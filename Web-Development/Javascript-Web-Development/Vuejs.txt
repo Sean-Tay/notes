@@ -1,0 +1,136 @@
+Vue.js: 
+	
+	Abbreviations:
+		SPA: 						Single Page Application.
+	
+	Description: A Frontend Framework for building Web Applications.
+	
+	Tutorial Videos / Playlist:
+		Quick Start: https://youtu.be/Wy9q22isx3U
+	
+	Concepts:
+		Virtual DOM: A Tree whose Nodes represent Logical HTML Tags.
+	
+	Details:
+		Vue faciliates the construction of SPAs:
+			The default entry point, index.html, should reference a <div id='app'> </div> Element.
+		
+			The default Javascript entry point, index.js, should reference a root Vue Instance 'App' and render it in the top-level <div id='app'> </div> Element.
+				import Vue from 'vue';
+				import App from './App.vue';
+
+				new Vue({
+				  el: '#app', // Specifies the id of the <div> HTML Element that the root Vue Instance will be attached to.
+				  template: '<App/>',
+				  components: { App }
+				})
+			
+		Vue makes use of self-contained Components with their own Component-Level State. 
+			Vue Components eschew the traditional idea of Separation of Concerns - HTML, CSS and JS no longer need to be in separate files. Instead, the code meant for each is combined within a single .vue file per Vue Component.		
+		
+			When these States change, it manipulates the Virtual DOM to invoke changes to just parts of the Pages, as opposed to reloading the whole Page.
+
+		Vue Components: 
+			Global Components: Pure Javascript - can be assessed by any root Vue Instance created after these Global Components are created, or sub-Components.
+				import Vue from 'vue';
+			
+				Vue.component(
+					'<component-name>', 
+					{
+						template: '<div> ... </div>',
+						data() {
+							return {
+								<data-object-key>: "",
+								...
+							}
+						},
+						...
+					}
+				);
+		
+			Single File Components: .vue files
+				(HTML) Output:
+					<template>
+						<div id="<component-name>">
+							... HTML Interpolation and Construction for Dynamic Content ...
+							... <other-component-name <other-component-prop>="val"> </other-component-name> ...
+						</div>
+					</template>
+
+					Component Directives: Prefixed with "v_" without quotes.
+						v-for="<item> in <data-object-key>"					
+						
+						v-bind: // Bring a JS Value into HTML
+							v-bind:<other-component-prop>="<data-object-key>"
+							v-bind:class="{<class-name>:<boolean>}"
+							v-bind:key="<item>.id" 
+
+						v-on: // On DOM Event Emitter
+						v-on: // On DOM Event Emitter
+							@ - shorthand for "v-on:"
+
+							v-on:<dom-event>="<custom-function>"
+							v-on:<dom-event>="$emit('<custom-dom-event>', <props> ...)"
+
+						v-model: // Two-Way Binding (for Inputs) - Combination of v-bind and v-on.
+							v-model="<data-object-key>"
+
+				(JS) Functionality: 
+					import <other-component-name> from "<other-component-path>";
+
+					export default {
+						name: "<component-name>",
+						props: {
+							// Component Parameters
+							<component-prop>: <component-prop-type>,
+						}
+						components: {
+							<other-component-name>,
+							...
+						},
+						methods: {
+							<custom-function>() {
+
+							},
+							...
+						},
+						directives: {
+							<custom-directive>: {
+								{ bind | inserted | update | componentUpdated | unbind }: function(el) {
+									...
+								}
+							},
+						},
+						created() {
+							// Function that Triggers when the Vue Component is loaded
+						},
+						data() {
+							// Function that returns a Data Object
+							return {
+								<data-object-key>: "",
+								...
+							}
+						},
+					}
+
+				(CSS) Style:
+					<style scoped> // Styling only affects the Component
+						...
+					<style>
+
+		VueX: Utility that handles Application-Level State Management to maintain and share States across multiple Components, similar to Redux / Flux.
+			Central Store for all Components. Avoids complex “prop” graphs in Component Trees.
+
+			Actions: Update Global State and trigger responses from Components.
+	
+	Commands: 
+		Vue CLI 3:
+			Features:
+				Babel, Typescript, ESLint, PostCSS
+				Dev Server with Hot Reload
+				Vue GUI for managing Application.
+
+			vue create "<name>" 	- Create an Application with name <name>.
+
+			vue ui 					- Launch a GUI for Project Management.
+

@@ -1,0 +1,106 @@
+Git:
+	Abbreviations:
+		VCS						- Version Control System.
+	
+	Description:	
+		Decentralized VCS.
+			Larger Local Copy - Repo History saved.
+			Does not need to be connected to Repo before Commits are made.
+	
+	Tutorial Videos / Playlist:
+	
+	Concepts: 
+		origin					- A Local Alias for the Remote Repository's URL in interest.
+
+		HEAD					- A Local Alias for the current Commit.
+	
+	Details:
+	
+	Commands:
+		git config				- Configure Git.
+			--global http."https://code.example.com/".sslVerify false - Disable SSL Cert Check for "code.example.com" domain.
+
+		git init <directory>	- Create a Local Repository in the current *empty* Local Directory.
+		git clone <repo_url>	- Copies a Remote Repository into the current *empty* Local Directory; creates Local Branches that track each available Remote Branch, before checking out the Local Branch that tracks the active Remote Branch of the Remote Repository.
+			-o <repo_url_alias> - Specify a custom Local Alias to reference the Remote Repository URL (default is origin).
+
+		git remote add <repo_url_alias> <username>@<server>:<repo_path_on_server> - Add a Local Alias for a Remote Repository URL.
+		git remote -v			- View all Local Aliases within the current Repo.
+
+		git fetch				- Preview updates for all Local Branches tracking Remote Branches.
+			FETCH_HEAD			- Creates a short-lived reference that keeps track of what has just been fetched from the Remote Repository. 
+
+		git checkout <branch> - Switches Local Branches.
+			-B <new_branch>	- Creates a new Local Branch called <new_branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
+				--track <repo_url_alias> <branch> - Forces the new Local Branch to track a specified Remote Branch.
+
+		git branch <branch> 	- Create a new Local Branch.
+			-r					- List Remote Branches
+			-a 					- List both Local and Remote Branches.
+
+			-d <branch> 		- Delete a Local Branch.
+
+			git push <repo_url_alias> <branch> - Add a Local Branch (with changes) to the Remote Repository.
+			git push -d <repo_url_alias> <branch> - Remove a Branch on the Remote Repository.
+		
+		git checkout <commit> -- <file> ... - Switch current version of <file> with the <commit> version of <file>.
+
+		git merge <branch> 		- Merge updates from the Local Branch <branch> into the currently checked out Local Branch.
+		git merge <repo_url_alias> <branch> - Merge updates from the Remote Branch <branch> into the currently checked out Local Branch.
+			--no-commit			- Prevent the automatic Commit behaviour of the Merge operation, allowing for edits to be made before actually making the Commit.
+
+			--abort				- If Merge Conflicts are present, this will revert the Merge. If there are prior Local Working Copy changes, those will be lost.
+
+			--continue			- If Merge Conflicts are present, this will allow for the retry the Merge after edits are made. 
+
+		git pull <branch>
+		git pull <repo_url_alias> <branch> - git fetch + git merge.
+
+		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
+
+		git diff HEAD <file> <file> - See differences between checked out <file> and Local Working Copy <file>.
+
+		git add	<file> ...		- Specify changed <file>s to be added into the Local Staging List.
+			-A 					- Specify that all new, modified or deleted files be added.
+			--ignore-removal 	- Specify that only new or modified files be added.
+			-u 					- Specify that only modified or deleted files be added.
+
+			.					- <file> specification to add all new, modified or deleted files.
+
+		git checkout -- . 		- Reset all files not in the Local Staging List.
+
+		git reset -- <file> ... - Specify <file>s to be removed from the Local Staging List.
+			--hard				- Reset all uncommited Local Changes to files.
+
+		git stash <option> -- <file> - Save Local Working Copy Changes.
+			stash@{<index>}		- Naming Convention of Stashes, with <index> 0 being the latest.
+
+			push -m "<stash_message>" - Option to additionally revert back Local Working Copy to HEAD ; push as in push and pop.
+
+			list 				- Option to view all Stashes.
+
+			show stash@{<index>} - Option to show differences between Stash contents and Commit contents for which the Stash was created.
+			pop stash@{<index>}	- Option to apply Stash onto current Local Working Copy, and to delete the Stash ; pop as in push and pop.
+			branch <branch> stash@{<index>} - Pop the Stash onto a Local Branch rooted at the Commit at which the Stash was created.
+
+			drop stash@{<index>} - Option to delete a specified Stash.
+			clear				- Option to delete all Stashes.
+
+		git commit -m "<commit_message>" - Commit the changes of the <file>s in the Local Staging List to the Local Branch.
+			-a 					- Automatically stages all modified Files with the Commit.
+
+		git checkout -- <file> ... - Revert changes to <file>s.
+
+		git push <repo_url_alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
+
+		git tag 				- Mark an important Commit with a local reference.
+			-a <tag> -m <tag_annotation> - Create an annotated local reference for the Commit.
+			-d <tag>			- Delete a specified local reference.
+
+		git push <repo_url_alias> <tag>	- Push the created Tag to the Remote Repository.
+		git push <repo_url_alias> :/refs/tags/<tag> - Push the locally changed Tag to the Remote Repository.
+		git push <repo_url_alias> -- tags - Push all locally changed Tags to the Remote Repository.
+
+		git log --all --decorate --oneline --graph - Observe Commit history of the current Local Repository as a graph.
+		
+	

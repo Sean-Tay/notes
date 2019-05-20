@@ -1,0 +1,49 @@
+General Computing Notes:
+	Abbreviations:
+		OS:					Operating System.
+
+		API: 				Application Programming Interface.
+	
+	Concepts:
+		Database:			An organized, structured set of Data within a Computer, accessible in different ways.
+		
+		API:				A specification on the expected behaviour of the entity it is for.
+		Design Patterns:	General, Reusable Solution to Recurring Problems in different Contexts.
+		Common Programming Interface: An Interface which transcends Programming Language.
+
+		Program:			A set of Instructions to be performed in Human-Readable Format.
+		Executable:			A set of Instructions to be performed after Compilation.
+
+		Artifact:			Generic Term: a tangile by-product of Software Development (i.e. Class Diagram, Executable, etc.).
+
+		Server: 			An entity that provides a Service. Can be Physical (i.e. a dedicated Machine), or Logical (i.e. a Process / Container / Virtual Machine, etc), agnostic of the underlying Implementation (Java, Scala, C, Python, etc. ) or Medium through which it is delivered (i.e. Web, etc.).
+
+		Port:				Signifies a Logical Entryway ('Delivery Box') in a Device.
+		Socket:				Endpoint of a Connection defined by a Network Protocol + IP Address + Port Number.
+
+		Multiplexer:		Mechanism for routing multiple inputs into a single channel, based on additional selector inputs.
+
+		OS:					Low Level Software which supports the use of a Computer's Physical Hardware and its functionality.
+		Thread:				Basic Unit for which the Operating System allocates Processor Time.
+		Process:			A running Executable, in which potentially multiple Threads execute with shared resources (i.e. Variables, Address Space) and a common execution state, supporting basic OS-level isolation from other Processes.
+
+		Daemon:				A non-interactive, background Process.
+		Service:			A Process which responds to requests from other Processes over some inter-process communication mechanism.
+
+		Container: 			A semi-isolated Logical Environment (OS Virtualization) that can host a Process and its dependencies with greater OS-level isolation and abstraction.
+		Virtual Machine: 	A fully-isolated Logical Environment (Hardware Virtualization) that can host multiple Processes with absolute OS-level isolation through a fully-blown 'Guest OS' running on a Hypervisor mediating sharing of Hardware Resources.
+
+	Details:
+		Design Patterns:
+			Broker Pattern:	Centralized Handler for Coordination between Decentralized Objects.
+
+		OS Types:
+			Unix: 			Proprietary OS.
+				Solaris:	One of the Unix Distributions.
+
+			Linux: 			Open Source "Legal" Unix Clone
+				Debian:		One of the first GNU/Linux Distributions. Targeted for Advanced Users.
+				Ubuntu:		One of the subsequent GNU/Linux Distributions. Targeted for Normal Users.
+
+		Virtualization:		The act of creating a Virtual (as opposed to Actual) version of something.
+	

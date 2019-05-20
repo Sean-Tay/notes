@@ -1,0 +1,175 @@
+Javascript
+
+	Scopes:
+		const 												- block {} scope, unchangeable once declared, not redeclarable
+		let 												- block {} scope, changeable once declared, not redeclarable
+		var 												- global scope, changeable once declared, redeclarable
+
+	Basic Javascript Expression Manipulations: 
+		Raw Data Types: 
+			var myString = "Test";
+				var myTemplateString = `Testing: ${dynamicValue}` // Can also be Multi-line
+			var myNumber = 23;
+			var myBoolean = true;
+			var myFunction = () => {};
+
+		console.log("Something to Print"); 					// Prints to Console
+
+		Comments // /* */
+
+		if (condition1) {
+
+		} else if (condition2) {
+
+		} else {
+
+		}
+
+		switch (variable) {
+		  case 'value1':
+			 // ...
+			 break;
+		  case 'value2':
+			 // ...
+			 break;
+		  default:
+			 // ...
+			 break;
+		}
+		
+		for (var index = 0; index < 5; index++) {
+			// ...
+		}
+
+		To check if two things are equal to each other (with automatic type conversion): ==
+		To check if two things are unequal to each other (even with automatic type conversion): !=
+		To check if two things are equal to each other (with the same type): ===
+		To check if two things are unequal to each other (with different types): !==
+		
+		function functionName(inputArgument1) { 			// Parameters should not have the var keyword
+			// ...
+		}
+
+		function() { 										// Anonymous Function
+
+		}
+
+		function functionCallback( ... , callback) { 		// A callback parameter is to allow the execution (or multiple executions) of a specified function anytime during the parent function's execution
+			// ...
+			callback();
+		}
+		
+		function classConstructor( ... ) {
+			this.property = ...;
+		}
+
+		functionName(); 									// Invoke the functionName function
+		
+		// Note: Functions are actually Objects!
+		
+		var objectName = { key:value, key:value, key:this.key }; // Objects with Properties or Dictionaries
+		objectName.key == value;
+		objectName['key'] == value;
+		
+		Object.assign(<targetObject>, object1, object2, ...);
+			// Mutates targetObject with the content stored in object1, object2, etc...
+			// If more than one object has different values for the same key, only the latest object (i.e. object2) will have its changes pushed.
+		
+		JSON.stringify(objectName); 						// Encode object as a JSON	
+		
+		var listName = [listElement, ... ]; 				// Arrays
+		
+		listName.map(function(listElement, listElementIndexOptional, listElementArrayRefOptional) { // Do something to each listElementType  }); // Map Function
+		listName.filter((listElement) => { // Return true to keep listElement in returned Array, false to exclude listElement from returned Array })
+		listName.sort(); 									// Sort the contents in listName		
+		
+		// this refers to the current scope's owner - can be a class or a function
+			.bind(this) // Search up on this
+	
+	Utilities:
+		Mathematical Functions: 
+			Math.floor();
+			Math.random();
+			// ... etc.
+		
+		Date Functions:
+			Date.now(); 									// Returns the number of milliseconds since Jan 1, 1970
+			setTimeout(function, <milliseconds>); 			// Executes the specified function once the specified amount of milliseconds has passed.
+			var intervalHandle = setInterval(function, <milliseconds>); // Executes the specified function repeatedly after every period of the specified amount of milliseconds has passed.
+			clearInterval(<intervalHandle>); 				// Stop the repeated execution of a function.
+			
+		Regex: 
+			Local Match: /<RegEx>/
+			Global Match: /<RegEx>/g
+			
+			/<RegEx>/.test("<string>"); 					// Test if a String contains the supplied RegExp.
+
+	Function Currying - The process of breaking down a function that takes multiple arguments into several sub-functions that each take a subset of those multiple arguments.
+		function add(a, b) { return a + b; }
+		(x, y) => { return x + y; }
+		
+		vs.
+		
+		function add(a) { return function(b) {return a + b}; } 	// This allows multiple different subtypes of the function to be built up before executing.
+		(x) => (y) => { return x + y; }
+	
+	Document Object Model - Term referencing the tagged tree-like structure of a browser-processed HTML document - html, head, body, etc for easy access of a particular HTML element within the webpage.
+		Accessing HTML Elements:
+			var element = document.getElementsByClassName('classname'); // No need the . prefix
+			var element = document.getElementById('idName'); 	// No need the # prefix	
+	
+		DOM Properties: Initialized from the values assigned to HTML Attributes. These can mutate during runtime, unlike HTML Attributes which only dictate the starting values of these Properties.
+			element.innerText; 									// references the text content between opening and closing HTML tags 
+			element.innerHTML; 									// references the HTML content between opening and closing HTML tags
+			element.style; 										// references the js object representing the css of the HTML element
+		
+		DOM Events:	
+			Add Event Listener:
+				element.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
+					// <eventType>: http://www.w3schools.com/jsref/dom_obj_event.asp
+					// event: the Object containing details about the Event that triggered the listener
+						// event.stopPropagation(): use to stop parent DOM elements from also receiving the event
+					// useCapture: false to specify function should fire during bubbling, true to specify the function should fire during capturing
+					// element.eventType = functionID; // Legacy shortcut
+			
+			Remove Event Listener:
+				element.removeEventListener("eventType", functionID); // Doesn't seem to be able to remove anonymous functions
+				element.eventType = null; // Legacy shortcut
+			
+			// Note: Event Listeners return Event Objects
+				eventObject.target.value
+				// eventObject Properties: https://developer.mozilla.org/en-US/docs/Web/API/Event
+				
+	AJAX Requests - Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
+		const httpRequest = new XMLHttpRequest(); // Create a new AJAX Request
+		
+		httpRequest.open("{GET | POST | PUT | DELETE}", "<relative-url>"); // Specify HTTP Request Type and Target
+		
+		httpRequest.onload = function() { // Add Event Listeners 
+			// ... 
+		};
+		
+		httpRequest.send(null); // Actually fire off the AJAX Request
+			
+	Spread Operator (ES6) - Convenient Syntax 
+		Iterator Spread Operator: 
+			// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
+			
+			// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
+			
+		Object Spread Operator:		
+		
+	Arrow Functions (ES6) - A function that has a syntactic definition that is shorter than a regular anonymous function.
+		function () {} becomes () => {};
+		function (x) { return x; } becomes x => x;
+		
+		(x) => { return x; }
+			// LHS - Argument List
+			// RHS - To Return
+				// Using parenthesis in place of the RHS braces represents an implicit return statement. Should be used if there's a sole return statement in the body of the anonymous function.
+				// (x) => (x) // Equivalent to the above
+				// Useful for simplified syntax for React 
+					const Counter = () => (
+						<h1> Value </h1>
+					);
+	

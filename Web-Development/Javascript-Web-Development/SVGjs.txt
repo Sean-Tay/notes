@@ -1,0 +1,75 @@
+SVG.js - A Library which renders Vector Graphics for Web Sites.
+
+	Canvas Creation: 
+		const paper 		= SVG(<DOM Element>).size(<dimX>, <dimY>);
+		
+	Canvas Coordinates: Origin (0, 0) is relative to the top-left corner of the Canvas.
+	
+	Canvas Containers: Useful for transforming Elements together.
+		const group 		= paper.group();					// Create a Group.
+		group.clear();											// Clear the Group.
+		
+	Element Creation and Attachment:
+		const paperCircle 	= paper.circle(<diameter>).center(<centerX>, <centerY>);
+		const groupRect		= group.rect(<dimX>, <dimY>).move(<topLeftX>, <topLeftY>).attr({"fill": "f06"});
+		const groupText		= group.text("<text>").font({"family": "<font-family>"});
+		
+	Element Transformations:
+		paper.size(<dimX>, <dimY>); 							// Modify the viewable area of the Canvas without changing aspect ratio.
+		group.scale(<normX>, <normY>);							// Scale a Group by a normalized amount along the X and Y axis.
+		
+		group.transform(										// Translate the Group Elements.
+			{
+				"x": <translateX>,
+				"y": <translateY>
+			},
+			true												// Causes the Translation to be relative to prior Transformations.
+		);
+		
+		group.transform(
+			{
+				"rotate": <rotationAmt>
+			},
+			true												// Causes the clockwise Rotation to be relative to prior Translating and Rotating (but not Scaling).
+		); 
+		
+	SVG Paths:
+		const pathDefinition = 
+			"<action1> <parameter1> <parameter2> <action2>..."; // A path can be defined as a space delimited string of actions and related information (SVG-format).
+		const groupPathElement 	 = group.path(pathDefinition); 	// Send in the path definition to the path() to process the definition string.
+		
+		groupPathElement.fill( ... ).stroke( ... );
+		
+		Actions: Upper-Case Action Letters denote absolute coordinates, Lower-Case Action Letters denote relative coordinates. 
+			M (x y)+ 						- Move the drawing cursor without drawing a path.
+			L (x y)+						- Begin or Continue (LineTo) a subpath with the drawing cursor.
+			Q (x1 y1 x y)+					- Define a Quadratic Bezier subpath. (x, y) defines the target point, (x1, y1) defines the control point for the curve.
+			Z (none)						- End the subpath. 
+			
+		Tip: Store the Components in a List then just use the .join(" ") method with the space-delimiter.		
+		
+	Elements Styles:
+		Getting Element Style Properties:
+			element.attr("targetProperty");
+			element.attr();
+		
+		Setting Element Styles:
+			element.attr(
+				{
+					"property1": "value1",
+					"property2": "value2"
+				}
+			);
+			
+	Element Animation:
+		
+		element.animate(<duration>, <easeType>, <delay>).<animatableFunction>(); // Chainable
+		element.stop(<jumpToEnd>, <clearQueue>);				// Current Running Animation is stopped, and values are left as they are.
+		element.finish();										// All Animations are forcefully finished, and all values are set to their corresponding end values.
+		element.after(<callback>)								// Execute a function after the Animation has finished.
+			
+	Element Removal:
+		element.remove();
+	
+	Extract DOM Element from SVGjs Element:
+		element.node;

@@ -1,0 +1,21 @@
+Docker
+	Abbreviations:
+		
+	
+	Description: Container and Container Orchestration Tool
+	
+	Tutorial Videos / Playlist:
+	
+	Concepts: See 'Software Engineering' Notes on Containerization.
+	
+	Details:
+		Docker Daemon:				Used to run the Docker Engine.
+			OS Specifics:
+				Linux:				Runs natively.
+				Windows: 			Runs a 'boot2docker' Docker Host (acts as a Linux VM).
+
+			The Docker Daemon hosts Running Containers.
+	
+	Commands:
+		Docker CLI: 				Used to interact with the Docker Daemon.
+	

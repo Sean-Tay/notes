@@ -1,0 +1,37 @@
+Express.js - Web Application Framework. 
+	
+	// An Express Server utilizes the HTTP Request Command, as well as the path section of the supplied URL in a received HTTP Request to determine what to do.
+	// This is known as Routing, and both the HTTP Request Command as well as the path defines a Route.
+	// Route Path Format: One or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"} 
+	
+	var app = express();										// Creates a new Express Server Instance
+	
+	var router = express.Router();								// Express Routers are convenient in keeping Routes and their associated code together in a modular manner
+	
+	router.<{HTTP Request Command | use}>(						// Define a new Route for this Router
+		"<Route>", 												// Specifies the Route
+		(req, res) => { 										// The Handler Function for this Route
+			req.params.<parameter> = // ... //; 				// Accesses the <parameter> passed into this Route
+		
+			// ... // 
+		}
+	);
+	
+	app.use(													// Attach a Router to the Express Server Instance
+		"<Route>",												// All Routes attached to the Router will now be Sub-Routes of the Route specified here
+		router													// The Router to attach to the Express Server Instance
+	);
+	
+	// Middleware Functions denote functions that execute between the Web Application's Request / Response sequence.
+	// In Express, Middleware Functions can be attached to the Express Server Instance, or a Router.
+	
+	app.use(													// Specify a Middleware Function for the Express Server Instance
+		"<Route>",												// Specifies the Route that this Middleware Function will execute on
+		(req, res, next) => {									// The Middleware Function Definition
+			// ... //
+			
+			next();												// Execute the next function in the Request / Response sequence
+		}
+	);
+	
+	app.listen(<port>);											// Start the Express Server Instance on a specified Port

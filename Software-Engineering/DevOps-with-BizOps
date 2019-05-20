@@ -1,0 +1,75 @@
+DevOps and BizOps:
+	Abbreviations:
+		IT: Information Technology
+		
+		SME: Small-Medium Enterprises
+		
+		SDLC: Systems Developmnet Life Cycle / Application Development Life Cycle
+		
+		CX: Customer Experience
+		UX: User Experience
+	
+	Description:
+		DevOps is a combination of the Cultural Philosophies, Practices and Tools that increases an Organization's ability to deliver Applications and Services at a high-velociy to better serve their Customers and compete more effectively in the Market.
+		BizOps is the same as the above, but on processes not directly in the realm of DevOps.
+	
+	Concepts:
+		SDLC: The process of Analyzing the Use-Case of, Designing, Building, Testing, Releasing and Maintaining Software.
+		
+		Lean (Methodology): A method for removing the Baggage within a System without sacrificing Productivity. 
+		
+		Shared Services: Involves Servive Providers that serve multiple different Business Scopes.
+		Dedicated Services: Involves Service Providers that solely serve a single Business Scope.
+		
+		Value Stream Mapping: A Tool to visualize the steps needed from Product Implementation to End-Customer Arrival (SDLC?), with the end goal of identifying bottlenecks in the Value Stream.
+	
+	Details:
+		DevOps: 
+			- To identify and eliminate unnecessary Organizational Complexity in the hopes of shortening the SDLC.
+			
+			- 2 Teams:
+				- Dev: CX / UX Architects, Software Developers, Continuous Delivery Architects, Security Engineers, Build Engineers, Testers, etc.
+				- Ops: Database Administrators, Systems Engineers, Systems Administrators, Network Engineers, Security Professionals, Release Engineers, Operations Staff, etc.
+			
+			- 3 Perspectives:
+				(Dev to User) Flow: Accelerate the delivery of work from Dev to Ops to Users.
+				(User to Dev) Feedback: To Improve the Flow.
+				Continuous Learning and Experimentation: A vector for Organizational Improvement and a High-Trust Culture.
+		
+		Considerations:
+			- The Golden Circle:
+				1. Why:
+					- Large Companies need to be more 'Agile' in a competitive Market Space, or risk losing their customers to other Smaller Companies that are quicker and more efficient.
+						- Startups / SMEs have less accrued Organizational Complexity: 
+							- They can manuever to more quickly meet Customer Requirements.
+							- No rigid processes -> more room for Innovation and Creative Solutions -> attraction point for Customers.
+							
+						- Startups / SMEs have smaller Manpower, less likely to have isolated Teams:
+							- Encourages Collaboration:
+								- No blame-game between Teams.
+								- Everyone is commited into pushing things to Production, and not just up to their direct jurisdictions.
+						
+					- Is it right for the situation?
+						- Why break something if it is already working?
+							- Example: Is there enough Competition in the Market to warrant the time and effort into the 'leanification' of such processes?			
+							
+				2. How (is it different)?
+					- Centralized (Traditional Shared Services) -> Decentralized (New Dedicated Services) Business Model: 
+						- Accountability clearly defined through Hierarchical Structure -> Faster Decision Making due to flat Hierarchy
+						- Easier Standardization and Compliance through Consistent Policies and Processes -> Higher Productivity with Leaner Policies
+						- Less Cost through Economies of Scale -> Increased Specialism
+						- Ideal for Mature Products -> Ideal for Rapidly Changing Products
+						
+						- A tradeoff between Agility and Stability.
+					
+					- Transition:
+						- Shared Services for Everything -> Agile Business Teams (DevOps) + ( Lean Shared Services (BizOps) -> Highly Automated Shared Services + Lean Manual Processes that cannot be automated)
+					
+				3. What:
+					- What is the End-Goal?
+						- What is the ultimate benefit to the Business in doing such practices?
+							- Common Benefits:
+								- Savings in Time
+								- Savings in Money
+								
+			

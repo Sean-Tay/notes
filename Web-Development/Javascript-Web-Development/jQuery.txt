@@ -1,0 +1,30 @@
+jQuery - A JS library useful for interacting and manipulating with the DOM without having to reload the HTML page. The HTML should be loaded first before any jQuery or Javascript is run.
+
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"> </script> // Include the library in the HTML doc with the script tag referencing an online source
+	
+	$() 														// Alias for jQuery()
+
+	$(document).ready(main); 									// Wait until the HTML has loaded before executing the main callback function
+	var $jQueryvariable = $("<selector>"); 						// Convention: $ to denote jQuery variable
+
+	$(this) 													// Refer to the element that triggered the execution of the anonymous function
+	
+	$("<selector>").<action>() 									// CSS-style selector to find specified HTML / DOM elements, and perform an <action> that is meant for the specified HTML / DOM elements
+		$("<selector>")[0] 										// Access the raw js DOM element
+	
+		<action>:
+			hide() 												- Add the CSS property display:none to elements of a selected type.
+			
+			show() 												- Remove the CSS property display:none to elements of a selected type.
+			fadeIn(milliseconds) 								- Fade in hidden objects.
+			
+			toggle() 											- Alternate between showing and hiding elements of a selected type.
+			slideToggle() 										- Slide out hidden elements of a selected type to make them visible.
+			toggleClass("CSSclassname") 						- Alternate between adding and removing the specified CSS class from elements of a selected type.
+			
+			text("New Text") 									- Change the text contained within the selected DOM element.
+
+			on('event', function() { // ... } ) 				- Executes the anonymous function when elements of selected type experiences a specified DOM event. Unlocks the specified event functionality for the elements with the attached selectors (e.g. click).
+				
+			find("<selector>") 									- Grab any elements that reside as a child of the element targeted by the parent <selector>.
+			next() 												- Refer to the neighbour of a specified element within the same DOM hierarchy / level.	

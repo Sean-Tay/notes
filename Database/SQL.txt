@@ -1,0 +1,334 @@
+SQL:
+	Abbreviations:
+		SQL:					Structured Query Language
+
+		SPOOL:					Simultaneous Peripheral Operations Online
+	
+	Description:	
+		Declarative Language used by Applications to instruct what needs to be done by Relational Databases to meet Application Requirements.
+	
+	Tutorial Videos / Playlist:
+		https://www.youtube.com/watch?v=nWeW3sCmD2k
+	
+	Concepts: 
+		Attribute:				A property of a Record / Table that can hold a value to meaningfully represent information about what the Record is supposed to represent.
+
+		Key: 					An Attribute / Attributes whose values can uniquely represent a Record in the Table.
+
+		Record: 				Collection of related values pertaining to some Attributes.
+
+		Table: 					Collection of Records with the same defined Attributes.
+
+		Index: 					An additional sparse Data Structure accompanying a Table that maps between data in specified Table Attribute(s) and virtual addresses of the actual Table Records on disk.
+
+		Database: 				Collection of Tables.
+
+		Synonym:				Stored Alias of a Table, View, Sequence, Procedure, Stored Function, Package, Materialized View, Java Class Schema Object, User-Defined Object Type, or another Synonym.
+
+		Spooling: 				Data is temporarily held in volatile storage to be used for near-future operations. In SQL, this is the process of writing query results to a file.
+
+	Details:
+		General:
+			Attribute Datatypes: 	All Caps
+				INT:				Integer.
+				NUMBER(<Total_Precision>, <Number_of_Decimal_Digits>): General Numerical Data Type.
+
+				CHAR(<Length>):		Fixed-length String. Better performance than VARCHAR.
+
+				BOOLEAN({TRUE | FALSE}): Boolean Variables.
+
+				LOB:				Large Object that specializes in storing unstructured data of up to 128TB.
+					- BLOB: Binary Large Object.
+					- CLOB: Character Large Object.
+					- NCLOB: Native Character Large Object.
+
+				DATE:				Date in format YYYY-MM-DD.
+				TIME:				Time in format HH:MI:SS.
+				TIMESTAMP:			Date + Time, but with fractional precision for the seconds.
+
+			Attribute Constraints: 	All Caps
+				NOT NULL: 			Enforce that the Attribute cannot be left empty upon Record Creation.
+
+				UNIQUE:				Enforce that the Attribute cannot be assigned prior values upon Record Creation.
+
+				DEFAULT:			Enforce a default value to the Attribute if none are specified during Record Creation.
+					CURRENT_TIMESTAMP For DATETIME Attributes.
+
+				AUTO_INCREMENT:		Sets it such that upon Record Creation, the value for the Attribute this Attribute Modifier is assigned to will increment by some value.
+
+			Value Bulit-Ins:		All Caps
+				String:
+					Tab				CHAR(9)
+					Line Feed		CHAR(10)
+					Carriage Return CHAR(13)
+
+			Indexes:
+				An additional sparse Data Structure accompanying a Table that maps between selected data from specified Table Attribute(s) and virtual addresses of the actual Table Records on disk.
+
+				Defined separately from Tables, but is silent thereafter (reference Table as per normal).
+				
+				Implemented via Hash Tables, or BTrees.
+					BTree implementation allows optimization of GROUP BY / HAVING / Min-Max Aggregate Queries.
+
+				Query must only utilize a 'leftmost-prefix' of the Indexed Attribute(s) in an Index to be able to make use of the sorted order.
+
+				Improves lookup speed, but penalizes on Insertions / Deletions / Storage Space of the Table.
+					Since Indexes are supposed to be sparse, DBMS is not looking up every Record in the Table, reducing the number of storage block lookups.
+
+					For very large Tables, a multi-level Index may be used to further avoid sequential storage block lookups in the original Index.
+
+			Exposition:
+				DQL: Not automatically Commited.
+					SELECT: Denotes what we are getting back.
+
+					FROM: Denotes where we are getting the data from.
+
+					JOIN: Combine results from two or more Tables based on common fields between them.
+						- Allows the combining logic to be taken out of the WHERE clause, making the intent of the query clearer.
+
+						- No performance difference between WHERE and JOIn - modern DBMS can execute both equally fast.
+
+						- Types:
+							- INNER JOIN: Return the Records in both Tables where the condition is matched. Also can be emulated with a CROSS JOIN and the WHERE clause on a common Field in both Tables.
+							- LEFT [OUTER] JOIN: Return all the Records from the left Table alongside any matching data from the right Table, based on a common Field in both Tables.
+							- RIGHT [OUTER] JOIN: Return all the Records from the right Table alongside any matching data from the left Table, based on a common Field in both Tables.
+							- FULL [OUTER] JOIN: Return all the Records in both Tables alongside any matching data from the left and right Tables, based on a common Field in both Tables.
+
+					WHERE: Denotes which ones we are operating on.
+				
+				DML: Not automatically Commited.
+					INSERT: Denotes items to be inserted into DB.
+
+					UPDATE: Denotes items to be updated within DB.
+
+					MERGE: Upsert Operation - combination of INSERT and UPDATE.
+
+					DELETE: Denotes items to be removed from the DB.
+
+			Conditional Operators:
+				= 
+				<>
+				>
+				<
+				>=
+				<=
+
+				BETWEEN <left> AND <right> - Between an inclusive range.
+
+				[NOT] LIKE <pattern> - Match a character pattern.
+					%				- Wildcard for zero or more characters.
+					_				- Wildcard for a single character.
+
+				IN (<val>, ...)		- Equal to one of multiple possible values.
+
+				IS [NOT] NULL	- Compare to NULL / missing data. 
+
+		Postgre SQL Specials:
+			PL/pgSQL 			- Procedural Language Extension that allows Applications to additionally indicate how the instruction should be done. 
+
+		Oracle SQLPlus Specials:
+			VARCHAR(<Max_Length>): Variable-Length String Internal Data Type - try NOT to use. Distinguishes between NULL and empty Strings.
+			VARCHAR2(<Max_Length>): Variable-Length String External Data Type. Does NOT distinguish between NULL and empty Strings.
+
+			SET LIN[ESIZE] <line_width> - Specify <line_width> as the maximum number of Characters within one Line. Maximum value is 32767.
+			SET WRAP {ON | OFF} - Specify if Lines exceeding <line_width> should wrap-around, or be truncated.
+
+			SET PAGESIZE <page_size> - Specify <page_size> as the maximum number of Lines to be printed on one Page. Set <page_size> == 0 to put everything into one Page.
+
+			SET TERMOUT {ON | OFF} - Suppress Screen Output. This can accelerate the execution of Spool File Statements.
+			SET TRIMOUT {ON | OFF} - Specify if each Line in Screen Output is to be padded with trailing blanks.
+
+			SET TRIMSPOOL {ON | OFF} - Specify if each Line in Spool File Output is to be padded with trailing blanks.			
+			
+			REM[ARK]			- Oracle SQL / SQLPlus Syntax for commenting SQL.
+
+			PRO[MPT]			- Oracle SQL / SQLPlus version of echo.
+
+			ACC[EPT] <variable_name> <input_type> [FOR[MAT] <expected_input_format>] [DEF[AULT] <default_input_value>] [PROMPT <text> |NOPR[OMPT]] [HIDE] - Reads a line of input and stores it in <variable>. If HIDE is specified, input is not printed on screen.
+
+			DECODE (<attribute_name>, <attribute_value>, <result>, ... [,<default_result>]) - Return <result>s for different specified <attribute_values>.
+
+			dual				- Table wholly storing one dummy Record, useful for computing a constant expression. 
+            
+			user_tables			- Table storing metadata of all User-Owned Tables in the Database.
+			all_tables			- Table storing metadata of all Tables in the Database.
+
+			all_tab_columns		- Table storing metadata of all Table Attributes in the Database.
+			
+			TO_DATE('<date_string>', 'YYYY-MM-DD HH24:MI:SS') - Convert <date_string> to a DATE Type.
+			TO_TIMESTAMP('<timestamp_string>', 'YYYY-MM-DD HH24:MI:SS.FF') - Convert <timestamp_string> to a TIMESTAMP Type.
+
+			'&#'				- Reference Positional Argument passed into SQL File.
+
+			PL/SQL				- Procedural Language Extension that allows Applications to additionally indicate how the instruction should be done. 
+				Tutorial: https://www.guru99.com/introduction-pl-sql.html
+
+				- Supports OOP Concepts: Information Hiding (Encapsulation), Ad-Hoc Polymorphism (Function Overloading), etc.
+
+				- Blocks		- Atomic Execution Unit that contains both SQL as well as PL/SQL code.
+					
+					- Types:
+						- Anonymous Blocks: Single-Session Execution - they wil not be saved to the Database as a Stored Object. As a result, Compilation and Execution are done together in a single step. 
+						- Named Procedural Blocks: Multi-Session Execution - they are saved to the Database as a Stored Object, and can be referred to so long as it exists on the Server.
+						- Named Functional Blocks: Multi-Session Execution - they are saved to the Database as a Stored Object, and can be referred to so long as it exists on the Server.
+
+			Data Pump API		- API to support transfer of data from a Source Database to the Destination Database.
+
+		Microsoft SQL Server Specials:
+			TSQL				- Procedural Language Extension that allows Applications to additionally indicate how the instruction should be done.
+
+		Tips:
+			DELETE any content related to new content to be inserted, before actually INSERTing.
+
+	Commands:
+		-- Single Line Comment
+		/* 
+			Multi-Line Comment 
+		*/
+
+		<command>;
+
+		-- Creates a Database called <database_name>.
+		CREATE DATABASE <database_name>; 
+
+		-- - Deletes the Database <database_name> from the Database Server.
+		DROP DATABASE <database_name>; 
+
+		CREATE TABLE <table_name>(
+			<attribute_name> <attribute_datatype> <attribute_constraint>,
+			...
+
+			PRIMARY KEY(<attribute_name>, ...)
+			-- OR
+			FOREIGN KEY(<attribute_name>, ...) REFERENCES <table>(<attribute_name>), ...
+		);
+
+		-- View <table> Properties.
+		DESC <table>
+
+		CREATE [UNIQUE] INDEX <index_name>
+		ON <table_name>(<attribute_name>, ...);
+
+		DROP INDEX <index_name>
+		ON <table_name>(<attribute_name>, ...); 
+
+		ALTER TABLE <table_name>
+		ADD <attribute_name> <attribute_datatype>
+		;
+
+		ALTER TABLE <table_name>
+		DROP COLUMN <attribute_name>
+		;
+
+		INSERT INTO <table_name> 
+		(
+			<attribute_name>, ...
+		)
+		VALUES
+		(	-- One Record
+			<value>, ...
+		),
+		... 
+		; COMMIT;
+
+		UPDATE <table_name>
+		SET <attribute_name> = <value>
+		WHERE <record_conditional>
+		; COMMIT; 
+
+		UPDATE <table_name>
+		SET <attribute_name> = CASE
+								WHEN <record_conditional> THEN <return_value>
+								...
+								END;
+
+		MERGE INTO <table_name> 
+		ON (condition)
+		WHEN MATCHED THEN
+			UPDATE SET column1 = value1 [, column2 = value2, ...]
+		WHEN NOT MATCHED THEN
+			INSERT (column1 [, column2, ...]) VALUES (value1 [, value2, ...]); COMMIT;
+
+		DELETE FROM <table_name>
+		WHERE <record_conditional>
+		; COMMIT;
+
+		-- Save further Query Results to Local File at <filepath>.
+		SPOOL <filepath>
+		;
+
+		SELECT [DISTINCT] <alias>.<attribute_name>, ...
+		FROM <table_name> [AS] <alias>, ...
+			[
+				{INNER | LEFT | RIGHT} JOIN <other_table_name> [AS] <other_alias>
+				ON <alias>.<attribute_name> = <other_alias>.<other_attribute_name>, ...
+			]
+		WHERE <record_conditional> ...
+		GROUP BY <alias>.<attribute_name>, ...
+		HAVING <aggregate_conditional>
+		ORDER BY <alias>.<attribute_name>, ...
+		;
+
+		-- Stop Saving further Query Results to Local File at <filepath>.
+		SPOOL OFF
+		;
+
+		-- Confirm any pending DML Transactions.
+		COMMIT;
+
+		-- Oracle PL/SQL Template.
+		DECLARE / CREATE
+			/*
+				Naming Convention:
+					First Uppercase Letter:
+						P				Parameter Level Variable.
+						L				Local Level Variable.
+						G 				Global Level Variable.
+					
+					Second Lowercase Letter:
+						n				Numbe-Type Variable.
+						v				Varchar-Type Variable.
+
+						r				Record-Type Variable.
+						t				Table-Type Variable.
+			*/
+
+			-- Pragmas: 
+
+			-- Variables: <variable_name> <variable_datatype> := <variable_value>; - Has SQL as well as PL/SQL-specific datatypes.
+
+			-- Collections: Ordered Group of Elements of a particular Datatype.
+				-- General Declaration: TYPE <collection_type> IS VARRAY (<size>) OF <element_type>; <collection_variable> <collection_type> := <collection_type>();
+
+				-- Varray: 				Dense Array with a Fixed Upper Length. Can only have Elements pushed or popped.
+				-- Nested Table: 		Dense or Sparse Array with a Variable Upper Length (increased via the use of EXTEND). Can have Elements inserted or deleted at any position. Positions of Elements within the Array may not be preserved when SAVED to a Database Table.
+				-- Index-By-Table:		Sparse Array with a Variable Length. Can have Elements inserted with either Numerical or String Subscripts (via INDEX BY VARCHAR2(<max_index_length>) appended to the declaration). Cannot be stored in a Database. 
+
+			-- Cursors: 
+
+			-- Subprograms: 
+
+			-- Exceptions: 
+
+		BEGIN
+			-- Can contain SQL, PL/SQL Code  as well as other nested Blocks.
+
+			-- Assignment.
+			<variable_name> := <variable_value>;
+
+			-- Print Statement.
+			dbms_output.put_line('<text>');
+
+			-- FOR LOOP
+			FOR <counter> IN <sequence>
+			LOOP
+				...
+			END LOOP;
+
+		EXCEPTION
+			...
+
+		END;
+		/
+		
+	

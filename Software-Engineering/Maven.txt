@@ -1,0 +1,82 @@
+Maven: 
+	Abbreviations:
+		POM: Project Object Model. Maven configuration to specify how the Project should be handled.
+	
+	Description:
+		(Java / Other Software) Project Management and Comprehension Tool that simplifies and standardizes the Project build process.
+			Dependency Manager - similar to npm, but with no scripting capabilities.
+			Build Manager
+	
+	Tutorial Videos / Playlist:
+		https://youtu.be/al7bRZzz4oU
+	
+	Concepts:
+		Repository:				Collection of Artifacts.
+		
+		Archetype: 				A template that defines a Project.
+		Artifact:				The end-product of a Software Development Process.
+		
+		Coordinate:				Uniquely identifies the Artifact: groupId + artifactId + version.
+		
+		Lifecycle: 				An ordered sequence of Phases.
+		Phase: 					An abstract step that is expected to occur in the Project's development lifetime.
+		
+		Plugin: 				Contains a bundle of Goals.
+		Goal: 					Provides implementation for Phases (Goals have a many-to-many relationship with Phases).
+		
+		Execution: 				Specifies which Goal(s) with which configurations to bind and execute with which Phase.
+		
+	Commands:
+		// General Form
+		mvn <plugin>:<goal> [<params>, ...]			// Execute a Goal.
+		mvn <phase>									// Execute Phases in the Build Lifecycle up until and including the one defined. Will break execution upon error.
+		
+		// Create Projects from Templates
+		// jar - Java Application
+		// war - Java Web Module
+		// ear - Java Enterprise Module
+		mvn archetype:generate -Dfilter=<filter>	// View list of available Archetypes. Filter the result with the optional "Dfilter" parameter.
+		mvn archetype:generate 
+			-DgroupId=<ReverseDomainPackageName> 
+			-DartifactId=<ProjectName> 
+			-DarchetypeGroupId=<TemplateTypePackage> 
+			-DarchetypeArtifactId=<TemplateTypeName>
+						
+		// Import Dependency Artifacts
+		// Searches Local Repository first, followed by the Remote Repository.
+		// Installs Dependency Artifacts to Local Repository.
+		mvn install:install-file 
+			-Dfile=<DependencyPath> 
+			{
+			
+			||
+			-DpomFile=<DependencyPOMPath>
+			||
+			-DgroupId=<DependencyReverseDomainPackageName> 
+			-DartifactId=<DependencyProjectName> 
+			-Dversion=<DependencyVersion>
+			-Dpackaging=<DependencyPackageType> 
+			}
+		// Alternatively, copy-paste the Dependency XML into the POM.
+		// May need to recompile Dependencies after adding in: see --also-make
+		
+		// Bind Goal Artifacts to Phase
+		
+		// Compile Project
+		mvn compile
+		
+		// Build, Test and Package Project into an Artifact
+		// "-SNAPSHOT" - A user mark appended to Version that indicates the Artefact is still under development and not ready for release.
+		mvn package
+		
+		// Save Package to Local Maven Repository
+		mvn install
+		mvn install:install
+		
+		// Save Package to Remote Maven Repository
+		mvn deploy
+		
+		// Execute Packaged Project
+		mvn exec:java <artifactCoordinate>
+		java -cp <targetURL>
+		

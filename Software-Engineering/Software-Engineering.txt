@@ -1,0 +1,54 @@
+Application Development:
+	Design:
+		Bad Code:					Mainly caused by Coupling.
+			Rigidity:				Modification of one part of code requires changes to other parts of the code due to non-isolation and coupling.
+			Fragility:				Modification of one part of code requires changes to many other non-related parts of the code.
+			Non-Reusability:		
+		
+		OOP:						"OO is about managing Dependencies by selectively inverting key Dependencies in the architecture to prevent the problems with Bad Code."
+			Abstraction:			To hide away low level implementation details and only expose high level functionality.
+			Encapsulation:			Group Fields and related Methods together.
+			Inheritance:			Extend parent Class functionality with child Classes that have a "is-a" relationship.
+			Polymorphism: 			The provision of a single Interface to Entities of different types.
+		
+		SOLID:
+			Single Responsibility:	
+			Open-Close:				Components should be Open to Extension but Closed for Modification. Basically, Inherit rather than modify.
+			Liskov Substitution:	
+			Interface Segregation:	Have a specific Interface for each Client as opposed to one big Interface.
+			Dependency Inversion:	High Level Modules should not depend on concrete Low Level Modules, both should depend on Abstractions which dictate the details.
+			
+		Dependency Injection:		Allow Dependencies of a Client be initialized and passed in by an external Server.
+		
+		Inversion of Control:		Reverses the flow of control between Client Applications and Frameworks.
+		
+	Constructs:
+		Mixins:						Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
+
+Application Lifecycle:
+	Containerization:				Bundling an Application, related Binaries and Libaries into some Self-Contained Package for execution.
+		An Application Image is first constructed from a Base Image, the Application and its related Binaries and Libraries.
+			A 'snapshot' of the Application Environment is created to create this Image.
+		
+		This Application Image is then used to create Containers, which are running instances of the Application Image.
+
+		A Container runs natively on Linux, and does not include a full OS unlike Virtual Machines. Instead, it shares the host Kernel with other running Containers, whilst maintaining its own emulation of certain Kernel Features for the purposes of creating an Abstraction Layer over the specific Kernel, and to create an Isolated Environment to house the running Application.
+			Namespaces:				A Linux Kernel feature that partitions Kernel resources such that two sets of Processes see different sets of Kernel resources.
+			Control Groups:			A Linux Kernel feature which limits, accounts for, and isolates Resource Usage of a group of Processes.
+		
+			Tricks the Application into thinking that it has sole run of the hosting OS.
+
+			Because Containers create an Isolated Environment, Applications can now use their own Tech Stack.
+
+		With Containers, the Application becomes:
+			Portable: Containers provide an Abstraction Layer over the hosting OS, so that Applications run the same way even on different OSes.
+			Accessible: Since the Application and its Dependencies are bundled into a Self-Contained Package, the created Image can be uploaded to a Public Registry for sharing, without any fragmentation. Together with the enhanced Portability, this increases the Application's Accessbility.
+
+			Interchangeable: The immutable nature of Containers simplifies the process of updating a running Application - just run the new Container and kill off the old Container later on.
+			Scalable: The stateless nature of Containers allows for any instance of the Application to serve the same request.
+
+		If Application Components are themselves Containerized (as part of Micro Services), then even more good benefits occur in:
+			Deployment: 			Easier to control, since only parts of the Application are being deployed at any one time.
+			Flexibility: 			Different parts of the Application can use differing Tech Stacks to acheive API functionality.
+
+	Container Orchestration: 		Container Management.

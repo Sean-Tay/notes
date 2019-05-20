@@ -1,0 +1,194 @@
+Java Web:
+	Abbreviations:
+		JPF:					Java Plugin Framework / Java Page Flow.
+		JSP:					Java Server Page.
+		JSTL:					Java Server Page Standard Tag Library.
+		JSF:					Java Server Faces: Successor to JSP.
+	
+	Description:
+		
+	
+	Tutorial Videos / Playlist:
+		1. Learn Core Java (Murach Programming)
+		2. Data Structures and Algorithms (Page on weebly.com)
+		3. Servlets & JSP (Java Brains)
+		4. Struts (Java Brains)
+		5. Hibernate (Java Brains)
+		6. Springs (Java Brains)
+		7. JAX-RS Restful Services (Java Brains)
+		8. SOAP (Java Brains)
+	
+	Concepts: 
+		Main Flow:
+		JSP(s) -> Java HTTPServlet(s) + Controller Class -> JPFs -> Java Web Application(s) => .jar / .ear / .war -> Java EE Container on JVM + Web Page Resources -> Server.
+
+		Java Server Pages: HTML Pages with Java Code within them for rendering Dynamic Content. This is the opposite from Servlets, which can be seen as Java Code that generates HTML. Eventually, the JSPs get compiled and converted into Servlets by the Java EE Container, and stored inside a separate Staging Folder. Can be seen as the "View" of the MVC Pattern - they surface the functionality of the (Web) Application to the User.
+
+		Java HTTPServlet: Java Classes on Servers / compiled JSPs that perform actions to fulfil incoming Network Requests and optionally return a Network Response. Servlets can be seen as the "Controller" of the MVC Pattern - it decides / controls / orchestrates the flow of execution.
+
+		Java Page Flow: A group of JSPs and a Java Controller Class that define and implement a portion of the flow of the Java Web Application. Can be seen as defining usage scenarios / user *actions* for the Java Web Application ; the functionality of the Web Applicaton.
+
+		Java Server Faces: Front-End Framework which serves to encapsulate HTML, CSS, JS. Has a similar purpose to JSPs, but instead uses XML to represent formal, reusable, Components in a logical tree, with each Component being Java Objects that have the full range of Java Abiities, such as accessing remote APIs and Databases.
+
+		Java Dynamic Web Project: Java Application that can serve dynamic Web Content. 
+	
+		Containers: Provides a context for a Web Application to run in - these are usually IoC in nature.
+
+	Details:
+		Java Server Pages:	
+			JSP Directive Tags: <%@ ... %>	Indicates to the Web / Servlet Container special instructions for processing the JSP.
+				<%@ page ... %> Defines Page Attributes. Can have more than one to split long Attributes.
+					language="java" Attribute to declare language of (Java) Code Tags.
+					contentType="text/html" Attribute to declare format of output of JSP.
+					import="<lib1> ; <lib2> ; ..." Attribute to declare imports for Java Code Tags.
+
+				<%@ include file="<file>" %> Includes a File (during the translation phase) to embed current contents inside current JSP.
+				<%@ taglib ... %> Declares a Tag Library for Custom Actions.
+			
+			Java Code Tags: <% ... %>
+				Literals:
+					Boolean
+					Integer
+					Floating
+					String
+					null
+
+				Conditional and Loop Code Constructs may start in one Java Code Tag Block, and end in another.
+
+				Implicit Objects:
+					request			HTTPServletRequest Object.
+					response		HTTPServletResponse Object.
+					out				PrintWriter Object useful in sending HTML output to client.
+					page			Synonym for 'this'.
+					session			HTTPSession Object.
+					config			ServletConfig Object.
+					application		ServletContext Object.
+
+					pageContext		PageContext Object. Can be used to set attributs of request, session and application scope via the overloaded setAttribute("<attribute_id>") method and the corresponding PageContext enums. Can also use findAttribute("<attribute_id>") to search for the value associated with "<attribute_id>" from the various scopes, in case the scope of the Attribute is not known.
+
+				When converted into a Servlet, the code within will be inserted into the Servlet's service() method.
+
+			Java Code Declaration Tags: <%! ... %> Used when declaring code / methods to be used by other Java Code Tags. 
+
+			Java Code Comment Tags: <%-- ... --%> Java Code Comment Tags.
+
+			Java Code Expression Tags: <%= variable %> Shorthand for rendering the content of 'variable'.
+
+			Java Server Page Standard Tag Library: Use in place of Java Code Tags to keep HTML Page as a "pure" Markup Document.
+				<jsp:... ... > </jsp:...> Standard Form of the JSP Standard Tags.
+
+				<jsp:useBean id="<parameter_id>" class="<parameter_type>" scope="request | page | application"> </jsp:useBean> Declare Custom Objects. Note: parameter_value_id and <parameter_id> must be the same. Additionally, it will create the Custom Object if it does not already exist.
+					<jsp:setProperty name="<parameter_id>" property="<object_property_id>" value="<object_property_value>" /> Set a value manually.
+					<jsp:setProperty name="<parameter_id>" property="<object_property_id>" param="<request_param_id>" /> Set a value based on the Request parameter. Note: If the <request_param_id> and the <object_property_id> matches, do not need to specify the param attribute. Furthermore, if all properties for the DTO are to be set from the Request Object, can just do property="*".
+
+				<jsp:getProperty name="<parameter_id>" property="<object_property_id>" /> Obtain previously declared Custom Objects. Note: The Tag will implicitly call the Object's Getter for the associated <object_property_id> specified.
+
+				<jsp:action_name ... /> JSP Action Tags.
+			
+			Javascript Code Tags: <script type="text/javascript"> ... </script>
+
+			'name' attribute of the form / input html tag is how the servlet will reference for the associated value that was submitted with the form / input tag. 'action' attribute of the form / input html tag will determine which Servlet will process the forms.
+
+		Servlet:
+			Servlet Objects are not created per User access - they are first instantiated as (Singleton?) Objects and initialized at the start of the Servlet Lifecycle via ServletConfig Objects, afterwhich the pooled threads that supports User Requests from the Servlet Container can make use of the Servlet Object (calling the Servlet's service method), which will then instantiate a JavaBean to pass on the processing of the Business Logic. However, HTTPServletRequest and HTTPServletResponse Objects are created per User access per Machine.
+
+			@WebServlet("/<url>") - Determines the URL Pattern which this Servlet handles.
+
+			Servlet Methods: init(ServletConfig) -> init(), service(ServletRequest , ServletResponse) -> service(HTTPServletRequest , HTTPServletResponse) -> doGet() / doPost() / etc., destroy()
+
+			Common Methods: (ObjectType) getParameter("<parameter_id>") , setAttribute("<parameter_id>", <value>)
+				Parameters == Client-Side
+				Attributes == Server-Side
+
+			HTTPServletRequest -> getRequestDispatcher("<url_pattern>") -> forward(HTTPServletRequest , HTTPServletResponse) - Server-Side Redirection from current Servlet to another JSP or Servlet or running Web Resource.
+				Faster than Client-Side Redirection, but Browser History is not updated.
+
+			HTTPServletRequest -> getSession(<create>) - HTTPSession Object - to provide some state to identify past Users from encountered Machines between potentially different Servlet Threads over a stateless protocol (HTTP).
+
+			(GenericServlet) -> getServletContext() - ServletContext Object - to provide a singleton global state across the Web Application per JVM.
+
+			HTTPServletResponse -> getWriter() - Obtain a (PrintWriter) Object which can be used to generate HTML attached to the HTTP Response. Note: cannot be used if sendRedirect() is to be used.
+
+			HTTPServletResponse -> sendRedirect("<url_pattern>") - Client-Side Redirection from current Servlet to another JSP or Servlet or running Web Resource. Note: cannot be used if the getWriter() method was used to write HTML to the HTTPServletResponse Object.
+				Slower than Server-Side Redirection, but Browser History is updated, which is more desirable.
+
+			GET vs POST HTTP Request:
+				GET Request - may expose parameters in the URL.
+				POST Request - when a change to website data is to be triggered by the User.
+
+		Java Page Flow:
+			Specific to the Eclipse BEA Workshop tech stack?
+				Extensive Usage of NetUI: BEA Workshop / Apache Beehive Framework.
+
+			The Java Controller Class manages state variables and the *actions* associated with the JPF.
+
+			When a User accesses the URL of one of the JSPs a JPF handles, an instance of the Java Controller Class within the JPF is created and maintained until the User is not accessing any of the JSPs it handles.
+
+		Java Server Faces:
+			Facelets: XHTML Pages which feature XML Tags that can be used to scaffold a JSF User Interface.
+
+		Java Dyamic Web Project:
+			BEA Workshop: A suite of plugins specific to the Eclipse IDE that eases the creation of Java Enterprise Applications.
+				Apache Beehive Framework extends BEA Workshop, and it is designed to reduce necessary code by incorporating Annotations into Web Application Projects.
+				
+				Apache Struts provides support for MVC Architectured Web Applications.
+				Apache NetUI is part of the Apache Beehive Project, built ontop of Apache Struts. It aimed to separate Navigational Control Logic from Presentational Logic, through the use of a "Page-Flow Controller Class".
+				
+				Succeeding Framework to Apache Beehive is Oracle Application Development Framework.
+
+			Springboot: Java Enterprise (Service-Oriented) Applications with 'embedded Tomcat' to allow for standalone operation.
+
+			Structure:
+				Default Folders: META-INF and WEB-INF (INF stands for Information?).
+
+					WEB-INF/web.xml: Configuration File / Deployment Descriptor for the Java Web Applications.
+						Welcome Page ; Servlet Configuration (alternative to Annotation coupled to the Java Servlet Class Definition)
+						
+						<servlet>
+							<servlet-name> ... </servlet-name>
+							<servlet-class> ... </servlet-class> / <servlet-path> ... </servlet-path> / <jsp-file> ... path to JSP file ... </jsp-file>
+							<init-param> 
+								<param-name> ... </param-name>
+								<param-value> ... </param-value>
+							</init-param>
+						</servlet>
+						<servlet-mapping> 
+							<servlet-name> ... </servlet-name>
+							<url-pattern> ... </url-pattern>
+						</servlet-mapping>
+
+						<welcome-file-list>
+							<welcome-file> ... </welcome-file>
+						</welcome-file-list>
+
+				Other Folders: A Java Dynamic Web Application may have more than 1 Module.
+
+			Usually packaged in:
+				.jar:				Java ARchive: EJB Module containing Enterprise JavaBeans and their Deployment Descriptors / Contains Libraries, Resources and Accessory Files (e.g. Property Files).
+					Note: Can convert to .zip to view internals.
+				.war:				Web ARchive: Web Module which contains Servlet class files, JSP Files, supporting files, GIF and HTML files. Basically, a fully featured Web Application.
+				.ear:				Enterprise ARchive: .jar + .war to be deployed into Application Servers.
+
+		Containers:
+			Apache httpd: General Purpose Web Server, or (HTML / CSS / JS) Container.
+			
+			Java EE:
+				Apache Tomcat: the Java EE counterpart to other technologies such as PHP, .NET or NodeJS. It can be seen as a "Web Server + Web / Servlet Container".
+					Coyote Module: Serves Web Content - Web Server.
+					Catalina Module: Handles Servlets.
+					Jasper Module: Handles JSPs.
+
+				Oracle WebLogic: Oracle's Java EE Container.
+
+				IBM WebSphere: IBM's Java EE Container.
+
+		Struts 2 Framework: Supports MVC-based Java Web Applications.
+			Features:
+				Struts 2 Interceptors: Gateway / Layer between Client and Routing Module which obtains User Request Parameters. Can be seen as the "Controller" in the MVC Pattern.
+				Struts XML: File that defines Routing Configuration for the Routing Component to use. Configuration is defined separately from the Component to avoid frequent code change.
+				Action: 	Classes to handle calling the various Business Services. Can be seen as a 'Facade' before the Business Service level (the "Model" in the MVC pattern).
+				Struts Tag Libraries
+
+	Commands:
+		
+	

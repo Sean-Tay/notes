@@ -1,0 +1,479 @@
+/* General Java Behaviour */
+
+	Java Objects are all Heap Allocated - no Stack Allocation.
+	
+	Note that the GC only handles Memory Resources (i.e. not System Resources).
+
+/* OOP */
+
+	Five Pillars:
+		1. Encapsulation: 											Group Fields and related Methods together.
+			Packages:												A scoping construct that aids in namespace management and Class organization. 
+				package <package_name>:								Declare that the following Classes belong to the Package <package_name>.
+			Class: 													A template featuring an Encapsulated grouping of Data and related Behaviour.
+				Constructors:										No return-type (not even void) Method that is called when an Object is Instantiated. Initializes Object Fields. Utilize 'this(...)' to refer to the Object's Constructor, rather than a Method.
+			Object: 												A realized Class / Instance.
+			
+		2. Composition:												Extend Class functionality by incorporating other Classes via a "has-a" relationship. Favor over Inheritance.
+			Aggregation:											Weaker form of Composition. When the Container Object is destroyed, the Contained Objects persist.
+			Dependency:												Weaker form of Aggregation. Object only temporarily uses other Objects within Methods.
+			Association: 											General form of Dependency.
+		
+		3. Inheritance: 											Extend ancestrial Class functionality with Sub-Classes that have a "is-a" relationship.
+			this [within a Class]: 									Refers to the instantiated Object.
+			super [within a Class]: 								Refers to the instantiated Object's Parent Class. When super is used to call a base method, it needs to be the first statement in the calling Method's body.
+			
+			Type Conversions: 										Upcasting / Generalizing always works, Downcasting / Specializing requires at least a explicit Cast. Avoid further Runtime Exceptions with instanceof.
+		
+		4. Abstraction:												To hide away low level implementation details and only expose high level functionality.
+			Loose Coupling:											The dependency can be substituted, or its "signature" changed, without requiring a change to the dependent class.
+		
+		5. Polymorphism:											Different Contexts, Different Forms, Different Behaviour.
+			Static / Compile Time Polymorphism:						
+				Method Overloading.
+					1. Overload Resolution: 						Determine which variant of the Overloaded Method to execute.
+					2. Conditions:
+						a. Same Method Name.
+						b. Different Number of Arguments / Argument Types only.
+						
+				Generics:											Abstract Types in Variable / Method / Class Definitions. Does not allow Covariant Return Types. Type Erasure: Compiler eventually substitutes in the Concrete Types during compilation.
+					Types:
+						Instance Field:								T exampleVariable; // Requires Generic Class Definition.
+						Method:										public static <T> void exampleMethod(T arg) {} // Does NOT require Generic Class Definition.
+						Class:										class ExampleClass<T> {}; new ExampleClass<T>();
+						
+					Type Safety:									Avoidance of Runtime Exceptions stemming from Type Errors.
+						Raw-Type:									Data Structure that uses Object as the Type to reference Instances (i.e. no <> specified). Not Type-Safe (e.g. allows Instances of implicitly different Types to be added during Run Time). Use Generics instead to enforce Type-Safety at Compile Time.
+		
+					Diamond Syntax:									Shortcut (e.g. new ExampleClass<>(40.0)) - infers Generic Type based on specified values.
+					Wildcard Syntax:								e.g. ExampleClass<?> ref. Wildcard Data Structures cannot be mutated, but can be accessed.
+					Bounded Wildcard Syntax:						e.g. ExampleClass<? super T1 & ...> ref - super is useful for allowing Clients to specify a more generic Data Structure, ExampleClass<? extends T1 & ...> ref. Bounded Wildcard Data Structures cannot be mutated, but can be accessed.
+				
+			Dynamic / Run Time Polymorphism:						
+				Method Overriding / Superclass or Interface non-Static, non Final Method.
+					1. vs. Hiding / Shadowing:						Incomplete Overriding via Different Number of Arguments / Argument Types.
+					2. @Override:									Specify intent with marked Method to Override a prior Method. Avoids ambiguity with possible Hiding.
+					3. Conditions:
+						a. Same Method Name.
+						b. Covariant Return Type - either the Same or Sub-Type.
+						c. Equal / Greater Access Privileges.
+						d. Subset of Equal / Sub-Type of Overriden thrown Method Exceptions.
+				
+				Subtyping:											Assign a derived Type to a base Type. Does not work for Generics.
+	
+	Class Design:	
+		Modifiers:
+			Access:
+				1. Private:											Specifies that the related Field / Method / Inner Class of a Class can only be accessed by Objects of that Class type.
+				
+				2. Default (Package-Protected):						Specifies that the related Field / Method / Inner Class of a Class can only be accessed by Objects of any Class within the same Package.
+				
+				3. Protected:										Specifies that the related Field / Method / Inner Class of a Class can only be accessed by Objects of any Class within the same Package, or a Sub-Class.
+				
+				4. Public:											Specifies that the related Field / Method / Inner Class of a Class can be accessed by any other Object. Note that the encompassing Class needs to also be marked as public.
+			
+			Abstraction:											
+				Abstract Methods:									Cannot have default implementations (i.e. does not feature Curly Braces). Class it belongs to should be defined as Abstract.
+				Abstract Classes:									Can feature default implemented Methods, but cannot be Instantiated. At least one Abstract Method.
+				
+			Final:													Immutable.
+				Final Fields and Parameters:						Constants - Unchangeable / Non-Overridable once declared.
+				Final Methods:										Non-Overridable Method.
+				Final Classes:										Non-Inheritable Class. Prevents behavior change from sub-classing.
+				
+			Static:
+				Static Fields:										Class Variable.
+				Static Method:										Class, Non-Overridable Method.
+				Static Inner Class:									Just a nested Class within another Class. Can access any Static Member of the Outer Class.
+				Static Block:										Invoked Code when Class is loaded into Memory.
+			
+			Transient:												Prevents Serialization.
+				Transient Fields:									Prevents Serialization of the Variable.
+			
+		Class Types:
+			Public Class:											A Class whose Members would all be Public.
+		
+			Static Inner Class:										A nested Class with Static Members, which can additionally access any Static Member of Outer Class. Useful for implementing the Singleton Pattern via the "Initialization on Demand Holder" idiom.
+			Inner Class:											Associated with an Instance of the Outer Class: this.new <Inner Class>();
+			Local Method Class:										An Inner Class located within a Method. Only accepts Final Parameters.
+			Local Anonymous Class:									An Local Method Class without an identifier. Cannot Inherit or Implement.
+			
+			Enum Class:												Special Public Static Final Classes. Enum Elements first, before other Fields and Methods. Private Constructor only.
+			
+		Interface:													A Set of Public Static Final Fields and Public Abstract Methods. May have an Empty Body for Class Tagging purposes. Class implementation should not rely on the internal implementation of other Classes, promoting Loose Coupling. Extensible, promoting Inheritance.
+		
+	Design Patterns:												Reusable solutions of frequently occurring Design Problems.
+		Creational Patterns:										Determines who creates the Object, and what, when, and how the Object is created.
+			Singleton:												Ensures only that one Object of a Class exists at any one time. Class has Private Constructor, and a Final Static Reference of the Class Instance, with a single Static Getter Method for obtaining that Instance.
+			Factory:												Abstracts specific Object Creation Functionality from other Components. The Objects created from this Factory should implement a common Interface to further promote Loose Coupling.
+			Abstract Factory:										Factory of Factories.
+		
+		Structural Patterns:										Determines how are related Classes and Objects are Composed together.
+		
+		Behavioural Patterns:										Determines how Classes and Objects communicate with each other.
+			Subject / Observable - Observer Pattern:				A pattern where the Subject informs the Observers if it has changed.
+			Data Access Object (DAO):								Some sort of Facade Pattern dedicated to Persistance Logic - abstracting away specifics of different IO Methods.
+
+/* Data Structures */
+	
+	Iterators														Traverses Iterable Objects, and even correctly accounts for the removal of elements from the Iterable during traversal.
+	
+	Iterable -> Collection -> List / Set / Queue					Abstract Data Structures which can be traversed via an Iterator / For-Each Loop.
+		List Interface:												Abstract Data Structure that stores a sequence of elements.
+			ArrayList: 												Quick Lookup of elements; Slow Addition / Removal of elements - internally uses an Array.
+			LinkedList:												Slow Lookup of elements; Quick Addition / Removal of elements - internally uses a Double LL.
+			
+		Set Interface:												Abstract Data Structure that stores a unique group of elements.
+			HashSet:												Quick Addition / Removal of elements, Quick Lookup of elements - internally implements a hash table. Does not retain element order. Ensure equals() and hashCode() in the Object to be stored is overrided properly before using - if equals() returns true for two Instances, hashCode() must give the same hash for both Instances.
+			Set -> SortedSet -> NavigableSet -> TreeSet:			Quick Addition / Removal of elements, Quick Lookup of elements - internally uses a Red-Black Tree. Retains element ordering (default: ascending order).
+			
+		Queue Interface:											Abstract Data Structure that stores a sequence of elements, and retrieves them in an order from the front.
+			Queue -> Deque:											Abstract Data Structure that stores a sequence of elements, and retrieves them from both front and back.
+				LinkedList
+				ArrayDeque
+				LinkedBlockingDeque
+	
+	Map Interface:													Abstract Data Structure that stores a group of key-element pairs.
+		HashMap:													Quick Lookup of Elements - internally implements a hash table. Does not retain element order. Ensure equals() and hashCode() in the Object to be stored is overrided properly before using - if equals() returns true for two Instances, hashCode() must give the same hash for both Instances.
+		Set -> SortedMap -> NavigableMap -> TreeMap:				Quick Lookup of Elements - internally uses a Red-Black Tree. Retains element ordering (default: ascending order).
+			
+/* String Manipulation */
+
+	String Methods:
+		"<target>".indexOf("<match>", <start>)						Returns int index of first occurrence of <match> delimited word within <target> from the <start>.
+		"<target>".lastIndexOf("<match>", <end>)					Returns int index of last occurrence of <match> delimited word within <target> from the <end>.
+		
+		"<target>".regionMatches(<ignoreCase>,
+			<start>, "<match>",
+			<matchStartOffset>, <matchLen>)							Returns int index of first occurrence of <match>.substring(<matchStartOffset>, <matchStartOffset> + <matchLen>) delimited word within <target>. Not as efficient as Pattern + Matcher Class.
+			
+		"<target>".split("<delimiter>", <numSplits>)				Returns <numSplits> of split Strings as an array from the <target>.
+			
+	String Parsing:
+		String.valueOf(<number>)									Returns a String from a number.
+		
+		Integer.parseInt("<string>")								Returns an Integer / int from a String.
+		Float.parseFloat("<string>")								Returns a Float / float from a String.
+	
+	String Formatting:
+		String.format("<formatString>", "<arg1>", ...)				Returns a String in the specified format. If "<formatString>" is empty this method returns an empty String.
+		System.out.printf("<formatString>", "<arg1>", ...)			Prints a String in the specified format. If "<formatString>" is empty this method does not print anything.
+		
+		Formats: 													'%' is the escape symbol here, not '\'.
+			%b 														Boolean.
+			%c 														Character.
+			%d 														Decimal Integer (signed).
+			%o 														Integer in Octal Format.
+			%x 														Integer in Hexadecimal Format.
+			%e 														Float in Scientific Format.
+			%f 														Float in Decimal Format.
+			%g 														Float in Decimal or Scientific Format (depending on the value passed as argument).
+			%h 														Hashcode of the passed argument.
+			%n 														Line separator (new line character).
+			%s 														String.
+			%t 														Date/time.
+		
+	Regex Symbols:
+		^expr 														Matches expr at beginning of line.
+		expr$ 														Matches expr at end of line.
+		
+		. 															Matches any single character wildcard (except line terminators).
+		
+		Xy 															Matches x followed by y.
+		x | y 														Matches either x or y.
+		
+		[xyz] 														Character Class - Either x, y, XOR z.
+		[p-z] 														Character Class - Any character from p to z.
+		[p-z1-9] 													Character Class - Either any character from p to z XOR any digit from 1 to 9 (remember, it won’t match p1).
+		[^p-z] 														Negated Character Class - it matches any character except characters p to z.
+		
+		\d 															Matches digits (equivalent to [0–9]).
+		\D 															Matches non-digits.
+		\w 															Matches word characters.
+		\W 															Matches non-word characters.
+		\s 															Matches whitespaces (equivalent to [\t\r\f\n]).
+		\S 															Matches non-whitespaces.
+		\b 															Matches word boundary when outside bracket. Matches backslash when inside bracket.
+		\B 															Matches non-word boundary.
+		\A 															Matches beginning of string.
+		\Z 															Matches end of string.
+		
+		expr? 														Matches 0 or 1 occurrence of expr (equivalent to expr{0,1}).
+		expr* 														Matches 0 or more occurrences of expr (equivalent to expr{0,}).
+		expr+ 														Matches 1 or more occurrences of expr (equivalent to expr{1,}).
+		expr{x} 													Matches x occurrences of expr.
+		expr{x, y} 													Matches between x and y occurrences of expr.
+		expr{x,} 													Matches x or more occurrences of expr.
+		
+		(expr)														Capture an expr and group it.
+		$<groupNum>													Back Reference the <groupNum>th group. Indexing starts from 1.
+		
+	Regex String Manipulation:
+		Pattern pattern = Pattern.compile("<RegEx>")				Obtain a compiled RegEx Instance.
+		Matcher matcher = pattern.matcher("<target>")				Obtain a Matcher Instance for the <target> String.
+		matcher.find()												Returns a boolean indicating if there is a match in the remaining search result.
+		matcher.group()												Returns the match, and removes it from the remaining search result.
+		
+		matcher.replaceAll("<RegEx>")								Replace all matching results with the <RegEx> String.
+	
+/* Java I/O */
+	
+	Note that the GC only handles Memory Resources, and not the System Resources described below.
+	
+	/* java.io package */
+	
+	Console console = System.console();								Obtain a reference to the System Console - does not work if the JVM is run from an IDE or a background process, returning null. Better handles special characters than Streams.
+		console.format("<formatString>", "<arg1>", ...)			
+		console.printf("<formatString>", "<arg1>", ...)			
+	
+	Stream:															Ordered sequence of Data. Initialize within a try-with-resources Exception Handler.
+		
+		Character Stream:											Interprets Data as Human-Readable, 16-bit Unicode characters via Abstract Classes Reader and Writer.
+			FileReader fr = new FileReader("<file>");				Read Data directly from a File.
+			fr.read()												Reads and returns the next character as an int from the remaining Stream. If at end, return -1.
+			
+			FileWriter fw = new FileWriter("<file>");				Write Data directly from a File.
+			fw.write(<character>)									Writes the character to the Stream.
+			
+			BufferedReader br = new BufferedReader(fr);				Load File Data into Memory, and Read from there.
+			
+			BufferedWriter bw = new BufferedWriter(fw);				Load File Data into Memory, and Write from there.
+			bw.flush()												Core Dump all current Data in Memory.
+		
+		Byte / Data Stream:											Assumes Data is Low-Level, formatted 8-bit Data via Abstract Classes InputStream and OutputStream.
+			FileInputStream fis = new FileInputStream("<file>");	Reads data directly from a File.
+			
+			FileOutputStream fos = new FileOutputStream("<file>");	Writes data directly to a File.
+			
+			BufferedInputStream bis = new BufferedInputStream(fis);	Load File Data into Memory, and Read from there.
+			
+			BufferedOutputStream bos = new BufferedOutputStream(fos); Load File Data into Memory and Write from there.
+			bw.flush()												Core Dump all current Data in Memory.
+			
+			DataInputStream dis = new DataInputStream(bis);			Reads Low-Level Data Types (short, byte, etc.) from File loaded into Memory.
+			
+			DataOutputStream dos = new DataOutputStream(bos);		Writes Low-Level Data Types (short, byte, etc.) to File loaded into Memory.
+			
+			ObjectInputStream ois = new ObjectInputStream(bis);		Reads Serialized Java Objects from the File tracked by the bis.
+			ois.readObject()										Returns an Object reference from the File tracked by the bis. Note that the <object> has to implement Serializable / Externalizable, and that the field serialVersionUID is used to identify which version of the <object>'s Class is used.
+			
+			ObjectOutputStream oos = new ObjectOutputStream(bos); 	Serializes and Writes Java Objects to File tracked by the bos.
+			oos.writeObject(<object>)								Writes Object to the File tracked by the bos. Note that the <object> has to implement Serializable / Externalizable, and that the field serialVersionUID is used to identify which version of the <object>'s Class is used.
+	
+	/* java.nio package */
+	
+	File System Operations:
+	
+		Channels:													A non-blocking File System feature which transfers data at faster speeds.
+			Selectors:												Selects a ready Channel for File Transfer.
+		
+		Socket:														A blocking File System feature which transfers data at faster speeds.
+		
+		Charset:													Encoder and Decoders to map bytes to Unicode symbols.
+		
+		Path Interface / Paths:
+		
+			Path path = Paths.getPath("<path>");					Returns a Path Object representing the specified path String.
+			
+			Path path = <file>.toPath();							Returns the Path Object representing the File Object that invoked it.
+			
+			Path root = <path>.getRoot();							Returns the root of the Path Object that invoked it, or null if the root does not exist.
+			
+			Path file = <path>.getFileName();						Returns the File / Directory of the Path Object that invoked it.
+			
+			Path parent = <path>.getParent();						Returns the parent of the Path Object that invoked it.
+			
+			int count = <path>.getNameCount();						Returns the number of Files / Directories in the given Path; returns 0 if the given path represents the root.
+			
+			Path ancestor = <path>.getName(<index>);				Returns the ith File / Directory. Note that the root itself is not counted (the 0 index starts from the subsequent element).
+			
+			Path subPath = <path>.subpath(<startIndex>, <endIndex>); Returns the subpath of the Path object from <startIndex> to <endIndex> - 1. This means that the two indexes cannot be equal. Note that the root itself is not counted (the 0 index starts from the subsequent element).
+			
+			Path <path> = <path>.normalize();						Resolves the Path (e.g. '.' = up one level; '..' = back to root).
+			
+			Path comboPath = <path>.resolve({<otherPath> || "<otherPath>"}); Combines two Paths together and returns the result.
+			
+			<path>.isAbsolute()										Returns if the Path represents an Absolute Path.
+			
+			Path absolutePath = <path>.toAbsolutePath();			Returns the Absolute Path variant of the Path Object that invoked it.
+			
+			Path realPath = <path>.toRealPath({ || LinkOption.NOFOLLOW_LINKS }); Returns an Absolute, Normalized Path with default Symbolic Link Resolution. However. the <path> must be valid, which is not a pre-requisite for the other Path methods.
+			
+			URI uri = <path>.toUri()								Returns the URI representation of the Path Object. A URI is a Path that can be opened from a browser.
+		
+		PathMatcher: 												Matches Path based on a specified Pattern.
+		
+			PathMatcher matcher = FileSystems.getDefault().getPathMatcher(<pattern>); Returns an instance of a PathMatcher compiled with the specified <pattern>. Note: <pattern> can start with the prefix "glob:" for the Glob Syntax.
+			
+			<matcher>.matches(<path>)								Returns if the specified <path> matches the Pattern compiled within the <matcher>.
+		
+		Files: 														Static Final Utility Class for manipulating Files / Directories.
+		
+			Path filePath = Files.createDirectory(<directory>);		Creates a File given the <directory>.
+
+			Path filePath = Files.createDirectories(<directory>); 	Creates a File, and all intermediate Directories, given the <directory>.
+			
+			Path filePath = Files.createTempFile(<directory>, <prefix>, <suffix>); Creates a Temporary File in <directory>.
+			
+			Path filePath = Files.createTempDirectory(<directory>, <prefix>); Creates a Temporary Directory in <directory>.
+			
+			Files.exists(<filePath>, { || LinkOption.{NOFOLLOW_LINKS ||  ...}}) Checks if a File / Directory exists in the given Path.
+			
+			Files.isDirectory(<filePath>, { || LinkOption.{NOFOLLOW_LINKS ||  ...}}) Checks if a given Path represents a File or a Directory.
+			
+			Files.isSameFile(<filePath1>, <filePath2>)			
+			
+			Files.is{Readable || Writable || Executable}(<filePath>) 
+			
+			Path copyPath = Files.copy(<sourcePath>, <targetPath>, { || CopyOption.{REPLACE_EXISTING || COPY_ATTRIBUTES || NOFOLLOW_LINKS || ATOMIC_MOVE} ...}); Copy the File from <sourcePath> to <targetPath>. <options> = . Intermediate Directories must exist. If <sourcePath> represents a Symbolic Link, it'll copy the target of the Symbolic Link.
+			
+			Path filePath = Files.move(<sourcePath>, <targetPath>, { || CopyOption.{REPLACE_EXISTING || COPY_ATTRIBUTES || NOFOLLOW_LINKS || ATOMIC_MOVE} ...}); Identical to the Copy operation, except that the Source File is removed. If the operation is within the same directory, it is a rename operation. Intermediate Directories must exist.
+			
+			Files.deleteIfExists(<sourcePath>);						Silently deletes a File / Empty Directory represented by <sourcePath>, if it exists. If <sourcePath> represents a Symbolic Link, it'll only delete the Symbolic Link itself.
+		
+			Files.walkFileTree(<startPath>, <fileVisitor>);			Traverses the File Tree rooted at <startPath>. <fileVisitor> is an Instance of a Class that implements the FileVisitor Interface (i.e. SimpleFileVisitor<T>), which defines Methods that execute at varying points of the Traversal (preVisitDirectory, visitFile, postVisitDirectory, visitFileFailed). The Methods must return FileVisitResult = FileVisitResult.{CONTINUE || TERMINATE || SKIP_SUBTREE || SKIP_SIBLINGS}.
+			
+/* JDBC / Java with SQL */
+
+	JDBC Drive Manager -> JDBC Concrete Driver						Offers a High-Level Abstraction over Database Logic / Programmatic Access to DBMS. May be Two-Tier or Three-Tier Architectures, where the first Tier is the Client, the second Tier is the Application Server, and the third Tier is the Database itself.
+	
+	/* java.sql package */
+	
+		Connection Interface: 										Contains Non-Blocking Methods that allow the Java Application to interact with a Database. All throw SQLExceptions.
+			
+			Connection dbConnection = DriverManager.getConnection(<url>, <userName>, <password>); Obtain a Connection to the specified DB via <url> = <protocol>:<subprotocol>://<IPAddress>:<port>/. Encase within a try-with-resources statement for Automatic Closure.
+			
+			DbConnector.connectToDb();
+			
+			DatabaseMetaData dbData = <Connection>.getMetaData();	Get an Object containing Schema, Table information, etc.
+			
+			String schema = <Connection>.getSchema();				Obtain Schema name associated with the <Connection> Object.
+			
+			<Connection>.setSchema("<schema>")						
+			
+			Clob clob = <Connection>.createClob();					Create a Character Large OBject, which can store a Column value in a Row.
+			
+			Blob blob = <Connection>.createBlob();					Create a Binary Large OBject, which can store a Column value in a Row.
+			
+			<Connection>.setAutoCommit({true || false});			Set behavior for Statements - whether their changes would be immediately sent over to the Database when executed. If true, each Statement is a Transaction.
+			
+				Savepoint s = <Connection>.setSavepoint({ || "name"}); Saves the current state of the Database as a "Restore Point".
+				
+				<Connection>.releaseSavepoint(<Savepoint>);			Removes the specified "Restore Point", as well as subsequent "Restore Points".
+				
+				<Connection>.rollback(<Savepoint>);						Rollback to the given <Savepoint> state.
+				
+				<Connection>.rollback();							Rollback to the original state at the start of the Transaction.
+				
+				<Connection>.commit();								Send over all changes made by CallableStatements thus far to the Database. Automatically called when setAutoCommit(true). Defines the start of a new Transaction.
+			
+			<Connection>.close();
+			
+		Statement Interface: 										For invoking Database Operations as Transactions. Throws SyntaxErrorExceptions during runtime for SQL Syntax Errors!
+		
+			Statement: 												Basic SQL Statement.
+				
+				Statement s = <Connection>.createStatement({ || ResultSet.{TYPE_SCROLL_SENSITIVE || CONCUR_UPDATABLE} ...});
+			
+			Statement -> Prepared Statement:						SQL Statements with IN placeholders as ? symbols.
+				
+				PreparedStatement p = <Connection>.prepareStatement("<sql>");
+				
+			Statement -> Prepared Statement -> Callable Statement:	SQL Statements with IN, OUT, or INOUT placeholders as ? symbols.
+						
+				CallableStatement c = <Connection>.prepareCall("<sql>");
+			
+			ResultSet result = <statement>.executeQuery();			Execute an SQL QUERY Statement.
+			
+			int numUpdated = <statement>.executeUpdate();			Execute a CREATE TABLE, INSERT, UPDATE or DELETE Statement.
+
+		ResultSet Interface:										A Table containing the results of an executed SQL Statement. Internally maintains a pointer to the current Row; at the start it points to just before the first Row. Only one Row can be read at one time.
+		
+			<ResultSet>.beforeFirst();								Set the pointer to just before the first Row.
+			
+			<ResultSet>.afterLast();								Set the pointer to just after the last Row.
+			
+			<ResultSet>.absolute(<rowNum>);							Set the pointer to specified Row. If <rowNum> is negative, it calculates position to move to from the end of the Table. If <rowNum> is out of bounds, pointer will shift to the beginning or end. Row Index starts / ends from 1 / -1, not 0.
+			
+			<ResultSet>.relative(<numRows>);						Shift the pointer from it's current position by <numRows>. If <rowNum> is out of bounds, pointer will shift to the beginning or end.
+			
+			<ResultSet>.next();										Shift the pointer one step down. Returns false if out of bounds.
+			
+			<ResultSet>.previous();									Shift the pointer one step up. Returns false if out of bounds.
+			
+			<ResultSet>.getMetaData().getColumnCount()				Obtain number of Columns.
+			
+			<ResultSet>.get{Object || String || etc.}({<columnNumber> || "<columnName>"}) Read the value at the desired Column in the Row currently pointed at. Column Index starts from 1, not 0. "<columnName>" is case-insensitive.
+			
+			<ResultSet>.moveToInsertRow();							Shift the pointer to a new Row and prepares a buffer within <ResultSet> to contain the new Row values.
+
+			<ResultSet>.update{Object || String || etc.}({<columnNumber> || "<columnName>"}, <value>) Update the the value at the desired Column in the Row currently pointed at. Column Index starts from 1, not 0. Note that changes won't actually be saved until <ResultSet>.updateRow() is called. "<columnName>" is case-insensitive.
+			
+			<ResultSet>.updateRow();								Save changes done by <ResultSet>.update{Object || String || etc.}({<columnNumber> || "<columnName>"}, <value>) on a previously existing Row.
+			
+			<ResultSet>.insertRow();								Save changes done by <ResultSet>.update{Object || String || etc.}({<columnNumber> || "<columnName>"}, <value>) on a newly inserted Row.
+			
+			<ResultSet>.deleteRow();								Deletes the Row currently pointed to within the ResultSet.
+			
+			<ResultSet>.close();									
+	
+/* Defensive Programming */
+	
+	Throwables:
+	
+		Throwable -> Error: 										Indicates serious problems. Should not attempt to catch.
+		
+		Throwable -> (Checked) Exception: 							Indicates regular problems. Compiler forces declaration that a Method will throw this sort of Exceptions. Should attempt to catch.
+			
+		Throwable -> Exception -> (Unchecked) RuntimeException:		Indicates problems arising from faulty programming. Do not attempt to resolve it during Runtime - should address the faulty code when it crashes. Utilize @throws rather than listing it in the throws clause to indicate that the method can throw Unchecked Exceptions.
+		
+			public void foo() throws <CheckedException> {
+				try {
+					// Execute Code that may throw an Exception.
+					
+				} catch(<Specific Exception>) {
+				
+					throw new <CheckedException>(<Specific Exception>);
+				} catch (<Exception1> | <Exception2>) {
+					// Multi-Catch-Block: Handles 2 or more Exceptions that get thrown for Similar Reasons.
+					
+					// Cannot handle Parent and Child Exceptions in the same catch-block, otherwise Compiler Error.
+					
+					throw new <CheckedException>(<message>);
+					
+				} catch(<Generic Exception>) {
+					// Exception Chain should be increasingly Generic going down, otherwise Compiler Error.
+					
+					throw new <SpecificCheckedException>(<message>);
+				} finally {
+					// Code here always executes regardless.
+					
+					// Note: Can override return statements in successful try-blocks.
+				}
+				
+				// Compiler Error: Unreachable code.
+			}
+			
+			public static void bar() {
+				try (Scanner scanner = new Scanner(System.in); ...) {
+					// try-with-resources block - any Object implementing the AutoCloseable Interface will have their close() method called implicitly as with a finally block.
+					
+					// Note: Since the try-with-resources block already implicitly closes the Resource, do NOT explicitly state it again - bad practice to assume that implemented close() methods can be called more than once. 
+				}
+			}
+			
+			new <Posterior Exception>(<Prior Exception>)			Chain Exceptions. Cannot be changed later on, otherwise IllegalStateException.
+			
+			<Posterior Exception>.initCause(<Prior Exception>);		Chain Exceptions. Cannot be changed later on, otherwise IllegalStateException.
+			
+			<Exception>.getCause()									Return the Exception prior to this.
+			
+			<Exception>.printStackTrace();								
+			
+			<Exception>.getStackTrace()								Returns an Array of StackTraceElements which can be traversed.
+			
+			<Exception>.getSuppressed()								Returns an Array of Throwables which represent other Exceptions that were implicitly suppressed when they were thrown at the same time as the Exception that was caught.
+			
+	Assertions:														For checking assumptions. Use -ea when running the program to enable Assertion behavior - by default they are disabled. The functioning of the program should be the same whether or not it is enabled / disabled - it is used in the debugging / testing process.
+	
+		assert <boolean>: "<message on false>"						Asserts upon a given boolean condition. If the boolean condition is false, the program will crash with an AssertionError.

@@ -1,0 +1,61 @@
+IBM MQ
+	Abbreviations:
+		
+	
+	Description:
+		Message-Oriented Middleware that allows Independent and potentially Non-Concurrent Applications on Distributed Systems to securely communicate with each other through the use of a Common Programming Interface.
+	
+	Tutorial Videos / Playlist:
+		
+	
+	Concepts: 
+		Components:
+			- Message Queue: Objects which store unhandled Messages in an Application for asynchronous communication.
+				- This is to allow Processes to not get stuck on work that they are not meant / optimized to handle. 
+					- Example: If a Web Application needs to send out an Email, the Web Application can just put the request on a Message Queue and immediately proceed to serve the next request, without having to directly wait and communicate with the Email Server itself. Meanwhile, another Server optimized to handle Email Requests can poll the Message Queue whenever it's ready and work on that in a asynchronous manner. If the Email Server is down, the Web Application is unaffected.
+			
+			- Message: Collections of binary or character data that have meaning to a participating program.
+				- MQMD: Message Queue Message Descriptor: Message Metadata - similar to Packet Headers in Network Protocols.
+					- Added before Transmission, Stripped before Delivery.
+
+					- Properties:
+						- Message UID.
+						- Correlation ID: Should be the same as the Request UID when present in the Reply.
+						- Message Type.
+
+				- Types (Property):
+					- Datagram: A Message which no Reply is expected. Default.
+					- Request: A Message in which a Reply is expected.
+					- Reply: A Message to respond to a received Request.
+					- Event / Report: A Message pertaining to some Event handled by the Queue Manager (i.e. sent Message has been received).
+
+			- Message Queue Manager: A system service that provides a logical container for the Message Queue. It is responsible for transferring data to other Mesage Queue Managers via Message Channels, as well as handling storage, timing issues, triggering and other functions not directly related to the actual movement of data.
+				- MQ Server: Centrally-located Logical Server that implements most of the functionality detailed.
+
+		Communication Types:
+			- Persistent / Non-Persistent Messaging.
+
+			- Point to Point: Between one Sender and one Receiver.
+			- Publish Subscribe: Between one Broadcaster and several Subscribers.
+	
+	Details:
+		- Message Queue Manager:
+			- Exits: Compiled Applications that are triggered by the Queue Manager which invoke Data Transformation.
+
+			- Comunication Methods:
+				- Outside World:
+					- Bindings: Direct software connection to other Applications on the same host as the Queue Manager.
+					- Network Connection: Over the Network - allows Applications to connect to other Queue Managers on other hosts.
+
+				- Between Queue Managers: Message Channels: 
+					- Properties:
+						- Uni-directional
+						- One-One/Many.
+
+					- Types:
+						- Sending Channel: Has a defined destination, and a specific transmission queue.
+						- Receiving Channel: Receives data from any other Queue Manager with Sending Channels of the same name.
+	
+	Commands:
+		
+	

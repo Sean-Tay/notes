@@ -1,0 +1,60 @@
+Node.js - A configurable JS Server-Runtime-Environment. 
+	
+	node "<file.js>"											// Run a .js file under Node
+	node --prof "file.js" 										// Run a .js file under Node with profiling, storing the profiling in a .txt file
+	node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) // Process the text file produced from profiling
+	
+	module.exports = {
+		function1 : function () { // ... }, 
+		function2 : function () { // ... }, 
+		component1 : React.createClass({ render : function () { return; } })
+	} // the importable functionality object of a Node JS file is defined within this module.exports JS object
+	
+	var importedModule = require("./fileToImport.js"); 			// require() acts as an importer
+	importedModule.function2(); 								// Execute the function2() object
+	
+	process.argv												// Contains the command split via " "
+	process.env.VARIABLE_NAME 									// Used to get and set global or externally set Node environment variables
+	
+	package.json - Specifies the configuration of a Node environment.
+		{
+			"scripts": { 										// Specify action(s) to be run upon certain Node environment lifecycle events
+				// Note: May want to use npm-run-all to execute npm commands in parallel
+				"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed
+				"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed
+			}							
+			"dependencies": { // ... // }						// Specifies the modules that the Node environment depends on to run correctly
+			"devDependencies": { // ... // }					// Specifies modules that the Node environment uses during development
+		}
+	
+	npm - A manager for a Node environment.
+	
+		npm install -g node 									// Update Node
+		npm install -g npm stable								// Update npm
+	
+		npm init 												// Initialize a new Node environment
+		
+		npm install 											// Install all modules specified within a package.json locally to the Node environment
+		npm install <module> 									// Install a module locally to the Node environment
+		npm install <module> --save								// Install a production-level module locally to the Node environment, and save it to package.json
+		npm install <module> --save-dev							// Install a development-level module locally to the Node environment, and save it to package.json
+		npm install <module> --global							// Install a module to globally (outside the Node environment)
+		
+		npm uninstall <module>									// Uninstall a module from the Node environment, and remove it from package.json
+		npm uninstall -g <module>								// Uninstall a globally installed module
+		
+		npm list -g --depth=0									// See all user-installed Node modules
+		
+		npm run <command> [-- <args>]							// Execute a <command> (script) that was specified as a property within the "scripts" object of package.json. 
+		
+		npx <command> [-- <args>]								// Execute a <command> for a locally installed package.
+		
+		npm publish "<file.js>"									// Publish package to npm codebase
+	
+	yarn - "A better version of npm".
+	
+Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node environment during runtime.		
+
+Forever.js - A module which enables the automatic restart of a running Node environment should it crash.
+
+Babel.js - Loader for a Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.	

@@ -1,0 +1,64 @@
+Raphael - A Library which draws Vector graphics for Web Sites
+	
+	Canvas Creation: 
+		var paper 			= Raphael(<topLeftX>, <topLeftY>, <dimX>, <dimY>);
+		var paper 			= Raphael(<DOM Element>, <dimX>, <dimY>);
+	
+	Canvas Coordinates: Origin (0, 0) is relative to the top-left corner of the Canvas.
+		var canvasWidth 	= paper.width;
+		var canvasHeight 	= paper.height;
+		
+	Element Creation and Attachment:
+		var circleElement 	= paper.circle(<centerX>, <centerY>, <radius>);
+		var rectElement 	= paper.rect(<topLeftX>, <topLeftY>, <dimX>, <dimY>);
+		var textElement 	= paper.text("<topLeftX>", "<topLeftY>", "<text>");
+		var pathElement 	= paper.path(<pathDefinition>);
+		var imageElement	= paper.img("<url>", <topLeftX>, <topLeftY>, <width>, <height>);
+	
+	Raphael Paths:
+		var pathDefinition = 
+			"<action1> <parameter1> <parameter2> <action2>..."; // A path can be defined as a space delimited string of actions and related information (SVG-format).
+		var pathElement 	= paper.path(pathDefinition); 		// Send in the path definition to the path() to process the definition string.
+		
+		Actions: Upper-Case Action Letters denote absolute coordinates, Lower-Case Action Letters denote relative coordinates. 
+			M (x y)+ 						- Move the drawing cursor without drawing a path.
+			L (x y)+						- Begin or Continue (LineTo) a subpath with the drawing cursor.
+			Q (x1 y1 x y)+					- Define a Quadratic Bezier subpath. (x, y) defines the target point, (x1, y1) defines the control point for the curve.
+			Z (none)						- End the subpath. 
+			
+		Tip: Store the Components in a List then just use the .join(" ") method with the space-delimiter.
+			
+	Elements Styles:
+		Getting Element Style Properties:
+			element.attr("targetProperty");
+		
+		Setting Element Styles:
+			element.attr(
+				{
+					"property1": "value1",
+					"property2": "value2"
+				}
+			);
+		
+	Element Animation:
+		element.animate(<attrObject>, <milliseconds>, <interpolationType>);
+		
+			<interpolationType>: 
+				“linear”
+				“<” or “easeIn” or “ease-in”
+				“>” or “easeOut” or “ease-out”
+				“<>” or “easeInOut” or “ease-in-out”
+				“backIn” or “back-in”
+				“backOut” or “back-out”
+				“elastic”
+				“bounce”
+	
+	Element Removal:
+		element.remove();
+	
+	Extract DOM Element from Raphael Element:
+		element.node;
+	
+	Raphael Elements detect Mouse-related Inputs via Filled Pixels.
+	Raphael Events are NOT bubbled to all underlying Elements!
+	

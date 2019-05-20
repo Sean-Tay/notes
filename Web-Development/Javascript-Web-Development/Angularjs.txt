@@ -1,0 +1,277 @@
+Angular.js - Client-Side SPA Javascript Framework that extends HTML by allowing Properties to be extended by Directives and data-bound with Expressions.
+	
+	Terminology:
+		
+		HTML Attributes vs DOM Properties: Attributes are static - they serve to initialize values of the DOM Properties during the Browser Parsing Process.
+		
+		Dependency Injection: Rather than the Client internally handling the Dependency Loading Logic as well as it's own Logic, separate the concern away by passing in the Dependencies via Arguments from an external Server.
+		
+		App: A grouping of Angular Modules packaged as a complete solution.
+		
+			Module: A feature-complete section of an App represented by a grouping of other Modules and Components, which can be exported to / imported from other Modules. 
+			
+				Component: Defines Views and uses Services via Dependency Injection. They display data on the screen, listen for user input, and take action based on that input. 
+				
+					HTML Template: Defines the View skeleton.
+					
+					TypeScript Class: Encodes Logic for the View skeleton in.
+					
+					Metadata: Specifies to Angular if a Class belongs to a Component. Utilizes Decorators.
+					
+					Spec File: For Testing Purposes.
+				
+				Services: A Class with a specific purpose, not tied to the View Logic, usable across different Components via Injectors as a form of Dependency Injection.
+		
+		Directive: Components without a HTML Template.
+		
+	Modules:
+	
+		// The Root Module of an App is conventionally named: "AppModule", and is specified as the Module to kickstart within 'main.ts'. All other Sub-Modules and Sub-Components should be nested within the folder of the "AppModule".
+	
+		// Module Decorator
+		
+			import {NgModule} from '@angular/core';
+			
+			import {BrowserModule} from '@angular/platform-browser';
+			import {FormsModule}   from '@angular/forms'; // Required for Two-Way Binding via ngModel
+			
+			@NgModule(
+				{
+					declarations: [ // Specify Components to be used by the Module / Root-Component here.
+						<AppComponent>,
+						<ComponentName> 
+					],
+					imports: [
+						BrowserModule,
+						FormsModule, // Required for Two-Way Binding via ngModel
+					],
+					providers: [ // Specify Services for the Sub-Modules and Components here.
+						<Service>
+					],
+					bootstrap: [ // Specify Main Component to kickstart the Module.
+						<AppComponent>, 
+					]
+				}
+			);
+			export class AppModule {}
+		
+	Components: 
+	
+		// Each Module has a Root Component, and is specified as the Component to kickstart within the Parent Module's definition file. All other Sub-Components are nested within this Root Component.
+		
+		// Components should only handle the View Logic within their Classes, agreeing with the Single Responsibility Principle.
+	
+		// Creation of a new Component via Angular CLI: 
+			
+			ng g c <ComponentName>
+	
+		// Component Decorator and Class
+		
+			import {Component} from '@angular/core';
+			
+			import {Input, Output, EventEmitter} from '@angular/core'; // Required for Component - Component Interaction via @Input() and @Output().
+			
+			import {<ServiceClass>} from '<ServicePath>';
+			
+			@Component(
+				{
+					selector: '...', // Specify a CSS-Class formatted handle to reference this Component within HTML.
+						Tag: 'component-name' -> <component-name> </component-name>
+						Class Name: '.component-name' -> <div class='component-name'> </div>
+						Property: '[component-name]' -> <div 'component-name'> </div>
+					
+					template: `<!-- Inline HTML Template -->`
+					templateUrl: '...', // Filepath of the HTML Template representing the View for this Component.
+					
+					styles: [`...`, `...`, ...] // Inline CSS
+					styleUrls: ['...', ] // Filepath of the CSS that should be applied to stylize the View for this Component.
+				}
+			)
+			export class <ComponentName> { 
+				
+				// Service Usage
+				
+				constructor(private <serviceHandle> : <serviceType>) {
+					
+					// this.<serviceHandle>.<serviceMethod>() ...
+					
+				}
+				
+				// Internal Component Interaction:
+					
+					public name = "Sam";
+					public number = 5;
+					public isDisabled = true;
+					public date = new Date();
+					
+					public classObject = {
+						<class_1>: this.isDisabled,
+						<class_2>: !this.isDisabled
+					};
+					
+					eventHandler(event) { console.log(event); };
+					
+					someFunction(input) { return number + input; };
+				
+				// External Component Interaction:
+					
+					// Child Listening to Parent
+						@Input() public <parentVariable>;
+						@Input('<parentVariable>') public <alias>;
+					
+					// Child Talking to Parent via Events
+						@Output() public childEvent = new EventEmitter();
+						
+						// ...
+						
+						fireEvent() {
+							this.childEvent.emit(<argument>);
+						}
+			}
+			
+		// Templates: 
+			
+			// Structural Directives: Add or Remove DOM Elements
+			
+				// Conditional Rendering
+				
+					// ngIf
+					
+						<div *ngIf = "{true | false}"> </div>
+						
+						<div *ngIf = "<boolean_variable>; then thenBlock; else elseBlock" >  </div>
+						
+						<ng-template #thenBlock> ... </ng-template>
+						<ng-template #elseBlock> ... </ng-template>
+					
+					// ngSwitch
+						
+						<div [ngSwitch]="<variable_name>">
+							<div *ngSwitchCase="'case_1'"> </div>
+							<div *ngSwitchCase="'case_2'"> </div>
+							<div *ngSwitchDefault> </div>
+						</div>
+						
+				// Repeat Rendering
+				
+					// ngFor
+					
+						<div *ngFor = "let <element> of <array>; first as f; odd as o; even as e; index as i; last as l">
+							<p> {{i}} {{<element>}} </p>
+						</div>			
+			
+			// Template Reference Variables: Referencing other HTML within Templates
+
+				<input #<referenceHandle> type="text">
+				
+				<button (click) = "someFunction(<referenceHandle>.value)"> Add </button>
+		
+			// One-Way Binding:
+		
+				// Class -> Template Data Flow: Inputs w.r.t Component
+				
+					// Interpolation Expression Binding:
+					
+						// Supports only String values.
+						// Does not support assignments, global variables, loops, conditionals and exceptions.
+						
+						<p> I have {{ 2+2 }} apples! </p> <!-- Evaluates to 4 -->
+						
+						<p> I have {{ number }} apples! </p>
+						
+						<p> {{ someFunction(5) }} </p>
+						
+						<div id = "{{ number }}"> </div>
+				
+					// Property Binding:
+						
+						// Supports both String and non-String values. 
+						// Bind the DOM Property of a HTML Element, a Directive, or a sub-Component.
+						
+						<input [disabled] = "isDisabled">
+						
+						<app-hero-detail [hero] = "heroName"> </app-hero-detail>
+						
+						<child-component [<childTargetProperty>] = "<parentSourceProperty>"> </child-component>
+						
+					// Class Binding:
+						
+						// Supports conditional application of Classes.
+						
+						<h2 [class.<css-class>] = "isDisabled"> </h2>
+						
+						<h2 [ngClass]="classObject"> </h2>
+						
+					// Pipes: Transforms Data before presenting it to the View. Utilizes the '|' operator.
+					
+						// String Data
+						
+							<h2> {{name | lowercase}} </h2>
+							<h2> {{name | uppercase}} </h2>
+							<h2> {{name | titlecase}} </h2>
+							<h2> {{name | slice: <inclusiveStartIndex>:<exclusiveEndIndex>}} </h2> // 0-based index
+							
+							<h2> {{classObject | json}} </h2>
+							
+						// Numerical Data
+							
+							<h2> {{<float> | number: '<minIntegerDigits>.<minDecimalDigits>-<maxDecimalDigits>'}} </h2>
+							
+							<h2> {{<normalizedFloat> | percent}} </h2>
+							
+							// Default: USD
+							// Does NOT do conversion between the currencies!
+							<h2> {{<float> | currency}} </h2>
+							<h2> {{<float> | currency: 'SGD'}} </h2>
+							
+						// Date Data
+							
+							// Only Date and Time
+							<h2> {{date | date: 'short'}} </h2> 
+							
+							// Only Date
+							<h2> {{date | date: 'shortDate'}} </h2> 
+							
+							// Only Time
+							<h2> {{date | date: 'shortTime'}} </h2> 
+						
+				// Template -> Class Data Flow: Output w.r.t Component
+				
+					// Event Binding:
+				
+						<div (<event>)="eventHandler($event)"> Test </div>
+						
+						// $event gives the <argument> that was passed into the Event from the ChildComponent.
+						<child-component (<childEvent>)="<parentTaregtProperty> = $event"> </child-component>
+			
+			// Two-Way Binding: 
+				
+				// Property Binding + Event Binding
+				<input [value]="<variableName>" (input)="<variableName>=$event.target.value" />
+				
+				// ngModel combines the Event and Property Binding Syntax.
+				// ngModel requires the FormsModule to be specified in the imports array within the @NgModule Directive in the main Module.
+				<input [(ngModel)]="<classVariable>">
+
+	Services:
+		
+		// Uses the Dependency Injection approach.
+		
+			1) Define the Service Class.
+			2) Register with Injector at the appropriate Hierarchy (Module-level).
+			3) Declare as Dependency in the Component.
+			
+		// Creation of a new Service via Angular CLI:
+		
+			ng g s <ServiceName>
+			
+		// Injectable Decorator and Service Definition:
+			
+			import {Injectable} from '@angular/core';
+			
+			@Injectable()
+			export class <ServiceName>Service {
+				
+				// Constructor and Service Methods ...
+				
+			}

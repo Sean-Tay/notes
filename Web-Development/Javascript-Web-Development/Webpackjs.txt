@@ -1,0 +1,18 @@
+Webpack.js - Bundles and precompiles all installed dependencies (with installed corresponding loaders) together.
+	
+	Note: Webpack can parse 'import' and 'export' ES6 statement functionality without the need for Babel.
+	
+	Commands:
+		npx webpack src/<file.js> --output dist/bundle.js		// Sources through file.js, finds all js dependencies, and compiles everything together into a single bundle.js
+		npx webpack --config webpack.config.js					// Compiles the project via a specified setup procedure
+	
+	Basic Configuration Template: 
+		const path = require('path');
+
+		module.exports = {
+			entry: './src/index.js',
+			output: {
+				path: path.resolve(__dirname, 'dist')
+				filename: 'bundle.js',
+			}
+		};	

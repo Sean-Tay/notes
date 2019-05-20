@@ -1,0 +1,25 @@
+Subversion:
+	Abbreviations:
+		VCS: 					 Version Control System.
+
+	Description:
+		Centralized VCS. Compare with Git, which is a Decentralized VCS.
+			Smaller Local Copy - no Repo History saved.
+			Need to be connected to Repo before Commits can be made.
+	
+	Concepts:
+
+	Details:
+		Mixed Revision Local Copies.
+		Revisions apply to all Files in the File Tree, not per File.
+		
+	Commands:
+		svn <operation> ... --username=<username> --password=<password>
+
+		git clone + checkout	- svn checkout [<repo_url>, ...] <local_dir_url> --username=<username> --password=<password> -r <revision_number>
+		git fetch + merge 		- svn update
+		git status				- svn status
+		git add 				- svn add [<file_name>, ...]
+		git commit + push		- svn commit -m "<msg>"
+
+		git diff				- svn diff -r <old_rev>:<new_rev> <file_url>

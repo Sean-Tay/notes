@@ -1,0 +1,440 @@
+# Data Structures: Data organized in a specific way to support efficient Insertion, Searching / Updating, and Removal of data in Memory. Contrast with DMBS for efficient storage in Disk.
+	Linked List: 
+
+	Queue:
+
+	Stack:
+
+	Hash Table: Maps Keys to the Datasets they represent via a Hashing Function that efficiently determines Dataset location within the Data Structure.
+		- Time Complexities:
+			- Search / Update: Amortized O(1)
+				- findMin: O(n)
+				- findMax: O(n)
+			- Insertion: Amortized O(1)
+			- Delete: Amortized O(1)
+		
+		- Properties: 
+			- Hash Function: A function that 'chops' up the domain into many sub-domains (i.e. definition of 'Hash').
+				- Fast Computation.
+				- Even Key Scatter.
+				
+				- Uniform Hash Function: Distributes Keys evenly in a Hash Table.
+				- Perfect Hash Function: Achieves a one-to-one mapping on all given Keys (GNU gperf - Perfect Hash Function generator).
+			
+			- Load Factor: Num of Keys / Num of Buckets in Table
+				- A Metric that represents fullness of the Hash Table.
+				- A Metric for determining when the Hash Table should be resized.
+				
+				- If Load Factor is too low, it results in Wasted Memory.
+				- If Load Factor is too high, Table becomes slower in general.
+			
+			- Collision Resolution: Resolution for conflicting Keys.
+				- Separate Chaining:
+					- Store Collisions together in a separate Data Structure associated with the Key.
+					
+					- Coalesced Chaining: A combination of Linear Probing and Chaining - rather than utilizing a separate Data Structure at each Bucket, use the Buckets in the HashTable to track the collision chain to save Memory.
+				
+				- Open Addressing: 
+					- Linear Probing:
+						- Upon Collision, scan through the Table in constant Strides to search for the next available Empty Space.
+						- Caution: Beware of Deletion - use Lazy Deletion instead to prevent incorrect conclusion.
+						
+						- Primary Clustering: When many consecutive occupied slots are used.
+						- Optimization: Stride a (consistent) number of slots instead of just 1 slot per check. Make Stride Size coprime to Array Size in order to cover all slots in the Array.
+						
+					- Quadratic Probing:
+						- Upon Collision, scan through the Table with increasingly larger steps to search for the next available Empty Space.
+						- Caution: Beware of Deletion - use Lazy Deletion instead to prevent incorrect conclusion.
+						
+						- Secondary Clustering:	Occurs when many entries in the given Input Sequence have the same starting point.
+						
+					- Double Hashing:
+						- Extension of Linear Probing. Use Primary Hash Function to determine starting point, followed by a Secondary Hash Function to determine Stride Size for each Key.					
+						- Caution: Secondary Hash Function cannot return a 0.
+
+	Binary Heap: 
+		- Time Complexities:
+			- Search / Update: O(n) for general Node / O(1) for Maximum / Minimum Node
+			- Insertion: O(logn)
+				- Heapification: Create a Heap with a given sequence of Elements: O(n): Execute shiftDown() on all Non-Leaf Nodes, from the lowest level to the top.
+			- Deletion: O(logn)	
+
+		- Properties: 
+			- Max Heap: Parent is always larger than or equal to both Child Nodes ; Min Heap: Parent is always smaller than or equal to both Child Nodes.
+			- Complete Binary Tree: Every Level of the Tree is filled, except possibly the last - Nodes on the last level are all compacted towards the 'left' of the Tree.
+			
+			- Array Implementation: The 0th Index is not used.
+
+			- Utility Operations:
+				- parent(i): floor(i/2)
+				- leftChild(i): i*2
+				- rightChild(i): i*2 + 1
+
+				- shiftUp(i): Max Heap / Min Heap: if parent(i) < i / parent(i) > i; swap parent(i) with i
+				- shiftDown(i): Max Heap / Min Heap: if i < larger Child / i > smaller Child; swap i with larger Child / smaller Child
+
+			- Insertion: 
+				1. Insert into index corresponding to heapSize. 
+				2. Execute shiftUp(inserted Node) until Heap Property is no longer violated.
+			
+			- Deletion: 
+				1. Extract Root, set Node at index corresponding to heapSize as root instead.
+				2. Execute shiftDown(new Root) until Heap Property is no longer violated.
+
+		- Finds use in Priority Queues.
+
+	Binary Search Trees: A Tree which stores lesser Data in a left Sub-Tree, and greater Data in a right Sub-Tree.
+		- Time Complexities:
+			- Search / Update: O(n) for non-self-balancing variant / O(logn) for self-balancing variant
+			- Insertion: O(n) for non-self-balancing variant / O(logn) for self-balancing variant
+			- Deletion: O(n) for non-self-balancing variant / O(logn) for self-balancing variant
+
+		- Properties:
+			- Each Node stores one Element, with at most Pointers to 2 Child Nodes.
+				- The left Child Node stores lesser Elements.
+				- The right Child Node stores greater Elements.
+
+				- Threaded Binary Tree: No Null Pointers for non-Minimum and non-Maximum Nodes; a Node with no Left Child / Right Child Node will link back to the Predecessor Node / Successor Node.
+
+			- Sorted Order:
+				- Although the Nodes are of different heights, the sorted order of the Elements in the Tree can be seen by simply looking from left to right.
+					- In a given [Sub-]Tree, the Leftmost Node is the smallest Element; the Rightmost Node is the largest Element.
+
+			- Utility Operations:
+				- findMin(Node) / findMax(Node): Just Leftmost or Rightmost Node of [Sub-]Tree rooted at Node.
+					
+				- findPredecessor(Node) / findSuccessor(Node): 
+					1. Given Node has corresponding Child Node: findPredecessor ; findMax(Left Child) / findSuccessor ; findMin(Right Child)
+						- Note: If using Moris Traversal / Threaded Binary Trees, terminate when the Descendent links back to Node.
+					2. Given Node has specific Ancestor: 'Left' Ancestor ; findPredecessor / 'Right' Ancestor ; findSuccessor
+				
+				- size(Node): Utilize BFS / Level-Order Traversal to obtain size of [Sub-]Tree rooted at Node.
+					- Size of Empty Tree == 0
+
+				- rank(Node): size(Left Sub-Tree) + 1
+
+				- height(Node): max(height(Left Sub-Tree), height(Right Sub-Tree)) + 1
+					- Height of Empty Tree == -1
+
+			- Deletion: 
+				1. If the Node is Childless, just remove.
+				2. If the Node has one Child, just bypass current Node to the Child Node directly from the Parent.
+				3. If the Node has two Children, replace Node with Predecessor / Successor key, and delete Predecessor / Successor Node.
+					- Note: Predecessor / Successor of a Node with 2 Children guaranteed to either only have zero or one Child.
+
+			- Balance Factor: height(Left Sub-Tree) - height(Right Sub-Tree)
+				- A Metric for determining if a given [Sub-]Tree is adequately not-degenerate.
+				- If Balance Factor is < - 1 or > 1, then the [Sub-]Tree is not balanced, and at risk of becoming degenerate upon further operations.
+
+			- AVL Trees:
+				- Rebalancing: Rotations to prevent degenerate Trees.
+					- Types:
+						left_rotate(Node): Make Right Child Parent of Node, transfer Left Sub-Tree of Right Child to become Right Sub-Tree of Node.
+						right_rotate(Node): Make Left Child Parent of Node, transfer Right Sub-Tree of Left Child to become Left Sub-Tree of Node.
+
+					- Upon Insertion / Deletion of a Node, traverse back up the Tree all the way to the Root.
+					- Upon encountering an unbalanced Ancestor Node, execute one of the four cases:
+						1. Balance Factor 2: LEFT Ancestor Child and LEFT Ancestor Grandchild: right_rotate(Ancestor Node)
+						2. Balance Factor -2: RIGHT Ancestor Child and RIGHT Ancestor Grandchild: left_rotate(Ancestor Node)
+						
+						3. Balance Factor 2: LEFT Ancestor Child and RIGHT Ancestor Grandchild: left_rotate(LEFT Ancestor Child), then Case 1: right_rotate(Ancestor Node)
+						4. Balance Factor -2: RIGHT Ancestor Child and LEFT Ancestor Grandchild: right_rotate(RIGHT Ancestor Child), then Case 2: left_rotate(Ancestor Node)
+
+						- At the end of the operation, new Ancestor Node will have a Balance Factor of 0.
+
+					- Pretty good Balancing Mechanism, but will result in more Rotations.
+
+			- Red-Black Trees: A less balanced BST, but less Rotations. Good for frequent Insertions and Deletions.
+
+	UFDS: Union-Find Disjoint Set: A Data Structure which tracks the membership of a Set of Elements partitioned into smaller non-overlapping disjoint Sub-Sets.
+		- Time Complexities:
+			- Search / Update: O(Inverse Ackermann Function)
+
+		- Properties:
+			- [Sub-]Sets here can be visually imagined as m-way Trees.
+
+			- Each Element has an accompanying:
+				- 'Parent' Status: The value here is the index of a 'Parent' Element. If the 'Parent' Element is itself, it is considered the representative Element of a [Sub-]Set. At creation, an Element's Parent is itself (it is the representative Element of its own Set).
+				- 'Rank' Status: An *upperbound* metric that represents the 'height' of the [Sub-]Tree rooted at the given Element. At creation, an Element's Rank is 0.
+
+			- Utility Operations:
+				- findSet(Element): Using the 'Parent' Status of each Element, recursively visit Ancestor Elements until the representative Element of the [Sub-]Set the Element belongs to is found. To keep the future search time low:
+					- Path Compression: The 'Parent' of the Element is fixed to the representative Element of the encompassing Set once it is determined.
+					- Path Halving: The 'Parent' of the Element and *every other* Ancestor Element is fixed to their corresponding Grandparent Elements.
+					- Path Splitting: The 'Parent' of the Element and Ancestor Elements are fixed to their corresponding Grandparent Elements.
+
+				- unionSet(ElementX, ElementY): Joins the encompassing [Sub-]Sets of ElementX and ElementY together.
+					1) repX = findSet(ElementX); repY = findSet(ElementY);
+					2) Set the 'Parent' of either repX / repY to be repY / repX.
+						- The representative Element with the smaller 'Rank' will be set as the Child of the other representative Element.
+						- If the two representative Elements have the same 'Rank', the ultimate representative Element of the two will have the 'Rank' incremented by 1.
+
+	Bitmask: A Data Structure which tracks some status of an Array of Elements.
+		- Time Complexities:
+			- Search / Update: O(1) (Bit Shift Complexity dependent on CPU Processor implementation)
+
+		- Properties:
+			- A Number whose n Bits tracks n Elements.
+				- Each Bit can represent a Boolean Value of 0 or 1.
+				- Integer: 32 Bits = 32 Elements.
+			
+			- Utility Operations:
+				- Check ith Bit: x & (1 << (n - (i + 1)))
+				- Activate ith Bit: x = x | (1 << (n - (i + 1)))
+				- Activate ith Bit to jth Bit inclusive: x = x | ((1 << (n - (i + 2)) - 1) & (1 << (n - (j + 1)))
+
+	Graphs:
+		- Terminology:
+			- Vertex: Node
+				- In / Out Degree: The number of Edges leading in / out to / from the Vertex.
+
+			- Edge: A Link between two Vertices.
+				- Direction
+				- Weight
+
+				- Two Vertices are adjacent if they are linked by an Edge.
+
+			- Path: Sequence of Vertices adjacent to each other.
+				- Simple Path: When the Path does not contain repeated Vertices.
+
+				- Cost:
+					- Unweighted Edges: Number of involved Edges in the Path.
+					- Weighted Edges: Sum of the Weights of all involved Edges.
+
+			- Cycle: A Path which starts / ends on the same Vertex.
+				- Simple Cycle: A Simple Path with a Cycle.
+
+			- Component: A group of Vertices that can visit each other via some Path in an Undirected Graph.
+
+		- Types:
+			- Undirected Graph: A Graph where all Edges are bi-directional (i.e. if there is a link from one Vertex to another, there is also a link from the other Vertex back to the first).
+			- Directed Graph: A Graph where all Edges have direction (i.e. if there is a link from one Vertex to another, it does not mean that there is also a link from the other Vertex back to the first).
+
+			- Simple Graph: Where all pairs of Unique Vertices have at most one Edge between them.
+
+			- Sparse Graph: A Graph with few Edges.
+			- Dense Graph: A Graph with many Edges.
+			- Complete Graph: A Graph where every pair of Unique Vertices has an Edge between them.
+
+			- Connected Graph: When the entire Graph is one Component.
+
+			- Directed Acyclic Graph: A Directed Graph with no Cycle.
+
+			- Tree: An (Undirected) Graph where there only exists a single Path between any two Vertices. Number of Edges = Number of Vertices - 1.
+
+			- Bipartite Graph: A Graph where all Vertices can be partitioned into two Sets such that all Vertices in each Set cannot directly visit another member of the same Set.
+
+		- Representative Data Structures:
+			- Adjacency Matrix: A 2D Array which stores any potential Edge between every possible pair of Vertices in the Graph.
+				- Space Complexity: O(V^2)
+
+			- Adjacency List: An Array of Lists, in which each List stores adjacent Vertices for the Vertex it represents.
+				- Space Complexity: O(E + V)
+
+			- Edge List: A List that tracks all adjacent Vertex Pairs.
+				- Space Complexity: O(E)
+
+	B Trees: An extension of a Binary Search Tree - m-way Search Tree, but with constraints on how new Elements are inserted to prevent degenerate Trees.
+		- Time Complexities:
+			- Search / Update: O(logn)
+			- Insertion: O(logn)
+			- Deletion: O(logn)
+		
+		- Properties: 
+			- Root Node should have at least one Element.
+			
+			- Each non-Root Node must store between d and 2d Elements in ascending order, with d+1 as the Minimum Degree or Branching Factor of the Tree.
+				- The factor of 2 ensures that Nodes can be evenly split.
+			
+			- Self-Balancing Properties:
+				- All Non-Leaf Nodes (Non-Root Nodes with Children) should have at least d+1 Child Nodes.
+					- A Child Node can only be created if this property is fulfilled for the given Non-Leaf Node.
+
+				- All Leaf Nodes (Nodes with no Children) should be at the same Level.
+					- (Proactive) Insertion: Advantageous of not visiting a Node twice.
+						- Bottom-Up: Tree grows upwards ; actual Element Insertion should only occur at a Leaf Node.
+						- Traverse down from the Root Node to a Leaf Node.
+							- If a given Node during Traversal is full, split the Node into 2 Child Nodes, and take the median Element from the original Node and set it to a Parent Node.
+							- Continue Traversal from one of the Child Nodes.
+					
+					- (Proactive) Deletion: 
+						- Traverse down from the Root Node.
+							- If Element is in Non-Leaf Node:
+								- If the Child Node that precedes / succeeds the Element has at least d Elements:
+									- Obtain the Predecessor / Successor of the Element, depending on which Child Node has enough Elements.
+									- Replace Element with Predecessor / Successor Element.
+									- Delete Predecessor / Successor - guaranteed to be in Leaf Node.
+								- Else: Both Child Nodes has less than d Elements:
+									- Merge Both Child Nodes together, set Element to be Median Key of Child Node.
+									- Traverse to new Child Node, and recursively delete Key from Child Node.
+							- Else: Element is not in Current Non-Leaf Node.
+								- Determine next Child Node to traverse to.
+								- If Child Node has less than the minimum d Elements:
+									- If an immediate Sibling Node has at least d+1 Elements, execute a left or right Rotation on one of the neighbouring Parent Elements.
+										- Send the neighbouring Parent Element down to the Child Node.
+										- Set the Predecessor or Successor Element of the Sibling Node in the Parent Element's position.
+									- If both immediate Sibling Nodes have less than d+1 Elements, merge one of the Siblings together with the Child Node, with one the Parent Element becoming the Median Element of the Child Node.
+								- Continue Traversal.
+								- If Traversal has reached a Leaf Node, if delete Element from Leaf Node if it exists.
+	
+		- Finds use in Multi-Level Database Indexes.
+			- Leaf Nodes - Dense Index.
+			- Non-Leaf Nodes - Sparse Indexes to the Blocks containing the Dense Index.
+
+	B+ Trees: An extension to B Trees. Can be viewed as a Tree + Linked List combination.
+		- Properties:
+			- Does not need to traverse the whole Tree for Sequential Access:
+				- All Non-Leaf Nodes have their Keys in the Leaf Nodes as well.
+				- All Leaf Nodes will be connected together like a Linked List from left to right.
+
+	Segment Tree
+
+	Fenwick Tree
+
+	Trie
+
+	Bitmask
+
+# Algorithms
+	Analysis
+		- Bound Notation:
+			- Big O: Defines a set of Functions whose Growth Rates at most differ by a constant when considering sufficiently large inputs. Represents the Upper Bound of a given Growth Rate.
+	
+		Complexity Hierarchy: O(1) < O(log(logn)) < O(logn) < O((logn)^k) < O(n) < O(nlog*n) < O(nlogn) == O(log(n!)) < O(n^k) < O(n^(log(n))) < O(k^n) < O(n!) < O(n^n)
+	
+		- Amortized Analysis: Overall Algo Behaviour when not considering infrequent, extreme bottlenecks (the Average Case Scenario).
+			- Example: Adding an Element to an Array -> O(1) usually, occasional O(n) when expanding Array.
+		- Asymptotic Analysis: Algo Behaviour when considering increasingly large inputs (the Worst Case Scenario).
+	
+	Array:
+		- Circular:
+			- Head Pointer and Tail Pointer.
+				- If both pointing to same Index, Array is Empty.
+				- When full, Head and Tail Pointer should be separated by one empty Index to ensure no confusion with Empty state.
+
+		- Two Pointers / Sliding Window	
+	
+	String Manipulation:
+		Javascript Regex: /<regex>/ or /<regex>/g to match for multiple instances of <regex>
+			Quantifiers:
+				<char | char_class>* : 0 or more of <char> or <char_class>
+				<char | char_class>+ : 1 or more of <char> or <char_class>
+				<char | char_class>? : 0 or 1 of <char> or <char_class>
+				
+				<char | char_class>{n} : Exactly n of <char> or <char_class>
+				<char | char_class>{n, } : At least n of <char> or <char_class>
+				<char | char_class>{n, m} : At least n and at most m or <char> or <char_class>
+				
+				<char | char_class><quantifier>? : Converts the matching to non-greedy Quantifiers.
+			
+			Specials:
+				^ : Matches the beginning of the String.
+				$ : Matches the end of the String.
+			
+			[<char>...]<quantifier> : Denotes Character Class to match for.
+			[^<char>...]<quantifier> : Denotes Character Class to not match for.
+			
+			(<regex>): Denotes a Capturing Group for <regex>
+				/1 ... /99: References Capturing Groups previously defined.
+			
+			(?<name><regex>) : Denotes a named Capturing Group for <regex>. Note: The '<' and '>' ARE required.
+				(?:<regex>) : Denotes a Non-Capturing Group for <regex>.
+					<expr>(?=<regex>) : Denotes a Non-Capturing Group for a Positive Lookahead - that is, match only for occurrances where <expr> is followed by the <regex>.
+					<expr>(?!<regex>) : Denotes a Non-Capturing Group for a Negative Lookahead - that is, match only for occurrances where <expr> is NOT followed by the <regex>.
+					(?<=<regex>)<expr> : Denotes a Non-Capturing Group for a Positive Lookbehind - that is, match only for occurrances where <expr> is preceded by the <regex>.
+					(?<!<regex>)<expr> : Denotes a Non-Capturing Group for a Negative Lookbehind - that is, match only for occurrances where <expr> is NOT preceded by the <regex>.
+			
+			Usage:
+				<string>.match(<regex>) : 
+					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
+					- If <regex> is globally scoped, it will return all occurrances, but without any capturing groups within <regex>.
+				<regex>.exec(<string>) : 
+					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
+					- If <regex> is globally scoped and saved, it will return the ith occurrance, alongside any capturing groups, on the ith iteration of the .exec call on the <regex> object.
+	
+	Recursion:
+		- Typically:
+			1) Identify the Base-Case of the Problem / Break the Problem into smaller Sub-Problems.
+			2) Call Function recursively to resolve Sub-Problems.
+			3) Use results from (2) to resolve actual Problem.
+		
+		- Tail Recursion: When the Recursion is the last operation in a Recursive Call, the Call Stack is not kept unnecessarily.
+	
+	Sorting:
+		Comparison Based Sorting:
+			Selection Sort:
+			Insertion Sort:
+			Bubble Sort:
+			Merge Sort:
+			Quick Sort:
+			
+			Heap Sort:
+		
+		Non-Comparison Based Sorting:
+			Radix Sort:
+			Counting Sort:
+			Bucket Sort:
+
+	
+	Binary Search:
+
+	BFS: Graph Traversal with a Queue, and a 'visited' Array.
+
+	DFS: Graph Traversal with a Stack, and a 'visited' Array.
+
+	Tree Traversal:
+		- DFS: Key Idea is to push Nodes onto the Stack to access them later.
+			- Pre-Order: Idea: Can push multiple Nodes into the Stack at one time.
+				1. If Current Node is not null, visit Current Node, then push Right Child, then Left Child, into Stack.
+				2. Pop from Stack to descend.
+				3. Iterate until Stack is empty.
+
+				- Root is always visited first.
+
+			- In-Order: Idea: Push Nodes onto the Stack to access them later.
+				1. If Current Node is not null, push Current Node into Stack, then traverse to Left Child.
+				2. If Current Node is null, pop from Stack, visit the popped Node, then descend to Right Child.
+				3. Iterate until Stack is empty and Current Node is null.
+
+				- Leftmost Node is always visited first.
+
+			- Post-Order: Ideas: Can push same Node more than once / Can 'rearrange' pushed Nodes.
+				1. If Current Node is not null, push Current Node into Stack twice and traverse to Left Child.
+				2. If Current Node is null, pop from Stack.
+					a. If the topmost Node in the Stack is the same as popped Node, traverse to the Right Child.
+					b. Else, visit popped Node.
+
+				- Root is always visited last.
+
+		- Morris Traversal: Key Idea is to use the Right Child of the (Leaf) Predecessor of the Current Node to allow Current Node to be reaccessed again from that Predecessor, and as an indication of whether or not the Current Node has been accessed before. If the Current Node's Leaf Predecessor's Right Child is set to null, it means the Current Node has not been accessed before. Set it to point to the Current Node, then descend. Later on when traversal reaches back to the Current Node via that Right Child, we know that the Current Node has been accessed before because the (Leaf) Predecessor is itself.
+			- Time Complexity: O(n) - Num of Edges is n-1, each Edge visited at most 3 times.
+
+		- Level-Order: BFS on a Tree
+
+	Topological Sort: When performed on a DAG, for every Vertex, they are processed only after every other Vertex leading into them is processed.
+		- Finds use in Task Scheduling - if some Tasks are dependent on other Tasks.
+			- Package Dependency Resolution.
+
+	Minimum Spanning Tree
+
+	Shortest Path
+		- Dijkstra
+		- Floyd Warshal
+		- Bellman Ford?
+		- A*
+
+	Flood Fill
+
+	Greedy
+	
+	Dynamic Programming:	
+		1) Top-Down: Recursion / Memoize
+			- Avoids recomputing some Past States in overlapping Sub-Problems.
+			
+		2) Bottom-Up: For Loops
+			- Avoids Recursion Overhead.
+
+	Exhaustive Search
+
+	Backtracking
+

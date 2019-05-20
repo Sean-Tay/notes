@@ -1,0 +1,74 @@
+LDAP:
+	Abbreviations:
+		LDAP: 				Lightweight Directory Access Protocol
+		DIT:				Directory Information Tree
+
+		O:					Organization
+			DC:				Domain Name Component
+
+		L:					Locality Name
+			C:				Country
+			ST:				State or Province Name
+			STREET:			Street Name
+
+		OU: 				Organizational Unit
+
+		DN: 				Distinguished Name
+			RDN:			Relative Distinguished Name
+			UID:			User Identification
+			CN:				Common Name
+			SN: 			Simple Name
+	
+	Description:
+		An optimization layer outside of a Database to offload work related to User Validation and Authentication. 
+	
+	Concepts: https://ldap.com/glossary-of-ldap-terms/
+		Root DSE: 			An Entry with the information about the Server Capabilities and type of Data contained in it. Also contains the Null DN.
+
+		Data Entry:
+			DN:				A Name that uniquely defines a Data Entry and position in the DIT. Usually comprised of a series of zero or more RDNs of ancestor Data Entries delimited by commas.
+				Null DN: A DN with zero RDNs.
+
+			RDN:			Comprised of one or more Attribute Name - Value pairs. Usually refers to the leftmost component of the Data Entry's DN, since that Attribute Name - Value has to exist in the Data Entry.
+
+			Object Class: 	A Schema Element that is used to define a set of required and optional Attributes for Data Entries which contain the Schema. May inherit from other Object Classes.
+				- Structural Object Class: Represents the basic type of Object that a Data Entry represents. Every Data Entry should have at least one.
+				- Auxillary Object Class: Used to indicate that a Data Entry has a particular quality or characteristic. Similar to Tags?
+				- Abstract Object Class: Like Absrtact Classes. Can only be used if subclassed by a Structural or Auxillary Class.
+
+				Default Class Hierarchy:
+					top
+						OU
+						groupofuniquenames
+							posixGroup
+						person
+							organizationalPerson
+							inetOrgPerson
+		
+		Attribute: A particular characteristic of a Data Entry.
+			User Attribute: A Normal Attribute.
+			Operational Attribute: Represents Server-specific Configuration or State of the Data Entry.
+	
+	Details:
+		Use Case for LDAP:
+			You need to Search for ONE piece of Data many times at fast speeds.
+			You don’t Update, Add, or Delete the Data very often.
+			You don’t care about the logic and relations between different Data.
+			The size of each Data Entry is small.
+			You don’t mind having all these small pieces of Data at a centralized place.
+	
+	Commands:
+		Bash: 
+			ldapsearch <flags> <search_filter> <attribute1> ... - Return the results from a search through a LDAP listing.
+				-LLL -1 	- Remove unnecessary information from the result generation.
+				-h "<server>" - LDAP Server <server> Hostname to connect to.
+				-p "<port>" - LDAP Server <server> Port to connect to.
+				-D "<user_uid>" - LDAP User DN specification within the LDAP listing to connect as.
+				-w "<password>" - Plaintext <password> for <user_uid>.
+				-b "... ,<child>,<main_root>" - Specification for root of the subtree (for example, <child>) to search within.
+				-s {"one" | "sub"} - Specification for search scope. 
+					"one" - Denotes that the search will only search among sibling child Containers / Nodes from the root of the subtree.
+					"sub" - Denotes that the search will search through the entirety from the root of the subtree. Default.
+
+				<search_filter>: Nested Collection of (<conditional_operator>(<attribute1>=<value1>)...)
+					<conditional_operator>s - & | !

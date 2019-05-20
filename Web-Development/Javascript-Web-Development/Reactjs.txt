@@ -1,0 +1,127 @@
+React.js
+	
+	Abbreviations:
+		MVC: 						Model-View-Controller.
+		SPA:						Single-Page Application.
+		PWA:						Progressive Web Application.
+		
+		CSS:						Cascading Style Sheets.
+		
+		JS: 						Javascript.
+		JSX: 						Javascript Syntax Extension.
+	
+	Description: A Lightweight Frontend Library for building UIs in Web Applications. It is part of the View Layer in the MVC Architecture.
+	
+	Tutorial Videos / Playlist:
+		Quick Start: https://youtu.be/sBws8MSXN7A
+	
+	Concepts:
+		Virtual DOM: A Tree whose Nodes represent Logical HTML Tags.
+		
+		Render: A term to describe how the Component will appear on the Web Page.
+	
+	Details:
+		React faciliates the construction of SPAs:
+			The default entry point, public/index.html, contains a top-level <div> 'root', which will contain the entirety of the React Application as part of the SPA functionality.
+			The default Javascript entry point, src/index.js, should reference a top-level React Component 'App' and render it in the top-level <div> 'root'.
+				import React from 'react';
+				import {render} from 'react-dom';
+				
+				import './index.css';
+				import 'App' from './App.js';
+				
+				render(<App />, document.getElementById('root'));
+		
+		React makes use of self-contained Components with their own Component-Level State. 		
+			These States will determine how the Component will Render and behave.
+			When these States change, React manipulates the Virtual DOM to invoke changes to just parts of the Pages, as opposed to reloading the whole Page.
+		
+		React Components make use of JSX Preprocessing to allow for XML HTML-like markup within JS:
+			Class-Component:
+				import React from 'react';
+				import PropTypes from 'prop-types';
+				
+				import './ExampleClass.css';
+				import 'OtherComponent' from './OtherComponent.js';
+			
+				Class ExampleClass extends React.Component {
+					state = {
+						<state-object-key>: '',
+						...
+					}
+					
+					stateChange() {
+						// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State
+						
+						// Don't modify this.state directly, otherwise React won't know to re-render the Component. 
+						// Use setState() instead to merge in the changed values of the affected <state-object-key>s, and implicitly call the Component's render() function to re-render the Component
+						this.setState({
+							<state-object-key>: '',
+							...
+						});
+						
+						return this.props.<parent-state-change-function-name>;
+					}
+					
+					render() {
+						return ( // ... Multi-line JSX Element ...
+							/*
+								JSX Elements are treated as JS Expressions.
+								
+								JSX Elements can have attributes, similar to DOM / HTML.
+									Note: Replace the class DOM attribute to className for compiling from JSX -> JS, since class is a reserved keyword in JS.
+									Note: style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to dash-delimited words.
+
+								JSX Elements can have Event Listeners, similar to DOM / HTML, but with the names in camelCase as opposed to lowercase words.
+									var exampleVariable = <img onHover={ exampleJSFunction } />; // The Event Listeners act on JS functions.
+
+								JSX Elements can be nested, just like in DOM / HTML.	
+									Any nested JSX Element must have only exactly one outermost element. The first opening tag and the final closing tag must belong to the same JSX element.
+									Can use a <div> </div> or <React.Fragment> </React.Fragment> to enclose the group.							
+							
+								JSX Elements can hold Javascript within {}. The curly braces signal the start of JS Injection.
+									You cannot inject JS if statements directly within JSX. Utilize an Immediately-Invoked JS Function within the JS Injection instead.
+									Utilize the && operator for code that either will or will not appear.
+							*/
+							<div className={<html-class-reference>} style={ { <cssAttribute>: '', ... } }>
+								<p> { this.props.<prop-name> } </p>
+								
+								<p>
+								  {(() => {
+									switch (this.state.<state-object-key>) {
+									  case "red":   return "#FF0000";
+									  case "green": return "#00FF00";
+									  case "blue":  return "#0000FF";
+									  default:      return "#FFFFFF";
+									}
+								  })()}
+								</p>
+								
+								<OtherComponent <child-prop-name>={ ... } <child-state-change-function-name>={ this.stateChange }/>
+							</div>
+						)
+					}
+					
+					// Other Lifecycle Methods
+				}
+				
+				ExampleClass.propTypes = {
+					<prop-name>: PropTypes.<prop-type>[.isRequired],
+					<parent-state-change-function-name>: PropTypes.func[.isRequired],
+					...
+				};
+				
+				export default ExampleClass;
+				
+		React Context API / Redux: Application-Level State Managers to maintain and share State across multiple Components.
+			Central Store for all Components. Avoids complex “prop” graphs in Component Trees.
+	
+	Commands:
+		Create-React-App: CLI Tool for Creating Boilerplate React Apps.
+			Features:
+				Dev Server with Hot Reload
+			
+			npx create-react-app <app-name> - Create a Boilerplate React ES6 Nodejs Project without installing the create-react-app package locally.
+			npm run build 			- Invoke Code Compilation and Minification of Assets within the 'src' folder, and transfers the generated Artifacts into a separate 'build' folder.
+			npm run eject			- Import the (Webpack) configuration files from create-react-app for more customization of the local React Project.
+			

@@ -1,0 +1,862 @@
+Statistical Concepts:
+	
+	Parameter: Population Characteristic of Interest.
+		- Expectation: E[x]												= sum(p(x_1) * x_1 + ... + p(x_n) * x_n)
+	
+	Statistic: A single measure / function of an attribute of data within of a Sample.
+		- If a Statistic has capability to estimate a Parameter, then we call it an Estimator (of the Parameter).
+		- Not all Statistics can be used to estimate for Parameters! They are just mere Statistics.
+	
+	Estimator: A Statistic that can estimate a Parameter. 
+		- Every Estimator is a Statistic, but not every Statistic is an Estimator.
+		- Bias: Long-Run Error											= E(T) - true_value(Parameter)
+			- Unbiased: No error on average over the long-run.
+		- SD: Variation of the Estimator / Test Statistic				= sqrt((1 / (S - 1)) sum((T - E(T)) ^ 2))
+			- Small Preferred - tells us that luck is not a factor.
+		- MSE: (S - 1) / S * SD^2 + Bias^2.
+	
+	Confidence Interval: Interval Estimate of a Parameter.
+	
+	Probability: Absolute Measure of Plausability.
+	
+	Probability Distribution: A Mathematical Function that provides the probabilities of all possible Future Outcomes of a single Event given the Parameters of the Event's Distribution. Sums / Integrates to be 1.
+	
+	Joint Distribution Function: A Mathematical Function that provides the probabilities of all possible combinations of Future Outcomes for multiple Events, given the Parameters of the Events' Distribution.
+		- If Events are independent, the JDF is simply the product of the constituent Probability Distribution Functions for each Event.
+	
+	Likelihood: Relative Measure of Plausability. 
+	
+	Likelihood Function: A Mathematical Function that provides the plausibility of a specific set of Parameters from the Distributions of those Events, given Fixed, Observed Outcomes for those Events. Does not Sum / Integrate to be 1.
+		- Maximum Likelihood Estimation: Produces a set of Parameters that most likely would be part of the Distributions of the Events that would produce a set of specified Observed Outcomes. Comes about from Maximisation of the Events' Likelihood Function.
+	
+	Moments: Specific Quantitative Measure of the shape of a set of points.
+	
+		Raw Moment 														- Specific Quantitative Measure about 0.
+		
+			1st Raw Moment: m1 											- Mean: Location Estimator.
+				Population Mean: mu 									= sum(x) / n
+				Unbiased Estimator for Population Mean: xbar 			= sum(x) / n
+			
+		Central Moment 													- Specific Quantitative Measure about the Random Variable's Mean.
+		
+			2nd Central Moment: m2										- Variance: Scale Estimator. A measure of how far out the data is from the Expected value.
+				Population Variance: sigma^2 							= sum((x - mu)^2) / n
+				Unbiased Estimator for Population Variance: s^2			= sum((x - xbar)^2) / (n-1)
+				
+			3rd Central Moment: m3										- Skewness: Scale Estimator. A measure whose magnitude gives an idea for how strongly skewed the data is.
+				Population Skewness										= (sum((x - mu)^3) / n) / (sigma^2)^(3/2)
+				Unbiased Estimator for Population Skewness				= (sqrt((n) * (n - 1)) / (n - 2)) * (sum((x - xbar)^3) / n) / (s^2)^(3/2)
+				
+			4th Central Moment: m4 										- Kurtosis: Scale Estimator. A measure of how "thick" the tails are.
+				Population Kurtosis										= (sum((x - mu)^4) / n) / (sigma^2)^2
+				Unbiased Estimator for Population Kurtosis				= ((n - 1) / ((n - 2) * (n - 3))) * ((((n + 1) * (sum((x - xbar)^4) / n)) / (s^2)^2) - 3(n - 1))
+	
+	Robust Statistics: Statistics which are insensitive to slight departues from the assumptions that justify the use of the Statistic. They are used as a way to check impact of assumptions - many default Statistics assume different things to 'work'.
+
+		Robust Location Estimators:
+			Trimmed Mean 												- Discard x% of the lowest and highest observations, and take the Mean.
+			
+			Huber / Winsorized Mean										- Clamp all observations to be between the x percentile and (100 - x) percentile, and take the Mean.
+			
+			Minimization Estimator 										- Minimize distance between data value and average value w.r.t some meaningful function. Set derivative of the meaningful function to be 0 and solve for the solution.
+			
+			Median														- Take the 50th Percentile.
+		
+		Robust Scale Estimators:
+			Inter-Quartile Range										- Depending on the underlying distribution, the IQR can be operated with a certain scalar to estimate for the Standard Deviation.
+				Normal Distribution Scalar: IQR * 0.7413
+			
+			Median Absolute Deviation									- The median of all the absolute deviations w.r.t each value from the median. Depending on the underlying distribution, the MAD can be operated on with a certain scalar to estimate for the Standard Distribution.
+				Normal Distribution Scalar: MAD * 1.4826
+				
+			Gini's Mean Difference										- The average of all the differences betweeen each pair of observations: (1 / nC2) sum(yi - yj) for all i less than j. Depending on the underlying distribution, the GMD can be operated on with a certain scalar to estimate for the Standard Distribution.
+				Normal Distribution Scalar: GMD * sqrt(pi) / 2
+	
+	Assumption Testing: To check assumptions about a Population based on a Sample.
+		
+		Kolmogorov-Smirnov Test: Tests if a Sample follows a particular Distribution.
+			Behaviour: 
+				Measures the distance between the Sample and the Cumulative Density Function for the Distribution to test for.
+		
+		F-test: To find if two Normally Distributed Populations have different Variances or not.
+			Null Hypothesis												- The two Populations have the same Variance.
+			
+		Bartlett's Test or Levene's Test: To find if two or more Populations have different Variances or not.
+			Behaviour:
+				Levene's Test is a Robust Statistical Test - utilizes ANOVA on the individual Variances.
+			Null Hypothesis												- The two Populations have the same Variance.
+	
+	Hypothesis Testing: To infer details about the Population from a Sample of the Population.
+		
+		p-value: Denotes the chance of observing such data assuming the Null Hypothesis is true. If small, reject the Null Hypothesis.
+		
+		Null Hypothesis: The Status Quo; the Expected Hypothesis. 
+			Usually assumes attributes to be independant (i.e. no relationship). 
+			Usually assumed to be true as the premise of all following Tests.
+		
+		Chi Square Test: To find if two attributes are independant or not.
+			Behaviour:
+				Attains approximate p-values given any Sample Size. 
+				Considers alternative Contingency Tables whose Grand Totals match the observed Contingency Table's Grand Total (compares more Tables).		
+		
+			Underlying Distribution 									- Multinomial Distribution.
+			p-value Interpretation 										- Rarity of the observed Contingency Table assuming Null Hypothesis is true.
+			Null Hypothesis 											- Row and Column attributes are independant (i.e. overall probability for the cell is equal to the multiplication of the Row and Column probabilities).
+		
+		Fisher's Exact Test: To find if two attributes are independant or not.
+			Behaviour:
+				Attains exact p-values for small Sample Sizes.
+				Considers alternative Contingency Tables whose Row and Column Totals match the observed Contingency Table's Row and Column Totals (compares less Tables).
+				
+			Underlying Distribution										- Hypergeometric Distribution.
+			p-value Interpretation										- Rarity of the observed Contingency Table assuming Null Hypothesis is true.
+			Null Hypothesis												- Row and Column attributes are independant (i.e. overall probability for the cell is equal to the multiplication of the Row and Column probabilities).
+			
+		McNemar's Test: To find if a Treatment was statistically significant or not.
+			Behaviour:
+				Automatically assumes Row and Column attributes already have some relationship.
+				Considers only 2-Dimensional Contingency Tables.
+			
+			Underlying Distribution										- Binomial Distribution. Approximates to Chi-Square Distribution for large numbers of discordants.
+			Null Hypothesis												- Difference between the discordant changes are zero.
+	
+		One-Sample Test: To find if a Population has the Hypothesized Location or not based on a Sample.
+			Null Hypothesis												- The Population has the Hypothesized Location. 
+			
+			Parametric Test: Applied to Populations whose Distributions are from a known Parametric Family.
+			
+				One-Sample Student's t-test: Assumes a Normally Distributed Population. 
+		
+			Non-Parametric Test: Applied to Populations whose Distributions are not part of a known Parametric Family. If Sample Size is large, Populations are assumed to be Normally Distributed under the CLT, and a Parametric Test can be used instead.
+				
+				Sign Test: Tests for the equality of the number of observations whose value for the attribute is more than the Null Hypothesized Location, and the number of observations whose value for the attribute is less than the Null Hypothesized Location.
+					Behaviour: 
+						Removes observations that are equal to the Hypothesized Location.		
+				
+				Signed Rank Test: Tests for the equality of the sum of Ranks between positive and negative differences from the observed values for the attribute and the Null Hypothesized Location. 
+					Behaviour: 
+						Removes observations that are equal to the Hypothesized Location.
+						For ties between observations, their Ranks will be averaged and each gets the averaged Rank as a replacement.
+				
+		Two-Sample Test: To find if two Populations have the same Location or not based on a Sample from each.
+			Null Hypothesis												- The difference between the Locations from each Population is 0.
+		
+			Parametric Test: Applied to Populations whose Distributions are from a known Parametric Family.
+				
+				Two-Sample Student's t-test: Two independant Samples from Normally Distributed Populations.
+				
+				Paired Student's t-test: Two related Samples from Normally Distibuted Populations are combined to find the differences in Location. Since the difference is also Normally Distributed, a One-Sample t-test can be done, with Null-Hypothesized Location = 0.
+				
+			Non-Parametric Test: Applied to Populations whose Distributions are not part of a known Parametric Family. If Sample Size is large, Populations are assumed to be Normally Distributed under the CLT, and a Parametric Test can be used instead.
+				
+				Rank-Sum Test: Tests if the sum of Ranks between two independant Samples are close enough. Both independant Samples are concatenated, and the resulting Ranks are generated based on the values of the target attribute. The sum of Ranks will then be generated for each Sample.
+					Behaviour:
+						For ties between observations, their Ranks will be averaged and each gets the averaged Rank as a replacement. 
+				
+				Paired Sign Test / Signed Rank Test: Two related Samples are combined to find the differences in Location. The respective One-Sample Non-Parametric Test can then be done on these differences, with the Null Hypothesized Location = 0.
+		
+		Multi-Sample Test: To find if multiple Groups have the same Location or not via a Sample from each.
+			Null Hypothesis												- All Groups have the same Location.
+			
+			Parametric Test: Applied to Groups whose Distributions are from a known Parametric Family.
+			
+				One-Way ANalysis Of VAriance: Direct extension of the Two-Sample Student's t-test - multiple independant Normally Distributed Groups, with ideally equal Variances.
+					Behaviour:
+						Robust Statistical Test - assumptions need not hold 100% for the p-value to be accurate.
+						
+						Grand Mean - the Mean of all observations.
+						Group Effect = Grand Mean - Group Mean.
+						Observed Value = Grand Mean + Group Effect + Individual Variance.
+						
+						Use Sum of Squares of all differences between Observed Value and Grand Mean <SST> - Total Variation.
+						Total Variation <SST> = Sum of Squares of all differences between Group Mean and Grand Mean <SSB> + Sum of Squares of all differences between Observed Value and Group Mean, or Residuals <SSE>.
+						If the Null Hypothesis is true, the <SSB> should be small.
+						
+						Degrees of Freedom: Normalizing Factors for Sum of Squares.
+						For <SST>, <num_observations> - 1,
+						For <SSB>, <num_groups> - 1,
+						For <SSE>, <num_observations> - <num_groups>
+						
+						Normalized SS:
+						Mean-Square Between, <MSB> = <SSB> / (<num_groups> - 1)
+						Mean-Square Error, <MSE> = <SSE> / (<num_observations> - <num_groups>)
+						
+						F-Statistic = <MSB> / <MSE>
+						The ratio between the Variation between the Groups and the Variation within the Groups.
+						
+					Null Hypothesis										- F-Statistic should be around 1.
+				
+				Post-Hoc Tests / Multiple Comparison Tests: A follow-up test that is used to find which Group(s) caused the rejection of the Null Hypothesis.
+				
+					Least Significant Difference Test: Considers all pairwise comparisons between two Groups.
+						Behaviour:
+							Considers the difference between the Locations of two Groups - if the difference is greater than a calculated threshold, we can safely conclude that the two Groups have different Locations.
+							
+							threshold = t-statistic * sqrt(<MSE> * (1/<group_i_size> + 1/<group_j_size>))
+					
+					Contrasts of Locations Test: Considers only selected Groups via a specified Linear Combination.
+						Behaviour:
+							Contrast Definition: The sum of weights given to each Location must equate to zero.
+							
+							The test can only be about checking that the Contrast = 0.
+							
+							<SSC> = sum(<weight> * <group_mean>)^2 / sum(<weight>^2 / <group_size>)
+							
+							If the Contrast = 0, then <SSC> should be small.
+							
+							The ratio <SSC> / <MSE> follows an F distribution with degrees of freedom 1 and <num_observations> - <num_groups>.
+							
+							Note: Depending on Problem Statement, this Contrast Test can be directly used.
+							
+						Null Hypothesis									- The sum is zero.
+				
+			Non-Parametric Test: Applied to Populations whose Distributions are not part of a known Parametric Family. If Sample Size is large, Populations are assumed to be Normally Distributed under the CLT, and a Parametric Test can be used instead.
+			
+				Kruskal-Wallis Test: Direct extension of the Rank-Sum Test.
+	
+		Correlation Test: Studies how variables jointly behave - the strength of correlation is represented by a normalized variable. 
+			Behaviour:
+				Pearson's Correlation Coefficient: -1 to 1.
+			
+			Null Hypothesis 											- The variables are totally not correlated. Assumes Normal Distribution.
+	
+	Regression Analysis: A model can be used to predict for dependant variables given independant variables.
+		
+		Simple Linear Regression: Y_i = B_0 + B_1 * x_i + e_i, where e_i represents the difference between Y_i and fitted Y_i => Y_i = fitted_Y_i + e_i.
+			Behaviour:
+				All Y_i follows a Normal Distribution - E(Y_i) = B_0 + B_1 * x_i, var(Y_i) = var(e_i) = sigma^2.
+				
+				Minimize the Least Squares Loss Function to obtain fitted_B_0 and fitted_B_1 - sum((Y_i - (B_0 + B_1 * x_i))^2).
+				
+				fitted_B_1 = sum((x_i - x_bar)(Y_i - Y_bar)) / sum((x_i - x_bar)^2).
+				
+				fitted_B_0 = Y_bar - fitted_B_1 * x_bar.
+				
+				sigma^2 = <MSE> = (1 / (n-2)) * sum((Y_i - fitted_Y_i)^2).
+				
+				Sum of Squares of all differences between Y_i and mean(Y_i) <SST> = Sum of Squares of all differences between fitted_Y_i and mean(Y_i) <SSR> + Sum of Squares of all differences between Y_i and fitted_Y_i <SSE>.
+					Only true when the fitted line is considered.
+					
+				Degrees of Freedom: Normalizing Factors for Sum of Squares.
+				For <SSR>, 1,
+				For <SSE>, (n-2)
+				
+				Normalized SS:
+				Mean-Square Regression, <MSR> = <SSR> / 1
+				Mean-Square Error, <MSE> = <SSE> / (n-2)
+				
+				F-Statistic = <MSR> / <MSE>
+				
+				Coefficient of Determination: <SSR> / <SST>, this is the square of the Correlation Coefficient for the Simple Regression Model. CoDs -> 1 imply that either the model is a good fit, or that there is a large number of predictors in the model.
+				
+				Adjusted Coefficient of Determination: 1 - (<SSE> / (n - k - 1)) / (<SST> / (n - 1)), a CoD which takes into account the number of predictors in the model. k is defined as the number of independant variables for the model. For the Simple Regression Model, k = 1.
+				
+			Null Hypothesis												- The predictor variables cannot predict for the dependant variable => The various coefficients = 0 => F Statistic is small (around 1). Assumes Y_i is Normally Distributed.
+			
+	Simulation: If one can set things up to mimic the real world to a good degree (i.e. introduce randomness in a correct fashion), one can get some imitation of a real world scenario at any time, or repeat it many times (i.e. generate Controlled Samples).
+		
+		- Advantages:
+			- Overcome rarity of real-world scenarios.
+			- Avoid trying to calculate for difficult or impossible exact theoretical results => approximate it instead with a large, finite number of trials.
+			- Ability to vary scenario parameters easily.
+		
+		- Random Number Generators: Deterministic sequence of numbers which "look" random (pseudo-random).
+			- Properties:
+				- Seeds: All RNGs are actually deterministic sequences of numbers - they need to start from somewhere.
+			
+			- Types:
+				- Uniform Random Variables: U(0, 1)
+					- Congruential Generators: X_i = (a * X_(i-1) + c) % M
+						- X_0 would be the seed to start the sequence.
+						- M should be large Prime Numbers to avoid the sequence being repeated too frequently.
+						- There's still some structure in the generated numbers which can interfere when trying to detect other distributions in simulation.
+					- Mersenne Twister.
+		
+				- Non-Uniform Random Numbers: 
+					- If Random Variable X has a closed-form Cumulative Distribution Function F(x) = P(X <= x), then F(X) ~ U(0, 1). 
+					- If U ~ U(0, 1), then inverse-F(U) would effectively sample from Random Variable X.
+					
+					- Box Muller Algorithm: Samples from the Normal Distribution.
+						1. Generate U_1, and U_2 from U(0,1).
+						2. theta = 2 * pi * U_1.
+						3. R = (-2 log(U_2))^(0.5).
+						4. X = R * cos(theta), Y = R * sin(theta).
+						5. X and Y are independent Normal Random Variables.
+			
+		- Monte Carlo Simulation Approximation:
+			- Generate S independent data sets under the conditions of interest.
+				- True Value of Parameter known.
+			- Compute the numerical value of the Estimator / Test Statistic T for each data set => S simulated Estimators / Test Statistics.
+			- If S is large enough, summary statistics across the different Ts will approximate the true properties of the Estimator or Test Statistic under the conditions of interest.
+			
+		- Bootstrap: Resampling from the Observed Sample if Population cannot be Simulated due to lack of information.
+		
+		- Statistical Quantities:
+			- Bias: Long-Run Error											= E(T) - true_value(Parameter)
+				- Unbiased: No error on average over the long-run.
+			- SD: Variation of the Estimator / Test Statistic				= sqrt((1 / (S - 1)) sum((T - E(T)) ^ 2))
+				- Small Preferred - tells us that luck is not a factor.
+			- MSE: SD^2 + Bias^2.
+		
+		- Statistical Applications:
+			- Checking the Distribution of a R.V.
+			- Comparing between Estimators.
+				- Are they biased in finite scenarios?
+			- Verifying the coverage of a Confidence Interval for a Parameter (e.g. 95% CI - 95% chance for the CI containing the true value of the Parameter).
+			- Does a Hypothesis Testing procedure attain the advertised Level of Significance? Power of a Test?
+	
+	Numerical Methods: Approximation Methods for Numerical Analysis.
+		- Root Finding: Given an Equation, determine its Roots.
+		- Integration: Given a Function without a Closed Form, determine the value of its Definite Integral.
+		- Optimization: Given a Function, determine its minima / maxima.
+			- Find the Roots of the Derivative of a Function.
+	
+Octave:
+	
+	Help Command: help
+	
+	Comments: %
+	
+	Disable Printout from Statement: <statement>;
+	
+	Element-Wise Operations: .<operator>
+		Element-Wise Multiplication - .*
+
+	A(row, column): Access the element in A at the specified row and column.
+	
+	Range Operations:
+		n, m - A sequence involving the numbers n and m.
+		n: m - A sequence involving the numbers from n to m inclusive.
+	
+	For Loop:
+		for i=1:10
+			... statements ...
+		endfor
+	
+SAS:
+	
+	Statement Terminator: ;
+	
+	Comment: * ... comment ...;
+		
+	Comment Block: 
+		/* 
+			... comments ...
+		*/
+		
+	Logical Operators:
+		Equality: =
+		Negation: ^
+	
+	Do Loop:
+		do <index_var> = <begin_num> to <end_num>; /* inclusive limits */
+			... statements ...
+		end;
+		
+	Built-In Variables:
+		Iteration Counter (w.r.t. Steps): _n_
+	
+	Steps: A series of related SAS Statements.
+	
+		Data Step 															- Creates, Reads, Modifies or Updates datasets.
+		
+			data <dataset name>;											- Specify the start of a new dataset.
+			data <file url>;												- Specify the start of a new permanent dataset.
+				
+				infile '<file url>' <parameter> ...;						- Import a dataset.
+					delimiter = "<delimiter>"								- Specify a delimiter regex for the dataset.
+					firstobs = <number>										- Specify the starting entry of the dataset.
+					obs = <number>											- Specify the ending entry of the dataset.
+				
+				set <dataset> ...;											- Read in and/or append data from the specified loaded datasets - all need to have the same input attributes.
+				
+				merge <dataset> <dataset> ...;								- Merges the specified datasets together ...
+					by <attribute>											- ... by the common attribute specified. Ensure that the constituent datasets are sorted by the common attribute before merging.
+				
+				input <attribute> ...;										- Specify atributes for an unloaded dataset.
+					<attribute> $											- Specify a preceding input attribute with non-numerical represented values.
+					<attribute> x - y										- Specify the columns where the digits (and symbols) meant to represent the values for the input attribute lie in the dataset.
+					@@ 														- Specify that more valid inputs may be encountered along the same line.
+					/ 														- Specify that the succeeding attributes start on the next line.
+					
+					@<start col num> <attribute> <datatype>					- Another way to specify which columns apply to which attribute.
+						$<num cols>.										- Datatype - Specify that the preceding attribute is a non-numeric type that takes up <num cols> of data.
+						<num cols>.<num decimal places>						- Datatype - Specify that the preceding attribute is a numeric-type that takes up <num cols> of data and has <num decimal places>. The decimal point in the data takes up one column.
+				
+				label <attribute> = <string> ...;							- Specify prettified header labels for specified attributes.
+				
+				format <attribute> ... <format>. ...;						- Apply a format to one or more specified attributes (see proc format). Alters the dataset as it is read in. The period is necessary to distinguish between a format and an attribute.
+				
+				output;														- Force output of all current attributes specified in the data step.
+				
+				<attribute> = ...;											- Introduce new attributes (based on input attributes from loaded datasets) into this dataset.
+				
+				keep <attribute> ...;										- Keeps only the values related to the specified attributes from each entry within the loaded dataset.
+				
+				drop <attribute> ...;										- Drops the values related to the specified attributes from each entry within the loaded dataset.
+				
+				where (<condition 1> and ...);								- Only consider the entries whose attributes satisfy the specified conditions.
+				
+				if (<condition 1>) then <statement1>;						- Only execute the statement on entries whose values from related attributes satisfy the specified conditions.
+				
+				else if (<condition 2>) then <statement2>;					- Only execute the statement on entries whose values from related attributes did not satisfy condition 1 earlier.
+				
+				else <statement3>;											- Execute the statement on entries whose values from related attributes did not satisfy any of the conditions made earlier.
+				
+				datalines; <dataset values>;							 	- Specify manual dataset entry.
+					.														- Indicates missing data within an entry.
+					
+				call streaminit(<seed>)										- Specify a starting seed for Random Number Generation.
+			
+		Proc Step (Procedure Step) 											- Performs Statistical Analysis on a dataset.
+			
+			proc <procedure>; 												- Defines a general procedure to be executed.
+			
+				format														- Procedure - Indicate to SAS what specific values mean for one or more potential attributes.
+					value $<format> "<value>" = <string> ... ;				- Sub Statement - Indicate to SAS what specific values mean in this non-numerical format, and save this as a usable format. <value> can also be the keyword 'Others' as a catch-all.
+					value <format> <value> = <string> ... ;					- Sub Statement - Indicate to SAS what specific values mean in this numerical format, and save this as a usable format. <value> can also be the keyword 'Others' as a catch-all.
+					value <format> <value1> - <value2> = <string> ... ;		- Sub Statement - Indicate to SAS what a range of values mean in this numerical format, and save this as a usable format. <value1> and <value2> can take on the keywords 'low' and 'high' respectively to specify ranges that include the minimum and maximum value. 
+			
+			proc <procedure> data = <dataset name> <flag> ...;				- Defines a procedure to be executed on a specified dataset.
+				
+				print 														- Procedure - Prints out the specified dataset.
+				
+				means														- Procedure - Finds commmon statistical information for each attribute in the specified dataset.
+					min														- Flag - Outputs the Minimum.
+					max 													- Flag - Outputs the Maximum.
+					sd 														- Flag - Outputs the Standard Deviation.
+				
+				univariate													- Procedure - Finds a variety of statistics for summarizing the data distribution for each numeric attribute in the specified dataset. More in-depth than the means procedure.
+					plot													- Flag - Additionally outputs a Box-and-Whiskers Plot, a Distribution Plot, and a QQ-Plot.
+					class <attribute>;										- Sub Statement - Specify an attribute meant to denote classification.
+					
+					histogram <attribute> / <option> ... ;					- Sub Statement - Chart a Histogram for a specified attribute.
+						midpoints = <value> to <value> by <value>			- Option - Set Histogram Range and Bin-Width.
+						normal												- Option - Consider the Normal Distribution in the final output. Activates the Kolmogorov-Smirnov Test if noplot is used.
+						noplot												- Option - Do not plot out the Histogram.
+						
+					qqplot <attribute>;										- Sub Statement - Chart a QQ-Plot of a specified attribute.
+					
+					robustscale												- Flag - Outputs Robust Measures of Scale.
+					trimmed = <value>										- Parameter - Specify elimination of (<value> * 100)% of the lowest and highest values.
+					winsorized = <value>									- Parameter - Specify addition of the clamped variants of the lowest and highest values below and above the (<value> * 100) percentile and ((1 - <value>) * 100) percentile respectively.
+					
+					mu0 = <value>											- Parameter - Change the Null-Hypothesized Mean. By default, univariate outputs the One-Sample Tests.
+					
+					by <attribute>;											- Sub-Statement - Execute the Univariate Procedure for every batch of rows with different values for that attribute.
+					
+					output out = <dataset_out> probt = <p attribute>;		- Sub Statement - Create a new Dataset that contains the p-value of the ttest executed by the Univariate Procedure.
+					
+				boxplot														- Procedure - Chart a Box-and-Whiskers Plot.
+					plot <attribute> * <class>;								- Sub Statement - Specify an attribute to chart the Box-and-Whiskers Plot for. 
+				
+				sgplot														- Procedure - Chart bivariate data.
+					scatter x=<attribute> y=<attribute> / <option> ...;		- Sub Statement - Specify two attributes to use for each axis of a Scatter Plot.
+						group = <attribute>									- Option - Specify a categorizing attribute.
+				
+				gplot														- Procedure - Chart bivariate data.
+					plot <attribute_y> * <attribute_x> = <class>;			- Sub Statement - Specify two attributes to be used for plotting a Scatter Plot, as well as an optional categorizing attribute.
+					symbol<n> value = {circle || square} color = {red || black}; - Sub Statement - Specify each category to have different symbols.
+					by <attribute>;											- Sub Statement - Specify a categorizing attribute. For each value present in the categorizing attribute, a new Scatter Plot will be drawn.
+				
+				freq														- Procedure - Chart Frequency / Contingency Tables for comparison between Categorical Variables. 0-Count Category Variables will not be displayed.
+					title <title>; 											- Sub Statement - Define a title for the Chart.
+					tables <attribute> ...;									- Sub Statement - Define attributes to include in the Frequency Tables.
+					tables <attribute> -- <attribute>; 						- Sub Statement - Define a range of attributes to include in the Frequency Tables, based on attribute order when the dataset was created.
+					tables <attribute> * <attribute> / <option>;			- Sub Statement - Defines a pair of attributes to chart a Contingency Table for - provides Frequency, Overall Percent, Row Percent and Col Percent for each cell.
+						chisq												- Option - Execute the Chi-Square Test (and Fisher's Exact Test) on the pair of attributes.
+						agree												- Option - Conduct a McNemar's Test on the pair of attributes.
+					weight <attribute>; 									- Sub Statement - Used when the dataset contains summarized frequencies for each combination of attributes stored under <attribute>, rather than a 1 line per observation format.
+				
+				ttest														- Procedure - Execute a Two-Sample t-test. Two p-values are given; the pooled p-value assumes the two populations have the same variances, whereas the satterthwaite p-value does not.
+					class <identifier>;										- Sub Statement - Specify a sample identifier attribute.
+					paired <attribute> * <identifier>;						- Sub Statement - Specify related attributes between two related samples within the specified dataset.
+				
+				npar1way													- Procedure - Non-Parametric 1-Way Analysis.
+					wilcoxon												- Flag - Execute a Two-Sample Rank-Sum Test / Kruskal-Wallis Test. The dataset should contain both / all samples.
+					
+					class <identifier>; 									- Sub-Statement - Specify a sample identifier attribute.
+					exact wilcoxon;											- Sub Statement - Output the exact p-value. Not efficient for large datasets / large groups.
+				
+				anova														- Procedure - Execute the ANOVA Test.
+					class <identifier>;										- Sub Statement - Specify a group identifier attribute.
+					model <attribute> = <identifier>;						- Sub Statement
+					means <identifier> / <option>;							- Sub Statement - Output a Statistical Summary and a Box-and-Whiskers Plot for each group.
+						hovtest = <{levene || bartlett}>;					- Option - Output results from the Levene and / or Bartlett Test to determine if variance equality was maintained.
+				
+				glm															- Procedure - Execute Tests related to General Linear Models (LSD / Contrast).
+					class <identifier>;										- Sub Statement - Specify a group identifier attribute.
+					model <attribute> = <identifier>;						- Sub Statement
+					means <identifier>;										- Sub Statement - Groups the groups which has similar enough means.
+					means <identifier> / lsd;								- Sub Statement - Execute the LSD Test.
+					contrast <title> group <weight_1> ... <weight_n>;		- Sub Statement - 
+					Execute the Contrast Test for a Contrast considering n groups.
+					
+					output out = <dataset> <output_type> = <attribute>		- Sub Statement - Output certain findings of the glm procedure to the specified output dataset.
+						p													- Output Type - Extracts out the group_mean within the specified input dataset.
+						r													- Output Type - Extracts out the observed_value - group_mean within the specified input dataset.
+				
+				corr														- Procedure - Execute a Correlation Analysis.
+					nosimple;												- Sub Statement - Prevent output of simple summary statistics.
+				
+				reg															- Procedure - Calculate a Regression Model.
+					model <attribute> = <attribute>	... / <option>;			- Sub Statement - Specify the dependant and independant attributes.
+						clb													- Option - Specify that the confidence limits for the betas should also be output.
+						noprint												- Option - Specify that no summary stats should be given.
+					
+					output out = <dataset> <output_type> = <attribute>;		- Sub Statement - Output certain findings of the reg procedure to the specified output dataset.
+						p													- Output Type - Extracts out the fitted_Y_i within the specified input dataset.
+						r													- Output Type - Extracts out the observed_value - fitted_Y_i within the specified input dataset.
+					
+					plot <attribute> * <attribute>;							- Sub Statement - Output a Scatter Plot.
+					
+					plot residual. * <attribute>;							- Sub Statement - Output a Residual Plot for the independant attribute.
+					
+					plot residual. * p;										- Sub-Statement - Output a General Residual Plot for the Multivariate Case.
+					
+					plot residual. * nqq. / nostat;							- Sub Statement - Output a QQPlot that tests for Normality of Residuals.
+					
+				sort														- Procedure - Sorts the specified dataset ...
+					by <{ || descending}> <attribute>;						- Sub Statement - ... by the specified attribute.
+				
+				sql															- Procedure - Performs an operation defined in SQL.
+				
+			var <attribute> ...;											- Defines one or more input attributes to be worked upon by the procedure from the dataset specified.
+			
+			format <attribute> ... <format>. ...;							- Apply a format to one or more specified attributes (see proc format). Only alters the interpretation of the dataset within the procedure step. The period is necessary to distinguish between a format and an attribute.
+		
+		run; 																- Executes a Step.
+		
+		quit; 																- Stops a running Step.
+
+R:
+	Help Command: ?
+	
+	Get Workspace Path: getwd()
+	Set Workspace Path: setwd(<dir>)
+	
+	Comment: # ... 
+	
+	Logical Operators:
+		Equality: ==
+		Negation: !
+		Conjunction: &
+		Disjunction: |
+		
+	Value Operators:
+		Modulo: %%
+	
+	Assignment Operators: 
+		<-																					- Global Assignment.
+			rm <name> 																		- Remove the specified global variable with that name.
+		= 																					- Local Assignment.
+	
+	Range Operations:
+		n: m 																				- A sequence involving the numbers from n to m inclusive.
+	
+	For Loop:
+		for (i in 1:10) {
+			# ... statements ...
+		}
+		
+		for (i in <vector>) {
+			# ... statements ...
+		}
+		
+	While Loop:
+		while(<logical value>) {
+			# ... statements ...
+		}
+	
+	Conditional Behaviour:
+		If the <conditional> is working on a single valued target, the <conditional> will return a logical value.
+		If the <conditional> is working on a vector or matrix, the <conditional> will return a logical vector or logical matrix.
+	
+	Conditional Flow:
+		if (<logical value>) {
+			# ...
+		} else if (<logical value>) {
+			# ...
+		} else {
+			# ...
+		}
+		
+		ifelse(<logical vector>, <value1>, <value2>)										- Assigns <value 1> to the T elements in the specified <logical vector>, and <value 2> otherwise.
+	
+	Function Definition:
+		<function_name> <- function(<parameter>, ...) {
+			# ... statements ...
+			
+			# Note: If no return() stated, R will return the last executed statement.
+			return(<value>);
+		}	
+	
+	Library Loading Function: library(<library>)
+		foreign 																			- Imports additional input functions to import data from various external propreitary sources.
+
+	Input Functions:
+		scan( ... )																			- Can be used to read in Vectors or Lists.
+		read.table( ... ) 																	- Can be used to read Dataframes from free-format .txt files. Most general of the read methods. Note that columns with String variables are read in as Factors, unless otherwise stated.
+			header = {T || F}																- Parameter - Specifies if the first row of the .txt file has defined headers.
+			col.names = <vector>															- Parameter - Manually specify column names.
+			sep = <delimiter>																- Parameter - Specifies the delimiter for the table being read in.
+			skip = <number>																	- Parameter - Specifies the number of entries to skip at the start.
+			nrows = <number>																- Parameter - Specifies the number of entries to read in.
+		read.fwf( ... )																		- Can be used to read files with a fixed-width format.
+			width = <vector>																- Parameter - Specifies a numeric vector representing the number of columns for each attribute.
+		read.csv( ... )																		- Can be used to read Dataframes from comma-delimited files.
+		
+		read.mtp( ... )																		- Imports Minitab worksheets. Requires the foreign library.
+		read.xport( ... )																	- Reads in SAS files in TRANSPORT format. Requires the foreign library.
+		read.S( ... )																		- Reads in Binary Objects produced by S-plus. Requires the foreign library.
+		read.spss( ... )																	- Reads in SPSS files. Requires the foreign library.
+		
+		source(<url> ".R")																	- Reads in a specified R script.
+		
+	Output Function:
+		sink(<url>)																			- Defines the start of a segment whereby all output from code thereafter this statement will be piped to the specified file.
+		sink()																				- Defines the end of the abovementioned segment.
+		cat( ... )																			- Concatenates objects and outputs them.
+		write.table(<dataframe>, <url>)														- Outputs the Dataframe to a file. Works well with read.table().
+		
+	Common Functions:
+		paste(<string1>, <string2>, sep = <delimiter>)										- Concatenates 2 strings together.
+	
+		dim(<{matrix || dataframe}>)														- Returns a 2D Vector indicating the dimensions of the specified Data Object.
+		rbind(<{vector || matrix || dataframe}>, <{vector || matrix || dataframe}>)			- Appends two Data Objects together row-wise.
+		cbind(<{vector || matrix || dataframe}>, <{vector || matrix || dataframe}>)			- Appends two Data Objects together column-wise.
+		head(<{vector || matrix || dataframe}>)												- Prints out the first few elements in the Data Object.
+		
+		Reduce(f, x)																		- Higher Order Function that returns() a List. f(a, b) returns() only either a or b.
+		Filter(f, x)																		- Higher Order Function that returns() a List. f(a) returns() whether a should remain in the final resultant object.
+		Map(f, x) 																			- Higher Order Function that returns() a List. f(a) returns() an augmented value of a.
+		
+		sapply(<{vector || list}>, f)														- Similar to Map() - is a simple lapply (function defaults to returning a Vector or Matrix when possible).
+		
+		set.seed(<value>)																	- Sets a seed for Rnadom Number Generation.
+		
+	4 Most Commonly Used Data Structures:
+		Vector 																				- Set of Elements of the same type (logical, numeric, character).
+			c(<value>, <vector>, ...)														- Creates a Vector that contains the specified values and values from the constituent vectors.
+			
+			numeric(<size>)																	- Creates a <size>-dimensional Vector which contains numbers initialized to 0.
+			character(<size>)																- Creates a <size>-dimensional vector which contains Strings initialized to "".
+			logical(<size>)																	- Creates a <size>-dimensional vector which contains logical values initialized to F.
+			
+			factor(<vector>, levels = <category definition vector>)							- Creates a Categorical Vector / Factor based on the supplied Vectors.
+			contrasts(<vector>) <- <{vector || matrix}>										- Sets the Contrasts associated with a Categorical Vector / Factor.
+			
+			rep(<{value || vector}>, <{value || vector}>)									- Creates a Vector with repeating sequences.
+			seq(from=n, to=m, by=s) 														- Creates a Vector that contains a sequence from n to m, with step size s.
+			
+			dnorm(<vector>, mean = <value>, sd = <value>)									- Creates a Vector whose values correspond to the normal distribution centered at the specified mean and spread out according to the specified range.
+			
+			runif(<size>, min = 0, max = 1)													- Creates a <size>-length Vector that contains randomly-drawn values from the Uniform Distribution starting and ending at the two limits (every value between the limits are equally probable).
+			
+			sample(<vector>, size = <empirical_sample_size>, replace = <{T || F}>)			- Creates a <empirical_sample_size>-length Vector that contains sampled observations from the supplied Vector.
+			
+			dim(<matrix>) <- NULL															- Flatten the Matrix into a Vector format.
+			unlist(<list>)																	- Converts a List (from a Higher-Order Function) into a Vector.
+			
+			length(<vector>)																- Finds out size of Vector.
+			
+			<vector>[<{value || vector}>]													- Access the specified Vector elements. Note: Indexing starts from 1.
+			
+		Matrix 																				- A Vector of Vectors.
+			dim(<vector>) <- <2D vector> 													- Convert a Vector into a Matrix, whose dimensions are specified by the 2D Vector.
+			matrix(<vector>, nr=m, nc=n, byrow={F || T})									- Convert a Vector into a Matrix whose dimensions are mxn. Note: byrow=T is more intuitive.
+			as.matrix(<dataframe>)															- Convert a Dataframe into a Matrix.
+			
+			<matrix>[<{value || vector}>, <{value || vector}>] 								- Access the specified Matrix elements. Note: Indexing starts from 1.
+			
+			<matrix> %*% <{vector || matrix}> 												- Matrix Multiplication.
+			t(<matrix>)																		- Returns the transpose the specified Matrix.
+			solve(<matrix>)																	- Solve for the inverse of the specified Matrix.
+		
+		Dataframe 																			- Similar to a Matrix, but the columns can have different interpretations. Useful for storing datasets.
+			data.frame(<matrix>)															- Converts a Matrix into a Dataframe.
+			data.frame(<vector>, <vector> ...)												- Converts a collection of Vectors into a Dataframe column-wise.
+			
+			names(<dataframe>)																- Output column names of the specified data frame.
+			names(<dataframe>) <- <vector>													- Rename columns of a Dataframe.
+			row.names(<dataframe>) <- <vector>												- Rename rows of a Dataframe.
+			<dataframe>$<attribute>															- Specify for an attribute within the dataframe. Aka this outputs a <d_attribute>.
+			
+			merge(<dataframe>, <dataframe>, by="<attribute>", all=T)						- Merge two Dataframes together via a common attribute. Implicitly sorts the resultant dataset by the specified attribute.
+				all = <{F || T}>															- Parameter - Specify the behaviour for non-overlapping portions of the constituent datasets.
+			
+			rank(<d_attribute>)																- Outputs the rank for each entry w.r.t <d_attribute>'s sorted order, with 1 being the smallest.
+			
+			order(<d_attribute>)															- Outputs the index of each entry in the dataframe where the entries would be sorted w.r.t <d_attribute>.
+			<dataframe>[order(<d_attribute>), ]												- Sorts the Dataframe via the specified attribute row-wise in ascending order.
+			<dataframe>[rev(order(<d_attribute>)), ]										- Sorts the Dataframe via the specified attribute row-wise in descending order.			
+			
+			<dataframe>[<{ || value || vector}>, <{ || value || vector}>] 					- Access the specified Dataframe elements. Note: Indexing starts from 1.
+				- Column Conditionals (i.e Per-Observation Conditionals) should operate on the Rows.
+			
+			attach(<dataframe>)																- Make the dataframe elements accessible by their names within the current R session. Useful for subsetting with logical operations.
+			detach(<dataframe>)																- Revert the above attach() change.
+		List																				- Collection of Data Structures.
+		
+			c(<value>, <value>, ...)														- Creates a List that contains the specified values of different modes.
+			
+			<list>$<identifier>																- Access the object with the specified identifier.
+	
+	Descriptive Statistics:
+		summary(<vector>)																	- Outputs the Min, 1st Quartile, Median, Mean, 3rd Quartile, and Max values in the Vector.
+		sd(<vector>)																		- Outputs the Standard Deviation of the values in the Vector.
+		var(<vector>)																		- Outputs the Variance of the values in the Vector.
+		IQR(<vector>)																		- Outputs the Inter-Quartile Range of the values in the Vector.
+		quantile(<vector>, <value>)															- Outputs the (<value> * 100)th Quantile of the supplied Vector.
+		
+	Plotting Functions:
+		hist(<vector>, ... )																- Construct a Histogram plot for the specified Vector. 
+			freq = {F || T}																	- Parameter - Determines if the y-axis should be in terms of frequency or density. By default, freq = T.
+			main = <title> 																	- Parameter - Defines a label for the overall plot.
+			xlab = <xLabel>																	- Parameter - Defines a label for the x-axis of the plot.
+			xlim = <2D vector>																- Parameter - Defines the range for the x-axis with a 2D Vector containing the min and max values. Useful when comparing across different Histograms vertically.
+			ylab = <yLabel>																	- Parameter - Defines a label for the y-axis of the plot.
+			ylim = <2D Vector>																- Parameter - Defines the range for the y-axis with a 2D Vector containing the min and max values. Useful when comparing across different Histograms vertically.
+			breaks = <{vector || value}>													- Parameter - Defines histogram bin-widths. Each element in the Vector represents the lowest value of each bin, whilst the value denotes size for all bins.
+			include.lowest = {F || T}														- Parameter - If each bin should include the lowest value (as defined in the breaks Vector).
+			
+		qqnorm(<vector>)																	- Compare the quantiles of the specified Vector against the normal distribution within a partial QQ-Plot.
+		
+		qqline(<vector>)																	- Appends a plot of a theoretical normally distributed version of the specified Vector. Completes the partial QQ-Plot generated above.
+		
+		stem(<vector>)																		- Construct a Stem-and-Leaf Plot.
+		
+		boxplot(<vector>~<classifier attribute>)											- Construct a Box-and-Whiskers Plot.
+		
+		plot(<attribute>, <attribute>, ...)													- Construct a Scatter Plot involving the 2 (continuous) attributes.
+			main = <title> 																	- Parameter - Defines a label for the overall plot.
+			xlab = <xLabel>																	- Parameter - Defines a label for the x-axis of the plot.
+			xlim = <2D vector>																- Parameter - Defines the range for the x-axis with a 2D Vector containing the min and max values.
+			ylab = <yLabel>																	- Parameter - Defines a label for the y-axis of the plot.
+			ylim = <2D Vector>																- Parameter - Defines the range for the y-axis with a 2D Vector containing the min and max values.
+			pch = {0 || 1 || 2 || ... || 18}												- Parameter - Defines point symbol to be used.
+			col = {1 || 2 || ... }															- Parameter - Specify color for points.
+			type = "n"																		- Parameter - Specify that no points should be generated. Use when passing in the full dataset to automatically set the xlab, xlim, ylab, and ylim. Use further point() calls to specify custom points for different classifiers.
+		
+		points(<attribute>, <attribute>, ...)												- Add more points to a prior Scatter Plot.
+			pch = {0 || 1 || 2 || ... || 18}												- Parameter - Defines point symbol to be used.
+			col = {1 || 2 || ... }															- Parameter - Specify color for points.
+		
+		par( ... )																			- Set up the options for graphical outputs.
+			mfrow = <2D vector>																- Parameter - Set the graphical output s.t. multiple outputs appear on different areas 'row-wise'.
+			new = {T || F}																	- Parameter - If T, do NOT overwrite past plots.
+			
+		table(<vector>, ...)																- Chart a Frequency / Contingency Table for the supplied Vector(s). 0-count categories are only shown when the supplied Vector(s) is / are a Factor(s) with indicated levels.
+		
+		ecdf(<vector>)																		- Charts a "Cumulative" Plot for the supplied Vector.
+		
+	Testing Functions:
+		chisq.test(<table>)																	- Conduct a Chi-Square Test based on a supplied Contingency Table.
+		
+		fisher.test(<table>)																- Conduct a Fisher Exact Test based on a supplied Contingency Table.
+		
+		mcnemar.test(<table>)																- Conduct a Mcnemar Test based on a supplied Contingency Table.	
+		
+		t.test(<vector>, ...)																- Conducts a One-Sample t-test.
+			mu = <value>																	- Parameter - Specify the mean under the null hypothesis.
+		
+		binom.test(<value>, <value>, 0.5)													- Can be used to conduct a One-Sample Sign Test, based on a supplied number of 'positive discordants' and number of 'discordants'. If P(success) is close to 0.5, then the Sign Test passes.
+		
+		wilcox.test.default(<vector>, ...)													- Conduct a One-Sample Signed Rank Test based on a given Vector of supplied 'discordants'.
+			mu = <value>																	- Parameter - Specify the mean under the null hypothesis.
+			alternative = "two-sided"														- Parameter - Consider both extremes.
+		
+		var.test(<vector>, <vector>)														- Conduct an F-test to determine if the two given Vectors have the same variance.
+		
+		t.test(<vector>~<sample id vector>, ...)											- Conducts a Two-Sample t-test.
+			mu = <value>																	- Parameter - Specify the difference in mean under the null hypothesis.
+			var.equal = {F || T}															- Parameter - Specify if the samples have the same variance.
+			
+		wilcox.test(<vector>~<sample id vector>)											- Conducts a Two-Sample Rank Sum Test. Gives exact p-values.
+		
+		t.test(<vector>, <vector>, ...)														- Conducts a Two-Sample Paired t-test.
+			mu = <value>																	- Parameter - Specify the difference in mean under the null hypothesis.		
+			paired = T																		- Parameter - Specify that the two supplied Vectors hold paired data.
+		
+		aov(<vector>~<group id vector>)														- Conduct the ANOVA Test. Returns a Dataframe "model" that contains all relevant information with regards to the ANOVA computation.
+			sum(model$residuals) 															- Denotes the <SSE>. Can be used to further conduct the LSD Test.
+			model$fitted.values																- A Vector containing the group_mean that the corresponding entry in the supplied Vector to aov() has.
+		
+		lm(<vector>~<contrasted group vector>)												- Returns a Dataframe "model" that contains the information associated with a Contrast Test.
+			- p-value only valid if the group vector is orthogonal to one another.
+			- Should do manual computation via the formula for consistency with the general case.
+		
+		kruskal.test(<vector>~<group id vector>)											- Conduct a Kruskal-Wallis Test. Gives approximate p-values.
+		
+		bartlett.test(<vector>, <group id vector>)											- Conduct Bartlett's Test.
+		
+		aov(abs(<vector> - <group mean>) ~ <group id vector>)								- Conduct Levenne's Test. Returns a dataframe "model" that contains all relevant information with regards to the Levenne's Test Computation.
+		
+		ks.test(<vector>, "pnorm", mean(<vector>), sd(<vector>))							- Check if the supplied Vector is part of a Normal Distribution using the Kolmogorov-Smirnov Test.
+		
+		cor(<vector>, ...)																	- Check for the Correlation between multiple Vectors via a Correlation Matrix.
+			method = "Pearson"																- Specify that the Pearson Method of calculating Correlation should be used.
+			
+		cor.test(<vector>, ...)																- Conduct a Correlation Test.
+		
+		lm(<vector> ~ <vector> + ...)														- Returns a Dataframe "model" that contains the information associated with a Regression Analysis.
+			model$residual																	- A Vector containing the residuals of the model.
+			model$fitted																	- A Vector containing the fitted values w.r.t the inputs of the model.
+			model$coefficients																- A Vector containing the coefficients of the model.
+		
+		aov(<model>)																		- Runs ANOVA on the Dataframe "model".
+		
+		confint(<model>)																	- Generates the confidence intervals of the model coefficients.
+		
+		predict(<model>, <dataframe>)														- Outputs fitted values based on a dataframe of independent predictor variables also used by the model.
+		
+	Numerical Analysis:
+		uniroot(f, lower = <value>, upper = <value>)										- Returns a Dataframe "root" within [lower, upper] of a supplied function w.r.t its first argument. The root is a value which when supplied to the function makes it return 0. f(lower) * f(upper) should be negative.
+		
+		polyroot(<vector>)																	- Returns all possible roots for a polynomial specified by its coefficients in the supplied Vector.
+		
+		integrate(f, lower = <{value || -Inf}>, upper = <{value || Inf}>, <argument> ...)	- Returns the value of the evaluated definite integral of the supplied function w.r.t its first argument; subsequent arguments should be sent in after the "upper".
+		
+		optimize(f, lower=<value>, upper=<value>, maximum=<{T || F}>, <argument> ...)		- Returns a Dataframe "optimizer" within [lower, upper] of a supplied one-dimensional function w.r.t its first argument.
+			${minimum || maximum}															- The Value that can be sent into the function to output its minimum / maximum within the specified range.
+			$objective																		- The minimum / maximum of the function within the specified range.
+		
+		optim(<starting_point_vector>, f, <argument> ...)									- Returns a Dataframe "optimizer" within [lower, upper] of a supplied multi-dimensional function. The function's first argument and the <starting_point_vector> have to correspond in length - they represent each dimension that the function possesses.
+			$par																			- Estimated Values that minimizes the supplied multi-dimensional function.
+		
+SPSS:
+	
+	Transform -> Compute Variable															- Create a new attribute based on computations on existing attributes.
+	
+	Analyze -> Compare Means -> One-Sample t Tests											- Conduct a One-Sample t-test.
+	
+	Analyze -> Nonparamteric Tests -> One Sample ...											
+		Settings Tab -> Customize Tests -> Compare Median to Hypothesized					- Conduct a One-Sample Signed-Rank Test.
+		
+	Analyze -> Compare Means -> Independent Sample T tests ...
+		Define Groups -> Continue -> Ok														- Conduct a Two-Sample t-test. 
+	
+	Analyze -> Nonparametric Tests -> Independant Samples ...
+		Settings -> Customize tests -> Mann-Whitney U (2 samples)							- Conduct a Two-Sample Rank Sum Test.
+	
+	Analyze -> Compare Means -> Paired Sample T test 										- Conduct a Two-Sample Paired t-test.
+	
+	Analyze -> Compare Means -> One-way ANOVA ...
+		Options -> Descriptive -> Continue -> Ok											- Conduct the ANOVA Test.
+		Options -> Homogeneity of variance test												- Run Levenne's Test.
+		Post Hoc. -> LSD																	- Conduct the Post Hoc LSD Test.
+		Contrasts																			- Set Contrasts to do a Contrasts Test.
+	
+	Analyze -> General Linear Model -> Univariate ...
+		Save -> Unstandardized -> Continue -> Ok ...
+			Analyze -> Descriptive Statistics -> Explore ...
+				Plots -> Normality Plots with Tests	-> Continue -> Ok 						- Conduct a KS Test for Normality.
+	
+	Analyze -> Nonparametric Tests -> Legacy Dialogs -> K Independent Samples ...			- Conduct a Kruskal-Wallis Test.
+	
+	Analyze -> Correlate -> Bivariate ...
+		Pearson -> Correlation Coefficients -> Ok											- Check for the Correlation between multiple variance via a Correlation Matrix.
+	
+	Analyze -> Regression -> Linear ...
+		Statistics -> Confidence Intervals													- Run a Regression Analysis w.r.t. a Simple Regression Model.
+		Save -> Unstandardized -> Continue -> Ok											- Save the Residuals and the Fitted Values onto the current Dataset.

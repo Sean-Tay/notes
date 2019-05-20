@@ -1,0 +1,249 @@
+WebLogic:
+	Abbreviations:
+		MVC:					Model-View-Controller Pattern.
+		
+		IoC:					Inversion of Control.
+		
+		SSL:					Secure Sockets Layer.
+		LDAP:					Lightweight Directory Access Protocol: Defines the language used to lookup tree-like structured information from a Server.		
+		
+		POJO:					Plain Old Java Object.
+		DTO:					Data Transfer Object: Can constitute the "Model" in MVC Patterns - the Data to be transferred between View and Controller Components.
+
+		QOS:					Quality of Service.
+
+		ADF:					Java Application Development Framework.
+		JAX-WS:					Java API for XML [Web Services].
+		JDBC:					Java DataBase Connectivity,
+		JNDI:					Java Naming and Directory Interface.
+		JMS:					Java Message Service: Handles Asynchronous Communication between Java Applications.
+		JMX:					Java Management Extensions.
+		JPA:					Java Persistence API.
+		JRF:					Java Required Files.
+
+		RMI:					Remote Method Invocation. 
+		WLS:					WebLogic Server.
+		WLST:					WebLogic Scripting Tool: Jython.
+
+		JCX: 					WebLogic Workshop Java Control Extensions.
+		
+	Description: 
+		Scalable, Enterprise Ready Java EE Container.
+		Part of Oracle Fusion Middleware.
+
+	Tutorial Videos / Playlist:
+
+	Concepts:
+		// General:
+			Machine:			Physical Hardware.
+
+			https://stackoverflow.com/questions/936197/what-is-the-difference-between-application-server-and-web-server
+			Web Server:			Hosts Exposes Applications strictly through Web / HTTP protocols.
+			App Server:			Hosts and Exposes Applications or Business Logic.
+			
+			Application:		A Solution to a Problem.
+			Component:			A (physical, deployable) part of an Application that handles a sufficiently large scope of the Application.
+			Module:				A reusable set of functionality that can be used by many Applications / Components.
+
+			Framework:			An implementation of a Pattern, for the purpose of setting Design Constraints to enforce positive or reusable practices.
+
+			Patch / Minor / Major: Categories of Upgrades that add new features to the Product.
+
+		// Java Related:
+			JavaBean:			A Java Class that is serializable, has a default (empty) constructor, and has private instance variables with corresponding public getters and setters. Also known as POJOs.
+			Enterprise JavaBeans: An EJB (Enterprise Java Bean) are more complex versions of JavaBeans that reside on compatable Application Servers, representing parts of large, distributed Applications, handling Business Logic. They additionally implement the EJB Specification for more Enterprise-related functionality.
+				Added Features:
+					Session Management.
+					Security.
+					Transactional Behaviour.
+
+				Types:
+					Session: 		Usually contain some Business Logic.
+					Entity: 		Usually interface with a Data Store (e.g Database).
+					Message-Driven: Receives messages from JMS.
+					Singleton
+
+			Remote Method Invocation: Mechanism for executing methods of a Java Object that exists elsewhere on the network.
+			CommonJ:			A specification that defines a standard for executing concurrent tasks in a JEE Environment.
+			
+			Datasource:			A source of Data. Each is tied to one JDBC Connection Pool, App referenced by JNDI name.
+
+		// WebLogic Specific
+			Server Domain:		A logical grouping of WebLogic Server resources, configured and maintained by at most one Admin Server.
+			
+			Admin Server: 		A WebLogic Server Instance that manages Domain Configuration, App Deployment, and Oracle Server Instances added to the Domain.
+				- Functionality done via the Admin Console, WLST and JMX.
+				- Admin should only manage setting up and configuration of applications to a Domain in Production.
+				- Can also run Applications, since it is also a WebLogic Server.
+			Node Manager:		Optional WLST Daemon Process on each Machine that manages and maintains Managed Servers. 
+			
+			Managed Server:		JEE Application Servers / Other Server Instances that are managed by an Admin Server.
+			
+			Server Cluster: 	A grouping of Servers that act as a single Server for Load Distribution and Fault Tolerance.
+				- External Proxy for Load Balancing.
+			
+			Master Server:		Server Instance that coordinates neighbouring Server Instances in a Server Cluster.
+			
+			Patch:				Set of Files that contain Bug Fixes and other Enhancements to improve functionality of a running WebLogic Installation.
+			
+	Details:
+		WebLogic Administration:
+			- WebLogic Default Installation Directory: /fmw
+			- Domain Default Directory: MW_HOME/user_projects/domains/<domainName>
+			
+			- Starting WebLogic Servers:
+				- Admin: startWebLogic.sh
+				- Managed: startManagedWebLogic.sh.
+			
+			- WebLogic Administration Panel:
+				- Web Browser-based Tool that configures, administers and monitors Domain Resources.
+			
+			- WLST:
+				- Scripting Tool that configures, administers and monitors Domain Resources.
+					- Ability to automate Admin Tasks.
+				
+				- Higher capability as compared to the Admin Panel.
+					- Online Mode: Connected to the Admin Server, which allows it to manage an Active Domain.
+					- Offline Mode: Access Configuration Files of an Inactive Domain.
+				
+			- WebLogic Node Manager:
+				- Separate Process that deals with the Starting, Stopping and Restart of all Servers in a Domain.
+					- Automated Self and Server Revival.
+					- Server Migration.
+				- One Node Manager per Machine.
+				- Controllable via WebLogic Admin Console or WLST.
+				
+			- Rolling Changes to Domain or WebLogic Installation:
+				- Should involve more than one Machine to have Zero-Downtime.
+			
+				- Changes are systematically applied / rolled-back on each Machine belonging to a Cluster / Domain.
+					- Client Sessions that are active throughout the process are maintained. 
+						- Session Replication via Coherence Web is used?
+						- Relies on the Production Redeployment Mechanism to manage the Graceful Transition.
+					
+					- Patching WebLogic Server Installations across the Cluster / Domain:						
+						- Recommended to schedule Service Downtime for Minor and Major upgrades.
+							- Rolling Changes involving Minor Versions may still unofficially work.
+					
+						- Invoked via the Oracle Patch Tool (OPatch).
+							- "opatch" command
+								- Update the opatch Tool if required.
+								- Applying a Patch:
+									1. Download the Patch from Oracle as a .zip file.
+									2. Unzip the Patch.
+									3. cd to the new Directory that contains the unzipped Patch.
+									4. ${opatch_home}/opatch apply
+								- Rollback a Patch:
+									1.${opatch_home}/opatch rollback -id <patch_id>
+				
+						- Process:
+							- For a Domain:
+								- On 'Admin' Machine:
+									- Force-Shutdown the Admin Server first, followed by the rest of the Managed Servers on the Machine using the target WebLogic Installation.
+										- Force-Shutdown to not wait for any current Client Sessions to finish before proceeding.
+											- Forces the Client Sessions to failover to other Servers on other Machines.
+										- The Admin Server should be dealt with first; the Domain may not function properly if the Admin Server is not utilizing the latest WebLogic Server Installation relative to the Domain.
+											- Administration Tasks will be affected during the shutdown.
+									- Stop Node Manager.
+									- Backup the target WebLogic Installation, Domain Files, etc.
+									- Utilize the OPatch Tool to apply Patch onto the target WebLogic Installation.
+									- Startup the Admin Server first, followed by the other Managed Servers on the Machine using the patched WebLogic Installation.
+								- On other Machines:
+									- Repeat the above, but without concern for Server Type and Order.
+									
+							- For a Cluster:
+								- On each Machine:
+									- Perform the process specified for the 'Admin' Machine above, but without concern for the Server Type and Order.
+									- WebLogic allows Servers in a Cluster to temporarily run with slightly different versions, since Servers in a Cluster necessarily operate as one single Server.
+									
+			- Domain Templates:
+				
+		
+		WebLogic Application Deployment:
+			- Workflow:
+				- Packaging the Application.
+					- Exploded Archive Directory: 
+						- A tree of Folders and Files that respects a given structure, such that the Application Server can exploit it.
+							- WEB-INF Directory that contains a web.xml files which acts as Deployment Descriptors.
+					- Archive File: Essentially a .zip file containing the above.
+				- Preparing the Application.
+					- Creation of an Application Installation Directory to organize the Deployment Files (Archive File) and Deployment Config Files.
+				- Configuring the Application to run in the Target Environment.
+					- Deployment Plan: WebLogic Config Artifact that stores the Configuration Changes of the Deployment Descriptor Files between different Environments. 
+				- Deploying the Application.
+					- Staging Phase: Application Distribution.
+						- Via Stage Mode: Upload to Admin Server via Admin Console / WLST. Admin Server will then copy to Managed Servers Staging Directories.
+						- Via Non-Staged Mode: Shared File Directory bypasses the copying.
+						- Via 3rd Party Tool: Skips Admin Server Distribution.
+		
+		WebLogic Clustering:
+			- Communication Protocols:
+				- Types:
+					- Unicast: Default, > WLS 10.0
+					- Multicast: Scalable - but requires an additional router and WLS configuration for clusters that span subnets, > WLS 4.0.
+				
+				- Purpose:
+					- Server Membership: Every Server sends a unique heartbeat every 10 seconds; missing 3 consecutive heartbeats will remove the Server from the Server Cluster.
+					- Public Object / Service Status: A Cluster-wide JNDI tree is consolidated and maintained among the Servers in the Cluster, actively tracking what Object / Service is hosted by which Server within the Cluster.
+					
+			- Nature:
+				- Fronted by Load Balancer.
+					- Web Server with a WebLogic Plugin.
+					- Hardware Load Balancer - always configure sticky sessions.
+					- WebLogic Web Server.
+					
+				- WLS replicates the HTTP Session State Object in memory from one Server to another within the Server Cluster for failover purposes - which updates after request processing.
+					- Coherence Web
+					- WLS attempts to keep the primary session and secondary session state separate.
+						- In the event that the Server hosting the primary session fails, the Load Balancer uses the secondary session to recreate the primary session (and secondary session) on other Servers within the Server Cluster.
+				
+					- Can also support cross-cluster replication: http://docs.oracle.com/cd/E24329_01/web.1211/e24425/failover.htm#i1040344		
+		
+		WebLogic Server Architecture:
+			- Request Types:
+				- Internal: Communication between WebLogic Servers.
+				- External: Related to Applications deployed inside the WebLogic Server, etc.
+			
+			1. Two Threads are initialized to listen, accept and hand off incoming requests to the Socket Muxer.
+				- Listen Thread: For handling non-SSL-based requests (on the respective ports?).
+				- SSL Listen Thread: For handling SSL-based requests (on port 22?).
+				
+				- Network Channels are used to add more ports, and limit the protocols accepted on those ports.
+					- Each is associated with a unique Socket.
+				
+					- Traffic Segregation
+					- Multiple Network Cards
+					- Control over Network-related QOS parameters.
+				
+			2. Socket Muxers are software modules that do light processing of incoming supported requests / responses on the server / client respectively.
+				- Analyses the first few bytes of the input stream to determine the protocol, and the target Execution Queue / Work Manager to associate the request to.
+				- Packages the request and puts it on the Execute Queue.
+			
+				- Native Muxer: Default Muxer which uses native code to detect incoming requests (from the threads?). High Performance and Scalability.
+				- Java Muxer: Default polling-type Muxer used on Weblogic RMI Clients, as well as Servers which can't load the Native Muxer.
+				- NIO Muxer: Default Muxer used on ExaLogic.
+				
+			3. Execution Queue(s) and Threads handle all incoming requests.
+				- < WLS9.0: Multiple Queues, either Default or User-Defined, each managed their own pool of Threads.
+				- > WLS9.0: Single Priority Queue configurable with Work Managers.
+				
+					- Work Managers can allow consumers to influence the scheduling priority of their requests in the Execution Queue (i.e. change the scheduling policy).
+						- CommonJ API Interface: http://docs.oracle.com/cd/E24329_01/web.1211/e24432/self_tuned.htm#i1069944 
+						
+						- <work-manager> <name> ... </name> ... </work-manager>
+						
+						- Different Scopes:
+							- Server
+							- Application via <dispatch-policy> XML element
+							- Module via <dispatch-policy> XML element
+						
+						- Default: All involved consumers get equal influence, with no constraints.
+						- Custom:
+							- Types:
+								- (Weighted) Fair Share
+								- Response Time 
+								- User / Group-based
+							- Constraints:
+								- Min, Max Num of Execution Threads allocated to Requests, reject with HTTP 503 otherwise.
+								- Capacity
+

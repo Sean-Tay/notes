@@ -1,0 +1,74 @@
+Web Computing Notes:	
+	Abbreviations:
+		SOA:					Service Oriented Architecture.
+		
+		SOAP:					Single Object Access Protocol: Messaging definition for the interaction between Web Services.
+		
+		XML:					EXtensible Markup Language: A readable implementation-independent data interchange format, used by SOAP.
+		BPEL:					Business Process Execution Language: Specialized XML that links Web Services together.
+		
+		SEI:					Service Endpoint Interface. Generates Stubs / Classes that allow an Application to interact with Web Services, given it's WSDL file.	
+		
+		WSDL:					Web Services Description Language: XML File that describes the Web Service it details (methods, arguments, return types).
+		UDDI:					Universal Description, Discovery and Integration: Stores WSDL files for a Web Service.
+		
+		ESB:					Enterprise Service Bus: Monitors and Routes messages between Web Services and their different versions.		
+		
+		JSON:					Javascript Object Notation: A readable implementation-independent data interchange format.
+
+		REST: 					Representational State Transfer.
+	
+	Concepts:
+		Web Site:				A Service hosted on the Web - meant for Humans.
+		Web Service:			A Service hosted on the Web - meant for Applications. Advantageous in the interoperability sense. Access the Service's WSDL at a UDDI Directory via SOAP or REST.
+		
+		Service First:			When the WSDL gets generated after the Web Service is created - not preferable.
+		Contract First:			When the WSDL gets generated before the Web Service is created - preferable.
+		
+		Monolithic -> Client-Server -> {3 || n}-Tier Architecture -> Service Oriented Architecture -> Cloud Service.
+
+		Web Server:				Serves Web Content via HTTP / HTTPs / (HTML / CSS / JS) Container?
+		App Server:				Hosts and Exposes Business Logic and Processes.
+	
+	Details:
+		WSDL Format: XML
+			Definition:			The Root Element of all WSDL documents, containing all non-Utility elements described below. It defines the name of the Web Service, declares multiple namespaces used throughout the remainder of the document.
+
+			Data types:			The data types to be used in the messages are in the form of XML schemas.
+
+			Message: 			It is an abstract definition of the data, in the form of a message presented either as an entire document or as arguments to be mapped to a method invocation.
+
+			Port type: 			It is an abstract set of operations mapped to one or more end-points, defining the collection of operations for a binding; the collection of operations, as it is abstract, can be mapped to multiple transports through various bindings.
+				Operation:		It is the abstract definition of the operation for a message, such as naming a method, message queue, or business process, that will accept and process the message.
+			
+			Binding: 			It is the concrete protocol and data formats for the operations and messages defined for a particular port type.
+
+			Port: 				It is a combination of a binding and a network address, providing the target address of the service communication.
+
+			Service: 			It is a collection of related end-points encompassing the service definitions in the file; the services map the binding to the port and include any extensibility definitions.
+			
+			Documentation: 		This utility element is used to provide human-readable documentation and can be included inside any other WSDL element.
+
+			Import:				This utility element is used to import other WSDL documents or XML Schemas.
+
+		REST: An Architectural Style to facilitate cleaner communication and interaction between Systems via the Web.
+			- The core problem is that in the past, it was only necessary to facilitate communication between a small group of Machines in the Business' Local Network to operate. However, it has become increasingly necessary to talk to Machines outside of the Business Network (i.e. other Businesses, etc).
+
+			- When HTTP was designed, it was with the intention to allow for communication between Machines anywhere in the world.
+
+			- The idea is to represent Concepts / Resources / Nouns as URLs. Any other related Concepts / Resources / Nouns are also stored as URLs. Machines can then use HTTP with the URLs to reach other Machines elsewhere and obtain Concepts / Resources / Nouns required to do things.
+				- The combination allows for a standardized way of communication between all Entities to refer to things.
+
+			- Additionally, on the premise that all Web Applications only require 4 Universal Verbs to operate on all things successfully:
+				- Create / POST
+				- Read / GET
+				- Update / PUT
+				- Delete / DELETE
+
+			- The structure of the information in the Application has been mapped directly onto a structure of HTTP URLs, using only standard HTTP operations that allow for HTTP body content.
+
+			- The implication is that all information that the Server requires to process the Client's Request is in the HTTP Request, and that the Client would get all other related information from the Server alongside the original Client Request, referenced as other URLs.
+
+			- This negates the need to store a Session State for tracking purposes, as the 'State' is now transferred between Client Requests and Server Responses.
+
+			- Statelessness allows for Scalability, as now any Node in the Network can serve appropriate Client Requests.

@@ -1,0 +1,138 @@
+HTML: Defines the structure of the web document. It specifies both the content, and the rendering instructions for a browser.
+
+General HTML Structure:
+	
+	A HTML Element is represented by 1 or 2 HTML Tags.
+	
+	Any Element can have an ID Attribute associated to them - but only one element in the HTML document can have the specific ID.
+
+	Any Element can have a Class Attribute associated to them - no restrictions.
+
+HTML Tags / Elements:
+
+	<!-- Comment --> - A comment Tag.
+
+	<!DOCTYPE html> - A Tag which declares that the content below it is HTML
+
+	<html> ... </html> - Tags which specify the start and end of the HTML content respectively.
+		lang="en-US" - Attribute which specify language of the page. Important for coding with Bootstrap.
+
+	<script src="js/main.js"> </script> - Defines a scripting envrionment where JS functionality from the main.js file can be executed.
+		CDN - Can reference JS Script libraries from Content Delivery Network - no need to download and reference.
+		
+		<script async="async" src="js/main.js"> </script> - Same as above, but this isn't a blocking JS runtime environment.
+		<script defer="defer" src="js/main.js"> </script> - Blocks the execution of the specified JS until the HTML page has fully loaded.
+		
+		If the src Tag is non-empty, there cannot be anything between the script Tags.
+		
+		<script src="jslib/require.js" data-main="main.js"> </script> - Loads the require.js module loader, which then synchronously initializes / runs the main.js file.
+
+	<head> ... </head> - Tags which specify the start and end of the metadata related to the HTML content respectively.
+
+	<title> Put Title Here </title> - Tags which specify Title of Webpage.
+
+	<meta charset="utf-8" /> - Specify encoding.
+
+	<style type="text/css"> ... </style> - Define an environment to specify CSS with.
+
+	<link href="main.css" rel="stylesheet" type="text/css" /> - Defines a link to a CSS type document.
+		CDN - Can reference CSS Style libraries from Content Delivery Network - no need to download and reference.
+		
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+	<body> ... </body> - Tags which specify the start and end of the actual HTML content respectively.
+
+	<a href="http://www.google.com"> Click Me! </a> - Anchor Element. Tags which denote a clickable link to the website specified in the href parameter of the tag.
+		<a href="#elementid"> Link </a> - Can be used to jump to elements with the specified id within the same webpage as well.
+
+	<p> ... </p> - Tags which denote a paragraph.
+
+	<{h1|h2|h3|h4|h5|h6}> Header Content </{h1|h2|h3|h4|h5|h6}> - Tags which denote a Header. Used by Search Engines to index Webpages.
+
+	<b> ... </b> or <strong> ... </strong> - Tags which specify bolded content.
+
+	<i> ... </i> or <em> ... </em> - Tags which specify italicized content.
+
+	<div> ... </div> - Tags which is used to group block elements in a document. 
+
+	<span> ... </span> - Tags which is used to group Inline Elements or Inline-Block Elements in a document. Cannot contain Block Elements within it.
+
+	<ul> <li> Unordered List Item 1 </li> <li> Unordered List Item 2 </li> </ul> - Tags used in specifying an unordered list.
+
+	<ol> <li> Ordered List Item 1 </li> <li> Ordered List Item 2 </li> </ol> - Tags used in specifying an ordered list.
+
+	<table> <tr> <th> Table Header 1 </th> <th> Table Header 2 </th> </tr> <tr> <td> Item 1 Value 1 </td> <td> Item 1 Value 2 </td> </tr> </table>
+		style="width:100%"
+		colspan / rowspan
+
+	<img src="example.jpg" height="256" width="256" /> - Image Tag. 
+		alt="example.jpg" - Shows alternate text when the image cannot be displayed.
+		
+	<canvas id="myCanvas" width="256" height="256"></canvas> - A tag that allows drawing of graphics via Javascript. 
+		Note: Need to set id Attribute so that can reference within JS.
+
+	<template> ... </template> - A Tag that holds HTML but does not render it at the start. Use Javascript to conditionally show it.
+	
+CSS: Decorates the webpages. General Form: selector { property:value; } OR selector:state { property:value; } OR 
+	
+	Types:
+		Inline CSS - CSS defined with the style attribute of the HTML element. Performance friendly.
+		Internal CSS - CSS defined with the <style> </style> tags. Performance friendly.	
+		External CSS - CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
+
+	// id
+	#id {}
+	
+	// class
+	.class {}
+	
+	// media conditional - apply css only if conditional is satisified
+	@media all and (condition) {
+		// css here
+	}
+	
+	// CSS Reset
+		// Removes all CSS that a browser automatically adds - make design consistent amongst different browsers., which may have their own styling for certain elements.
+	
+	// Unit Specification
+		// x vw, y vh - Relatively scale element by x% of the viewport width and y% of the viewport height.
+		// em - Specify scale according to element size.
+	
+	// To specify style for special state of selector 1
+	selector1:special-state {}
+	
+	// To select both selector1 and selector2
+	selector1, selector2 {}
+
+	// To select an immediate selector2 DOM element that follows after a selector1 DOM element with the same parent
+	selector1 + selector2 {}
+
+	// To select any selector2 DOM element that follows after a selector1 DOM element with the same parent
+	selector1 ~ selector2 {}
+
+	// To select only direct selector2 DOM elements contained within a selector1 DOM element
+	selector1 > selector2 {}
+
+	// To select all selector2 DOM elements contained within a selector1 DOM element
+	selector1 selector2 {}
+	
+	display: inline - 
+		Respect left & right margins and padding, but not top & bottom.
+		Cannot have a width and height set.
+		Allow other elements to sit to their left and right.
+		
+	display: block -
+		Respect all of those.
+		Force a line break after the block element.
+		
+	display: inline-block - 
+		Allow other elements to sit to their left and right.
+		Respect top & bottom margins and padding.
+		Respect height and width.
+	
+	Order: Top Right Bottom Left.
+	
+	Padding - Inward separation.
+	Margin - Outward seperation.
+	
+	Float - To specify that element be on the left or right.

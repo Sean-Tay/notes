@@ -1,0 +1,169 @@
+mongoDB: Written in C++
+
+	Default MongoDB Port: 27017
+	
+	Connect to MongoDB via JS: 
+		db = connect("localhost:" + port + "/" + dbName);
+		
+	.mongorc.js - A JS script that is run every time a shell command is to be executed.
+		// Default Windows Location: "C:\Users\<UserName>\.mongorc.js"
+		
+	// The biggest concept of MongoDB is that all data is available in one place - reduce the need for Joining.
+	
+	// Tip: Ensure all Entities have at least one Human Redable Candidate Key, if the Primary Key is not Human Readable.
+	
+	// Node.js MongoDB usage: 
+	
+		var mongo = require("mongodb");
+		var url = "mongodb://localhost:27017/<database_name>";
+		
+		mongo.connect(url, function(err, db) {
+			assert.equal(null, err); // Stop if there are errors
+			
+			db.collection("collection_name").<collection_operation>(item, function(err, result) {
+				assert.equal(null, err); // Stop if there are errors				
+				
+				db.close(); // Close database when done
+			});
+		
+		}); 
+		
+	// Change filepath of mongod - important for starting node applications with MongoDB integration
+		mongod --dbpath "Full Path"
+		
+mongoDB Shell: 
+
+	Able to run certain JS code.
+		// Load external JS script: load("scriptname.js");
+	
+	"exit" - Exit from MongoDB Shell
+	
+	"edit <document>" - Edit Document in external editor.
+
+	Show current Database: db
+
+	Show all Databases:	show dbs
+
+	Create new MongoDB Database and set it to current DB: use <database_name>
+	
+	Show Execution Stats: 
+		db.<collection_name>.explain("executionStats")
+	
+	Collections are the "Tables" of a Database:
+		Create a new Collection into the current DB: db.createCollection(<collection_name>)
+													 db.<collection_name>.insert({ //... }) 				// Will create collection upon insertion of a starting document.
+													 db.<collection_name>.insert([{ //... }, { //... }])	// Inserts multiple documents into a single collection.
+													 
+		View all Collections in the current DB: db.getCollectionNames()
+		
+		Get a single Collection: db.getCollection("<collectionName>")
+		
+		Enforcing Custom Indexing of each Document in a Collection: db.<collection_name>.createIndex({"field1" : <1 | -1>, ...}) // Index Documents based on another field or fields in ascending or descending order.
+		db.<collection_name>.createIndex({"field1" : 1}, <options>) 
+		
+			// <options> can be: 
+				
+				{"unique" : true} // Let MongoDB know that the values in field1 are unique for every document in the collection.
+				{"dropdups" : true} // Tell MongoDB to enforce uniqueness by dropping Documents who have the same value in field1.
+				{"sparse" : true} // Tell MongoDB to enforce non-null values in field1.
+				
+			// Examples of generated Index Names: 
+				"field1_1"
+				"field1_-1_field2_1"
+			
+			// Good to use on fields that have higher cardinality (low number of possible values) - should ideally return a small subset of the data.
+		
+		View all Indexes in a Collection:
+			db.<collection_name>.getIndexes()
+			
+		Drop Index in a Collection:
+			db.<collection_name>.dropIndex("indexName")
+			
+		// Note: Might have to drop and reinsert the Collection in order for new Indexes to take into effect.
+		
+	Documents are the "Rows" of a Collection:
+		Create new Document and store it into the current DB: documentName = {"field1" : <value1>, "field2" : <value2>}
+			// Essentially an Object containing multiple Key Value pairs.
+			// Internally stores it as BSON, which is a Binary Form of JSON.
+			// Fields == "Columns" of a Collection.
+			// _id already reserved as a Primary Key
+				// Consists of 24 Hexadecimal Numbers
+					// First 8 Numbers represent a Timestamp for when the Document was created.
+					// Next 6 Numbers represent a unique ID for the machine that generated this Document.
+					// Next 4 Numbers represent a unique ID for the process in the machine that generated this Document.
+					// Last 6 Numbers represent an incrementing sequence for each Document entered into the DB.
+						// Max 16,777,216 values? 
+			
+			// Value Types:
+				// null, true, false
+				// number - 64 bit floats.
+				// "String"
+				// 'regexp' OR /regexp/
+				// [<value1>, <value2>] - A group of possibly different data types.
+				// new <Object>() - Store a reference to that Object.
+					// new Date() - Store a Date Object.
+				// {Document} -  Store embedded documents.
+				// ObjectId("id") - Store reference to another document with the identifier.
+
+		Insert new Document into specified Collection: 	db.<collection_name>.insert(documentName)
+														db.<collection_name>.insert([document1, document2, ...])
+			// Note that Tables do not constraint the number of attributes and their integrities per document inserted.
+		
+		// filter: {"field1" : "value1"}, {"field2" : 1, "field3" : 0}		// WHERE, SELECT
+			// Match all Documents whose field1 contains value1, and return the values of field2 but not explicitly field3 from those matched documents.
+			
+			// value1 can also be:
+				// {"$gte" : value} to select only those whose field1 has values greater than or equal to value.
+				// {"$lte" : value} to select only those whose field1 has values lesser than or equal to value.
+				// {"$ne" : value} to select only those whose field1 has values not equal to value.
+				// {"$in" : ["value2", "value3", ... ]} to select only those whose field1 is equal to one of those values.
+				// {"$nin" : ["value2", "value3", ... ]} to select only those whose field1 is not equal to one of those values.	
+				// {"$size" : n} to select only those whose field1 is an array containing n elements.
+			
+			// field2 can also contain value s.t.:
+				// {"$slice" : [index1, index2]} to show those 
+				
+			// field1.field2 - to look for field2 within field1 (i.e. embedded document)
+		
+		Find Documents in specified Collection: db.<collection_name>.find(<filter>)
+										db.<collection_name>.find(<filter>).limit(n) // Show only the first n matches.
+										db.<collection_name>.find(<filter>).skip(n) // Show the matches only after the first n.
+										db.<collection_name>.find(<filter>).pretty() // Format Output into Human Readable Output.
+										
+		Aggregate-Type Queries across Documents in a specified Collection:
+			db.<collection_name>.aggregate([{$match: {"field1" : "value1"}}, {$group : { _id: "$nonUniqueField", "field2" : {<reduce_operation> : "$field3"}}}, {<format_specification> : true}])
+			
+				// In the collection_name Collection, find all Documents that match the filter, and project out new Documents that each represent a merged grouping of the matched Documents based on $nonUniqueField, each with a field2 field that contains a reduction of the values in the field3 fields of the Documents in each merged grouping.
+				
+				// https://docs.mongodb.com/manual/aggregation/
+				
+				// <reduce_operation> can be: 
+					// $sum - In the projected Document, increment the value in field2 each time a matched Document of a specific value in nonUniqueField is encountered, by the value in field3.
+					// $avg
+					// $min
+					// $max
+					
+				// <format_specification> can be: 
+					// {$sort : {"field2" : <1 | -1>}} - Sort the projected Collection out according to the values stored in field2 of each projected Document in ascending or descending order.
+				
+			db.<collection_name>.aggregate({"$project" : {"field1" : "$field2", ... }})
+			
+				// In the collection_name Collection, project out a new Document for each Document in the Collection that has a field1 that takes its value from field2 in the Documents in the Collection.
+				
+				// $field2 can also be:
+					// "$cond" : {if : { //... }, then { //... }, else: { //... }}
+					
+		Update first occurring Document in specified DB that satisfies the filter: db.<collection_name>.update(<filter>, updateObject)
+																				   db.<collection_name>.update(<filter>, updateObject, {multi : true}) // For multiple documents
+																				   
+			// updateObject can also be:
+				// {$set{"field1" : "value2", //etc.}} which either updates or adds field1 to the matched document specified in the filter and set it to value2.
+				// {"$addToSet" : {"field1" : "value2"}} which only adds field1 to the matched document specified if it doesn't exist.
+				// {"$push" : {"arrayfield1" : "value3"}} which appends arrayfield1 and the corresponding value onto the matched document, or appends the value to the already existing arrayfield1 in the matched document.
+				// {"$pop" : {"arrayfield1" : <1 | -1>}} to remove the first or last item from the arrayfield1 in the matched document.
+				// {"$pull" : {"arrayfield1" : "valueOrCondition1"}} to remove all occurrances of valueOrCondition1 or remove all values in the array that fulfill valueOrCondition1 within the matched document. 
+				// {"$inc" : {"field1" : "value3"}} which increments the value in field1 by value3, which can be negative for decrement.
+				// {"$mul" : {"field1" : "value3"}} which multiplies the value in field1 by value3, which can be < 1 and > 0 for division.
+		
+		Delete all Documents in specified DB that satisfies the filter: db.<collection_name>.remove(<filter>)
+			// Keep <filter> empty to remove all Documents from <collection_name>

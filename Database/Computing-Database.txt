@@ -1,0 +1,38 @@
+Database Notes:
+	Abbreviations:
+		ACID:				Atomicity, Consistency, Isolation, Durability.
+
+		DDL					Data Definition Language.
+		DML					Data Manipulation Language.
+		DCL					Data Control Language.
+		DQL					Data Query Language.
+		TCL					Transactional Control Language.
+	
+	Description:
+		A Data Structure that allows for efficient Storage of Data on Disk.
+	
+	Tutorial Videos / Playlist:
+		
+	
+	Concepts:
+		Transaction:		A Unit of Work done / Measure of Change performed within a Database Managaement System.
+		ACID:				A set of desirable properties to apply to a Transaction when interacting with a Database.
+
+		Index:				A sparse Data Structure that maps selected pieces of Data to storage locations on Disk, with the aim of improving lookup speed.
+		
+		DDL:				Linguistic Mechanism for Defining (create or modify) the Data *Structures* within a Database.
+		DML:				Linguistic Mechanism for Manipulating (modify, delete, insert and update) Data within a Database.
+		DCL:				Linguistic Mechanism for Controlling (grant or revoke) access to the Data within a Database.
+		DQL: 				Linguistic Mechanism for Querying (selecting) Data wihtin a Database.
+		TCL:				Linguistic Mechanism for Managing (commit or rollback) Transactions for a Database.
+
+		Coherence:			Synchronization of shared data at multiple locations.
+	
+	Details:
+		ACID:
+			Atomicity:		Transactions containing multiple Statements will either succeed as a whole, or not be processed at all.
+			Consistency:	Transactions can only bring the Database from one valid State to another, respecting Constraints, Cascades and Triggers within affected Data.
+			Isolation: 		Transactions executed concurrently will behave the same if the Transactions are executed sequentially.
+			Durability:		Transactions that have been commited will remain commited, even during System Failure (Power Outage / Crash).
+		
+

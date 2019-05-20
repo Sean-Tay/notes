@@ -1,0 +1,23 @@
+Opening a potential Pycharm Project: 
+	1) One can simply open any directory (a repo directory perhaps) in Pycharm. Pycharm will automatically create a .idea folder in that directory. 
+	   This would not be an issue if the .gitignore is primed to ignore the .idea folder should the folder be a tracked repo.
+	2) If the .gitignore also happens to ignore virtualenvs (which it should do if it was created with a Python .gitignore template), one can also just create the virtualenv inside
+	   the repo folder.
+		- To create the virtualenv for the opened Project:
+			a) File > Settings > Project: 'projectName' > Project Interpreter > Gear Icon next to the uppermost drop-down list on the Right Subpanel > Create virtualenv
+			b) Navigate to the desired folder inside the directory containing the potential Pycharm Project.
+			c) Should probably inherit global site-packages.
+			d) Should probably not share this virtualenv with other projects.
+			e) Click Ok.
+		- The created virtualenv will automatically be used for this potential Pycharm Project.
+	3) If there is a requirements.txt inside the root directory of the folder, double click on any .py file to receive a prompt regarding the dependencies of the potential Pycharm Project. 
+	   You can then one-click install all the dependencies into the created virtualenv in Step 2.
+	4) If there's a main subfolder containing all the .py files in the potential Pycharm Project folder, make sure to mark it as a Source Root so that it can find referenced modules.
+	5) For all intents and purposes, the potential Pycharm Project has now become an actual Pycharm Project.
+
+Generating a requirements.txt for a Pycharm Project:
+	1) File > Settings > Project Interpreter.
+	2) Select all packages in the Table, and Copy.
+	3) Create a new file at the Project Root called 'requirements.txt'.
+	4) Paste the copied contents into the new file.
+	5) Apply the format: <package_name><{ == | >= }><package_version_number> 
