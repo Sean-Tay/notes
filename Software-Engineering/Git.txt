@@ -60,6 +60,7 @@ Git:
 
 		git pull <branch>
 		git pull <repo_url_alias> <branch> - git fetch + git merge.
+			--allow-unrelated-histories - Merges two Repos that started independently.
 
 		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
 
