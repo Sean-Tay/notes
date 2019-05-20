@@ -13,6 +13,9 @@ Git:
 		origin					- A Local Alias for the Remote Repository's URL in interest.
 
 		HEAD					- A Local Alias for the current Commit.
+		
+		Downstream				- Information Flow from Remote Repo to Local Repo.
+		Upstream				- Information Flow from Local Repo to Remote Repo.
 	
 	Details:
 	
@@ -40,9 +43,11 @@ Git:
 
 			-d <branch> 		- Delete a Local Branch.
 
-			git push <repo_url_alias> <branch> - Add a Local Branch (with changes) to the Remote Repository.
+			-u <repo_url_alias>/<remote-branch> <branch> - Set which Remote Branch the Local Branch pushes to.
+
+			git push -u <repo_url_alias> <branch> - Add a Local Branch (with changes) to the Remote Repository.
 			git push -d <repo_url_alias> <branch> - Remove a Branch on the Remote Repository.
-		
+
 		git checkout <commit> -- <file> ... - Switch current version of <file> with the <commit> version of <file>.
 
 		git merge <branch> 		- Merge updates from the Local Branch <branch> into the currently checked out Local Branch.
