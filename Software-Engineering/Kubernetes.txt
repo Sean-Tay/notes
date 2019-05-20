@@ -1,0 +1,43 @@
+Kubernetes:
+	Abbreviations:
+		
+	
+	Description:
+		A Platform for running many Containers on Production.
+	
+	Tutorial Videos / Playlist:
+		
+	
+	Concepts:
+
+
+	Details:
+		Components:
+			Label: 					Name Tags to identify entities, or to define different attributes. 
+				Querying can be done on these Labels in a Kubernetes Environment.
+
+			Pod: 					A runnable unit of work which can contain many related Containers. 
+				Kubernetes will connect this Pod to the overall network, and the rest of the Kubernetes ecosystem.
+
+			Replication Controller: Provides a Pod Template, which can create any number of Pod Templates.
+
+			k8s Service: 			Tells the rest of the Kubernetes Environment, including other Pods and Replication Controllers, what Services does the Application provide.
+				Defines a fixed Network Address for the Application so that other Applications can interact with the Application.
+
+				Features:
+					Persistent
+					Load Balancing
+
+			Volume: 				Persistent or Ephemeral Storage Backend where Applications can store information.
+				From the perspective of the Application, it appears to be on the local filesystem.
+
+				Types:
+					Mounted
+					Cloud
+
+			Namespace: 				Segments a group of Pods, Replication Controllers, Volumes, and other secrets, from each other.
+				A degree of isolation from each other.
+	
+	Commands:
+		
+	
