@@ -225,11 +225,15 @@
 			- Bipartite Graph: A Graph where all Vertices can be partitioned into two Sets such that all Vertices in each Set cannot directly visit another member of the same Set.
 
 		- Representative Data Structures:
-			- Adjacency Matrix: A 2D Array which stores any potential Edge between every possible pair of Vertices in the Graph.
+			- Adjacency Matrix: A 2D Array which stores every link between every possible pair of Vertices in the Graph.
 				- Space Complexity: O(V^2)
+				
+				- Good for Dense Graphs.
 
-			- Adjacency List: An Array of Lists, in which each List stores adjacent Vertices for the Vertex it represents.
+			- Adjacency List: An Array of Lists, in which each List stores only adjacent Vertices for the Vertex it represents.
 				- Space Complexity: O(E + V)
+
+				- Good for Sparse Graphs.
 
 			- Edge List: A List that tracks all adjacent Vertex Pairs.
 				- Space Complexity: O(E)
@@ -379,8 +383,10 @@
 	Binary Search:
 
 	BFS: Graph Traversal with a Queue, and a 'visited' Array.
+		- Time Complexity: O(V+E)
 
 	DFS: Graph Traversal with a Stack, and a 'visited' Array.
+		- Time Complexity: O(V+E)
 
 	Tree Traversal:
 		- DFS: Key Idea is to push Nodes onto the Stack to access them later.
@@ -414,6 +420,11 @@
 	Topological Sort: When performed on a DAG, for every Vertex, they are processed only after every other Vertex leading into them is processed.
 		- Finds use in Task Scheduling - if some Tasks are dependent on other Tasks.
 			- Package Dependency Resolution.
+
+		- A Graph can have more than one valid Topological Ordering.
+
+		- DFS, but only visit the Current Vertex after adjacent Vertices have been visited (similar to Post-Order Traversal).
+			- The method will output the Topological Ordering in reverse order.
 
 	Minimum Spanning Tree
 
