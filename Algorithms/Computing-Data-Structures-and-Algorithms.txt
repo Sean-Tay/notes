@@ -221,6 +221,7 @@
 			- Directed Acyclic Graph: A Directed Graph with no Cycle.
 
 			- Tree: An (Undirected) Graph where there only exists a single Path between any two Vertices. Number of Edges = Number of Vertices - 1.
+				- Minimum / Maximum Spanning Tree: A Tree covering all Vertices in the overall Graph, and whose Cost is the minimum / maximum possible.
 
 			- Bipartite Graph: A Graph where all Vertices can be partitioned into two Sets such that all Vertices in each Set cannot directly visit another member of the same Set.
 
@@ -382,11 +383,15 @@
 	
 	Binary Search:
 
-	BFS: Graph Traversal with a Queue, and a 'visited' Array.
+	BFS: Graph Traversal with a Queue, and a 'visited' Array which tracks if the Vertex has been processed before in this traversal.
 		- Time Complexity: O(V+E)
 
-	DFS: Graph Traversal with a Stack, and a 'visited' Array.
+		- If an additional 'predecessor' Array is used to track the vertex that was visited before its adjacent vertices, the Graph Traversal can generate a Spanning Tree, represented by this Array.
+
+	DFS: Graph Traversal with a Stack, and a 'visited' Array which tracks if the Vertex has been processed before in this traversal.
 		- Time Complexity: O(V+E)
+
+		- If an additional 'predecessor' Array is used to track the vertex that was visited before its adjacent vertices, the Graph Traversal can generate a Spanning Tree, represented by this Array.
 
 	Tree Traversal:
 		- DFS: Key Idea is to push Nodes onto the Stack to access them later.
@@ -426,7 +431,10 @@
 		- DFS, but only visit the Current Vertex after adjacent Vertices have been visited (similar to Post-Order Traversal).
 			- The method will output the Topological Ordering in reverse order.
 
-	Minimum Spanning Tree
+	Minimum / Maximum Spanning Tree: A Tree covering all Vertices in the overall Graph, and whose Cost is the minimum / maximum possible.
+		- Prim's: 		BFS, but with a Priority Queue acting on the Edge Weight as opposed to a regular Queue.
+		- Kruskal's: 	Sort the Edge in Ascending / Descending Order, and on each Edge determine if it can be added to the overall Tree without forming a Cycle (use UFDS to determine if two vertices already have the same Parent).
+		- Boruvka's: 	
 
 	Shortest Path
 		- Dijkstra
