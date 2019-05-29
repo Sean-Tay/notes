@@ -232,7 +232,7 @@ SQL:
 		; COMMIT;
 
 		UPDATE <table_name>
-		SET <attribute_name> = <value>
+		SET <attribute_name> = <value>, ...
 		WHERE <record_conditional>
 		; COMMIT; 
 
