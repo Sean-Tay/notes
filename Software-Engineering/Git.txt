@@ -29,6 +29,7 @@ Git:
 
 		git remote add <repo_url_alias> <username>@<server>:<repo_path_on_server> - Add a Local Alias for a Remote Repository URL.
 		git remote -v			- View all Local Aliases within the current Repo.
+		git remote remove <repo_url_alias> - Remove a Local Alias for a Remote Repository URL.
 
 		git fetch				- Preview updates for all Local Branches tracking Remote Branches.
 			FETCH_HEAD			- Creates a short-lived reference that keeps track of what has just been fetched from the Remote Repository. 
