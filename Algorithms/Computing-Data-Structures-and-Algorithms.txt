@@ -193,6 +193,7 @@
 				- Weight
 
 				- Two Vertices are adjacent if they are linked by an Edge.
+				- A Vertex is incident to an Edge if the Vertex is one of the two the Edge links.
 
 			- Path: Sequence of Vertices adjacent to each other.
 				- Simple Path: When the Path does not contain repeated Vertices.
@@ -204,7 +205,7 @@
 			- Cycle: A Path which starts / ends on the same Vertex.
 				- Simple Cycle: A Simple Path with a Cycle.
 
-			- Component: A group of Vertices that can visit each other via some Path in an Undirected Graph.
+			- Component: A group of Vertices that can visit each other via some Path.
 
 		- Types:
 			- Undirected Graph: A Graph where all Edges are bi-directional (i.e. if there is a link from one Vertex to another, there is also a link from the other Vertex back to the first).
@@ -433,8 +434,11 @@
 
 	Minimum / Maximum Spanning Tree: A Tree covering all Vertices in the overall Graph, and whose Cost is the minimum / maximum possible.
 		- Prim's: 		BFS, but with a Priority Queue acting on the Edge Weight as opposed to a regular Queue.
-		- Kruskal's: 	Sort the Edge in Ascending / Descending Order, and on each Edge determine if it can be added to the overall Tree without forming a Cycle (use UFDS to determine if two vertices already have the same Parent).
-		- Boruvka's: 	
+			- Time Complexity: O(E log(V))
+		- Boruvka's: 	In each iteration, find Vertices / Components in the Graph, and add the cheapest Edges incident to each Vertex / Component that links to a different Vertex / Component. 
+			- Time Complexity: O(E log(V))
+		- Kruskal's: 	Sort the Edges (in an Edge List) in Ascending / Descending Order, and on each Edge determine if it can be added to the overall Tree without forming a Cycle (use UFDS to determine if two vertices already have the same Parent).
+			- Time Complexity: O(E log(V))
 
 	Shortest Path
 		- Dijkstra
