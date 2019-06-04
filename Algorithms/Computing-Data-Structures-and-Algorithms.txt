@@ -344,7 +344,7 @@
 				<expr>(?=<regex>) : Denotes a Non-Capturing Group for a Positive Lookahead - that is, match only for occurrances where <expr> is followed by the <regex>.
 				<expr>(?!<regex>) : Denotes a Non-Capturing Group for a Negative Lookahead - that is, match only for occurrances where <expr> is NOT followed by the <regex>.
 				(?<=<regex>)<expr> : Denotes a Non-Capturing Group for a Positive Lookbehind - that is, match only for occurrances where <expr> is preceded by the <regex>.
-				(?<!<regex>)<expr> : Denotes a Non-Capturing Group for a Negative Lookbehind - that is, match only for occurrances where <expr> is NOT preceded by the <regex>.			
+				(?<!<regex>)<expr> : Denotes a Non-Capturing Group for a Negative Lookbehind - that is, match only for occurrances where <expr> is NOT preceded by the <regex>.
 			
 			(<regex>) : Denotes an anonymous Capturing Group for <regex>
 				\1 ... \99 : References Capturing Groups previously defined.
