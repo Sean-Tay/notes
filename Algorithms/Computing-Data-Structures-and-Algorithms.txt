@@ -340,16 +340,18 @@
 			[<char>...]<quantifier> : Denotes Character Class to match for.
 			[^<char>...]<quantifier> : Denotes Character Class to not match for.
 			
-			(<regex>): Denotes a Capturing Group for <regex>
-				/1 ... /99: References Capturing Groups previously defined.
+			(?:<regex>) : Denotes a Non-Capturing Group for <regex>.
+				<expr>(?=<regex>) : Denotes a Non-Capturing Group for a Positive Lookahead - that is, match only for occurrances where <expr> is followed by the <regex>.
+				<expr>(?!<regex>) : Denotes a Non-Capturing Group for a Negative Lookahead - that is, match only for occurrances where <expr> is NOT followed by the <regex>.
+				(?<=<regex>)<expr> : Denotes a Non-Capturing Group for a Positive Lookbehind - that is, match only for occurrances where <expr> is preceded by the <regex>.
+				(?<!<regex>)<expr> : Denotes a Non-Capturing Group for a Negative Lookbehind - that is, match only for occurrances where <expr> is NOT preceded by the <regex>.			
 			
-			(?<name><regex>) : Denotes a named Capturing Group for <regex>. Note: The '<' and '>' ARE required.
-				(?:<regex>) : Denotes a Non-Capturing Group for <regex>.
-					<expr>(?=<regex>) : Denotes a Non-Capturing Group for a Positive Lookahead - that is, match only for occurrances where <expr> is followed by the <regex>.
-					<expr>(?!<regex>) : Denotes a Non-Capturing Group for a Negative Lookahead - that is, match only for occurrances where <expr> is NOT followed by the <regex>.
-					(?<=<regex>)<expr> : Denotes a Non-Capturing Group for a Positive Lookbehind - that is, match only for occurrances where <expr> is preceded by the <regex>.
-					(?<!<regex>)<expr> : Denotes a Non-Capturing Group for a Negative Lookbehind - that is, match only for occurrances where <expr> is NOT preceded by the <regex>.
+			(<regex>) : Denotes an anonymous Capturing Group for <regex>
+				/1 ... /99 : References Capturing Groups previously defined.
 			
+			(?<name><regex>) : Denotes a Capturing Group called 'name' for <regex>. Note: The '<' and '>' in '<name>' ARE required.
+				/<name> : References named Capturing Groups previously defined.
+				
 			Usage:
 				<string>.match(<regex>) : 
 					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
