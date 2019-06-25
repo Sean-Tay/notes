@@ -96,7 +96,7 @@ Git:
 		git commit -m "<commit_message>" - Commit the changes of the <file>s in the Local Staging List to the Local Branch.
 			-a 					- Automatically stages all modified Files with the Commit.
 
-		git checkout -- <file> ... - Revert changes to <file>s.
+		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 
 		git push <repo_url_alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
