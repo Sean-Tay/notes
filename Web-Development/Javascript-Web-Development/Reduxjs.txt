@@ -53,19 +53,19 @@ Redux.js
 
 				store.getState() - Gets a copy of the current State tracked within the Store.
 			
-			// connect(mapStateToProps, mapDispatchToProps) (ReactComponent)
-				// Returns a modified variant of the ReactComponent sent into the connect function.
-					// mapDispatchToProps (".dispatch()") is a function returning a JS Object describing functions to be passed as props into the ReactComponent.
-						// Typically allows the React Component to dispatch actions to update the Store.
-						// Minimally takes in "dispatch", which is the function to use to invoke State changing actions to the Store from within the ReactComponent.
+			const <redux-component> = connect(mapStateToProps, mapDispatchToProps) (<react-component>)
+				Returns a modified variant of the <react-component> sent into the connect Function.
+					mapDispatchToProps (".dispatch()") is a Function returning an Object describing Redux Store Dispatch Functions to be passed as props into the <react-component>.
+						// Typically allows the React Component to dispatch Actions to update the Store.
+						// Minimally takes in "dispatch", which is the Function to use to invoke State changing Actions to the Store from within the <react-component>.
 					
-					// mapStateToProps (".subscribe()") is a function returning a JS Object describing functions to be passed as props into the ReactComponent, that will be executed upon the production of a new state.
-						// Typically dissects the overall state to smaller parts that the ReactComponent can use.
-						// Since the prop value changes, the ReactComponent gets re-rendered.
+					mapStateToProps (".subscribe()") is a Function returning an Object describing Functions to be passed as props into the <react-component>, that will be executed upon the production of a new State.
+						// Typically dissects the overall State to smaller parts that the <react-component> can use.
+						// Since the prop value changes, the <react-component> gets re-rendered.
 						// Minimally takes in "state", which is the state currently stored in the Store.
 						
-					// Special Arguments: 
-						// ownProps - Access the props passed into the React - Redux Component created by the connect function.
+					Special Arguments: 
+						ownProps - Access the props passed into the React - Redux Component created by the connect Function.
 	
 	Commands:
 

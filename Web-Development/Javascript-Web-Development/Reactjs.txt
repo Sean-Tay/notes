@@ -256,24 +256,26 @@ React.js
 				// ...
 
 			Higher-Order Component: 
-				// A Pattern involving a Function which takes in a Component and returns a new Component. 
+				// A Pattern involving a Function which takes in a Component and returns a new Component.
 				// Useful for adding on commonly used functionality to many Components.
-				// The wrapped Component needs to take in Props.
+				// WrappedComponent needs to be configured to take in more Props.
 
 				function withSubscription(WrappedComponent, ... ) {
+					// Return a new Class Component to keep the Function pure.
 					return class extends React.Component {
 						constructor(props) {
 							super(props);
 							this.handleChange = this.handleChange.bind(this);
 							this.state = {
-								data: selectData(DataSource, props)
+								// Functionality-Specific Local State
+								data: //... ,
 							};
 						}
 
 						// ... Additional Functionality Here ...
 
 						render() {
-							// Renders the wrapped component with the appropriate props.
+							// Renders WrappedComponent with the appropriate minimal props.
 							return <WrappedComponent data={this.state.data} {...this.props} />;
 						}
 					};
