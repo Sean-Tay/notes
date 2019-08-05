@@ -255,6 +255,30 @@ React.js
 				
 				// ...
 
+			Higher-Order Component: 
+				// A Pattern involving a Function which takes in a Component and returns a new Component. 
+				// Useful for adding on commonly used functionality to many Components.
+				// The wrapped Component needs to take in Props.
+
+				function withSubscription(WrappedComponent, ... ) {
+					return class extends React.Component {
+						constructor(props) {
+							super(props);
+							this.handleChange = this.handleChange.bind(this);
+							this.state = {
+								data: selectData(DataSource, props)
+							};
+						}
+
+						// ... Additional Functionality Here ...
+
+						render() {
+							// Renders the wrapped component with the appropriate props.
+							return <WrappedComponent data={this.state.data} {...this.props} />;
+						}
+					};
+				}
+
 			Render:
 				let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
 				ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.

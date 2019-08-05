@@ -2,7 +2,7 @@ Express.js
 	Abbreviations:
 		
 	
-	Description: Web Application Backend / Middleware Framework.
+	Description: Web Application Backend Routing / Middleware Framework.
 	
 	Tutorial Videos / Playlist:
 		
