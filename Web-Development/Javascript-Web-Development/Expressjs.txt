@@ -1,37 +1,97 @@
-Express.js - Web Application Framework. 
-	
-	// An Express Server utilizes the HTTP Request Command, as well as the path section of the supplied URL in a received HTTP Request to determine what to do.
-	// This is known as Routing, and both the HTTP Request Command as well as the path defines a Route.
-	// Route Path Format: One or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"} 
-	
-	var app = express();										// Creates a new Express Server Instance
-	
-	var router = express.Router();								// Express Routers are convenient in keeping Routes and their associated code together in a modular manner
-	
-	router.<{HTTP Request Command | use}>(						// Define a new Route for this Router
-		"<Route>", 												// Specifies the Route
-		(req, res) => { 										// The Handler Function for this Route
-			req.params.<parameter> = // ... //; 				// Accesses the <parameter> passed into this Route
+Express.js
+	Abbreviations:
 		
-			// ... // 
-		}
-	);
 	
-	app.use(													// Attach a Router to the Express Server Instance
-		"<Route>",												// All Routes attached to the Router will now be Sub-Routes of the Route specified here
-		router													// The Router to attach to the Express Server Instance
-	);
+	Description: Web Application Backend / Middleware Framework.
 	
-	// Middleware Functions denote functions that execute between the Web Application's Request / Response sequence.
-	// In Express, Middleware Functions can be attached to the Express Server Instance, or a Router.
+	Tutorial Videos / Playlist:
+		
 	
-	app.use(													// Specify a Middleware Function for the Express Server Instance
-		"<Route>",												// Specifies the Route that this Middleware Function will execute on
-		(req, res, next) => {									// The Middleware Function Definition
-			// ... //
-			
-			next();												// Execute the next function in the Request / Response sequence
-		}
-	);
+	Concepts:
+		Routing: Utilizes the HTTP Request Methods, as well as the Path section of the supplied URL in a received HTTP Request to determine what to do.
+		
+		HTTP Request Methods:
+			Create / POST 											// Status Code: Success - 201 Created 		; Fail - 400 Bad Request
+			Read / GET 												// Status Code: Success - 200 OK 			; Fail - 404 Not Found
+			Update / PUT 											// Status Code: Success - 200 OK			; Fail - 404 Not Found
+			Delete / DELETE											// Status Code: Success - 204 No Content	; Fail - 404 Not Found
+
+			Note: PUT and POST interchangeable for Updating, but PUT is idempotent (i.e. calling PUT repeatedly will only update once), whereas POST is not (i.e. calling POST repeatedly will update repeatedly).
+
+		Middleware: Code that executes on the Server between the time it receives a Request and sends a Response.
 	
-	app.listen(<port>);											// Start the Express Server Instance on a specified Port
+	Details:	
+		const express = require();									// Import the Express Module.
+
+		var app = express();										// Creates a new Express Server Instance.
+
+		var router = express.Router();								// Express Routers are convenient in keeping Middleware and their associated code together in a modular manner.
+		
+		// In Express, Middleware can be attached to the Express Server Instance, or a Router.
+		// Route Format: 
+			- Path : One or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"}
+			- Query : <path>/?<key>=<value>& ...					// One or more Key-Value Pairs Appended at the end of a Path.
+
+		// In order for Middleware to match to a Request, the entirety of one of its assigned Route Paths must be matched.
+		// The Middleware are called in the order that they are registered.
+		<{app | router}>.<{HTTP Request Method | use}>(				// Define new Middleware for this App / Router.
+			[  														// Specifies the Routes Paths to match. Optional.
+				"<Route-Path>",
+				// ...
+			],
+			[ 														// Specify Middleware Functions.
+				([err, ] req, res, next) => { 						// If four arguments are defined, this Middleware is set to only handle Errors.
+					req.params.<parameter>							// Accesses the <parameter> passed into the Routes (i.e. '/route/:<parameter>').
+					req.query.<key>									// Accesses the <value> assigned to the <key> passed into the Routes (i.e. '/route/?<key>=<value> & ...').
+
+					req.on('event-type', () => {					// Add Event Handlers when Events occur for the Request Object.
+
+					});
+
+					// Note: Also possible to attach Objects to pass into the next Function / Middleware via the Request Object.
+					
+					// Include 'return' to break from the Middleware.
+
+					[return] res.[status(<http-status-code>].send(<data>); // Include <data> in the Response Body, whilst setting an optional <http-status-code>.
+						// Useful to return Created / Updated / Deleted Object back to the Client for synchronization purposes.
+
+					[return] res.[status(<http-status-code>].json(<json-obj>); // Include <json-obj> in the Response Body, whilst setting the Content Type appropriately.
+
+					[return] next();								// Execute the next Function defined in the encompassing List.
+					[return] next('route');							// Skip to the next Middleware of the same HTTP Request Method with the same Route Path. Only usable for Middleware responding to specific HTTP Request Methods.
+					
+					[return] next(err); 							// Skip to the next Error-Handling Middleware. Express can automatically handle Synchronous Errors, but Asynchronous Errors require this Function Call.
+				},
+				//...
+			]
+		);
+		
+		app.use(													// Mount a Router to the Express Server Instance.
+			"<Route-Path>",											// All Middleware attached to the Router will now be assumed to have the <Route-Path> specified here prepended to their corresponding Route Paths.
+			router													// The Router to mount to the Express Server Instance.
+		);
+
+		app.use(express.static('<directory>'));						// Allow the Express Server Instance to serve Static HTML / CSS / JS Pages within '<directory>', with the URLs mapping to the File Paths of each File, via the default Static Router.
+
+		// express.<router>											// All Router Objects are implicitly attached to the main Express Server Instance.
+		
+		app.listen(
+			process.env.PORT || <port>								// Start the Express Server Instance on a specified Port.
+			() => {													// Callback Function that is triggered once Server is running.
+				// ...
+			}
+		);
+
+		// Additional Useful Libaries:
+			morgan 													// Produces Logging Middleware Functions.
+				morgan('<predefined-format-string>' [, <options-obj>]);
+				morgan(':<predefined-tokens> ...') [, <options-obj>];
+				morgan((tokens, req, res) => {
+					// ...
+				} [, <options-obj>]);
+
+			body-parser												// Produces Body-Parsing Middleware Functions.
+	
+	Commands:
+		
+	

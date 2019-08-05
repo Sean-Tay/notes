@@ -1,26 +1,40 @@
 React.js
-	
 	Abbreviations:
 		MVC: 						Model-View-Controller.
 		SPA:						Single-Page Application.
 		PWA:						Progressive Web Application.
 		
+		HTML: 						HyperText Markup Language.
 		CSS:						Cascading Style Sheets.
+		DOM:						Document Object Model.
 		
 		JS: 						Javascript.
 		JSX: 						Javascript Syntax Extension.
 	
-	Description: A Lightweight Frontend Library for building UIs in Web Applications. It is part of the View Layer in the MVC Architecture.
+	Description: A Lightweight Frontend Library for building User Interfaces for Applications. It is part of the View Layer in the MVC Architecture.
 	
 	Tutorial Videos / Playlist:
 		Quick Start: https://youtu.be/sBws8MSXN7A
 	
 	Concepts:
-		Virtual DOM: A Tree whose Nodes represent Logical HTML Tags.
-		
-		Render: A term to describe how the Component will appear on the Web Page.
+		Virtual DOM: 				A Lightweight Abstraction of the Actual DOM (i.e. no CSS considerations, etc), represented by a tree of JS Objects.
+		React Element:				Lightweight, Immutable, Stateless, Functionless unit describing a Component Instance - a Virtual DOM node or sub-tree. It is implicitly produced from the compilation of JSX during rendering.
+
+		React Component:			Small, reusable pieces of code that return a React Element to be rendered to the Web Page.
+		React Component Instance:	A React Element, but with Functions and State.
+
+		State:						Information maintained by a React Component which it itself can change.
+		Props: 						Information received by a React Component from other React Components which it should NOT change directly - use Event Handlers.
+
+		Render: 					A term to describe the process of adding a React Element to the Virtual DOM tree, and modifying the actual DOM tree appropriately.
+
+		Uncontrolled Component:		A React Component that maintains its own internal State. Usually only used w.r.t React Form Elements.
+		Controlled Component:		A React Component that does not maintain internal State. Usually only used w.r.t React Form Elements.
 	
 	Details:
+		React.js Library handles Element creation and manipulation.
+		ReactDOM.js Library handles DOM interaction.
+
 		React faciliates the construction of SPAs:
 			The default entry point, public/index.html, contains a top-level <div> 'root', which will contain the entirety of the React Application as part of the SPA functionality.
 			The default Javascript entry point, src/index.js, should reference a top-level React Component 'App' and render it in the top-level <div> 'root'.
@@ -32,87 +46,237 @@ React.js
 				
 				render(<App />, document.getElementById('root'));
 		
-		React makes use of self-contained Components with their own Component-Level State. 		
-			These States will determine how the Component will Render and behave.
-			When these States change, React manipulates the Virtual DOM to invoke changes to just parts of the Pages, as opposed to reloading the whole Page.
+		React makes use of self-contained Components with their own Component-Level State.
+			These States will determine how the Component will appear and behave.
+
+			When these States change and the Component gets re-rendered, React uses the Virtual DOM to update and detect which parts of the Page has changed, so it only selectively updates the Actual DOM, as a form of optimization.
+				1. React takes a snapshot of the Virtual DOM before the update.
+				2. React then updates the entire Virtual DOM. This makes it easier to comprehend - we need only to return the Virtual DOM that we want to see, and not keep track of all changes happening to the Virtual DOM.
+				3. Diffing the captured snapshot of the Virtual DOM with the updated Virtual DOM allows React to detect which Actual DOM Objects should be updated.
+				4. React proceeds to only update the Actual DOM Objects identified in the earlier step.
 		
-		React Components make use of JSX Preprocessing to allow for XML HTML-like markup within JS:
+		React Patterns:
+			Parent Stateful -> Child Stateless : Pass Parent State / State Changer as Child Props. Child Component can declare custom function wrapper for received State Change Function to make it suitable as a Event Handler.
+			Child Stateless -> Child Stateless = Child Stateless -> Parent Stateful -> Child Stateless : Separation of Concerns.
+				Business Logic (Container Components) and Display Logic (Presentational Components).
+
+		React Components:
 			Class-Component:
 				import React from 'react';
 				import PropTypes from 'prop-types';
 				
 				import './ExampleClass.css';
 				import 'OtherComponent' from './OtherComponent.js';
-			
-				Class ExampleClass extends React.Component {
-					state = {
-						<state-object-key>: '',
-						...
-					}
-					
-					stateChange() {
-						// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State
-						
-						// Don't modify this.state directly, otherwise React won't know to re-render the Component. 
-						// Use setState() instead to merge in the changed values of the affected <state-object-key>s, and implicitly call the Component's render() function to re-render the Component
-						this.setState({
-							<state-object-key>: '',
-							...
-						});
-						
-						return this.props.<parent-state-change-function-name>;
-					}
-					
-					render() {
-						return ( // ... Multi-line JSX Element ...
+
+				import ReactDOM from 'react-dom';
+
+				// Note: Class Names to begin with a Capital Letter to help React distinguish between HTML Elements and React / JSX Element.
+				Class ExampleComponent extends React.Component {
+					// Mounting: Phase in Component Lifecycle which depicts creation of a corresponding React Element and its initial Render.
+						constructor(props) {
+							super(props);
+
+							// Initialize Local State Object directly.
+							this.state = { //... };
+
+							// Binding Event Handler Methods to a Component Instance. Can be omitted if using (ev) => {this.handleStateChange(ev)} 
+							this.handleStateChange = this.handleStateChange.bind(this);
+						}
+
+						componentWillMount() {
+							// Called before the render Function is invoked - a chance to update state in preparation for the first render.
+							// ...
+
+							this.setState((state, props) => { // ... });
+						}
+
+						// Compulsory
+						render() {
+							// Examines this.props and this.state, and returns a React Element.
+							// Child Render methods are also executed.
+							// This should be a Pure Function - do not call this.setState() or mutate any global states here.
+
 							/*
-								JSX Elements are treated as JS Expressions.
+								React Elements are produced via JSX.
+									Evaluation of any JS is only done via JS Injection within curly braces.
+										You cannot inject JS if-statements directly within JSX. Utilize either:
+											1. Ternary Operator - it always evaluates to a JS Expression (returns a value) unlike an if-else statement.
+											2. Immediately-Invoked JS Function.
+									Utilize the && operator for code that either will or will not appear. 
+									JSX can still be used within the braces.
+									Multi-line JSX should be enclosed with parentheses.
 								
-								JSX Elements can have attributes, similar to DOM / HTML.
+								React Elements can have attributes, similar to DOM / HTML.
 									Note: Replace the class DOM attribute to className for compiling from JSX -> JS, since class is a reserved keyword in JS.
 									Note: style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to dash-delimited words.
 
-								JSX Elements can have Event Listeners, similar to DOM / HTML, but with the names in camelCase as opposed to lowercase words.
-									var exampleVariable = <img onHover={ exampleJSFunction } />; // The Event Listeners act on JS functions.
+								React Elements can have Event Listeners, similar to DOM / HTML, but with the names in camelCase as opposed to lowercase.
+									let exampleElement = <img onHover={ exampleJSFunction } />; // The Event Listeners act on JS functions.
 
-								JSX Elements can be nested, just like in DOM / HTML.	
-									Any nested JSX Element must have only exactly one outermost element. The first opening tag and the final closing tag must belong to the same JSX element.
-									Can use a <div> </div> or <React.Fragment> </React.Fragment> to enclose the group.							
-							
-								JSX Elements can hold Javascript within {}. The curly braces signal the start of JS Injection.
-									You cannot inject JS if statements directly within JSX. Utilize an Immediately-Invoked JS Function within the JS Injection instead.
-									Utilize the && operator for code that either will or will not appear.
+								React Elements can also utilize CSS Style Declarations, similar to HTML, but with the names in camelCase as opposed to lowercase hyphenation.
+									let exampleElement = <h1 style={{background: 'lightblue', color: 'darkred', fontSize: '20px'}}> Test </h1>;
+
+								React Elements can be nested, just like in DOM / HTML.
+									All React Elements must have only exactly one outermost element. The first opening tag and the final closing tag must belong to the same React element.
+
+									Can use a <div> </div> or React Fragment (<> </>) to enclose the group.
 							*/
-							<div className={<html-class-reference>} style={ { <cssAttribute>: '', ... } }>
-								<p> { this.props.<prop-name> } </p>
-								
-								<p>
-								  {(() => {
-									switch (this.state.<state-object-key>) {
-									  case "red":   return "#FF0000";
-									  case "green": return "#00FF00";
-									  case "blue":  return "#0000FF";
-									  default:      return "#FFFFFF";
-									}
-								  })()}
-								</p>
-								
-								<OtherComponent <child-prop-name>={ ... } <child-state-change-function-name>={ this.stateChange }/>
-							</div>
-						)
-					}
-					
-					// Other Lifecycle Methods
+
+							let subReactElement = (
+								<div> 
+									// ...
+								</div>
+							);
+
+							return <boolean> && ( 
+								<div className={<html-class-reference>} style={ { <cssAttribute>: '', ... } }>
+									<p> { this.props.<prop-name> } </p>
+									
+									<p>
+										{
+											(
+												() => {
+													switch (this.state.<state-object-key>) {
+														case "red":   return "#FF0000";
+														case "green": return "#00FF00";
+														case "blue":  return "#0000FF";
+														default:      return "#FFFFFF";
+													}
+												}
+											)()
+										}
+									</p>
+									
+									<OtherComponent <child-prop-name>={ // ... } <child-onStateChange>={ this.handleStateChange } />
+
+									// OR
+
+									<OtherComponent <child-prop-name>={ // ... } <child-onStateChange>=(ev) => {this.handleStateChange(ev)} />
+
+									// OR
+
+									<OtherComponent { ...this.state } /> // Object Spread Notation
+								</div>
+							)
+						}
+
+						componentDidMount() {
+							// Additional Function that is called only after a Component has been mounted, and only once.
+							// Child Components also execute their componentDidMount Functions as well.
+
+							// setInterval ...
+							// AJAX Call for Data ...
+						}
+
+						handleStateChange(callback) {
+							// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State.
+							
+							// Don't modify this.state directly, otherwise React won't know to re-render the Component.
+							// Use setState() instead to merge in changes to the State, and implicitly call the Component's render() function to re-render the Component.
+							this.setState(
+								(state, props) => {
+									return {
+										// New Object that represents the intended changes to the State Object.
+										// DO NOT mutate the State Object directly.
+									};
+								},
+								callback
+							);
+							
+							// Return (or execute) Parent stateChange method.
+							return this.props.<parent-stateChange>;
+						}
+
+					// Updating: Phase in which a Component updates due to changes in Props or State. Only occurs after the initial Render / Mounting Phase.
+						componentWillReceiveProps(nextProps) {
+							// Called only when Component will receive Props, regardless if old or new.
+						}
+						
+						shouldComponentUpdate(nextProps, nextState) {
+							// Default Behaviour is to re-render on any State change.
+							// return either True or False
+						}
+						
+						componentWillUpdate(nextProps, nextState) {
+							// Cannot call this.setState() here.
+							// Meant for interactions outside of the React architecture.
+						}
+
+						render() // Called to get new React Element.
+
+						getSnapshotBeforeUpdate(prevProps, prevState) {
+							// Called before the new React Element is commited to the Virtual DOM.
+							// Enables the Component to capture information from the Actual DOM before it is potentially changed.
+						}
+
+						componentDidUpdate(prevProps, prevState, snapshot) {
+							// Called immediately after any updating occurs.
+							// Meant for interactions outside of the React architecture.
+						}
+
+					// Unmounting: Phase in which a Component Instance is no longer actively inside the generated React Element that it is usually under, or if ReactDOM.unmountComponentAtNode( ... ) is used.
+						componentWillUnmount() {
+							// Called immediately before a Component is unmounted and destroyed.
+
+							// clearInterval ...
+						}
 				}
 				
-				ExampleClass.propTypes = {
+				// Explicit Declaration of expected types for Props helps to avoid errors.
+				ExampleComponent.propTypes = {
 					<prop-name>: PropTypes.<prop-type>[.isRequired],
-					<parent-state-change-function-name>: PropTypes.func[.isRequired],
+					<onStateChange>: PropTypes.func[.isRequired], // parent.handleStateChange
 					...
 				};
+
+				// Default Props Declaration - Static Property Declaration.
+				ExampleComponent.defaultProps = {
+					<prop-name>: [React.]PropTypes.<type>[.isRequired],
+					<onStateChange>: () => {},
+				}
 				
-				export default ExampleClass;
+				export default ExampleComponent;
 				
+				// ...
+
+			Functional Component:
+				// Useful as Presentational Components
+				const ExampleComponent = (props) => {
+					return ...
+				}
+
+				// Default Props Declaration - Static Property Declaration.
+				ExampleComponent.defaultProps = {
+					<prop-name>: [React.]PropTypes.<type>[.isRequired],
+					<onStateChange>: () => {},
+				}
+				
+				export default ExampleComponent;
+				
+				// ...
+
+			Render:
+				let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
+				ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.
+
+				// OR
+
+				ReactDOM.render(<ExampleComponent />, document.getElementById('...'));
+
+				// OR 
+
+				ReactDOM.render(<ExampleComponent> // ... </ExampleComponent>, document.getElementById('...'));
+				// Within ExampleComponent, the special this.props.children can be used to reference all nested React Elements that is a child of this ExampleComponent.
+				// React.Children API Methods.
+		
+		React Form (Elements): Special HTML Elements that use React State as a single-source of truth.
+			Typical HTML Form Elements maintain their own State. However, the React version of these Elements use the Component State instead.
+				This enforces that every State mutation will have an associated handler function, making it straightforward to modify or validate User Input.
+				Allows for finer-grained synchronization between User Input and Server State.
+
+			When these (usually HTML) Form Elements have a 'value' attribute specified in the React Element specification, they switch from using their internal State to the React Component State instead:
+				<element onChange={this.onChangeHandlerFunction} value={this.state.value} />
+
 		React Context API / Redux: Application-Level State Managers to maintain and share State across multiple Components.
 			Central Store for all Components. Avoids complex “prop” graphs in Component Trees.
 	
@@ -125,3 +289,4 @@ React.js
 			npm run build 			- Invoke Code Compilation and Minification of Assets within the 'src' folder, and transfers the generated Artifacts into a separate 'build' folder.
 			npm run eject			- Import the (Webpack) configuration files from create-react-app for more customization of the local React Project.
 			
+	

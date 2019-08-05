@@ -1,60 +1,196 @@
-Node.js - A configurable JS Server-Runtime-Environment. 
-	
-	node "<file.js>"											// Run a .js file under Node
-	node --prof "file.js" 										// Run a .js file under Node with profiling, storing the profiling in a .txt file
-	node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) // Process the text file produced from profiling
-	
-	module.exports = {
-		function1 : function () { // ... }, 
-		function2 : function () { // ... }, 
-		component1 : React.createClass({ render : function () { return; } })
-	} // the importable functionality object of a Node JS file is defined within this module.exports JS object
-	
-	var importedModule = require("./fileToImport.js"); 			// require() acts as an importer
-	importedModule.function2(); 								// Execute the function2() object
-	
-	process.argv												// Contains the command split via " "
-	process.env.VARIABLE_NAME 									// Used to get and set global or externally set Node environment variables
-	
-	package.json - Specifies the configuration of a Node environment.
-		{
-			"scripts": { 										// Specify action(s) to be run upon certain Node environment lifecycle events
-				// Note: May want to use npm-run-all to execute npm commands in parallel
-				"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed
-				"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed
-			}							
-			"dependencies": { // ... // }						// Specifies the modules that the Node environment depends on to run correctly
-			"devDependencies": { // ... // }					// Specifies modules that the Node environment uses during development
-		}
-	
-	npm - A manager for a Node environment.
-	
-		npm install -g node 									// Update Node
-		npm install -g npm stable								// Update npm
-	
-		npm init 												// Initialize a new Node environment
+Node.js:
+	Abbreviations:
 		
-		npm install 											// Install all modules specified within a package.json locally to the Node environment
-		npm install <module> 									// Install a module locally to the Node environment
-		npm install <module> --save								// Install a production-level module locally to the Node environment, and save it to package.json
-		npm install <module> --save-dev							// Install a development-level module locally to the Node environment, and save it to package.json
-		npm install <module> --global							// Install a module to globally (outside the Node environment)
-		
-		npm uninstall <module>									// Uninstall a module from the Node environment, and remove it from package.json
-		npm uninstall -g <module>								// Uninstall a globally installed module
-		
-		npm list -g --depth=0									// See all user-installed Node modules
-		
-		npm run <command> [-- <args>]							// Execute a <command> (script) that was specified as a property within the "scripts" object of package.json. 
-		
-		npx <command> [-- <args>]								// Execute a <command> for a locally installed package.
-		
-		npm publish "<file.js>"									// Publish package to npm codebase
 	
-	yarn - "A better version of npm".
+	Description: A configurable JS Runtime-Environment, independent of the Web Browser.
 	
-Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node environment during runtime.		
+	Tutorial Videos / Playlist:
+		
+	
+	Concepts:
+		
+	
+	Details:
 
-Forever.js - A module which enables the automatic restart of a running Node environment should it crash.
+	
+	Commands:
+		Node.js:
+			node "<file.js>"											// Run a .js file under Node.
+			node --prof "file.js" 										// Run a .js file under Node with profiling, storing the profiling in a .txt file.
+			node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) // Process the text file produced from profiling.
+			
+			package.json - Specifies the configuration of a Node environment.
+				{
+					"scripts": { 										// Specify action(s) to be run upon certain Node environment lifecycle events.
+						// Note: May want to use npm-run-all to execute npm commands in parallel.
+						"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed.
+						"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed.
+					}							
+					"dependencies": { // ... // }						// Specifies the Modules that the Node environment depends on to run correctly.
+					"devDependencies": { // ... // }					// Specifies Modules that the Node environment uses during development.
+				}
 
-Babel.js - Loader for a Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.	
+			// CommonJS 
+				module.exports = {
+					function1 : function () { // ... }, 
+					function2 : function () { // ... }, 
+					component1 : React.createClass({ render : function () { return; } })
+				} // the importable functionality Object of a Node JS file is defined within this module.exports JS Object.
+				
+				const importedModule = require("./fileToImport.js"); 		// require() acts as an importer. Checks if the string passed in is a relative path - if not, it will search for a module with that name instead.
+				importedModule.function2(); 								// Execute the function2() Object.
+
+			// ES6
+				export const exportObj = {
+					// ...
+				}
+
+				import { exportObj as importedObj, } from './exportObjFile.js';
+				
+				// Use importedObj ...
+
+			// In-Built Variables:
+				global														// Contains built-in Objects available to all Node Modules.
+
+				process.memoryUsage()										// CPU Usage for the current Process.
+
+				process.argv												// Contains each element of the command, delimited by spaces, used to create the Process.
+				process.env													// An Object which stores and controls information about the environment in which the Process is currently running in.
+				process.env.VARIABLE_NAME 									// Used to get and set global or externally set Node environment variables.
+					process.env.NODE_ENV 									// Convention: Used to indicate various environments.
+
+				process.stdin.on('data', (userInput) => {					// Receive User Input.
+					let input = userInput.toString()
+					console.log(input)
+				});
+
+			// Event Driven Architecture: For handling situations without knowing when exactly they occur ; contrast with traditional imperative programming which executes instructions in a pre-defined order.
+				const events = require('events');
+
+				const exampleEventEmitter = new events.EventEmitter();
+				const callbackFunction = function(data) {
+					// handle
+				}; 
+
+				exampleEventEmitter.on(
+					<event-type>,
+					callbackFunction
+				);
+
+				exampleEventEmitter.emit(
+					<event-type>,
+					<event-data>
+				);
+
+			// Asynchronous: Will not fire if synchronous Event does not terminate.
+				setTimeout(callbackFunction, <ms-duration>);
+				setInterval(callbackFunction, <ms-duration>);
+
+				async ... await
+
+			// Error-Handling: Traditional try ... catch won't work for asynchronous Error Events.
+				// Error-First Callback: Error Object given as first expected argument. The callback Function is the entity that does the Error Handling.
+				const errorFirstCallback = (err, data)  => {
+					if (err) {
+						// Error
+					} else {
+						// No Error
+					}
+				}
+
+				api.invokeMethod('data', errorFirstCallback);
+
+			// File I/O: Primarily used for sending over Web Files stored on the Server to the Client.
+				const fs = require('fs');
+
+				// Each method from the fs module has both a synchronous and asynchronous variant.
+
+				fs.readFile( // Read all of one File at one go.
+					<file-path>,
+					<file-character-encoding>,
+					errorFirstCallback
+				);
+
+				const fsOutputHandle = fs.createWriteStream(<file-path>);
+
+				fileStream.write(<line>);
+				fileStream.end();
+
+				const readline = require('readline');
+
+				const eventEmitterInterface = readline.createInterface({
+					input: fs.createReadStream(<file-path>)
+				});
+
+				eventEmitterInterface.on(
+					'line', // Listen for 'line' Events
+					(fileLine) => {
+						console.log(`The line read: ${fileLine}`);
+					}
+				);
+
+			// Web Server:
+				const http = require('http');
+
+				let requestListener = (request, response) => {
+					request.method // POST, GET, PUT, DELETE
+					request.url // Route
+					
+					response.writeHead(200, {'Content-Type': 'text/plain' });
+					response.write('Hello World!\n');
+
+					response.end();
+				};
+
+				const server = http.createServer(requestListener);
+
+				server.listen(process.env.PORT || <port-number>);
+
+			npm - A manager for a Node environment.
+				npm install -g node 									// Update Node.
+				npm install -g npm stable								// Update npm.
+			
+				npm init 												// Initialize a new Node environment.
+				
+				npm install 											// Install all Modules specified within a package.json locally to the Node environment.
+				npm install <module> 									// Install a Module locally to the Node environment.
+				npm install <module> --save								// Install a production-level Module locally to the Node environment, and save it to package.json.
+				npm install <module> --save-dev							// Install a development-level Module locally to the Node environment, and save it to package.json.
+				npm install <module> --global							// Install a Module to globally (outside the Node environment).
+				
+				npm uninstall <module>									// Uninstall a Module from the Node environment, and remove it from package.json.
+				npm uninstall -g <module>								// Uninstall a globally installed Module.
+				
+				npm list -g --depth=0									// See all user-installed Node Modules.
+				
+				npm run <command> [-- <args>]							// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
+				
+				npx <command> [-- <args>]								// Execute a <command> for a locally installed package.
+				
+				npm publish "<file.js>"									// Publish package to npm codebase.
+			
+			yarn - A 'better' version of npm.
+			
+		Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node environment during runtime.
+
+		Forever.js - A Module which enables the automatic restart of a running Node environment should it crash.
+
+		Babel.js - Loader for a Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
+			// Steps:
+				npm install babel-cli
+				npm install babel-preset-env
+				
+				// For .babelrc, ensure the Object has:
+				presets = ["env"]
+
+				// For .package.json, ensure the Object has:
+				package.json.scripts.build = "babel src -d lib" // Command babel to convert all .js Source Code into ES5 Compatable Versions into a separate 'lib' Directory.
+
+		Rewire.js - Adds a special Setter and Getter Method to Modules so you can modify their behaviour for better Unit Testing.
+			// Inject Mocks for other Modules or Globals (e.g process)
+			// Inspect Private Variables.
+			// Override Variables within the Module.
+
+		Supertest.js - Allows testing of Endpoints / HTTP Assertions via SuperAgent.js.
+			// Accepts any http.Server instance, and test for the contents of the returned Response object when querying with a particular Route with a Request Object.
+	

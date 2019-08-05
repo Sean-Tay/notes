@@ -1,5 +1,4 @@
 Javascript
-
 	Scopes:
 		const 												- block {} scope, unchangeable once declared, not redeclarable
 		let 												- block {} scope, changeable once declared, not redeclarable
@@ -51,7 +50,6 @@ Javascript
 		}
 
 		function() { 										// Anonymous Function
-
 		}
 
 		function functionCallback( ... , callback) { 		// A callback parameter is to allow the execution (or multiple executions) of a specified function anytime during the parent function's execution
@@ -86,6 +84,51 @@ Javascript
 		// this refers to the current scope's owner - can be a class or a function
 			.bind(this) // Search up on this
 	
+	Spread Operator: Convenient Syntax 
+		Iterator Spread Operator: 
+			// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
+			
+			// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
+			
+		Object Spread Operator:		
+			// { ...<Object>}
+		
+	Arrow Functions: A function that has a syntactic definition that is shorter than a regular anonymous function.
+		function () {} becomes () => {};
+		function (x) { return x; } becomes x => x;
+		
+		(x) => { return x; }
+			// LHS - Argument List
+			// RHS - To Return
+				// Using parenthesis in place of the RHS braces represents an implicit return statement. Should be used if there's a sole return statement in the body of the anonymous function.
+				// (x) => (x) // Equivalent to the above
+				// Useful for simplified syntax for React 
+					const Counter = () => (
+						<h1> Value </h1>
+					);
+
+	Function Currying - The process of breaking down a function that takes multiple arguments into a series of functions that each take only one argument.
+		function add(a, b) { return a + b; }
+		(x, y) => { return x + y; }
+		
+		vs.
+		
+		function add(a) { return function(b) {return a + b}; }
+		(x) => (y) => { return x + y; }
+
+		// This allows multiple different subtypes of the function to be built up before executing.
+		const add3 = add(3);
+		add3(4) // Returns 7.
+
+	Import / Export Syntax:
+		import Module from 'npm-module';
+
+		export default className; // Make 'className' the only export of the JS File.
+		import className from './JS-File';
+
+		export const className = className; // Set 'className' to be an export of the JS File.
+		import {className as 'alias'} from './JS-File'; // Named Imports
+
 	Utilities:
 		Mathematical Functions: 
 			Math.floor();
@@ -103,20 +146,11 @@ Javascript
 			Global Match: /<RegEx>/g
 			
 			/<RegEx>/.test("<string>"); 					// Test if a String contains the supplied RegExp.
-
-	Function Currying - The process of breaking down a function that takes multiple arguments into several sub-functions that each take a subset of those multiple arguments.
-		function add(a, b) { return a + b; }
-		(x, y) => { return x + y; }
-		
-		vs.
-		
-		function add(a) { return function(b) {return a + b}; } 	// This allows multiple different subtypes of the function to be built up before executing.
-		(x) => (y) => { return x + y; }
 	
-	Document Object Model - Term referencing the tagged tree-like structure of a browser-processed HTML document - html, head, body, etc for easy access of a particular HTML element within the webpage.
-		Accessing HTML Elements:
+	Document Object Model - An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
+		DOM Elements:
 			var element = document.getElementsByClassName('classname'); // No need the . prefix
-			var element = document.getElementById('idName'); 	// No need the # prefix	
+			var element = document.getElementById('idName'); 	// No need the # prefix
 	
 		DOM Properties: Initialized from the values assigned to HTML Attributes. These can mutate during runtime, unlike HTML Attributes which only dictate the starting values of these Properties.
 			element.innerText; 									// references the text content between opening and closing HTML tags 
@@ -150,26 +184,4 @@ Javascript
 		};
 		
 		httpRequest.send(null); // Actually fire off the AJAX Request
-			
-	Spread Operator (ES6) - Convenient Syntax 
-		Iterator Spread Operator: 
-			// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
-			
-			// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
-			
-		Object Spread Operator:		
-		
-	Arrow Functions (ES6) - A function that has a syntactic definition that is shorter than a regular anonymous function.
-		function () {} becomes () => {};
-		function (x) { return x; } becomes x => x;
-		
-		(x) => { return x; }
-			// LHS - Argument List
-			// RHS - To Return
-				// Using parenthesis in place of the RHS braces represents an implicit return statement. Should be used if there's a sole return statement in the body of the anonymous function.
-				// (x) => (x) // Equivalent to the above
-				// Useful for simplified syntax for React 
-					const Counter = () => (
-						<h1> Value </h1>
-					);
 	

@@ -377,7 +377,8 @@
 			Heap Sort:
 		
 		Non-Comparison Based Sorting:
-			Radix Sort:
+			Radix / Base Sort:
+				- Radix: The smallest number that can only be represented by more than one symbol.
 			Counting Sort:
 			Bucket Sort:
 
