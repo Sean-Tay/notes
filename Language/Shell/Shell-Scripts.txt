@@ -188,7 +188,7 @@ Linux / Unix:
 				--overwrite -xvpPf <file>.tar - Extract all <file>s within <file>.tar whilst preserving directory structure.
 				-C <path> - Extract all <file>s to <path>.
 
-				-z				- Activate compression for the file bundle.
+				-z				- Activate compression for the file bundle. This operation can be invoked separately by the gzip command.
 		
 		Script Specific:
 			#!<script_interpreter>: Shebang or Hashbang Line to specify which Interpreter to use to read and execute the program.
