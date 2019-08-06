@@ -107,7 +107,7 @@ Javascript
 						<h1> Value </h1>
 					);
 
-	Function Currying - The process of breaking down a function that takes multiple arguments into a series of functions that each take only one argument.
+	Function Currying: The process of breaking down a function that takes multiple arguments into a series of functions that each take only one argument.
 		function add(a, b) { return a + b; }
 		(x, y) => { return x + y; }
 		
@@ -128,6 +128,20 @@ Javascript
 
 		export const className = className; // Set 'className' to be an export of the JS File.
 		import {className as 'alias'} from './JS-File'; // Named Imports
+
+	Classes:
+		class className [extends parentClass] {
+			// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
+			// Else:
+			constructor(arg, ...) {
+				super(arg, ...)
+
+				//...
+
+			}
+
+			// ...
+		}
 
 	Utilities:
 		Mathematical Functions: 
