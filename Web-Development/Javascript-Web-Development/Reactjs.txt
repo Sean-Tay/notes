@@ -60,6 +60,8 @@ React.js
 			Child Stateless -> Child Stateless = Child Stateless -> Parent Stateful -> Child Stateless : Separation of Concerns.
 				Business Logic (Container Components) and Display Logic (Presentational Components).
 
+			Use Props to set State only when it is clear the data involved is just initialization data. Components will automatically re-render if the Props change.
+
 		React Components:
 			Class-Component:
 				import React from 'react';
@@ -82,6 +84,11 @@ React.js
 							// Binding Event Handler Methods to a Component Instance. Can be omitted if using (ev) => {this.handleStateChange(ev)} 
 							this.handleStateChange = this.handleStateChange.bind(this);
 						}
+
+						// Set State without need for declaring Constructor.
+						state = {
+							// ...
+						};
 
 						componentWillMount() {
 							// Called before the render Function is invoked - a chance to update state in preparation for the first render.
@@ -185,6 +192,11 @@ React.js
 							
 							// Return (or execute) Parent stateChange method.
 							return this.props.<parent-stateChange>;
+						}
+						
+						// Specifying a Function in this manner removes the need to bind 'this'.
+						handleStateChange = (callback) => {
+							// ...
 						}
 
 					// Updating: Phase in which a Component updates due to changes in Props or State. Only occurs after the initial Render / Mounting Phase.
