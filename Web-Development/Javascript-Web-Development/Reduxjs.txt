@@ -14,6 +14,8 @@ Redux.js
 		Action: 				
 			Plain Object that minimally expresses a type of intention to CHANGE the Application State.
 				{type: "<action_identifier>", arg1: 'value1', ...}
+
+			Action Creators are Functions that return Action Objects when invoked. The results of this invoked Function can be directly passed into the Store's dispatch Function.
 		
 		Reducer Function: 		
 			Specifies how the Application State changes in response to an Action.
@@ -44,7 +46,7 @@ Redux.js
 				const store = createStore(combinedReducer);
 
 				// Update the Store (and UI) in response to whenever a State Change occurs via dispatch.
-				// Mainly used for updating UI Elements / Re-rendering of the DOM.
+				// Mainly used for updating UI Elements / re-Rendering of the DOM.
 				store.subscribe(<callback-function>);
 
 				// Execute a State Changing Action on the Store.
@@ -54,7 +56,7 @@ Redux.js
 				store.getState() - Gets a copy of the current State tracked within the Store.
 			
 			const <redux-component> = connect(mapStateToProps, mapDispatchToProps) (<react-component>)
-				Returns a modified variant of the <react-component> sent into the connect Function.
+				Returns a modified variant of the <react-component> sent into the connect Higher-Order Function.
 					mapDispatchToProps (".dispatch()") is a Function returning an Object describing Redux Store Dispatch Functions to be passed as props into the <react-component>.
 						// Typically allows the React Component to dispatch Actions to update the Store.
 						// Minimally takes in "dispatch", which is the Function to use to invoke State changing Actions to the Store from within the <react-component>.
