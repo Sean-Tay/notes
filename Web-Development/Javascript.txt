@@ -1,10 +1,10 @@
-Javascript
+JavaScript
 	Scopes:
 		const 												- block {} scope, unchangeable once declared, not redeclarable
 		let 												- block {} scope, changeable once declared, not redeclarable
 		var 												- global scope, changeable once declared, redeclarable
 
-	Basic Javascript Expression Manipulations: 
+	Basic JavaScript Expression Manipulations: 
 		Raw Data Types: 
 			var myString = "Test";
 				var myTemplateString = `Testing: ${dynamicValue}` // Can also be Multi-line
@@ -161,7 +161,7 @@ Javascript
 			
 			/<RegEx>/.test("<string>"); 					// Test if a String contains the supplied RegExp.
 	
-	Document Object Model - An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
+	Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
 		DOM Elements:
 			var element = document.getElementsByClassName('classname'); // No need the . prefix
 			var element = document.getElementById('idName'); 	// No need the # prefix
@@ -188,7 +188,7 @@ Javascript
 				eventObject.target.value
 				// eventObject Properties: https://developer.mozilla.org/en-US/docs/Web/API/Event
 				
-	AJAX Requests - Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
+	AJAX Requests: Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
 		const httpRequest = new XMLHttpRequest(); // Create a new AJAX Request
 		
 		httpRequest.open("{GET | POST | PUT | DELETE}", "<relative-url>"); // Specify HTTP Request Type and Target
@@ -198,4 +198,4 @@ Javascript
 		};
 		
 		httpRequest.send(null); // Actually fire off the AJAX Request
-	
+
