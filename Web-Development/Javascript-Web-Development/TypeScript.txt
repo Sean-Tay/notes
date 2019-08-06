@@ -1,0 +1,43 @@
+TypeScript:
+	Abbreviations:
+		OOP: 					Object-Oriented Programming.
+	
+	Description: An extension to JavaScript.
+	
+	Tutorial Videos / Playlist:
+		
+	
+	Concepts:
+		
+	
+	Details:
+		Features:
+			Static Typing: 		Allows for optional explicit declaration of Variable Types. Compiler will ensure Variables are not assigned Values of the wrong Type.
+				let <variable> : <{ variable-type | interface }> = <value>;
+
+				function ( arg:<arg-type>, ... ): <{ return-type | interface }> {
+					// ...
+				}
+
+			Interfaces:			Allows for explicit structure declaration of Values.
+				interface <interface-name> {
+					<property>: <type>, 
+					<optional-property>?: <type>, 
+					readonly <readonly-property>: <type>,
+					// ...
+				}
+
+				Strictness can change in different scenarios:
+					1. At least the required types are accounted for in the Value.
+					2. Only the required types are accounted for in the Value.
+
+			Modules
+			Namespaces
+			OOP Support
+
+		TypeScript code will eventually be compiled down to JavaScript code. This additional step serves as another point whereby problematic code can be caught.
+	
+	Commands:
+		tsc *.ts[x]				Compiles TypeScript code in relevant .ts or .tsx files to JavaScript code in .js or .jsx files.
+			--watch 			Auto-Compile when TypeScript code changes are detected.
+	
