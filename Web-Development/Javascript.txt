@@ -1,10 +1,10 @@
-JavaScript
+Javascript
 	Scopes:
 		const 												- block {} scope, unchangeable once declared, not redeclarable
 		let 												- block {} scope, changeable once declared, not redeclarable
 		var 												- global scope, changeable once declared, redeclarable
 
-	Basic JavaScript Expression Manipulations: 
+	Basic Javascript Expression Manipulations: 
 		Raw Data Types: 
 			var myString = "Test";
 				var myTemplateString = `Testing: ${dynamicValue}` // Can also be Multi-line

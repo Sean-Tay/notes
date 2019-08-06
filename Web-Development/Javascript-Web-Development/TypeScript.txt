@@ -1,8 +1,8 @@
-TypeScript:
+Typescript:
 	Abbreviations:
 		OOP: 					Object-Oriented Programming.
 	
-	Description: An extension to JavaScript.
+	Description: An extension to Javascript.
 	
 	Tutorial Videos / Playlist:
 		
@@ -35,9 +35,9 @@ TypeScript:
 			Namespaces
 			OOP Support
 
-		TypeScript code will eventually be compiled down to JavaScript code. This additional step serves as another point whereby problematic code can be caught.
+		Typescript code will eventually be compiled down to Javascript code. This additional step serves as another point whereby problematic code can be caught.
 	
 	Commands:
-		tsc *.ts[x]				Compiles TypeScript code in relevant .ts or .tsx files to JavaScript code in .js or .jsx files.
-			--watch 			Auto-Compile when TypeScript code changes are detected.
+		tsc *.ts[x]				Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
+			--watch 			Auto-Compile when Typescript code changes are detected.
 	
