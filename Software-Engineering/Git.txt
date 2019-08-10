@@ -51,16 +51,18 @@ Git:
 
 		git checkout <commit> -- <file> ... - Switch current version of <file> with the <commit> version of <file>.
 
-		git merge <branch> 		- Merge updates from the Local Branch <branch> into the currently checked out Local Branch.
-		git merge <repo_url_alias> <branch> - Merge updates from the Remote Branch <branch> into the currently checked out Local Branch.
+		git merge [<repo_url_alias>] <branch> - Merge updates from the Branch <branch> into the currently checked out Local Branch.
+			--abort				- If Merge Conflicts will occur, this will revert the Merge. If there are prior Local Working Copy changes, those will be lost.
+			--continue			- If Merge Conflicts will occur, this will allow for retrying the Merge after the edits are made. 
+
 			--no-commit			- Prevent the automatic Commit behaviour of the Merge operation, allowing for edits to be made before actually making the Commit.
+			
+			--squash			- Combine all updates from the Branch <branch> into one, and add that combined update as one Commit into the currently checked out Local Branch. Helps keep history clean.
 
-			--abort				- If Merge Conflicts are present, this will revert the Merge. If there are prior Local Working Copy changes, those will be lost.
+		git cherry-pick <commit> - Selectively bring in a Commit from another Branch to the currently checked out Local Branch.
+			--no-commit			- Apply the changes only to the Local Working Copy without Commiting.
 
-			--continue			- If Merge Conflicts are present, this will allow for the retry the Merge after edits are made. 
-
-		git pull <branch>
-		git pull <repo_url_alias> <branch> - git fetch + git merge.
+		git pull [<repo_url_alias>] <branch> - git fetch + git merge.
 			--allow-unrelated-histories - Merges two Repos that started independently.
 
 		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
@@ -101,6 +103,8 @@ Git:
 		git checkout -- <file> ... - Revert changes to <file>s.
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 
+		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of <branch>. 
+
 		git push <repo_url_alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
 		git tag 				- Mark an important Commit with a local reference.
@@ -111,6 +115,7 @@ Git:
 		git push <repo_url_alias> :/refs/tags/<tag> - Push the locally changed Tag to the Remote Repository.
 		git push <repo_url_alias> -- tags - Push all locally changed Tags to the Remote Repository.
 
+		git log					- See information about last 5 Commits, with the first Commit being the most recent.
 		git log --all --decorate --oneline --graph - Observe Commit history of the current Local Repository as a graph.
 		
 	
