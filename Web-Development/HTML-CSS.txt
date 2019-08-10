@@ -1,18 +1,16 @@
-HTML: Defines the structure of the web document. It specifies both the content, and the rendering instructions for a browser.
+HTML: Defines the structure of the Web Document. It specifies both the content, and the rendering instructions for a Browser.
 
 General HTML Structure:
-	
 	A HTML Element is represented by 1 or 2 HTML Tags.
 	
-	Any Element can have an ID Attribute associated to them - but only one element in the HTML document can have the specific ID.
+	Any Element can have an ID Attribute associated to them - but only one Element in the HTML Document can have the specific ID.
 
-	Any Element can have a Class Attribute associated to them - no restrictions.
+	Any Element can have one or more Class Attributes associated to them - no restrictions.
 
 HTML Tags / Elements:
+	<!-- Comment --> - A Comment Tag.
 
-	<!-- Comment --> - A comment Tag.
-
-	<!DOCTYPE html> - A Tag which declares that the content below it is HTML
+	<!DOCTYPE html> - A Tag which declares that the content below it is HTML.
 
 	<html> ... </html> - Tags which specify the start and end of the HTML content respectively.
 		lang="en-US" - Attribute which specify language of the page. Important for coding with Bootstrap.
@@ -35,7 +33,7 @@ HTML Tags / Elements:
 
 	<style type="text/css"> ... </style> - Define an environment to specify CSS with.
 
-	<link href="main.css" rel="stylesheet" type="text/css" /> - Defines a link to a CSS type document.
+	<link href="main.css" rel="stylesheet" type="text/css" /> - Defines a link to a CSS Type Document.
 		CDN - Can reference CSS Style libraries from Content Delivery Network - no need to download and reference.
 		
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
@@ -43,7 +41,7 @@ HTML Tags / Elements:
 	<body> ... </body> - Tags which specify the start and end of the actual HTML content respectively.
 
 	<a href="http://www.google.com"> Click Me! </a> - Anchor Element. Tags which denote a clickable link to the website specified in the href parameter of the tag.
-		<a href="#elementid"> Link </a> - Can be used to jump to elements with the specified id within the same webpage as well.
+		<a href="#elementid"> Link </a> - Can be used to jump to Elements with the specified id within the same webpage as well.
 
 	<p> ... </p> - Tags which denote a paragraph.
 
@@ -53,7 +51,7 @@ HTML Tags / Elements:
 
 	<i> ... </i> or <em> ... </em> - Tags which specify italicized content.
 
-	<div> ... </div> - Tags which is used to group block elements in a document. 
+	<div> ... </div> - Tags which is used to group block Elements in a document. 
 
 	<span> ... </span> - Tags which is used to group Inline Elements or Inline-Block Elements in a document. Cannot contain Block Elements within it.
 
@@ -73,66 +71,87 @@ HTML Tags / Elements:
 
 	<template> ... </template> - A Tag that holds HTML but does not render it at the start. Use Javascript to conditionally show it.
 	
-CSS: Decorates the webpages. General Form: selector { property:value; } OR selector:state { property:value; } OR 
-	
+CSS: Decorates Webpages. 
+	General Form: 
+		<css-selector> { 
+			<rule>: <value>; 
+		}
+
 	Types:
-		Inline CSS - CSS defined with the style attribute of the HTML element. Performance friendly.
-		Internal CSS - CSS defined with the <style> </style> tags. Performance friendly.	
+		Inline CSS - CSS defined with the style attribute of the HTML Element. Performance friendly.
+		Internal CSS - CSS defined with the <style> </style> tags. Performance friendly.
 		External CSS - CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
 
-	// id
+	/* id */
 	#id {}
 	
-	// class
+	/* class */
 	.class {}
 	
-	// media conditional - apply css only if conditional is satisified
-	@media all and (condition) {
+	/* media conditional - apply css only if conditional is satisfied */
+	@media all and (conditional) {
 		// css here
 	}
 	
-	// CSS Reset
-		// Removes all CSS that a browser automatically adds - make design consistent amongst different browsers., which may have their own styling for certain elements.
+	/* 
+		CSS Reset - Removes all CSS that a browser automatically adds - make design consistent amongst different browsers, which may have their own implicit styling for certain Elements.
+	*/
 	
-	// Unit Specification
-		// x vw, y vh - Relatively scale element by x% of the viewport width and y% of the viewport height.
-		// em - Specify scale according to element size.
+	/* 
+		Unit Specification
+			x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
+			em - Specify scale according to Element size.
+	*/
 	
-	// To specify style for special state of selector 1
+	/* To specify style for special state of selector1. */
 	selector1:special-state {}
 	
-	// To select both selector1 and selector2
+	/* To select both selector1 and selector2. */
 	selector1, selector2 {}
 
-	// To select an immediate selector2 DOM element that follows after a selector1 DOM element with the same parent
+	/* To select an immediate selector2 HTML Element that follows after a selector1 HTML Element with the same parent. */
 	selector1 + selector2 {}
 
-	// To select any selector2 DOM element that follows after a selector1 DOM element with the same parent
+	/* To select any selector2 HTML Element that follows after a selector1 HTML Element with the same parent. */
 	selector1 ~ selector2 {}
 
-	// To select only direct selector2 DOM elements contained within a selector1 DOM element
+	/* To select only direct selector2 HTML Elements contained within a selector1 HTML Element. */
 	selector1 > selector2 {}
 
-	// To select all selector2 DOM elements contained within a selector1 DOM element
+	/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
 	selector1 selector2 {}
 	
-	display: inline - 
-		Respect left & right margins and padding, but not top & bottom.
-		Cannot have a width and height set.
-		Allow other elements to sit to their left and right.
-		
-	display: block -
-		Respect all of those.
-		Force a line break after the block element.
-		
-	display: inline-block - 
-		Allow other elements to sit to their left and right.
-		Respect top & bottom margins and padding.
-		Respect height and width.
+	/* 
+		Spacing Properties: 
+			Specification Order: Top Right Bottom Left.
+			
+			Padding: Inward Separation.
+			Margin: Outward Seperation.
+			
+			Float: To specify that Element be on the Left or Right.
+
+		Arrangement Properties: 
+			display: inline
+				Respect Left & Right Margins and Padding, but not Top & Bottom.
+				Cannot have a Width and Height set.
+				Allow other Elements to sit to their Left and Right.
+				
+			display: block
+				Respects all of those.
+				Force a Line Break after the block Element.
+				
+			display: inline-block
+				Respect Top & Bottom Margins and Padding.
+				Respect Height and Width.
+				Allow other Elements to sit to its Left and Right.
+	*/
 	
-	Order: Top Right Bottom Left.
+	/*
+		Extensions: Usually a Preprocessor Style Sheet Language that adds programmatic features to CSS.
+			SASS: Syntactically Awesome Style Sheets.
+
+			LESS: Leaner Style Sheets.
+
+			SCSS: Sassy CSS.
+	*/
 	
-	Padding - Inward separation.
-	Margin - Outward seperation.
-	
-	Float - To specify that element be on the left or right.
