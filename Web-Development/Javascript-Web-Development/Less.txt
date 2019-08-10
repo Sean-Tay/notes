@@ -1,0 +1,133 @@
+Less
+	Abbreviations:
+		CSS:					Cascading Style Sheet.
+	
+	Description:				An extension to CSS that adds more programmatic features.
+	
+	Tutorial Videos / Playlist:
+		
+	
+	Concepts:
+		Rule:					A <{key | rule}>: <value> pair specifying a CSS property.
+		Rule-Set:				A grouping of CSS Rules that is usually applied to <css-selectors>.
+
+		List:					A comma or space delimited series of Values.
+	
+	Details:
+		Less Syntax needs to be compiled down to CSS before it can be used.
+
+		Features:
+			Variable Definition:
+				@<variable>: <value>; 							// Variable Definition
+				@<variable>: <value> <operator> @<variable>;	// Variable Reference
+
+				#example {
+					<rule>: @<variable>; 							// Variable Usage
+				}
+
+				// Variables can also be used as part of Rule-Set Definitions
+				@min768: (min-width: 768px); 					// Escaped Value
+				#example {
+					@media @min768 {							// Variable as part of Rule-Set Definition
+						font-size: 1.2rem;
+					}
+				}
+
+			Useful Functions: Less provides a number of useful Functions for Values.
+				if(<conditional>, <return-true-value>, <return-false-value>) // Can be used as part of <conditionals>, returns true or false
+
+				escape('<value>')								// Applies URL Encoding for String values.
+				e('<value>')									// Returns <value> as is without the encompassing String quotes.
+
+				length('value1', 'value2', ...)					// Returns the length of the List passed into it.
+				extract(@<list>, <position>)					// Returns the element at the specified position in the List. Note: 1-based Index.
+
+				range(<start>, <end>, <step>)					// Returns a List of Values, <end> included.
+				each(@iterable, { 								// Binds the evaluation of a Rule-Set with each element of the List / Rule-Set.
+					// Special Variables:
+						// @{key}								// Usually matches @{index}, except if a Rule-Set was passed in as @iterable.
+						// @{index}
+						// @{value}
+
+					<css-selector> {							// Mixin / Anoymous Mixin Specification
+						// ...
+					}
+				});
+
+			Escaping Values: Encompass Values with Parentheses.
+				@<variable>: (<value>);
+
+			Guards: Conditional Usage of Rule-Sets.
+				<css-selector> when (<conditional>) {
+					// ... 
+				}
+
+			Mixins: Use Rule-Sets within other Rule-Sets.
+				<css-selector-A> {								// CSS-Visible Mixin Definition
+					<rule-A>: <value-A>;
+					// ...
+				}
+
+				<invisible-selector>() {						// CSS-Invisible Mixin Definition
+					<rule>: <value>;
+					// ...
+				}
+
+				<css-selector-B> {
+					<rule-B>: <value-B>;
+					<css-selector-A>();							// Mixin Call
+				}
+
+				{ # | . }() {									// Anonymous Mixin Definition
+					// ...
+				}
+
+				// Each Rule-Set has its own Namespace.
+				<css-selector-C> {
+					<css-selector-B><css-selector-A>();
+				}
+				
+				// Mixins with Parameters:
+				<css-selector-D>(@<parameter-1>: <default-value-1>, <default-value-2>, ... ; @<parameter-2>: ... ; ... ) {
+					// ... 
+				}
+
+				#example {
+					// Positional Parameter Specification
+					<css-selector-D>(<value1>, <value2>, ... ; <valueA> ; ...);
+
+					// Named Parameter Specification
+					<css-selector-D>(@<parameter-1>: <value1>, <value2>, ... ; @<parameter-2>: <valueA> ; ...);
+				}
+
+				/* Mixin Overloading: 
+					Multiple Mixin Definitions with the same IDs can be created with different Parameters.
+					When referencing the Mixin, all possible Mixins with the matching Parameters will be incorporated.
+				*/
+				<css-selector-E>(@<parameter-1>) {
+					// A
+				}
+
+				<css-selector-E>(@<parameter-1>; @<parameter-2>:<default-value>) {
+					// B
+				}
+
+				<css-selector-F> {
+					@<css-selector-E>(@<parameter-1>: <value1>); // A and B
+				}
+
+			Nesting: Similar to Mixins, but inner Rule-Sets can be defined within outer Rule-Sets to mimick corresponding HTML structure.
+				<outer-css-selector> {
+					// ...
+					<inner-css-selector> {
+						// ... 
+					}
+				}
+			
+			Imports:
+				@import '<library>'; // <library>.less - Default Extension assumed to be .less.
+				@import '<library>.css';
+	
+	Commands:
+		
+	
