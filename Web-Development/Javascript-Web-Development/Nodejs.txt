@@ -146,30 +146,49 @@ Node.js:
 
 				server.listen(process.env.PORT || <port-number>);
 
-			npm - A manager for a Node environment.
+			npm - A manager for a Node environment. Skip to yarn if possible.
 				npm install -g node 									// Update Node.
 				npm install -g npm stable								// Update npm.
 			
 				npm init 												// Initialize a new Node environment.
 				
-				npm install 											// Install all Modules specified within a package.json locally to the Node environment.
-				npm install <module> 									// Install a Module locally to the Node environment.
-				npm install <module> --save								// Install a production-level Module locally to the Node environment, and save it to package.json.
-				npm install <module> --save-dev							// Install a development-level Module locally to the Node environment, and save it to package.json.
-				npm install <module> --global							// Install a Module to globally (outside the Node environment).
+				npm install 											// Add all Modules specified within a package.json locally to the current Node environment.
+
+				npm install <module> 									// Add a Module locally to the current Node environment. Older versions of npm will not automatically add the Module into package.json to be used by the current Node project.
+					--save-dev											// Add a development-level Module locally to the current Node environment, and save it to package.json to be used by the current Node project.
+					--save												// Add a Module locally to the current Node environment, and save it to package.json to be used by the current Node project.
+					-g													// Install a Module globally (outside the Node environment).
 				
-				npm uninstall <module>									// Uninstall a Module from the Node environment, and remove it from package.json.
-				npm uninstall -g <module>								// Uninstall a globally installed Module.
+				npm uninstall <module>									// Remove a Module from the current Node environment. Older versions of npm will not automatically remove it from package.json.
+					--save-dev											// Remove a development-level Module locally from the current Node environment, and propagate the changes to package.json / the current Node project.
+					--save												// Remove a Module locally from the current Node environment, and propagate the changes to package.json / the current Node project.
+					-g													// Remove a globally installed Module.
 				
 				npm list -g --depth=0									// See all user-installed Node Modules.
 				
-				npm run <command> [-- <args>]							// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
+				npm run <command> [-- <arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 				
-				npx <command> [-- <args>]								// Execute a <command> for a locally installed package.
+				npx <command> [-- <arg>, ...]							// Execute a <command> for a locally installed package.
 				
 				npm publish "<file.js>"									// Publish package to npm codebase.
 			
-			yarn - A 'better' version of npm.
+			yarn - A better version of npm. Avoid installing with npm, install separately.
+				yarn init												// Initialize a new Node environment.
+
+				yarn install											// Add all Modules specified within a package.json locally to the current Node environment.
+
+				yarn add <module>[@<{ version | tag }>]					// Add a Module, optionally of a specific version or tag, to the local Node environment, and adds it into package.json to be used by the current Node project.
+					--dev												// Add a development-level Module, optionally of a specific version or tag, to the local Node environment, and adds it into package.json to be used by the current Node project.
+
+				yarn upgrade <module>[@<{ version | tag }>]				// Upgrade any Module, optionally to a specific version or tag, within the local Node environment, and propagate the changes to package.json / current Node project.
+
+				yarn remove <module>									// Remove any Module from the local Node environment, and propagate the changes to package.json / current Node project.
+
+				yarn global add <module>[@<{ version | tag }>]			// Install a Module globally (outside the Node environment).
+				yarn global upgrade <module>[@<{ version | tag }>]		// Upgrade a globally installed Module.
+				yarn global remove <module>								// Remove a globally installed Module.
+
+				yarn run <command> [<arg>, ...]							// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 			
 		Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node environment during runtime.
 
@@ -180,10 +199,10 @@ Node.js:
 				npm install babel-cli
 				npm install babel-preset-env
 				
-				// For .babelrc, ensure the Object has:
+				// For .babelrc, ensure the Object within has:
 				presets = ["env"]
 
-				// For .package.json, ensure the Object has:
+				// For .package.json, ensure the Object within has:
 				package.json.scripts.build = "babel src -d lib" // Command babel to convert all .js Source Code into ES5 Compatable Versions into a separate 'lib' Directory.
 
 		Rewire.js - Adds a special Setter and Getter Method to Modules so you can modify their behaviour for better Unit Testing.
