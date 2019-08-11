@@ -90,8 +90,8 @@ Javascript
 			
 			// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
 			
-		Object Spread Operator:		
-			// { ...<Object>}
+		Object Spread Operator:
+			// { ...<Object> }
 		
 	Arrow Functions: A function that has a syntactic definition that is shorter than a regular anonymous function.
 		function () {} becomes () => {};
