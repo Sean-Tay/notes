@@ -36,7 +36,7 @@ Git:
 
 		git checkout <branch> - Switches Local Branches.
 			-B <new_branch>	- Creates a new Local Branch called <new_branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
-				--track <repo_url_alias> <branch> - Forces the new Local Branch to track a specified Remote Branch.
+				--track <repo_url_alias> <branch> - Forces <new_branch> to track a specified Remote Branch.
 
 		git branch <branch> 	- Create a new Local Branch.
 			-r					- List Remote Branches
@@ -57,7 +57,7 @@ Git:
 
 			--no-commit			- Prevent the automatic Commit behaviour of the Merge operation, allowing for edits to be made before actually making the Commit.
 			
-			--squash			- Combine all updates from the Branch <branch> into one, and add that combined update as one Commit into the currently checked out Local Branch. Helps keep history clean.
+			--squash			- Combine all updates from the Branch <branch> into one, and add that combined update as one Commit into the currently checked out Local Branch. Does not actually merge <branch>, which helps keep git history of the currently checked out Branch clean.
 
 		git cherry-pick <commit> - Selectively bring in a Commit from another Branch to the currently checked out Local Branch.
 			--no-commit			- Apply the changes only to the Local Working Copy without Commiting.
@@ -115,7 +115,7 @@ Git:
 		git push <repo_url_alias> :/refs/tags/<tag> - Push the locally changed Tag to the Remote Repository.
 		git push <repo_url_alias> -- tags - Push all locally changed Tags to the Remote Repository.
 
-		git log					- See information about last 5 Commits, with the first Commit being the most recent.
+		git log					- See information about past Commits, with the first Commit being the most recent.
 		git log --all --decorate --oneline --graph - Observe Commit history of the current Local Repository as a graph.
 		
 	
