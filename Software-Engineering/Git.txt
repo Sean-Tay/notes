@@ -76,10 +76,12 @@ Git:
 
 			.					- <file> specification to add all new, modified or deleted files.
 
-		git checkout -- . 		- Reset all files not in the Local Staging List.
+		git checkout -- . 		- Reset all files not in the Local Staging List in the current Directory.
 
 		git reset -- <file> ... - Specify <file>s to be removed from the Local Staging List.
 			--hard				- Reset all uncommited Local Changes to files.
+
+		git checkout HEAD -- . 	- Reset all Local Changes to files in the current Directory.
 
 		git stash <option> -- <file> - Save Local Working Copy Changes.
 			stash@{<index>}		- Naming Convention of Stashes, with <index> 0 being the latest.
