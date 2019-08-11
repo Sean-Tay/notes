@@ -11,25 +11,9 @@ Node.js:
 		
 	
 	Details:
+		Front-End Code, Back-End Code, and Assets are usually pre-compiled and transformed down to HTML, CSS and ES5 JS Assets. These Assets are then served by the Node Server process.
 
-	
-	Commands:
-		Node.js:
-			node "<file.js>"											// Run a .js file under Node.
-			node --prof "file.js" 										// Run a .js file under Node with profiling, storing the profiling in a .txt file.
-			node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) // Process the text file produced from profiling.
-			
-			package.json - Specifies the configuration of a Node environment.
-				{
-					"scripts": { 										// Specify action(s) to be run upon certain Node environment lifecycle events.
-						// Note: May want to use npm-run-all to execute npm commands in parallel.
-						"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed.
-						"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed.
-					}							
-					"dependencies": { // ... // }						// Specifies the Modules that the Node environment depends on to run correctly.
-					"devDependencies": { // ... // }					// Specifies Modules that the Node environment uses during development.
-				}
-
+		Code:
 			// CommonJS 
 				module.exports = {
 					function1 : function () { // ... }, 
@@ -145,8 +129,25 @@ Node.js:
 				const server = http.createServer(requestListener);
 
 				server.listen(process.env.PORT || <port-number>);
+	
+	Commands:
+		Node.js:
+			node "<file.js>"											// Run a .js file under Node.
+			node --prof "file.js" 										// Run a .js file under Node with profiling, storing the profiling in a .txt file.
+			node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) // Process the text file produced from profiling.
+			
+			package.json - Specifies the configuration of a Node environment.
+				{
+					"scripts": { 										// Specify action(s) to be run upon certain Node environment lifecycle events.
+						// Note: May want to use npm-run-all to execute npm commands in parallel.
+						"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed.
+						"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed.
+					}							
+					"dependencies": { // ... // }						// Specifies the Modules that the Node environment depends on to run correctly.
+					"devDependencies": { // ... // }					// Specifies Modules that the Node environment uses during development.
+				}
 
-			npm - A manager for a Node environment. Skip to yarn if possible.
+			npm - A package manager for a Node environment. Skip to yarn if possible.
 				npm install -g node 									// Update Node.
 				npm install -g npm stable								// Update npm.
 			
@@ -188,7 +189,7 @@ Node.js:
 				yarn global upgrade <module>[@<{ version | tag }>]		// Upgrade a globally installed Module.
 				yarn global remove <module>								// Remove a globally installed Module.
 
-				yarn run <command> [<arg>, ...]							// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
+				yarn [run] <command> [<arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 			
 		Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node environment during runtime.
 
@@ -196,8 +197,8 @@ Node.js:
 
 		Babel.js - Loader for a Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
 			// Steps:
-				npm install babel-cli
-				npm install babel-preset-env
+				yarn install babel-cli
+				yarn install babel-preset-env
 				
 				// For .babelrc, ensure the Object within has:
 				presets = ["env"]
