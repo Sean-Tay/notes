@@ -102,7 +102,6 @@ React.js
 							// Examines this.props and this.state, and returns a React Element.
 							// Child Render methods are also executed.
 							// This should be a Pure Function - do not call this.setState() or mutate any global states here.
-
 							/*
 								React Elements are produced via JSX.
 									Evaluation of any JS is only done via JS Injection within curly braces.
@@ -175,9 +174,8 @@ React.js
 							// AJAX Call for Data ...
 						}
 
+						// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State.
 						handleStateChange(callback) {
-							// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State.
-							
 							// Don't modify this.state directly, otherwise React won't know to re-render the Component.
 							// Use setState() instead to merge in changes to the State, and implicitly call the Component's render() function to re-render the Component.
 							this.setState(
@@ -214,7 +212,8 @@ React.js
 							// Meant for interactions outside of the React architecture.
 						}
 
-						render() // Called to get new React Element.
+						// Called if this.props or this.state is changed.
+						render() 
 
 						getSnapshotBeforeUpdate(prevProps, prevState) {
 							// Called before the new React Element is commited to the Virtual DOM.
@@ -241,10 +240,11 @@ React.js
 					...
 				};
 
-				// Default Props Declaration - Static Property Declaration.
+				// Default Props Declaration - If no Props are passed into the Function.
 				ExampleComponent.defaultProps = {
-					<prop-name>: [React.]PropTypes.<type>[.isRequired],
+					<prop-name>: <default-value>,
 					<onStateChange>: () => {},
+					...
 				}
 				
 				export default ExampleComponent;
@@ -253,26 +253,93 @@ React.js
 
 			Functional Component:
 				// Useful as Presentational Components
+				const ExampleComponent = (props) => { // Recall that all Properties defined via JSX gets put into a singular 'props' Object by React.
+					// Extract / Consume the Props that are used.
+					// other will contain all other unused Props via destructuring, which can then be separately passed down to Child Components.
+					let {<used-prop>, // ... , ...other} = props;
+
+					// other can also be referenced normally as a regular Object variable.
+					// console.log(other);
+
+					// ...
+					
+					return (
+						{ // Ensure unknown, unconsumed Props are specified first - later Props will override if applicable }
+						<ChildComponent {...other} usedProp={<used-prop>} ... /> 
+					);
+				}
+
+				// React Hooks can be used to 'hook' onto Class Component Functionality:
 				const ExampleComponent = (props) => {
-					return ...
+					// Each Hook has the prefix 'use' in its name.
+					// React counts on the Hook Definition Order - only define Hook Definitions at the Top-Level of the Function, outside of any Conditionals, Loops or other Functions.
+
+					// State
+					// Each State Variable defined in the manner below is independent from one another.
+					// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
+					const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
+
+					// Side-Effects
+					// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State is updated).
+					useEffect(() => {
+						// ... 
+
+						// Return an optional cleanup Function that is executed just before each subsequent Render.
+						return () => {
+							// ...
+						};
+					}, 
+						// An optional List of Variables can be specified as well to limit when the submitted Function executes.
+						// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed after the first Render.
+						// This List might include State Variables that are referenced in the submitted Function.
+						// Hint: Passing an Empty List here would make the submitted Function behave like componentDidMount.
+						[ <variable>, ... ]
+					);
+
+					return (
+						<>
+							{ /* ... */ }
+						</>
+					);
 				}
 
 				// Default Props Declaration - Static Property Declaration.
 				ExampleComponent.defaultProps = {
-					<prop-name>: [React.]PropTypes.<type>[.isRequired],
+					<prop-name>: <default-value>,
 					<onStateChange>: () => {},
 				}
 				
 				export default ExampleComponent;
+
+				// To simulate shouldComponentNotUpdate w.r.t Props when using React Hooks
+				export default React.memo(
+					ExampleComponent, 
+					(prevProps, nextProps) => {
+						// return true if Component should not update
+						// return false otherwise
+					}
+				);
 				
-				// ...
+				// Testing
+				const mockData = {
+					<prop>: <value>,
+					// ...
+				};
+
+				const MockExampleComponent = () => (
+					<>
+						<ExampleComponent {...mockData} />
+					</>
+				);
+
+				export default MockExampleComponent;
 
 			Higher-Order Component: 
 				// A Pattern involving a Function which takes in a Component and returns a new Component.
 				// Useful for adding on commonly used functionality to many Components.
 				// WrappedComponent needs to be configured to take in more Props.
 
-				function withSubscription(WrappedComponent, ... ) {
+				function withSubscription(WrappedComponent, ...) {
 					// Return a new Class Component to keep the Function pure.
 					return class extends React.Component {
 						constructor(props) {
@@ -288,7 +355,7 @@ React.js
 
 						render() {
 							// Renders WrappedComponent with the appropriate minimal props.
-							return <WrappedComponent data={this.state.data} {...this.props} />;
+							return <WrappedComponent {...this.props} data={this.state.data} />;
 						}
 					};
 				}
