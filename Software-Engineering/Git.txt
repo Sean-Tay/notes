@@ -67,7 +67,7 @@ Git:
 
 		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
 
-		git diff HEAD <file> <file> - See differences between checked out <file> and Local Working Copy <file>.
+		git diff [HEAD] <file> <file> - See differences between checked out <file> and Local Working Copy <file>.
 
 		git add	<file> ...		- Specify changed <file>s to be added into the Local Staging List.
 			-A 					- Specify that all new, modified or deleted files be added.
