@@ -115,6 +115,7 @@ React.js
 								React Elements can have attributes, similar to DOM / HTML.
 									Note: Replace the class DOM attribute to className for compiling from JSX -> JS, since class is a reserved keyword in JS.
 									Note: style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to dash-delimited words.
+									Note: Child Elements produced from mapping an Iterable need to have the top-level Child Element specify a distinguishing 'key' element.
 
 								React Elements can have Event Listeners, similar to DOM / HTML, but with the names in camelCase as opposed to lowercase.
 									let exampleElement = <img onHover={ exampleJSFunction } />; // The Event Listeners act on JS functions.
