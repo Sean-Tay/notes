@@ -105,7 +105,7 @@ Git:
 		git checkout -- <file> ... - Revert changes to <file>s.
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 
-		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of <branch>. 
+		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of the Local <branch>. 
 
 		git push <repo_url_alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
