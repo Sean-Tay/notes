@@ -274,10 +274,25 @@ React.js
 					// Each Hook has the prefix 'use' in its name.
 					// React counts on the Hook Definition Order - only define Hook Definitions at the Top-Level of the Function, outside of any Conditionals, Loops or other Functions.
 
-					// State
+					// Local Component State
 					// Each State Variable defined in the manner below is independent from one another.
 					// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
 					const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
+
+					// Advanced Local Component State Management
+					// The key difference between useState and useReducer is that for useReducer the State can be altered in a controlled manner as opposed to simply using the <state-var-setter-function>.
+					const [ <state-var>, <dispatch-function> ] = React.useReducer( 
+						(state, action) => {
+							// Reducer Function - A Function that combines two or more Arguments and returns the combination.
+							// Practically, it should be a Pure Function that:
+								// Does not mutate Arguments.
+								// Does not generate Side-Effects (API Calls, etc).
+								// Execute Impure Functions within.
+
+							// Based on action's Properties, a new State based on the passed in state should be returned.
+						}, 
+						<initial-state>
+					);
 
 					// Side-Effects
 					// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State is updated).
@@ -289,12 +304,23 @@ React.js
 							// ...
 						};
 					}, 
-						// An optional List of Variables can be specified as well to limit when the submitted Function executes.
+						// An optional 'Dependency List' of Variables can be specified as well to limit when the submitted Function executes.
 						// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed after the first Render.
 						// This List might include State Variables that are referenced in the submitted Function.
 						// Hint: Passing an Empty List here would make the submitted Function behave like componentDidMount.
 						[ <variable>, ... ]
 					);
+
+					// DOM Node Reference
+					const nodeRef = useRef();
+
+					// Tips
+					/*
+						The flow should be:
+						1. Define Initial States via the useState Hook if necessary, either from Props or use placeholder default Values.
+						2. Query backend API with useEffect / custom Hook, and with a Dependency List containing Props that pertain to the HTTP Request and REST Query Parameters.
+						3. Render the actual Component only when a certain flag passed from the backend API changes. Use a placeholder 'Loading' Component if the flag is not of a certain state.
+					*/
 
 					return (
 						<>
