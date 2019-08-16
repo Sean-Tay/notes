@@ -67,7 +67,7 @@ Git:
 
 		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
 
-		git diff HEAD <file> <file> - See differences between checked out <file> and Local Working Copy <file>.
+		git diff [HEAD] <file> <file> - See differences between checked out <file> and Local Working Copy <file>.
 
 		git add	<file> ...		- Specify changed <file>s to be added into the Local Staging List.
 			-A 					- Specify that all new, modified or deleted files be added.
@@ -105,7 +105,7 @@ Git:
 		git checkout -- <file> ... - Revert changes to <file>s.
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 
-		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of <branch>. 
+		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of the Local <branch>. 
 
 		git push <repo_url_alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
