@@ -55,7 +55,8 @@ Web Computing Notes:
 			Additionally, on the premise that all Web Applications only require 4 Universal Verbs to operate on all things successfully:
 				Create / POST
 				Read / GET
-				Update / PUT
+				Update (Replacement) / PUT
+				Update (Partial-Update) / PATCH
 				Delete / DELETE
 
 			The structure of the information in the Application has been mapped directly onto a structure of HTTP URLs, using only standard HTTP operations that allow for HTTP body content.
