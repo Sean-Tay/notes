@@ -85,14 +85,18 @@ Javascript
 			.bind(this) // Search up on this
 	
 	Spread Operator: Convenient Syntax 
-		Iterator Spread Operator: 
+		Iterator Spreading: 
 			// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
 			
 			// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
 			
-		Object Spread Operator:
+		Object Duplication:
 			// { ...<Object> }
 		
+	Destructuring Syntax: Convenient Syntax for copying a subset of Properties / Elements from an Iterable / Object.
+		Object Deconstruction:
+			const { <property> : <property-alias>, ... , ...<rest-object> } = <object>;
+
 	Arrow Functions: A function that has a syntactic definition that is shorter than a regular anonymous function.
 		function () {} becomes () => {};
 		function (x) { return x; } becomes x => x;
