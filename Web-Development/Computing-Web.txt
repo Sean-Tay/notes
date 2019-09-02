@@ -51,6 +51,7 @@ Web Computing Notes:
 
 			The idea is to represent Concepts / Resources / Nouns as URLs. Any other related Concepts / Resources / Nouns are also stored as URLs. Machines can then use HTTP with the URLs to reach other Machines elsewhere and obtain Concepts / Resources / Nouns required to do things.
 				The combination allows for a standardized way of communication between all Entities to refer to things.
+				If the URL contains a Verb, it is an indicator that that URL does not represent a Concept / Resource / Noun.
 
 			Additionally, on the premise that all Web Applications only require 4 Universal Verbs to operate on all things successfully:
 				Create / POST
