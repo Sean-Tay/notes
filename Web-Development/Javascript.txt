@@ -120,14 +120,33 @@ Javascript
 		const add3 = add(3);
 		add3(4) // Returns 7.
 
-	Import / Export Syntax:
-		import Module from 'npm-module';
+	Promises: Object representing a Value which will eventually be available.
+		var promiseObj = new Promise(
+			(resolveCb, rejectCb) => {
+				// Executor Function with Asynchronous Behaviour.
+				// 3 Possible States: Pending, Fulfilled, Rejected.
 
-		export default className; // Make 'className' the only export of the JS File.
-		import className from './JS-File';
+				// ...
+				
+				if (err) rejectCb(err);
+				else resolveCb(val);
+			}
+		);
 
-		export const className = className; // Set 'className' to be an export of the JS File.
-		import {className as 'alias'} from './JS-File'; // Named Imports
+		promiseObj.then(
+			() => {
+				// Value Handler
+
+				// ...
+			}
+		).then( // ... ) ... // Chainable Resolution.
+		.catch(
+			() => {
+				// Optional Error Handler
+
+				// ...
+			}
+		).catch( // ... ) ... // Chainable Error Resolution.
 
 	Classes:
 		class className [extends parentClass] {
@@ -142,6 +161,15 @@ Javascript
 
 			// ...
 		}
+
+	Import / Export Syntax:
+		import Module from 'npm-module';
+
+		export default className; // Make 'className' the only export of the JS File.
+		import className from './JS-File';
+
+		export const className = className; // Set 'className' to be an export of the JS File.
+		import {className as 'alias'} from './JS-File'; // Named Imports
 
 	Utilities:
 		Mathematical Functions: 
