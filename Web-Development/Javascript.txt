@@ -124,33 +124,53 @@ Javascript
 		const add3 = add(3);
 		add3(4) // Returns 7.
 
-	Promises: Object representing a Value which will eventually be available.
-		var promiseObj = new Promise(
-			(resolveCb, rejectCb) => {
-				// Executor Function with Asynchronous Behaviour.
-				// 3 Possible States: Pending, Fulfilled, Rejected.
+	Promise: Object representing a Value which will eventually be available.
+		const asyncOperation = () => (
+			return new Promise(
+				(resolveCb, rejectCb) => {
+					// Executor Function with Asynchronous Behaviour.
+					// 3 Possible States: Pending, Fulfilled, Rejected.
 
-				// ...
-				
-				if (err) rejectCb(err);
-				else resolveCb(val);
-			}
-		);
+					// ...
+					
+					if (err) rejectCb(err);
+					else resolveCb(val);
+				}
+			);
+		)
+
+		const promiseObj = asyncOperation();
 
 		promiseObj.then(
 			() => {
 				// Value Handler
 
 				// ...
-			}
-		).then( // ... ) ... // Chainable Resolution.
-		.catch(
+			}, 
 			() => {
 				// Optional Error Handler
 
 				// ...
 			}
-		).catch( // ... ) ... // Chainable Error Resolution.
+		).then( // ... ) ... // Chainable Resolution.
+
+	Async / Await Syntax:
+		const asyncFunction = async () => {
+			// Traditional try-catch syntax works with async / await
+			try { 
+				// await can work on both a Promise, or a synchronous Result
+				var promiseResult = await promiseObj;
+
+				// but usually on a function that returns a Promise
+				var asyncResult = await asyncOperation();
+
+				// ...
+			} catch (err) {
+				// ...
+			}
+		}
+
+		asyncFunction();
 
 	Classes:
 		class className [extends parentClass] {
