@@ -152,9 +152,6 @@ Javascript
 			}
 		).catch( // ... ) ... // Chainable Error Resolution.
 
-		// Note: To force a plain File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
-		export {};
-
 	Classes:
 		class className [extends parentClass] {
 			// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
