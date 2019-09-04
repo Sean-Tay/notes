@@ -131,7 +131,7 @@ Javascript
 					// Executor Function with Asynchronous Behaviour.
 					// 3 Possible States: Pending, Fulfilled, Rejected.
 
-					// ...
+					// Insert Asynchronous Execution here.
 					
 					if (err) rejectCb(err);
 					else resolveCb(val);
@@ -146,9 +146,13 @@ Javascript
 				// Value Handler
 
 				// ...
+
+				return val; // The next 'then' in the chain is passed in val.
+				// OR 
+				return new Promise( // ... ); // The next 'then' waits for this returned Promise to finish executing.
 			}, 
 			() => {
-				// Optional Error Handler
+				// Optional Error Handler.
 
 				// ...
 			}
