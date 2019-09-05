@@ -210,7 +210,7 @@ Javascript
 
 			asyncFunction();
 
-		Generator: A Function which can 'return' multiple times.
+		Generator: A Function that conforms to the Iterator Specification, being able to 'return' multiple times.
 			function* generator() {
 				// ... 
 
