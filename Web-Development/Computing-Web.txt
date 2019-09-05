@@ -4,7 +4,7 @@ Web Computing Notes:
 		
 		SOAP:					Single Object Access Protocol: Messaging definition for the interaction between Web Services.
 		
-		XML:					EXtensible Markup Language: A readable implementation-independent data interchange format, used by SOAP.
+		XML:					EXtensible Markup Language: A readable implementation-independent Data interchange format, used by SOAP.
 		BPEL:					Business Process Execution Language: Specialized XML that links Web Services together.
 		
 		SEI:					Service Endpoint Interface. Generates Stubs / Classes that allow an Application to interact with Web Services, given it's WSDL file.	
@@ -14,9 +14,10 @@ Web Computing Notes:
 		
 		ESB:					Enterprise Service Bus: Monitors and Routes messages between Web Services and their different versions.		
 		
-		JSON:					Javascript Object Notation: A readable implementation-independent data interchange format.
+		JSON:					Javascript Object Notation: A readable implementation-independent Data interchange format.
 
 		RPC:					Remote Procedure Call.
+		RMI:					Remote Method Invocation.
 		REST: 					Representational State Transfer.
 	
 	Concepts:
@@ -35,14 +36,14 @@ Web Computing Notes:
 		WSDL Format: XML
 			Definition:			The Root Element of all WSDL documents, containing all non-Utility elements described below. It defines the name of the Web Service, declares multiple namespaces used throughout the remainder of the document.
 
-			Data types:			The data types to be used in the messages are in the form of XML schemas.
+			Data types:			The Data types to be used in the messages are in the form of XML schemas.
 
-			Message: 			It is an abstract definition of the data, in the form of a message presented either as an entire document or as arguments to be mapped to a method invocation.
+			Message: 			It is an abstract definition of the Data, in the form of a message presented either as an entire document or as arguments to be mapped to a method invocation.
 
 			Port type: 			It is an abstract set of operations mapped to one or more end-points, defining the collection of operations for a binding; the collection of operations, as it is abstract, can be mapped to multiple transports through various bindings.
 				Operation:		It is the abstract definition of the operation for a message, such as naming a method, message queue, or business process, that will accept and process the message.
 			
-			Binding: 			It is the concrete protocol and data formats for the operations and messages defined for a particular port type.
+			Binding: 			It is the concrete protocol and Data formats for the operations and messages defined for a particular port type.
 
 			Port: 				It is a combination of a binding and a network address, providing the target address of the service communication.
 
@@ -55,9 +56,9 @@ Web Computing Notes:
 		Summary of Full-Stack:
 			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and static assets sent to a Client, like a Web Browser.
 
-			A Web Server is a running (containerized?) Processthat listens for incoming requests for information over the Web and sends back HTTP Responses.
+			A Web Server is a running (containerized?) Process that listens for incoming requests for information over the Web and sends back HTTP Responses.
 
-			Creating, Reading, Updating and Deleting data is a large part of a Web Application’s Back-End. Data is stored in Databases, which can be Relational Databases or NoSQL Databases.
+			Creating, Reading, Updating and Deleting Data is a large part of a Web Application’s Back-End. Data is stored in Databases, which can be Relational Databases or NoSQL Databases.
 
 			The Server-Side of a Web Application, sometimes called the Application Server, handles important tasks such as Authentication and Authorization.
 
@@ -65,8 +66,11 @@ Web Computing Notes:
 			
 			Together the technologies used to build the Front-End and Back-End of a Web Application are known as the Stack, and many different Languages and Frameworks can be used to build a robust Back-End.
 
-		RPC: An Architectural Style that models Communication between two Applications as straightforward Function Calls to expose direct Execution Logic.
-			An RPC Mechanism usually defines a Network Protocol, some Format for exchanging Messages, a portable way of serializing and deserializing Data and specific Programming Language support (like Code Generators).
+		RPC: A Mechanism that models Communication between two Applications as straightforward Function Calls as a medium to exchange Data, exposing direct Execution Logic.
+			An RPC Mechanism usually defines a Network Protocol, some Format for exchanging Messages, a portable way of serializing and deserializing Data and specific Programming Language support (like Code Generators). 
+			
+			It typically involves generating some Method Stubs on the Client Process that makes the call appear local, but behind the stub is logic to marshall the Request and send it to the Server Process. 
+			The Server Process then unmarshalls the Request and invokes the actual Method before repeating the process in reverse to get whatever the Method returns back to the Client Process. 
 			
 			Unlike REST, the URLs do not represent Resources, but rather Verbs representing Operations to perform on Resources.
 				Example: 
@@ -75,6 +79,8 @@ Web Computing Notes:
 					http://MyRestaurant:8080/Orders/UpdateOrder (PUT: {Pineapple Tacos object})
 
 				This means that the URLs used per API Call are usually different.
+
+			RMI is closely related to RPC, but uses Object-Oriented control to execute. This is prevalent in Java.
 
 		REST: An Architectural Style to facilitate cleaner communication and interaction between Systems via the Web.
 			The core problem is that in the past, it was only necessary to facilitate communication between a small group of Machines in the Business' Local Network to operate. However, it has become increasingly necessary to talk to Machines outside of the Business Network (i.e. other Businesses, etc).
@@ -93,6 +99,10 @@ Web Computing Notes:
 				If the URL contains a Verb, it is an indicator that that URL does not represent a Concept / Resource / Noun.
 
 			Additionally, on the premise that all Web Applications only require 4 Universal Verbs to operate on all things successfully:
+				POST: Accompanying Data is used to modify the Resource represented in the given URI, following the rules documented by the Resource Type.
+				PUT: Replace the Resource represented by the given URI, if anything.
+				PATCH: Apply this Diff to the Resource, if the Resource has the same State as it did the last time it was queried.
+				
 				Create / POST
 				Read / GET
 				Update (Replacement) / PUT
@@ -106,9 +116,5 @@ Web Computing Notes:
 			Another implication is that the Client and the Server need not know how the other was implemented in order to interact. As long as each side knows what format of messages to send to the other, they can be kept modular and separate.
 
 			This negates the need to store a Session State for tracking purposes, as the 'State' is now transferred between Client Requests and Server Responses.
-
-			Statelessness allows for Scalability, as now any Node in the Network can serve appropriate Client Requests.
-
-
-	
-
+				Statelessness allows for Scalability, as now any Node in the Network can serve appropriate Client Requests.
+				Statelessness allows for Cacheability.
