@@ -214,11 +214,16 @@ Javascript
 			function* generator() {
 				// ... 
 
-				yield [<return-value>];
+				yield [<intermediate-value>];
 
 				// ...
 
-				yield [<return-value>];
+				yield [<intermediate-value>];
+
+				// ...
+
+				// Allow Values to be passed in via the .next() call.
+				var passedIn = yield [<intermediate-value>];
 
 				// ...
 				
@@ -226,11 +231,16 @@ Javascript
 				yield* <generator-instance>;
 
 				// ...
+				
+				return [<final-value>];
 			}
 
 			// Create a Generator Instance
 			const myGen = generator();
-			var { myGenValue, isGenDone } = myGen.next(); // repeatable ; once there are no more upcoming yields, the return object will be undefined.
+
+			// Using a Generator Instance
+			var { value: myGenValue, done: isGenDone } = myGen.next(); // repeatable ; once there are no more upcoming yields, the return object will not contain the value property.
+			var { value: myGenValue, done: isGenDone } = myGen.next([<optional-value>]); // Pass in a Value to the Generator for the current yield.
 
 		Classes:
 			class className [extends parentClass] {
