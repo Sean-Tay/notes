@@ -87,6 +87,21 @@ Javascript
 	// Static Properties
 		// Allows the addition of Properties and Methods to the Object Type specifically.
 		// These cannot be accessed by instances of the Object Type.
+
+		myObj.staticProperty = <value>;
+
+		OR
+
+		class myClass {
+			
+			// ...
+
+			// Via the static keyword (ES6)
+			static staticProperty = <value>;
+
+			// ...
+
+		}
 	
 	// Prototype Properties
 		// Allows the addition of Properties and Methods to all instances of an Object Type.
