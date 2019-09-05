@@ -221,6 +221,11 @@ Javascript
 				yield [<return-value>];
 
 				// ...
+				
+				// Substitute another Generator. The calling Generator is out of play until the substituted Generator runs out of yields.
+				yield* <generator-instance>;
+
+				// ...
 			}
 
 			// Create a Generator Instance
