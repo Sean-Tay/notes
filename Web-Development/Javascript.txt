@@ -4,7 +4,7 @@ Javascript
 		let 												- block {} scope, changeable once declared, not redeclarable
 		var 												- global scope, changeable once declared, redeclarable
 
-	Basic Javascript Expression Manipulations: 
+	Basic Javascript Expression Manipulation: 
 		Raw Data Types: 
 			var myString = "Test";
 				var myTemplateString = `Testing: ${dynamicValue}` // Can also be Multi-line
@@ -45,6 +45,7 @@ Javascript
 		To check if two things are equal to each other (with the same type): ===
 		To check if two things are unequal to each other (with different types): !==
 		
+	Functions:
 		function functionName(inputArgument1) { 			// Parameters should not have the var keyword
 			// ...
 		}
@@ -64,7 +65,15 @@ Javascript
 		functionName(); 									// Invoke the functionName function
 		
 		// Note: Functions are actually Objects!
+	
+	Iterables:
+		var listName = [listElement, ... ]; 				// Arrays
 		
+		listName.map(function(listElement, listElementIndexOptional, listElementArrayRefOptional) { // Do something to each listElementType  }); // Map Function
+		listName.filter((listElement) => { // Return true to keep listElement in returned Array, false to exclude listElement from returned Array })
+		listName.sort(); 									// Sort the contents in listName	
+
+	Objects:
 		var objectName = { key:value, key:value, key:this.key }; // Objects with Properties or Dictionaries
 		objectName.key == value;
 		objectName['key'] == value;
@@ -73,134 +82,178 @@ Javascript
 			// Mutates targetObject with the content stored in object1, object2, etc...
 			// If more than one object has different values for the same key, only the latest object (i.e. object2) will have its changes pushed.
 		
-		JSON.stringify(objectName); 						// Encode object as a JSON	
-		
-		var listName = [listElement, ... ]; 				// Arrays
-		
-		listName.map(function(listElement, listElementIndexOptional, listElementArrayRefOptional) { // Do something to each listElementType  }); // Map Function
-		listName.filter((listElement) => { // Return true to keep listElement in returned Array, false to exclude listElement from returned Array })
-		listName.sort(); 									// Sort the contents in listName		
-		
-		// this refers to the current scope's owner - can be a class or a function
-			.bind(this) // Search up on this
+		JSON.stringify(objectName); 						// Encode object as a JSON
+
+	// Static Properties
+		// Allows the addition of Properties and Methods to the Object Type specifically.
+		// These cannot be accessed by instances of the Object Type.
 	
-	Spread Operator: Convenient Syntax 
-		Iterator Spreading: 
-			// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
+	// Prototype Properties
+		// Allows the addition of Properties and Methods to all instances of an Object Type.
+		// Also allows the extension of Parent Types to add aforementioned Properties and Methods to Child Types.
+			// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
+		
+	// this refers to the current scope's owner - can be a Class or a Function
+		.bind(this) // Search up on this
+	
+	> ES6:
+		Spread Operator: Convenient Syntax 
+			Iterator Spreading: 
+				// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
+				
+				// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
+				
+			Object Duplication:
+				// { ...<Object> }
 			
-			// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
+		Destructuring Syntax: Convenient Syntax for copying a subset of Properties / Elements from an Iterable / Object.
+			Iterable Destructuring:
+				const [ <property>, ... ] = [ <value>, ... ];  
+
+			Object Destructuring:
+				const { <property> : <property-alias>, ... , ...<rest-object> } = <object>;
+
+			// Assigning a Default Value if unpacked property is not defined in <struct>
+			const { <undefined-property> : <property-alias> = <default-value> } = <struct>;
+
+		Arrow Functions: A function that has a syntactic definition that is shorter than a regular anonymous function.
+			function () {} becomes () => {};
+			function (x) { return x; } becomes x => x;
 			
-		Object Duplication:
-			// { ...<Object> }
-		
-	Destructuring Syntax: Convenient Syntax for copying a subset of Properties / Elements from an Iterable / Object.
-		Object Deconstruction:
-			const { <property> : <property-alias>, ... , ...<rest-object> } = <object>;
+			(x) => { return x; }
+				// LHS - Argument List
+				// RHS - To Return
+					// Using parenthesis in place of the RHS braces represents an implicit return statement. Should be used if there's a sole return statement in the body of the anonymous function.
+					// (x) => (x) // Equivalent to the above
+					// Useful for simplified syntax for React 
+						const Counter = () => (
+							<h1> Value </h1>
+						);
 
-	Arrow Functions: A function that has a syntactic definition that is shorter than a regular anonymous function.
-		function () {} becomes () => {};
-		function (x) { return x; } becomes x => x;
-		
-		(x) => { return x; }
-			// LHS - Argument List
-			// RHS - To Return
-				// Using parenthesis in place of the RHS braces represents an implicit return statement. Should be used if there's a sole return statement in the body of the anonymous function.
-				// (x) => (x) // Equivalent to the above
-				// Useful for simplified syntax for React 
-					const Counter = () => (
-						<h1> Value </h1>
-					);
+		Function Currying: The process of breaking down a function that takes multiple arguments into a series of functions that each take only one argument.
+			function add(a, b) { return a + b; }
+			(x, y) => { return x + y; }
+			
+			vs.
+			
+			function add(a) { return function(b) {return a + b}; }
+			(x) => (y) => { return x + y; }
 
-	Function Currying: The process of breaking down a function that takes multiple arguments into a series of functions that each take only one argument.
-		function add(a, b) { return a + b; }
-		(x, y) => { return x + y; }
-		
-		vs.
-		
-		function add(a) { return function(b) {return a + b}; }
-		(x) => (y) => { return x + y; }
+			// This allows multiple different subtypes of the function to be built up before executing.
+			const add3 = add(3);
+			add3(4) // Returns 7.
 
-		// This allows multiple different subtypes of the function to be built up before executing.
-		const add3 = add(3);
-		add3(4) // Returns 7.
+		Promise: Object representing a Value which will eventually be available.
+			const asyncOperation = () => (
+				return new Promise(
+					(resolveCb, rejectCb) => {
+						// Executor Function with Asynchronous Behaviour.
+						// 3 Possible States: Pending, Fulfilled, Rejected.
 
-	Promise: Object representing a Value which will eventually be available.
-		const asyncOperation = () => (
-			return new Promise(
-				(resolveCb, rejectCb) => {
-					// Executor Function with Asynchronous Behaviour.
-					// 3 Possible States: Pending, Fulfilled, Rejected.
+						// Insert Asynchronous Execution here.
+						
+						if (err) rejectCb(err);
+						else resolveCb(val);
+					}
+				);
+			)
 
-					// Insert Asynchronous Execution here.
-					
-					if (err) rejectCb(err);
-					else resolveCb(val);
+			const promiseObj = asyncOperation();
+
+			promiseObj.then(
+				() => {
+					// Value Handler
+
+					// ...
+
+					return val; // The next 'then' in the chain is passed in val.
+					// OR 
+					return new Promise( // ... ); // The next 'then' waits for this returned Promise to finish executing.
+				}, 
+				() => {
+					// Optional Error Handler.
+
+					// ...
 				}
-			);
-		)
+			).then( // ... ) ... // Chainable Resolution.
 
-		const promiseObj = asyncOperation();
+		Async / Await Syntax:
+			const asyncFunction = async () => {
+				// Traditional try-catch syntax works with async / await
+				try { 
+					// await can work on both a Promise, or a synchronous Result
+					var promiseResult = await promiseObj;
 
-		promiseObj.then(
-			() => {
-				// Value Handler
+					// but usually on a function that returns a Promise
+					var asyncResult = await asyncOperation();
 
-				// ...
+					// ...
+				} catch (err) {
+					// ...
+				}
+			}
 
-				return val; // The next 'then' in the chain is passed in val.
-				// OR 
-				return new Promise( // ... ); // The next 'then' waits for this returned Promise to finish executing.
-			}, 
-			() => {
-				// Optional Error Handler.
+			asyncFunction();
+
+		Classes:
+			class className [extends parentClass] {
+				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
+				// Else:
+				constructor(arg, ...) {
+					super(arg, ...)
+
+					//...
+
+				}
 
 				// ...
 			}
-		).then( // ... ) ... // Chainable Resolution.
 
-	Async / Await Syntax:
-		const asyncFunction = async () => {
-			// Traditional try-catch syntax works with async / await
-			try { 
-				// await can work on both a Promise, or a synchronous Result
-				var promiseResult = await promiseObj;
+		Symbol: Reflection Metaprogramming within Implementation - used to change the behaviour of existing Classes and Objects.
+			// Primitive Data Type.
 
-				// but usually on a function that returns a Promise
-				var asyncResult = await asyncOperation();
+			// Creation: Do not use the 'new' keyword with the 'constructor'.
+				var mySym = Symbol('<description>');
 
-				// ...
-			} catch (err) {
-				// ...
-			}
-		}
+				// Creation of the Symbol in a 'global' namespace.
+				var myGlobalSym = Symbol.for('<description>');
 
-		asyncFunction();
+			// A Symbol's Description is primarily used for debugging purposes.
+			// Two Symbols will normally not be equivalent, even if they have the same Description.
+				assert.notEqual(Symbol('foo'), Symbol('foo'));
 
-	Classes:
-		class className [extends parentClass] {
-			// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
-			// Else:
-			constructor(arg, ...) {
-				super(arg, ...)
+			// If the Symbols were created via Symbol.for(), then equivalence via same Description becomes possible.
+				assert.equal(Symbol.for('foo'), Symbol.for('foo'));
 
-				//...
+			// To check if a Symbol was created in the 'global' namespace:
+				Symbol.keyFor( myGlobalSym ) !== undefined; 
 
-			}
+			// Primarily used as Object Keys, similar to String Keys:
+				var myObj = {};
+				myobj[mySym] = <value>;
 
-			// ...
-		}
+			// Symbols are only ever visible within an Object via: 
+				Object.getOwnPropertySymbols(myobj); // Returns a List of Symbols assigned to the Object.
+				
+			// They do not show up when the Object's Keys are iterated over, or via existing Reflection Tools.
 
-	Import / Export Syntax:
-		import Module from 'npm-module';
+			// Can be regarded as a special separate namespace for Object Keys.
 
-		export default className; // Make 'className' the only export of the JS File.
-		import className from './JS-File';
+		Reflect: Reflection Metaprogramming through Introspection - used to discover low level information about Code.
 
-		export const className = className; // Set 'className' to be an export of the JS File.
-		import {className as 'alias'} from './JS-File'; // Named Imports
+		Proxy: Reflection Metaprogramming through Intercession - used to wrap Objects and intercept their behaviour through traps.
 
-		// Note: To force a plain File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
-		export {};
+		Import / Export Syntax:
+			import Module from 'npm-module';
+
+			export default className; // Make 'className' the only export of the JS File.
+			import className from './JS-File';
+
+			export const className = className; // Set 'className' to be an export of the JS File.
+			import {className as 'alias'} from './JS-File'; // Named Imports
+
+			// Note: To force a plain File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
+			export {};
 
 	Utilities:
 		Mathematical Functions: 
