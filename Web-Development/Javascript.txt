@@ -210,6 +210,23 @@ Javascript
 
 			asyncFunction();
 
+		Generator: A Function which can 'return' multiple times.
+			function* generator() {
+				// ... 
+
+				yield [<return-value>];
+
+				// ...
+
+				yield [<return-value>];
+
+				// ...
+			}
+
+			// Create a Generator Instance
+			const myGen = generator();
+			var { myGenValue, isGenDone } = myGen.next(); // repeatable ; once there are no more upcoming yields, the return object will be undefined.
+
 		Classes:
 			class className [extends parentClass] {
 				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
@@ -253,6 +270,21 @@ Javascript
 			// They do not show up when the Object's Keys are iterated over, or via existing Reflection Tools.
 
 			// Can be regarded as a special separate namespace for Object Keys.
+
+			// Symbols can be used to activate / change some specific behaviour for an API that takes into account Symbol-Value Mapping.
+
+			// Well-Known Symbols:
+				Symbol.hasInstance - used by instanceof
+				Symbol.iterator - used by of in for ... of
+				Symbol.isConcatSpreadable
+				Symbol.unscopables
+				
+				Symbol.match - used by String.match()
+				Symbol.replace - used by String.replace()
+				Symbol.search - used by String.search()
+				Symbol.split - used by String.split()
+
+				Symbol.species - Points to the constructor value of Classes
 
 		Reflect: Reflection Metaprogramming through Introspection - used to discover low level information about Code.
 
