@@ -34,10 +34,6 @@ Git:
 		git fetch				- Preview updates for all Local Branches tracking Remote Branches.
 			FETCH_HEAD			- Creates a short-lived reference that keeps track of what has just been fetched from the Remote Repository. 
 
-		git checkout <branch> - Switches Local Branches.
-			-B <new_branch>	- Creates a new Local Branch called <new_branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
-				--track <repo_url_alias> <branch> - Forces <new_branch> to track a specified Remote Branch.
-
 		git branch <branch> 	- Create a new Local Branch.
 			-r					- List Remote Branches
 			-a 					- List both Local and Remote Branches.
@@ -46,8 +42,12 @@ Git:
 
 			-u <repo_url_alias>/<remote-branch> <branch> - Set which Remote Branch the Local Branch pushes to.
 
-			git push -u <repo_url_alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository.
-			git push -d <repo_url_alias> <branch> - Remove a Branch on the Remote Repository.
+		git checkout <branch> - Switches Local Branches.
+			-B <new_branch>	- Creates a new Local Branch called <new_branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
+				--track <repo_url_alias> <branch> - Forces <new_branch> to track a specified Remote Branch.
+
+		git push -u <repo_url_alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository.
+		git push -d <repo_url_alias> <branch> - Remove a Branch on the Remote Repository.
 
 		git checkout <commit> -- <file> ... - Switch current version of <file> with the <commit> version of <file>.
 
