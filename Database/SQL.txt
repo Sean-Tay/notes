@@ -19,13 +19,16 @@ SQL:
 
 		Table: 					Collection of Records with the same defined Attributes.
 
-		Index: 					An additional sparse Data Structure accompanying a Table that maps between data in specified Table Attribute(s) and virtual addresses of the actual Table Records on disk.
+		Index: 					An additional sparse Data Structure accompanying a Table that maps between data from specified Table Attribute(s) and virtual addresses of the actual Table Records on disk.
 
 		Database: 				Collection of Tables.
 
 		Synonym:				Stored Alias of a Table, View, Sequence, Procedure, Stored Function, Package, Materialized View, Java Class Schema Object, User-Defined Object Type, or another Synonym.
 
 		Spooling: 				Data is temporarily held in volatile storage to be used for near-future operations. In SQL, this is the process of writing query results to a file.
+
+		Sharding: 				Splitting a Table by Rows.
+		Normalization: 			Splitting a Table by Columns.
 
 	Details:
 		General:
