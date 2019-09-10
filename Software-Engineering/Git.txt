@@ -42,6 +42,8 @@ Git:
 
 			-u <repo_url_alias>/<remote-branch> <branch> - Set which Remote Branch the Local Branch pushes to.
 
+		git branch -m <branch> 	- Rename currently checked out Local Branch.
+
 		git checkout <branch> - Switches Local Branches.
 			-B <new_branch>	- Creates a new Local Branch called <new_branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
 				--track <repo_url_alias> <branch> - Forces <new_branch> to track a specified Remote Branch.
@@ -104,6 +106,8 @@ Git:
 
 		git checkout -- <file> ... - Revert changes to <file>s.
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
+			--soft 				- Keep accumulated changes from <number-of-commits> in Staging.
+			--hard				- Discard accumulated changes from <number-of-commits>.
 
 		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of the Local <branch>. 
 
