@@ -280,6 +280,12 @@ React.js
 					// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
 					const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
 
+					// Local Component State - No Re-Render
+					// Changes made to these Variables here will not cause a Re-Render.
+					const <ref-var> = React.useRef(<initial-value>);
+					// Access / Modify the Ref.
+					<ref-var> = <new-value>;
+
 					// Advanced Local Component State Management
 					// The key difference between useState and useReducer is that for useReducer the State can be altered in a controlled manner as opposed to simply using the <state-var-setter-function>.
 					const [ <state-var>, <dispatch-function> ] = React.useReducer( 
@@ -297,7 +303,7 @@ React.js
 
 					// Side-Effects
 					// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State is updated).
-					useEffect(() => {
+					React.useEffect(() => {
 						// ... 
 
 						// Return an optional cleanup Function that is executed just before each subsequent Render.
