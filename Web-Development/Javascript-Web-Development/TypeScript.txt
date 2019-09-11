@@ -13,11 +13,56 @@ Typescript:
 	Details:
 		Features:
 			Static Typing: 		Allows for optional explicit declaration of Variable Types. Compiler will ensure Variables are not assigned Values of the wrong Type.
+				// Compare this with Dynamic Typing, which can only perform Type-Checks during runtime.
+
 				let <variable> : <{ variable-type | interface }> = <value>;
 
 				function ( arg:<arg-type>, ... ): <{ return-type | interface }> {
 					// ...
 				}
+
+				// Arrays
+					let <array-variable>: <type>[] = <value-array>;
+					// OR
+					let <array-variable>: Array<<type>> = <value-array>; // Include one set of Angled Brackets.
+
+				// Tuples: For Arrays that hold different Types.
+					let <tuple-variable>: [<type>, ...] = [<value>, ...];
+
+				// enums: To provide more friendly names to sets of Numeric Values.
+					enum <enum-name> { <key>: <numeric-value>, ... }
+					let <example-variable>: <enum-name> = <enum-name>.<key>; 
+				
+				// any: For when the intended Type is unknown.
+					let <any-type-variable>: any = <value>;
+
+				// void: For when there should be no Type.
+					let <void-type-variable>: void; 
+
+				// never: For when the value should never occur.
+					let <never-type-variable>: never;
+
+					(): never => {
+						// Functions with unreachable end-points should have a 'never' return value.
+						throw new Error();
+					}
+
+				// Partial: To allow partial fulfillment of specified Type Properties.
+					// Useful for Prop instantiation?
+					let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
+
+				// Intersection Types: Combines multiple Types into one.
+					// Union of Member Attributes.
+					let <union-type-variable>: <type> & ... = <value>;
+
+				// Union Types: Designate one of the following Types.
+					// Intersection of Member Attributes.
+					let <Intersection-type-variable>: <type> | ... = <value>;
+
+				// Type Assertion
+					<value> as <type>
+					// OR
+					<<type>><value> // Include one set of Angled Brackets.
 
 			Interfaces:			Allows for explicit structure declaration of Values.
 				interface <interface-name> {
