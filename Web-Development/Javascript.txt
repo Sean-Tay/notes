@@ -275,16 +275,29 @@ Javascript
 			// To check if a Symbol was created in the 'global' namespace:
 				Symbol.keyFor( myGlobalSym ) !== undefined; 
 
-			// Primarily used as Object Keys, similar to String Keys:
-				var myObj = {};
-				myobj[mySym] = <value>;
+			// Object:
+				// Primarily used as Object Keys, similar to String Keys:
+					var myObj = {};
+					myobj[mySym] = <value>;
 
-			// Symbols are only ever visible within an Object via: 
-				Object.getOwnPropertySymbols(myobj); // Returns a List of Symbols assigned to the Object.
-				
-			// They do not show up when the Object's Keys are iterated over, or via existing Reflection Tools.
+				// Symbols are only ever visible within an Object via: 
+					Object.getOwnPropertySymbols(myobj); // Returns a List of Symbols assigned to the Object.
+					
+				// They do not show up when the Object's Keys are iterated over, or via existing Reflection Tools.
 
-			// Can be regarded as a special separate namespace for Object Keys.
+				// Can be regarded as a special separate namespace for Object Keys.
+
+			// Classes:
+				// Useful in declaring Private Properties:
+					class ExampleClass {
+						// Declare the Private Variable
+							[<private-variable>] = <private-value>;
+
+						// ...
+
+						// Reference the Private Variable
+							this[<private-variable>]
+					}
 
 			// Symbols can be used to activate / change some specific behaviour for an API that takes into account Symbol-Value Mapping.
 
