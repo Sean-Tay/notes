@@ -117,9 +117,16 @@ Javascript
 				// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
 				
 				// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
+					// Reduce Pattern:
+						<array>.reduce((prev, item) => {
+							return [
+								... prev,
+								item
+							]
+						}, <initial>);
 				
-			Object Duplication:
-				// { ...<Object> }
+			Shallow Object Duplication:
+				// { ...<Object> };
 			
 		Destructuring Syntax: Convenient Syntax for copying a subset of Properties / Elements from an Iterable / Object.
 			Iterable Destructuring:
@@ -157,6 +164,9 @@ Javascript
 			// This allows multiple different subtypes of the function to be built up before executing.
 			const add3 = add(3);
 			add3(4) // Returns 7.
+
+			// Extreme Example
+			(a) => (b) => ... (z) => { // ... }
 
 		Promise: Object representing a Value which will eventually be available.
 			const asyncOperation = () => (
