@@ -4,141 +4,174 @@ Javascript
 		let 												- block {} scope, changeable once declared, not redeclarable
 		var 												- global scope, changeable once declared, redeclarable
 
-	Basic Javascript Expression Manipulation: 
-		Raw Data Types: 
-			var myString = "Test";
-				var myTemplateString = `Testing: ${dynamicValue}` // Can also be Multi-line
-			var myNumber = 23;
-			var myBoolean = true;
-			var myFunction = () => {};
+	// Common JS:
+		Basic Javascript Expression Manipulation: 
+			Raw Data Types: 
+				var myString = "Test";
+					var myTemplateString = `Testing: ${dynamicValue}` // Can also be Multi-line
+				var myNumber = 23;
+				var myBoolean = true;
+				var myFunction = () => {};
 
-		console.log("Something to Print"); 					// Prints to Console
+			console.log("Something to Print"); 					// Prints to Console
 
-		Comments // /* */
+			Comments // /* */
 
-		if (condition1) {
+			if (condition1) {
 
-		} else if (condition2) {
+			} else if (condition2) {
 
-		} else {
+			} else {
 
-		}
+			}
 
-		switch (variable) {
-		  case 'value1':
-			 // ...
-			 break;
-		  case 'value2':
-			 // ...
-			 break;
-		  default:
-			 // ...
-			 break;
-		}
-		
-		for (var index = 0; index < 5; index++) {
-			// ...
-		}
-
-		To check if two things are equal to each other (with automatic type conversion): ==
-		To check if two things are unequal to each other (even with automatic type conversion): !=
-		To check if two things are equal to each other (with the same type): ===
-		To check if two things are unequal to each other (with different types): !==
-		
-	Functions:
-		function functionName(inputArgument1) { 			// Parameters should not have the var keyword
-			// ...
-		}
-
-		function() { 										// Anonymous Function
-		}
-
-		function functionCallback( ... , callback) { 		// A callback parameter is to allow the execution (or multiple executions) of a specified function anytime during the parent function's execution
-			// ...
-			callback();
-		}
-		
-		function classConstructor( ... ) {
-			this.property = ...;
-		}
-
-		functionName(); 									// Invoke the functionName function
-		
-		// Note: Functions are actually Objects!
-	
-	Iterables:
-		var listName = [listElement, ... ]; 				// Arrays
-		
-		listName.map(function(listElement, listElementIndexOptional, listElementArrayRefOptional) { // Do something to each listElementType  }); // Map Function
-		listName.filter((listElement) => { // Return true to keep listElement in returned Array, false to exclude listElement from returned Array })
-		listName.sort(); 									// Sort the contents in listName	
-
-	Objects:
-		var objectName = { key:value, key:value, key:this.key }; // Objects with Properties or Dictionaries
-		objectName.key == value;
-		objectName['key'] == value;
-		
-		Object.assign(<targetObject>, object1, object2, ...);
-			// Mutates targetObject with the content stored in object1, object2, etc...
-			// If more than one object has different values for the same key, only the latest object (i.e. object2) will have its changes pushed.
-		
-		JSON.stringify(objectName); 						// Encode object as a JSON
-
-	// Static Properties
-		// Allows the addition of Properties and Methods to the Object Type specifically.
-		// These cannot be accessed by instances of the Object Type.
-
-		myObj.staticProperty = <value>;
-
-		OR
-
-		class myClass {
+			switch (variable) {
+			case 'value1':
+				// ...
+				break;
+			case 'value2':
+				// ...
+				break;
+			default:
+				// ...
+				break;
+			}
 			
-			// ...
+			for (var index = 0; index < 5; index++) {
+				// ...
+			}
 
-			// Via the static keyword (ES6)
-			static staticProperty = <value>;
+			To check if two things are equal to each other (same values check only): ==
+			To check if two things are unequal to each other (different values check only): !=
+			To check if two things are equal to each other (same values and types check): ===
+			To check if two things are unequal to each other (different values and types check): !==
+			
+		Functions:
+			function functionName(inputArgument1) { 			// Parameters should not have the var keyword
+				// ...
+			}
 
-			// ...
+			function() { 										// Anonymous Function
+				// ...
+			}
 
-		}
-	
-	// Prototype Properties
-		// Allows the addition of Properties and Methods to all instances of an Object Type.
-		// Also allows the extension of Parent Types to add aforementioned Properties and Methods to Child Types.
-			// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
+			function functionCallback( ... , callback) { 		// A callback parameter is to allow the execution (or multiple executions) of a specified function anytime during the parent function's execution
+				// ...
+				callback();
+			}
+			
+			function classConstructor( ... ) {
+				this.property = ...;
+			}
+
+			functionName(); 									// Invoke the functionName function
+			
+			// Note: Functions are actually Objects!
 		
-	// this refers to the current scope's owner - can be a Class or a Function
-		.bind(this) // Search up on this
+		Iterables:
+			var listName = [listElement, ... ]; 				// Arrays
+			
+			listName.map(function(listElement, listElementIndexOptional, listElementArrayRefOptional) { // Do something to each listElementType  });
+			listName.filter(function(listElement) { // Return true to keep listElement in returned Array, false to exclude listElement from returned Array });
+			listName.reduce(function(listElementA, listElementB) { // Return combinate value of listItemA, listItemB });
+
+			listName.sort(function(itemA, itemB) { // Return relative value of itemA to itemB }); // Sort the contents in listName according to the sort function passed in.
+
+		Objects:
+			var objectName = { key:value, key:value, key:this.key }; // Objects with Properties ; Dictionaries.
+			objectName.key == value;
+			objectName['key'] == value;
+			
+			Object.assign(<targetObject>, object1, object2, ...);
+				// Mutates targetObject with the content stored in object1, object2, etc...
+				// If more than one object has different values for the same key, only the latest object (i.e. object2) will have its changes pushed.
+			
+			JSON.stringify(objectName); 						// Encode object as a JSON
+
+		// Static Properties
+			// Allows the addition of Properties and Methods to the Object Type specifically.
+			// These cannot be accessed by instances of the Object Type.
+
+			myObj.staticProperty = <value>;
+
+			OR
+
+			class myClass {
+				
+				// ...
+
+				// Via the static keyword (ES6)
+				static staticProperty = <value>;
+
+				// ...
+
+			}
+		
+		// Prototype Properties
+			// Allows the addition of Properties and Methods to all instances of a Type.
+				// This is useful for adding Properties and Methods to a Type in which the Type Definition is not available.
+
+			// Also allows the extension of Parent Types to add aforementioned Properties and Methods to Child Types.
+				// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
+			
+		// this refers to the current scope's owner - can be a Class or a Function
+			.bind(this) // Search up on this
 	
 	> ES6:
-		Spread Operator: Convenient Syntax 
-			Iterator Spreading: 
-				// ...<Iterable> - Literally spreads out the Iterable's Item, as if declaring them sequentially
+		Computed Object Property Name: Evaluate an expression to determine the Property Name of a Value assigned to an Object.
+			const example = {
+				[<js-expression>]: <value>, // Note the Square Braces as the Syntax to apply.
+			};
+
+		Spread / Rest Operator: Convenient Syntax.
+			Spread Operator: Used as a shorthand for expanding an Iterable into its constituent Items inline.
+				Usage: ...<Iterable>
 				
-				// [...<Iterable>, item] - Shorthand for concatenating an Item to an Array
-					// Reduce Pattern:
-						<array>.reduce((prev, item) => {
-							return [
-								... prev,
-								item
-							]
-						}, <initial>);
+				Shallow Duplication Pattern: 
+					[ ...<Array> ]
+
+					// OR
+
+					{ ...<Object> }
+
+				Concatenate Pattern: 
+					[ ...<Array>, item ]
+
+					// OR
+
+					{
+						...<Object>,
+						<property>: <value>
+					}
+
+				Reduce Pattern: <array>.reduce((prev, item) => ([ ...prev, item ]), <initial>);
+			
+			Rest Parameter: Used as a shorthand to gather up variables into an Iterable.
+				Usage: 
+					...<Iterable>
+
+					// OR 
+
+					<var>, ..., ...<Iterable> // To remove Variables from the Iterable in their order.
+
+				Function Arguments:
+					( ...<arguments-iterable> ) => {
+						// ...
+					}
 				
-			Shallow Object Duplication:
-				// { ...<Object> };
+				Object Destructuring: See below.
 			
 		Destructuring Syntax: Convenient Syntax for copying a subset of Properties / Elements from an Iterable / Object.
 			Iterable Destructuring:
 				const [ <property>, ... ] = [ <value>, ... ];  
 
-			Object Destructuring:
-				const { <property> : <property-alias>, ... , ...<rest-object> } = <object>;
+			Object Destructuring: Declare Variables that contain only specific Properties from the Object.
+				const { <property> : <property-alias>, ..., ...<rest-object> } = <Object>;
 
 			// Assigning a Default Value if unpacked property is not defined in <struct>
 			const { <undefined-property> : <property-alias> = <default-value> } = <struct>;
 
-		Arrow Functions: A function that has a syntactic definition that is shorter than a regular anonymous function.
+		Arrow Function: A Function that has a shorter syntactic definition than a regular (Anonymous) Function.
 			function () {} becomes () => {};
 			function (x) { return x; } becomes x => x;
 			
@@ -329,16 +362,27 @@ Javascript
 		Proxy: Reflection Metaprogramming through Intercession - used to wrap Objects and intercept their behaviour through traps.
 
 		Import / Export Syntax:
-			import Module from 'npm-module';
+			// Named Imports and Exports:
+				const className = <class>;
 
-			export default className; // Make 'className' the only export of the JS File.
-			import className from './JS-File';
+				export {className}; // Compiles down to: module.exports.className = <class>;
 
-			export const className = className; // Set 'className' to be an export of the JS File.
-			import {className as 'alias'} from './JS-File'; // Named Imports
+				import {className as '<alias>'} from './JS-File'; // Compiles down to: const <alias> = require('./JS-File').className;
 
-			// Note: To force a plain File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
-			export {};
+				// Namespace Import
+				import * as '<alias>' from './JS-File'; // Compiles down to: const <alias> = require('./JS-File');
+				// ... <alias>.className 
+
+			// Default Exports:
+				export default className; // Make 'className' the only export of the JS File. Compiles down to: module.export = className;
+
+				import className as <alias> from './JS-File'; // Compiles down to: const <alias> = require('./JS-File');
+
+			// Tips:
+				// Note: To force a plain File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
+				export {};
+
+				// Note: Do not mix import and NodeJS module.export.
 
 	Utilities:
 		Mathematical Functions: 

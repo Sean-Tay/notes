@@ -1,6 +1,6 @@
 Node.js:
 	Abbreviations:
-		
+		AMD: 					Asynchronous Module Definition.
 	
 	Description: A configurable JS Runtime-Environment, independent of the Web Browser.
 	
@@ -11,25 +11,38 @@ Node.js:
 		
 	
 	Details:
-		Front-End Code, Back-End Code, and Assets are usually pre-compiled and transformed down to HTML, CSS and ES5 JS Assets. These Assets are then served by the Node Server process.
+		Front-End Code, Back-End Code, and Assets are usually pre-compiled and transformed down to HTML, CSS and CommonJS Assets. These Assets are then served by the Node Server process.
+			Although usually, Front-End Code is the one with the more involved Build Process:
+				Webpack does some useful optimizations on JS Code (tree shaking, bundling, minification), resulting in faster file transfer from Server Side to Client Side. There is no need to do this for Server Side operations ; the added complexity does not produce significant benefit.
+
+				Babel is required for Client Side, since Browsers may not natively support > ES6 spec. On the other hand, NodeJS is starting to support most of the ES6 spec, so Babel is not actually required for the Server Side.
+					Certain ES6 Mechanisms and corresponding NodejS Mechanisms may differ in functionality. Example: require() and import.
+
+				That being said, special use-cases may warrant the usage of JS Build Processes for Back-End Code as well.
 
 		Code:
-			// CommonJS 
+			// NodeJS: Node specific implementation of CommonJS.
 				module.exports = {
 					function1 : function () { // ... }, 
 					function2 : function () { // ... }, 
 					component1 : React.createClass({ render : function () { return; } })
-				} // the importable functionality Object of a Node JS file is defined within this module.exports JS Object.
+				} // the importable functionality of a Node JS file is defined within this module.exports JS Object.
 				
-				const importedModule = require("./fileToImport.js"); 		// require() acts as an importer. Checks if the string passed in is a relative path - if not, it will search for a module with that name instead.
-				importedModule.function2(); 								// Execute the function2() Object.
+				const importedModule = require("./fileToImport.js"); 		// References the module.exports Object defined in the specified fileToImport.js.
+					// Checks if the string passed in is a relative path - if not, it will search for a module with that name instead.
+						// It will automatically also search under an existing node_modules directory.
 
-			// ES6
-				export const exportObj = {
+				importedModule.function2(); 								// Execute function2().
+
+			// ES6: Depending on the Node version, the following syntax may be used instead. See the section under 'Javascript' Notes for more exposition.
+				const exportObj = {
 					// ...
 				}
 
-				import { exportObj as importedObj, } from './exportObjFile.js';
+				export { exportObj }
+
+				import { exportObj as importedObj } from './exportObjFile.js';
+					// Note: This will not automatically search under node_modules directory - as per the ES6 spec. Requires Babel to compile it to require().
 				
 				// Use importedObj ...
 
@@ -201,7 +214,7 @@ Node.js:
 				yarn install babel-preset-env
 				
 				// For .babelrc, ensure the Object within has:
-				presets = ["env"]
+				presets = ["env"] // This is a configuration which tells Babel to always use the latest spec.
 
 				// For .package.json, ensure the Object within has:
 				package.json.scripts.build = "babel src -d lib" // Command babel to convert all .js Source Code into ES5 Compatable Versions into a separate 'lib' Directory.
