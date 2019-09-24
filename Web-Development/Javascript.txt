@@ -145,6 +145,11 @@ Javascript
 					}
 
 				Reduce Pattern: <array>.reduce((prev, item) => ([ ...prev, item ]), <initial>);
+
+				Conditional Object Property Pattern:
+					{
+						...<conditional> && { <property> : <value> }
+					}
 			
 			Rest Parameter: Used as a shorthand to gather up variables into an Iterable.
 				Usage: 
