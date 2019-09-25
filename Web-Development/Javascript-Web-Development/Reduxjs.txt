@@ -13,9 +13,15 @@ Redux.js
 	Details:
 		Action: 				
 			Plain Object that minimally expresses a type of intention to CHANGE the Application State.
-				{type: "<action_identifier>", arg1: 'value1', ...}
+				{type: "<action-identifier>", arg1: 'value1', ...}
 
 			Action Creators are Functions that return Action Objects when invoked. The results of this invoked Function can be directly passed into the Store's dispatch Function.
+				const <operation> = (args) => (
+					{
+						type: "<action-identifier>",
+						...args,
+					}
+				)
 		
 		Reducer Function: 		
 			Specifies how the Application State changes in response to an Action.
@@ -37,7 +43,7 @@ Redux.js
 				}
 			
 				const combinedReducer = combineReducers({<reducer-function-1>, ...}); 
-					// Function that takes in any number of Reducer Functions stored in an Object to combine them together into a single Reducer Function - fit for creating a Store with.
+					// Function that takes in any number of Reducer Functions stored in an Object to combine them together into a single Reducer Function - fit for creating a Store with via the createStore method.
 		
 		Store: 
 			A read-only Object Tree which represents a single source of truth for Application State.

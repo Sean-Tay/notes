@@ -17,7 +17,12 @@ Typescript:
 
 				let <variable> : <{ variable-type | interface }> = <value>;
 
-				function ( arg:<arg-type>, ... ): <{ return-type | interface }> {
+				const <function> = ( arg:<arg-type>, ... ): <{ return-type | interface }> => {
+					// ...
+				}
+
+				// Function with Generics
+				const <function> = <<Generic-Type>> ( arg:<Generic-Type>, ... ): <{ return-type | interface }> => {
 					// ...
 				}
 
