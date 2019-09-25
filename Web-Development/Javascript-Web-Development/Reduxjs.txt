@@ -11,9 +11,13 @@ Redux.js
 		Pure Function: 			A Function which gives the same Output for the corresponding Input (i.e. no dependence on external State, just Input). Easier to debug.
 	
 	Details:
-		Action: 				
+		Action:
 			Plain Object that minimally expresses a type of intention to CHANGE the Application State.
 				{type: "<action-identifier>", arg1: 'value1', ...}
+
+			Different Types of Actions can be used to address different Events.
+				User Interaction.
+				Network Event.
 
 			Action Creators are Functions that return Action Objects when invoked. The results of this invoked Function can be directly passed into the Store's dispatch Function.
 				const <operation> = (args) => (
@@ -23,7 +27,7 @@ Redux.js
 					}
 				)
 		
-		Reducer Function: 		
+		Reducer Function:
 			Specifies how the Application State changes in response to an Action.
 				// Essentially a Pure Function with a Swtich Case that operates on a State and Action argument.
 				(state = <default-initial-state>, action) => { 
@@ -38,6 +42,7 @@ Redux.js
 						// ...
 						
 						default:
+							// Important in making sure combineReducers() work as intended.
 							return <default-initial-state>;
 					}
 				}
@@ -45,7 +50,7 @@ Redux.js
 				const combinedReducer = combineReducers({<reducer-function-1>, ...}); 
 					// Function that takes in any number of Reducer Functions stored in an Object to combine them together into a single Reducer Function - fit for creating a Store with via the createStore method.
 		
-		Store: 
+		Store:
 			A read-only Object Tree which represents a single source of truth for Application State.
 				import {create-store} from redux;
 
@@ -63,17 +68,24 @@ Redux.js
 			
 			const <redux-component> = connect(mapStateToProps, mapDispatchToProps) (<react-component>)
 				Returns a modified variant of the <react-component> sent into the connect Higher-Order Function.
-					mapDispatchToProps (".dispatch()") is a Function returning an Object describing Redux Store Dispatch Functions to be passed as props into the <react-component>.
-						// Typically allows the React Component to dispatch Actions to update the Store.
-						// Minimally takes in "dispatch", which is the Function to use to invoke State changing Actions to the Store from within the <react-component>.
-					
 					mapStateToProps (".subscribe()") is a Function returning an Object describing Functions to be passed as props into the <react-component>, that will be executed upon the production of a new State.
 						// Typically dissects the overall State to smaller parts that the <react-component> can use.
 						// Since the prop value changes, the <react-component> gets re-rendered.
 						// Minimally takes in "state", which is the state currently stored in the Store.
+
+					mapDispatchToProps (".dispatch()") is a Function returning an Object describing Redux Store Dispatch Functions to be passed as props into the <react-component>.
+						// Typically allows the React Component to dispatch Actions to update the Store.
+						// Minimally takes in "dispatch", which is the Function to use to invoke State changing Actions to the Store from within the <react-component>.
 						
 					Special Arguments: 
 						ownProps - Access the props passed into the React - Redux Component created by the connect Function.
+
+		External Configuration:
+			With React:
+				Ensure that the Provider Component is rendered at the topmost level of the Web Application. This will enable any sub-Components wrapped with connect() to receive the appropriate State and Dispatchers in their Props.
+					<Provider store={createStore(combinedReducer)}>
+						<App />
+					</Provider>
 	
 	Commands:
 
