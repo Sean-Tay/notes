@@ -85,6 +85,13 @@ Git:
 
 		git checkout HEAD -- . 	- Reset all Local Changes to files in the current Directory.
 
+		git clean 				- Remove untracked files from the current Directory.
+			-n 					- Preview removals.
+			-f 					- Execute removals.
+
+			-fd 				- Remove untracked Directories.
+			-fX					- Remove ignored files.
+
 		git stash <option> -- <file> - Save Local Working Copy Changes.
 			stash@{<index>}		- Naming Convention of Stashes, with <index> 0 being the latest.
 
