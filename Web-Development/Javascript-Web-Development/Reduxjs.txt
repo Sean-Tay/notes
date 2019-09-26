@@ -53,15 +53,15 @@ Redux.js
 				});
 					// Function that takes in any number of Reducer Functions stored in an Object to combine them together into a single Reducer Function - fit for creating a Store with via the createStore method.
 					// Essentially:
-						(<reducer-function-1>, ...) => (
-							(state={}, action) => (
+						({<key-1>: <reducer-function-1>, ...}) => (
+							(state={<key-1>: {},  ...}, action) => {
 								// Returns a new State Object.
 								{
 									...state,
 									<key-1>: <reducer-function-1>(state.<key-1>, action),
 									// ...
 								}
-							)
+							}
 						)
 		
 		Store:
@@ -69,6 +69,8 @@ Redux.js
 				import {create-store} from redux;
 
 				const store = createStore(combinedReducer);
+
+				// Note that Redux will call the Reducer Function with state = undefined passed in to trigger the creation of the initial State.
 
 				// Update the Store (and UI) in response to whenever a State Change occurs via dispatch.
 				// Mainly used for updating UI Elements / re-Rendering of the DOM.
