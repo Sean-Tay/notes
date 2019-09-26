@@ -58,7 +58,8 @@ Redux.js
 								// Returns a new State Object.
 								{
 									...state,
-									<key-1>: <reducer-function-1>(state.<key-1>, action)
+									<key-1>: <reducer-function-1>(state.<key-1>, action),
+									// ...
 								}
 							)
 						)
