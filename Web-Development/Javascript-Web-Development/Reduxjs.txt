@@ -70,7 +70,9 @@ Redux.js
 
 				const store = createStore(combinedReducer);
 
-				// Note that Redux will call the Reducer Function with state = undefined passed in to trigger the creation of the initial State.
+				export default store;
+
+				// Note that Redux will call the Reducer Function with state = undefined passed in to trigger the creation of the initial State via the default arguments of each Reducer Function.
 
 				// Update the Store (and UI) in response to whenever a State Change occurs via dispatch.
 				// Mainly used for updating UI Elements / re-Rendering of the DOM.

@@ -15,14 +15,19 @@ Typescript:
 			Static Typing: 		Allows for optional explicit declaration of Variable Types. Compiler will ensure Variables are not assigned Values of the wrong Type.
 				// Compare this with Dynamic Typing, which can only perform Type-Checks during runtime.
 
-				let <variable> : <{ variable-type | interface }> = <value>;
+				let <variable> : <variable-type> = <value>;
 
-				const <function> = ( arg:<arg-type>, ... ): <{ return-type | interface }> => {
+				const <function> = ( arg:<arg-type>, ... ): <return-type> => {
 					// ...
 				}
 
+				// Function with Object Destructuring
+				const <function> = ( { <key-1> , ... } : { <key-1> : <value-type-1> , ... }) => {
+					// ... 
+				}
+
 				// Function with Generics
-				const <function> = <<Generic-Type>> ( arg:<Generic-Type>, ... ): <{ return-type | interface }> => {
+				const <function> = <<Generic-Type>> ( arg:<Generic-Type>, ... ): <return-type> => {
 					// ...
 				}
 
@@ -62,7 +67,7 @@ Typescript:
 
 				// Union Types: Designate one of the following Types.
 					// Intersection of Member Attributes.
-					let <Intersection-type-variable>: <type> | ... = <value>;
+					let <intersection-type-variable>: <type> | ... = <value>;
 
 				// Type Assertion
 					<value> as <type>
