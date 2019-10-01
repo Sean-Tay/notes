@@ -107,13 +107,13 @@ React.js
 									Evaluation of any JS is only done via JS Injection within curly braces.
 										You cannot inject JS if-statements directly within JSX. Utilize either:
 											1. Ternary Operator - it always evaluates to a JS Expression (returns a value) unlike an if-else statement.
-											2. Immediately-Invoked JS Function.
+											2. Immediately-Invoked JS Function - (() => {})()
 									Utilize the && operator for code that either will or will not appear. 
 									JSX can still be used within the braces.
 									Multi-line JSX should be enclosed with parentheses.
 								
 								React Elements can have attributes, similar to DOM / HTML.
-									Note: Replace the class DOM attribute to className for compiling from JSX -> JS, since class is a reserved keyword in JS.
+									Note: Replace the 'class' DOM attribute to 'className' for compiling from JSX -> JS, since 'class' is a reserved keyword in JS.
 									Note: style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to dash-delimited words.
 									Note: Child Elements produced from mapping an Iterable need to have the top-level Child Element specify a distinguishing 'key' element.
 
@@ -283,8 +283,8 @@ React.js
 					// Local Component State - No Re-Render
 					// Changes made to these Variables here will not cause a Re-Render.
 					const <ref-var> = React.useRef(<initial-value>);
-					// Access / Modify the Ref.
-					<ref-var> = <new-value>;
+					// Access / Modify the Ref
+					<ref-var>.current = <new-value>;
 
 					// Advanced Local Component State Management
 					// The key difference between useState and useReducer is that for useReducer the State can be altered in a controlled manner as opposed to simply using the <state-var-setter-function>.
@@ -297,6 +297,12 @@ React.js
 								// Execute Impure Functions within.
 
 							// Based on action's Properties, a new State based on the passed in state should be returned.
+								// Switch on action.type
+								// action.payload
+							return {
+								...state,
+								// ...
+							};
 						}, 
 						<initial-state>
 					);
@@ -408,7 +414,7 @@ React.js
 				// React.Children API Methods.
 		
 		React Form (Elements): Special HTML Elements that use React State as a single-source of truth.
-			Typical HTML Form Elements maintain their own State. However, the React version of these Elements use the Component State instead.
+			Typical HTML Form Elements maintain their own State (Uncontrolled). However, the React version of these Elements use the Component State instead (Controlled).
 				This enforces that every State mutation will have an associated handler function, making it straightforward to modify or validate User Input.
 				Allows for finer-grained synchronization between User Input and Server State.
 

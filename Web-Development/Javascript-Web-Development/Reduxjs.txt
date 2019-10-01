@@ -12,12 +12,13 @@ Redux.js
 	
 	Details:
 		Action:
-			Plain Object that minimally expresses a type of intention to CHANGE the Application State.
+			Plain Object that minimally expresses ANY type of intention to CHANGE the Application State.
 				{type: "<action-identifier>", arg1: 'value1', ...}
 
-			Different Types of Actions can be used to address different Events.
-				User Interaction.
-				Network Event.
+				Different Types of Actions can be used to address different Events.
+					Synchronous State Update 	- 'SET' type Actions - the Actions which a Reducer should minimally act upon.
+					User Interaction 			- 'CHANGE' type Actions which may feature one or more 'GET' and 'SET' Actions.
+					Network Event 				- 'GET' type Actions.
 
 			Action Creators are Functions that return Action Objects when invoked. The results of this invoked Function can be directly passed into the Store's dispatch Function.
 				const <operation> = (args) => (
@@ -26,6 +27,11 @@ Redux.js
 						...args,
 					}
 				)
+
+				const store = createStore(<reducer-function>);
+				store.dispatch(<operation>());
+
+				// Alternatively, if mapDispatchToProps() was used, simply invoking the Action Creator will implicitly dispatch the Action to the connected Store.
 		
 		Reducer Function:
 			Specifies how the Application State changes in response to an Action.
