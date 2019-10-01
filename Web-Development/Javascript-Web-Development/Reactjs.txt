@@ -312,7 +312,7 @@ React.js
 						};
 					}, 
 						// An optional 'Dependency List' of Variables can be specified as well to limit when the submitted Function executes.
-						// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed after the first Render.
+						// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed (=== type and value check) after the first Render.
 						// This List might include State Variables that are referenced in the submitted Function.
 						// Hint: Passing an Empty List here would make the submitted Function behave like componentDidMount.
 						[ <variable>, ... ]
