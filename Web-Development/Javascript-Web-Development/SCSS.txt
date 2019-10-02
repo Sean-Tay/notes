@@ -1,0 +1,39 @@
+SCSS
+	Abbreviations:
+		CSS: 					Cascading Style Sheets.
+		SCSS:					Sassy CSS.
+	
+	Description:				A superset of CSS3 that adds programmatic features.
+	
+	Tutorial Videos / Playlist:
+		
+	
+	Concepts:
+		Rule:					A <{key | rule}>: <value> pair specifying a CSS property.
+		Rule-Set:				A grouping of CSS Rules that is usually applied to <css-selectors>.
+
+		List:					A comma or space delimited series of Values.	
+	
+	Details:
+		SCSS Syntax needs to be compiled down to CSS before it can be used.
+
+		Features:
+			Variable Definition:
+				$<variable-name>: <value>;
+
+				#example {
+					<rule>: $<variable>; 							// Variable Usage
+				}
+
+			Nested Rule-Sets:
+				<outer-css-selector> {
+					// ...
+					<inner-css-selector> {
+						// ... 
+					}
+					// ...
+				}
+	
+	Commands:
+		
+	

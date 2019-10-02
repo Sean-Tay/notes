@@ -72,27 +72,46 @@ HTML Tags / Elements:
 	<template> ... </template> - A Tag that holds HTML but does not render it at the start. Use Javascript to conditionally show it.
 	
 CSS: Decorates Webpages. 
-	General Form: 
+	Forms: 
+		/* General Form */
 		<css-selector> { 
 			<rule>: <value>; 
 		}
+
+		/* id */
+		#id {}
+		
+		/* class */
+		.class {}
+		
+		/* media conditional - apply css only if conditional is satisfied */
+		@media all and (conditional) {
+			// css here
+		}
+		
+		/* To specify style for special state or conditional of selector1. */
+		selector1:pseudo-class {}
+		
+		/* To select for HTML Elements that satisfy both selector1 and selector2. */
+		selector1,selector2 {}
+
+		/* To select an immediate selector2 HTML Element that follows after a sibling selector1 HTML Element. */
+		selector1+selector2 {}
+
+		/* To select any selector2 HTML Element that follows after a sibling selector1 HTML Element. */
+		selector1~selector2 {}
+
+		/* To select only direct selector2 HTML Elements contained within a selector1 HTML Element. */
+		selector1>selector2 {}
+
+		/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
+		selector1 selector2 {}
 
 	Types:
 		Inline CSS - CSS defined with the style attribute of the HTML Element. Performance friendly.
 		Internal CSS - CSS defined with the <style> </style> tags. Performance friendly.
 		External CSS - CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
 
-	/* id */
-	#id {}
-	
-	/* class */
-	.class {}
-	
-	/* media conditional - apply css only if conditional is satisfied */
-	@media all and (conditional) {
-		// css here
-	}
-	
 	/* 
 		CSS Reset - Removes all CSS that a browser automatically adds - make design consistent amongst different browsers, which may have their own implicit styling for certain Elements.
 	*/
@@ -102,25 +121,7 @@ CSS: Decorates Webpages.
 			x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
 			em - Specify scale according to Element size.
 	*/
-	
-	/* To specify style for special state of selector1. */
-	selector1:special-state {}
-	
-	/* To select both selector1 and selector2. */
-	selector1, selector2 {}
 
-	/* To select an immediate selector2 HTML Element that follows after a selector1 HTML Element with the same parent. */
-	selector1 + selector2 {}
-
-	/* To select any selector2 HTML Element that follows after a selector1 HTML Element with the same parent. */
-	selector1 ~ selector2 {}
-
-	/* To select only direct selector2 HTML Elements contained within a selector1 HTML Element. */
-	selector1 > selector2 {}
-
-	/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
-	selector1 selector2 {}
-	
 	/* 
 		Spacing Properties: 
 			Specification Order: Top Right Bottom Left.
@@ -146,12 +147,10 @@ CSS: Decorates Webpages.
 				Allow other Elements to sit to its Left and Right.
 	*/
 	
-	/*
-		Extensions: Usually a Preprocessor Style Sheet Language that adds programmatic features to CSS.
-			SASS: Syntactically Awesome Style Sheets.
+	Extensions: Usually a Preprocessor Style Sheet Language that adds programmatic features to CSS.
+		SASS: Syntactically Awesome Style Sheets.
 
-			LESS: Leaner Style Sheets.
+		LESS: Leaner Style Sheets.
 
-			SCSS: Sassy CSS.
-	*/
+		SCSS: Sassy CSS.
 	
