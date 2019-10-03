@@ -28,11 +28,37 @@ SCSS
 			Nested Rule-Sets:
 				<outer-css-selector> {
 					// ...
-					<inner-css-selector> {
+					<inner-css-selector> { // Equivalent to '<outer-css-selector> <inner-css-selector>'
 						// ... 
 					}
 					// ...
+
+					// & will refer to <outer-css-selector>
 				}
+
+			Mixins: Use function-like Rule-Sets within other Rule-Sets.
+				@mixin <mixin-name>($<arg1>, ...) {
+					// ...
+				}
+
+				<css-selector> {
+					@include <mixin-name>(<val1>, ...);
+					// ...
+				}
+
+			Extension / Inheritance: Apply Rules from a 'virtual' Rule-Set to another. The 'virtual' Rule-Set will have no CSS footprint in the compiled CSS if not used.
+				%<virtual-rule-set> {
+					// ...
+				}
+
+				<css-selector> {
+					@extends %<virtual-rule-set>;
+
+					// ...
+				}
+
+			Partials: SCSS Files with a leading underscore in their name will not be compiled to CSS. Usually used as imports via the @use syntax.
+				@use '<scss-file-name>';
 	
 	Commands:
 		

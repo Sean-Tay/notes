@@ -119,7 +119,7 @@ Less
 			Rule-Set Nesting: Similar to Mixins, but inner Rule-Sets can be defined within outer Rule-Sets to mimick corresponding HTML structure.
 				<outer-css-selector> {
 					// ...
-					<inner-css-selector> {
+					<inner-css-selector> { // Equivalent to '<outer-css-selector> <inner-css-selector>'
 						// ... 
 					}
 				}
