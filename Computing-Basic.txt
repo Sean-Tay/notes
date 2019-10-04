@@ -41,6 +41,8 @@ General Computing Notes:
 			Typing '.editor' allows accumulation of several lines of code.
 
 		Design Patterns:
+			Fluent Interface Pattern: API that allows for Method Chaining - return 'this' after each chainable function.
+
 			Broker Pattern:		Centralized Handler for Coordination between Decentralized Objects.
 
 		OS Types:
