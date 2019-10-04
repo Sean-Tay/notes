@@ -112,45 +112,42 @@ CSS: Decorates Webpages.
 		Internal CSS - CSS defined with the <style> </style> tags. Performance friendly.
 		External CSS - CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
 
-	/* 
-		CSS Reset - Removes all CSS that a browser automatically adds - make design consistent amongst different browsers, which may have their own implicit styling for certain Elements.
-	*/
+	CSS Reset - Removes all CSS that a browser automatically adds - make design consistent amongst different browsers, which may have their own implicit styling for certain Elements.
 	
-	/* 
-		Unit Specification
-			x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
-			em - Specify scale according to Element size.
-	*/
-
-	/* 
-		Spacing Properties: 
-			Specification Order: Top Right Bottom Left.
-			
-			Padding: Inward Separation.
-			Margin: Outward Seperation.
-			
-			Float: To specify that Element be on the Left or Right.
-
-		Arrangement Properties: 
-			display: inline
+	Unit Specification:
+		x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
+		em - Specify scale according to Element size.
+	
+	Spacing Properties: 
+		Specification Order: Top Right Bottom Left.
+		
+		Box Model:
+			Margin: Outer Separation from other neighbouring Elements.
+			Border: A border around the Element.
+			Padding: Inner Separation between the Content and the Border of the Element.
+			Content: Element Children.
+		
+	Arrangement Properties: 
+		display: 
+			inline
 				Respect Left & Right Margins and Padding, but not Top & Bottom.
 				Cannot have a Width and Height set.
 				Allow other Elements to sit to their Left and Right.
-				
-			display: block
+			
+			block
 				Respects all of those.
 				Force a Line Break after the block Element.
-				
-			display: inline-block
+			
+			inline-block
 				Respect Top & Bottom Margins and Padding.
 				Respect Height and Width.
 				Allow other Elements to sit to its Left and Right.
-	*/
+
+		float: To specify that Element be on the Left or Right.
 	
 	Extensions: Usually a Preprocessor Style Sheet Language that adds programmatic features to CSS.
 		SASS: Syntactically Awesome Style Sheets.
+			SCSS: Sassy CSS - a different form of SASS with the added advantage of being immediately compatible with regular CSS.
 
 		LESS: Leaner Style Sheets.
-
-		SCSS: Sassy CSS.
 	

@@ -15,7 +15,10 @@ Typescript:
 			Static Typing: 		Allows for optional explicit declaration of Variable Types. Compiler will ensure Variables are not assigned Values of the wrong Type.
 				// Compare this with Dynamic Typing, which can only perform Type-Checks during runtime.
 
-				let <variable> : <variable-type> = <value>;
+				const <variable> : <variable-type> = <value>;
+				
+				const <array-variable> : <variable-type>[] = [];
+				const <nested-array-variable> : <variable-type>[][] = [[]];
 
 				const <function> = ( arg:<arg-type>, ... ): <return-type> => {
 					// ...

@@ -26,15 +26,18 @@ Javascript
 			}
 
 			switch (variable) {
-			case 'value1':
-				// ...
-				break;
-			case 'value2':
-				// ...
-				break;
-			default:
-				// ...
-				break;
+				case 'value1': {
+					// ...
+					break;
+				}
+				case 'value2': {
+					// ...
+					break;
+				}
+				default: {
+					// ...
+					break;
+				}
 			}
 			
 			for (var index = 0; index < 5; index++) {
