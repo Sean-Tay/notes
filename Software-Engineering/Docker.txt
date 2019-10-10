@@ -4,7 +4,7 @@ Docker
 	
 	Description: Container and Container Orchestration Tool
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 	
 	Concepts: See 'Software Engineering' Notes on Containerization.
 	

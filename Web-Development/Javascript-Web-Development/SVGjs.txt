@@ -1,5 +1,4 @@
 SVG.js - A Library which renders Vector Graphics for Web Sites.
-
 	Canvas Creation: 
 		const paper 		= SVG(<DOM Element>).size(<dimX>, <dimY>);
 		

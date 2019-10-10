@@ -4,7 +4,7 @@ Webpack.js
 	
 	Description: Nodejs Module Bundler and Asset Transformer / Pre-Compiler.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		
 	
 	Concepts:

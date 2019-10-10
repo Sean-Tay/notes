@@ -1,5 +1,4 @@
 Raphael - A Library which draws Vector graphics for Web Sites
-	
 	Canvas Creation: 
 		var paper 			= Raphael(<topLeftX>, <topLeftY>, <dimX>, <dimY>);
 		var paper 			= Raphael(<DOM Element>, <dimX>, <dimY>);

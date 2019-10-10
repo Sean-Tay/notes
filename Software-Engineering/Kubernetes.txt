@@ -5,7 +5,7 @@ Kubernetes:
 	Description:
 		A Platform for running many Containers on Production.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		
 	
 	Concepts:

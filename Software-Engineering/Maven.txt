@@ -7,7 +7,7 @@ Maven:
 			Dependency Manager - similar to npm, but with no scripting capabilities.
 			Build Manager
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		https://youtu.be/al7bRZzz4oU
 	
 	Concepts:

@@ -1,26 +1,18 @@
 Springboot
-	
 	Abbreviations:
 		
+	
+	Description:
 		
 	
-	Description:	
-		
-		
-	
-	Tutorial Videos / Playlist:
-		
+	Tutorials:
 		https://youtu.be/msXL2oDexqw
 	
 	Concepts: 
 		
-		
 	
 	Details:
 		
-		
 	
 	Commands:
-		
-		
-	
+

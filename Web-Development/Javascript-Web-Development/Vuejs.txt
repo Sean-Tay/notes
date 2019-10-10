@@ -5,7 +5,7 @@ Vue.js:
 	
 	Description: A Frontend Framework for building Web Applications.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		Quick Start: https://youtu.be/Wy9q22isx3U
 	
 	Concepts:

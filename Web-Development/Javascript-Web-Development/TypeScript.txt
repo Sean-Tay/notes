@@ -4,7 +4,7 @@ Typescript:
 	
 	Description: An extension to Javascript.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		
 	
 	Concepts:

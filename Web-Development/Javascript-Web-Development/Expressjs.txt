@@ -4,8 +4,8 @@ Express.js
 	
 	Description: Web Application Backend Routing / Middleware Framework.
 	
-	Tutorial Videos / Playlist:
-		
+	Tutorials:
+
 	
 	Concepts:
 		Routing: Utilizes the HTTP Request Methods, as well as the Path section of the supplied URL in a received HTTP Request to determine what to do.

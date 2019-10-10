@@ -7,7 +7,7 @@ SQL:
 	Description:	
 		Declarative Language used by Applications to instruct what needs to be done by Relational Databases to meet Application Requirements.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		https://www.youtube.com/watch?v=nWeW3sCmD2k
 	
 	Concepts: 
@@ -16,6 +16,8 @@ SQL:
 		Key: 					An Attribute / Attributes whose values can uniquely represent a Record in the Table.
 
 		Record: 				Collection of related values pertaining to some Attributes.
+
+		View:					Collection of Records resulting from the processing of some Query ; Result-Set.
 
 		Table: 					Collection of Records with the same defined Attributes.
 

@@ -13,7 +13,7 @@ React.js
 	
 	Description: A Lightweight Frontend Library for building User Interfaces for Applications. It is part of the View Layer in the MVC Architecture.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		Quick Start: https://youtu.be/sBws8MSXN7A
 	
 	Concepts:

@@ -7,7 +7,7 @@ Git:
 			Larger Local Copy - Repo History saved.
 			Does not need to be connected to Repo before Commits are made.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 	
 	Concepts: 
 		origin					- A Local Alias for the Remote Repository's URL in interest.

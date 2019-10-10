@@ -5,7 +5,7 @@ SCSS
 	
 	Description:				A superset of CSS3 that adds programmatic features.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		
 	
 	Concepts:

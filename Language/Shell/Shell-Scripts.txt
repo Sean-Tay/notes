@@ -1,5 +1,5 @@
 Linux / Unix:
-	Tutorial Playlist: https://www.youtube.com/playlist?list=PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_
+	Tutorials: https://www.youtube.com/playlist?list=PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_
 	
 	Concepts: 
 		Cronjob 				- A Shell Script that gets executed periodically.
