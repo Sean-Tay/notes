@@ -2,31 +2,38 @@ Database Notes:
 	Abbreviations:
 		ACID:				Atomicity, Consistency, Isolation, Durability.
 
-		DDL					Data Definition Language.
-		DML					Data Manipulation Language.
-		DCL					Data Control Language.
-		DQL					Data Query Language.
-		TCL					Transactional Control Language.
+		DDL:				Data Definition Language.
+		DML:				Data Manipulation Language.
+		DCL:				Data Control Language.
+		DQL:				Data Query Language.
+		TCL:				Transactional Control Language.
+
+		DBMS:				DataBase Management System.
+		RDBMS:				Relational DataBase Management System.
+
+		OLTP: 				OnLine Transaction Processing.
 	
 	Description:
-		A Data Structure that allows for efficient Storage of Data on Disk.
+		A Data Structure that focuses on the storage and retrival of Data on Disk.
 	
-	Tutorial Videos / Playlist:
-		
+	Tutorials:
+
 	
 	Concepts:
-		Transaction:		A Unit of Work done / Measure of Change performed within a Database Management System.
+		Transaction:		A Unit of Work done / Measure of Change performed within a DBMS.
 		ACID:				A set of desirable properties to apply to a Transaction when interacting with a Database.
 
 		Index:				A sorted, sparse Data Structure that maps selected pieces of Data to storage locations on Disk, with the aim of improving lookup speed for Range Queries.
 		
-		DDL:				Linguistic Mechanism for Defining (create or modify) the Data *Structures* within a Database.
-		DML:				Linguistic Mechanism for Manipulating (modify, delete, insert and update) Data within a Database.
-		DCL:				Linguistic Mechanism for Controlling (grant or revoke) access to the Data within a Database.
-		DQL: 				Linguistic Mechanism for Querying (selecting) Data wihtin a Database.
-		TCL:				Linguistic Mechanism for Managing (commit or rollback) Transactions for a Database.
+		DDL:				Linguistic Mechanism for Defining (Create or Modify) the Data *Structures* within a Database.
+		DML:				Linguistic Mechanism for Manipulating (Modify, Delete, Insert and Update) Data within a Database.
+		DCL:				Linguistic Mechanism for Controlling (Grant or Revoke) access to the Data within a Database.
+		DQL: 				Linguistic Mechanism for Querying (Selecting) Data wihtin a Database.
+		TCL:				Linguistic Mechanism for Managing (Commit or Rollback) Transactions for a Database.
 
-		Coherence:			Synchronization of shared data at multiple locations.
+		Coherence:			Synchronization of shared Data at multiple locations.
+
+		OLTP:				An approach to quickly serve Transaction Oriented Implementations (i.e. Sales Systems, ATM).
 	
 	Details:
 		ACID:
@@ -34,5 +41,9 @@ Database Notes:
 			Consistency:	Transactions can only bring the Database from one valid State to another, respecting Constraints, Cascades and Triggers within affected Data.
 			Isolation: 		Transactions executed concurrently will behave the same if the Transactions are executed sequentially.
 			Durability:		Transactions that have been commited will remain commited, even during System Failure (Power Outage / Crash).
-		
 
+		OLTP:
+			Databases that support OLTP are a type of RDBMS that can process straightforward Create, Read, Update and Delete Operations. 
+				The Data is highly normalized for the sake of efficient Transaction processing.
+
+			OLTP Applications have high throughput on Creating and Updating Data, and usually serves many Users at once.

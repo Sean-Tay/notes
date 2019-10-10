@@ -4,7 +4,7 @@ Redux.js
 	
 	Description: Centralized State and Logic Container. It mainly deals with the Model and View in MVC.
 	
-	Tutorial Videos / Playlist:
+	Tutorials:
 		
 	
 	Concepts:
@@ -104,12 +104,29 @@ Redux.js
 					Special Arguments: 
 						ownProps - Access the props passed into the React - Redux Component created by the connect Function.
 
+		Implementation Flow:
+			
+
 		External Configuration:
 			With React:
 				Ensure that the Provider Component is rendered at the topmost level of the Web Application. This will enable any sub-Components wrapped with connect() to receive the appropriate State and Dispatchers in their Props.
 					<Provider store={createStore(combinedReducer)}>
 						<App />
 					</Provider>
+
+			With Typescript:
+				Define State Types for the Reducer Functions, and one Generic Interface for Action Objects.
+					export interface IAnyMap {
+						[propName: string]: any
+					}
+
+					export interface IReduxActionObject {
+						type: string,
+						payload?: any
+					}
+
+			With redux-saga:
+				
 	
 	Commands:
 

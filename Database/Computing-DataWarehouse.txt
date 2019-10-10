@@ -1,0 +1,42 @@
+Data Warehouse
+	Abbreviations:
+		DBMS:				DataBase Management System.
+		RDBMS:				Relational DataBase Management System.
+
+		OLAP: 				OnLine Analytics Processing.
+	
+	Description:
+		A Database which is specifically designed to allow for efficient Analysis of Data.
+	
+	Tutorials:
+		OLAP:				https://www.guru99.com/data-warehousing.html
+	
+	Concepts:
+		OLAP: 				An approach to quickly serve Analytics Oriented Implementations (i.e. Business Intelligence Applications).
+		OLAP Hypercube:		Refers to the Multi-Dimensional 'Cube Structure' of the Data involved in OLAP.
+	
+	Details:
+		OLAP:
+			Data Warehouses, the Databases that support OLAP, focus more on complex, Multi-Dimensional Queries, in a smaller volume.
+				Usually involves archived / historical Data, which is why OLAP is optimized for purely Read Operations.
+
+			OLAP Cube:
+				Table Types:
+					Fact Table: A collection of Facts and corresponding Measurements about the Managed Entity or System, and references to related Dimension Tables.
+					Dimension Table: A companion to the Fact Table which contains textual or numerical Attributes that aid in Query Filtering or Query Result-Set Labelling. Dimensions describe the 'Who', 'What' and 'Where' of a Fact, whilst Attributes pertain to each Dimension's characteristics.
+
+				Schema Types:
+					Star Schema
+					Snowflake Schema
+					Galaxy Schema
+
+			Operation Types:
+				Roll-Up:	The consolidation of Data in one or more Dimensions.
+				Drilldown:	To concentrate on smaller details within the Data.
+				Slice and Dice: 
+					Slice: 	Extract Data Sets from the OLAP Cube.
+					Dice:	Viewing the Data Sets from different Dimensions.
+	
+	Commands:
+		
+	
