@@ -20,11 +20,26 @@ Database Notes:
 
 	
 	Concepts:
+		Attribute:			A property of a Record / Table that can hold a value to meaningfully represent information about what the Record is supposed to represent.
+
+		Key: 				An Attribute / Attributes whose values can uniquely represent a Record in the Table.
+
+		Record: 			Collection of related values pertaining to some Attributes.
+
+		View:				Collection of Records resulting from the processing of some Query ; Result-Set.
+
+		Table: 				Collection of Records with the same defined Attributes.
+
+		Sharding: 			Splitting a Table by Rows.
+		Normalization: 		Splitting a Table by Columns.
+
+		Index: 				An additional sparse Data Structure accompanying a Table that maps between data from specified Table Attribute(s) and virtual addresses of the actual Table Records on disk.
+
+		Database: 			Collection of Tables.
+		
 		Transaction:		A Unit of Work done / Measure of Change performed within a DBMS.
 		ACID:				A set of desirable properties to apply to a Transaction when interacting with a Database.
 
-		Index:				A sorted, sparse Data Structure that maps selected pieces of Data to storage locations on Disk, with the aim of improving lookup speed for Range Queries.
-		
 		DDL:				Linguistic Mechanism for Defining (Create or Modify) the Data *Structures* within a Database.
 		DML:				Linguistic Mechanism for Manipulating (Modify, Delete, Insert and Update) Data within a Database.
 		DCL:				Linguistic Mechanism for Controlling (Grant or Revoke) access to the Data within a Database.
@@ -44,6 +59,7 @@ Database Notes:
 
 		OLTP:
 			Databases that support OLTP are a type of RDBMS that can process straightforward Create, Read, Update and Delete Operations. 
-				The Data is highly normalized for the sake of efficient Transaction processing.
+				This approach therefore uses the Relational Model, which grants superior Transactional Capability.
+				The Data would be highly normalized for the sake of efficient Transaction processing.
 
 			OLTP Applications have high throughput on Creating and Updating Data, and usually serves many Users at once.
