@@ -19,6 +19,7 @@ Data Warehouse
 		OLAP:
 			Data Warehouses, the Databases that support OLAP, focus more on complex, Multi-Dimensional Queries, in a smaller volume.
 				Usually involves archived / historical Data, which is why OLAP is optimized for purely Read Operations.
+				This approach uses the Dimensional Model for superior Analytical Capability.
 
 		OLAP Cube:
 			Table Types:
