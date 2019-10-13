@@ -281,6 +281,9 @@ Javascript
 				// Substitute another Generator. The calling Generator is out of play until the substituted Generator runs out of yields.
 				yield* <generator-instance>;
 
+				// 'Return' Elements in an Iterable
+				yield* <iterable>;
+
 				// ...
 				
 				return [<final-value>];
@@ -292,6 +295,12 @@ Javascript
 			// Using a Generator Instance
 			var { value: myGenValue, done: isGenDone } = myGen.next(); // repeatable ; once there are no more upcoming yields, the return object will not contain the value property.
 			var { value: myGenValue, done: isGenDone } = myGen.next([<optional-value>]); // Pass in a Value to the Generator for the current yield.
+
+			// Using for-of:
+				// Note: Does not execute return statements beyond the last yield.
+				for (let forGen of generator) {
+					const yieldedValue = forGen;
+				}
 
 		Classes:
 			class className [extends parentClass] {
