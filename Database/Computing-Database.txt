@@ -14,7 +14,7 @@ Database Notes:
 		OLTP: 				OnLine Transaction Processing.
 	
 	Description:
-		A Data Structure that focuses on the storage and retrival of Data on Disk.
+		A Data Structure that focuses on the storage and retrival of Operational Data from Disk.
 	
 	Tutorials:
 
@@ -58,8 +58,10 @@ Database Notes:
 			Durability:		Transactions that have been commited will remain commited, even during System Failure (Power Outage / Crash).
 
 		OLTP:
-			Databases that support OLTP are a type of RDBMS that can process straightforward Create, Read, Update and Delete Operations. 
-				This approach therefore uses the Relational Model, which grants superior Transactional Capability.
-				The Data would be highly normalized for the sake of efficient Transaction processing.
+			OLTP Applications have high throughput on Write Operations, and usually serves many Users at once.
+				The Data Structure supporting these Applications must therefore be able to process Write Operations as quickly as possible.
 
-			OLTP Applications have high throughput on Creating and Updating Data, and usually serves many Users at once.
+				The Database Tables are hence highly Normalized for the sake of efficient Transaction Processing.
+					The Normalized Nature of the Data reduces Data Redundancy, resulting in faster Insertions and Deletions.
+					However, Database and Table Joins are more complex as a result, reducing Query Speed.
+					Nevertheless, the Transactional Data recorded is available in Real-Time as a result of the fast Write Operations.
