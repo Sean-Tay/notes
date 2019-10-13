@@ -36,6 +36,10 @@ General Computing Notes:
 		Container: 				A semi-isolated Logical Environment (OS Virtualization) that can host a Process and its dependencies with greater OS-level isolation and abstraction.
 		Virtual Machine: 		A fully-isolated Logical Environment (Hardware Virtualization) that can host multiple Processes with absolute OS-level isolation through a fully-blown 'Guest OS' running on a Hypervisor mediating sharing of Hardware Resources.
 
+		Cluster Computing:		A Distributed System in which each similar, Local Node works on solving the same type of independent parts of a Problem.
+		Grid Computing:			A Distributed System in which each different, relatively independent Global Node works together to solve a Problem. It is Decentralized, with the Computation and Ownership occurring across many Administrative Domains.
+		Cloud Computing: 		Simiar to Grid Computing, except that it is Centralized, with the Computation and Ownership occurring within a single Administrative Domain.
+
 	Details:
 		REPL:					Used in interactive interpreters (Python, Node, Bash ...).
 			Typing '.editor' allows accumulation of several lines of code.
