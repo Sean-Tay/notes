@@ -48,6 +48,11 @@ Javascript
 			To check if two things are unequal to each other (different values check only): !=
 			To check if two things are equal to each other (same values and types check): ===
 			To check if two things are unequal to each other (different values and types check): !==
+
+			// Note: Objects, Arrays and Functions are never equal to each other, unless the equality check is done through the same reference:
+			const ref = {};
+			console.log( ref === ref ); // true
+			console.log( ref === {} ); // false
 			
 		Functions:
 			function functionName(inputArgument1) { 			// Parameters should not have the var keyword
