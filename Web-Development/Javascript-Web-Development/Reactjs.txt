@@ -325,7 +325,9 @@ React.js
 					);
 
 					// DOM Node Reference
-					const nodeRef = useRef();
+					const nodeRef = React.useRef();
+					// ... <div ref={nodeRef}> </div> ...
+					// nodeRef.current ...
 
 					// Tips
 					/*

@@ -51,7 +51,7 @@ HTML Tags / Elements:
 
 	<i> ... </i> or <em> ... </em> - Tags which specify italicized content.
 
-	<div> ... </div> - Tags which is used to group block Elements in a document. 
+	<div> ... </div> - Tags which is used to group Block Elements in a document. 
 
 	<span> ... </span> - Tags which is used to group Inline Elements or Inline-Block Elements in a document. Cannot contain Block Elements within it.
 
@@ -132,11 +132,13 @@ CSS: Decorates Webpages.
 			inline
 				Respect Left & Right Margins and Padding, but not Top & Bottom.
 				Cannot have a Width and Height set.
-				Allow other Elements to sit to their Left and Right.
+				Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container.
+				Default Element: <span> </span>
 			
 			block
-				Respects all of those.
+				Takes up whole Width of Parent Container.
 				Force a Line Break after the block Element.
+				Default Element: <div> </div>
 			
 			inline-block
 				Respect Top & Bottom Margins and Padding.
