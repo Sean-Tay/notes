@@ -22,6 +22,10 @@ Application Development:
 		
 		Inversion of Control:		Reverses the flow of control between Client Applications and Frameworks.
 		
+		DRY:						Don't Repeat Yourself. Abstractions sufficiently duplicated pieces of Code when appropriate.
+		WET:						Write Everything Twice. If a piece of Code has been duplicated more than twice, it may be time for a Abstractions.
+		AHA:						Avoid Hasty Abstracitions. Wait until a piece of Code has been duplicated several times before looking into Abstraction to get a better sense of what the potential use-case for that piece of Code is.
+
 	Constructs:
 		Mixins:						Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
 
