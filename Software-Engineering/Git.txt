@@ -76,6 +76,8 @@ Git:
 		git diff [HEAD] <file> <file> - See differences between checked out <file> and Local Working Copy <file>.
 
 		git add	<file> ...		- Specify changed <file>s to be added into the Local Staging List.
+			--patch 			- Interactively chose which part of <file> should be added.
+
 			-A 					- Specify that all new, modified or deleted files be added.
 			--ignore-removal 	- Specify that only new or modified files be added.
 			-u 					- Specify that only modified or deleted files be added.
