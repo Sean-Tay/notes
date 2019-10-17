@@ -1,0 +1,24 @@
+Database
+	Abbreviations: 
+		DBMS:				DataBase Management System.	
+
+	Description: 
+		A Database is an Organized Collection of Data, generally Stored, Managed and Accessed from a System.
+	
+	Tutorials:
+	
+	Concepts:
+		Database Types:
+			Relational Database
+			Document Database
+			Graph Database
+			Key-Value Database
+			In-Memory Database
+			Data Warehouse
+	
+	Details:
+		
+	
+	Commands:
+		
+	

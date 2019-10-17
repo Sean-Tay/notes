@@ -1,0 +1,57 @@
+Data Warehouse
+	Abbreviations:
+		DBMS:				DataBase Management System.
+
+		OLAP: 				OnLine Analytics Processing.
+	
+	Description:
+		A Database that focuses on the efficient analysis of Historical or Commutative Data gathered from different Data Sources.
+	
+	Tutorials:
+		https://www.guru99.com/data-warehousing.html
+		https://youtu.be/q77B-G8CA24
+	
+	Concepts:
+		Fact:				A Measurable Quantity representing something about the managed Entity or System. Calculations can be made on these for additional insight.
+		Dimension: 			A Descriptive Item describing the 'Who', 'What', 'When' or 'Where' of a Fact.
+
+		Record: 			Collection of related values pertaining to some Facts or Dimension.
+		Table: 				Collection of Records with the same defined Facts or Dimension.
+
+		OLAP: 				An approach to quickly serve Analytics Oriented Implementations (i.e. Business Intelligence Applications).
+		OLAP Hypercube:		Refers to the Multi-Dimensional 'Cube-like' Data Structure involved in OLAP.
+
+		Data Mart:			A subsidiary of a Data Warehouse to cater to a certain group of Users.
+	
+	Details:
+		Data Warehouses focus on efficiently serving complex, Multi-Dimensional Queries as part of OLAP.
+			Characteristics:
+				Subject-Oriented: Each Data Warehouse consolidates Data relating to some theme.
+				Integrated: The Data, potentially from multiple sources, must be integrated and transformed into a consistent format.
+				Time-Variant: The Primary Keys of Data stored within should implicitly or explicitly contain an element of Time, as it is Historical or Commutative Data.
+				Non-Volatile: Data is Read Only.
+				
+				Un-Normalized: Data is not Normalized so as to allow for faster Querying (i.e less and simpler Table Joins). 
+					However, this also results in Data Redundancy within the Table Records.
+
+		OLAP Cube:
+			Table Types:
+				Fact Table: Records in these contain Measurable Data on collection of Facts, as well as references to related Dimension Tables.
+				Dimension Table: A companion to the Fact Table, Records in these contain Descriptive Data on the Facts in the Records that they are linked to.
+
+			Schema Types:
+				Star Schema
+				Snowflake Schema: The Normalized Form of a Star Schema. Hierarchies are further separated into other Tables.
+				Galaxy Schema
+
+		Operation Types:
+			Roll-Up:	The consolidation of Data through the reduction of Dimensions / climbing up the Concept Hierarchy.
+			Drilldown:	The refinement of Data through the increment of Dimensions / climbing down the Concept Hierarchy.
+			Slice and Dice: 
+				Slice: 	Extract Data Sets from the OLAP Cube.
+				Dice:	Viewing the Data Sets from different Dimensions.
+			Pivot: Rotate.
+	
+	Commands:
+		
+	

@@ -1,0 +1,67 @@
+Relational Database:
+	Abbreviations:
+		ACID:				Atomicity, Consistency, Isolation, Durability.
+
+		DDL:				Data Definition Language.
+		DML:				Data Manipulation Language.
+		DCL:				Data Control Language.
+		DQL:				Data Query Language.
+		TCL:				Transactional Control Language.
+
+		DBMS:				DataBase Management System.
+		RDBMS:				Relational DataBase Management System.
+
+		OLTP: 				OnLine Transaction Processing.
+	
+	Description:
+		A Database that focuses on the efficient storage and retrival of Operational Data from Disk.
+	
+	Tutorials:
+
+	
+	Concepts:
+		Attribute:			A property of a Record / Table that can hold a value to meaningfully represent information about what the Record is supposed to represent.
+
+		Key: 				An Attribute / Attributes whose values can uniquely represent a Record in the Table.
+
+		Record: 			Collection of related values pertaining to some Attributes.
+
+		View:				Collection of Records resulting from the processing of some Query ; Result-Set.
+
+		Table: 				Collection of Records with the same defined Attributes.
+
+		Sharding: 			Splitting a Table by Rows.
+		Normalization: 		Splitting a Table by Columns.
+
+		Index: 				An additional sparse Data Structure accompanying a Table that maps between data from specified Table Attribute(s) and virtual addresses of the actual Table Records on disk.
+
+		Database: 			Collection of Tables.
+		
+		Transaction:		A Unit of Work done / Measure of Change performed within a DBMS.
+		ACID:				A set of desirable properties to apply to a Transaction when interacting with a Database.
+
+		DDL:				Linguistic Mechanism for Defining (Create or Modify) the Data *Structures* within a Database.
+		DML:				Linguistic Mechanism for Manipulating (Modify, Delete, Insert and Update) Data within a Database.
+		DCL:				Linguistic Mechanism for Controlling (Grant or Revoke) access to the Data within a Database.
+		DQL: 				Linguistic Mechanism for Querying (Selecting) Data wihtin a Database.
+		TCL:				Linguistic Mechanism for Managing (Commit or Rollback) Transactions for a Database.
+
+		Coherence:			Synchronization of shared Data at multiple locations.
+
+		OLTP:				An approach to quickly serve Transaction Oriented Implementations (i.e. Sales Systems, ATM).
+	
+	Details:
+		ACID:
+			Atomicity:		Transactions containing multiple Statements will either succeed as a whole, or not be processed at all.
+			Consistency:	Transactions can only bring the Database from one valid State to another, respecting Constraints, Cascades and Triggers within affected Data.
+			Isolation: 		Transactions executed concurrently will behave the same if the Transactions are executed sequentially.
+			Durability:		Transactions that have been commited will remain commited, even during System Failure (Power Outage / Crash).
+
+		OLTP:
+			OLTP Applications have high throughput on Write Operations, and usually serves many Users at once.
+				The Data Structure supporting these Applications must therefore be able to process Write Operations as quickly as possible.
+
+				The Database Tables are hence highly Normalized for the sake of efficient Transaction Processing.
+					The Normalized Nature of the Data reduces Data Redundancy, resulting in faster Insertions and Deletions.
+					However, Database and Table Joins are more complex as a result, reducing Query Speed.
+					Nevertheless, the Transactional Data recorded is available in Real-Time as a result of the fast Write Operations.
