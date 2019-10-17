@@ -279,15 +279,25 @@ React.js
 					// Each State Variable defined in the manner below is independent from one another.
 					// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
 					const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
+					// Modify the State.
+					<state-var-setter-function>(<new-value>);
+					// Modify the State based on the previous State.
+					<state-var-setter-function>(
+						(<prev-value>) => {
+							// ...
+							return <new-value>;
+						}
+					);
 
 					// Local Component State - No Re-Render
 					// Changes made to these Variables here will not cause a Re-Render.
 					const <ref-var> = React.useRef(<initial-value>);
-					// Access / Modify the Ref
+					// Access / Modify the Ref.
 					<ref-var>.current = <new-value>;
 
 					// Advanced Local Component State Management
 					// The key difference between useState and useReducer is that for useReducer the State can be altered in a controlled manner as opposed to simply using the <state-var-setter-function>.
+					// It is also more suited for managing State Objects that have multiple sub-values.
 					const [ <state-var>, <dispatch-function> ] = React.useReducer( 
 						(state, action) => {
 							// Reducer Function - A Function that combines two or more Arguments and returns the combination.
@@ -326,8 +336,13 @@ React.js
 
 					// DOM Node Reference
 					const nodeRef = React.useRef();
+<<<<<<< HEAD
 					// ... <div ref={nodeRef}> </div> ...
 					// nodeRef.current ...
+=======
+					// ... <div ref={{nodeRef}}> </div> ...
+					// ... nodeRef.current ...
+>>>>>>> 5b6edce8db0a5a9dc322232234bf279c1a5a30fa
 
 					// Tips
 					/*
@@ -355,6 +370,7 @@ React.js
 				// To simulate shouldComponentNotUpdate w.r.t Props when using React Hooks
 				export default React.memo(
 					ExampleComponent, 
+					// If the Function below is not provided, ExampleComponent will only re-Render once its Props changes.
 					(prevProps, nextProps) => {
 						// return true if Component should not update
 						// return false otherwise
