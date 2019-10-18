@@ -94,6 +94,13 @@ Typescript:
 			OOP Support
 
 		Typescript code will eventually be compiled down to Javascript code. This additional step serves as another point whereby problematic code can be caught.
+
+		Typescript Definitions:
+			If the original Javascript Library does not already have Typescript definitions, it may be possible to install the definitions via:
+				npm: 			npm install --save '@types/<library>'
+				yarn: 			yarn add '@types/<library>'
+
+				The Typescript definitions are at: https://github.com/DefinitelyTyped/DefinitelyTyped
 	
 	Commands:
 		tsc *.ts[x]				Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
