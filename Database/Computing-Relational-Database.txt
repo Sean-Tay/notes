@@ -14,7 +14,7 @@ Relational Database:
 		OLTP: 				OnLine Transaction Processing.
 	
 	Description:
-		A Database that focuses on the efficient storage and retrival of Operational Data from Disk.
+		A Database that focuses on the efficient storage and retrival of Relational Data from Disk.
 	
 	Tutorials:
 
@@ -51,6 +51,10 @@ Relational Database:
 		OLTP:				An approach to quickly serve Transaction Oriented Implementations (i.e. Sales Systems, ATM).
 	
 	Details:
+		Data Structure:
+			Entity: 		A Table whose Records represent one subject type.
+			Relation: 		A Table whose Records track a type of connection between two or more Entities.
+
 		ACID:
 			Atomicity:		Transactions containing multiple Statements will either succeed as a whole, or not be processed at all.
 			Consistency:	Transactions can only bring the Database from one valid State to another, respecting Constraints, Cascades and Triggers within affected Data.

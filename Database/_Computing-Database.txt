@@ -3,7 +3,7 @@ Database
 		DBMS:				DataBase Management System.	
 
 	Description: 
-		A Database is an Organized Collection of Data, generally Stored, Managed and Accessed from a System.
+		A Database is an Organized, Long-Term Collection of Data, generally Stored, Managed and Accessed via some System.
 	
 	Tutorials:
 	
