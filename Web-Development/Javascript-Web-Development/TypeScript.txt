@@ -11,21 +11,20 @@ Typescript:
 		
 	
 	Details:
+		Note: The use of Types below may reference either Typescript Types or Typescript Interfaces.
+
 		Features:
 			Static Typing: 		Allows for optional explicit declaration of Variable Types. Compiler will ensure Variables are not assigned Values of the wrong Type.
 				// Compare this with Dynamic Typing, which can only perform Type-Checks during runtime.
 
-				const <variable> : <variable-type> = <value>;
-				
-				const <array-variable> : <variable-type>[] = [];
-				const <nested-array-variable> : <variable-type>[][] = [[]];
+				const <variable>: <variable-type> = <value>;
 
 				const <function> = ( arg:<arg-type>, ... ): <return-type> => {
 					// ...
 				}
 
 				// Function with Object Destructuring
-				const <function> = ( { <key-1> , ... } : { <key-1> : <value-type-1> , ... }) => {
+				const <function> = ( { <key-1> , ... }: { <key-1>: <value-type-1> , ... }) => {
 					// ... 
 				}
 
@@ -38,6 +37,8 @@ Typescript:
 					let <array-variable>: <type>[] = <value-array>;
 					// OR
 					let <array-variable>: Array<<type>> = <value-array>; // Include one set of Angled Brackets.
+
+					const <nested-array-variable>: <type>[][] = [[]];
 
 				// Tuples: For Arrays that hold different Types.
 					let <tuple-variable>: [<type>, ...] = [<value>, ...];
@@ -60,12 +61,15 @@ Typescript:
 						throw new Error();
 					}
 
-				// Partial: To allow partial fulfillment of specified Type Properties.
+				// Partial: To allow partial fulfillment of a Type.
 					// Useful for Prop instantiation?
 					let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
 
-				// Omit: To remove a Type Property from specified Type Properties.
-					let <partial-type-variable>: Omit<<type>, "<property>" | ... >
+				// Pick: To specify a subset of Type Properties from another Type through a 'whitelist' approach.
+					let <pick-type-variable>: Pick<<type>, '<property>' | ... > = {};
+
+				// Omit: To specify a subset of Type Properties from another Type through a 'blacklist' approach.
+					let <omit-type-variable>: Omit<<type>, '<property>' | ... > = {};
 
 				// Intersection Types: Combines multiple Types into one.
 					// Union of Member Attributes.
@@ -89,8 +93,8 @@ Typescript:
 				}
 
 				Strictness can change in different scenarios:
-					1. At least the required types are accounted for in the Value.
-					2. Only the required types are accounted for in the Value.
+					1. At least the required Types are accounted for in the Value.
+					2. Only the required Types are accounted for in the Value.
 
 			Modules
 			Namespaces
