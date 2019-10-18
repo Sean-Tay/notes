@@ -64,6 +64,9 @@ Typescript:
 					// Useful for Prop instantiation?
 					let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
 
+				// Omit: To remove a Type Property from specified Type Properties.
+					let <partial-type-variable>: Omit<<type>, "<property>" | ... >
+
 				// Intersection Types: Combines multiple Types into one.
 					// Union of Member Attributes.
 					let <union-type-variable>: <type> & ... = <value>;
