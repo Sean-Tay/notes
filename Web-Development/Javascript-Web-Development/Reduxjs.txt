@@ -188,7 +188,7 @@ Redux.js
 					// This is for capturing all Asynchronous Actions dispatched by Components (or by other Saga Function), and triggering the respective Saga Functions.
 					export function* watcherSagaFunction() {
 						// If there exists a current Executing Instance tied to this Action Type, terminate the previous Executing Instance and reset.
-						takeLatest(<asynchronous-action-type>, <saga-function>);
+						yield takeLatest(<asynchronous-action-type>, <saga-function>);
 
 						// ...
 					}
