@@ -198,6 +198,8 @@ Javascript
 							<h1> Value </h1>
 						);
 
+			// Moreover, Arrow Functions do NOT change the 'this' context, unlike regular Javascript Functions. They inherit the meaning of 'this' as it was where the Arrow Function was created / defined.
+
 		Function Currying: The process of breaking down a function that takes multiple arguments into a series of functions that each take only one argument.
 			function add(a, b) { return a + b; }
 			(x, y) => { return x + y; }
