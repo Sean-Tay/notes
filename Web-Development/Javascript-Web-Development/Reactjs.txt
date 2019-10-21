@@ -359,11 +359,11 @@ React.js
 					<prop-name>: <default-value>,
 					<onStateChange>: () => {},
 				}
-				
-				export default ExampleComponent;
 
+				export ExampleComponent;
+				
 				// To simulate shouldComponentNotUpdate w.r.t Props when using React Hooks
-				export default React.memo(
+				export const MemoExampleComponent = React.memo(
 					ExampleComponent, 
 					// If the Function below is not provided, ExampleComponent will only re-Render once its Props changes.
 					(prevProps, nextProps) => {
@@ -371,7 +371,7 @@ React.js
 						// return false otherwise
 					}
 				);
-				
+
 				// Testing
 				const mockData = {
 					<prop>: <value>,
