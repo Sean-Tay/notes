@@ -73,7 +73,7 @@ React.js
 				import ReactDOM from 'react-dom';
 
 				// Note: Class Names to begin with a Capital Letter to help React distinguish between HTML Elements and React / JSX Element.
-				Class ExampleComponent extends React.Component {
+				class ExampleComponent extends React.Component {
 					// Mounting: Phase in Component Lifecycle which depicts creation of a corresponding React Element and its initial Render.
 						constructor(props) {
 							super(props);
@@ -205,7 +205,8 @@ React.js
 						
 						shouldComponentUpdate(nextProps, nextState) {
 							// Default Behaviour is to re-render on any State change.
-							// return either True or False
+							// return true if Component should update
+							// return false otherwise
 						}
 						
 						componentWillUpdate(nextProps, nextState) {
