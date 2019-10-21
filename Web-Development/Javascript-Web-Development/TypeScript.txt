@@ -92,6 +92,12 @@ Typescript:
 					// ...
 				}
 
+				Extending an existing Interface
+				interface <extended-interface-name> extends <existing-interfce-name> {
+					<additional-property>: <type>,
+					// ...
+				}		
+
 				Strictness can change in different scenarios:
 					1. At least the required Types are accounted for in the Value.
 					2. Only the required Types are accounted for in the Value.
