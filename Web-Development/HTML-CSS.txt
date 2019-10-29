@@ -132,19 +132,38 @@ CSS: Decorates Webpages.
 			Content: Element Children.
 		
 	Arrangement Properties: 
+		position: Specify how the Element is to interpret its Positional Properties.
+			static: 
+				Default.
+				Adheres to Document Flow.
+				Ignores Top, Bottom, Left, Right, and z-index settings.
+			fixed:
+				Ignores Document Flow.
+				Interprets Top, Bottom, Left, Right and z-index settings with respect to the Browser Viewport.
+			relative:
+				Adheres to Document Flow.
+				Interprets Top, Bottom, Left, Right, and z-index settings with respect to position derived from Document Flow.
+			sticky:
+				Whilst the position derived from Document Flow is in Browser Viewport: follows the 'relative' positioning.
+				Whilst the position derived from Document Flow is outside Browser Viewport: follows the 'fixed' positioning.
+				Interprets Top, Bottom, Left, Right, and z-index settings when 'fixed' positioning is active.
+			absolute:
+				Adheres to Document Flow.
+				Interprets Top, Bottom, Left, Right, and z-index settings with respect to position derived from closest Ancestor Element with non-static positioning, or <body> </body> if there is none.
+
 		display: 
-			inline
+			inline:
 				Respect Left & Right Margins and Padding, but not Top & Bottom.
 				Cannot have a Width and Height set.
 				Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container.
 				Default Element: <span> </span>
 			
-			block
+			block:
 				Takes up whole Width of Parent Container.
 				Force a Line Break after the block Element.
 				Default Element: <div> </div>
 			
-			inline-block
+			inline-block:
 				Respect Top & Bottom Margins and Padding.
 				Respect Height and Width.
 				Allow other Elements to sit to its Left and Right.
