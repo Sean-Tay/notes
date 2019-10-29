@@ -151,22 +151,27 @@ CSS: Decorates Webpages.
 				Whilst the position derived from Document Flow is outside Browser Viewport: follows the 'fixed' positioning.
 				Interprets Top, Bottom, Left, Right, and z-index settings when 'fixed' positioning is active.
 
-		display: 
-			inline:
-				Respect Left & Right Margins and Padding, but not Top & Bottom.
-				Cannot have a Width and Height set.
-				Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container.
-				Default Element: <span> </span>
-			
-			block:
-				Takes up whole Width of Parent Container.
-				Force a Line Break after the block Element.
-				Default Element: <div> </div>
-			
-			inline-block:
-				Respect Top & Bottom Margins and Padding.
-				Respect Height and Width.
-				Allow other Elements to sit to its Left and Right.
+		display: Specify if the Element is block or inline, and the layout of Child Elements.
+			Element Display:
+				block:
+					Takes up the whole Width of the Parent Container.
+					Force a Line Break after the block Element ; Elements are laid out vertically one after the other.
+					Default Element: <div> </div>
+
+				inline:
+					Respect Left & Right Margins and Padding, but not Top & Bottom.
+					Cannot have a Width and Height set.
+					Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container ; Elements are laid out horizontally one after the other.
+					Default Element: <span> </span>
+				
+				inline-block:
+					Respect Top & Bottom Margins and Padding.
+					Respect Height and Width.
+					Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container ; Elements are laid out horizontally one after the other.
+
+			Children Element Display:
+				flex:
+					One Dimensional Layout Model.
 
 		float: To specify that Element be on the Left or Right.
 	
