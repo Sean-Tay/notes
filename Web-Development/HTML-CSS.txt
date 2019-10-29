@@ -137,19 +137,19 @@ CSS: Decorates Webpages.
 				Default.
 				Adheres to Document Flow.
 				Ignores Top, Bottom, Left, Right, and z-index settings.
-			fixed:
-				Ignores Document Flow.
-				Interprets Top, Bottom, Left, Right and z-index settings with respect to the Browser Viewport.
 			relative:
 				Adheres to Document Flow.
 				Interprets Top, Bottom, Left, Right, and z-index settings with respect to position derived from Document Flow.
+			absolute:
+				Adheres to Document Flow.
+				Interprets Top, Bottom, Left, Right, and z-index settings with respect to position derived from closest Ancestor Element with non-static positioning, or <body> </body> if there is none.
+			fixed:
+				Ignores Document Flow.
+				Interprets Top, Bottom, Left, Right and z-index settings with respect to the Browser Viewport.
 			sticky:
 				Whilst the position derived from Document Flow is in Browser Viewport: follows the 'relative' positioning.
 				Whilst the position derived from Document Flow is outside Browser Viewport: follows the 'fixed' positioning.
 				Interprets Top, Bottom, Left, Right, and z-index settings when 'fixed' positioning is active.
-			absolute:
-				Adheres to Document Flow.
-				Interprets Top, Bottom, Left, Right, and z-index settings with respect to position derived from closest Ancestor Element with non-static positioning, or <body> </body> if there is none.
 
 		display: 
 			inline:
