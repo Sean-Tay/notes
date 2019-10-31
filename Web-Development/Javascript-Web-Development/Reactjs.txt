@@ -52,7 +52,7 @@ React.js
 
 			After batching multiple Component re-renders:
 				1. React takes a snapshot of the Virtual DOM before the update.
-				2. React then attempts to re-render the entire Virtual DOM (though each Component may choose not to return new React Elements). This makes it easier to comprehend - we need only to return the Virtual DOM that we want to see in each Component, and not keep track of all changes happening to the Virtual DOM.
+				2. React then attempts to re-render the entire Virtual DOM (though each Component may choose not to do so and return the old Element). This makes it easier to comprehend - we need only to return the Virtual DOM that we want to see in each Component, and not keep track of all changes happening to the Virtual DOM.
 				3. Diff-ing the captured snapshot of the Virtual DOM with the updated Virtual DOM allows React to detect which Actual DOM Objects should be updated.
 				4. React proceeds to only update the Actual DOM Objects identified in the earlier step. This is a form of optimization, and is much faster than updating the entire Actual DOM Tree.
 		
