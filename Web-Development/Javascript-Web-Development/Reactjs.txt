@@ -48,7 +48,7 @@ React.js
 		
 		React makes use of self-contained Components with their own Component-Level State.
 			These States will determine how the Component will appear and behave.
-			Only upon a State change would the Component be re-rendered.
+			Only upon a State change would the Component be re-rendered (not Props change).
 
 			After batching multiple Component re-renders:
 				1. React takes a snapshot of the Virtual DOM before the update.
