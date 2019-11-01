@@ -90,8 +90,11 @@ CSS: Decorates Webpages.
 			}
 
 		/* Selector Forms */
-			/* To specify style for special state or conditional of selector1. */
+			/* To select for HTML Elements, but only under a certain condition. */
 			selector1:pseudo-class ... {}
+
+			/* To introduce new HTML Elements not specified in the Document Markup. */
+			selector1::pseudo-element ... {}
 			
 			/* To select for HTML Elements are either selector1 or selector2. */
 			selector1,selector2 ... {}
