@@ -96,10 +96,10 @@ CSS: Decorates Webpages.
 			/* To introduce new HTML Elements not specified in the Document Markup. */
 			selector1::pseudo-element ... {}
 			
-			/* To select for HTML Elements are either selector1 or selector2. */
+			/* To select for HTML Elements are either selector1 OR selector2. */
 			selector1,selector2 ... {}
 
-			/* To select for HTML Elements that satisfy both selector1 and selector2. */
+			/* To select for HTML Elements that satisfy both selector1 AND selector2. */
 			selector1selector2 ... {}
 
 			/* To select an immediate selector2 HTML Element that follows after a sibling selector1 HTML Element. */
