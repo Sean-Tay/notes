@@ -22,7 +22,7 @@ SCSS
 				$<variable-name>: <value>;
 
 				#example {
-					<rule>: $<variable>; 							// Variable Usage
+					<rule>: $<variable-name>; // Variable Usage
 				}
 
 			Nested Rule-Sets:
