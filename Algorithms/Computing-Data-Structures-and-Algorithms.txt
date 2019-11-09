@@ -323,15 +323,15 @@
 	String Manipulation:
 		Javascript Regex: /<regex>/ or /<regex>/g to match for multiple instances of <regex>
 			Quantifiers:
-				<char | char_class>* : 0 or more of <char> or <char_class>
-				<char | char_class>+ : 1 or more of <char> or <char_class>
-				<char | char_class>? : 0 or 1 of <char> or <char_class>
+				<char | char-class>* : 0 or more of <char> or <char-class>
+				<char | char-class>+ : 1 or more of <char> or <char-class>
+				<char | char-class>? : 0 or 1 of <char> or <char-class>
 				
-				<char | char_class>{n} : Exactly n of <char> or <char_class>
-				<char | char_class>{n, } : At least n of <char> or <char_class>
-				<char | char_class>{n, m} : At least n and at most m or <char> or <char_class>
+				<char | char-class>{n} : Exactly n of <char> or <char-class>
+				<char | char-class>{n, } : At least n of <char> or <char-class>
+				<char | char-class>{n, m} : At least n and at most m or <char> or <char-class>
 				
-				<char | char_class><quantifier>? : Converts the matching to non-greedy Quantifiers.
+				<char | char-class><quantifier>? : Converts the matching to non-greedy Quantifiers.
 			
 			Specials:
 				^ : Matches the beginning of the String.

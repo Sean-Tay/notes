@@ -24,12 +24,12 @@ Git:
 			--global http."https://code.example.com/".sslVerify false - Disable SSL Cert Check for "code.example.com" domain.
 
 		git init <directory>	- Create a Local Repository in the current *empty* Local Directory.
-		git clone <repo_url>	- Copies a Remote Repository into the current *empty* Local Directory; creates Local Branches that track each available Remote Branch, before checking out the Local Branch that tracks the active Remote Branch of the Remote Repository.
-			-o <repo_url_alias> - Specify a custom Local Alias to reference the Remote Repository URL (default is origin).
+		git clone <repo-url>	- Copies a Remote Repository into the current *empty* Local Directory; creates Local Branches that track each available Remote Branch, before checking out the Local Branch that tracks the active Remote Branch of the Remote Repository.
+			-o <repo-url-alias> - Specify a custom Local Alias to reference the Remote Repository URL (default is origin).
 
-		git remote add <repo_url_alias> <username>@<server>:<repo_path_on_server> - Add a Local Alias for a Remote Repository URL.
+		git remote add <repo-url-alias> <username>@<server>:<repo-path-on-server> - Add a Local Alias for a Remote Repository URL.
 		git remote -v			- View all Local Aliases within the current Repo.
-		git remote remove <repo_url_alias> - Remove a Local Alias for a Remote Repository URL.
+		git remote remove <repo-url-alias> - Remove a Local Alias for a Remote Repository URL.
 
 		git fetch				- Preview updates for all Local Branches tracking Remote Branches.
 			FETCH_HEAD			- Creates a short-lived reference that keeps track of what has just been fetched from the Remote Repository. 
@@ -40,22 +40,22 @@ Git:
 
 			-d <branch> 		- Delete a Local Branch.
 
-			-u <repo_url_alias>/<remote-branch> <branch> - Set which Remote Branch the Local Branch pushes to.
+			-u <repo-url-alias>/<remote-branch> <branch> - Set which Remote Branch the Local Branch pushes to.
 
 		git branch -m <branch> 	- Rename currently checked out Local Branch.
 
 		git checkout <branch> - Switches Local Branches.
-			-B <new_branch>	- Creates a new Local Branch called <new_branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
-				--track <repo_url_alias> <branch> - Forces <new_branch> to track a specified Remote Branch.
+			-B <new-branch>	- Creates a new Local Branch called <new-branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
+				--track <repo-url-alias> <branch> - Forces <new-branch> to track a specified Remote Branch.
 
-		git push -u <repo_url_alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo_url_alias> as a Remote Branch <branch>.
-		git push -d <repo_url_alias> <branch> - Remove a Branch on the Remote Repository.
+		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
+		git push -d <repo-url-alias> <branch> - Remove a Branch on the Remote Repository.
 
 		git branch --unset-upstream - Set the Local Branch to no longer track the Remote Branch it was assigned to track.
 
 		git checkout <commit> -- <file> ... - Switch current version of <file> with the <commit> version of <file>.
 
-		git merge [<repo_url_alias>] <branch> - Merge updates from the Branch <branch> into the currently checked out Local Branch.
+		git merge [<repo-url-alias>] <branch> - Merge updates from the Branch <branch> into the currently checked out Local Branch.
 			Tip:				- If there are pending changes prior to the merge, *do a Commit for those changes first ; do NOT use stash*. In the event the merge is done wrongly, there will be a Commit containing all prior work to revert to.
 
 			--abort				- If Merge Conflicts will occur, this will revert the Merge. If there are prior Local Working Copy changes, those will be lost.
@@ -68,7 +68,7 @@ Git:
 		git cherry-pick <commit> - Selectively bring in a Commit from another Branch to the currently checked out Local Branch.
 			--no-commit			- Apply the changes only to the Local Working Copy without Commiting.
 
-		git pull [<repo_url_alias>] <branch> - git fetch + git merge.
+		git pull [<repo-url-alias>] <branch> - git fetch + git merge.
 			--allow-unrelated-histories - Merges two Repos that started independently.
 
 		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
@@ -101,7 +101,7 @@ Git:
 		git stash <option> -- <file> - Save Local Working Copy Changes.
 			stash@{<index>}		- Naming Convention of Stashes, with <index> 0 being the latest.
 
-			push -m "<stash_message>" - Option to additionally revert back Local Working Copy to HEAD ; push as in push and pop.
+			push -m "<stash-message>" - Option to additionally revert back Local Working Copy to HEAD ; push as in push and pop.
 
 			list 				- Option to view all Stashes.
 
@@ -112,11 +112,11 @@ Git:
 			drop stash@{<index>} - Option to delete a specified Stash.
 			clear				- Option to delete all Stashes.
 
-		git commit -m "<commit_message>" - Commit the changes of the <file>s in the Local Staging List to the Local Branch.
+		git commit -m "<commit-message>" - Commit the changes of the <file>s in the Local Staging List to the Local Branch.
 			-a 					- Automatically stages all modified Files with the Commit.
 		
 		git commit --amend --no-edit - Add to the most recent Commit <file>s in the Local Staging List.
-		git commit --amend -m "<commit_message>" - Change the message of the most recent Commit. Note: Staged Changes will be included in this commit.
+		git commit --amend -m "<commit-message>" - Change the message of the most recent Commit. Note: Staged Changes will be included in this commit.
 
 		git checkout -- <file> ... - Revert changes to <file>s.
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
@@ -125,15 +125,15 @@ Git:
 
 		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of the Local <branch>. 
 
-		git push <repo_url_alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
+		git push <repo-url-alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
 		git tag 				- Mark an important Commit with a local reference.
-			-a <tag> -m <tag_annotation> - Create an annotated local reference for the Commit.
+			-a <tag> -m <tag-annotation> - Create an annotated local reference for the Commit.
 			-d <tag>			- Delete a specified local reference.
 
-		git push <repo_url_alias> <tag>	- Push the created Tag to the Remote Repository.
-		git push <repo_url_alias> :/refs/tags/<tag> - Push the locally changed Tag to the Remote Repository.
-		git push <repo_url_alias> -- tags - Push all locally changed Tags to the Remote Repository.
+		git push <repo-url-alias> <tag>	- Push the created Tag to the Remote Repository.
+		git push <repo-url-alias> :/refs/tags/<tag> - Push the locally changed Tag to the Remote Repository.
+		git push <repo-url-alias> -- tags - Push all locally changed Tags to the Remote Repository.
 
 		git log					- See information about past Commits, with the first Commit being the most recent.
 		git log --all --decorate --oneline --graph - Observe Commit history of the current Local Repository as a graph.
