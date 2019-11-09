@@ -173,11 +173,40 @@ CSS: Decorates Webpages.
 					Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container ; Elements are laid out horizontally one after the other.
 
 			Children Element Display:
-				flex:
-					One Dimensional Layout Model.
+				flex / inline-flex: 
+					One Dimensional Layout Model which allows the assigned Container to determine Children proportions for the best utilization of available space.
+					The Main Axis is the direction in which Children are placed along, whilst the Cross Axis is perpendicular to it.
 
-		float: To specify that Element be on the Left or Right.
-	
+					/* Container Rules */
+						/* Determine Main Axis (and implicitly, Cross Axis). */
+						flex-direction: <'row' | 'column' | 'row-reverse' | 'column-reverse'>
+
+						/* Determine Children Layout Behaviour / Proportion along Main Axis. */
+						justify-content: <'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-evenly'>
+
+						/* Determine Children Behaviour / Proportion along Cross Axis. */
+						align-items: <'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'>
+
+						/* Determine Children Wrapping Behaviour along Main Axis. */
+						/* Main Axis would span another 'line' only if there is enough space along the Cross Axis. */
+						flex-wrap: <'nowrap' | 'wrap' | 'wrap-reverse'>
+
+						/* Determine how space between multiple 'lines' of the Main Axis is distributed among the Cross Axis. */
+						align-content: <'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-evenly'>
+
+					/* Children Rules */
+						/* Determine order of appearance w.r.t Main Axis. */
+						order: <number>;
+
+						/* Determine ideal size of Child before taking into account flex behaviour. */
+						flex-basis: <size>;
+
+						/* Determine capability for Child to grow to consume free space <number>-times proportionally w.r.t other Siblings along the Main Axis. */
+						flex-grow: <number>;
+
+						/* Determine capability for Child to shrink to fit into space <number>-times proportionally w.r.t other Siblings along the Main Axis. */
+						flex-shrink: <number>;
+
 	Extensions: Usually a Preprocessor Style Sheet Language that adds programmatic features to CSS.
 		SASS: Syntactically Awesome Style Sheets.
 			SCSS: Sassy CSS - a different form of SASS with the added advantage of being immediately compatible with regular CSS.
