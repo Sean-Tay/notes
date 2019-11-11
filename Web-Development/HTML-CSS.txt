@@ -157,27 +157,31 @@ CSS: Decorates Webpages.
 		display: Specify if the Element is block or inline, and the layout of Child Elements.
 			Element Display:
 				block:
-					Takes up the whole Width of the Parent Container.
-					Force a Line Break after the block Element ; Elements are laid out vertically one after the other.
+					Normally takes up the whole Width of the Parent Container.
+					Force a Line Break after the block Element regardless of Width; Elements are laid out vertically one after the other.
 					Default Element: <div> </div>
 
 				inline:
 					Respect Left & Right Margins and Padding, but not Top & Bottom.
-					Cannot have a Width and Height set.
+					Cannot have a Width and Height set - fully accommodates Children.
 					Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container ; Elements are laid out horizontally one after the other.
 					Default Element: <span> </span>
 				
 				inline-block:
 					Respect Top & Bottom Margins and Padding.
-					Respect Height and Width.
+					Respect Width and Height.
 					Allow other Elements to sit to their Left and Right if their total Width can fit into the Parent Container ; Elements are laid out horizontally one after the other.
 
 			Children Element Display:
 				flex / inline-flex: 
 					One Dimensional Layout Model which allows the assigned Container to determine Children proportions for the best utilization of available space.
 					The Main Axis is the direction in which Children are placed along, whilst the Cross Axis is perpendicular to it.
+						The size of Children corresponding to the Main Axis will be overriden by flex behaviour.
+						The size of Children corresponding to the Cross Axis will be honored by the Parent.
 
-					/* Container Rules */
+					Children Margins (and directional variants) will automatically expand to consume available space if set to auto.
+
+					/* Container-Defined Rules */
 						/* Determine Main Axis (and implicitly, Cross Axis). */
 						flex-direction: <'row' | 'column' | 'row-reverse' | 'column-reverse'>
 
@@ -188,14 +192,14 @@ CSS: Decorates Webpages.
 						align-items: <'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'>
 
 						/* Determine Children Wrapping Behaviour along Main Axis. */
-						/* Main Axis would span another 'line' only if there is enough space along the Cross Axis. */
+						/* Main Axis will wrap to another 'line' if set to wrap, potentially causing Overflow along the Cross Axis if there's not enough space. */
 						flex-wrap: <'nowrap' | 'wrap' | 'wrap-reverse'>
 
 						/* Determine how space between multiple 'lines' of the Main Axis is distributed among the Cross Axis. */
 						align-content: <'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-evenly'>
 
-					/* Children Rules */
-						/* Determine order of appearance w.r.t Main Axis. */
+					/* Children-Defined Rules */
+						/* Determine Child's order of appearance w.r.t Main Axis. */
 						order: <number>;
 
 						/* Determine ideal size of Child before taking into account flex behaviour. */
