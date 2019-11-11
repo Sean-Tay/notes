@@ -44,7 +44,7 @@ Git:
 
 		git branch -m <new-name> - Rename currently checked out Local Branch.
 
-		git fetch <repo-url-alias> <remote-branch> <local-branch> - Create a Local Branch that tracks the specified Remote Branch.
+		git fetch <repo-url-alias> <remote-branch> <local-branch> - Creates a new Local Branch that tracks the specified Remote Branch.
 
 		git checkout <branch> - Switches Local Branches.
 			-B <new-branch>	- Creates a new Local Branch called <new-branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
