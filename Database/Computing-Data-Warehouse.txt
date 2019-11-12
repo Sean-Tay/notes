@@ -21,7 +21,7 @@ Data Warehouse
 		OLAP: 				An approach to quickly serve Analytics Oriented Implementations (i.e. Business Intelligence Applications).
 		OLAP Hypercube:		Refers to the Multi-Dimensional 'Cube-like' Data Structure involved in OLAP.
 
-		Data Mart:			A subsidiary of a Data Warehouse to cater to a certain group of Users.
+		Data Mart:			A subsidiary of a Data Warehouse to cater to a certain group of Users / Business Aspect.
 	
 	Details:
 		Data Warehouses focus on efficiently serving complex, Multi-Dimensional Queries as part of OLAP.
