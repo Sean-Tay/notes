@@ -28,15 +28,12 @@ Express.js
 		var router = express.Router();								// Express Routers are convenient in keeping Middleware and their associated code together in a modular manner.
 		
 		// In Express, Middleware can be attached to the Express Server Instance, or a Router.
-		// Route Format: 
-			- Path : One or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"}
-			- Query : <path>/?<key>=<value>& ...					// One or more Key-Value Pairs Appended at the end of a Path.
 
 		// In order for Middleware to match to a Request, the entirety of one of its assigned Route Paths must be matched.
 		// The Middleware are called in the order that they are registered.
 		<{app | router}>.<{HTTP Request Method | use}>(				// Define new Middleware for this App / Router.
 			[  														// Specifies the Routes Paths to match. Optional.
-				"<Route-Path>",
+				"<route-path>",
 				// ...
 			],
 			[ 														// Specify Middleware Functions.
@@ -67,7 +64,7 @@ Express.js
 		);
 		
 		app.use(													// Mount a Router to the Express Server Instance.
-			"<Route-Path>",											// All Middleware attached to the Router will now be assumed to have the <Route-Path> specified here prepended to their corresponding Route Paths.
+			"<route-path>",											// All Middleware attached to the Router will now be assumed to have the <route-path> specified here prepended to their corresponding Route Paths.
 			router													// The Router to mount to the Express Server Instance.
 		);
 

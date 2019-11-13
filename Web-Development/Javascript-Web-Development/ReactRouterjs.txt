@@ -1,0 +1,104 @@
+React-Router:
+	Abbreviations:
+		HTML:					HyperText Markup Language.
+	
+	Description:
+		A Framework to support Client-Side Front-End Routing for Single-Page React Applications.
+	
+	Tutorials:
+		
+	
+	Concepts:
+		Single Page Web Application: A Web Application that only uses a single HTML Page to display content. Content changes mainly through Javascript, without having to refresh / reload the Page.
+
+		Routing:				The idea of leading Users to different parts of the Web Application via different Paths in the URLs.
+		
+		Static Routing:			Used to describe Routing before Application Rendering.
+		Dynamic Routing:		Used to describe Routing during Application Rendering.
+	
+	Details:
+		Router: The Component that wraps around the topmost level of the Web Application.
+			import { BrowserRouter, HashRouter } from 'react-router-dom';
+
+			// Router that uses the Path portion of a URL to change the wrapped UI accordingly.
+			// Requires that only one HTML Page be served to the Client.
+			// Incorporates the HTML5 History API, which supports Browser Back and Forward Navigation.
+			<BrowserRouter
+				baseName="/<base-path>"
+			>
+				<App />
+			</BrowserRouter>
+
+			// Router that uses the hash portion of a URL to change the wrapped UI accordingly.
+			<HashRouter
+				baseName="/<base-path>"
+			>
+				<App />
+			</HashRouter>
+
+		Switch and Route: The Components that implement the Routing Logic.
+			import { Switch, Route } from 'react-router-dom';
+
+			// Switches contain Routes, and Routes contain Application Components.
+			// Note: Application Components may contain more nested Switches and Routes.
+
+			const App = () => {
+				return (
+					<>
+						// Application Components
+							// ...
+
+						// Router Components
+							// Renders if it matches the Path.
+							<Route path="/<route-path>">
+								<AppPage />
+							</Route>
+
+							// Renders *only* the first Child that matches the Path, or null if there are no matches.
+							<Switch>
+								<Route path="/<route-path-1>">
+									// ...
+								</Route>
+
+								<Route path="/<route-path-2>">
+									// ...
+								</Route>
+
+								// ...
+							</Switch>
+					</>
+				);
+			}
+
+			// Routing-Support React Hooks
+			import { useRouteMatch, useParams } from 'react-router-dom';
+
+			const AppPage = () => {
+				// Obtain URL and matched Path in the current Route for implementing relative Links and Routes.
+				const { url, path } = useRouteMatch();
+
+				// Obtain any named Parameters in the current Route (i.e. /:<parameter>).
+				const { <parameter-name> } = useParams();
+
+				// ...
+			}
+
+		Link, NavLink, and Redirect: Components that change the Path and triggers the Routing Behaviour.
+			import { Link, NavLink, Redirect } from 'react-router-dom';
+
+			// Compiles down to an <a> element that switches the current Path to "/<route-path>".
+			<Link to="/<route-path>"> 
+				// Link Item Component
+			</Link>
+
+			// Like a Link Element, but also styles itself according to specified CSS when the Path matches.
+			<NavLink to="/<route-path>" activeClassName="<css-class>" activeStyle={<style-object>}> 
+				// Link Item Component
+			</NavLink>
+
+			// Changes the current Path to "/<route-path>" upon rendering.
+			<Redirect to="/<route-path>" />
+	
+	Commands:
+		
+	

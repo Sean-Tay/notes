@@ -1,5 +1,7 @@
 Web Computing Notes:	
 	Abbreviations:
+		URL:					Universal Resource Locator.
+
 		SOA:					Service Oriented Architecture.
 		
 		SOAP:					Single Object Access Protocol: Messaging definition for the interaction between Web Services.
@@ -21,6 +23,12 @@ Web Computing Notes:
 		REST: 					Representational State Transfer.
 	
 	Concepts:
+		URL:					A String that uniquely identifies a Resource / Site / Service on the Web. Consists of:
+			Protocol:			The Protocol used to specify the communication mode with the Server.
+			Host and Domain:	The Entity that the Server is running on, and the Administrative Space the Entity is in.
+			Path:				The part that points to a Resource within the Host (i.e. one or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"}).
+			Query:				Optional appended String to the Path that represents URL Arguments in Key-Value Pairs (i.e. <path>/?<key>=<value>& ...).
+
 		Web Site:				A Service hosted on the Web - meant for Humans.
 		Web Service:			A Service hosted on the Web - meant for Applications. Advantageous in the interoperability sense. Access the Service's WSDL at a UDDI Directory via SOAP or REST.
 		
