@@ -22,7 +22,7 @@ React-Router:
 		Router: The Component that wraps around the topmost level of the Web Application.
 			import { BrowserRouter, HashRouter } from 'react-router-dom';
 
-			// Router that uses the Path portion of a URL to change the wrapped UI accordingly.
+			// Router that uses the Path portion of a URL to change the wrapped content accordingly.
 			// Requires that only one HTML Page be served to the Client.
 			// Incorporates the HTML5 History API, which supports Browser Back and Forward Navigation.
 			<BrowserRouter
@@ -31,7 +31,7 @@ React-Router:
 				<App />
 			</BrowserRouter>
 
-			// Router that uses the hash portion of a URL to change the wrapped UI accordingly.
+			// Router that uses the hash portion of a URL to change the wrapped content accordingly.
 			<HashRouter
 				baseName="/<base-path>"
 			>
