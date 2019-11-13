@@ -1,5 +1,7 @@
 React-Router:
 	Abbreviations:
+		URL:					Uniform Resource Locator.
+
 		HTML:					HyperText Markup Language.
 	
 	Description:
