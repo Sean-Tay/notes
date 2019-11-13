@@ -124,7 +124,7 @@ Git:
 			--soft 				- Keep accumulated changes from <number-of-commits> in Staging.
 			--hard				- Discard accumulated changes from <number-of-commits>.
 
-		git rebase <branch> 	- Reposition the base of the currently checked out Local Branch to the tip of the Local <branch>. 
+		git rebase --onto <desired-branch-base> <old-branch-base> [<branch>] - Reposition the base of <branch> to <desired-branch-base>.
 
 		git push <repo-url-alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
