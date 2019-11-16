@@ -203,6 +203,7 @@ CSS: Decorates Webpages.
 						order: <number>;
 
 						/* Determine ideal size of Child before taking into account flex behaviour. */
+						/* Note: There is an existing bug on all major browsers that causes a nested flex Parent to not account for Children flex-basis specifications, causing unneccessary wrapping or overflow along its Main Axis. Specify Children width / height instead to correct it, which functions similarly to flex-basis in the context of a flex Parent. */
 						flex-basis: <size>;
 
 						/* Determine capability for Child to grow to consume free space <number>-times proportionally w.r.t other Siblings along the Main Axis. */
