@@ -185,17 +185,17 @@ CSS: Decorates Webpages.
 						/* Determine Main Axis (and implicitly, Cross Axis). */
 						flex-direction: <'row' | 'column' | 'row-reverse' | 'column-reverse'>
 
-						/* Determine Children Layout Behaviour / Proportion along Main Axis. */
+						/* Determine Children Layout Behaviour / Proportion along the Main Axis. */
 						justify-content: <'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-evenly'>
 
-						/* Determine Children Behaviour / Proportion along Cross Axis. */
+						/* Determine Children Behaviour / Proportion along the Cross Axis. */
 						align-items: <'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'>
 
-						/* Determine Children Wrapping Behaviour along Main Axis. */
+						/* Determine Children Wrapping Behaviour along the Main Axis. */
 						/* Main Axis will wrap to another 'line' if set to wrap, potentially causing Overflow along the Cross Axis if there's not enough space. */
 						flex-wrap: <'nowrap' | 'wrap' | 'wrap-reverse'>
 
-						/* Determine how space between multiple 'lines' of the Main Axis is distributed among the Cross Axis. */
+						/* Determine how space between multiple 'lines' of the Main Axis is distributed along the Cross Axis. */
 						align-content: <'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-evenly'>
 
 					/* Children-Defined Rules */
