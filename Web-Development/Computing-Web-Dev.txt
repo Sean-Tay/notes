@@ -1,25 +1,10 @@
-Web Computing Notes:	
+Web Dev:
 	Abbreviations:
 		URL:					Universal Resource Locator.
-
-		SOA:					Service Oriented Architecture.
-		
-		SOAP:					Single Object Access Protocol: Messaging definition for the interaction between Web Services.
-		
-		XML:					EXtensible Markup Language: A readable implementation-independent Data interchange format, used by SOAP.
-		BPEL:					Business Process Execution Language: Specialized XML that links Web Services together.
-		
-		SEI:					Service Endpoint Interface. Generates Stubs / Classes that allow an Application to interact with Web Services, given it's WSDL file.	
-		
-		WSDL:					Web Services Description Language: XML File that describes the Web Service it details (methods, arguments, return types).
-		UDDI:					Universal Description, Discovery and Integration: Stores WSDL files for a Web Service.
-		
-		ESB:					Enterprise Service Bus: Monitors and Routes messages between Web Services and their different versions.		
 		
 		JSON:					Javascript Object Notation: A readable implementation-independent Data interchange format.
 
-		RPC:					Remote Procedure Call.
-		RMI:					Remote Method Invocation.
+		SOAP:					Single Object Access Protocol: Messaging definition for the interaction between Web Services.
 		REST: 					Representational State Transfer.
 	
 	Concepts:
@@ -30,37 +15,12 @@ Web Computing Notes:
 			Query:				Optional appended String to the Path that represents URL Arguments in Key-Value Pairs (i.e. <path>/?<key>=<value>& ...).
 
 		Web Site:				A Service hosted on the Web - meant for Humans.
-		Web Service:			A Service hosted on the Web - meant for Applications. Advantageous in the interoperability sense. Access the Service's WSDL at a UDDI Directory via SOAP or REST.
-		
-		Service First:			When the WSDL gets generated after the Web Service is created - not preferable.
-		Contract First:			When the WSDL gets generated before the Web Service is created - preferable.
-		
-		Monolithic -> Client-Server -> {3 || n}-Tier Architecture -> Service Oriented Architecture -> Cloud Service.
+		Web Service:			A Service hosted on the Web - meant for Applications.
 
 		Web Server:				A running (containerized?) Process that listens for incoming requests for information over the Web and sends back HTTP Responses.
 		App Server:				Hosts and Exposes Business Logic and Processes.
 	
 	Details:
-		WSDL Format: XML
-			Definition:			The Root Element of all WSDL documents, containing all non-Utility elements described below. It defines the name of the Web Service, declares multiple namespaces used throughout the remainder of the document.
-
-			Data types:			The Data types to be used in the messages are in the form of XML schemas.
-
-			Message: 			It is an abstract definition of the Data, in the form of a message presented either as an entire document or as arguments to be mapped to a method invocation.
-
-			Port type: 			It is an abstract set of operations mapped to one or more end-points, defining the collection of operations for a binding; the collection of operations, as it is abstract, can be mapped to multiple transports through various bindings.
-				Operation:		It is the abstract definition of the operation for a message, such as naming a method, message queue, or business process, that will accept and process the message.
-			
-			Binding: 			It is the concrete protocol and Data formats for the operations and messages defined for a particular port type.
-
-			Port: 				It is a combination of a binding and a network address, providing the target address of the service communication.
-
-			Service: 			It is a collection of related end-points encompassing the service definitions in the file; the services map the binding to the port and include any extensibility definitions.
-			
-			Documentation: 		This utility element is used to provide human-readable documentation and can be included inside any other WSDL element.
-
-			Import:				This utility element is used to import other WSDL documents or XML Schemas.
-
 		Summary of Full-Stack:
 			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and static assets sent to a Client, like a Web Browser.
 
@@ -73,22 +33,6 @@ Web Computing Notes:
 				Creating, Reading, Updating and Deleting Data is a large part of a Web Application’s Back-End. Operational Processes record Data to Databases via Transactions, and may be accessed from Databases or Data Warehouses.
 
 			Together the technologies used to build the Front-End and Back-End of a Web Application are known as the Stack, and many different Languages and Frameworks can be used to build a robust Back-End.
-
-		RPC: A Mechanism that models Communication between two Applications as straightforward Function Calls as a medium to exchange Data, exposing direct Execution Logic.
-			An RPC Mechanism usually defines a Network Protocol, some Format for exchanging Messages, a portable way of serializing and deserializing Data and specific Programming Language support (like Code Generators). 
-			
-			It typically involves generating some Method Stubs on the Client Process that makes the call appear local, but behind the stub is logic to marshall the Request and send it to the Server Process. 
-			The Server Process then unmarshalls the Request and invokes the actual Method before repeating the process in reverse to get whatever the Method returns back to the Client Process. 
-			
-			Unlike REST, the URLs do not represent Resources, but rather Verbs representing Operations to perform on Resources.
-				Example: 
-					http://MyRestaurant:8080/Orders/PlaceOrder (POST: {Tacos object})
-					http://MyRestaurant:8080/Orders/GetOrder?OrderNumber=asdf (GET)
-					http://MyRestaurant:8080/Orders/UpdateOrder (PUT: {Pineapple Tacos object})
-
-				This means that the URLs used per API Call are usually different.
-
-			RMI is closely related to RPC, but uses Object-Oriented control to execute. This is prevalent in Java.
 
 		REST: An Architectural Style to facilitate cleaner communication and interaction between Systems via the Web.
 			The core problem is that in the past, it was only necessary to facilitate communication between a small group of Machines in the Business' Local Network to operate. However, it has become increasingly necessary to talk to Machines outside of the Business Network (i.e. other Businesses, etc).
@@ -126,3 +70,5 @@ Web Computing Notes:
 			This negates the need to store a Session State for tracking purposes, as the 'State' is now transferred between Client Requests and Server Responses.
 				Statelessness allows for Scalability, as now any Node in the Network can serve appropriate Client Requests.
 				Statelessness allows for Cacheability.
+		
+		
