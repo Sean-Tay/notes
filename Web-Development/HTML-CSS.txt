@@ -120,10 +120,6 @@ CSS: Decorates Webpages.
 
 			/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
 			selector1 selector2 ... {}
-
-	Unit Specification:
-		x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
-		em - Specify scale according to Element size.
 	
 	Hiding an Element:
 		display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will be shown in its place.
@@ -137,7 +133,11 @@ CSS: Decorates Webpages.
 			Border: A border around the Element.
 			Padding: Inner Separation between the Content and the Border of the Element.
 			Content: Element Children.
-		
+
+	Unit Specification:
+		x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
+		em - Specify scale according to Element size.
+
 	Arrangement Properties: 
 		position: Specify how the Element is to interpret its Positional Properties.
 			static: 
