@@ -126,8 +126,8 @@ CSS: Decorates Webpages.
 		em - Specify scale according to Element size.
 	
 	Conditional Rendering:
-		display: none 		- HTML Tag is created. It is not placed into the Document Flow, and other neighbouring Elements will be shown in its place.
-		visibility: hidden 	- HTML Tag is created. It is placed into the Document Flow, and an (empty) space is allocated for it.
+		display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will be shown in its place.
+		visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, and an (empty) space is allocated for it.
 
 	Spacing Properties: 
 		Specification Order: Top Right Bottom Left.
