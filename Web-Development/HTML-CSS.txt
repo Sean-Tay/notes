@@ -72,6 +72,13 @@ HTML Tags / Elements:
 	<template> ... </template> - A Tag that holds HTML but does not render it at the start. Use Javascript to conditionally show it.
 	
 CSS: Decorates Webpages. 
+	CSS Reset - Removes all CSS that a browser automatically adds - make design consistent amongst different browsers, which may have their own implicit styling for certain Elements.
+
+	Types:
+		Inline CSS - CSS defined with the style attribute of the HTML Element. Performance friendly.
+		Internal CSS - CSS defined with the <style> </style> tags. Performance friendly.
+		External CSS - CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
+
 	Forms: 
 		/* General Form */
 			<css-selector> { 
@@ -114,17 +121,14 @@ CSS: Decorates Webpages.
 			/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
 			selector1 selector2 ... {}
 
-	Types:
-		Inline CSS - CSS defined with the style attribute of the HTML Element. Performance friendly.
-		Internal CSS - CSS defined with the <style> </style> tags. Performance friendly.
-		External CSS - CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
-
-	CSS Reset - Removes all CSS that a browser automatically adds - make design consistent amongst different browsers, which may have their own implicit styling for certain Elements.
-	
 	Unit Specification:
 		x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
 		em - Specify scale according to Element size.
 	
+	Conditional Rendering:
+		display: none 		- HTML Tag is created. It is not placed into the Document Flow, and other neighbouring Elements will be shown in its place.
+		visibility: hidden 	- HTML Tag is created. It is placed into the Document Flow, and an (empty) space is allocated for it.
+
 	Spacing Properties: 
 		Specification Order: Top Right Bottom Left.
 		
