@@ -125,9 +125,9 @@ CSS: Decorates Webpages.
 		x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
 		em - Specify scale according to Element size.
 	
-	Conditional Rendering:
+	Hiding an Element:
 		display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will be shown in its place.
-		visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, and an (empty) space is allocated for it.
+		visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, but an (empty) space is allocated in its place.
 
 	Spacing Properties: 
 		Specification Order: Top Right Bottom Left.
