@@ -136,7 +136,9 @@ CSS: Decorates Webpages.
 
 	Unit Specification:
 		x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
-		em - Specify scale according to Element size.
+		
+		em - Relative to font-size of the current Element (2em === 200% of current Font-Size).
+		rem - Relative to font-size of the HTML Root Element (2em === 200% of current Font-Size).
 
 	Arrangement Properties: 
 		position: Specify how the Element is to interpret its Positional Properties.
