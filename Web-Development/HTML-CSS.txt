@@ -122,7 +122,7 @@ CSS: Decorates Webpages.
 			selector1 selector2 ... {}
 	
 	Hiding an Element:
-		display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will be shown in its place.
+		display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
 		visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, but an (empty) space is allocated in its place. It cannot receive Events.
 		opacity: 0			- The HTML DOM Node is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
 
