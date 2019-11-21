@@ -1,5 +1,7 @@
 Web Dev:
 	Abbreviations:
+		HTTP:					HyperText Transfer Protocol.
+		
 		URL:					Universal Resource Locator.
 		
 		JSON:					Javascript Object Notation.
@@ -24,19 +26,18 @@ Web Dev:
 		Web Site:				A Service hosted on the Web - meant for Humans.
 		Web Service:			A Service hosted on the Web - meant for Applications.
 
-		Web Server:				A running (containerized?) Process that listens for incoming requests for information over the Web and sends back HTTP Responses.
+		Web Server:				A running (containerized?) Process that listens for incoming Requests for information over the Web and sends back Responses.
 		App Server:				Hosts and Exposes Business Logic and Processes.
 	
 	Details:
 		Summary of Full-Stack:
 			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and static assets sent to a Client, like a Web Browser.
 
-			A Web Server is a running (containerized?) Process that listens for incoming requests for information over the Web and sends back HTTP Responses.
-				If HTTPS is used, a signed Digital Certificate is sent to the Client upon first contact. The Client then uses the Public Key within to encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Encryption used in further communication between the two, as Asymmetric Encryption is less efficient.
+			A Web Server is a running (containerized?) Process that listens for incoming Requests for information over the Web and sends back Responses.
 
 			The Server-Side of a Web Application, sometimes called the Application Server, handles important tasks such as Authentication and Authorization.
 
-			The Back-End of a Web Application often has a Web API which is a way of interacting with an Application’s Data through HTTP Requests and Responses.
+			The Back-End of a Web Application often has a Web API which is a way of interacting with an Application’s Data through Requests and Responses.
 				Creating, Reading, Updating and Deleting Data is a large part of a Web Application’s Back-End. Operational Processes record Data to Databases via Transactions, and may be accessed from Databases or Data Warehouses.
 
 			Together the technologies used to build the Front-End and Back-End of a Web Application are known as the Stack, and many different Languages and Frameworks can be used to build a robust Back-End.
