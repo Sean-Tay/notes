@@ -1,0 +1,77 @@
+Security:
+	Abbreviations:
+		SSH:					Secure SHell.
+
+		SSL:					Secure Sockets Layer.
+		TLS:					Transport Layer Security.
+
+		HTTPs:					HyperText Transfer Protocol Secure.
+	
+	Concepts:
+		Cryptography:			The theory and practice of techniques for Secure Communication.
+		(Cryptographic) Key:	Information that determines the Output of a Cryptographic Algorithm.
+		Key Stretching:			The Process of strengthening a Weak Key by increasing the amount of Resources used to compute it.
+
+		Plaintext:				Information whose meaning is immediately readable and understandable.
+
+		Hashing:				The process of generating some preferably unique Value from a Plaintext via some one-way Mathematical Hashing Function.
+		Hash:					The resultant Value that comes about from Hashing a Plaintext.
+		Salt:					An additional Value that is used in the Hashing Process in some way to alter the resultant Hash.
+		
+		Reduction Function:		A Function that has a swapped Domain and Range with its corresponding Hashing Function. It is NOT the inverse of the Hashing Function.
+		Rainbow Table:			A Data Structure that stores pre-computed mappings between Plaintexts and corresponding derived Hashes under one Hashing Configuration.
+
+		Cipher:					A mechanism to transform Information between a Readable Format and a Disguised Variant that hides its meaning. May include the use of a Key to allow a piece of Information to have mappings with different Disguised Variants.
+		Ciphertext:				Plaintext that has been transformed in some way via a Cipher to hide its meaning.
+
+		Encryption:				The process of transforming Plaintext into a Ciphertext form.
+		Decryption:				The process of transforming Ciphertext back into its Plaintext form.
+
+		Symmetric Cryptography:	Involves the use of the same Key between Encryption and Decryption.
+		Asymmetric Cryptography: Involves the use of different Keys between Encryption and Decryption.
+
+		Public Key:				A Key for a Cipher that is freely accessible.
+		Private Key:			A Key for a Cipher that is a secret.
+	
+		Digital Certificate:	A Public Key that is verified by some trusted entity.
+		Certificate Authority: 	A trusted entity that verifies Public Keys.
+
+	Details:
+		Hashing:
+			Hash Functions are typically one-way Mathematical Functions, with no corresponding Inverse Function.
+				To achieve the no proper Inverse behaviour, they tend to lose information as they convert Input to Output.
+
+			Rainbow Tables:
+				Unoptimized Rainbow Tables are simply Lookup Tables that store all possible mappings between Plaintext Values and their corresponding Hashes.
+
+				Lookup Tables can be made more Storage Efficient via a Reduction Function. Rather than storing all Plaintext Values and their corresponding Hashes, it can:
+					1. Ascertain a random valid starting Input.
+					2. Obtain the corresponding Hash for the Input.
+					3. Derive another valid Input from the resultant Hash through the Reduction Function.
+					4. Repeat Steps 2-3 several times, then only store the mapping between the starting Input and the final Hash.
+
+					In this scenario, the Lookup Table stores 'Hash Chains' instead of simple mappings between Plaintext Inputs and corresponding Hashes, which reduces the amount of stored Information.
+
+				The size of a Table is inversely proportional to the amount of time needed to process a particular Hash and the corresponding Plaintext Input.
+
+			Secure Password Storage:
+				Hashing can be used to safely store User Passwords. Whenever a User submits a Password, Hashing that Plaintext Password would disguise it. Applications would then only store or verify against the Hashes, not the Plaintext Passwords.
+					Since the Hashing Function used in the process is one-way, the stored Hash is not meant to be converted back to its Plaintext form, offering some protection of the original User Passwords should the Hashes be made public.
+
+				The issue is that for most Hash Functions, there already exists a corresponding Rainbow Table that tracks a listing of commonly-used Passwords and their corresponding resultant Hashes under each Hash Function. If an untrusted source obtains the stored Hashes as they are, a Rainbow Table might be able to map that Hash back to the original Plaintext form.
+
+				The best practice to protect against Rainbow Tables is to use both a Salt Value and a Key Stretching Function.
+
+				A (potentially User-Specific) Salt is added to the original Password and Hashed with it, so that two Hashes of the same Plaintext with the same Hashing Function but with different Salts will produce different Hashes. The Salt can be used by just concatenating it and the Password together, or within a Keyed Hash Function like HMAC-SHA256 with the Salt as the Key. Then pass the output through a Key Stretching Function like PBKDF2 or bcrypt, and store or verify that result as the final Password Hash.
+
+				As a result, the User Database for the Application would store the Username, the unmodified Salt for that User, and the final Password Hash. 
+					The Salts make it so that one Rainbow Table cannot immediately break all stored Password Hashes; it does not matter that the Salts are in Plaintext.
+
+		Cryptography:
+			Asymmetric Cryptography:
+				Communication Modes:
+					Confidentiality: If a Public Key is used for Encryption and the corresponding Private Key is used for Decryption, the Encrypted Information would only be viewable by the owner of the Private Key.
+					Authenticity: If a Private Key is used for Encryption and the corresponding Public Key is used for Decryption, the Encrypted Information could only have been created by the owner of the Private Key.
+
+				HTTPs:
+					If HTTPS is used, the Server sends a Digital Certificate to the Client upon first contact. The Client then uses the Public Key within to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.
