@@ -89,6 +89,9 @@ Typescript:
 					<property>: <type>, 
 					<optional-property>?: <type>, 
 					readonly <readonly-property>: <type>,
+
+					<function-property>: ( arg:<arg-type>, ... ) => <return-type>,
+
 					// ...
 				}
 
