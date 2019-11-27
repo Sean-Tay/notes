@@ -193,6 +193,8 @@ CSS: Decorates Webpages.
 
 					Children Margins (and directional variants) will automatically expand to consume available space if set to auto.
 
+					Children with z-index specifications will always create a new Stacking Context, even when not positioned.
+
 					/* Container-Defined Rules */
 						/* Determine Main Axis (and implicitly, Cross Axis). */
 						flex-direction: <'row' | 'column' | 'row-reverse' | 'column-reverse'>
