@@ -17,7 +17,7 @@ React.js
 		Quick Start: https://youtu.be/sBws8MSXN7A
 	
 	Concepts:
-		React Component:			Refers to the definition that would create a React Component Instance.
+		React Component:			Refers to the syntactical definition that would create a React Component Instance.
 		React Component Instance:	An instance of a React Component. Returns a React Element adjusted for State and Functions.
 
 		React Element:				Lightweight, Immutable, Stateless, Functionless, plain JS Object describing a React Component Instance - a Virtual DOM Node or Sub-Tree. It is implicitly produced from the compilation of JSX during Rendering, either from a React.createElement call or the result of the render() method.
