@@ -117,6 +117,17 @@ Typescript:
 				yarn: 			yarn add '@types/<library>'
 
 				The Typescript definitions are at: https://github.com/DefinitelyTyped/DefinitelyTyped
+
+		Common Types:
+			In React:
+				React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
+
+				React.ReactText: To specify for a string | number Value.
+				React.ReactElement: To specify for the JS Object implicitly produced through the compilation of JSX.
+
+				React.ReactChild: To specify the Type for valid children of React Elements. Does not allow for falsy values.
+
+				React.ReactNode: A superset of React.ReactChild, with the same purpose as React.ReactChild. Allows for falsy values.
 	
 	Commands:
 		tsc *.ts[x]				Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
