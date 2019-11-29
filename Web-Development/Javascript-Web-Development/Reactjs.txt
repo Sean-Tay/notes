@@ -186,9 +186,6 @@ React.js
 									return {
 										// New Object that represents the intended changes to the State Object.
 										// DO NOT mutate the State Object directly.
-
-										...state,
-										// ...
 									};
 								},
 								callback
