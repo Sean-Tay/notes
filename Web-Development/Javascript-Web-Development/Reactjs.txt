@@ -17,7 +17,7 @@ React.js
 		Quick Start: https://youtu.be/sBws8MSXN7A
 	
 	Concepts:
-		React Element:				Lightweight, Immutable, Stateless, Functionless, Nestable, plain JS Object that describes what should be shown on screen - a Virtual DOM Node or Sub-Tree. It is implicitly produced from the compilation of inline JSX during Rendering to React.createElement() calls.
+		React Element:				Lightweight, Immutable, Stateless, Functionless, Nestable, plain JS Object that describes what should be shown on screen - a Virtual DOM Node or Sub-Tree. It is implicitly produced when inline JSX is compiled down to React.createElement() calls during Rendering.
 		Virtual DOM: 				A Lightweight Abstraction of the Actual DOM (i.e. no CSS considerations, etc), represented by a Tree of React Elements.
 
 		React Component:			Refers to the syntactical definition that would create a React Component Instance.
