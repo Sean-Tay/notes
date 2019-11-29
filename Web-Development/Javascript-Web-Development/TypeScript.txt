@@ -113,7 +113,7 @@ Typescript:
 
 		Typescript Definitions:
 			If the original Javascript Library does not already have Typescript definitions, it may be possible to install the definitions via:
-				npm: 			npm install --save '@types/<library>'
+				npm: 			npm install --save-dev '@types/<library>'
 				yarn: 			yarn add '@types/<library>'
 
 				The Typescript definitions are at: https://github.com/DefinitelyTyped/DefinitelyTyped
