@@ -179,12 +179,16 @@ React.js
 						// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State.
 						handleStateChange(callback) {
 							// Don't modify this.state directly, otherwise React won't know to re-render the Component.
-							// Use setState() instead to merge in changes to the State, and implicitly call the Component's render() function to re-render the Component.
+							// Use setState() instead to merge in changes to the State, which will also implicitly re-render the Component.
+							// Don't reference this.state directly as the update triggered by this.setState is asynchronous - use the update function argument form, as shown below.
 							this.setState(
 								(state, props) => {
 									return {
 										// New Object that represents the intended changes to the State Object.
 										// DO NOT mutate the State Object directly.
+
+										...state,
+										// ...
 									};
 								},
 								callback
