@@ -254,19 +254,29 @@ Javascript
 			const asyncFunction = async () => {
 				// Traditional try-catch syntax works with async / await
 				try { 
-					// await can work on both a Promise, or a synchronous Result
+					// await can work on a Promise, or a synchronous Result
 					var promiseResult = await promiseObj;
 
 					// but usually on a function that returns a Promise
 					var asyncResult = await asyncOperation();
 
+					// await can also work on another async Function
+					asyncReslt = await asyncFunction();
+
 					// ...
+
+					return asyncResult;
 				} catch (err) {
 					// ...
 				}
 			}
 
 			asyncFunction();
+
+			// when used in a synchronous context, the result of the Function is a Promise
+			asyncFunction().then(
+				// ...
+			)
 
 		Generator: A Function that conforms to the Iterator Specification, being able to 'return' multiple times.
 			function* generator() {
