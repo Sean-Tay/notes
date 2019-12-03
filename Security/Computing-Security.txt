@@ -5,7 +5,7 @@ Security:
 		SSL:					Secure Sockets Layer.
 		TLS:					Transport Layer Security.
 
-		HTTPs:					HyperText Transfer Protocol Secure.
+		HTTPS:					HyperText Transfer Protocol Secure.
 	
 	Concepts:
 		Cryptography:			The theory and practice of techniques for Secure Communication.
