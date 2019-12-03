@@ -44,6 +44,14 @@ Javascript
 				// ...
 			}
 
+			for (const index in <array>) {
+				// ...
+			}
+
+			for (const item in <array>) {
+				// ...
+			}
+
 			To check if two things are equal to each other (same values check only): ==
 			To check if two things are unequal to each other (different values check only): !=
 			To check if two things are equal to each other (same values and types check): ===
