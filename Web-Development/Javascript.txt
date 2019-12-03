@@ -261,7 +261,7 @@ Javascript
 					var asyncResult = await asyncOperation();
 
 					// await can also work on another async Function
-					asyncReslt = await asyncFunction();
+					asyncResult = await asyncFunction();
 
 					// ...
 
