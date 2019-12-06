@@ -102,7 +102,10 @@ Git:
 		git stash <option> -- <file> - Save Local Working Copy Changes.
 			stash@{<index>}		- Naming Convention of Stashes, with <index> 0 being the latest.
 
-			push -m "<stash-message>" - Option to additionally revert back Local Working Copy to HEAD ; push as in push and pop.
+			-m "<stash-message>" - Optional Stash Label.
+			-u					- Also include untracked files in the Stash.
+
+			push - Option to additionally revert back Local Working Copy to HEAD ; push as in push and pop.
 
 			list 				- Option to view all Stashes.
 
