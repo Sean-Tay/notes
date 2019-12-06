@@ -324,18 +324,56 @@ React.js
 
 					// Side-Effects
 						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State is updated).
-						React.useEffect(() => {
-							// ... 
+						React.useEffect(
+							() => {
+								// ... 
 
-							// Return an optional cleanup Function that is executed just before each subsequent Render.
-							return () => {
-								// ...
-							};
-						}, 
+								// Return an optional cleanup Function that is executed just before each subsequent Render.
+								return () => {
+									// ...
+								};
+							}, 
 							// An optional 'Dependency List' of Variables can be specified as well to limit when the submitted Function executes.
 							// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed (=== type and value check) after the first Render.
 							// This List might include State Variables that are referenced in the submitted Function.
 							// Hint: Passing an Empty List here would make the submitted Function behave like componentDidMount.
+							// Hint: For Arrays and Objects, use JSON.stringify.
+							[ <variable>, ... ]
+						);
+
+					// Optimizations
+						// Used to prevent unneccessary recalculation of some value per re-Render.
+						// Hint: That 'some value' can be a React Element too.
+						React.useMemo(
+							() => {
+								// ...
+
+								return expensive(<variable>, ...);
+
+								// OR 
+
+								return <ExampleComponent arg={<variable>} />;
+							},
+							// Optional 'Dependency List' of Variables, same as with useEffect().
+							[ <variable>,  ... ]
+
+							// OR
+
+							// Optional Comparator Function
+							(prev, next) => {
+								// return true if the value should not be recalculated
+								// return false otherwise
+							}
+						);
+						
+						// Used to define Functions within Functional Components that won't be unneccessarily recreated per re-Render.
+						React.useCallback(
+							(<arg-1>, ...) => {
+								// ...
+
+								return;
+							}, 
+							// Optional 'Dependency List' of Variables, same as with useEffect().
 							[ <variable>, ... ]
 						);
 
