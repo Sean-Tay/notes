@@ -233,8 +233,12 @@ Javascript
 
 						// Insert Asynchronous Execution here.
 						
-						if (err) rejectCb(err);
-						else resolveCb(val);
+						// Error Handling:
+						if (err) return rejectCb(err);
+						// OR
+						throw err;
+						
+						resolveCb(val);
 					}
 				);
 			)
@@ -242,8 +246,8 @@ Javascript
 			const promiseObj = asyncOperation();
 
 			promiseObj.then(
-				() => {
-					// Value Handler
+				(val) => {
+					// Value Handler.
 
 					// ...
 
@@ -251,12 +255,31 @@ Javascript
 					// OR 
 					return new Promise( // ... ); // The next 'then' waits for this returned Promise to finish executing.
 				}, 
-				() => {
+				(err) => {
 					// Optional Error Handler.
 
 					// ...
+
+					// To prevent execution of any further 'then's.
+					throw new Error( // ... );
+
+					// To allow execution of any further 'then's.
+					return '';
 				}
-			).then( // ... ) ... // Chainable Resolution.
+			).then( // ... ) ... // Chainable.
+			.catch(
+				() => {
+					// Terminal Error Handler.
+
+					// ...
+				}
+			).finally(
+				() => {
+					// Invoked on both success (then) and failure (catch)
+
+					// ...
+				}
+			);
 
 		Async / Await Syntax:
 			const asyncFunction = async () => {
