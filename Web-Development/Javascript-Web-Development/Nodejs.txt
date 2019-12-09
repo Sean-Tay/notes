@@ -37,7 +37,7 @@ Node.js:
 				// Execute function2().
 				importedModule.function2(); 								
 
-			// ES6: Depending on the Node version, the following syntax may be used instead. See the section under 'Javascript' notes for more exposition.
+			// ES6: Depending on the Node version or Project configuration, the following syntax may be used instead. See the section under 'Javascript' notes for more exposition.
 				const exportObj = {
 					// ...
 				}
