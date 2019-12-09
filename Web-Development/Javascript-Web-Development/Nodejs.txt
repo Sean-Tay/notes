@@ -21,20 +21,23 @@ Node.js:
 				That being said, special use-cases may warrant the usage of JS Build Processes for Back-End Code as well.
 
 		Code:
-			// NodeJS: Node specific implementation of CommonJS, which is Server-Side JS.
+			// CommonJS or ServerJS:
+				// The importable functionality of a NodeJS File is defined within this module.exports JS Object.
 				module.exports = {
 					function1 : function () { // ... }, 
 					function2 : function () { // ... }, 
 					component1 : React.createClass({ render : function () { return; } })
-				} // the importable functionality of a NodeJS File is defined within this module.exports JS Object.
+				};
 				
-				const importedModule = require("./fileToImport.js"); 		// References the module.exports Object defined in the specified fileToImport.js synchronously.
+				// References the module.exports Object defined in the specified fileToImport.js synchronously.
+				const importedModule = require("./fileToImport.js"); 		
 					// Checks if the string passed in is a relative path, and attempts to find the required Dependency from the Project itself.
 					// If it does not find it in the step above, it will proceed to check the node_modules Directory.
 
-				importedModule.function2(); 								// Execute function2().
+				// Execute function2().
+				importedModule.function2(); 								
 
-			// ES6: Depending on the Node version, the following syntax may be used instead. See the section under 'Javascript' Notes for more exposition.
+			// ES6: Depending on the Node version, the following syntax may be used instead. See the section under 'Javascript' notes for more exposition.
 				const exportObj = {
 					// ...
 				}
@@ -105,7 +108,8 @@ Node.js:
 
 				// Each method from the fs module has both a synchronous and asynchronous variant.
 
-				fs.readFile( // Read all of one File at one go.
+				// Read the entirety of the File synchronously.
+				fs.readFile( 
 					<file-path>,
 					<file-character-encoding>,
 					errorFirstCallback
