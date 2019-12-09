@@ -243,11 +243,11 @@ Node.js:
 				{
 					"scripts" : {
 						// Server Side
-							// Note: This executes the transpilation of the App and keeps the result in memory.
+							// Note: This executes the transpilation of the App and keeps the result in memory for current execution.
 							"server": "babel-node ./src/bin/www",
 							"dev": "NODE_ENV=development server",
 
-							// Note: This executes the transpilation of the App and writes the result to disk.
+							// Note: This executes the transpilation of the App and writes the result to disk for eventual execution.
 							"clean": "rm -rf ./dist",
 							"build": "babel ./src -d dist",
 							"server:prod": "node ./dist/bin/www",
