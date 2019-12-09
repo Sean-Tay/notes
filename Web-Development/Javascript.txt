@@ -48,7 +48,7 @@ Javascript
 				// ...
 			}
 
-			for (const item in <array>) {
+			for (const item of <array>) {
 				// ...
 			}
 
