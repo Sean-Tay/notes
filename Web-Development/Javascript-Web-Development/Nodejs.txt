@@ -8,7 +8,7 @@ Node.js:
 		
 	
 	Concepts:
-		
+		Module:					A File or Directory (with an index.js) whose defined functionality is designed to be re-usable across multiple parts of the Project.
 	
 	Details:
 		Front-End Code, Back-End Code, and Assets are usually pre-compiled and transformed down to HTML, CSS and CommonJS Assets. These Assets are then served by the Node Server process.
