@@ -16,7 +16,7 @@ Node.js:
 				Webpack does some useful optimizations on JS Code (tree shaking, bundling, minification), resulting in faster file transfer from Server Side to Client Side. There is no need to do this for Server Side operations ; the added complexity does not produce significant benefit.
 
 				Babel is required for Client Side, since Browsers may not natively support > ES6 spec. On the other hand, NodeJS is starting to support most of the ES6 spec, so Babel is not actually required for the Server Side.
-					Certain ES6 Mechanisms and corresponding NodejS Mechanisms may differ in functionality. Example: require() and import.
+					Certain ES6 Mechanisms and corresponding NodeJS Mechanisms may differ in functionality. Example: require() and import.
 
 				That being said, special use-cases may warrant the usage of JS Build Processes for Back-End Code as well.
 
@@ -26,10 +26,10 @@ Node.js:
 					function1 : function () { // ... }, 
 					function2 : function () { // ... }, 
 					component1 : React.createClass({ render : function () { return; } })
-				} // the importable functionality of a Node JS file is defined within this module.exports JS Object.
+				} // the importable functionality of a NodeJS File is defined within this module.exports JS Object.
 				
 				const importedModule = require("./fileToImport.js"); 		// References the module.exports Object defined in the specified fileToImport.js.
-					// Checks if the string passed in is a relative path - if not, it will search for a Module in the special node_modules Folder with that name instead.
+					// Checks if the string passed in is a relative path - if not, it will search for a Module in the special node_modules directory with that name instead.
 						// It will automatically also search under an existing node_modules directory.
 
 				importedModule.function2(); 								// Execute function2().
@@ -61,7 +61,7 @@ Node.js:
 					console.log(input)
 				});
 
-				process.cwd()												// Returns the abosolute path of the Directory where the Process was started in.
+				process.cwd()												// Returns the absolute path of the Directory where the Process was started in.
 				__dirname													// Returns the absolute path of the Directory containing the currently executing File that this is used in.
 
 			// Event Driven Architecture: For handling situations without knowing when exactly they occur ; contrast with traditional imperative programming which executes instructions in a pre-defined order.
