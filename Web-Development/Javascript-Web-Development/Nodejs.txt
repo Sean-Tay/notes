@@ -225,11 +225,11 @@ Node.js:
 
 		Babel.js - A Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
 			// Steps:
-				npm install -D @babel/core
-				npm install -D @babel/preset-env 
+				npm install --save-dev @babel/core
+				npm install --save-dev @babel/preset-env 
 
 				// To compile (and run) JS Files with Babel Commands via the Command Line.
-				npm install -D @babel/cli
+				npm install --save-dev @babel/cli
 				
 				// For .babelrc:
 				{
