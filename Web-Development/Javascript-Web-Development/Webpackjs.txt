@@ -2,29 +2,66 @@ Webpack.js
 	Abbreviations:
 		
 	
-	Description: Nodejs Module Bundler and Asset Transformer / Pre-Compiler.
+	Description: Asset Transformer / Pre-Processor and Module Bundler.
 	
 	Tutorials:
 		
 	
 	Concepts:
-		
+		Plugins:				Third-Party Addons that add to Webpack's functionality.
+
+		Entry-Point:			A User-specified Module that dictates where Webpack should start the bundling process from.
+		Loaders:				Third-Party Tools that assist in the pre-processing of a File.
 	
 	Details:
-		Basic Configuration Template: 
-			const path = require('path');
+		Webpack works by: 
+			1. Starting from a User-specified 'Input' Modules / Entry-Points in the Project.
 
-			module.exports = {
-				entry: './src/index.js',
-				output: {
-					path: path.resolve(__dirname, 'dist')
-					filename: 'bundle.js',
-				}
-			};
+			2. Traversing and Constructing Dependency Graphs via defined Module Imports and Exports.
+				For the current Module, if the Module contains a Dependency, Webpack will proceed to recursively resolve the Dependencies first.
+				Once all Dependencies for the Module have been resolved, Webpack checks against the config for any Loaders to be used on the current Module.
+				Assuming all matching Loaders were found, Webpack will run through the encountered Module one Loader at a time.
+
+			3. Producing 'Output' Bundles based on the constructed Dependency Graphs.
 
 		Features:
 			Webpack can parse 'import' and 'export' ES6 statement functionality without the need for Babel.
-	
+
+		Configuration Template: 
+			const path = require('path');
+
+			module.exports = {
+				// Specify the Entry-Points for Webpack.
+				entry: {
+					<entry-chunk-name>: '<entry-point-file-path>',
+					...
+				},
+
+				// Configure how Modules are resolved.
+				resolve: {
+					// Aliases are used to shorten import or require declarations in Files.
+					alias: { 
+						<path-alias>: path.resolve(__dirname, '<path>'),
+						<exact-match-path-alias>$: path.resolve(__dirname, '<path>'),
+						...
+					},
+
+					// Specify which Directory should be searched for Node Modules.
+					modules: ['node_modules', ...],
+
+					// Specify which File should be the Entry Point in a Node Module.
+					mainFiles: ['index.js', ...],
+
+					// Resolve the listed Extensions in the specified order.
+					extensions: ['.<extension>', ...], 
+				},
+
+				output: {
+					path: path.resolve(__dirname, '<output-directory-path>')
+					filename: '<filename>',
+				}
+			};
+
 	Commands:
 		npx webpack src/<file.js> --output dist/bundle.js // Sources through file.js, finds all js dependencies, and compiles everything together into a single bundle.js
 		npx webpack --config webpack.config.js	// Compiles the project via a specified setup procedure
