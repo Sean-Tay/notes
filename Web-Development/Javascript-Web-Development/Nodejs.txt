@@ -61,6 +61,9 @@ Node.js:
 					console.log(input)
 				});
 
+				process.cwd()												// Returns the abosolute path of the Directory where the Process was started in.
+				__dirname													// Returns the absolute path of the Directory containing the currently executing File that this is used in.
+
 			// Event Driven Architecture: For handling situations without knowing when exactly they occur ; contrast with traditional imperative programming which executes instructions in a pre-defined order.
 				const events = require('events');
 
