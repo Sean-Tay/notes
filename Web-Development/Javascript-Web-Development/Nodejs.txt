@@ -29,8 +29,8 @@ Node.js:
 				} // the importable functionality of a NodeJS File is defined within this module.exports JS Object.
 				
 				const importedModule = require("./fileToImport.js"); 		// References the module.exports Object defined in the specified fileToImport.js synchronously.
-					// Checks if the string passed in is a relative path - if not, it will search for a Module in the special node_modules directory with that name instead.
-						// It will automatically also search under an existing node_modules directory.
+					// Checks if the string passed in is a relative path, and attempts to find the required Dependency from the Project itself.
+					// If it does not find it in the step above, it will proceed to check the node_modules Directory.
 
 				importedModule.function2(); 								// Execute function2().
 
