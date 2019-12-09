@@ -223,16 +223,37 @@ Node.js:
 
 		Forever.js - A Module which enables the automatic restart of a running Node Environment should it crash.
 
-		Babel.js - Loader for a Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
+		Babel.js - A Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
 			// Steps:
-				yarn install babel-cli
-				yarn install babel-preset-env
-				
-				// For .babelrc, ensure the Object within has:
-				presets = ["env"] // This is a configuration which tells Babel to always use the latest spec.
+				npm install -D @babel/core
+				npm install -D @babel/preset-env 
 
-				// For .package.json, ensure the Object within has:
-				package.json.scripts.build = "babel src -d lib" // Command babel to convert all .js Source Code into ES5 Compatable Versions into a separate 'lib' Directory.
+				// To compile (and run) JS Files with Babel Commands via the Command Line.
+				npm install -D @babel/cli
+				
+				// For .babelrc:
+				{
+					presets = [
+						"@babel/env", // This is a configuration which tells Babel to always use the latest spec.
+						...
+					] 
+				}
+
+				// package.json Scripts Example:
+				{
+					"scripts" : {
+						// Server Side
+							// Note: This executes the transpilation of the App and keeps the result in memory.
+							"server": "babel-node ./src/bin/www",
+							"dev": "NODE_ENV=development server",
+
+							// Note: This executes the transpilation of the App and writes the result to disk.
+							"clean": "rm -rf ./dist",
+							"build": "babel ./src -d dist",
+							"server:prod": "node ./dist/bin/www",
+							"prod": "NODE_ENV=production clean build server:prod",
+					}
+				}
 
 		Rewire.js - Adds a special Setter and Getter Method to Modules so you can modify their behaviour for better Unit Testing.
 			// Inject Mocks for other Modules or Globals (e.g process)
