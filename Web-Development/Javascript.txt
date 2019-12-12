@@ -102,7 +102,7 @@ Javascript
 
 			// Setting Keys and Values.
 			objectName.key = value; // Set the literal string 'key' as the property that will hold the value.
-			objectName[key] = value; // Set the value of key as the property that will hold the value.
+			objectName[key] = value; // Set the value of the variable key as the property that will hold the value.
 			
 			Object.assign(<targetObject>, object1, object2, ...);
 				// Mutates targetObject with the content stored in object1, object2, etc...
