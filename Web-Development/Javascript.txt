@@ -8,7 +8,7 @@ Javascript
 		Basic Javascript Expression Manipulation: 
 			Raw Data Types: 
 				var myString = "Test";
-					var myTemplateString = `Testing: ${dynamicValue}` // Can also be Multi-line
+					var myTemplateString = `Testing: ${dynamicValue}`; // Can also be Multi-line
 				var myNumber = 23;
 				var myBoolean = true;
 				var myFunction = () => {};
@@ -18,11 +18,11 @@ Javascript
 			Comments // /* */
 
 			if (condition1) {
-
+				// ...
 			} else if (condition2) {
-
+				// ...
 			} else {
-
+				// ...
 			}
 
 			switch (variable) {
@@ -110,7 +110,7 @@ Javascript
 			
 			JSON.stringify(objectName); 						// Encode object as a JSON
 
-		// Static Properties
+		Static Properties
 			// Allows the addition of Properties and Methods to the Object Type specifically.
 			// These cannot be accessed by instances of the Object Type.
 
@@ -129,7 +129,7 @@ Javascript
 
 			}
 		
-		// Prototype Properties
+		Prototype Properties
 			// Allows the addition of Properties and Methods to all instances of a Type.
 				// This is useful for adding Properties and Methods to a Type in which the Type Definition is not available.
 
@@ -137,7 +137,7 @@ Javascript
 				// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
 			
 		// this refers to the current scope's owner - can be a Class or a Function
-			.bind(this) // Search up on this
+			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
 	
 	> ES6:
 		Computed Object Property Name: Evaluate an expression to determine the Property Name of a Value assigned to an Object.
