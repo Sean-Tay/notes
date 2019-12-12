@@ -22,7 +22,7 @@ Less
 				@<variable>: <value> <operator> @<variable>;	// Variable Reference
 
 				#example {
-					<rule>: @<variable>; 							// Variable Usage
+					<rule>: @<variable>; 						// Variable Usage
 				}
 
 				// Variables can also be used as part of Rule-Set Definitions
