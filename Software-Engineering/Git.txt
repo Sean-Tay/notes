@@ -122,9 +122,8 @@ Git:
 		git commit --amend --no-edit - Add to the most recent Commit <file>s in the Local Staging List.
 		git commit --amend -m "<commit-message>" - Change the message of the most recent Commit. Note: Staged Changes will be included in this commit.
 
-		git checkout -- <file> ... - Revert changes to <file>s.
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
-			--soft 				- Keep accumulated changes from <number-of-commits> in Staging.
+			--soft 				- Keep accumulated changes from <number-of-commits> in the Local Staging List.
 			--hard				- Discard accumulated changes from <number-of-commits>.
 
 		git rebase --onto <desired-branch-base> <old-branch-base> [<branch>] - Reposition the base of <branch> to <desired-branch-base>.
