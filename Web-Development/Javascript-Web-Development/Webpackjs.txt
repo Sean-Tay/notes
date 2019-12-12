@@ -2,51 +2,88 @@ Webpack.js
 	Abbreviations:
 		
 	
-	Description: Asset Transformer / Pre-Processor and Module Bundler.
+	Description: Primarily a Module Bundler, but also an Asset Transformer / Pre-Processor.
 	
 	Tutorials:
 		
 	
 	Concepts:
-		Plugins:				Third-Party Addons that add to Webpack's functionality.
+		Plugin:					Third-Party Addon that add to Webpack's functionality.
 
-		Module:					A File or Directory (with an index.js) whose defined functionality is designed to be re-usable across multiple parts of the Project.
-		Entry-Point:			A User-specified Module that dictates where should Webpack start the bundling process from.
-		Loaders:				Third-Party Tools that assist in the transformation of encountered Dependencies in a Module.
+		Asset:					A File that does not contain code.
+		Module:					A File whose code is designed to be re-usable across multiple parts of the Project.
+		Dependency:				In the context of a Module, another Asset or Module which it relies upon.
+		
+		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
+		Loader:					Third-Party Tool that assist in the transformation of encountered Dependencies in a Module.
 
-		Output-Point:			A User-specified Location that dictates where should Webpack output the bundle(s) it creates.
+		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
+
+		Bundle:					A compiled File consisting of the content from a group of Assets, Modules and potentially associated Dependencies, made to be easily consumable for a Browser.
 	
 	Details:
+		Webpack initially only understands JSON and JS syntax (ES2015, AMD, and CommonJS variants).
+
 		Webpack works by: 
-			1. Starting from a User-specified 'Input' Modules / Entry-Points in the Project.
+			1. Starting from a User-specified Entry-Points in the Project.
 
-			2. Traversing and Constructing Dependency Graphs via defined Module Imports and Exports.
+			2. Traversing and Constructing Dependency Graphs via defined Module Imports and Exports, rooted at each Entry-Point.
 				For the current Module, if the Module contains a Dependency, Webpack will proceed to recursively resolve the Dependencies first.
-				Each Module Dependency is checked against the config for (a) corresponding Loader(s) to transform the Dependency into JS first, before adding the transformed Dependency to the current 'Output' Bundle.
+				Each Module Dependency is checked against the config for (a) corresponding Loader(s) to transform the Dependency before adding it to the current 'Output' Bundle.
 
-			3. Producing 'Output' Bundles based on the constructed Dependency Graphs.
+			3. Producing 'Output' Bundle(s) based on the constructed Dependency Graphs.
 
-		Features:
-			Webpack initially only understands JSON and JS syntax.
-			Webpack can parse 'import' and 'export' ES6 statement functionality without the need for Babel.
+		Miscellaneous Features:
+			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
+			Hot Module Replacement: Detects for changes in Bundles and forces a reload.
+			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
 
 		Configuration Template: 
 			const path = require('path');
 
 			module.exports = {
+				// Indicate which pre-defined bundling behaviour should Webpack use.
+				mode: <{'development' | 'production'}>,
+
+				// Specify additional Plugins to expand the functionality of Webpack.
+				plugins: [
+					new <plugin>(<config-obj>),
+					...
+				],
+
 				// Specify the Entry-Points for Webpack.
 				entry: {
 					<entry-chunk-name>: '<entry-point-file-path>',
 					...
 				},
 
+				// Adjust Dependency Resolution Behaviour.
+				resolve: {
+					// Aliases are used to shorten import or require declarations in Files.
+					alias: { 
+						<path-alias>: path.resolve(__dirname, '<path>'),
+						<exact-match-path-alias>$: path.resolve(__dirname, '<path>'),
+						...
+					},
+
+					// Specify which Directories should be searched for Dependencies. Upon a match, it will ignore the rest.
+					modules: [..., 'node_modules', ...],
+
+					// Specify which Files should be the Entry Point in a Directory Module. Upon a match, it will ignore the rest.
+					mainFiles: ['index.js', ...],
+
+					// Resolve the listed Extensions in the specified order. Upon a match, it will ignore the rest.
+					extensions: ['.<extension>', ...], 
+				},
+
+				// Specify which type of Dependency imported / required by a Module should use which Loader(s) for transformation.
 				module: {
-					// Specify which type of Dependency imported / required by a Node Module should use which Loader(s).
-					// Note: the Loader order in the 'use' Array is reversed - the last Loader is applied first.
 					rules: [
 						{
 							test: /\.(<file-extension-regex> | ... )$/,
 							exclude: /<exclusion-path-regex>/,
+
+							// Note: the Loader order in the 'use' Array is reversed - the last Loader is applied first.
 							use: [
 								{
 									loader: '<webpack-loader>',
@@ -61,30 +98,21 @@ Webpack.js
 					],
 				},
 
-				// Configure how Modules are resolved.
-				resolve: {
-					// Aliases are used to shorten import or require declarations in Files.
-					alias: { 
-						<path-alias>: path.resolve(__dirname, '<path>'),
-						<exact-match-path-alias>$: path.resolve(__dirname, '<path>'),
-						...
-					},
-
-					// Specify which Directory should be searched for Node Modules.
-					modules: ['node_modules', ...],
-
-					// Specify which File should be the Entry Point in a Node Module.
-					mainFiles: ['index.js', ...],
-
-					// Resolve the listed Extensions in the specified order.
-					extensions: ['.<extension>', ...], 
-				},
-
 				output: {
 					path: path.resolve(__dirname, '<output-directory-path>')
 					filename: '<filename>',
+						// Specifying '[name]' will include the <entry-chunk-name> in its position within the <filename>.
 				},
 			};
+
+		Common:
+			Plugins:
+
+			Loaders:
+				CSS:
+					less-loader OR sass-loader
+					css-loader
+					style-loader
 
 	Commands:
 		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
