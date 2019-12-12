@@ -4,7 +4,7 @@ Javascript
 		let 												- block {} scope, changeable once declared, not redeclarable
 		var 												- global scope, changeable once declared, redeclarable
 
-	Common JS:
+	Common Syntax:
 		Basic Javascript Expression Manipulation: 
 			Raw Data Types: 
 				var myString = "Test";
