@@ -10,8 +10,11 @@ Webpack.js
 	Concepts:
 		Plugins:				Third-Party Addons that add to Webpack's functionality.
 
-		Entry-Point:			A User-specified Module that dictates where Webpack should start the bundling process from.
-		Loaders:				Third-Party Tools that assist in the pre-processing of a File.
+		Module:					A File or Directory (with an index.js) whose defined functionality is designed to be re-usable across multiple parts of the Project.
+		Entry-Point:			A User-specified Module that dictates where should Webpack start the bundling process from.
+		Loaders:				Third-Party Tools that assist in the transformation of encountered Dependencies in a Module.
+
+		Output-Point:			A User-specified Location that dictates where should Webpack output the bundle(s) it creates.
 	
 	Details:
 		Webpack works by: 
@@ -19,12 +22,12 @@ Webpack.js
 
 			2. Traversing and Constructing Dependency Graphs via defined Module Imports and Exports.
 				For the current Module, if the Module contains a Dependency, Webpack will proceed to recursively resolve the Dependencies first.
-				Once all Dependencies for the Module have been resolved, Webpack checks against the config for any Loaders to be used on the current Module.
-				Assuming all matching Loaders were found, Webpack will run through the encountered Module one Loader at a time.
+				Each Module Dependency is checked against the config for (a) corresponding Loader(s) to transform the Dependency into JS first, before adding the transformed Dependency to the current 'Output' Bundle.
 
 			3. Producing 'Output' Bundles based on the constructed Dependency Graphs.
 
 		Features:
+			Webpack initially only understands JSON and JS syntax.
 			Webpack can parse 'import' and 'export' ES6 statement functionality without the need for Babel.
 
 		Configuration Template: 
@@ -35,6 +38,27 @@ Webpack.js
 				entry: {
 					<entry-chunk-name>: '<entry-point-file-path>',
 					...
+				},
+
+				module: {
+					// Specify which type of Dependency imported / required by a Node Module should use which Loader(s).
+					// Note: the Loader order in the 'use' Array is reversed - the last Loader is applied first.
+					rules: [
+						{
+							test: /\.(<file-extension-regex> | ... )$/,
+							exclude: /<exclusion-path-regex>/,
+							use: [
+								{
+									loader: '<webpack-loader>',
+									options: {
+										// Dependent on each Loader.
+										// ...
+									}
+								},
+								...
+							],
+						}, ...
+					],
 				},
 
 				// Configure how Modules are resolved.
@@ -59,10 +83,13 @@ Webpack.js
 				output: {
 					path: path.resolve(__dirname, '<output-directory-path>')
 					filename: '<filename>',
-				}
+				},
 			};
 
 	Commands:
-		npx webpack src/<file.js> --output dist/bundle.js // Sources through file.js, finds all js dependencies, and compiles everything together into a single bundle.js
-		npx webpack --config webpack.config.js	// Compiles the project via a specified setup procedure
+		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
+			--mode development // Optimizes the bundling process for Build Speed and Debugging.
+			--mode production // Optimizes the bundling process for Runtime Speed and Bundle Size.
+
+		npx webpack --config webpack.config.js	// Compiles the project via a specified setup procedure.
 	
