@@ -93,10 +93,16 @@ Javascript
 
 			listName.sort(function(itemA, itemB) { // Return relative value of itemA to itemB }); // Sort the contents in listName according to the sort function passed in.
 
-		Objects:
-			var objectName = { key:value, key:value, key:this.key }; // Objects with Properties ; Dictionaries.
-			objectName.key == value;
-			objectName['key'] == value;
+		Objects: Key-Value Mappings.
+			var objectName = { 
+				key:value, 
+				key:value, 
+				key:this.key 
+			};
+
+			// Setting Keys and Values.
+			objectName.key = value; // Set the literal string 'key' as the property that will hold the value.
+			objectName[key] = value; // Set the value of key as the property that will hold the value.
 			
 			Object.assign(<targetObject>, object1, object2, ...);
 				// Mutates targetObject with the content stored in object1, object2, etc...
