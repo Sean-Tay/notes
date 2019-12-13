@@ -11,7 +11,7 @@ Webpack.js
 		Plugin:					Third-Party Addon that add to Webpack's functionality.
 
 		Asset:					A File that does not contain code.
-		Module:					A File whose code is designed to be re-usable across multiple parts of the Project.
+		Module:					A File or Directory in a Node Project which has some JS execution entry-point available, allowing it to be loaded in code.
 		Dependency:				In the context of a Module, another Asset or Module which it relies upon.
 		
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.

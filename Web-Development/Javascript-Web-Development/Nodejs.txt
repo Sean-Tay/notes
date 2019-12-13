@@ -8,7 +8,10 @@ Node.js:
 		
 	
 	Concepts:
-		Module:					A File whose code is designed to be re-usable across multiple parts of the Project.
+		Node Package:			A File or Directory that is described by a package.json.
+		Node Module: 			A File or Directory located within the node_modules Directory of a Node Project which has some JS execution entry-point available, allowing Node to load it.
+
+		Node Dependency:		A Node Package or Node Module that is installed for use in one or more Node Projects.
 	
 	Details:
 		Front-End Code, Back-End Code, and Assets are usually pre-compiled and transformed down to HTML, CSS and CommonJS Assets. These Assets are then served by the Node Server process.
@@ -55,9 +58,9 @@ Node.js:
 				process.memoryUsage()										// CPU Usage for the current Process.
 
 				process.argv												// Contains each element of the command, delimited by spaces, used to create the Process.
-				process.env													// An Object which stores and controls information about the Environment in which the Process is currently running in.
-				process.env.VARIABLE_NAME 									// Used to get and set global or externally set Node Environment variables.
-					process.env.NODE_ENV 									// Convention: Used to indicate various Environments.
+				process.env													// An Object which stores and controls information about the Node Project in which the Process is currently running in.
+				process.env.VARIABLE_NAME 									// Used to get and set global or externally set Node Project variables.
+					process.env.NODE_ENV 									// Convention: Mainly used to indicate various configurations for a Node Project.
 
 				process.stdin.on('data', (userInput) => {					// Receive User Input.
 					let input = userInput.toString()
@@ -106,7 +109,7 @@ Node.js:
 			// File I/O: Primarily used for sending over Web Files stored on the Server to the Client.
 				const fs = require('fs');
 
-				// Each method from the fs module has both a synchronous and asynchronous variant.
+				// Each method from the fs Node Module has both a synchronous and asynchronous variant.
 
 				// Read the entirety of the File synchronously.
 				fs.readFile( 
@@ -156,74 +159,78 @@ Node.js:
 			node --prof "file.js" 										// Run a .js file under Node with profiling, storing the profiling in a .txt file.
 			node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) // Process the text file produced from profiling.
 			
-			package.json - Specifies the configuration of a Node Environment.
+			package.json - Specifies the configuration of a Node Project.
 				{
-					"scripts": { 										// Specify action(s) to be run upon certain Node Environment lifecycle events.
+					"scripts": { 										// Specify action(s) to be run upon certain Node Project lifecycle events.
 						// Note: May want to use npm-run-all to execute npm commands in parallel.
 						"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed.
 						"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed.
 					}							
-					"dependencies": { // ... // }						// Specifies the Modules that the Node Environment depends on to run correctly.
-					"devDependencies": { // ... // }					// Specifies Modules that the Node Environment uses during development.
+					"dependencies": { // ... // }						// Specifies the Node Dependencies that the Node Project depends on to run correctly.
+					"devDependencies": { // ... // }					// Specifies the Node Dependencies that the Node Project uses during development.
 				}
 
-			npm - A package manager for a Node Environment. Skip to yarn if possible.
+			npm - A package manager for a Node Project. Skip to yarn if possible.
+				npm config set @<scope>:registry <registry-url>			// Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
+
 				npm install -g node 									// Update Node.
 				npm install -g npm stable								// Update npm.
 			
-				npm init 												// Initialize a new Node Environment.
+				npm init 												// Initialize a new Node Project.
 				
-				npm install 											// Add all Modules specified within a package.json locally to the current Node Environment.
+				npm install 											// Add all Node Dependency specified within a package.json locally to the current Node Project.
 
-				npm install <module> 									// Add a Module locally to the current Node Environment. Older versions of npm will not automatically add the Module into the Node Environment's package.json.
-					--save-dev											// Add a development-level Module locally to the current Node Environment, and save it to its package.json.
-					--save												// Add a Module locally to the current Node Environment, and save it to package.json.
-					-g													// Install a Module globally (outside of the current Node Environment).
+				npm install <dependency> 								// Add a Node Dependency locally to the current Node Project. Older versions of npm will not automatically add it into the Node Project's package.json.
+					--save-dev											// Add a development-level Node Dependency locally to the current Node Project, and save it to its package.json.
+					--save												// Add a Node Dependency locally to the current Node Project, and save it to package.json.
+					-g													// Install a Node Dependency globally (outside of the current Node Project).
 				
-				npm uninstall <module>									// Remove a Module from the current Node Environment. Older versions of npm will not automatically remove it from package.json.
-					--save-dev											// Remove a development-level Module locally from the current Node Environment, and propagate the changes to its package.json.
-					--save												// Remove a Module locally from the current Node Environment, and propagate the changes to its package.json.
-					-g													// Remove a globally installed Module.
+				npm uninstall <dependency>								// Remove a Node Dependency from the current Node Project. Older versions of npm will not automatically remove it from package.json.
+					--save-dev											// Remove a development-level Node Dependency locally from the current Node Project, and propagate the changes to its package.json.
+					--save												// Remove a Node Dependency locally from the current Node Project, and propagate the changes to its package.json.
+					-g													// Remove a globally installed Node Dependency.
 				
-				npm list 												// View all installed Node Modules in the current Node Environment.
+				npm list 												// View all installed Node Dependencies in the current Node Project.
 					--depth=0											// Without Dependencies.
-				npm list -g												// View all user-installed Node Modules alongside their version information.
+				npm list -g												// View all user-installed Node Dependencies alongside their version information.
 					--depth=0											// Without Dependencies.
 
-				npm view <module> version								// View the Node Module's latest version from the npm registry.
+				npm view <dependency> version							// View the Node Dependency's latest version from its Node Registry.
 
-				npm update <module>										// Update a Node Module to the latest version.
-				npm update <module>@<version>							// Update a Node Module to the specific <version>.
+				npm update <dependency>									// Update a Node Dependency to the latest version.
+				npm update <dependency>@<version>						// Update a Node Dependency to the specific <version>.
 				
 				npm run <command> [-- <arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 				
-				npx <command> [-- <arg>, ...]							// Execute a <command> for a locally installed package.
+				npx <command> [-- <arg>, ...]							// Execute a <command> for a locally installed Node Dependency.
 				
-				npm publish "<file.js>"									// Publish package to npm codebase.
+				npm publish "<file-path>"								// Publish a Node Dependency rooted at <file-path> to a Node Registry.
 			
-			yarn - A better version of npm. Avoid installing with npm, install separately.
-				yarn init												// Initialize a new Node Environment.
+			yarn - A better version of npm. Avoid installing with npm - install separately.
+				yarn config set registry <registry-url>					// Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
 
-				yarn install											// Add all Modules specified within a package.json locally to the current Node Environment.
+				yarn init												// Initialize a new Node Project.
 
-				yarn add <module>[@<{ version | tag }>]					// Add a Module, optionally of a specific version or tag, to the local Node Environment, and adds it into package.json to be used by the current Node project.
-					--dev												// Add a development-level Module, optionally of a specific version or tag, to the local Node Environment, and adds it into package.json to be used by the current Node project.
+				yarn install											// Add all Node Dependencies specified within a package.json locally to the current Node Project.
 
-				yarn upgrade <module>[@<{ version | tag }>]				// Upgrade any Module, optionally to a specific version or tag, within the local Node Environment, and propagate the changes to package.json / current Node project.
+				yarn add <dependency>[@<{ version | tag }>]				// Add a Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
+					--dev												// Add a development-level Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
 
-				yarn remove <module>									// Remove any Module from the local Node Environment, and propagate the changes to package.json / current Node project.
+				yarn upgrade <dependency>[@<{ version | tag }>]			// Upgrade any Node Dependency, optionally to a specific version or tag, within the local Node Project, and propagate the changes to the  Node Project's package.json.
 
-				yarn global add <module>[@<{ version | tag }>]			// Install a Module globally (outside the Node Environment).
-				yarn global upgrade <module>[@<{ version | tag }>]		// Upgrade a globally installed Module.
-				yarn global remove <module>								// Remove a globally installed Module.
+				yarn remove <dependency>								// Remove any Node Dependency from the local Node Project, and propagate the changes to the Node Project's package.json.
+
+				yarn global add <dependency>[@<{ version | tag }>]		// Install a Node Dependency globally (outside the Node Project).
+				yarn global upgrade <dependency>[@<{ version | tag }>]	// Upgrade a globally installed Node Dependency.
+				yarn global remove <dependency>							// Remove a globally installed Dependency.
 
 				yarn [run] <command> [<arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 			
-		Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node Environment during runtime.
+		Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node Project during runtime.
 
-		Forever.js - A Module which enables the automatic restart of a running Node Environment should it crash.
+		Forever.js - A Node Dependency which enables the automatic restart of a running Node Project should it crash.
 
-		Babel.js - A Transpiler between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
+		Babel.js - A Node Dependency that performs transpilation between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
 			// Steps:
 				npm install --save-dev @babel/core
 				npm install --save-dev @babel/preset-env 
