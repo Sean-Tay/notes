@@ -25,7 +25,7 @@ Webpack.js
 		Webpack initially only understands JSON and JS syntax (ES2015, AMD, and CommonJS variants).
 
 		Webpack works by: 
-			1. Starting from a User-specified Entry-Points in the Project.
+			1. Starting from User-specified Entry-Points in the Project.
 
 			2. Traversing and Constructing Dependency Graphs via defined Module Imports and Exports, rooted at each Entry-Point.
 				For the current Module, if the Module contains a Dependency, Webpack will proceed to recursively resolve the Dependencies first.
