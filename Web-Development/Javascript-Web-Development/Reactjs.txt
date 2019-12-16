@@ -385,7 +385,7 @@ React.js
 					// Tips
 					/*
 						The flow should be:
-						1. Define Initial States via the useState Hook if necessary, either from Props or use placeholder default Values.
+						1. Define initial States via the useState Hook if necessary, either from Props or use placeholder default Values.
 						2. Query backend API with useEffect / custom Hook, and with a Dependency List containing Props that pertain to the HTTP Request and REST Query Parameters.
 						3. Render the actual Component only when a certain flag passed from the backend API changes. Use a placeholder 'Loading' Component if the flag is not of a certain state.
 					*/
@@ -466,7 +466,7 @@ React.js
 				// OR 
 
 				ReactDOM.render(<ExampleComponent> // ... </ExampleComponent>, document.getElementById('...'));
-				// Within ExampleComponent, the special this.props.children can be used to reference all nested React Elements that is a child of this ExampleComponent.
+				// Within ExampleComponent, the special props.children can be used to reference all nested React Elements that is a child of this ExampleComponent.
 				// React.Children API Methods.
 		
 		React Form (Elements): Special HTML Elements that use React State as a single-source of truth.
