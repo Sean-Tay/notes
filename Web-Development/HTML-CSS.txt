@@ -49,6 +49,9 @@ HTML Tags / Elements:
 		<a href="http://www.google.com"> Click Me! </a> - Anchor Tags that specify a clickable link to a URL specified via the href parameter of the Tag.
 			<a href="#elementid"> Link </a> - Can be used to jump to Elements with the specified id within the same Webpage as well.
 
+			HTML Anchor Elements can be set to use the ‘javascript’ pseudo protocol within the href specified URI to avoid redirection when clicked.
+        		<a href="javascript:;"> Link </a> - Still clickable, but does nothing.
+
 		<p> ... </p> - Tags that specify a Paragraph.
 
 		<b> ... </b> or <strong> ... </strong> - Tags that specify Bolded Content.
