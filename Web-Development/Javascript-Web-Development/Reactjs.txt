@@ -469,13 +469,13 @@ React.js
 				// Within ExampleComponent, the special props.children can be used to reference all nested React Elements that is a child of this ExampleComponent.
 				// React.Children API Methods.
 		
-		React Form (Elements): Special HTML Elements that use React State as a single-source of truth.
+		React Form: Modified HTML Form that uses React State as a single-source of truth.
 			Typical HTML Form Elements maintain their own State (Uncontrolled). However, the React version of these Elements use the Component State instead (Controlled).
 				This enforces that every State mutation will have an associated handler function, making it straightforward to modify or validate User Input.
-				Allows for finer-grained synchronization between User Input and Server State.
+				Allows for finer-grained synchronization between User Input and Component State.
 
-			When these (usually HTML) Form Elements have a 'value' attribute specified in the React Element specification, they switch from using their internal State to the React Component State instead:
-				<element onChange={this.onChangeHandlerFunction} value={this.state.value} />
+			When these HTML Input Elements have a 'value' attribute specified in the React Element specification, they switch from using their internal State to the React Component State instead:
+				<input value={this.state.value} onChange={this.onChangeHandlerFunction} />
 
 		React Context API / Redux: Application-Level State Managers to maintain and share State across multiple Components.
 			Central Store for all Components. Avoids complex “prop” graphs in Component Trees.

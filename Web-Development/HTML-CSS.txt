@@ -10,69 +10,101 @@ General HTML Structure:
 HTML Tags / Elements:
 	<!-- Comment --> - A Comment Tag.
 
-	<!DOCTYPE html> - A Tag which declares that the content below it is HTML.
+	<!DOCTYPE html> - A Tag that declares that there is HTML Content below.
 
-	<html> ... </html> - Tags which specify the start and end of the HTML content respectively.
-		lang="en-US" - Attribute which specify language of the page. Important for coding with Bootstrap.
+	<html> ... </html> - Tags that specify the start and end of the HTML Content respectively.
+		lang="en-US" - Attribute that specifies language of the Webpage.
 
-	<script src="js/main.js"> </script> - Defines a scripting envrionment where JS functionality from the main.js file can be executed.
-		CDN - Can reference JS Script libraries from Content Delivery Network - no need to download and reference.
+	<script> ... </script> - Tags that specify a scripting environment where JS functionality can be executed.
+		<script src="js/main.js"> </script> - Same as above, but the JS is from another separate File. If the src Tag is non-empty, there cannot be anything between the Script Tags.
+
+		CDN - Can reference JS Script Libraries from Content Delivery Network - no need to download and reference.
 		
-		<script async="async" src="js/main.js"> </script> - Same as above, but this isn't a blocking JS runtime environment.
-		<script defer="defer" src="js/main.js"> </script> - Blocks the execution of the specified JS until the HTML page has fully loaded.
+		<script async="async" src="js/main.js"> </script> - Same as above, but this doesn't block.
+		<script defer="defer" src="js/main.js"> </script> - Blocks the execution of the JS File until the Webpage has fully loaded.
 		
-		If the src Tag is non-empty, there cannot be anything between the script Tags.
-		
-		<script src="jslib/require.js" data-main="main.js"> </script> - Loads the require.js module loader, which then synchronously initializes / runs the main.js file.
+		<script src="jslib/require.js" data-main="main.js"> </script> - Loads the require.js module loader, which then synchronously initializes / runs the JS File.
 
-	<head> ... </head> - Tags which specify the start and end of the metadata related to the HTML content respectively.
+	<template> ... </template> - Tags that contain additional HTML Content but does not render it at the start. Use JS to conditionally show it.
 
-	<title> Put Title Here </title> - Tags which specify Title of Webpage.
+	<head> ... </head> - Tags that specify the start and end of metadata related to the HTML Content.
+		<title> Title Content </title> - Tags that specify the Title of the Webpage.
 
-	<meta charset="utf-8" /> - Specify encoding.
+		<meta charset="utf-8" /> - Tags that specify Webpage encoding.
 
-	<style type="text/css"> ... </style> - Define an environment to specify CSS with.
+		<style type="text/css"> ... </style> - Tags that specify an environment to define CSS with.
 
-	<link href="main.css" rel="stylesheet" type="text/css" /> - Defines a link to a CSS Type Document.
-		CDN - Can reference CSS Style libraries from Content Delivery Network - no need to download and reference.
-		
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+		<link type="text/css" rel="stylesheet" href="main.css" /> - Reference CSS from an external CSS File.
+			CDN - Can reference CSS Style libraries from the Content Delivery Network - no need to download and reference.
+			
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 
-	<body> ... </body> - Tags which specify the start and end of the actual HTML content respectively.
+	<body> ... </body> - Tags that specify the start and end of the actual HTML Content.
+		<div> ... </div> - Tags that are usually used to group other Block Elements together with. 
 
-	<a href="http://www.google.com"> Click Me! </a> - Anchor Element. Tags which denote a clickable link to the website specified in the href parameter of the tag.
-		<a href="#elementid"> Link </a> - Can be used to jump to Elements with the specified id within the same webpage as well.
+		<span> ... </span> - Tags that are usually used to group Inline Elements or Inline-Block Elements together with. Cannot contain Block Elements within it.
 
-	<p> ... </p> - Tags which denote a paragraph.
+		<{h1|h2|h3|h4|h5|h6}> Header Content </{h1|h2|h3|h4|h5|h6}> - Tags that specify a Header. Used by Search Engines to index Webpages.
 
-	<{h1|h2|h3|h4|h5|h6}> Header Content </{h1|h2|h3|h4|h5|h6}> - Tags which denote a Header. Used by Search Engines to index Webpages.
+		<a href="http://www.google.com"> Click Me! </a> - Anchor Tags that specify a clickable link to a URL specified via the href parameter of the Tag.
+			<a href="#elementid"> Link </a> - Can be used to jump to Elements with the specified id within the same Webpage as well.
 
-	<b> ... </b> or <strong> ... </strong> - Tags which specify bolded content.
+		<p> ... </p> - Tags that specify a Paragraph.
 
-	<i> ... </i> or <em> ... </em> - Tags which specify italicized content.
+		<b> ... </b> or <strong> ... </strong> - Tags that specify Bolded Content.
 
-	<div> ... </div> - Tags which is used to group Block Elements in a document. 
+		<i> ... </i> or <em> ... </em> - Tags that specify Italicized Content.
 
-	<span> ... </span> - Tags which is used to group Inline Elements or Inline-Block Elements in a document. Cannot contain Block Elements within it.
+		<ul> - Tags that specify an Unordered List.
+			<li> Item 1 </li> 
+			...
+		</ul>
 
-	<ul> <li> Unordered List Item 1 </li> <li> Unordered List Item 2 </li> </ul> - Tags used in specifying an unordered list.
+		<ol> - Tags that specify an Ordered List.
+			<li> Item 1 </li> 
+			... 
+		</ol> 
 
-	<ol> <li> Ordered List Item 1 </li> <li> Ordered List Item 2 </li> </ol> - Tags used in specifying an ordered list.
+		<table> - Tags that specify Tabular Content.
+			<tr> 
+				<th> Column Header 1 </th> 
+				...
+			</tr> 
+			<tr> 
+				<td> Row 1 Column 1 </td> 
+				... 
+			</tr> 
+			...
+		</table>
 
-	<table> <tr> <th> Table Header 1 </th> <th> Table Header 2 </th> </tr> <tr> <td> Item 1 Value 1 </td> <td> Item 1 Value 2 </td> </tr> </table>
-		style="width:100%"
-		colspan / rowspan
+		<img src="example.jpg" height="256" width="256" /> - Image Tag. 
+			alt="example.jpg" - Shows alternate text when the Image cannot be displayed.
+			
+		<canvas id="myCanvas" width="256" height="256"> </canvas> - A Tag that allows drawing of graphics via JS. 
+			Note: Need to set id Attribute so that can reference within JS.
 
-	<img src="example.jpg" height="256" width="256" /> - Image Tag. 
-		alt="example.jpg" - Shows alternate text when the image cannot be displayed.
-		
-	<canvas id="myCanvas" width="256" height="256"></canvas> - A tag that allows drawing of graphics via Javascript. 
-		Note: Need to set id Attribute so that can reference within JS.
+		<form onsubmit="handler()" action="/handler.js"> - Tags that specify an Input Form.
+			<label for="form-input-id-1" > 
+				... 
+				<input id="form-input-id-1" name="form-field-1" type="{text | radio | file | ...}" /> 
+			</label>
+			<br />
 
-	<template> ... </template> - A Tag that holds HTML but does not render it at the start. Use Javascript to conditionally show it.
+			...
+
+			<input type="button" />
+
+			...
+
+			<input type="reset" />
+
+			<input type="submit" />
+			<!-- OR -->
+			<button> ... </button>
+		</form>
 	
 CSS: Decorates Webpages. 
-	CSS Reset - Removes all CSS that a browser automatically adds - make design consistent amongst different browsers, which may have their own implicit styling for certain Elements.
+	CSS Reset - Removes all CSS that a Browser automatically adds - make design consistent amongst different Browsers, which may have their own implicit styling for certain Elements.
 
 	Types:
 		Inline CSS - CSS defined with the style attribute of the HTML Element. Performance friendly.
