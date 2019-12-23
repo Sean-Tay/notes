@@ -41,6 +41,8 @@ Git:
 			-d <branch> 		- Delete a Local Branch.
 
 			-u <repo-url-alias>/<remote-branch> <branch> - Set which Remote Branch the Local Branch pushes to.
+
+			--track <remote-branch> - Set the currently checked out Local Branch to track <remote-branch>.
 			--unset-upstream - Set the currently checked out Local Branch to no longer track the Remote Branch it was assigned to track.
 
 		git branch -a 			- List all Local and Remote Branches.
