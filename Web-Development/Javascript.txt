@@ -61,29 +61,7 @@ Javascript
 			const ref = {};
 			console.log( ref === ref ); // true
 			console.log( ref === {} ); // false
-			
-		Functions:
-			function functionName(inputArgument1) { 			// Parameters should not have the var keyword
-				// ...
-			}
 
-			function() { 										// Anonymous Function
-				// ...
-			}
-
-			function functionCallback( ... , callback) { 		// A callback parameter is to allow the execution (or multiple executions) of a specified function anytime during the parent function's execution
-				// ...
-				callback();
-			}
-			
-			function classConstructor( ... ) {
-				this.property = ...;
-			}
-
-			functionName(); 									// Invoke the functionName function
-			
-			// Note: Functions are actually Objects!
-		
 		Iterables:
 			var listName = [listElement, ... ]; 				// Arrays
 			
@@ -138,6 +116,54 @@ Javascript
 			
 		// this refers to the current scope's owner - can be a Class or a Function
 			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
+
+		Functions:
+			function functionName(inputArgument1) { 			// Parameters should not have the var keyword
+				// ...
+			}
+
+			function() { 										// Anonymous Function
+				// ...
+			}
+
+			function functionCallback( ... , callback) { 		// A callback parameter is to allow the execution (or multiple executions) of a specified function anytime during the parent function's execution
+				// ...
+				callback();
+			}
+			
+			function classConstructor( ... ) {
+				this.property = ...;
+			}
+
+			functionName(); 									// Invoke the functionName function
+			
+			// Note: Functions are actually Objects!
+
+		Error Handling:
+			try {
+				// Execute something here which may throw an Error.
+
+				var result = someFunction();
+
+				if (!result) {
+					throw new Error('Invalid Result');
+				}
+
+				return result;
+			} catch (err) {
+				// Catch any Errors thrown within the try block, and execute Error-Handling functionality.
+
+				if (err === 'Invalid Result') {
+					// ...
+				}
+
+				return;
+			} finally {
+				// Always executes, even if there is a prior return statement.
+				// Hint: Use to combine common tail-functionality in the try and catch blocks.
+
+				// ...
+			}
 	
 	> ES6:
 		Computed Object Property Name: Evaluate an expression to determine the Property Name of a Value assigned to an Object.
@@ -289,7 +315,7 @@ Javascript
 
 		Async / Await Syntax:
 			const asyncFunction = async () => {
-				// Traditional try-catch syntax works with async / await
+				// Traditional try-catch-finally syntax works with async / await
 				try { 
 					// await can work on a Promise, or a synchronous Result
 					var promiseResult = await promiseObj;
@@ -304,6 +330,8 @@ Javascript
 
 					return asyncResult;
 				} catch (err) {
+					// ...
+				} finally {
 					// ...
 				}
 			}
