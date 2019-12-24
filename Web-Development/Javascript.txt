@@ -472,7 +472,7 @@ Javascript
 
 				// Namespace Import
 				import * as '<alias>' from '<module>'; // Compiles down to: const <alias> = require('<module>');
-				// ... <alias>.className 
+				// <alias>.className 
 
 			// Default Exports:
 				export default className; // Make 'className' the only export of the <module>. Compiles down to: module.export = className;
