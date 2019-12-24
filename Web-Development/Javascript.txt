@@ -466,20 +466,27 @@ Javascript
 
 				export {className}; // Compiles down to: module.exports.className = <class>;
 
-				import {className as '<alias>'} from './JS-File'; // Compiles down to: const <alias> = require('./JS-File').className;
+				// ...
+
+				import {className as '<alias>'} from '<module>'; // Compiles down to: const <alias> = require('<module>').className;
 
 				// Namespace Import
-				import * as '<alias>' from './JS-File'; // Compiles down to: const <alias> = require('./JS-File');
+				import * as '<alias>' from '<module>'; // Compiles down to: const <alias> = require('<module>');
 				// ... <alias>.className 
 
 			// Default Exports:
-				export default className; // Make 'className' the only export of the JS File. Compiles down to: module.export = className;
+				export default className; // Make 'className' the only export of the <module>. Compiles down to: module.export = className;
 
-				import className as <alias> from './JS-File'; // Compiles down to: const <alias> = require('./JS-File');
+				// ...
+
+				import className as <alias> from '<module>'; // Compiles down to: const <alias> = require('<module>');
 
 			// Tips:
-				// Note: To force a plain File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
+				// Note: To force a plain JS File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
 				export {};
+
+				// Note: One-liner Import / Export:
+				export { ... } from '<module>';
 
 				// Note: Do not mix import and NodeJS module.export.
 
