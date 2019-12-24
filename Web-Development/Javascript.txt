@@ -482,13 +482,13 @@ Javascript
 				import className as <alias> from '<module>'; // Compiles down to: const <alias> = require('<module>');
 
 			// Tips:
-				// Note: To force a plain JS File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
+				// To force a plain JS File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
 				export {};
 
-				// Note: One-liner Import / Export:
+				// One-liner Import / Export for Aggregating Modules:
 				export { ... } from '<module>';
 
-				// Note: Do not mix import and NodeJS module.export.
+				// Do not mix import and NodeJS module.export.
 
 	Utilities:
 		Mathematical Functions: 
