@@ -217,7 +217,7 @@ React.js
 						}
 						
 						shouldComponentUpdate(nextProps, nextState) {
-							// Default Behaviour is to re-render on any State change.
+							// Default Behaviour is to re-render on any State or Prop change.
 							// return true if Component should update
 							// return false otherwise
 						}
@@ -333,7 +333,7 @@ React.js
 						);
 
 					// Side-Effects
-						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State is updated), without blocking the Browser from painting the display.
+						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from painting the display.
 						React.useEffect(
 							() => {
 								// ... 
@@ -427,7 +427,7 @@ React.js
 				// To simulate shouldComponentNotUpdate w.r.t Props when using React Hooks
 				export const MemoExampleComponent = React.memo(
 					ExampleComponent, 
-					// If the Function below is not provided, ExampleComponent will only re-Render once its Props changes.
+					// If the Function below is not provided, ExampleComponent will only Re-Render once its Props changes.
 					(prevProps, nextProps) => {
 						// return true if Component should not update
 						// return false otherwise
