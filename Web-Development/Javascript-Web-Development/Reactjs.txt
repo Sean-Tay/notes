@@ -57,7 +57,7 @@ React.js
 		By default, changing States or Props should cause the Component Instance to be Re-Rendered.
 			Presumably, the Props come from an Ancestor's State, and if the Ancestor's State changes, the Ancestor's Component Instance would be Re-Rendered, which by default should propagate the Re-Render call down to the current Component Instance.
 
-			Note: Be careful of derived State from Props.
+			Note: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
 		
 		Best Practices:
 			Rely only on a Single-Source of Truth for each variable. Go with either: 
