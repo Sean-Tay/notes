@@ -18,22 +18,29 @@ React.js
 	
 	Concepts:
 		React Element:				Lightweight, Immutable, Stateless, Functionless, Nestable, plain JS Object that describes what should be shown on screen - a Virtual DOM Node or Sub-Tree. It is implicitly produced when inline JSX is compiled down to React.createElement() calls during Rendering.
-		Virtual DOM: 				A Lightweight Abstraction of the Actual DOM (i.e. no CSS considerations, etc), represented by a Tree of React Elements.
+		Virtual DOM: 				A Lightweight Reflection of the Actual DOM (i.e. CSS Layout recalculation, etc.), which can be seen as being represented by a Tree of React Elements.
+		Actual DOM:					The state in the Browser that keeps track of exactly how the Webpage should display and behave.
 
 		React Component:			Refers to the syntactical definition that would create a React Component Instance.
-		React Component Instance:	An instance of a React Component. Returns a React Element adjusted for State and Functions when the appropriate render() method is called.
+		React Component Instance:	An Instance of a React Component. Returns a React Element adjusted for State and Functions when Rendered.
 
 		State:						Information maintained by a React Component Instance which it itself can change.
-		Props: 						Information received by a React Component Instance from other React Components Instance which it should NOT change directly - use Event Handlers.
+		Props: 						Information received by a React Component Instance from other React Component Instances which it should NOT change directly.
 
-		[Re-]Render: 				A term to describe the process of [re-]creating the React Element.
+		[Re-]Render: 				The process of [re-]creating any associated React Element from a React Component Instance. This often results in Reconciliation and Painting.
+		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI. The changes are accumulated before the actual diff-ing occurs as a form of optimization.
+		Painting:					The process of applying only the actual changes derived from the Reconciliation process onto the Actual DOM Tree, and causing the Browser to re-paint the affected part of the display.
 
-		Uncontrolled Component:		A React Component Instance that maintains its own internal State. Usually only used w.r.t React Form Elements.
-		Controlled Component:		A React Component Instance that does not maintain internal State. Usually only used w.r.t React Form Elements.
+		Mounting:					Phase in the Component Lifecycle in which a Component Instance is being Painted for the first time.
+		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
+		Unmounting: 				Phase in the Component Lifecycle in which a Mounted Component Instance is being removed from the Actual DOM Tree. 
+
+		Uncontrolled Component:		A React Component Instance that maintains its own internal State.
+		Controlled Component:		A React Component Instance that does not maintain internal State.
 	
 	Details:
-		React.js Library handles Element creation and manipulation.
-		ReactDOM.js Library handles DOM interaction.
+		React.js Library manages the Virtual DOM.
+		ReactDOM.js Library handles the Reconciliation and Painting processes.
 
 		React faciliates the construction of SPAs:
 			The default entry point, public/index.html, contains a top-level <div> 'root', which will contain the entirety of the React Application as part of the SPA functionality.
@@ -46,26 +53,31 @@ React.js
 				
 				render(<App />, document.getElementById('root'));
 		
-		React makes use of self-contained Components with their own Component-Level State.
-			These States will determine how the Component will appear and behave.
-			Only upon a State change would the Component be re-rendered (not Props change).
+		React makes use of self-contained Component Instances with their own State.
+		By default, changing States or Props should cause the Component Instance to be Re-Rendered.
+			Presumably, the Props come from an Ancestor's State, and if the Ancestor's State changes, the Ancestor's Component Instance would be Re-Rendered, which by default should propagate the Re-Render call down to the current Component Instance.
 
-			After batching multiple Component re-renders:
-				1. React takes a snapshot of the Virtual DOM before the update.
-				2. React then attempts to re-render the entire Virtual DOM (though each Component may choose not to do so and return the old Element). This makes it easier to comprehend - we need only to return the Virtual DOM that we want to see in each Component, and not keep track of all changes happening to the Virtual DOM.
-				3. Diff-ing the captured snapshot of the Virtual DOM with the updated Virtual DOM allows React to detect which Actual DOM Objects should be updated.
-				4. React proceeds to only update the Actual DOM Objects identified in the earlier step. This is a form of optimization, and is much faster than updating the entire Actual DOM Tree.
+			Note: Be careful of derived State from Props.
 		
-		React Patterns:
-			Parent Stateful -> Child Stateless : Pass Parent State / State Changer as Child Props. Child Component can declare custom function wrapper for received State Change Function to make it suitable as a Event Handler.
-			Child Stateless -> Child Stateless = Child Stateless -> Parent Stateful -> Child Stateless : Separation of Concerns.
-				Business Logic (Container Components) and Display Logic (Presentational Components).
+		Best Practices:
+			Rely only on a Single-Source of Truth for each variable. Go with either: 
+				Controlled Child Component:
+					Pass Parent Component State / State Changer Function into the Controlled Child Component as Props.
 
-			Use Props to set State only when it is clear the data involved is just initialization data. Components will automatically re-render if the Props change.
+					Business Logic (Container Parent Component) and Display Logic (Presentational Child Component) are separated.
+
+				Uncontrolled Child Component:
+					Props for the Uncontrolled Child Component should only be used to derive its *initial* State.
+
+					Using the special 'key' Prop would offer the Parent Component some way to reset the Uncontrolled Child Component.
+					Expose a method in the Uncontrolled Child Component for the Parent Component to invoke (use a Ref to get a reference to the Child Component Instance).
+
+			Keep the Render Functionality of a Component free from any resource-intensive operations, or long running side-effects.
 
 		React Components:
+			import * as React from 'react';
+
 			Class-Component:
-				import React from 'react';
 				import PropTypes from 'prop-types';
 				
 				import './ExampleClass.css';
@@ -75,7 +87,7 @@ React.js
 
 				// Note: Class Names to begin with a Capital Letter to help React distinguish between HTML Elements and React / JSX Element.
 				class ExampleComponent extends React.Component {
-					// Mounting: Phase in Component Lifecycle which depicts creation of a corresponding React Element and its initial Render.
+					// Initialization:
 						constructor(props) {
 							super(props);
 
@@ -91,20 +103,37 @@ React.js
 							// ...
 						};
 
-						componentWillMount() {
-							// Called before the render Function is invoked - a chance to update state in preparation for the first render.
+						// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State.
+						handleStateChange(callback) {
+							// Don't modify this.state directly, otherwise React won't know to re-render the Component.
+							// Use setState() instead to merge in changes to the State, which will also implicitly re-render the Component.
+							// Don't reference this.state directly as the update triggered by this.setState is asynchronous - use the update function argument form, as shown below.
+							this.setState(
+								(state, props) => {
+									return {
+										// New Object that represents the intended changes to the State Object.
+										// DO NOT mutate the State Object directly.
+									};
+								},
+								callback
+							);
+							
+							// Return (or execute) Parent stateChange method.
+							return this.props.<parent-stateChange>;
+						}
+						
+						// Specifying a Function in this manner removes the need to bind 'this'.
+						handleStateChange = (callback) => {
 							// ...
-
-							this.setState((state, props) => { // ... });
 						}
 
 						// Compulsory
 						render() {
 							// Examines this.props and this.state, and returns a React Element.
-							// Child Render methods are also executed.
-							// This should be a Pure Function - do not call this.setState() or mutate any global states here.
+							// Child Component Instances are also Rendered.
+							// This should be a Pure Function - do not call this.setState() or mutate any State here.
 							/*
-								React Elements are produced via JSX.
+								React Elements are produced when inline JSX is compiled down to React.createElement() calls during Rendering.
 									Evaluation of any JS is only done via JS Injection within curly braces.
 										You cannot inject JS if-statements directly within JSX. Utilize either:
 											1. Ternary Operator - it always evaluates to a JS Expression (returns a value) unlike an if-else statement.
@@ -113,19 +142,14 @@ React.js
 									JSX can still be used within the braces.
 									Multi-line JSX should be enclosed with parentheses.
 								
-								React Elements can have attributes, similar to DOM / HTML.
+								React Elements can have attributes, akin to HTML DOM Elements.
 									Note: Replace the 'class' DOM attribute to 'className' for compiling from JSX -> JS, since 'class' is a reserved keyword in JS.
-									Note: style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to dash-delimited words.
+									Note: CSS style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to kebab-case.
+									Note: HTML DOM Event Listener attributes have their names specified in camelCase instead of lowercase.
 									Note: Child Elements produced from mapping an Iterable need to have the top-level Child Element specify a distinguishing 'key' element.
 
-								React Elements can have Event Listeners, similar to DOM / HTML, but with the names in camelCase as opposed to lowercase.
-									let exampleElement = <img onHover={ exampleJSFunction } />; // The Event Listeners act on JS functions.
-
-								React Elements can also utilize CSS Style Declarations, similar to HTML, but with the names in camelCase as opposed to lowercase hyphenation.
-									let exampleElement = <h1 style={{background: 'lightblue', color: 'darkred', fontSize: '20px'}}> Test </h1>;
-
-								React Elements can be nested, just like in DOM / HTML.
-									All React Elements must have only exactly one outermost element. The first opening tag and the final closing tag must belong to the same React element.
+								React Elements can be nested, akin to HTML DOM Elements.
+									All React Elements must have only exactly one outermost React Element. The first opening tag and the final closing tag must belong to the same React element.
 
 									Can use a <div> </div> or React Fragment (<> </>) to enclose the group.
 							*/
@@ -168,40 +192,27 @@ React.js
 							)
 						}
 
+					// Mounting: 
+						UNSAFE_componentWillMount() {
+							// Called before the render Function is invoked - a chance to change the State before the Component Instance is Rendered.
+							// A preferred alternative would be to set the desired State in the constructor as part of Initialization.
+							// ...
+
+							this.setState((state, props) => { // ... });
+						}
+
+						render()
+
 						componentDidMount() {
-							// Additional Function that is called only after a Component has been mounted, and only once.
+							// Additional Function that is called only after a Component has been Mounted, and only once.
 							// Child Components also execute their componentDidMount Functions as well.
 
 							// setInterval ...
 							// AJAX Call for Data ...
 						}
 
-						// Pass Custom Function to Child Component to alert Component when Child Component receives an Event to change State.
-						handleStateChange(callback) {
-							// Don't modify this.state directly, otherwise React won't know to re-render the Component.
-							// Use setState() instead to merge in changes to the State, which will also implicitly re-render the Component.
-							// Don't reference this.state directly as the update triggered by this.setState is asynchronous - use the update function argument form, as shown below.
-							this.setState(
-								(state, props) => {
-									return {
-										// New Object that represents the intended changes to the State Object.
-										// DO NOT mutate the State Object directly.
-									};
-								},
-								callback
-							);
-							
-							// Return (or execute) Parent stateChange method.
-							return this.props.<parent-stateChange>;
-						}
-						
-						// Specifying a Function in this manner removes the need to bind 'this'.
-						handleStateChange = (callback) => {
-							// ...
-						}
-
-					// Updating: Phase in which a Component updates due to changes in Props or State. Only occurs after the initial Render / Mounting Phase.
-						componentWillReceiveProps(nextProps) {
+					// Updating:
+						UNSAFE_componentWillReceiveProps(nextProps) {
 							// Called only when Component will receive Props, regardless if old or new.
 						}
 						
@@ -211,16 +222,15 @@ React.js
 							// return false otherwise
 						}
 						
-						componentWillUpdate(nextProps, nextState) {
+						UNSAFE_componentWillUpdate(nextProps, nextState) {
 							// Cannot call this.setState() here.
 							// Meant for interactions outside of the React architecture.
 						}
 
-						// Called if this.props or this.state is changed.
 						render() 
 
 						getSnapshotBeforeUpdate(prevProps, prevState) {
-							// Called before the new React Element is commited to the Virtual DOM.
+							// Called before the Reconciliation process.
 							// Enables the Component to capture information from the Actual DOM before it is potentially changed.
 						}
 
@@ -229,9 +239,9 @@ React.js
 							// Meant for interactions outside of the React architecture.
 						}
 
-					// Unmounting: Phase in which a Component Instance is no longer actively inside the generated React Element that it is usually under, or if ReactDOM.unmountComponentAtNode( ... ) is used.
+					// Unmounting:
 						componentWillUnmount() {
-							// Called immediately before a Component is unmounted and destroyed.
+							// Called immediately before a Component Instance is removed from the Actual DOM Tree and is destroyed.
 
 							// clearInterval ...
 						}
@@ -244,7 +254,7 @@ React.js
 					...
 				};
 
-				// Default Props Declaration - If no Props are passed into the Function.
+				// Default Props Declaration - If no Props are passed into the Component.
 				ExampleComponent.defaultProps = {
 					<prop-name>: <default-value>,
 					<onStateChange>: () => {},
@@ -260,7 +270,7 @@ React.js
 				const ExampleComponent = (props) => { // Recall that all Properties defined via JSX gets put into a singular 'props' Object by React.
 					// Extract / Consume the Props that are used.
 					// other will contain all other unused Props via destructuring, which can then be separately passed down to Child Components.
-					let {<used-prop>, // ... , ...other} = props;
+					const {<used-prop>, // ... , ...other} = props;
 
 					// other can also be referenced normally as a regular Object variable.
 					// console.log(other);
@@ -281,7 +291,7 @@ React.js
 					// Local Component State
 						// Each State Variable defined in the manner below is independent from one another.
 						// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
-						// Note: The State Value does NOT get updated if it was directly derived from a Prop. Set it again via useEffect.
+						// Note: The State Value does NOT get updated if it was initialized from a Prop. Update it via useEffect.
 						const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
 
 						// Modify the State.
@@ -323,7 +333,7 @@ React.js
 						);
 
 					// Side-Effects
-						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State is updated).
+						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State is updated), without blocking the Browser from painting the display.
 						React.useEffect(
 							() => {
 								// ... 
@@ -342,8 +352,16 @@ React.js
 							[ <variable>, ... ]
 						);
 
-					// Optimizations
-						// Used to prevent unneccessary recalculation of some value per re-Render.
+						// Same functionality as with useEffect, except that it DOES block the Browser from Painting until the execution is over.
+						React.useLayoutEffect(
+							() => {
+								// ...
+							},
+							[ <variable>, ... ]
+						);
+
+					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
+						// Used to prevent unneccessary recalculation of some value per Re-Render.
 						// Hint: That 'some value' can be a React Element too.
 						React.useMemo(
 							() => {
@@ -367,7 +385,7 @@ React.js
 							}
 						);
 						
-						// Used to define Functions within Functional Components that won't be unneccessarily recreated per re-Render.
+						// Used to define Functions within Functional Components that won't be unneccessarily recreated per Re-Render.
 						React.useCallback(
 							(<arg-1>, ...) => {
 								// ...
@@ -386,8 +404,8 @@ React.js
 					// Tips
 					/*
 						The flow should be:
-						1. Define initial States via the useState Hook if necessary, either from Props or use placeholder default Values.
-						2. Query backend API with useEffect / custom Hook, and with a Dependency List containing Props that pertain to the HTTP Request and REST Query Parameters.
+						1. Define initial States via useState Hooks if necessary, either from Props or use placeholder default Values.
+						2. Query backend API and update State with useEffect / custom Hooks, and with a Dependency List containing Props that pertain to the HTTP Request and REST Query Parameters.
 						3. Render the actual Component only when a certain flag passed from the backend API changes. Use a placeholder 'Loading' Component if the flag is not of a certain state.
 					*/
 
@@ -456,7 +474,7 @@ React.js
 					};
 				}
 
-			Render:
+			Rendering:
 				let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
 				ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.
 
