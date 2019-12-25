@@ -291,7 +291,7 @@ React.js
 					// Local Component State
 						// Each State Variable defined in the manner below is independent from one another.
 						// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
-						// Note: The State Value does NOT get updated if it was initialized from a Prop. Update it via useEffect.
+						// Note: The State Value does NOT get updated if it was initialized from a Prop and that Prop changes. Update it via useEffect.
 						const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
 
 						// Modify the State.
