@@ -502,11 +502,44 @@ Javascript
 			var intervalHandle = setInterval(function, <milliseconds>); // Executes the specified function repeatedly after every period of the specified amount of milliseconds has passed.
 			clearInterval(<intervalHandle>); 				// Stop the repeated execution of a function.
 			
-		Regex: 
-			Local Match: /<RegEx>/
-			Global Match: /<RegEx>/g
+		Regex: /<regex>/ or /<regex>/g to match for multiple instances of <regex>
+			Quantifiers:
+				<char | char-class>* : 0 or more of <char> or <char-class>
+				<char | char-class>+ : 1 or more of <char> or <char-class>
+				<char | char-class>? : 0 or 1 of <char> or <char-class>
+				
+				<char | char-class>{n} : Exactly n of <char> or <char-class>
+				<char | char-class>{n, } : At least n of <char> or <char-class>
+				<char | char-class>{n, m} : At least n and at most m or <char> or <char-class>
+				
+				<char | char-class><quantifier>? : Converts the matching to non-greedy Quantifiers.
 			
-			/<RegEx>/.test("<string>"); 					// Test if a String contains the supplied RegExp.
+			Specials:
+				^ : Matches the beginning of the String.
+				$ : Matches the end of the String.
+			
+			[<char>...]<quantifier> : Denotes Character Class to match for.
+			[^<char>...]<quantifier> : Denotes Character Class to not match for.
+			
+			(?:<regex>) : Denotes a Non-Capturing Group for <regex>.
+				<expr>(?=<regex>) : Denotes a Non-Capturing Group for a Positive Lookahead - that is, match only for occurrances where <expr> is followed by the <regex>.
+				<expr>(?!<regex>) : Denotes a Non-Capturing Group for a Negative Lookahead - that is, match only for occurrances where <expr> is NOT followed by the <regex>.
+				(?<=<regex>)<expr> : Denotes a Non-Capturing Group for a Positive Lookbehind - that is, match only for occurrances where <expr> is preceded by the <regex>.
+				(?<!<regex>)<expr> : Denotes a Non-Capturing Group for a Negative Lookbehind - that is, match only for occurrances where <expr> is NOT preceded by the <regex>.
+			
+			(<regex>) : Denotes an anonymous Capturing Group for <regex>
+				\1 ... \99 : References Capturing Groups previously defined.
+			
+			(?<name><regex>) : Denotes a Capturing Group called 'name' for <regex>. Note: The '<' and '>' in '<name>' ARE required.
+				\<name> : References named Capturing Groups previously defined.
+				
+			Usage:
+				<string>.match(<regex>) : 
+					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
+					- If <regex> is globally scoped, it will return all occurrances, but without any capturing groups within <regex>.
+				<regex>.exec(<string>) : 
+					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
+					- If <regex> is globally scoped and saved, it will return the ith occurrance, alongside any capturing groups, on the ith iteration of the .exec call on the <regex> object.
 	
 	Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
 		DOM Elements:
