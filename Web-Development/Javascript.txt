@@ -386,6 +386,10 @@ Javascript
 
 		Classes:
 			class className [extends parentClass] {
+				<public-property>;
+				#<private-property>;
+				static <static-property>;
+				
 				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
 				// Else:
 				constructor(arg, ...) {
@@ -393,6 +397,12 @@ Javascript
 
 					//...
 
+					this.#<private-property> = <value>;
+				}
+
+				// A Class Definition defines Prototype Methods.
+				<method>(arg, ...) {
+					// ...
 				}
 
 				// ...
