@@ -44,14 +44,6 @@ Javascript
 				// ...
 			}
 
-			for (const index in <array>) {
-				// ...
-			}
-
-			for (const item of <array>) {
-				// ...
-			}
-
 			To check if two things are equal to each other (same values check only): ==
 			To check if two things are unequal to each other (different values check only): !=
 			To check if two things are equal to each other (same values and types check): ===
@@ -63,13 +55,18 @@ Javascript
 			console.log( ref === {} ); // false
 
 		Iterables:
-			var listName = [listElement, ... ]; 				// Arrays
+			var listName = [listElement, ... ];
 			
 			listName.map(function(listElement, listElementIndexOptional, listElementArrayRefOptional) { // Do something to each listElementType  });
 			listName.filter(function(listElement) { // Return true to keep listElement in returned Array, false to exclude listElement from returned Array });
 			listName.reduce(function(listElementA, listElementB) { // Return combinate value of listItemA, listItemB });
 
 			listName.sort(function(itemA, itemB) { // Return relative value of itemA to itemB }); // Sort the contents in listName according to the sort function passed in.
+
+			// Iteration
+			for (const item of listName) {
+				// ...
+			}
 
 		Objects: Key-Value Mappings.
 			var objectName = { 
@@ -87,6 +84,15 @@ Javascript
 				// If more than one object has different values for the same key, only the latest object (i.e. object2) will have its changes pushed.
 			
 			JSON.stringify(objectName); 						// Encode object as a JSON
+
+			// Iteration
+			for (const key in objectName) {
+				// ...
+			}
+
+			for (const value of objectName) {
+				// ...
+			}
 
 		Static Properties
 			// Allows the addition of Properties and Methods to the Object Type specifically.
