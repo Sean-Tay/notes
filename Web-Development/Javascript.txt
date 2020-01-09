@@ -90,10 +90,6 @@ Javascript
 				// ...
 			}
 
-			for (const value of objectName) {
-				// ...
-			}
-
 		Static Properties
 			// Allows the addition of Properties and Methods to the Object Type specifically.
 			// These cannot be accessed by instances of the Object Type.
