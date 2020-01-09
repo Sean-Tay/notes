@@ -83,6 +83,9 @@ Javascript
 				// Mutates targetObject with the content stored in object1, object2, etc...
 				// If more than one object has different values for the same key, only the latest object (i.e. object2) will have its changes pushed.
 			
+			Object.keys(<targetObject>); // Obtain Array of keys defined in <targetObject>.
+			Object.values(<targetObject>); // Obtain Array of values within <targetObject>.
+
 			JSON.stringify(objectName); 						// Encode object as a JSON
 
 			// Iteration
