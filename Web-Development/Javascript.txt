@@ -177,8 +177,8 @@ Javascript
 			};
 
 		Spread / Rest Operator: Convenient Syntax.
-			Spread Operator: Used as a shorthand for expanding an Iterable into its constituent Items inline.
-				Usage: ...<Iterable>
+			Spread Operator: Used as a shorthand for expanding an Iterable / Object into its constituent Items inline.
+				Usage: ...<Item>
 				
 				Shallow Duplication Pattern: 
 					[ ...<Array> ]
@@ -204,13 +204,13 @@ Javascript
 						...<conditional> && { <property> : <value> }
 					}
 			
-			Rest Parameter: Used as a shorthand to gather up variables into an Iterable.
+			Rest Parameter: Used as a shorthand to gather up variables into an Iterable / Object.
 				Usage: 
-					...<Iterable>
+					...<Item>
 
 					// OR 
 
-					<var>, ..., ...<Iterable> // To remove Variables from the Iterable in their order.
+					<var>, ..., ...<Item> // To remove Variables from the Iterable in their order.
 
 				Function Arguments:
 					( ...<arguments-iterable> ) => {
