@@ -1,8 +1,11 @@
 Javascript
+	Hoisting:												Javascript Interpretation would store Variable and Function Declarations (NOT Initializations) in Memory first, before any Execution begins.
+		This is how Variables and Functions can be used within Code before they have been Defined.
+	
 	Scopes:
-		const 												- block {} scope, unchangeable once declared, not redeclarable
-		let 												- block {} scope, changeable once declared, not redeclarable
-		var 												- global scope, changeable once declared, redeclarable
+		const 												block {} scope, unchangeable once declared, not redeclarable
+		let 												block {} scope, changeable once declared, not redeclarable
+		var 												global scope, changeable once declared, redeclarable
 
 	Common Syntax:
 		Basic Javascript Expression Manipulation: 
