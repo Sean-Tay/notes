@@ -304,6 +304,11 @@ React.js
 							}
 						);
 
+						// To minimize the amount of times the State gets updated, do the following:
+							1. Create a separate copy of the <state-var> to be changed at the start of the scope.
+							2. Modify the copy as needed.
+							3. Only call the <state-var-setter-function> once at the end of the scope with the modified copy.
+
 					// Local Component State - No Re-Render
 						// Changes made to these Variables here will not cause a Re-Render.
 						const <ref-var> = React.useRef(<initial-value>);
@@ -401,13 +406,10 @@ React.js
 					// ... <div ref={{nodeRef}}> </div> ...
 					// ... nodeRef.current ...
 
-					// Tips
-					/*
-						The flow should be:
-						1. Define initial States via useState Hooks if necessary, either from Props or use placeholder default Values.
+					// Flow:
+						1. Define initial States via useState Hooks if necessary. Avoid deriving State from Props.
 						2. Query backend API and update State with useEffect / custom Hooks, and with a Dependency List containing Props that pertain to the HTTP Request and REST Query Parameters.
 						3. Render the actual Component only when a certain flag passed from the backend API changes. Use a placeholder 'Loading' Component if the flag is not of a certain state.
-					*/
 
 					return (
 						<>
