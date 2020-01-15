@@ -29,18 +29,17 @@ Javascript
 			}
 
 			switch (variable) {
-				case 'value1': {
+				case 'value1': 
 					// ...
 					break;
-				}
-				case 'value2': {
+				// ...
+				case 'valueN-1':
+				case 'valueN': 
 					// ...
 					break;
-				}
-				default: {
+				default: 
 					// ...
 					break;
-				}
 			}
 			
 			for (var index = 0; index < 5; index++) {
@@ -174,6 +173,24 @@ Javascript
 			}
 	
 	> ES6:
+		Switch Case:
+			switch (variable) {
+				case 'value1': {
+					// ...
+					break;
+				}
+				// ...
+				case 'valueN-1':
+				case 'valueN': {
+					// ...
+					break;
+				}
+				default: {
+					// ...
+					break;
+				}
+			}
+		
 		Computed Object Property Name: Evaluate an expression to determine the Property Name of a Value assigned to an Object.
 			const example = {
 				[<js-expression>]: <value>, // Note the Square Braces as the Syntax to apply.
