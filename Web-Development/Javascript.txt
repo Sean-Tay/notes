@@ -7,6 +7,14 @@ Javascript
 		let 												block {} scope, changeable once declared, not redeclarable
 		var 												global scope, changeable once declared, redeclarable
 
+	Primitives:
+		boolean:											Literal true / false.
+		string
+		number:												Literal Integers, Floats / Doubles, Infinity, NaN.
+		null
+		undefined
+		Symbols
+
 	Common Syntax:
 		Basic Javascript Expression Manipulation: 
 			Raw Data Types: 
