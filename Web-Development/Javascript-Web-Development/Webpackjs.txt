@@ -38,7 +38,7 @@ Webpack.js
 		Miscellaneous Features:
 			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
 			Hot Module Replacement: Detects for changes in Bundles and triggers a patch of the running Browser State without a full refresh.
-				This requires implementation of the Hot Module Replacement Interface in the Client source.
+				This requires implementation of the Hot Module Replacement Interface in the Client source (via module.hot and module.hot.accept).
 
 			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
 
