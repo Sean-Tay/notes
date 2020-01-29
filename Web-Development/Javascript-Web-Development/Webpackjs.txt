@@ -81,7 +81,14 @@ Webpack.js
 					rules: [
 						{
 							test: /\.(<file-extension-regex> | ... )$/,
-							exclude: /<exclusion-path-regex>/,
+							include: [
+								path.resolve(__dirname, <relative-inclusion-path-from-webpack-config>),
+								...
+							],
+							exclude: [
+								path.resolve(__dirname, <relative-exclusion-path-from-webpack-config>),
+								...
+							],
 
 							// Note: the Loader order in the 'use' Array is reversed - the last Loader is applied first.
 							use: [
