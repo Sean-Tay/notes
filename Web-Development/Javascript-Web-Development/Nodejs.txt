@@ -59,7 +59,10 @@ Node.js:
 
 				process.argv												// Contains each element of the command, delimited by spaces, used to create the Process.
 				process.env													// An Object which stores and controls information about the Node Project in which the Process is currently running in.
-				process.env.VARIABLE_NAME 									// Used to get and set global or externally set Node Project variables.
+				process.env.VARIABLE_NAME 									// Used to get and set global or externally set Node Project variables. 
+					// These are usually set in the "scripts" section of package.json specified commands.
+					// Alternatively, one can use the dotenv package to set these in an external .env File.
+
 					process.env.NODE_ENV 									// Convention: Mainly used to indicate various configurations for a Node Project.
 
 				process.stdin.on('data', (userInput) => {					// Receive User Input.

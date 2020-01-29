@@ -2,26 +2,28 @@ Webpack.js
 	Abbreviations:
 		
 	
-	Description: Primarily a Module Bundler, but also an Asset Transformer / Pre-Processor.
+	Description: Primarily a Module Bundler, but can be configured to handle other parts of the Development Pipeline too.
 	
 	Tutorials:
-		
+		Survivejs:				https://survivejs.com/webpack/
 	
 	Concepts:
-		Plugin:					Third-Party Addon that add to Webpack's functionality.
+		Plugin:					Third-Party Extensions that can utilize Webpack Hooks as a means to subscribe to various Events in the Webpack Execution Process.
 
 		Asset:					A File that does not contain code.
 		Module:					A File or Directory in a Node Project which has some JS execution entry-point available, allowing it to be loaded in code.
 		Dependency:				In the context of a Module, another Asset or Module which it relies upon.
 		
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
-		Loader:					Third-Party Tool that assist in the transformation of encountered Dependencies in a Module.
+		Loader:					Third-Party Extensions that assist in the transformation of encountered Dependencies in a Module.
 
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
 
 		Bundle:					A compiled File consisting of the content from a group of Assets, Modules and potentially associated Dependencies, made to be easily consumable for a Browser.
 	
 	Details:
+		Webpack is best installed locally to each Project; this allows Continuous Integration to work properly.
+		
 		Webpack initially only understands JSON and JS syntax (ES2015, AMD, and CommonJS variants).
 
 		Webpack works by: 
@@ -35,17 +37,42 @@ Webpack.js
 
 		Miscellaneous Features:
 			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
-			Hot Module Replacement: Detects for changes in Bundles and forces a reload.
+			Hot Module Replacement: Detects for changes in Bundles and triggers a patch of the running Browser State without a full refresh.
+				This requires implementation of the Hot Module Replacement Interface in the Client source.
+
 			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
 
 		Configuration Template: 
 			const path = require('path');
 
 			module.exports = {
+				// Webpack Dev Server Configuration for enabling Automatic Refreshing via in In-Memory Server Process - requires the webpack-dev-server Package.
+				devServer: {
+					// Display only errors to reduce the amount of output.
+					stats: "errors-only",
+
+					// Parse host and port from env to allow customization.
+					//
+					// If you use Docker, Vagrant or Cloud9, set
+					// host: "0.0.0.0";
+					//
+					// 0.0.0.0 is available to all network devices
+					host: process.env.HOST, // Defaults to `localhost`
+					port: process.env.PORT, // Defaults to 8080
+					open: true, // Open the page in Browser
+
+					// Request the Server to fallback to index.html if a requested resource cannot be found.
+					historyApiFallback: true, 
+
+					// Enable Hot Module Replacement.
+					hotOnly: true,
+				},
+
 				// Indicate which pre-defined bundling behaviour should Webpack use.
 				mode: <{'development' | 'production'}>,
 
 				// Specify additional Plugins to expand the functionality of Webpack.
+				// Note: Don't forget the new keyword.
 				plugins: [
 					new <plugin>(<config-obj>),
 					...
@@ -114,6 +141,16 @@ Webpack.js
 
 		Common:
 			Plugins:
+				Webpack Dev Server:
+					webpack.HotModuleReplacementPlugin()
+
+					write-file-webpack-plugin
+
+				HTML Injection:
+					HtmlWebpackPlugin
+						CDN for specified node_modules:
+							webpack-cdn-plugin
+							dynamic-webpack-cdn-plugin
 
 			Loaders:
 				CSS:
@@ -124,6 +161,8 @@ Webpack.js
 	Commands:
 		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
 			--mode development // Optimizes the bundling process for Build Speed and Debugging.
+			--watch // Enables automatic recompilation of changed Application Files.
+
 			--mode production // Optimizes the bundling process for Runtime Speed and Bundle Size.
 
 		npx webpack --config webpack.config.js	// Compiles the project via a specified setup procedure.
