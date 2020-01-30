@@ -176,148 +176,152 @@ SQL:
 
 		<command>;
 
-		-- Creates a Database called <database_name>.
-		CREATE DATABASE <database_name>; 
+		-- Database Modification
+			-- Creates a Database called <database_name>.
+			CREATE DATABASE <database_name>; 
 
-		-- - Deletes the Database <database_name> from the Database Server.
-		DROP DATABASE <database_name>; 
+			-- Deletes the Database <database_name> from the Database Server.
+			DROP DATABASE <database_name>; 
 
-		CREATE TABLE <table_name>(
-			<attribute_name> <attribute_datatype> <attribute_constraint>,
-			...
+		-- Table Modification
+			CREATE TABLE <table_name>(
+				<attribute_name> <attribute_datatype> <attribute_constraint>,
+				...
 
-			PRIMARY KEY(<attribute_name>, ...)
-			-- OR
-			FOREIGN KEY(<attribute_name>, ...) REFERENCES <table>(<attribute_name>), ...
-		);
+				PRIMARY KEY(<attribute_name>, ...)
+				-- OR
+				FOREIGN KEY(<attribute_name>, ...) REFERENCES <table>(<attribute_name>), ...
+			);
 
-		-- View <table> Properties.
-		DESC <table>
+			-- View <table> Properties.
+			DESC <table>
 
-		CREATE [UNIQUE] INDEX <index_name>
-		ON <table_name>(<attribute_name>, ...);
+			CREATE [UNIQUE] INDEX <index_name>
+			ON <table_name>(<attribute_name>, ...);
 
-		DROP INDEX <index_name>
-		ON <table_name>(<attribute_name>, ...); 
+			DROP INDEX <index_name>
+			ON <table_name>(<attribute_name>, ...); 
 
-		ALTER TABLE <table_name>
-		ADD <attribute_name> <attribute_datatype>
-		;
+			ALTER TABLE <table_name>
+			ADD <attribute_name> <attribute_datatype>
+			;
 
-		ALTER TABLE <table_name>
-		DROP COLUMN <attribute_name>
-		;
+			ALTER TABLE <table_name>
+			DROP COLUMN <attribute_name>
+			;
 
-		INSERT INTO <table_name> 
-		(
-			<attribute_name>, ...
-		)
-		VALUES
-		(	-- One Record
-			<value>, ...
-		),
-		... 
-		; COMMIT;
+		-- Table Data Modification
+			INSERT INTO <table_name> 
+			(
+				<attribute_name>, ...
+			)
+			VALUES
+			(	-- One Record
+				<value>, ...
+			),
+			... 
+			; COMMIT;
 
-		UPDATE <table_name>
-		SET <attribute_name> = <value>, ...
-		WHERE <record_conditional>
-		; COMMIT; 
+			UPDATE <table_name>
+			SET <attribute_name> = <value>, ...
+			WHERE <record_conditional>
+			; COMMIT; 
 
-		UPDATE <table_name>
-		SET <attribute_name> = CASE
-								WHEN <record_conditional> THEN <return_value>
-								...
-								END;
+			UPDATE <table_name>
+			SET <attribute_name> = CASE
+									WHEN <record_conditional> THEN <return_value>
+									...
+									END;
 
-		MERGE INTO <table_name> 
-		ON (condition)
-		WHEN MATCHED THEN
-			UPDATE SET column1 = value1 [, column2 = value2, ...]
-		WHEN NOT MATCHED THEN
-			INSERT (column1 [, column2, ...]) VALUES (value1 [, value2, ...]); COMMIT;
+			MERGE INTO <table_name> 
+			ON (condition)
+			WHEN MATCHED THEN
+				UPDATE SET column1 = value1 [, column2 = value2, ...]
+			WHEN NOT MATCHED THEN
+				INSERT (column1 [, column2, ...]) VALUES (value1 [, value2, ...]); COMMIT;
 
-		DELETE FROM <table_name>
-		WHERE <record_conditional>
-		; COMMIT;
+			DELETE FROM <table_name>
+			WHERE <record_conditional>
+			; COMMIT;
 
-		-- Save further Query Results to Local File at <filepath>.
-		SPOOL <filepath>
-		;
+		-- Querying
+			-- Save further Query Results to Local File at <filepath>.
+			SPOOL <filepath>
+			;
 
-		-- Prefer Table Aliases
-		SELECT [DISTINCT] <alias>.<attribute_name>, ...
-		FROM <table_name> [AS] <alias>, ...
-			[
-				{INNER | LEFT | RIGHT} JOIN <other_table_name> [AS] <other_alias>
-				ON <alias>.<attribute_name> = <other_alias>.<other_attribute_name>, ...
-			]
-		WHERE <record_conditional> ...
-		GROUP BY <alias>.<attribute_name>, ...
-		HAVING <aggregate_conditional>
-		ORDER BY <alias>.<attribute_name>, ...
-		;
+			-- Prefer Table Aliases
+			SELECT [DISTINCT] <alias>.<attribute_name>, ...
+			FROM <table_name> [AS] <alias>, ...
+				[
+					{INNER | LEFT | RIGHT} JOIN <other_table_name> [AS] <other_alias>
+					ON <alias>.<attribute_name> = <other_alias>.<other_attribute_name>, ...
+				]
+			WHERE <record_conditional> ...
+			GROUP BY <alias>.<attribute_name>, ...
+			HAVING <aggregate_conditional>
+			ORDER BY <alias>.<attribute_name>, ...
+			;
 
-		-- Stop Saving further Query Results to Local File at <filepath>.
-		SPOOL OFF
-		;
+			-- Stop Saving further Query Results to Local File at <filepath>.
+			SPOOL OFF
+			;
 
 		-- Confirm any pending DML Transactions.
 		COMMIT;
 
 		-- Oracle PL/SQL Template.
-		DECLARE / CREATE
-			/*
-				Naming Convention:
-					First Uppercase Letter:
-						P				Parameter Level Variable.
-						L				Local Level Variable.
-						G 				Global Level Variable.
-					
-					Second Lowercase Letter:
-						n				Numbe-Type Variable.
-						v				Varchar-Type Variable.
+			DECLARE / CREATE
+				/*
+					Naming Convention:
+						First Uppercase Letter:
+							P				Parameter Level Variable.
+							L				Local Level Variable.
+							G 				Global Level Variable.
+						
+						Second Lowercase Letter:
+							n				Numbe-Type Variable.
+							v				Varchar-Type Variable.
 
-						r				Record-Type Variable.
-						t				Table-Type Variable.
-			*/
+							r				Record-Type Variable.
+							t				Table-Type Variable.
+				*/
 
-			-- Pragmas: 
+				-- Pragmas: 
 
-			-- Variables: <variable_name> <variable_datatype> := <variable_value>; - Has SQL as well as PL/SQL-specific datatypes.
+				-- Variables: <variable_name> <variable_datatype> := <variable_value>; - Has SQL as well as PL/SQL-specific datatypes.
 
-			-- Collections: Ordered Group of Elements of a particular Datatype.
-				-- General Declaration: TYPE <collection_type> IS VARRAY (<size>) OF <element_type>; <collection_variable> <collection_type> := <collection_type>();
+				-- Collections: Ordered Group of Elements of a particular Datatype.
+					-- General Declaration: TYPE <collection_type> IS VARRAY (<size>) OF <element_type>; <collection_variable> <collection_type> := <collection_type>();
 
-				-- Varray: 				Dense Array with a Fixed Upper Length. Can only have Elements pushed or popped.
-				-- Nested Table: 		Dense or Sparse Array with a Variable Upper Length (increased via the use of EXTEND). Can have Elements inserted or deleted at any position. Positions of Elements within the Array may not be preserved when SAVED to a Database Table.
-				-- Index-By-Table:		Sparse Array with a Variable Length. Can have Elements inserted with either Numerical or String Subscripts (via INDEX BY VARCHAR2(<max_index_length>) appended to the declaration). Cannot be stored in a Database. 
+					-- Varray: 				Dense Array with a Fixed Upper Length. Can only have Elements pushed or popped.
+					-- Nested Table: 		Dense or Sparse Array with a Variable Upper Length (increased via the use of EXTEND). Can have Elements inserted or deleted at any position. Positions of Elements within the Array may not be preserved when SAVED to a Database Table.
+					-- Index-By-Table:		Sparse Array with a Variable Length. Can have Elements inserted with either Numerical or String Subscripts (via INDEX BY VARCHAR2(<max_index_length>) appended to the declaration). Cannot be stored in a Database. 
 
-			-- Cursors: 
+				-- Cursors: 
 
-			-- Subprograms: 
+				-- Subprograms: 
 
-			-- Exceptions: 
+				-- Exceptions: 
 
-		BEGIN
-			-- Can contain SQL, PL/SQL Code  as well as other nested Blocks.
+			BEGIN
+				-- Can contain SQL, PL/SQL Code  as well as other nested Blocks.
 
-			-- Assignment.
-			<variable_name> := <variable_value>;
+				-- Assignment.
+				<variable_name> := <variable_value>;
 
-			-- Print Statement.
-			dbms_output.put_line('<text>');
+				-- Print Statement.
+				dbms_output.put_line('<text>');
 
-			-- FOR LOOP
-			FOR <counter> IN <sequence>
-			LOOP
+				-- FOR LOOP
+				FOR <counter> IN <sequence>
+				LOOP
+					...
+				END LOOP;
+
+			EXCEPTION
 				...
-			END LOOP;
 
-		EXCEPTION
-			...
-
-		END;
-		/
+			END;
+			/
 		
 	
