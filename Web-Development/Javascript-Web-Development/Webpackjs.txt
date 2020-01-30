@@ -1,6 +1,8 @@
 Webpack.js
 	Abbreviations:
-		
+		CDN:					Content Delivery Network.
+
+		CSS:					Cascading Style Sheets.
 	
 	Description: Primarily a Module Bundler, but can be configured to handle other parts of the Development Pipeline too.
 	
@@ -8,14 +10,14 @@ Webpack.js
 		Survivejs:				https://survivejs.com/webpack/
 	
 	Concepts:
-		Plugin:					Third-Party Extensions that can utilize Webpack Hooks as a means to subscribe to various Events in the Webpack Execution Process.
+		Plugin:					Third-Party Extension that can utilize Webpack Hooks as a means to subscribe to various Events in the Webpack Execution Process.
 
 		Asset:					A File that does not contain code.
 		Module:					A File or Directory in a Node Project which has some JS execution entry-point available, allowing it to be loaded in code.
 		Dependency:				In the context of a Module, another Asset or Module which it relies upon.
 		
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
-		Loader:					Third-Party Extensions that assist in the transformation of encountered Dependencies in a Module.
+		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module.
 
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
 
@@ -36,38 +38,23 @@ Webpack.js
 			3. Producing 'Output' Bundle(s) based on the constructed Dependency Graphs.
 
 		Miscellaneous Features:
-			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
-			Hot Module Replacement: Detects for changes in Bundles and triggers a patch of the running Browser State without a full refresh.
-				This requires implementation of the Hot Module Replacement Interface in the Client source (via module.hot and module.hot.accept).
+			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and recompile them (only).
 
 			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
+
+			Code Minification: 	Only considers meaningful code during the Building Process. This can mean smaller variable names, or removing unreachable pieces of code.
+
+			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
+
+			Automatic Reload: 	Triggers a full Browser Reload to propagate the changes in Resolved Files after Automatic Recompilation to the View. Requires the webpack-dev-server Package.
+			
+			Hot Module Replacement: Detects for changes in Bundles and triggers a patch of the running Browser State without a full Browser Reload.
+				This requires implementation of the Hot Module Replacement Interface in the code (via module.hot and module.hot.accept).
 
 		Configuration Template: 
 			const path = require('path');
 
 			module.exports = {
-				// Webpack Dev Server Configuration for enabling Automatic Refreshing via in In-Memory Server Process - requires the webpack-dev-server Package.
-				devServer: {
-					// Display only errors to reduce the amount of output.
-					stats: "errors-only",
-
-					// Parse host and port from env to allow customization.
-					//
-					// If you use Docker, Vagrant or Cloud9, set
-					// host: "0.0.0.0";
-					//
-					// 0.0.0.0 is available to all network devices
-					host: process.env.HOST, // Defaults to `localhost`
-					port: process.env.PORT, // Defaults to 8080
-					open: true, // Open the page in Browser
-
-					// Request the Server to fallback to index.html if a requested resource cannot be found.
-					historyApiFallback: true, 
-
-					// Enable Hot Module Replacement.
-					hotOnly: true,
-				},
-
 				// Indicate which pre-defined bundling behaviour should Webpack use.
 				mode: <{'development' | 'production'}>,
 
@@ -132,31 +119,90 @@ Webpack.js
 					],
 				},
 
+				// Configure Webpack to monitor for any changes in Resolved Files and recompile them (only).
+				watch: true,
+				watchOptions: {
+					// Ignore Folders to save on CPU Usage.
+					ignored: [
+						'node_modules',
+						...
+					],
+
+					// Reduce the frequency of change detection.
+					poll: <milliseconds>,
+
+					// Specify a delay period for rebuilding to allow for consolidation of any changes that come in shortly after the first.
+					aggregateTimeout: <milliseconds>,
+				},
+
+				// Specify the Output-Points for Webpack.
 				output: {
 					path: path.resolve(__dirname, '<output-directory-path>')
 					filename: '<filename>',
-						// Specifying '[name]' will include the <entry-chunk-name> in its position within the <filename>.
+						// Specifying '[name]' wihtin the <filename> will include the <entry-chunk-name> from the Entry-Point congifuration in its position.
+				},
+
+				// Webpack Dev Server Configuration for enabling Automatic Recompilation and Reload via an In-Memory Server Process - requires the webpack-dev-server Package.
+				devServer: {
+					// Specify the non-default location(s) of index.html for Webpack to inject the Bundle into.
+					contentBase: [
+						paths.resolve(__dirname, '<path>'),
+						...
+					],
+
+					// Display only errors to reduce the amount of output.
+					stats: "errors-only",
+
+					// Parse host and port from env to allow customization.
+					//
+					// If you use Docker, Vagrant or Cloud9, set
+					// host: "0.0.0.0";
+					//
+					// 0.0.0.0 is available to all network devices
+					host: process.env.HOST, // Defaults to `localhost`
+					port: process.env.PORT, // Defaults to 8080
+					open: true, // Open the page in Browser
+
+					// Enable the requesting of resources from Webpack Dev Server to other Servers.
+					proxy: {
+						'<request-path>': '<full-request-URL>',
+						...
+					},
+
+					// Request the Server to fallback to index.html if a requested resource cannot be found.
+					historyApiFallback: true, 
+
+					// Enable Hot Module Replacement.
+					hotOnly: true,
 				},
 			};
 
 		Common:
+			webpack-merge // Used to merge different Webpack Config Objects together, allowing for composability fo Webpack Configuration.
+
 			Plugins:
-				Webpack Dev Server:
-					webpack.HotModuleReplacementPlugin()
+				Developer Experience:
+					npm-install-webpack-plugin // Automatic Package Installation when imported.
+					
+					// Webpack Dev Server for Automatic Browser Reload upon changes.
+						new webpack.HotModuleReplacementPlugin() // Enable Hot Module Reloading.
 
-					write-file-webpack-plugin
+						write-file-webpack-plugin // Forces Webpack Dev Server to emit the Resolved Files.
 
-				HTML Injection:
-					HtmlWebpackPlugin
-						CDN for specified node_modules:
+				HTML:
+					new HtmlWebpackPlugin() // HTML Injection.
+						// CDN for specified node_modules:
 							webpack-cdn-plugin
 							dynamic-webpack-cdn-plugin
 
+				CSS:
+					new MiniCssExtractplugin() // CSS Minification and separate CSS Bundle Creation.
+
 			Loaders:
 				CSS:
-					less-loader OR sass-loader
+					sass-loader OR less-loader
 					css-loader
-					style-loader
+					style-loader // Injects External CSS Styling through <style> HTML Elements. Implements Hot Module Reloading for CSS Patching.
 
 	Commands:
 		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
