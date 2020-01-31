@@ -7,7 +7,7 @@ Webpack.js
 	Description: Primarily a Module Bundler, but can be configured to handle other parts of the Development Pipeline too.
 	
 	Tutorials:
-		Survivejs:				https://survivejs.com/webpack/
+		SurviveJS:				https://survivejs.com/webpack/
 	
 	Concepts:
 		Plugin:					Third-Party Extension that can utilize Webpack Hooks as a means to subscribe to various Events in the Webpack Execution Process.
@@ -17,11 +17,13 @@ Webpack.js
 		Dependency:				In the context of a Module, another Asset or Module which it relies upon.
 		
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
-		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module.
+		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module. These are required for non JSON / Javascript Dependencies.
 
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
 
 		Bundle:					A compiled File consisting of the content from a group of Assets, Modules and potentially associated Dependencies, made to be easily consumable for a Browser.
+
+		Source Map:				A mapping between the code in the Bundle and the original Source to aid in debugging during the development process. The Bundle would have a special line at the end to hint to the Browser that a Source Map is available (via a URL).
 	
 	Details:
 		Webpack is best installed locally to each Project; this allows Continuous Integration to work properly.
@@ -38,9 +40,11 @@ Webpack.js
 			3. Producing 'Output' Bundle(s) based on the constructed Dependency Graphs.
 
 		Miscellaneous Features:
+			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
+			
 			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and recompile them (only).
 
-			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
+			Code Transpilation: Transforms newer variants of code to equivalent, older variants to maintain compatability with older Applications.
 
 			Code Minification: 	Only considers meaningful code during the Building Process. This can mean smaller variable names, or removing unreachable pieces of code.
 
@@ -52,6 +56,7 @@ Webpack.js
 				This requires implementation of the Hot Module Replacement Interface in the code (via module.hot and module.hot.accept).
 
 		Configuration Template: 
+			// Note: Only CommonJS allowed here.
 			const path = require('path');
 
 			module.exports = {
@@ -119,6 +124,9 @@ Webpack.js
 					],
 				},
 
+				// Specify completeness of any Source Maps generated from the transformations applied.
+				devtool: false | 'source-map',
+
 				// Configure Webpack to monitor for any changes in Resolved Files and recompile them (only).
 				watch: true,
 				watchOptions: {
@@ -137,11 +145,11 @@ Webpack.js
 
 				// Specify the Output-Points for Webpack.
 				output: {
-					path: path.resolve(__dirname, '<output-directory-path>')
+					path: path.resolve(__dirname, '<output-directory-path>'),
 					filename: '<filename>',
 						// Specifying '[name]' wihtin the <filename> will include the <entry-chunk-name> from the Entry-Point congifuration in its position.
 				},
-
+				
 				// Webpack Dev Server Configuration for enabling Automatic Recompilation and Reload via an In-Memory Server Process - requires the webpack-dev-server Package.
 				devServer: {
 					// Specify the non-default location(s) of index.html for Webpack to inject the Bundle into.
@@ -201,8 +209,9 @@ Webpack.js
 			Loaders:
 				CSS:
 					sass-loader OR less-loader
-					css-loader
-					style-loader // Injects External CSS Styling through <style> HTML Elements. Implements Hot Module Reloading for CSS Patching.
+						fast-css-loader
+					css-loader // Resolves references and transforms Local CSS Resources into JS Modules containing JS Strings with CSS Content.
+					style-loader // Injects JS Strings with CSS content into index.html through <style> HTML Elements. Implements Hot Module Reloading for CSS Patching.
 
 	Commands:
 		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
