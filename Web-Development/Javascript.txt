@@ -577,6 +577,8 @@ Javascript
 				\<name> : References named Capturing Groups previously defined.
 				
 			Usage:
+				<regex>.test(<variable>) : Test for the occurrence of a given pattern in the submitted <variable>.
+
 				<string>.match(<regex>) : 
 					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
 					- If <regex> is globally scoped, it will return all occurrances, but without any capturing groups within <regex>.
