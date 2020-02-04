@@ -86,29 +86,28 @@ CSS:
 					static: 
 						Default.
 						Adheres to Document Flow.
-						Ignores Top, Bottom, Left, and Right settings.
-						Uses the root Stacking Context when a z-index specification is set.
+						Ignores Top, Bottom, Left, Right, and z-index settings.
 
 					relative:
 						Adheres to Document Flow.
 						Interprets Top, Bottom, Left, and Right settings with respect to position derived from Document Flow.
-						Creates a new Stacking Context when a z-index specification is set.
+						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 
 					absolute:
-						Adheres to Document Flow.
+						Removed from Document Flow.
 						Interprets Top, Bottom, Left, and Right settings with respect to position derived from closest Ancestor Element with non-static positioning, or <body> </body> if there is none.
-						Creates a new Stacking Context when a z-index specification is set.
+						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 
 					fixed:
-						Ignores Document Flow.
+						Removed from Document Flow.
 						Interprets Top, Bottom, Left, and Right settings with respect to the Browser Viewport.
-						Creates a new Stacking Context when a z-index specification is set.
+						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 
 					sticky:
 						Whilst the position derived from Document Flow is in Browser Viewport: follows the 'relative' positioning.
 						Whilst the position derived from Document Flow is outside Browser Viewport: follows the 'fixed' positioning.
 						Interprets Top, Bottom, Left, and Right settings when 'fixed' positioning is active.
-						Creates a new Stacking Context when a z-index specification is set.
+						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 			
 				display: Specify if the Element is block or inline, and the layout of Child Elements.
 					Element Display:
