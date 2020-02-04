@@ -17,7 +17,7 @@ CSS:
 		Internal CSS: 			CSS defined with the <style> </style> tags. Performance friendly.
 		External CSS: 			CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
 
-		BEM:					Naming Convention for CSS Classes to avoid Global Scope Pollution.
+		BEM:					Naming Convention for CSS Classes.
 			Block:				Class for a reusable 'Component'.
 				/* Block */
 				.block {}
