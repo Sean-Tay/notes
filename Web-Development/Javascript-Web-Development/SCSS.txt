@@ -25,7 +25,7 @@ SCSS
 					<rule>: $<variable-name>; // Variable Usage for a CSS Rule Value.
 				}
 
-				<css-selector>#{$<variable-name>}-interpolation-example { // Variable Usage for a Selector Name.
+				<css-selector>#{$<variable-name>}-interpolation-example { // Variable Usage for a CSS Selector Name.
 					// ...
 				}
 
