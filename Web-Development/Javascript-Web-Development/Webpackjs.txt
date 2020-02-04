@@ -169,7 +169,7 @@ Webpack.js
 				
 				// Webpack Dev Server Configuration for enabling Automatic Recompilation and Reload via an In-Memory Server Process - requires the webpack-dev-server Package.
 				devServer: {
-					// Specify the non-default location(s) of index.html for Webpack to inject the Bundle into.
+					// Indicate where should the Webpack Dev Server search for the content to serve.
 					contentBase: [
 						path.resolve(__dirname, '<path>'),
 						...
@@ -186,7 +186,11 @@ Webpack.js
 					// 0.0.0.0 is available to all network devices
 					host: process.env.HOST, // Defaults to `localhost`
 					port: process.env.PORT, // Defaults to 8080
-					open: true, // Open the page in Browser
+					open: true, // Load the content from the contentBase specifications in the Browser.
+					openPage: [ // Load specified content from the contentBase specifications in the Browser.
+						'<page-url>',
+						...
+					],
 
 					// Enable the requesting of resources from Webpack Dev Server to other Servers.
 					proxy: {
@@ -249,4 +253,8 @@ Webpack.js
 			--mode production // Optimizes the bundling process for Runtime Speed and Bundle Size.
 
 		npx webpack --config webpack.config.js	// Compiles the project via a specified setup procedure.
+
+		npx webpack-dev-server // Runs the Webpack Dev Server.
+			--open // Previews the Result in the Browser.
+
 	
