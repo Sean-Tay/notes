@@ -1,6 +1,8 @@
 CSS:
 	Abbreviations:
 		CSS: 					Cascading Style Sheets.
+
+		BEM:					Block-Element-Modifier.
 	
 	Description:
 		
@@ -14,6 +16,19 @@ CSS:
 		Inline CSS: 			CSS defined with the style attribute of the HTML Element. Performance friendly.
 		Internal CSS: 			CSS defined with the <style> </style> tags. Performance friendly.
 		External CSS: 			CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
+
+		BEM:					Naming Convention for CSS Classes to avoid Global Scope Pollution.
+			Block:				Class for a reusable 'Component'.
+				/* Block */
+				.block {}
+
+			Modifier:			Class to modify the Block thematically.
+				/* Modifier */
+				.block--modifier {}
+
+			Element:			Class for child HTML Elements (that are not Blocks themselves).
+				/* Element */
+				.block__element {}
 
 		Autoprefixing:			Technique used to transform CSS Syntax to Browser-Specific variants.
 	
