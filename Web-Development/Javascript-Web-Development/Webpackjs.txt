@@ -19,9 +19,10 @@ Webpack.js
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
 		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module. These are required for non JSON / Javascript Dependencies.
 
-		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
+		Chunk:					A Module, or group of Modules that is currently being handled by Webpack as part of the Bundling Process.
 
-		Bundle:					A compiled File consisting of the content from a group of Assets, Modules and potentially associated Dependencies, made to be easily consumable for a Browser.
+		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
+		Bundle:					An emitted File consisting of the content from a group of Assets, Modules and potentially associated Dependencies, made to be easily consumable for a Browser.
 
 		Source Map:				A mapping between the code in the Bundle and the original Source to aid in debugging during the development process. The Bundle would have a special line at the end to hint to the Browser that a Source Map is available (via a URL).
 	
@@ -35,18 +36,19 @@ Webpack.js
 
 			2. Traversing and Constructing Dependency Graphs via defined Module Imports and Exports, rooted at each Entry-Point.
 				For the current Module, if the Module contains a Dependency, Webpack will proceed to recursively resolve the Dependencies first.
-				Each Module Dependency is checked against the config for (a) corresponding Loader(s) to transform the Dependency before adding it to the current 'Output' Bundle.
+				Each Module Dependency is checked against the config for (a) corresponding Loader(s) to transform the Dependency before adding it to the current Output Bundle.
 
-			3. Producing 'Output' Bundle(s) based on the constructed Dependency Graphs.
+			3. Emitting Output Bundle(s) based on the constructed Dependency Graphs.
 
-		Miscellaneous Features:
+		Possible High-Level Features:
 			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
+				Code Split Vendors: Allows for node_modules Dependencies to be compiled into a separate 'Vendor' Bundle from the Application Bundle - most likely the Vendor Bundle won't change as often as the Application Bundle, and can therefore be cached.
 			
-			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and recompile them (only).
+			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and selectively recompile them.
 
 			Code Transpilation: Transforms newer variants of code to equivalent, older variants to maintain compatability with older Applications.
 
-			Code Minification: 	Only considers meaningful code during the Building Process. This can mean smaller variable names, or removing unreachable pieces of code.
+			Code Minification: 	Only considers meaningful code during the Building Process. This can mean mangling variable names, or removing unreachable pieces of code.
 
 			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
 
@@ -58,6 +60,12 @@ Webpack.js
 		Configuration Template: 
 			// Note: Only CommonJS allowed here.
 			const path = require('path');
+
+			// <filename> Placeholders:
+				// [name] - <entry-chunk-name> from the Entry-Point congifuration.
+				// [path] - <entry-point-file-path> from the Entry-Point configuration.
+				// [hash] - Build Hash.
+				// [chunkhash] - Bundle Hash.
 
 			module.exports = {
 				// Indicate which pre-defined bundling behaviour should Webpack use.
@@ -86,13 +94,23 @@ Webpack.js
 					},
 
 					// Specify which Directories should be searched for Dependencies. Upon a match, it will ignore the rest.
-					modules: [..., 'node_modules', ...],
+					modules: [
+						path.join(__dirname, 'src'),
+						'node_modules',
+						...
+					],
 
 					// Specify which Files should be the Entry Point in a Directory Module. Upon a match, it will ignore the rest.
-					mainFiles: ['index.js', ...],
+					mainFiles: [
+						'index.js',
+						...
+					],
 
 					// Resolve the listed Extensions in the specified order. Upon a match, it will ignore the rest.
-					extensions: ['.<extension>', ...], 
+					extensions: [
+						'.<extension>',
+						...
+					], 
 				},
 
 				// Specify which type of Dependency imported / required by a Module should use which Loader(s) for transformation.
@@ -147,7 +165,6 @@ Webpack.js
 				output: {
 					path: path.resolve(__dirname, '<output-directory-path>'),
 					filename: '<filename>',
-						// Specifying '[name]' wihtin the <filename> will include the <entry-chunk-name> from the Entry-Point congifuration in its position.
 				},
 				
 				// Webpack Dev Server Configuration for enabling Automatic Recompilation and Reload via an In-Memory Server Process - requires the webpack-dev-server Package.
@@ -204,14 +221,25 @@ Webpack.js
 							dynamic-webpack-cdn-plugin
 
 				CSS:
-					new MiniCssExtractplugin() // CSS Minification and separate CSS Bundle Creation.
+					new MiniCssExtractPlugin() // Minifies and Extracts the CSS content into separate CSS Bundles.
 
 			Loaders:
 				CSS:
+					style-loader // Injects JS Strings with CSS content into index.html through <style> HTML Elements. Implements Hot Module Reloading for Patching CSS.
+					OR
+					MiniCssExtractPlugin.loader // Minifies and Extracts the CSS content into separate CSS Bundles.
+
+					css-loader // Resolves references and transforms Local CSS Resources into JS Modules containing JS Strings with CSS Content.
+						// Additionally facilitates the use of CSS Modules, which enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
+
 					sass-loader OR less-loader
 						fast-css-loader
-					css-loader // Resolves references and transforms Local CSS Resources into JS Modules containing JS Strings with CSS Content.
-					style-loader // Injects JS Strings with CSS content into index.html through <style> HTML Elements. Implements Hot Module Reloading for CSS Patching.
+
+				JS:
+					babel-loader
+						@babel/core
+						@babel/preset-env // Enables use of latest Javascript.
+						@babel/preset-react // Enables use of JSX Syntax for React.
 
 	Commands:
 		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
