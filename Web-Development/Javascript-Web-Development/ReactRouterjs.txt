@@ -19,60 +19,105 @@ React-Router:
 		Dynamic Routing:		Used to describe Routing during Application Rendering.
 	
 	Details:
-		Router: The Component that wraps around the topmost level of the Web Application.
-			import { BrowserRouter, HashRouter } from 'react-router-dom';
+		Components:
+			Router: The Component that wraps around the topmost level of the Web Application.
+				import { BrowserRouter, HashRouter } from 'react-router-dom';
 
-			// Router that uses the Path portion of a URL to change the wrapped content accordingly.
-			// Requires that only one HTML Page be served to the Client.
-			// Incorporates the HTML5 History API, which supports Browser Back and Forward Navigation.
-			<BrowserRouter
-				baseName="/<base-path>"
-			>
-				<App />
-			</BrowserRouter>
+				// Router that uses the Path portion of a URL to change the wrapped content accordingly.
+				// Requires that only one HTML Page be served to the Client.
+				// Incorporates the HTML5 History API, which supports Browser Back and Forward Navigation.
+				<BrowserRouter
+					baseName="/<base-path>"
+				>
+					<App />
+				</BrowserRouter>
 
-			// Router that uses the hash portion of a URL to change the wrapped content accordingly.
-			<HashRouter
-				baseName="/<base-path>"
-			>
-				<App />
-			</HashRouter>
+				// Router that uses the hash portion of a URL to change the wrapped content accordingly.
+				<HashRouter
+					baseName="/<base-path>"
+				>
+					<App />
+				</HashRouter>
 
-		Switch and Route: The Components that implement the Routing Logic.
-			import { Switch, Route } from 'react-router-dom';
+			Switch and Route: The Components that implement the Routing Logic.
+				import { Switch, Route } from 'react-router-dom';
 
-			// Switches contain Routes, and Routes contain Application Components.
-			// Note: Application Components may contain more nested Switches and Routes.
+				// Switches contain Routes, and Routes contain Application Elements.
+				// Note: Application Elements may contain more nested Switches and Routes.
 
-			const App = () => {
-				return (
-					<>
-						// Application Components
-							// ...
+				const RouteExample = () => (
+					<Route path="/<route-path>">
+						<AppPage />
+					</Route>
 
-						// Router Components
-							// Renders if it matches the Path.
-							<Route path="/<route-path>">
-								<AppPage />
-							</Route>
+					// OR
 
-							// Renders *only* the first Child that matches the Path, or null if there are no matches.
-							<Switch>
-								<Route path="/<route-path-1>">
-									// ...
-								</Route>
-
-								<Route path="/<route-path-2>">
-									// ...
-								</Route>
-
-								// ...
-							</Switch>
-					</>
+					// Note the lack of Angular Brackets when referencing AppPage - it is the Component, not the JSX -> React Element.
+					<Route path="/<route-path>" component={AppPage} />
 				);
-			}
 
-			// Routing-Support React Hooks
+				const App = () => {
+					return (
+						<>
+							// Application Elements
+								// ...
+
+							// Router Elements
+								// Renders if it matches the Path.
+								<Route path="/<route-path>">
+									<AppPage />
+								</Route>
+
+								// Renders *only* the first Child that matches the Path, or null if there are no matches.
+								<Switch>
+									<Route path="/<route-path-1>">
+										// ...
+									</Route>
+
+									// ...
+								</Switch>
+						</>
+					);
+				}
+
+			Link, NavLink, and Redirect: Components that change the Path and triggers the Routing Behaviour.
+				import { Link, NavLink, Redirect } from 'react-router-dom';
+
+				// Compiles down to an <a> element that switches the current Path to "/<route-path>".
+				<Link to="/<route-path>"> 
+					// Link Item Component
+				</Link>
+
+				// Like a Link Element, but also styles itself according to specified CSS when the Path matches.
+				<NavLink to="/<route-path>" activeClassName="<css-class>" activeStyle={<style-object>}> 
+					// Link Item Component
+				</NavLink>
+
+				// Changes the current Path to "/<route-path>" upon rendering.
+				<Redirect to="/<route-path>" />
+
+		History API Interaction:
+			// HOC
+			import { withRouter } from 'react-router';
+
+			const App = ({ history }) => {
+				useEffect(
+					() => history.listen(
+						// Establish a Listener for Route changes when Component initally Mounts.
+						// history.listen will destroy the Listener when the Component unmounts.
+						(location, action) => {
+							// ...
+							// location.pathname
+						}
+					), []
+				);
+
+				// ...
+			};
+
+			export default withRouter(App);
+
+			// React Hooks
 			import { useRouteMatch, useParams } from 'react-router-dom';
 
 			const AppPage = () => {
@@ -85,22 +130,6 @@ React-Router:
 				// ...
 			}
 
-		Link, NavLink, and Redirect: Components that change the Path and triggers the Routing Behaviour.
-			import { Link, NavLink, Redirect } from 'react-router-dom';
-
-			// Compiles down to an <a> element that switches the current Path to "/<route-path>".
-			<Link to="/<route-path>"> 
-				// Link Item Component
-			</Link>
-
-			// Like a Link Element, but also styles itself according to specified CSS when the Path matches.
-			<NavLink to="/<route-path>" activeClassName="<css-class>" activeStyle={<style-object>}> 
-				// Link Item Component
-			</NavLink>
-
-			// Changes the current Path to "/<route-path>" upon rendering.
-			<Redirect to="/<route-path>" />
-	
 	Commands:
 		
 	
