@@ -96,21 +96,43 @@ React-Router:
 				// Changes the current Path to "/<route-path>" upon rendering.
 				<Redirect to="/<route-path>" />
 
-		History API Interaction:
+		API Interaction:
 			// HOC
 			import { withRouter } from 'react-router';
 
-			const App = ({ history }) => {
+			const App = ({ match, location, history }) => {
+				// match Object contains information about how a Route matched a given URL.
+					// match.isExact
+					// match.url 		// Matched portion of the URL.
+					// match.path 		// The path pattern used to match.
+					// match.params 	// Object with Key-Value Pairs referencing passed parameters.
+
+				// location Object represents where the User is within the Component.
+					// Note: Prefer location over history.location due to immutability.
+
+					// location.pathname === '/<path>'
+
+					// State from the previous Route / to the next Route.
+					// location.state === {
+					// 	<key> : <value>
+					// }
+
+				// history Object acts as an interface for the History API.
 				useEffect(
 					() => history.listen(
-						// Establish a Listener for Route changes when Component initally Mounts.
+						// Establish a Listener for Route changes when Component initally mounts.
 						// history.listen will destroy the Listener when the Component unmounts.
 						(location, action) => {
-							// ...
+							// Obtain current <path>.
 							// location.pathname
+
+							// ...
 						}
 					), []
 				);
+
+				// Programmatically change Route.
+				// history.push(<location-type-obj>);
 
 				// ...
 			};
@@ -118,16 +140,22 @@ React-Router:
 			export default withRouter(App);
 
 			// React Hooks
-			import { useRouteMatch, useParams } from 'react-router-dom';
+			import { 
+				useHistory,
+				useLocation,
+				useParams,
+				useRouteMatch
+			} from 'react-router-dom';
 
 			const AppPage = () => {
-				// Obtain URL and matched Path in the current Route for implementing relative Links and Routes.
-				const { url, path } = useRouteMatch();
+				// Hooks can be used in any descendant Child, as long as there is a Router somewhere along the ancestrial line.
+				
+				// useRouteMatch is useful for avoiding a Route render.
+				let match = useRouteMatch('<path>');
 
-				// Obtain any named Parameters in the current Route (i.e. /:<parameter>).
-				const { <parameter-name> } = useParams();
-
-				// ...
+				// return match && (
+				// 	// ...
+				// );
 			}
 
 	Commands:
