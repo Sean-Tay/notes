@@ -180,6 +180,7 @@ Node.js:
 				npm install -g npm stable								// Update npm.
 			
 				npm init 												// Initialize a new Node Project.
+					-y													// Initialize a new Node Project with default metadata.
 				
 				npm install 											// Add all Node Dependency specified within a package.json locally to the current Node Project.
 
