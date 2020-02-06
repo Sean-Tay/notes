@@ -3,6 +3,7 @@ Webpack.js
 		CDN:					Content Delivery Network.
 
 		CSS:					Cascading Style Sheets.
+		JS:						Javascript.
 	
 	Description: Primarily a Module Bundler, but can be configured to handle other parts of the Development Pipeline too.
 	
@@ -19,7 +20,7 @@ Webpack.js
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
 		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module. These are required for non JSON / Javascript Dependencies.
 
-		Chunk:					A Module, or group of Modules that is currently being handled by Webpack as part of the Bundling Process.
+		Chunk:					References a Module, or group of Modules, currently being handled by the Webpack Bundling Process.
 
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
 		Bundle:					An emitted File consisting of the content from a group of Assets, Modules and potentially associated Dependencies, made to be easily consumable for a Browser.
