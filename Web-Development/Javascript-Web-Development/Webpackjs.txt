@@ -221,7 +221,7 @@ Webpack.js
 						write-file-webpack-plugin // Forces Webpack Dev Server to emit the Resolved Files.
 
 				HTML:
-					new HtmlWebpackPlugin() // HTML Injection.
+					new HtmlWebpackPlugin() // Injection of the Application JS into a HTML Template for eventual Browser usage.
 						// CDN for specified node_modules:
 							webpack-cdn-plugin
 							dynamic-webpack-cdn-plugin
@@ -244,6 +244,8 @@ Webpack.js
 				JS:
 					babel-loader
 						@babel/core
+
+						// presets
 						@babel/preset-env // Enables use of latest Javascript.
 						@babel/preset-react // Enables use of JSX Syntax for React.
 

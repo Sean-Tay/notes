@@ -98,65 +98,65 @@ React-Router:
 
 		API Interaction:
 			// HOC
-			import { withRouter } from 'react-router';
+				import { withRouter } from 'react-router';
 
-			const App = ({ match, location, history }) => {
-				// match Object contains information about how a Route matched a given URL.
-					// match.isExact
-					// match.url 		// Matched portion of the URL.
-					// match.path 		// The path pattern used to match.
-					// match.params 	// Object with Key-Value Pairs referencing passed parameters.
+				const App = ({ match, location, history }) => {
+					// match Object contains information about how a Route matched a given URL.
+						// match.isExact
+						// match.url 		// Matched portion of the URL.
+						// match.path 		// The path pattern used to match.
+						// match.params 	// Object with Key-Value Pairs referencing passed parameters.
 
-				// location Object represents where the User is within the Component.
-					// Note: Prefer location over history.location due to immutability.
+					// location Object represents where the User is within the Component.
+						// Note: Prefer location over history.location due to immutability.
 
-					// location.pathname === '/<path>'
+						// location.pathname === '/<path>'
 
-					// State from the previous Route / to the next Route.
-					// location.state === {
-					// 	<key> : <value>
-					// }
+						// State from the previous Route / to the next Route.
+						// location.state === {
+						// 	<key> : <value>
+						// }
 
-				// history Object acts as an interface for the History API.
-					useEffect(
-						() => history.listen(
-							// Establish a Listener for Route changes when Component initally mounts.
-							// history.listen will destroy the Listener when the Component unmounts.
-							(location, action) => {
-								// Obtain current <path>.
-								// location.pathname
+					// history Object acts as an interface for the History API.
+						useEffect(
+							() => history.listen(
+								// Establish a Listener for Route changes when Component initally mounts.
+								// history.listen will destroy the Listener when the Component unmounts.
+								(location, action) => {
+									// Obtain current <path>.
+									// location.pathname
 
-								// ...
-							}
-						), []
-					);
+									// ...
+								}
+							), []
+						);
 
-					// Programmatically change Route.
-					// history.push(<location-type-obj>);
+						// Programmatically change Route.
+						// history.push(<location-type-obj>);
 
-				// ...
-			};
+					// ...
+				};
 
-			export default withRouter(App);
+				export default withRouter(App);
 
 			// React Hooks
-			import { 
-				useHistory,
-				useLocation,
-				useParams,
-				useRouteMatch
-			} from 'react-router-dom';
+				import { 
+					useHistory,
+					useLocation,
+					useParams,
+					useRouteMatch
+				} from 'react-router-dom';
 
-			const AppPage = () => {
-				// Hooks can be used in any descendant Child, as long as there is a Router somewhere along the ancestrial line.
-				
-				// useRouteMatch is useful for avoiding a Route render.
-				let match = useRouteMatch('<path>');
+				const AppPage = () => {
+					// Hooks can be used in any descendant Child, as long as there is a Router somewhere along the ancestrial line.
+					
+					// useRouteMatch is useful for avoiding a Route render.
+					let match = useRouteMatch('<path>');
 
-				// return match && (
-				// 	// ...
-				// );
-			}
+					// return match && (
+					// 	// ...
+					// );
+				}
 
 	Commands:
 		
