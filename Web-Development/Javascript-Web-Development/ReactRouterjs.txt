@@ -118,21 +118,21 @@ React-Router:
 					// }
 
 				// history Object acts as an interface for the History API.
-				useEffect(
-					() => history.listen(
-						// Establish a Listener for Route changes when Component initally mounts.
-						// history.listen will destroy the Listener when the Component unmounts.
-						(location, action) => {
-							// Obtain current <path>.
-							// location.pathname
+					useEffect(
+						() => history.listen(
+							// Establish a Listener for Route changes when Component initally mounts.
+							// history.listen will destroy the Listener when the Component unmounts.
+							(location, action) => {
+								// Obtain current <path>.
+								// location.pathname
 
-							// ...
-						}
-					), []
-				);
+								// ...
+							}
+						), []
+					);
 
-				// Programmatically change Route.
-				// history.push(<location-type-obj>);
+					// Programmatically change Route.
+					// history.push(<location-type-obj>);
 
 				// ...
 			};
