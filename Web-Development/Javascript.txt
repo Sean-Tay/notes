@@ -589,12 +589,12 @@ Javascript
 	Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
 		DOM Elements:
 			var element = document.getElementsByClassName('classname'); // No need the . prefix
-			var element = document.getElementById('idName'); 	// No need the # prefix
+			var element = document.getElementById('idName'); // No need the # prefix
 	
 		DOM Properties: Initialized from the values assigned to HTML Attributes. These can mutate during runtime, unlike HTML Attributes which only dictate the starting values of these Properties.
-			element.innerText; 									// references the text content between opening and closing HTML tags 
-			element.innerHTML; 									// references the HTML content between opening and closing HTML tags
-			element.style; 										// references the js object representing the css of the HTML element
+			element.innerText; 	// references the text content between opening and closing HTML tags 
+			element.innerHTML; 	// references the HTML content between opening and closing HTML tags
+			element.style; 		// references the js object representing the css of the HTML element
 		
 		DOM Events:	
 			Add Event Listener:
@@ -612,7 +612,19 @@ Javascript
 			// Note: Event Listeners return Event Objects
 				eventObject.target.value
 				// eventObject Properties: https://developer.mozilla.org/en-US/docs/Web/API/Event
-				
+
+		Shadow DOM: An encapsulated DOM Tree which can be attached to any part of the regular DOM Tree, whilst still maintaining the encapsulation.
+			Code within the Shadow DOM cannot affect the regular DOM Tree.
+
+			Shadow Host: The regular DOM Tree Node to which a Shadow DOM Tree will be attached to.
+			Shadow Boundary: The boundary by which a Shadow DOM Tree and the regular DOM Tree are separated by. It does not contain the Shadow Host.
+			Shadow Root: The root node of a Shadow DOM Tree.
+
+			// Creating a Shadow DOM Tree, and attaching it onto a Shadow Host.
+			let shadowDOMTree = element.attachShadow({
+				mode: {'open' | 'close'} // Allow if outside JS can access the Shadow DOM Tree.
+			});
+
 	AJAX Requests: Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
 		const httpRequest = new XMLHttpRequest(); // Create a new AJAX Request
 		
