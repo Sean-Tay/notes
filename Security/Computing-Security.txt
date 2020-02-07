@@ -2,10 +2,15 @@ Security:
 	Abbreviations:
 		SSH:					Secure SHell.
 
+		MITM:					Man-In-The-Middle.
+		XSS:					Cross-Site Scripting.
+
 		SSL:					Secure Sockets Layer.
 		TLS:					Transport Layer Security.
 
 		HTTPS:					HyperText Transfer Protocol Secure.
+
+		JS:						Javascript.
 	
 	Concepts:
 		Cryptography:			The theory and practice of techniques for Secure Communication.
@@ -35,6 +40,8 @@ Security:
 	
 		Digital Certificate:	A Public Key that is verified by some trusted entity.
 		Certificate Authority: 	A trusted entity that verifies Public Keys.
+
+		Cross-Site:				Something that involves multiple Websites.
 
 	Details:
 		Hashing:
@@ -67,6 +74,10 @@ Security:
 				As a result, the User Database for the Application would store the Username, the unmodified Salt for that User, and the final Password Hash. 
 					The Salts make it so that one Rainbow Table cannot immediately break all stored Password Hashes; it does not matter that the Salts are in Plaintext.
 
+		Attacks:
+			Injection Attack: The supplication of Untrusted Input to an Application, which gets processed by an Interpreter as part of a Application Command or Query, altering the course of execution for the Application and potentially leading it to do malicious activity.
+				XSS: JS Injection Attack.
+
 		Cryptography:
 			Asymmetric Cryptography:
 				Communication Modes:
@@ -74,8 +85,10 @@ Security:
 					Authenticity: If a Private Key is used for Encryption and the corresponding Public Key is used for Decryption, the Encrypted Information could only have been created by the owner of the Private Key.
 
 				SSL: Older Cryptographic Transport Layer Protocol used for communication.
+					Primarily established to prevent MITM Attacks.
 
 				TLS: Current Cryptographic Transport Layer Protocol used for communication.
+					The successor to SSL v2.0.
 
 				HTTPS: Cryptographic Application Layer Protocol used for communication.
 					If HTTPS is used, the Server sends a Digital Certificate to the Client upon first contact. The Client then uses the Public Key within to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.

@@ -13,6 +13,12 @@ Web Dev:
 		REST: 					Representational State Transfer.
 	
 	Concepts:
+		Web Site:				A Service hosted on the Web - meant for Humans.
+		Web Service:			A Service hosted on the Web - meant for Applications.
+
+		Web Server:				A running Process that listens for incoming Requests for information over the Web and sends back Responses.
+		App Server:				Hosts and Exposes Business Logic and Processes.
+
 		URL:					A String that uniquely identifies a Resource / Site / Service on the Web. Consists of:
 			Protocol:			The Protocol used to specify the communication mode with the Server.
 			Host and Domain:	The Entity that the Server is running on, and the Administrative Space the Entity is in.
@@ -23,17 +29,25 @@ Web Dev:
 
 		SOAP:					Messaging definition for the interaction between Web Services.
 
-		Web Site:				A Service hosted on the Web - meant for Humans.
-		Web Service:			A Service hosted on the Web - meant for Applications.
+		Cookie:					A Key-Value Pair Data Structure used to store persistent Session State on the Browser when using Stateless HTTP, set via 'set-cookie' HTTP Response Headers. Each Field Attribute consists of:
+			Name:				Field Key.
+			Value: 				Field Value.
 
-		Web Server:				A running (containerized?) Process that listens for incoming Requests for information over the Web and sends back Responses.
-		App Server:				Hosts and Exposes Business Logic and Processes.
+			Domain:				Determines which Domain can access the associated Field.
+			Path:				Determines which part of the Web Application is allowed to access the associated Field.
+			Expires / Max Age: 	Determines validity lifespan of the associated Field.
+			Size:				Number of characters for associated Field Name and Value.
+
+			// Security-Related Fields - see Security Notes for more exposition.
+			HTTP / HttpOnly:	Prevents Client-Side manipulation of the Cookie via JS and other vectors - the Cookie is only used for Server-Side activity.
+			Secure:				Only transmit the assosicated Field over HTTPS.
+			SameSite:			Used to prevent CSRF Attacks.
 	
 	Details:
 		Summary of Full-Stack:
 			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and static assets sent to a Client, like a Web Browser.
 
-			A Web Server is a running (containerized?) Process that listens for incoming Requests for information over the Web and sends back Responses.
+			A Web Server is a running Process that listens for incoming Requests for information over the Web and sends back Responses.
 
 			The Server-Side of a Web Application, sometimes called the Application Server, handles important tasks such as Authentication and Authorization.
 
