@@ -230,6 +230,14 @@ Webpack.js
 					new MiniCssExtractPlugin() // Minifies and Extracts the CSS content into separate CSS Bundles.
 
 			Loaders:
+				JS:
+					babel-loader
+						@babel/core
+
+						// presets
+						@babel/preset-env // Enables use of latest Javascript.
+						@babel/preset-react // Enables use of JSX Syntax for React.
+
 				CSS:
 					style-loader // Injects JS Strings with CSS content into index.html through <style> HTML Elements. Implements Hot Module Reloading for Patching CSS.
 					OR
@@ -240,14 +248,6 @@ Webpack.js
 
 					sass-loader OR less-loader
 						fast-css-loader
-
-				JS:
-					babel-loader
-						@babel/core
-
-						// presets
-						@babel/preset-env // Enables use of latest Javascript.
-						@babel/preset-react // Enables use of JSX Syntax for React.
 
 	Commands:
 		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
