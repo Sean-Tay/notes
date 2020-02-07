@@ -625,6 +625,9 @@ Javascript
 				mode: {'open' | 'close'} // Allow if outside JS can access the Shadow DOM Tree.
 			});
 
+		API:
+			document.cookie		// Returns a semicolon separated list of Cookies, or sets a custom Cookie. Cannot be done if the Cookie has been set to HttpOnly in the HTTP Response Header from the Server.
+
 	AJAX Requests: Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
 		const httpRequest = new XMLHttpRequest(); // Create a new AJAX Request
 		
