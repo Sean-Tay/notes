@@ -39,7 +39,7 @@ Web Dev:
 			Size:				Number of characters for associated Field Name and Value.
 
 			// Security-Related Fields - see Security Notes for more exposition.
-			HTTP / HttpOnly:	Prevents Client-Side manipulation of the Cookie via JS and other vectors - the Cookie is only used for Server-Side activity.
+			HTTP / HttpOnly:	Prevents Client-Side manipulation of the Cookie via JS and other vectors - the Cookie is only used for Server-Side meta-session activity.
 			Secure:				Only transmit the assosicated Field over HTTPS.
 			SameSite:			Used to prevent CSRF Attacks.
 	

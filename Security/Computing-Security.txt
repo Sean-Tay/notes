@@ -4,6 +4,7 @@ Security:
 
 		MITM:					Man-In-The-Middle.
 		XSS:					Cross-Site Scripting.
+		CSRF:					Cross-Site Request Forgery.
 
 		SSL:					Secure Sockets Layer.
 		TLS:					Transport Layer Security.
@@ -26,6 +27,10 @@ Security:
 		Reduction Function:		A Function that has a swapped Domain and Range with its corresponding Hashing Function. It is NOT the inverse of the Hashing Function.
 		Rainbow Table:			A Data Structure that stores pre-computed mappings between Plaintexts and corresponding derived Hashes under one Hashing Configuration.
 
+		Cross-Site:				Something that involves multiple Websites.
+		
+		Session Hijacking:		Take over the identity of another User, from the perspective of an Application, for the purposes of malicious activity.
+
 		Cipher:					A mechanism to transform Information between a Readable Format and a Disguised Variant that hides its meaning. May include the use of a Key to allow a piece of Information to have mappings with different Disguised Variants.
 		Ciphertext:				Plaintext that has been transformed in some way via a Cipher to hide its meaning.
 
@@ -40,8 +45,6 @@ Security:
 	
 		Digital Certificate:	A Public Key that is verified by some trusted entity.
 		Certificate Authority: 	A trusted entity that verifies Public Keys.
-
-		Cross-Site:				Something that involves multiple Websites.
 
 	Details:
 		Hashing:
@@ -76,13 +79,21 @@ Security:
 
 		Attacks:
 			Injection Attack: The supplication of Untrusted Input to an Application, which gets processed by an Interpreter as part of a Application Command or Query, altering the course of execution for the Application and potentially leading it to do malicious activity.
-				XSS: JS Injection Attack.
+				XSS: Cross-Site JS Injection Attack.
+					Scenario: If User Input is rendered to HTML, the User can insert <script> </script> Tags to allow for unwarranted execution of JS, since <script> </script> Tags can be placed anywhere within the DOM Tree. The Cross-Site nature can occur if the JS is used to manipulate the User's Cookies derived from other Applications.
+			
+			CSRF: Cross-Site forgery of a valid User Request.
+				Scenario: If a User is logged into an Application, and clicks on something in another Application that triggers the submission of a forged valid User Request for the first Application.
 
 		Cryptography:
 			Asymmetric Cryptography:
 				Communication Modes:
 					Confidentiality: If a Public Key is used for Encryption and the corresponding Private Key is used for Decryption, the Encrypted Information would only be viewable by the owner of the Private Key.
 					Authenticity: If a Private Key is used for Encryption and the corresponding Public Key is used for Decryption, the Encrypted Information could only have been created by the owner of the Private Key.
+
+				Algorithms:
+					Diffie-Hellman Key Exchange.
+					RSA.
 
 				SSL: Older Cryptographic Transport Layer Protocol used for communication.
 					Primarily established to prevent MITM Attacks.
