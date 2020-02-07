@@ -51,9 +51,11 @@ HTML:
 					<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 
 			<body> ... </body> - Tags that specify the start and end of the actual HTML Content.
-				<div> ... </div> - Tags that are usually used to group other Block Elements together with. 
+				<iframe src="" srcdoc="<html_code>" > ... </iframe> - Tags used to represent an Inline Section to show another HTML Document.
 
 				<span> ... </span> - Tags that are usually used to group Inline Elements or Inline-Block Elements together with. Cannot contain Block Elements within it.
+
+				<div> ... </div> - Tags that are usually used to group other Block Elements together with. 
 
 				<{h1|h2|h3|h4|h5|h6}> Header Content </{h1|h2|h3|h4|h5|h6}> - Tags that specify a Header. Used by Search Engines to index Webpages.
 
