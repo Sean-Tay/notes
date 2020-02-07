@@ -4,7 +4,7 @@ Less
 	
 	Description:				An extension to CSS that adds more programmatic features.
 	
-	Tutorials:
+	Resources:
 		
 	
 	Concepts:

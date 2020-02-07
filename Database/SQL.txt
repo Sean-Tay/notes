@@ -7,7 +7,7 @@ SQL:
 	Description:	
 		Declarative Language used by Applications to instruct what needs to be done by Relational Databases to meet Application Requirements.
 	
-	Tutorials:
+	Resources:
 		https://www.youtube.com/watch?v=nWeW3sCmD2k
 	
 	Concepts: 

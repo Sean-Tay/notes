@@ -73,5 +73,9 @@ Security:
 					Confidentiality: If a Public Key is used for Encryption and the corresponding Private Key is used for Decryption, the Encrypted Information would only be viewable by the owner of the Private Key.
 					Authenticity: If a Private Key is used for Encryption and the corresponding Public Key is used for Decryption, the Encrypted Information could only have been created by the owner of the Private Key.
 
-				HTTPs:
+				SSL: Older Cryptographic Transport Layer Protocol used for communication.
+
+				TLS: Current Cryptographic Transport Layer Protocol used for communication.
+
+				HTTPS: Cryptographic Application Layer Protocol used for communication.
 					If HTTPS is used, the Server sends a Digital Certificate to the Client upon first contact. The Client then uses the Public Key within to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.

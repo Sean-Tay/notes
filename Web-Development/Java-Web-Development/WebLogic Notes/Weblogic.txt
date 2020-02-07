@@ -31,7 +31,8 @@ WebLogic:
 		Scalable, Enterprise Ready Java EE Container.
 		Part of Oracle Fusion Middleware.
 
-	Tutorials:
+	Resources:
+
 
 	Concepts:
 		// General:

@@ -5,7 +5,7 @@
 	Description:
 		
 	
-	Tutorials:
+	Resources:
 		
 	
 	Concepts:

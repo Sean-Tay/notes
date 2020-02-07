@@ -16,7 +16,7 @@ Relational Database:
 	Description:
 		A Database that focuses on the efficient storage and retrival of Relational Data from Disk.
 	
-	Tutorials:
+	Resources:
 
 	
 	Concepts:

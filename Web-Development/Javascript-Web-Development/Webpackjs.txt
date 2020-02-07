@@ -7,7 +7,7 @@ Webpack.js
 	
 	Description: Primarily a Module Bundler, but can be configured to handle other parts of the Development Pipeline too.
 	
-	Tutorials:
+	Resources:
 		SurviveJS:				https://survivejs.com/webpack/
 	
 	Concepts:

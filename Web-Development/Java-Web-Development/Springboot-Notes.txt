@@ -5,7 +5,7 @@ Springboot
 	Description:
 		
 	
-	Tutorials:
+	Resources:
 		https://youtu.be/msXL2oDexqw
 	
 	Concepts: 

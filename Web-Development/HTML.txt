@@ -4,7 +4,7 @@ HTML:
 	
 	Description:				Defines the structure of the Web Document. It specifies both the content, and the rendering instructions for a Browser.
 	
-	Tutorials:
+	Resources:
 		
 	
 	Concepts:

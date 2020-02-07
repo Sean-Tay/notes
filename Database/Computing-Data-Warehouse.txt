@@ -7,7 +7,7 @@ Data Warehouse
 	Description:
 		A Database that focuses on the efficient analysis of Historical or Commutative Data gathered from different Data Sources.
 	
-	Tutorials:
+	Resources:
 		https://www.guru99.com/data-warehousing.html
 		https://youtu.be/q77B-G8CA24
 	

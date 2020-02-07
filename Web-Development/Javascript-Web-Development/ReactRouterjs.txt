@@ -7,7 +7,7 @@ React-Router:
 	Description:
 		A Framework to support Client-Side Front-End Routing for Single-Page React Applications.
 	
-	Tutorials:
+	Resources:
 		
 	
 	Concepts:

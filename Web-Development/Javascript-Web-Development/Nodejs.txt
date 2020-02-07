@@ -4,7 +4,7 @@ Node.js:
 	
 	Description: A configurable JS Runtime-Environment, independent of the Web Browser.
 	
-	Tutorials:
+	Resources:
 		Front-End Node Project Template Creator: https://createapp.dev/
 	
 	Concepts:

@@ -5,7 +5,7 @@ IBM MQ
 	Description:
 		Message-Oriented Middleware that allows Independent and potentially Non-Concurrent Applications on Distributed Systems to securely communicate with each other through the use of a Common Programming Interface.
 	
-	Tutorials:
+	Resources:
 		
 	
 	Concepts: 
