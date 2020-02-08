@@ -63,12 +63,17 @@ React-Router:
 								// ...
 
 							// Router Elements
-								// Renders if it matches the Path.
+								// Renders if it at least partially matches the Path.
 								<Route path="/<route-path>">
 									<AppPage />
 								</Route>
 
-								// Renders *only* the first Child that matches the Path, or null if there are no matches.
+								// Renders only if the Path completely matches.
+								<Route exact path="/<route-path>">
+									<AppPage />
+								</Route>
+
+								// Renders *only* the first Route that has a fulfilled Path, or null if there are no matches.
 								<Switch>
 									<Route path="/<route-path-1>">
 										// ...
@@ -95,6 +100,11 @@ React-Router:
 
 				// Changes the current Path to "/<route-path>" upon rendering.
 				<Redirect to="/<route-path>" />
+
+				// A <Redirect> Component is more useful within a <Switch> Component:
+				<Switch>
+					<Redirect exact from="/<switch-base-path>" to="/<destination-route-path>" />
+				</Switch>
 
 		API Interaction:
 			// HOC
@@ -151,6 +161,7 @@ React-Router:
 					// Hooks can be used in any descendant Child, as long as there is a Router somewhere along the ancestrial line.
 					
 					// useRouteMatch is useful to avoid rendering the Route component.
+					// Note: The Component should be rendered outside of the Switch Component.
 					let match = useRouteMatch('<path>');
 
 					return match && (
