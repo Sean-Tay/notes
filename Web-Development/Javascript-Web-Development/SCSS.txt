@@ -12,12 +12,17 @@ SCSS
 		Rule:					A <{key | rule}>: <value> pair specifying a CSS property.
 		Rule-Set:				A grouping of CSS Rules that is usually applied to <css-selectors>.
 
-		List:					A comma or space delimited series of Values.	
+		List:					A comma or space delimited series of Values.
 	
 	Details:
 		SCSS Syntax needs to be compiled down to CSS before it can be used.
 
 		Features:
+			Imports:
+				@import '<url>';
+				@use '_<scss-file-name>'; // Partials: SCSS Files with a leading underscore in their name will not be compiled to CSS.
+				@use '<scss-file-path>';
+
 			Variable Definition:
 				$<variable-name>: <value>;
 
@@ -31,13 +36,17 @@ SCSS
 
 			Nested Rule-Sets:
 				<outer-css-selector> {
+
 					// ...
+
 					<inner-css-selector> { // Equivalent to '<outer-css-selector> <inner-css-selector>'
 						// ... 
 					}
+
 					// ...
 
-					// & will refer to <outer-css-selector>
+					// Note: & will refer to <outer-css-selector>.
+					// Note: @at-root will force the <inner-css-selector> to be at the level of the <outer-css-selector>.
 				}
 
 			Mixins: Use function-like Rule-Sets within other Rule-Sets.
@@ -59,9 +68,6 @@ SCSS
 					@extends %<virtual-rule-set>;
 					// ...
 				}
-
-			Partials: SCSS Files with a leading underscore in their name will not be compiled to CSS. Usually used as imports via the @use syntax.
-				@use '<scss-file-name>';
 	
 	Commands:
 		
