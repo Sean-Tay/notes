@@ -189,10 +189,6 @@ Webpack.js
 					host: process.env.HOST, // Defaults to `localhost`
 					port: process.env.PORT, // Defaults to 8080
 					open: true, // Load the content from the contentBase specifications in the Browser.
-					openPage: [ // Load specified content from the contentBase specifications in the Browser.
-						'<page-url>',
-						// ...
-					],
 
 					// Enable the requesting of resources from Webpack Dev Server to other Servers.
 					proxy: {
@@ -221,7 +217,12 @@ Webpack.js
 						write-file-webpack-plugin // Forces Webpack Dev Server to emit the Resolved Files.
 
 				HTML:
-					new HtmlWebpackPlugin() // Injection of the Application JS into a HTML Template for eventual Browser usage.
+					new HtmlWebpackPlugin( // Injection of the Application JS into a HTML Template for eventual Browser usage.
+						{ 
+							template: <html-template-path>, 
+							// ...
+						}
+					)
 						// CDN for specified node_modules:
 							webpack-cdn-plugin
 							dynamic-webpack-cdn-plugin
@@ -245,9 +246,11 @@ Webpack.js
 
 					css-loader // Resolves references and transforms Local CSS Resources into JS Modules containing JS Strings with CSS Content.
 						// Additionally facilitates the use of CSS Modules, which enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
+						
+						fast-css-loader
 
 					sass-loader OR less-loader
-						fast-css-loader
+						fast-sass-loader
 
 	Commands:
 		npx webpack src/<file.js> --output dist/<bundle>.js // Trigger the bundling process for file.js and emits the resultant bundle into <bundle>.js.
