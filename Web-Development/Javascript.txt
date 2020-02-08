@@ -133,24 +133,51 @@ Javascript
 			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
 
 		Functions:
-			function functionName(inputArgument1) { 			// Parameters should not have the var keyword
+			function functionName(
+				arg,
+				// ...
+			) {
 				// ...
 			}
 
-			function() { 										// Anonymous Function
+			// Anonymous Function
+			function(
+				arg, 
+				// ...
+			) {
 				// ...
 			}
 
-			function functionCallback( ... , callback) { 		// A callback parameter is to allow the execution (or multiple executions) of a specified function anytime during the parent function's execution
+			// Default Arguments
+			const functionName = function(
+				arg = <default-value>, 
 				// ...
-				callback();
-			}
-			
+			) {
+				// ...
+			};
+
+			// 'Class' Constructor.
 			function classConstructor( ... ) {
 				this.property = ...;
 			}
 
-			functionName(); 									// Invoke the functionName function
+			functionName();
+
+			// Patterns:
+				// An Object should be used instead of a Parameter List to avoid breaking changes when a new Paramenter is added.
+				function functionName(params = {}) {
+					if (params.arg !== undefined) {
+						// ...
+					}
+
+					// ...
+				}
+
+				// A Callback Function can be provided in the Function's Parameters to allow other execution to take place in the event something significant happens during the execution of this Function.
+				function functionCallback(params = {}) {
+					// ...
+					params.callback !== undefined && params.callback();
+				}
 			
 			// Note: Functions are actually Objects!
 
@@ -425,8 +452,8 @@ Javascript
 				
 				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
 				// Else:
-				constructor(arg, ...) {
-					super(arg, ...)
+				constructor(params) {
+					super(params)
 
 					//...
 
@@ -434,7 +461,7 @@ Javascript
 				}
 
 				// A Class Definition defines Prototype Methods.
-				<method>(arg, ...) {
+				<method>(params) {
 					// ...
 				}
 
