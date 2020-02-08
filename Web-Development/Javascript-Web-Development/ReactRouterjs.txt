@@ -145,17 +145,17 @@ React-Router:
 					useLocation,
 					useParams,
 					useRouteMatch
-				} from 'react-router-dom';
+				} from 'react-router';
 
 				const AppPage = () => {
 					// Hooks can be used in any descendant Child, as long as there is a Router somewhere along the ancestrial line.
 					
-					// useRouteMatch is useful for avoiding a Route render.
+					// useRouteMatch is useful to avoid rendering the Route component.
 					let match = useRouteMatch('<path>');
 
-					// return match && (
-					// 	// ...
-					// );
+					return match && (
+						// ...
+					);
 				}
 
 	Commands:
