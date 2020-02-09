@@ -246,6 +246,9 @@ Webpack.js
 
 					css-loader // Resolves references and transforms Local CSS Resources into JS Modules containing JS Strings with CSS Content.
 						// Additionally facilitates the use of CSS Modules, which enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
+							// General Flow: Define CSS Classes in the CSS File, then in JS Files:
+								// import classes from './index.css';
+								// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
 						
 						fast-css-loader
 
