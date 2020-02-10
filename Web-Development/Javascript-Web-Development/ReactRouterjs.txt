@@ -5,7 +5,7 @@ React-Router:
 		HTML:					HyperText Markup Language.
 	
 	Description:
-		A Framework to support Client-Side Front-End Routing for Single-Page React Applications.
+		A Framework to support Client-Side Routing for Single-Page React Applications.
 	
 	Resources:
 		
@@ -13,7 +13,7 @@ React-Router:
 	Concepts:
 		Single Page Web Application: A Web Application that only uses a single HTML Page to display content. Content changes mainly through Javascript, without having to refresh / reload the Page.
 
-		Routing:				The idea of leading Users to different parts of the Web Application via different Paths in the URLs.
+		Routing:				The process of using URLs to determine the part of the Web Application exposed to the User. Traditionally handled Server-Side, but React Router allows for Front-End Routing to save on HTTP Requests.
 		
 		Static Routing:			Used to describe Routing before Application Rendering.
 		Dynamic Routing:		Used to describe Routing during Application Rendering.
@@ -24,8 +24,9 @@ React-Router:
 				import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 				// Router that uses the Path portion of a URL to change the wrapped content accordingly.
-				// Requires that only one HTML Page be served to the Client.
-				// Incorporates the HTML5 History API, which supports Browser Back and Forward Navigation.
+				// Requires Server to be configured to always return one HTML File, regardless of URL.
+					// For Client-Side Routing, only the URL in the initial HTTP Request is handled Server-Side.
+					// If a given URL is only valid for Client-Side Routing, the Server may throw an error, unless configured to fallback to some resource.
 				<BrowserRouter
 					baseName="/<base-path>"
 				>
@@ -33,6 +34,7 @@ React-Router:
 				</BrowserRouter>
 
 				// Router that uses the hash portion of a URL to change the wrapped content accordingly.
+				// Does not require additional Server configuration, since the hash portion of the URL is not sent back to the Server.
 				<HashRouter
 					baseName="/<base-path>"
 				>
@@ -44,17 +46,6 @@ React-Router:
 
 				// Switches contain Routes, and Routes contain Application Elements.
 				// Note: Application Elements may contain more nested Switches and Routes.
-
-				const RouteExample = () => (
-					<Route path="/<route-path>">
-						<AppPage />
-					</Route>
-
-					// OR
-
-					// Note the lack of Angular Brackets when referencing AppPage - it is the Component, not the JSX -> React Element.
-					<Route path="/<route-path>" component={AppPage} />
-				);
 
 				const App = () => {
 					return (
@@ -162,7 +153,11 @@ React-Router:
 					
 					// useRouteMatch is useful to avoid rendering the Route component.
 					// Note: The Component should be rendered outside of the Switch Component.
-					let match = useRouteMatch('<path>');
+					let match = useRouteMatch({
+						path: '<path>',
+						strict: true,
+						sensitive: true
+					});
 
 					return match && (
 						// ...

@@ -4,6 +4,8 @@ Webpack.js
 
 		CSS:					Cascading Style Sheets.
 		JS:						Javascript.
+
+		SPA:					Single Page Application.
 	
 	Description: Primarily a Module Bundler, but can be configured to handle other parts of the Development Pipeline too.
 	
@@ -197,6 +199,7 @@ Webpack.js
 					},
 
 					// Request the Server to fallback to index.html if a requested resource cannot be found.
+					// Note: Useful for SPAs.
 					historyApiFallback: true, 
 
 					// Enable Hot Module Replacement.
