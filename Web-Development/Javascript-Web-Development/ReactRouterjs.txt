@@ -25,7 +25,8 @@ React-Router:
 
 				// Router that uses the Path portion of a URL to change the wrapped content accordingly.
 				// Requires Server to be configured to always return one HTML File, regardless of URL.
-				// Incorporates the HTML5 History API, which supports Browser Back and Forward Navigation.
+					// For Client-Side Routing, only the URL in the initial HTTP Request is handled Server-Side.
+					// If a given URL is only valid for Client-Side Routing, the Server may throw an error, unless configured to fallback to some resource.
 				<BrowserRouter
 					baseName="/<base-path>"
 				>
