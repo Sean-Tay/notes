@@ -43,13 +43,23 @@ Security:
 		Public Key:				A Key for a Cipher that is freely accessible.
 		Private Key:			A Key for a Cipher that is a secret.
 	
-		Digital Certificate:	A Public Key that is verified by some trusted entity.
+		Digital Signature:		A Hash of some Data, which is then Encrypted by the signer's Private Key.
+		Digital Certificate:	A Data Structure that minimally contains a Public Key, and the Public Key's Digital Signature, signed by some trusted entity.
+		Certificate Fingerprint: Hashes of the entire Digital Certificate with different Hashing Algorithms.
+
 		Certificate Authority: 	A trusted entity that verifies Public Keys.
+		Root Certificate: 		A Digital Certificate that was directly signed by a Certificate Authority. The corresponding Public Key to be used is pre-installed in Client Devices.
+		Intermediate Certificate: A Digital Certificate that was signed via the corresponding Private Key of the 'parent' Public Key within a Certificate (Root or another Intermediate). These are employed to provide additional layers of separation from the Certificate Authority's Private Key.
+		Leaf Certificate: 		A Digital Certificate that was signed via the corresponding Private Key of the 'parent' Public Key within an Intermediate Certificate. These are intended to contain the Public Keys of individual Servers.
 
 	Details:
 		Hashing:
 			Hash Functions are typically one-way Mathematical Functions, with no corresponding Inverse Function.
 				To achieve the no proper Inverse behaviour, they tend to lose information as they convert Input to Output.
+
+				Algorithms:
+					MD5
+					SHA256
 
 			Rainbow Tables:
 				Unoptimized Rainbow Tables are simply Lookup Tables that store all possible mappings between Plaintext Values and their corresponding Hashes.
@@ -101,5 +111,14 @@ Security:
 				TLS: Current Cryptographic Transport Layer Protocol used for communication.
 					The successor to SSL v2.0.
 
+					TLS Handshake:
+						For a Server to support TLS, they must first register their Public Key with a known Certificate Authority, which will create a Leaf Certificate (and one or more Intermediate Certificates) containing the Server's Hashed Public Key. The Certificate Authority must be well-known enough such that it has its corresponding Public Key  pre-installed on the Client's System.
+
+						When a Client initiates a connection to the Server via HTTPS from the Browser, the Server sends the Digital Certificates, as well as its own Public Key, to the Client upon first contact as part of the Handshake. The Client would then use the indicated pre-installed Certificate Authority's Public Key to Decrypt the (Intermediate Certificates, chaining up to the) Leaf Certificate and obtain the Hashed Server's Public Key within. The Hashed Server's Public Key is then used to check the Server's Public Key that was sent.
+
+						If the Server's Public Key cannot be verified (eventually) via a pre-installed Public Key, the Browser would warn the User.
+						
+						Once the sent Server's Public Key is verified, it is then used to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.
+
 				HTTPS: Cryptographic Application Layer Protocol used for communication.
-					If HTTPS is used, the Server sends a Digital Certificate to the Client upon first contact. The Client then uses the Public Key within to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.
+
