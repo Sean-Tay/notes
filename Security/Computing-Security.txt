@@ -43,8 +43,9 @@ Security:
 		Public Key:				A Key for a Cipher that is freely accessible.
 		Private Key:			A Key for a Cipher that is a secret.
 	
-		Digital Signature:		A Hash of some Data Encrypted by the signer's Private Key.
+		Digital Signature:		A Hash of some Data, which is then Encrypted by the signer's Private Key.
 		Digital Certificate:	A Data Structure that minimally contains a Public Key, and the Public Key's Digital Signature, signed by some trusted entity.
+		Certificate Fingerprint: Hashes of the entire Digital Certificate with different Hashing Algorithms.
 
 		Certificate Authority: 	A trusted entity that verifies Public Keys.
 		Root Certificate: 		A Digital Certificate that was directly signed by a Certificate Authority. It is pre-installed in Client Devices.
