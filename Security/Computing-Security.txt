@@ -56,6 +56,10 @@ Security:
 			Hash Functions are typically one-way Mathematical Functions, with no corresponding Inverse Function.
 				To achieve the no proper Inverse behaviour, they tend to lose information as they convert Input to Output.
 
+				Algorithms:
+					MD5
+					SHA256
+
 			Rainbow Tables:
 				Unoptimized Rainbow Tables are simply Lookup Tables that store all possible mappings between Plaintext Values and their corresponding Hashes.
 
