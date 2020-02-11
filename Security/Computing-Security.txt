@@ -47,7 +47,7 @@ Security:
 		Digital Certificate:	A Data Structure that minimally contains a Public Key, and the Public Key's Digital Signature, signed by some trusted entity.
 
 		Certificate Authority: 	A trusted entity that verifies Public Keys.
-		Root Certificate: 		A Digital Certificate that was directly signed by a Certificate Authority. Typically pre-installed in most devices.
+		Root Certificate: 		A Digital Certificate that was directly signed by a Certificate Authority. The corresponding Public Key is pre-installed in Client Devices.
 		Intermediate Certificate: A Digital Certificate that was signed via the corresponding Private Key of the 'parent' Public Key within a Certificate (Root or another Intermediate). These are employed to provide additional layers of separation from the Certificate Authority's Private Key.
 		Leaf Certificate: 		A Digital Certificate that was signed via the corresponding Private Key of the 'parent' Public Key within an Intermediate Certificate. These are intended to contain the Public Keys of individual Servers.
 
