@@ -43,7 +43,7 @@ HTML:
 
 				<meta charset="utf-8" /> - Tag that specify Webpage encoding.
 
-				<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://*; child-src 'none';"> - Tag to enable Content-Security Policy.
+				<meta http-equiv="..." content="..."> - Tag to simulate a HTTP Response Header (specified by the http-equiv attribute) with the associated value (specified by the content attribute).
 
 				<style type="text/css"> ... </style> - Tags that specify an environment to define CSS with.
 
