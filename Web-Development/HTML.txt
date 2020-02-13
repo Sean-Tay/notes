@@ -41,7 +41,9 @@ HTML:
 			<head> ... </head> - Tags that specify the start and end of metadata related to the HTML Content.
 				<title> Title Content </title> - Tags that specify the Title of the Webpage.
 
-				<meta charset="utf-8" /> - Tags that specify Webpage encoding.
+				<meta charset="utf-8" /> - Tag that specify Webpage encoding.
+
+				<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://*; child-src 'none';"> - Tag to enable Content-Security Policy.
 
 				<style type="text/css"> ... </style> - Tags that specify an environment to define CSS with.
 

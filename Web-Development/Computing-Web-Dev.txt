@@ -1,7 +1,7 @@
 Web Dev:
 	Abbreviations:
 		HTTP:					HyperText Transfer Protocol.
-		
+
 		URL:					Universal Resource Locator.
 		
 		JSON:					Javascript Object Notation.
@@ -11,6 +11,9 @@ Web Dev:
 		RMI:					Remote Method Invocation.
 
 		REST: 					Representational State Transfer.
+
+		HTTPS:					HyperText Transfer Protocol Secure.
+		CSP:					Content Security Policy.
 	
 	Concepts:
 		Web Site:				A Service hosted on the Web - meant for Humans.
@@ -40,7 +43,7 @@ Web Dev:
 			Expires / Max Age: 	Determines validity lifespan of the associated Field.
 			Size:				Number of characters for associated Field Name and Value.
 
-			// Security-Related Fields - see Security Notes for more exposition.
+			// Security-Related Fields.
 			HTTP / HttpOnly:	Prevents Client-Side manipulation of the Cookie via JS and other vectors - the Cookie is only used for Server-Side meta-session activity.
 			Secure:				Only transmit the assosicated Field over HTTPS.
 			SameSite:			Used to prevent CSRF Attacks.
@@ -107,4 +110,24 @@ Web Dev:
 				Statelessness allows for Scalability, as now any Node in the Network can serve appropriate Client Requests.
 				Statelessness allows for Cacheability.
 		
-		
+		Web Security:
+			HTTP Response Headers:
+				// Allow Browsers to only communicate via HTTPS.
+				// Should be supplemented with automatic redirects to HTTPS connections if a Browser attempts to load a URL with the regular HTTP protocol.
+				Strict-Transport-Security:
+					max-age=<expire-time> // The time in seconds that the Browser should remember this Strict-Transport-Security configuration for this Site.
+					includeSubDomains // Optional Flag to indicate if this rule should apply to sub Network Domains as well.
+
+				// CSP: A backwards-compatable mechanism that will reduce the Vector of any Injection Attack, mostly XSS.
+				// This allows specification of which Network Domains are acceptable sources of Resources to be used by the Web Page that is loaded in the Client Browser.
+				Content-Security-Policy: <policy-directive>; ...
+					// Note: The more <policy-directive>s specified (including duplicated directives), the more restricted it becomes.
+					
+					default-src: <source> [<source>] // Can be seen as a fallback for other directives if they are not specified. Specify this at the beginning of the Content-Security-Policy directive string.
+						'self' // Specify that all resources should only originate from the Web Site's own Domain.
+					
+			Cookie Configuration: See the Security-Related Fields section of the Cookie concept above for more exposition on each Field listed below.
+				HttpOnly
+				Secure
+				SameSite
+
