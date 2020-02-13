@@ -121,4 +121,7 @@ Security:
 						Once the sent Server's Public Key is verified, it is then used to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.
 
 				HTTPS: Cryptographic Application Layer Protocol used for communication.
+					It's just HTTP piggybacking on SSL / TLS for a secure channel of communication.
+
+		Web-Security: See Web-Dev Notes for exposition and implementation notes.
 

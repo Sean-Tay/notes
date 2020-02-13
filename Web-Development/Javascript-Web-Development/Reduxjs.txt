@@ -15,7 +15,7 @@ Redux.js
 			Plain Object that minimally expresses ANY type of intention to CHANGE the Application State.
 				{type: "<action-identifier>", arg1: 'value1', ...}
 
-				Different Types of Actions can be used to address different Events.
+				Different Types of Actions can be used to address different Events. Examples:
 					Synchronous State Update 	- 'SET' type Actions - the Actions which a Reducer should minimally act upon.
 					User Interaction 			- 'CHANGE' type Actions which may feature one or more 'GET' and 'SET' Actions.
 					Network Event 				- 'GET' type Actions.
@@ -54,21 +54,23 @@ Redux.js
 				}
 			
 				const combinedReducer = combineReducers({
-					<key-1>: <reducer-function-1>, 
+					<key-1>: <reducer-function-1>, // Because each Reducer is responsible for a slice of State, there needs to be a key given to identify each slice when they are combined.
 					...
 				});
 					// Function that takes in any number of Reducer Functions stored in an Object to combine them together into a single Reducer Function - fit for creating a Store with via the createStore method.
-					// Essentially:
-						({<key-1>: <reducer-function-1>, ...}) => (
-							(state={<key-1>: {},  ...}, action) => {
-								// Returns a new State Object.
-								{
-									...state,
-									<key-1>: <reducer-function-1>(state.<key-1>, action),
-									// ...
+						// Possible Implementation:
+							({<key-1>: <reducer-function-1>, ...}) => (
+								(state={<key-1>: {},  ...}, action) => {
+									// Returns a new State Object.
+									{
+										...state,
+										// Upon the submission of a new Action, all Reducers will be executed on their slice of State.
+										// Recall the importance of the 'default' argument for each Reducer - Reducers should simply return their current slice of State if they do not handle the submitted Action.
+										<key-1>: <reducer-function-1>(state.<key-1>, action),
+										// ...
+									}
 								}
-							}
-						)
+							)
 		
 		Store:
 			A Read-Only Object Tree which represents a single source of truth for Application State.
@@ -117,9 +119,9 @@ Redux.js
 			0) Understand what the Component does, and what sort of State it might potentially need.
 			1) Define the Initial State of the Reducer.
 			2) Define the Possible Actions for this Reducer. Each Action should only be focused on Synchronous State Changes.
-				- If Asynchronous State Changes are also to be expected, define separate Actions for them as well.
 			3) Define the Reducer Function. Synchronous Local State Transforms should be done here.
 			4) Define Action Creators for each possible Action Type. These should purely be for Component Invocation.
+				- Define additional Logic here if necessary.
 			5) Connect Component to Redux.
 
 		External Configuration:
