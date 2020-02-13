@@ -119,9 +119,9 @@ Redux.js
 			0) Understand what the Component does, and what sort of State it might potentially need.
 			1) Define the Initial State of the Reducer.
 			2) Define the Possible Actions for this Reducer. Each Action should only be focused on Synchronous State Changes.
-				- If Asynchronous State Changes are also to be expected, define separate Actions for them as well.
 			3) Define the Reducer Function. Synchronous Local State Transforms should be done here.
 			4) Define Action Creators for each possible Action Type. These should purely be for Component Invocation.
+				- Define additional Logic here if necessary.
 			5) Connect Component to Redux.
 
 		External Configuration:
