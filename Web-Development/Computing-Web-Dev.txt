@@ -51,9 +51,11 @@ Web Dev:
 			Secure:				Only transmit the assosicated Field over HTTPS.
 			SameSite:			Used to prevent CSRF Attacks.
 
-		CSP: 					A backwards-compatable HTTP Response mechanism that allows a Web Application to specify which are acceptable sources of Resources to be used by the Web Application that is loaded in the Client. This prevents the Web Application from inadvertedly loading malicious Resources from a Third-Party, and is helpful in mitigating Injection Attacks, particularly XSS.
+		CSP: 					A backwards-compatable HTTP Response mechanism that allows a Web Application to specify the acceptable types and sources of Resources that can be used by the Client for the Resource currently loaded. This prevents the Web Application from inadvertedly loading malicious Resources from a Third-Party, and is helpful in mitigating Injection Attacks, particularly XSS.
+			For the Web Application to protect itself.
 	
-		CORS:					A HTTP Response mechanism that allows a Web Application running on one Origin to dictate to Clients which Third-Party Web Applications running on different Origins can access its Resources. This prevents unauthorized Third-Party Web Applications from potentially doing something malicious to the User with respect to the Web Application (although this is already being done with the default Same-Origin only policy).
+		CORS:					A HTTP Response mechanism that allows a Web Application running on one Origin to dictate to Clients which Third-Parties running on different Origins can access its Resources, and how they can do so. This allows increased flexibility from the Same-Origin only policy whilst still preventing unauthorized Third-Parties from potentially doing something malicious to the User with respect to the Web Application.
+			For other Web Applications to protect themselves.
 
 	Details:
 		Summary of Full-Stack:
@@ -119,18 +121,18 @@ Web Dev:
 		
 		Web Security:
 			HTTP Response Headers:
-				// Allow Browsers to only communicate via HTTPS.
-				// Should be supplemented with automatic redirects to HTTPS connections if a Browser attempts to load a URL with the regular HTTP protocol.
-				Strict-Transport-Security:
-					max-age=<expire-time> // The time in seconds that the Browser should remember this Strict-Transport-Security configuration for this Site.
-					includeSubDomains // Optional Flag to indicate if this rule should apply to sub Network Domains as well.
+				// HTTPS Only:
+				// Note: Should be supplemented with automatic redirects to HTTPS connections if a Browser attempts to load a URL with the regular HTTP protocol.
+					Strict-Transport-Security:
+						max-age=<expire-time> // The time in seconds that the Browser should remember this Strict-Transport-Security configuration for this Site.
+						includeSubDomains // Optional Flag to indicate if this rule should apply to sub Network Domains as well.
 
 				// CSP:
-				Content-Security-Policy: <policy-directive>; ...
-					// Note: The more <policy-directive>s specified (including duplicated directives), the more restricted it becomes.
-					
-					default-src: <source> [<source>] // Can be seen as a fallback for other directives if they are not specified. Specify this at the beginning of the Content-Security-Policy directive string.
-						'self' // Specify that all resources should only originate from the Web Site's own Domain.
+					Content-Security-Policy: <policy-directive>; ...
+						// Note: The more <policy-directive>s specified (including duplicated directives), the more restricted it becomes.
+						
+						default-src: <source> [<source>] // Can be seen as a fallback for other directives if they are not specified. Specify this at the beginning of the Content-Security-Policy directive string.
+							'self' // Specify that all resources should only originate from the Web Site's own Domain.
 
 				// CORS: 
 					
