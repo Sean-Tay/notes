@@ -132,8 +132,17 @@ Web Dev:
 					Content-Security-Policy: <policy-directive>; ...
 						// Note: The more <policy-directive>s specified (including duplicated directives), the more restricted it becomes.
 						
-						default-src: <source> [<source>] // Can be seen as a fallback for other directives if they are not specified. Specify this at the beginning of the Content-Security-Policy directive string.
-							'self' // Specify that all resources should only originate from the Web Site's own Domain.
+						// Policy Directives
+							default-src: <source> [<source>]; // Can be seen as a fallback for other Directives if they are not specified. Specify this at the beginning of the Content-Security-Policy Directive string.
+								'self' // Specify that all Resources should only originate from the Web Site's own Origin.
+
+							script-src: <source> [<source>]; // Specify the source of JS Resources.
+								'self' // Specify that all JS Resources should only originate from the Web Site's own Origin.
+
+								// The following dangerous sources allow for more flexibility, but also increasing degrees to which XSS Attacks can be conducted.
+								'unsafe-hashes' // Danger: Allow processing of inline HTML Event Handlers.
+								'unsafe-inline' // Danger: Allow processing of inline JS Resources.
+								'unsafe-eval' // Danger: Allow processing of JS code specified within Strings.
 
 				// CORS: 
 					
