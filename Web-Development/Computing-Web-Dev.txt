@@ -54,7 +54,7 @@ Web Dev:
 		CSP: 					A backwards-compatable HTTP Response mechanism that allows a Web Application to specify the acceptable types and sources of Resources that can be used by the Client for the Resource currently loaded. This prevents the Web Application from inadvertedly loading malicious Resources from a Third-Party, and is helpful in mitigating Injection Attacks, particularly XSS.
 			The Web Application defends against being compromised by its own activity.
 	
-		CORS:					A HTTP Response mechanism that allows a Web Application running on one Origin to dictate to Clients which Third-Parties running on different Origins can access its Resources, and how they can do so. This allows increased flexibility from the Same-Origin only policy whilst still preventing unauthorized Third-Parties from potentially doing something malicious to the User with respect to the Web Application.
+		CORS:					A HTTP Response mechanism that allows a Web Application running on one Origin to dictate to Clients which Third-Parties running on different Origins can access its Resources, and how they can do so. This allows increased flexibility from the default Same-Origin only policy whilst still preventing unauthorized Third-Parties from potentially doing something malicious to the User with respect to the Web Application.
 			The Web Application defends against being compromised by the activity of other Web Applications.
 
 	Details:
