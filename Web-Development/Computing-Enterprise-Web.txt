@@ -2,6 +2,8 @@ Enterprise Web:
 	Abbreviations:
 		SOA:					Service Oriented Architecture.
 		
+		RPC:					Remote Procedure Call.
+
 		SOAP:					Single Object Access Protocol: Messaging definition for the interaction between Web Services.
 		
 		XML:					EXtensible Markup Language: A readable implementation-independent Data interchange format.
@@ -9,7 +11,7 @@ Enterprise Web:
 	
 		SEI:					Service Endpoint Interface. Generates Stubs / Classes that allow an Application to interact with Web Services, given it's WSDL file.	
 		
-		WSDL:					Web Services Description Language: XML File that describes the Web Service it details (methods, arguments, return types).
+		WSDL:					Web Services Description Language: XML File that describes the Web Service it details (methods, arguments, return types) for use in XML-RPC.
 		UDDI:					Universal Description, Discovery and Integration: Stores WSDL files for a Web Service.
 		
 		ESB:					Enterprise Service Bus: Monitors and Routes messages between Web Services and their different versions.
