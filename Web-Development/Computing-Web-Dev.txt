@@ -3,11 +3,14 @@ Web Dev:
 		HTTP:					HyperText Transfer Protocol.
 
 		URL:					Universal Resource Locator.
-		
-		JSON:					Javascript Object Notation.
 
-		SOAP:					Simple Object Access Protocol.
+		JSON:					Javascript Object Notation.
+		
 		RPC:					Remote Procedure Call.
+		SOAP:					Simple Object Access Protocol.
+		XML:					EXtensible Markup Language.
+		WSDL:					Web Services Description Language.
+
 		RMI:					Remote Method Invocation.
 
 		REST: 					Representational State Transfer.
@@ -36,9 +39,11 @@ Web Dev:
 
 		Routing: 				The process of using URLs to determine the part of the Web Application exposed to the User. Traditionally handled Server-Side.
 
-		JSON:					A readable implementation-independent Data interchange format.
+		JSON:					A readable implementation-independent Data Interchange Format.
 
 		SOAP:					Messaging definition for the interaction between Web Services.
+		XML:					A readable implementation-independent Data Interchange Format.
+		WSDL:					XML File that describes the Web Service it details (Methods, Arguments, Return Types, etc.).
 
 		Cookie:					A Key-Value Pair Data Structure used to store persistent Session State on the Browser when using Stateless HTTP, set via 'set-cookie' HTTP Response Headers. Each Field Attribute consists of:
 			Name:				Field Key.
@@ -78,6 +83,8 @@ Web Dev:
 		RPC: A Mechanism that models Communication between two Processes as straightforward Procedure / Function Calls to exchange Data.
 			An RPC Mechanism usually defines a Network Protocol, some Format for exchanging Messages, a portable way of serializing and deserializing Data and specific Programming Language support (like Code Generators). 
 			
+			RPC formed the basis for SOAP, which used XML Schema and WSDL to indicate what the Message should contain, and where it went.
+
 			It typically involves generating some Function Stubs on the Client Process that makes the Function Call appear local, but behind the stub is logic to marshall the Request and send it to the Server Process. 
 			The Server Process then unmarshalls the Request and invokes the actual Function before repeating the process in reverse to send whatever the Function returns back to the Client Process. 
 			
@@ -86,6 +93,13 @@ Web Dev:
 			RMI is closely related to RPC, but uses Object-Oriented control to execute. This is prevalent in Java.
 
 			REST is usually preferred, as REST features an additional layer of abstraction (i.e. the URLs) to prevent changes pertaining to Functions in Backend to affect Frontend.
+			In contrast, RPC does not require in-depth HTTP knowledge to implement (e.g. every HTTP Request might be a POST Request, for example).
+
+			That being said, the next generation RPC (gRPC) is likely better than REST, due to a number of features:
+				Protobuff vs JSON: Protobuf is a more performant alternative to the JSON format.
+				HTTP 2.0 vs HTTP 1.0 / 1.1.
+				Client-Initiated Streaming Capability vs Request-Response: As a result of leveraging on HTTP 2.0.
+				Strong-Typing vs Serialization for Payload Data.
 
 		REST: An Architectural Style to facilitate cleaner communication and interaction between Systems via the Web.
 			The core problem is that in the past, it was only necessary to facilitate communication between a small group of Machines in the Business' Local Network to operate. However, it has become increasingly necessary to talk to Machines outside of the Business Network (i.e. other Businesses, etc).
