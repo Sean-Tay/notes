@@ -93,12 +93,14 @@ Web Dev:
 			RMI is closely related to RPC, but uses Object-Oriented control to execute. This is prevalent in Java.
 
 			REST is usually preferred, as REST features an additional layer of abstraction (i.e. the URLs) to prevent changes pertaining to Functions in Backend to affect Frontend.
+				This is especially significant for APIs that are meant for external use.
+
 			In contrast, RPC does not require in-depth HTTP knowledge to implement (e.g. every HTTP Request might be a POST Request, for example).
 
-			That being said, the next generation RPC (gRPC) is likely better than REST, due to a number of features:
-				Protobuff vs JSON: Protobuf is a more performant alternative to the JSON format.
+			That being said, the next generation RPC (gRPC) is likely better than REST for internal APIs, due to a number of features:
+				Protobuff vs JSON: Protobuff is a more performant alternative to the JSON format.
 				HTTP 2.0 vs HTTP 1.0 / 1.1.
-				Client-Initiated Streaming Capability vs Request-Response: As a result of leveraging on HTTP 2.0.
+				Client-Initiated Duplex Streaming Capability vs Request-Response: As a result of leveraging on HTTP 2.0.
 				Strong-Typing vs Serialization for Payload Data.
 
 		REST: An Architectural Style to facilitate cleaner communication and interaction between Systems via the Web.
@@ -132,7 +134,7 @@ Web Dev:
 
 			The implication is that all information that the Server requires to process the Client's Request is in the HTTP Request, and that the Client would get all other related information from the Server alongside the original Client Request, referenced as other URLs.
 
-			Another implication is that the Client and the Server need not know how the other was implemented in order to interact. As long as each side knows what format of messages to send to the other, they can be kept modular and separate.
+			Another implication is that the Client and the Server need not know how the other was implemented in order to interact. As long as each side knows what format of Messages to send to the other, they can be kept modular and separate.
 
 			This negates the need to store a Session State for tracking purposes, as the 'State' is now transferred between Client Requests and Server Responses.
 				Statelessness allows for Scalability, as now any Node in the Network can serve appropriate Client Requests.
