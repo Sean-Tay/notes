@@ -54,7 +54,7 @@ Web Dev:
 			Secure:				Only transmit the assosicated Field over HTTPS.
 			SameSite:			Used to prevent CSRF Attacks.
 
-		CSP: 					A backwards-compatable HTTP Response mechanism that allows a Web Application to specify the acceptable types and sources of Resources that can be used by the Client for the Resource currently loaded. This prevents the Web Application from inadvertedly loading malicious Resources from a Third-Party, and is helpful in mitigating Injection Attacks, particularly XSS.
+		CSP: 					A backwards-compatable HTTP Response mechanism that allows a Web Application to specify the acceptable types and sources of Resources that can be used by the Client for the Resource currently loaded. This allows increased flexibility from the default Same-Origin only policy whilst still preventing the Web Application from inadvertedly loading malicious Resources from a Third-Party, and is helpful in mitigating Injection Attacks, particularly XSS.
 			The Web Application defends against being compromised by its own activity.
 	
 		CORS:					A HTTP Response mechanism that allows a Web Application running on one Origin to dictate to Clients which Third-Parties running on different Origins can access its Resources, and how they can do so. This allows increased flexibility from the default Same-Origin only policy whilst still preventing unauthorized Third-Parties from potentially doing something malicious to the User with respect to the Web Application.
@@ -151,23 +151,43 @@ Web Dev:
 									'unsafe-eval' // Danger: Allow processing of JS code specified within Strings.
 
 				// CORS:
+					// Reminder: Source (Third-Party) Web Application -> Requesting Resource -> Client -> Request -> Web Application -> Requested Resources.
+
 					// Pre-Flight:
 						// Client Request Headers:
-							Access-Control-Request-Method: <HTTP-method>
-								// Inform the Server the type of HTTP interaction the Client wants to do with the requested Resources.
-								// Additionally serves to notify the Server that this HTTP Request (along with the OPTIONS specification at the top of the HTTP Request) is a Pre-Flight HTTP Request.
+							Origin: <url> 
+								// Sent by the Client to primarily indicate to the Server the identity of the Source Web Application whose Requesting Resource has made the HTTP Request.
+								// Forbidden Header - cannot programmatically change this.
 							
-							Access-Control-Request-Header: <custom-HTTP-header>, ... // Specify any custom HTTP Request Headers that the Client might additionally send over.
+							Access-Control-Request-Method: <HTTP-method>
+								// Inform the Server the type of interaction the requesting Resource on the Client would want to do with the Requested Resources.
+								// Additionally serves to notify the Server that this HTTP Request (along with the OPTIONS HTTP Method specification at the top of the HTTP Request) is a Pre-Flight HTTP Request.
+							
+							Access-Control-Request-Headers: <custom-HTTP-header>, ... // Specify any custom HTTP Request Headers that the Requesting Resource on the Client might additionally send over.
 
 						// Server Response Headers:
-							Access-Control-Allow-Origin: { * | <origin> } // Specify the allowed Origin of the requested Resource.
+							Access-Control-Allow-Origin: { * | <origin> } // Specify allowed Source Web Applications that can access the Requested Resources.
 								// If the allowed Origin is specific, the Server should additionally include a 'Vary' HTTP Response Header to indicate to the Client that the Server Response will differ based on different Origins.
 
 							Access-Control-Allow-Methods: <HTTP-method> // Specify the allowed HTTP Methods that the Server will handle under CORS.
 
 							Access-Control-Allow-Headers: <[custom]-http-header>, ... // Specify any additional custom HTTP Headers (custom or the default CORS safelisted ones) that the Server will accept during a CORS Interaction.
 
-							Access-Control-Max-Age: <delta-seconds>, ... // Indicate the length of time that the results of the CORS Preflight Request can be cached on the Client for.
+							Access-Control-Max-Age: <delta-seconds>, ... // Indicate the length of time that the results of the CORS Preflight Request can be cached on the Client for, afterwhich another Preflight Request would need to be sent.
+								// Note: Certain Browsers will have a maximum Internal Value that they will use instead of the specification if it is longer than the Internal Value.
+
+							Access-Control-Allow-Credentials: true // Specify if the actual HTTP Request can be made using supplied Credentials.
+
+					// Actual:
+						// Server Response Headers:
+							Access-Control-Expose-Headers: <[custom]-http-header>, ... // Specify any additional custom HTTP Headers (custom or the default CORS safelisted ones) that the Server will allow Requesting Resources on Clients to access programmatically.
+
+							Access-Control-Allow-Credentials: true // Specify that Credential Cognizant Content for the Web Application should be exposed to the Requesting Resource on the Client, in the scenario where the Requesting Resource of the Source Web Application has enabled the 'withCredentials' Flag in their HTTP Request.
+								// Usually the Client will handle the Credential Cognizant Content, and direct accesses by loaded Resources to the Authentication Information will be blocked. Specifying this will allow the Requesting Resource on the Client to be able to access the Credential Cognizant Content. 
+
+								// Note: This also requires that the Access-Control-Allow-Origin Header have a specific <origin> value, rather than the '*' wildcard.
+
+								// Note: Omit this if it should not be exposed.
 					
 			Cookie Configuration: See the Security-Related Fields section of the Cookie concept above for more exposition on each Field listed below.
 				HttpOnly
