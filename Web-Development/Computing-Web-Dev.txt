@@ -100,6 +100,7 @@ Web Dev:
 			Cons:
 				Special, non-standard Handler required on both Client and Server, which makes RPC more suitable for internal APIs.
 				High Coupling between the Client and Server in terms of the API Contract.
+				Client would need to know how to entirely handle the Response given by the Server.
 
 			The modern gRPC framework provides additional features:
 				Protobuff vs JSON: Protobuff is a more performant alternative to the JSON format.
