@@ -6,7 +6,7 @@ Web Dev:
 		
 		JSON:					Javascript Object Notation.
 
-		SOAP:					Single Object Access Protocol.
+		SOAP:					Simple Object Access Protocol.
 		RPC:					Remote Procedure Call.
 		RMI:					Remote Method Invocation.
 
