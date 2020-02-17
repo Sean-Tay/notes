@@ -199,7 +199,7 @@ Webpack.js
 					},
 
 					// Request the Server to fallback to index.html if a requested resource cannot be found.
-					// Note: Useful for SPAs.
+					// Note: Necessary for Front-End Routing, as 404s will be issued for Web Application Page URLs that are sent to the Server directly (i.e. initial Request for the Web Application, but with a URL that would have lead to a Page within the Web Application if the Web Application had already been loaded on the Client).
 					historyApiFallback: true, 
 
 					// Enable Hot Module Replacement.
