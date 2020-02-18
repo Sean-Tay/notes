@@ -164,7 +164,8 @@ React-Router:
 						);
 
 						// Programmatically change Route.
-						// history.push(<location-type-obj>);
+							// history.replace(<path>, [<state>]); // Redirect Client, but replace the topmost item in the Client's History Stack.
+							// history.push(<path>, [<state>]); // Redirect Client, but add it to the Client's History Stack.
 
 					// ...
 				};
