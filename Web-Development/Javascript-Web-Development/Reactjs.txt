@@ -218,6 +218,8 @@ React.js
 						
 						shouldComponentUpdate(nextProps, nextState) {
 							// Default Behaviour is to re-render on any State or Prop change.
+							// Note: Can be seen as the combination of the Dependency Arrays from all theoretical 'useEffect' Hooks in a Functional Component.
+
 							// return true if Component should update
 							// return false otherwise
 						}
