@@ -170,15 +170,15 @@ React-Router:
 					// ...
 				};
 
-			// The API is usable in the following scenarios:
+			// The API is usable via the following mechanisms:
 				// HOC:
 					import { withRouter } from 'react-router';
 
-					const App = ({ match, location, history }) => {
-						// ...
-					};
-
-					export default withRouter(App);
+					const AppPage = withRouter(
+						{ match, location, history }) => {
+							// ...
+						}
+					);
 
 				// Route:
 					const AppPage = ({match, location, history}) => {
@@ -203,29 +203,27 @@ React-Router:
 						}
 					/>
 
-			// API React Hooks
-				import { 
-					useHistory,
-					useLocation,
-					useParams,
-					useRouteMatch
-				} from 'react-router';
+				// API React Hooks
+					import { 
+						useHistory,
+						useLocation,
+						useParams,
+						useRouteMatch
+					} from 'react-router';
 
-				const AppPage = () => {
-					// These Hooks can be safely used in places where the match, location and history Objects are passed in, as described above.
-					
-					// useRouteMatch is useful to avoid rendering the Route component.
-					// Note: The Component should be rendered outside of the Switch Component.
-					let match = useRouteMatch({
-						path: '<path>',
-						strict: true,
-						sensitive: true
-					});
+					const AppPage = () => {		
+						// useRouteMatch is useful to avoid rendering the Route component.
+						// Note: The Component should be rendered outside of the Switch Component.
+						let match = useRouteMatch({
+							path: '<path>',
+							strict: true,
+							sensitive: true
+						});
 
-					return match && (
-						// ...
-					);
-				}
+						return match && (
+							// ...
+						);
+					}
 
 	Commands:
 		
