@@ -76,32 +76,96 @@ React-Router:
 					);
 				}
 
+				// Example of a Protected Route:
+				const ProtectedRoute = ({children, ...rest}) => (
+					<Route
+						{ ...rest }
+						render={
+							({ location }) =>
+							isAuthenticated ? 
+								(children) : 
+								(
+									<Redirect
+										to={{
+											pathname: "/login",
+											state: { from: location }
+										}}
+									/>
+								)
+							)
+						}
+					/>
+				)
+
 			Link, NavLink, and Redirect: Components that change the Path and triggers the Routing Behaviour.
 				import { Link, NavLink, Redirect } from 'react-router-dom';
 
-				// Compiles down to an <a> element that switches the current Path to "/<route-path>".
-				<Link to="/<route-path>"> 
+				// The 'to' props of the Components below can accept an Object.
+				const locationTypeObj = {
+					pathname: '/<route-path>',
+					search: '?key=value& ...', // String Representation of the Query part of the URL.
+					hash: '#<text>', // Hash to put into the URL.
+					state: {
+						// Persistent State to pass to the Route upon rendering it.
+						// <key>: <value>
+						// ...
+					}
+				};
+
+				// Compiles down to an <a> element that switches the current Path to "/<route-path>", or to the configuration specified in the <location-type-obj>.
+				<Link to={"/<route-path>" | <location-type-obj>}> 
 					// Link Item Component
 				</Link>
 
 				// Like a Link Element, but also styles itself according to specified CSS when the Path matches.
-				<NavLink to="/<route-path>" activeClassName="<css-class>" activeStyle={<style-object>}> 
+				<NavLink to={"/<route-path>" | <location-type-obj>} activeClassName="<css-class>" activeStyle={<style-object>}> 
 					// Link Item Component
 				</NavLink>
 
-				// Changes the current Path to "/<route-path>" upon rendering.
-				<Redirect to="/<route-path>" />
+				// Changes the current Path to "/<route-path>", or to the configuration specified in the <location-type-obj>, upon rendering.
+				<Redirect to={"/<route-path>" | <location-type-obj>} />
 
-				// A <Redirect> Component is more useful within a <Switch> Component:
+				// A <Redirect> Component is more useful within a <Switch> Component, or as part of a Protected Route (see example in the Route Section):
 				<Switch>
-					<Redirect exact from="/<switch-base-path>" to="/<destination-route-path>" />
+					<Redirect exact from="/<switch-base-path>" to={"/<destination-route-path>" | <location-type-obj>} />
 				</Switch>
 
 		API Interaction:
-			// HOC
-				import { withRouter } from 'react-router';
+			// The API is usable in the following scenarios:
+				// HOC:
+					import { withRouter } from 'react-router';
 
-				const App = ({ match, location, history }) => {
+					const App = ({ match, location, history }) => {
+						// ...
+					};
+
+					export default withRouter(App);
+
+				// Route:
+					const AppPage = ({match, location, history}) => {
+						// ...
+					};
+
+					// ...
+
+					<Route>
+						<AppPage>
+					<Route>
+
+					// OR
+
+					<Route 
+						render={
+							({match, location, history}) => {
+								// ...
+								
+								return <AppPage>;
+							}
+						}
+					/>
+			
+			// API Description:
+				const someComponent = ({match, location, history}) => {
 					// match Object contains information about how a Route matched a given URL.
 						// match.isExact
 						// match.url 		// Matched portion of the URL.
@@ -138,9 +202,7 @@ React-Router:
 					// ...
 				};
 
-				export default withRouter(App);
-
-			// React Hooks
+			// API React Hooks
 				import { 
 					useHistory,
 					useLocation,
@@ -149,7 +211,7 @@ React-Router:
 				} from 'react-router';
 
 				const AppPage = () => {
-					// Hooks can be used in any descendant Child, as long as there is a Router somewhere along the ancestrial line.
+					// These Hooks can be safely used in places where the match, location and history Objects are passed in, as described above.
 					
 					// useRouteMatch is useful to avoid rendering the Route component.
 					// Note: The Component should be rendered outside of the Switch Component.
