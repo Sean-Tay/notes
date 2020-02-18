@@ -131,39 +131,6 @@ React-Router:
 				</Switch>
 
 		API Interaction:
-			// The API is usable in the following scenarios:
-				// HOC:
-					import { withRouter } from 'react-router';
-
-					const App = ({ match, location, history }) => {
-						// ...
-					};
-
-					export default withRouter(App);
-
-				// Route:
-					const AppPage = ({match, location, history}) => {
-						// ...
-					};
-
-					// ...
-
-					<Route>
-						<AppPage>
-					<Route>
-
-					// OR
-
-					<Route 
-						render={
-							({match, location, history}) => {
-								// ...
-								
-								return <AppPage>;
-							}
-						}
-					/>
-			
 			// API Description:
 				const someComponent = ({match, location, history}) => {
 					// match Object contains information about how a Route matched a given URL.
@@ -201,6 +168,39 @@ React-Router:
 
 					// ...
 				};
+
+			// The API is usable in the following scenarios:
+				// HOC:
+					import { withRouter } from 'react-router';
+
+					const App = ({ match, location, history }) => {
+						// ...
+					};
+
+					export default withRouter(App);
+
+				// Route:
+					const AppPage = ({match, location, history}) => {
+						// ...
+					};
+
+					// ...
+
+					<Route>
+						<AppPage>
+					<Route>
+
+					// OR
+
+					<Route 
+						render={
+							({match, location, history}) => {
+								// ...
+								
+								return <AppPage>;
+							}
+						}
+					/>
 
 			// API React Hooks
 				import { 
