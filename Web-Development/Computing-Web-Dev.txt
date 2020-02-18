@@ -100,7 +100,8 @@ Web Dev:
 
 			Cons:
 				Special, non-standard Handler required on both Client and Server, which makes RPC more suitable for internal APIs.
-				High Coupling between the Client and Server in terms of the API Contract.
+					High Coupling between the Client and Server in terms of the API Contract.
+					
 				Client would need to know how to entirely handle the Response given by the Server.
 
 			The modern gRPC framework provides additional features:
@@ -110,41 +111,50 @@ Web Dev:
 				In-Built Load Balancing.
 
 		REST: An Architectural Style to facilitate cleaner communication and interaction between Systems via the Web.
-			The core problem is that in the past, it was only necessary to facilitate communication between a small group of Machines in the Business' Local Network to operate. However, it has become increasingly necessary to talk to Machines outside of the Business Network (i.e. other Businesses, etc).
+			Background:
+				The core problem is that in the past, it was only necessary to facilitate communication between a small group of Machines in the Business' Local Network to operate. However, it has become increasingly necessary to talk to Machines outside of the Business Network (i.e. other Businesses, etc).
 
-			When HTTP was designed, it was with the intention to allow for communication between Machines anywhere in the world.
+				When HTTP was designed, it was with the intention to allow for communication between Machines anywhere in the world.
 
-			The idea is to represent Concepts / Resources / Nouns as URLs. Any other related Concepts / Resources / Nouns are also stored as URLs. Machines can then use HTTP with the URLs to reach other Machines elsewhere and perform operations on the Concepts / Resources / Nouns.
-				Example:
-					http://MyRestaurant:8080/Orders/Order?OrderNumber=asdf (POST: {Tacos object})
-					http://MyRestaurant:8080/Orders/Order?OrderNumber=asdf (GET)
-					http://MyRestaurant:8080/Orders/Order?OrderNumber=asdf (PUT: {Pineapple Tacos object})
+			Exposition:
+				The idea is to represent Concepts / Resources / Nouns as URLs. Any other related Concepts / Resources / Nouns are also stored as URLs. Machines can then use HTTP with the URLs to reach other Machines elsewhere and perform operations on the Concepts / Resources / Nouns.
+					Example:
+						http://MyRestaurant:8080/Orders/Order?OrderNumber=asdf (POST: {Tacos object})
+						http://MyRestaurant:8080/Orders/Order?OrderNumber=asdf (GET)
+						http://MyRestaurant:8080/Orders/Order?OrderNumber=asdf (PUT: {Pineapple Tacos object})
 
-				The combination allows for a standardized way of communication between all Entities to refer to things.
-					URLs used per API Call can be the same, but the accompanying HTTP Verbs used would result in different effects.
+					The combination allows for a standardized way of communication between all Entities to refer to things.
+						URLs used per API Call can be the same, but the accompanying HTTP Verbs used would result in different effects.
 
-				If the URL contains a Verb, it is an indicator that that URL does not represent a Concept / Resource / Noun.
+					If the URL contains a Verb, it is an indicator that that URL does not represent a Concept / Resource / Noun.
 
-			Additionally, on the premise that all Web Applications only require 4 Universal Verbs to operate on all things successfully:
-				POST: Accompanying Data is used to modify the Resource represented in the given URI, following the rules documented by the Resource Type.
-				PUT: Replace the Resource represented by the given URI, if anything.
-				PATCH: Apply this Diff to the Resource, if the Resource has the same State as it did the last time it was queried.
-				
-				Create / POST
-				Read / GET
-				Update (Replacement) / PUT
-				Update (Partial-Update) / PATCH
-				Delete / DELETE
+				Additionally, on the premise that all Web Applications only require 4 Universal Verbs to operate on all things successfully:
+					POST: Accompanying Data is used to modify the Resource represented in the given URI, following the rules documented by the Resource Type.
+					PUT: Replace the Resource represented by the given URI, if anything.
+					PATCH: Apply this Diff to the Resource, if the Resource has the same State as it did the last time it was queried.
+					
+					Create / POST
+					Read / GET
+					Update (Replacement) / PUT
+					Update (Partial-Update) / PATCH
+					Delete / DELETE
 
-			The structure of the information in the Application has been mapped directly onto a structure of HTTP URLs, using only standard HTTP operations that allow for HTTP body content.
+				The structure of the information in the Application has been mapped directly onto a structure of HTTP URLs, using only standard HTTP operations that allow for HTTP body content.
 
-			The implication is that all information that the Server requires to process the Client's Request is in the HTTP Request, and that the Client would get all other related information from the Server alongside the original Client Request, referenced as other URLs.
+			Pros:
+				No additional Special Handler required on Client and Server, since HTTP is widely supported. This makes it suitable for external APIs.
+					Standardized HTTP Operations help in making consistent API.
 
-			Another implication is that the Client and the Server need not know how the other was implemented in order to interact. As long as each side knows what format of Messages to send to the other, they can be kept modular and separate.
+				Loose Coupling between the Client and the Server in terms of the API Contract, as the URLs are an additional layer of abstraction.
 
-			This negates the need to store a Session State for tracking purposes, as the 'State' is now transferred between Client Requests and Server Responses.
-				Statelessness allows for Scalability, as now any Node in the Network can serve appropriate Client Requests.
-				Statelessness allows for Cacheability.
+				Each Request / Response is complete. All information that the Server requires to process the Client's Request is in the HTTP Request, and that the Client would get all other related information or Resources of the requested Resource from the Server alongside the original Client Request as part of the HTTP Response.
+					Statelessness: No need to keep Session State as a result of the above.
+						Scalability.
+						Cacheability.
+
+			Cons:
+				Requires in-depth HTTP knowledge.
+				Less Performant with a complex underlying Protocol Layer to get through.
 		
 		Web Security:
 			HTTP Headers:
