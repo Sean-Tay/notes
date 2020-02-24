@@ -369,7 +369,7 @@ React.js
 
 					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
 						// Used to prevent unneccessary recalculation of some value per Re-Render.
-						// Hint: That 'some value' can be a React Element too.
+						// Hint: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the render call does not occur within this Component.
 						React.useMemo(
 							() => {
 								// ...
