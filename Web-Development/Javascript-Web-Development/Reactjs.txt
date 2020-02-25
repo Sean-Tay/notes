@@ -414,7 +414,8 @@ React.js
 						3. Render the actual Component only when a certain flag passed from the backend API changes. Use a placeholder 'Loading' Component if the flag is not of a certain state.
 
 					// Tips:
-						1. Prefer useCallback for handling User-driven Events. Ideally these should trigger flags to run other useEffects, so that the actual Application functionality is reusable primarily through that flag.
+						1. Prefer useCallback for defining reusable Application functionality or for handling User-driven Events. Consider using a different naming convention between the two types for clarity.
+							For controlled execution of reusable Application functionality after asynchronous setStates, utilize useEffect and special State flags.
 
 					return (
 						<>
