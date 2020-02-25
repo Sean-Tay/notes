@@ -103,40 +103,15 @@ Javascript
 				// ...
 			}
 
-		Static Properties
-			// Allows the addition of Properties and Methods to the Object Type specifically.
-			// These cannot be accessed by instances of the Object Type.
-
-			myObj.staticProperty = <value>;
-
-			OR
-
-			class myClass {
-				
-				// ...
-
-				// Via the static keyword (ES6)
-				static staticProperty = <value>;
-
-				// ...
-
-			}
-		
-		Prototype Properties
-			// Allows the addition of Properties and Methods to all instances of a Type.
-				// This is useful for adding Properties and Methods to a Type in which the Type Definition is not available.
-
-			// Also allows the extension of Parent Types to add aforementioned Properties and Methods to Child Types.
-				// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
-			
-		// this refers to the current scope's owner - can be a Class or a Function
-			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
-
 		Functions:
 			function functionName(
 				arg,
 				// ...
 			) {
+				// Call-by-Sharing
+				// if arg is set to a new value, it will only take effect within the scope of the function
+				// if arg's properties are set to a new value, it will affect the original supplied argument to the function
+
 				// ...
 			}
 
@@ -180,6 +155,35 @@ Javascript
 				}
 			
 			// Note: Functions are actually Objects!
+
+		Static Properties
+			// Allows the addition of Properties and Methods to the Object Type specifically.
+			// These cannot be accessed by instances of the Object Type.
+
+			myObj.staticProperty = <value>;
+
+			OR
+
+			class myClass {
+				
+				// ...
+
+				// Via the static keyword (ES6)
+				static staticProperty = <value>;
+
+				// ...
+
+			}
+		
+		Prototype Properties
+			// Allows the addition of Properties and Methods to all instances of a Type.
+				// This is useful for adding Properties and Methods to a Type in which the Type Definition is not available.
+
+			// Also allows the extension of Parent Types to add aforementioned Properties and Methods to Child Types.
+				// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
+			
+		// this refers to the current scope's owner - can be a Class or a Function
+			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
 
 		Error Handling:
 			try {
