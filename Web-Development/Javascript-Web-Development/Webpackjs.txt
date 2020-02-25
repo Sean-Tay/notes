@@ -243,9 +243,12 @@ Webpack.js
 					babel-loader
 						@babel/core
 
-						// presets
+						// babel presets
 						@babel/preset-env // Enables use of latest Javascript.
 						@babel/preset-react // Enables use of JSX Syntax for React.
+
+						// babel (not Webpack) plugins
+						@babel/plugin-transform-runtime // Enables re-use of Babel's injected helper code to save on code size.
 
 				CSS:
 					style-loader // Injects JS Strings with CSS content into index.html through <style> HTML Elements. Implements Hot Module Reloading for Patching CSS.
