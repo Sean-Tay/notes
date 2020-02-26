@@ -245,18 +245,23 @@ SQL:
 			; COMMIT;
 
 		-- Querying
+			-- Create a View for later use
+			CREATE VIEW <view_name> AS (
+				<query>
+			);
+
 			-- Save further Query Results to Local File at <filepath>.
 			SPOOL <filepath>
 			;
 
 			-- Prefer Table Aliases
 			SELECT [DISTINCT] <alias>.<attribute_name>, ...
-			FROM <table_name> [AS] <alias>, ...
+			FROM { <table_name> | <view_name> | (<derived_table_from_subquery>) } [AS] <alias>, ...
 				[
-					{INNER | LEFT | RIGHT} JOIN <other_table_name> [AS] <other_alias>
+					{INNER | LEFT | RIGHT} JOIN { <other_table_name> | <view_name> | <derived_table_from_subquery> } [AS] <other_alias>
 					ON <alias>.<attribute_name> = <other_alias>.<other_attribute_name>, ...
 				]
-			WHERE <record_conditional> ...
+			WHERE { <record_conditional> | <view_name> | (<subquery_conditional>) } ...
 			GROUP BY <alias>.<attribute_name>, ...
 			HAVING <aggregate_conditional>
 			ORDER BY <alias>.<attribute_name>, ...
@@ -264,6 +269,10 @@ SQL:
 
 			-- Stop Saving further Query Results to Local File at <filepath>.
 			SPOOL OFF
+			;
+
+			-- Drop the View when no longer needed
+			DROP VIEW <view_name>
 			;
 
 		-- Confirm any pending DML Transactions.
