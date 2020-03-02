@@ -130,7 +130,7 @@ React.js
 						// Compulsory
 						render() {
 							// Examines this.props and this.state, and returns a React Element.
-							// Child Component Instances are also Rendered.
+							// Child Component Instances are also triggered to Render.
 							// This should be a Pure Function - do not call this.setState() or mutate any State here.
 							/*
 								React Elements are produced when inline JSX is compiled down to React.createElement() calls during Rendering.
@@ -217,7 +217,7 @@ React.js
 						}
 						
 						shouldComponentUpdate(nextProps, nextState) {
-							// Default Behaviour is to re-render on any State or Prop change.
+							// Default Behaviour is to re-render on any State or Prop change, or if a Parent re-renders.
 							// Note: Can be seen as the combination of the Dependency Arrays from all theoretical 'useEffect' Hooks in a Functional Component.
 
 							// return true if Component should update
@@ -369,7 +369,7 @@ React.js
 
 					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
 						// Used to prevent unneccessary recalculation of some value per Re-Render.
-						// Hint: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this Component.
+						// Hint: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
 						React.useMemo(
 							() => {
 								// ...
