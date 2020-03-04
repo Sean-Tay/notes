@@ -11,7 +11,7 @@ Typescript:
 		
 	
 	Details:
-		Note: The use of Types below may reference either Typescript Types or Typescript Interfaces.
+		Note: The use of Types below may reference either Type Aliases or Interfaces.
 
 		Features:
 			Static Typing: 		Allows for optional explicit declaration of Variable Types. Compiler will ensure Variables are not assigned Values of the wrong Type.
@@ -21,17 +21,17 @@ Typescript:
 
 				const <function> = ( arg:<arg-type>, ... ): <return-type> => {
 					// ...
-				}
+				};
 
 				// Function with Object Destructuring
 				const <function> = ( { <key-1> , ... }: { <key-1>: <value-type-1> , ... }) => {
 					// ... 
-				}
+				};
 
 				// Function with Generics
 				const <function> = <<Generic-Type>> ( arg:<Generic-Type>, ... ): <return-type> => {
 					// ...
-				}
+				};
 
 				// Arrays
 					let <array-variable>: <type>[] = <value-array>;
@@ -44,7 +44,7 @@ Typescript:
 					let <tuple-variable>: [<type>, ...] = [<value>, ...];
 
 				// enums: To provide more friendly names to sets of Numeric Values.
-					enum <enum-name> { <key>: <numeric-value>, ... }
+					enum <enum-name> { <key>: <numeric-value>, ... };
 					let <example-variable>: <enum-name> = <enum-name>.<key>; 
 				
 				// any: For when the intended Type is unknown.
@@ -84,22 +84,30 @@ Typescript:
 					// OR
 					<<type>><value> // Include one set of Angled Brackets.
 
+			Type Alias:			Declare custom Types that can be reused in other Types or Interfaces.
+				type <type-alias> = <type> | ... ;
+
+				// ...
+
+				const <variable>: <type-alias> = <value>;
+
 			Interfaces:			Allows for explicit structure declaration of Values.
 				interface <interface-name> {
-					<property>: <type>, 
-					<optional-property>?: <type>, 
-					readonly <readonly-property>: <type>,
+					<property>: <type>;
+					<optional-property>?: <type>;
+					readonly <readonly-property>: <type>;
 
-					<function-property>: ( arg:<arg-type>, ... ) => <return-type>,
+					<function-property>: ( arg:<arg-type>, ... ) => <return-type>;
 
 					// ...
-				}
+				};
 
-				Extending an existing Interface
+				// Extending an existing Interface
 				interface <extended-interface-name> extends <existing-interfce-name> {
-					<additional-property>: <type>,
+					<additional-property>: <type>;
+
 					// ...
-				}		
+				};
 
 				Strictness can change in different scenarios:
 					1. At least the required Types are accounted for in the Value.
