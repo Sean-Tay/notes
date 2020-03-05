@@ -128,6 +128,8 @@ Typescript:
 
 		Common Types:
 			In React:
+				React.HTMLAttributes: For default attributes available to DOM Elements.
+				
 				React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
 
 				React.ReactText: To specify for a string | number Value.
