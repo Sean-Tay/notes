@@ -163,11 +163,17 @@ Redux.js
 							// Note: If <function> has Child Executing Instances, it will wait until all Child Executing Instances has finished.
 							yield call(<function>, <args-array>);
 
+							// Perform a State Change on the Component State, or trigger another Saga - Non-Blocking.
+							// Note: This may be preferable for testing with redux-saga-test-plan.
+							yield put(<action-obj>);
+
 							// Call a Function - Non-Blocking. Attach Child Executing Instance to this Parent Generator / Saga.
+							// Note: If the Child Executing Instance fails, the Parent may fail if it doesn't have the proper Error Handling mechanisms.
 							yield fork(<function>, <args-array>);
 							yield fork(<another-saga>, <args-array>);
 
 							// Call a Function - Non Blocking. Attach Executing Instance to the Root Execution.
+							// Note: If the Child Executing Instance fails, the Parent will not fail, but the Root Saga will crash.
 							yield spawn(<function>, <args-array>);
 
 							// Await for the successful Execution of all Functions within, or if any one of those throws an Error - Blocking.
@@ -175,10 +181,6 @@ Redux.js
 								call(<function-1>),
 								// ...
 							]);
-
-							// Perform a State Change on the Component State - Non-Blocking.
-							yield put(<action-obj>);
-
 						} catch (err) {
 							// ... err ...
 						}
