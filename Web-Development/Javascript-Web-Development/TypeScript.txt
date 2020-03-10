@@ -128,17 +128,18 @@ Typescript:
 
 		Common Types:
 			In React:
+				// The Type for the children argument passed in via Component Props should be specified as any.
+				// children?: any
 				React.HTMLAttributes: For default attributes available to DOM Elements.
-				
 				React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
+
+				React.RefObject<<html-element-type>>: To specify the type for a Ref Object. Keep only one set of Angled Brackets.
 
 				React.ReactText: To specify for a string | number Value.
 				React.ReactElement: To specify for the JS Object implicitly produced through the compilation of JSX.
-
 				React.ReactChild: To specify the Type for valid children of React Elements. Does not allow for falsy values.
-
 				React.ReactNode: A superset of React.ReactChild, with the same purpose as React.ReactChild. Allows for falsy values.
-	
+
 	Commands:
 		tsc *.ts[x]				Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
 			--watch 			Auto-Compile when Typescript code changes are detected.
