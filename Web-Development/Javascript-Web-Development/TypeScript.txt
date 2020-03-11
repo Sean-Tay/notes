@@ -130,7 +130,9 @@ Typescript:
 			In React:
 				// The Type for the children argument passed in via Component Props should be specified as any.
 				// children?: any
-				React.HTMLAttributes: For default attributes available to DOM Elements.
+				React.FC<<component-props>>: To specify the Type for a Functional Component.
+
+				React.HTMLAttributes<<element-type>>: For default attributes available to DOM Elements.
 				React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
 
 				React.RefObject<<html-element-type>>: To specify the type for a Ref Object. Keep only one set of Angled Brackets.
