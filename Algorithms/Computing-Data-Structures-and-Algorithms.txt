@@ -419,7 +419,9 @@
 
 	Greedy
 	
-	Dynamic Programming:	
+	Divide and Conquer: Involves Problems that have discrete Sub-Problems.
+
+	Dynamic Programming: Involves Problems that have overlapping Sub-Problems.
 		1) Top-Down: Recursion / Memoize
 			- Avoids recomputing some Past States in overlapping Sub-Problems.
 			
