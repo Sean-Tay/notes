@@ -384,7 +384,10 @@
 
 				- Root is always visited last.
 
-		- Morris Traversal: Key Idea is to use the Right Child of the (Leaf) Predecessor of the Current Node to allow Current Node to be reaccessed again from that Predecessor, and as an indication of whether or not the Current Node has been accessed before. If the Current Node's Leaf Predecessor's Right Child is set to null, it means the Current Node has not been accessed before. Set it to point to the Current Node, then descend. Later on when traversal reaches back to the Current Node via that Right Child, we know that the Current Node has been accessed before because the (Leaf) Predecessor is itself.
+		- Morris Traversal: If the Current Node has a Left Child, find the In-Order Leaf Predecessor of this Current Node. The Leaf Predecessor's Right Child is used as an indication as to whether or not the Current Node has been accessed before:
+			- If the Leaf Predecessor's Right Child is null, it means the Current Node has not been accessed before. Set that Leaf Predecessor's Right Child to point to the Current Node, and descend.
+			- If the Leaf Predecessor's Right Child points to the Current Node, then this Current Node has been visited before.
+		
 			- Time Complexity: O(n) - Num of Edges is n-1, each Edge visited at most 3 times.
 
 		- Level-Order: BFS on a Tree
