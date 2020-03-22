@@ -485,6 +485,28 @@ React.js
 					};
 				}
 
+			Utilities:
+				// Child Element Manipulation:
+					// The 'children' Data Structure implicitly passed into every React Element is not the usual native JS Array.
+					// Utilize the React.Children API Object to handle the 'children' Data Structure.
+
+					// Array Methods:
+					React.Children.<{ count | toArray }>(children);
+
+					// Verify that this current Element only has one Child:
+					React.Children.only(children);
+
+					// Iteration:
+					React.Children.<{ map | forEach }>(children, <iterative-function>);
+
+					// Wrapping Children:
+					// Utilize the React.cloneElement Function to recreate another React Element based off the children.
+					React.Children.map(children, child => React.cloneElement(
+						child,
+						<additional-props-object>, // More props to apply to Child Element.
+						<new-children> // Replaces existing Children of the Child Element.
+					));
+
 			Rendering:
 				let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
 				ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.
