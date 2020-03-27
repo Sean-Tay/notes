@@ -486,6 +486,14 @@ React.js
 				}
 
 			Utilities:
+				// Ref Forwarding:
+					// Allows Users of the Component to specify ref in the same way that they would for a native HTML React Component.
+					React.forwardRef(
+						(prop, ref) => {
+							// ...
+						}
+					);
+
 				// Child Element Manipulation:
 					// The 'children' Data Structure implicitly passed into every React Element is not the usual native JS Array.
 					// Utilize the React.Children API Object to handle the 'children' Data Structure.
