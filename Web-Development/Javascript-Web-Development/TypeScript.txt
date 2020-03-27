@@ -128,8 +128,8 @@ Typescript:
 
 		Common Types:
 			In React:
-				// The Type for the children argument passed in via Component Props should be specified as any.
-				// children?: any
+				// The Type for the children argument passed in via Component Props should be specified as React.ReactNode.
+				// children?: React.ReactNode
 				React.FC<<component-props>>: To specify the Type for a Functional Component.
 
 				React.HTMLAttributes<<element-type>>: For default attributes available to DOM Elements.
