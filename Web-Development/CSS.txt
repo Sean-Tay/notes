@@ -111,6 +111,7 @@ CSS:
 					absolute:
 						Removed from Document Flow.
 						Interprets Top, Bottom, Left, and Right settings with respect to position derived from closest Ancestor Element with non-static positioning, or <body> </body> if there is none.
+						Ignores Parent Padding.
 						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 
 					fixed:
