@@ -118,31 +118,40 @@ Webpack.js
 					], 
 				},
 
-				// Specify which type of Dependency imported / required by a Module should use which Loader(s) for transformation.
+				// Specify how different Modules in the Project will be treated.
 				module: {
 					rules: [
 						{
-							test: /\.(<file-extension-regex> | ... )$/,
-							include: [
-								path.resolve(__dirname, <relative-inclusion-path-from-webpack-config>),
-								// ...
-							],
-							exclude: [
-								path.resolve(__dirname, <relative-exclusion-path-from-webpack-config>),
-								// ...
-							],
+							// Conditions for when the Rule Applies.
+								// Requesting Resource.
+								issuer: /<file-regex>/,
 
-							// Note: the Loader order in the 'use' Array is reversed - the last Loader is applied first.
-							use: [
-								{
-									loader: '<webpack-loader>',
-									options: {
-										// Dependent on each Loader.
-										// ...
-									}
-								},
-								// ...
-							],
+								// OR
+
+								// Requested Resource.
+								test: /\.(<file-extension-regex> | ... )$/,
+								include: [
+									path.resolve(__dirname, <relative-inclusion-path-from-webpack-config>),
+									// ...
+								],
+								exclude: [
+									path.resolve(__dirname, <relative-exclusion-path-from-webpack-config>),
+									// ...
+								],
+
+							// Results of Applying the Rule.
+								// Specify which Loader(s) to use for the Resource that matches for the Rule.
+								// Note: the Loader order in the 'use' Array is reversed - the last Loader is applied first.
+								use: [
+									{
+										loader: '<webpack-loader>',
+										options: {
+											// Dependent on each Loader.
+											// ...
+										}
+									},
+									// ...
+								],
 						}, 
 						// ...
 					],
