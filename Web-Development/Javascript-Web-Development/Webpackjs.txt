@@ -196,6 +196,11 @@ Webpack.js
 					// Enable the requesting of resources from Webpack Dev Server to other Servers.
 					proxy: {
 						'<request-path>': '<full-request-URL>',
+						'<request-path>': {
+							target: '<full-request-URL>',
+							changeOrigin: true, // For URLs that involve external Domains
+							// ...
+						},
 						// ...
 					},
 
