@@ -28,7 +28,7 @@ Application Development:
 
 	Constructs:
 		Mixins:						Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
-		Shims:						Implementation of newer APIs for older Environments to run newer Code.
+		Shims:						Emulation of API for Legacy Environments that would not have them implemented / repair incorrect implementations of the API in Problematic Environments.
 
 	Metaprogramming:				The practice of making Programs that makes other Programs.
 		Introspection:				Finding out the structure and semantics of the Code that makes up the Program.
