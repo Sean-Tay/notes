@@ -244,6 +244,14 @@ Webpack.js
 						// Parameters:
 							filename: '<filename>' // File Names of the CSS Bundles.
 
+				JS:
+					webpack.ProvidePlugin // Enables Automatic Importing of specified Modules / Functions in every Module of the Project.
+						// Parameters:
+							{
+								'<alias>': ['<module>', '<path-to-function>', ...],
+								// ...
+							}
+
 			Loaders:
 				JS:
 					babel-loader
