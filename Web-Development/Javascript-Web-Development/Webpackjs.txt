@@ -49,8 +49,8 @@ Webpack.js
 			
 			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and selectively recompile them.
 
-			Code Polyfill: 		Adds in functionality for newer APIs not implemented in older Environments through emulation.
-			Code Transpilation: Transforms newer variants of code to equivalent, older variants to maintain compatability with older Environments.
+			Code Polyfill: 		Adds in functionality for newer Web APIs not implemented in older Browsers through emulation.
+			Code Transpilation: Transforms newer variants of code to equivalent, older variants to maintain compatability with older Browsers.
 
 			Code Minification: 	Only considers meaningful code during the Building Process. This can mean mangling variable names, or removing unreachable pieces of code.
 
