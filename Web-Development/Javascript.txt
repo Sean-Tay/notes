@@ -549,7 +549,7 @@ Javascript
 				// <alias>.className 
 
 			// Default Exports:
-				export default className; // Make 'className' the only export of the <module>. Compiles down to: module.export = className;
+				export default className; // Make 'className' the only export of the <module>. Compiles down to: module.exports.default = className;
 
 				// ...
 
