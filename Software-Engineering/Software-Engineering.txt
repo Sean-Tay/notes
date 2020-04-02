@@ -24,7 +24,7 @@ Application Development:
 		
 		DRY:						Don't Repeat Yourself. Avoid Code Duplication whenever possible.
 		WET:						Write Everything Twice. Avoid Over Abstraction, which can be more harmful than Code Duplication. 
-		AHA:						Avoid Hasty Abstracitions. Wait until a piece of Code has been Duplicated several times before looking into Abstraction to get a better sense of what the potential use-case for that piece of Code is.
+		AHA:						Avoid Hasty Abstractions. Wait until a piece of Code has been Duplicated several times before looking into Abstraction to get a better sense of what the potential use-case for that piece of Code is.
 
 	Constructs:
 		Mixins:						Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
