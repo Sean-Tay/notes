@@ -257,9 +257,11 @@ Webpack.js
 
 				Loaders:
 					babel-loader
-						// options.presets: [
-							'@babel/preset-env'
-						]
+						options: {
+							presets: [
+								'@babel/preset-env'
+							]
+						}
 
 					style-loader
 					css-loader
@@ -301,9 +303,9 @@ Webpack.js
 				Loaders:
 					CSS:
 						MiniCssExtractPlugin.loader
-							// options: [
+							options: {
 								esModule: <boolean>, 				// Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
-							]
+							}
 
 						css-loader
 							// CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
@@ -311,10 +313,11 @@ Webpack.js
 									// import classes from './index.css';
 									// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
 							
-							// Options:
-								modules: <boolean> 					// Enable CSS Modules.
-								importLoaders: <number> 			// Indicate the number of Loaders that run before css-loader.
-								sourceMap: <boolean> 				// Create Source Map for the compiled CSS.
+							options: {
+								modules: <boolean>, 				// Enable CSS Modules.
+								importLoaders: <number>, 			// Indicate the number of Loaders that run before css-loader.
+								sourceMap: <boolean>, 				// Create Source Map for the compiled CSS.
+							}
 
 							fast-css-loader
 
