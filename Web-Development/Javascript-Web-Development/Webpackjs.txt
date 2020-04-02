@@ -315,8 +315,7 @@ Webpack.js
 							// Options:
 								esModule: <boolean> // Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
 
-						css-loader 
-							fast-css-loader
+						fast-css-loader
 
 						sass-loader OR less-loader
 							fast-sass-loader
