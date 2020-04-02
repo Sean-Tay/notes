@@ -225,81 +225,101 @@ Webpack.js
 				},
 			};
 
-		Common:
-			webpack-merge // Used to merge different Webpack Config Objects together, allowing for composability fo Webpack Configuration.
+		Extensions:
+			Base:
+				Packages:
+					webpack										
+					webpack-cli									// Run Webpack Commands
+					webpack-dev-server 							// Enable Automatic Browser Reload.
 
-			Plugins:
-				Developer Experience:
-					npm-install-webpack-plugin // Automatic Package Installation when imported.
-					
-					// Webpack Dev Server for Automatic Browser Reload upon changes.
-						webpack-dev-server // Enable Automatic Browser Reload.
+					babel-loader								// ESNext Javascript Syntax.
+					@babel/core									
+					@babel/preset-env							// Use Latest Javascript.
 
-						new webpack.HotModuleReplacementPlugin() // Enable Hot Module Reloading.
+					style-loader								// Injects JS Strings with CSS content into index.html through <style> HTML Elements. Implements Hot Module Reloading for Patching CSS.
+					css-loader									// Resolves local references to and transforms CSS Resources into JS Modules containing JS Strings with CSS Content.
 
-						write-file-webpack-plugin // Forces Webpack Dev Server to emit the Resolved Files.
+					html-webpack-plugin							// Injection of Application JS and Application CSS into a HTML Template for eventual Browser usage.
 
-				HTML:
-					new HtmlWebpackPlugin( // Injection of Application JS and Application CSS into a HTML Template for eventual Browser usage.
+				Plugins:
+					new webpack.HotModuleReplacementPlugin() 	// Enable Hot Module Reloading.
+
+					new HtmlWebpackPlugin( 
 						// Note: Webpack always parses Application JS first, then potential Application CSS imported by the Application JS, then injection into the HTML Template.
 						{ 
 							template: <html-template-path>, 
 							// ...
 						}
 					)
+
+				Loaders:
+					babel-loader
+						// options.presets: [
+							'@babel/preset-env'
+						]
+
+					style-loader 
+					css-loader 
+
+			Additional:
+				webpack-merge // Used to merge different Webpack Config Objects together, allowing for composability fo Webpack Configuration.
+
+				Plugins:
+					Developer Experience:
+						npm-install-webpack-plugin // Automatic Package Installation when imported.
+						
+						write-file-webpack-plugin // Forces Webpack Dev Server to emit the Resolved Files.
+
+					HTML:
 						// CDN for specified node_modules:
 							webpack-cdn-plugin
 							dynamic-webpack-cdn-plugin
 
-				CSS:
-					extract-text-webpack-plugin // Predecessor to mini-css-extract-plugin.
+					CSS:
+						extract-text-webpack-plugin // Predecessor to mini-css-extract-plugin.
 
-					mini-css-extract-plugin // Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
-						// Parameters:
-							filename: '<filename>' // File Names of the CSS Bundles.
+						mini-css-extract-plugin // Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
+							// Parameters:
+								filename: '<filename>' // File Names of the CSS Bundles.
 
-				JS:
-					webpack.ProvidePlugin // Enables Automatic Importing of specified Modules / Functions in every Module of the Project.
-						// Parameters:
-							{
-								'<alias>': ['<module>', '<path-to-function>', ...],
-								// ...
-							}
+						css-loader 
+							// CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
+								// General Flow: Define CSS Classes in the CSS File, then in the JS Files:
+									// import classes from './index.css';
+									// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
+							
+							// Options:
+								modules: <boolean> // Enable CSS Modules.
+								importLoaders: <number> // Indicate the number of Loaders that run before css-loader.
+								sourceMap: <boolean> // Create Source Map for the compiled CSS.
 
-			Loaders:
-				JS:
-					babel-loader
-						@babel/core
+					JS:
+						webpack.ProvidePlugin // Enables Automatic Importing of specified Modules / Functions in every Module of the Project.
+							// Parameters:
+								{
+									'<alias>': ['<module>', '<path-to-function>', ...],
+									// ...
+								}
 
-						// babel presets
-						@babel/preset-env // Enables use of latest Javascript.
-						@babel/preset-react // Enables use of JSX Syntax for React.
+				Loaders:
+					JS:
+						babel-loader
+							// babel presets
+							@babel/preset-react // Enables use of JSX Syntax for React.
 
-						// babel (not Webpack) plugins
-						@babel/plugin-transform-runtime // Enables re-use of Babel's injected helper code to save on code size.
+							// babel (not Webpack) plugins
+							@babel/plugin-transform-runtime // Enables re-use of Babel's injected helper code to save on code size.
 
-				CSS:
-					style-loader // Injects JS Strings with CSS content into index.html through <style> HTML Elements. Implements Hot Module Reloading for Patching CSS.
-					OR
-					MiniCssExtractPlugin.loader // Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
-						// Options:
-							esModule: <boolean> // Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
+					CSS:
+						MiniCssExtractPlugin.loader // Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
+							// Options:
+								esModule: <boolean> // Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
 
-					css-loader // Resolves local references to and transforms CSS Resources into JS Modules containing JS Strings with CSS Content.
-						// Additionally facilitates the use of CSS Modules, which enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
-							// General Flow: Define CSS Classes in the CSS File, then in JS Files:
-								// import classes from './index.css';
-								// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
-						
-						// Options:
-							modules: <boolean> // Enable CSS Modules.
-							importLoaders: <number> // Indicate the number of Loaders that run before css-loader.
-							sourceMap: <boolean> // Create Source Map for the compiled CSS.
+						css-loader 
+							fast-css-loader
 
-						fast-css-loader
-
-					sass-loader OR less-loader
-						fast-sass-loader
+						sass-loader OR less-loader
+							fast-sass-loader
 
 	Commands: Requires the webpack-cli Package.
 		npx webpack-cli init // Interactively create a Webpack Config File.
