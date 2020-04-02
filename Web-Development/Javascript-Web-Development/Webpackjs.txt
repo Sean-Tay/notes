@@ -231,6 +231,8 @@ Webpack.js
 					npm-install-webpack-plugin // Automatic Package Installation when imported.
 					
 					// Webpack Dev Server for Automatic Browser Reload upon changes.
+						webpack-dev-server // Enable Automatic Browser Reload.
+
 						new webpack.HotModuleReplacementPlugin() // Enable Hot Module Reloading.
 
 						write-file-webpack-plugin // Forces Webpack Dev Server to emit the Resolved Files.
