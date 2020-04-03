@@ -560,7 +560,12 @@ Javascript
 				export {};
 
 				// One-liner Import / Export for Aggregating Modules:
+				export * from '<module>';
+				export * as '<export-name>' from '<module>';
+
 				export { ... } from '<module>';
+					export { <module-item>, ... } from '<module>';
+					export { default as <export-name> } from '<module>';
 
 				// Do not mix import and NodeJS module.export.
 
