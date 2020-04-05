@@ -265,9 +265,6 @@ Webpack.js
 							]
 						}
 
-					style-loader
-					css-loader
-
 			Additional:
 				Webpack Packages:
 					webpack-merge 									// Used to merge different Webpack Config Objects together, allowing for composability for Webpack Configuration.
