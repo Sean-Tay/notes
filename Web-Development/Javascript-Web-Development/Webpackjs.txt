@@ -258,6 +258,8 @@ Webpack.js
 				Loaders:
 					babel-loader
 						options: {
+							cacheDirectory: true,					// Caches the Compiled Results from Babel to speed up later Builds.
+
 							presets: [
 								'@babel/preset-env'
 							]
