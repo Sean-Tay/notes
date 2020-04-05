@@ -59,7 +59,9 @@ Webpack.js
 			Automatic Reload: 	Triggers a full Browser Reload to propagate the changes in Resolved Files after Automatic Recompilation to the View. Requires the webpack-dev-server Package.
 			
 			Hot Module Replacement: Detects for changes in Bundles and triggers a patch of the running Browser State without a full Browser Reload.
-				This requires implementation of the Hot Module Replacement Interface in the code (via module.hot and module.hot.accept).
+				This requires implementation of the Hot Module Replacement Interface in the code:
+					module.hot										// Indicates if Hot Module Replacement has been enabled in Webpack.
+					module.hot.accept('<module>', () => { /* ... */ }) // Execute a Function whenever the '<module>' Dependency for a File has changed.
 
 		Configuration Template: Webpack will use 'webpack.config.js' if it exists in the Project Root.
 			// Note: Only CommonJS allowed here.
