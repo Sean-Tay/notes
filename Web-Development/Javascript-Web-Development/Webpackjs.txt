@@ -339,5 +339,5 @@ Webpack.js
 			--mode=production 										// Optimizes the bundling process for Runtime Speed and Bundle Size.
 
 		// Tip: Use Nodemon to monitor for changes to the Webpack Config Files, and restart running Webpack Processes upon change.
-		nodemon --watch <config-file>.js --exec \" <command> \"
+		nodemon --watch package.json --watch <config-file>.js --exec \" <command> \"
 		
