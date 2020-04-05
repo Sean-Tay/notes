@@ -227,7 +227,7 @@ Webpack.js
 
 		Extensions:
 			Base:
-				Packages:
+				Webpack Packages:
 					webpack										
 					webpack-cli										// Run Webpack Commands.
 					webpack-dev-server 								// Enable Automatic Browser Reload.
@@ -267,7 +267,7 @@ Webpack.js
 					css-loader
 
 			Additional:
-				Packages:
+				Webpack Packages:
 					webpack-merge 									// Used to merge different Webpack Config Objects together, allowing for composability for Webpack Configuration.
 
 					npm-install-webpack-plugin 						// Automatic Package Installation when imported.
@@ -283,8 +283,9 @@ Webpack.js
 						mini-css-extract-plugin 					// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
 
 					// JS
-						@babel/preset-react 						// Enables use of JSX Syntax for React.
 						@babel/plugin-transform-runtime 			// Enables re-use of Babel's injected helper code to save on code size. Not a Webpack Plugin.
+
+						@babel/preset-react 						// Enables use of JSX Syntax for React.
 
 				Plugins:
 					CSS
