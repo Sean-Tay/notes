@@ -228,7 +228,7 @@ Webpack.js
 		Extensions:
 			Base:
 				Webpack Packages:
-					webpack										
+					webpack											
 					webpack-cli										// Run Webpack Commands.
 					webpack-dev-server 								// Enable Automatic Browser Reload.
 					
@@ -289,6 +289,9 @@ Webpack.js
 						@babel/plugin-transform-runtime 			// Enables re-use of Babel's injected helper code to save on code size. Not a Webpack Plugin.
 
 						@babel/preset-react 						// Enables use of JSX Syntax for React.
+
+						ts-loader									// Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
+						@babel/preset-typescript					// Newer Alternative to ts-loader. Enables use of TypeScript with Babel. It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool. Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
 
 				Plugins:
 					// CSS
