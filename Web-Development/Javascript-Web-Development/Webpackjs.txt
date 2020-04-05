@@ -277,13 +277,12 @@ Webpack.js
 						dynamic-webpack-cdn-plugin					// CDN for node_modules
 
 					// CSS
-						extract-text-webpack-plugin 				// Predecessor to mini-css-extract-plugin.
-
 						fast-css-loader								// Alternative to css-loader. Does not support CSS Source Maps.
 
 						sass-loader OR less-loader					// Enables use of extended CSS-related functionality.
 							fast-sass-loader
 
+						extract-text-webpack-plugin 				// Predecessor to mini-css-extract-plugin.
 						mini-css-extract-plugin 					// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
 
 					// JS
