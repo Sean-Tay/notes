@@ -290,12 +290,12 @@ Webpack.js
 						@babel/preset-react 						// Enables use of JSX Syntax for React.
 
 				Plugins:
-					CSS
+					// CSS
 						new MiniCSSExtractPlugin({
 							filename: '<filename>.css' 				// File Names of the CSS Bundles.
 						})
 
-					JS:
+					// JS:
 						new webpack.ProvidePlugin({ 
 							// Enables Automatic Importing of specified Modules / Functions in every Module of the Project.
 							// Will search for Module in Current Folder and the node_modules Folder by default.
@@ -304,7 +304,7 @@ Webpack.js
 						})
 
 				Loaders:
-					CSS:
+					// CSS:
 						MiniCssExtractPlugin.loader
 							options: {
 								esModule: <boolean>, 				// Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
