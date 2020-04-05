@@ -282,6 +282,11 @@ Webpack.js
 					// CSS
 						extract-text-webpack-plugin 				// Predecessor to mini-css-extract-plugin.
 
+						fast-css-loader								// Alternative to css-loader. Does not support CSS Source Maps.
+
+						sass-loader OR less-loader					// Enables use of extended CSS-related functionality.
+							fast-sass-loader
+
 						mini-css-extract-plugin 					// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
 
 					// JS
@@ -321,11 +326,6 @@ Webpack.js
 								importLoaders: <number>, 			// Indicate the number of Loaders that run before css-loader.
 								sourceMap: <boolean>, 				// Create Source Map for the compiled CSS.
 							}
-
-							fast-css-loader
-
-						sass-loader OR less-loader
-							fast-sass-loader
 
 	Commands: Requires the webpack-cli Package.
 		npx webpack-cli init 										// Interactively create a Webpack Config File.
