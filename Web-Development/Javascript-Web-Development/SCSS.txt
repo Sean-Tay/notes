@@ -16,6 +16,7 @@ SCSS
 	
 	Details:
 		SCSS Syntax needs to be compiled down to CSS before it can be used.
+		SCSS Files should have the .scss extension, NOT .sass.
 
 		Features:
 			Imports:
