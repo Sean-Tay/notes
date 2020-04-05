@@ -111,7 +111,7 @@ Webpack.js
 						// ...
 					],
 
-					// Resolve the listed Extensions in the specified order. Upon a match, it will ignore the rest.
+					// Allow for resolution of the listed Extensions, in the specified order. Upon a match, it will ignore the rest.
 					extensions: [
 						'.<extension>',
 						// ...
