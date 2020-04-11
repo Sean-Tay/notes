@@ -109,7 +109,7 @@ Webpack.js
 
 					// Specify which Files should be the Entry Point in a Directory Module. Upon a match, it will ignore the rest.
 					mainFiles: [
-						'index.js',
+						'index',
 						// ...
 					],
 
