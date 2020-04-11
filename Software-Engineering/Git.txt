@@ -13,7 +13,8 @@ Git:
 	Concepts: 
 		origin					- A Local Alias for the Remote Repository's URL in interest.
 
-		HEAD					- A Local Alias for the current Commit.
+		HEAD					- A Local Alias for the latest Commit in the current Branch.
+		@						- A shorter Local Alias for the above.
 		
 		Downstream				- Information Flow from Remote Repo to Local Repo.
 		Upstream				- Information Flow from Local Repo to Remote Repo.
