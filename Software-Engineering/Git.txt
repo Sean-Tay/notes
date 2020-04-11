@@ -133,7 +133,7 @@ Git:
 			--hard				- Discard accumulated changes from <number-of-commits>.
 
 		git rebase <commit>		- Shift (Reapply) all Commits in current Local Branch onto <commit>.
-		git rebase --onto <desired-branch-base> <old-branch-base> [<branch>] - Reposition the base of <branch> to <desired-branch-base>.
+		git rebase --onto <desired-branch-base> <old-branch-base> [<branch>] - Shift (Reapply) all Commits in <branch> to <desired-branch-base>.
 
 		git push <repo-url-alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
