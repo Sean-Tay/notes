@@ -183,6 +183,7 @@ Node.js:
 					-y													// Initialize a new Node Project with default metadata.
 				
 				npm install 											// Add all Node Dependency specified within a package.json locally to the current Node Project.
+					-i													// Alias for the above.
 
 				npm install <dependency> 								// Add a Node Dependency locally to the current Node Project. Older versions of npm will not automatically add it into the Node Project's package.json.
 					--save-dev											// Add a development-level Node Dependency locally to the current Node Project, and save it to its package.json.
