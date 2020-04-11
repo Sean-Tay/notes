@@ -58,7 +58,7 @@ Git:
 		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
 		git push -d <repo-url-alias> <branch> - Remove a Branch on the Remote Repository.
 
-		git checkout <commit> -- <file> ... - Switch current version of <file> with the <commit> version of <file>.
+		git checkout <commit-hash> -- <file> ... - Switch current version of <file> with the <commit-hash> version of <file>.
 
 		git merge [<repo-url-alias>] <branch> - Merge updates from the Branch <branch> into the currently checked out Local Branch.
 			Tip:				- If there are pending changes prior to the merge, *do a Commit for those changes first ; do NOT use stash*. In the event the merge is done wrongly, there will be a Commit containing all prior work to revert to.
@@ -70,7 +70,7 @@ Git:
 			
 			--squash			- Combine all updates from the Branch <branch> into one, and add that combined update as one Commit into the currently checked out Local Branch. Does not actually merge <branch>, which helps keep git history of the currently checked out Branch clean.
 
-		git cherry-pick <commit> - Selectively bring in a Commit from another Branch to the currently checked out Local Branch.
+		git cherry-pick <commit-hash> - Selectively bring in a Commit from another Branch to the currently checked out Local Branch.
 			--no-commit			- Apply the changes only to the Local Working Copy without Commiting.
 
 		git pull [<repo-url-alias>] <branch> - git fetch + git merge.
@@ -126,13 +126,13 @@ Git:
 		git commit --amend --no-edit - Add in changes to the most recent Commit in the Local Staging List.
 		git commit --amend -m "<commit-message>" - Change the message of the most recent Commit. Note: Staged Changes will be included in this commit.
 
-		git rebase -i <earliest-commit-to-ammend>~1 - Technique to change one or more Commits prior to the most recent Commit of the checked out Local Branch. Change the operation to be performed on each row corresponding to the Commits to be amended from 'pick' to 'e'.
+		git rebase -i <earliest-hash-of-commit-to-amend>~1 - Technique to change one or more Commits prior to the most recent Commit of the checked out Local Branch. Change the operation to be performed on each row corresponding to the Commits to be amended from 'pick' to 'e'.
 
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 			--soft 				- Keep accumulated changes from <number-of-commits> in the Local Staging List.
 			--hard				- Discard accumulated changes from <number-of-commits>.
 
-		git rebase <commit>		- Shift (Reapply) all Commits in current Local Branch onto <commit>.
+		git rebase <commit-hash>		- Shift (Reapply) all Commits in current Local Branch onto <commit-hash>.
 		git rebase --onto <desired-branch-base> <old-branch-base> [<branch>] - Shift (Reapply) all Commits in <branch> to <desired-branch-base>.
 
 		git push <repo-url-alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
