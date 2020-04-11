@@ -231,41 +231,7 @@ Node.js:
 
 				yarn [run] <command> [<arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 			
-		Nodemon.js - Wraps around Node to enable hot reloading of changed files in the Node Project during runtime.
-
-		Forever.js - A Node Dependency which enables the automatic restart of a running Node Project should it crash.
-
-		Babel.js - A Node Dependency that performs transpilation between JS standards (ES5++ -> ES5). ES5 possibly supported by more browsers than ES5++.
-			// Steps:
-				npm install --save-dev @babel/core
-				npm install --save-dev @babel/preset-env 
-
-				// To compile (and run) JS Files with Babel Commands via the Command Line.
-				npm install --save-dev @babel/cli
-				
-				// For .babelrc:
-				{
-					presets = [
-						"@babel/env", // This is a configuration which tells Babel to always use the latest spec.
-						...
-					] 
-				}
-
-				// package.json Scripts Example:
-				{
-					"scripts" : {
-						// Server Side
-							// Note: This executes the transpilation of the App and keeps the result in memory for current execution.
-							"server": "babel-node ./src/bin/www",
-							"dev": "NODE_ENV=development server",
-
-							// Note: This executes the transpilation of the App and writes the result to disk for eventual execution.
-							"clean": "rm -rf ./dist",
-							"build": "babel ./src -d dist",
-							"server:prod": "node ./dist/bin/www",
-							"prod": "NODE_ENV=production clean build server:prod",
-					}
-				}
+		Nodemon.js - Wraps around Node to enable Hot Reloading of changed files in the Node Project during runtime.
 
 		Rewire.js - Adds a special Setter and Getter Method to Modules so you can modify their behaviour for better Unit Testing.
 			// Inject Mocks for other Modules or Globals (e.g process)
