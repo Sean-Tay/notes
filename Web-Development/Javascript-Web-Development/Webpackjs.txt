@@ -292,8 +292,15 @@ Webpack.js
 
 						@babel/preset-react 						// Enables use of JSX Syntax for React.
 
-						ts-loader									// Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
-						@babel/preset-typescript					// Newer Alternative to ts-loader. Enables use of TypeScript with Babel. It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool. Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
+						ts-loader									// Enables use of TypeScript. Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
+
+						@babel/preset-typescript					// Newer Alternative to ts-loader - Enables use of TypeScript with Babel. 
+							// It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool.
+							// With this approach alone, Type Checking would not be done during development with Automatic Reload / Hot Module Replacement.
+							// Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
+
+						fork-ts-checker-webpack-plugin				// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
+							// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
 
 				Plugins:
 					// CSS
@@ -326,6 +333,12 @@ Webpack.js
 								modules: <boolean>, 				// Enable CSS Modules.
 								importLoaders: <number>, 			// Indicate the number of Loaders that run before css-loader.
 								sourceMap: <boolean>, 				// Create Source Map for the compiled CSS.
+							}
+					
+					// JS:
+						ts-loader
+							options: {
+								transpileOnly: true,				// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
 							}
 
 	Commands: Requires the webpack-cli Package.
