@@ -24,7 +24,9 @@ Javascript
 				var myBoolean = true;
 				var myFunction = () => {};
 
-			console.log("Something to Print"); 					// Prints to Console
+			console.log("Something to Print"); 					// Prints Output.
+			console.table(<collection>);						// Prints Tabular Output for Arrays or Objects.
+			console.trace();									// Prints out current Stack Trace for where this was Executed at.
 
 			Comments // /* */
 
