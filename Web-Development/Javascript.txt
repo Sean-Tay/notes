@@ -65,16 +65,58 @@ Javascript
 			console.log( ref === {} ); // false
 
 		Iterables:
-			var listName = [listElement, ... ];
+			var arr = [ element1, ... ];
 			
-			listName.map(function(listElement, listElementIndexOptional, listElementArrayRefOptional) { // Do something to each listElementType  });
-			listName.filter(function(listElement) { // Return true to keep listElement in returned Array, false to exclude listElement from returned Array });
-			listName.reduce(function(listElementA, listElementB) { // Return combinate value of listItemA, listItemB });
+			var newArr = arr.map(
+				function ( element, index, arrRef ) {
+					// Return something based on each Element.
+				}
+			);
 
-			listName.sort(function(itemA, itemB) { // Return relative value of itemA to itemB }); // Sort the contents in listName according to the sort function passed in.
+			var filteredArr = arr.filter(
+				function( element, index, arrRef ) {
+					// Return true to keep the Element in the returned Array, false to exclude the Element from the returned Array.
+				}
+			);
+
+			var result = arr.reduce(
+				function( prev, element, index, arrRef ) {
+					// Return some combinate value of prev and element, traversing through the Array from Left to Right.
+				}, 
+				<optional-accumulator-initial-value>
+			);
+
+			var sortedArr = arr.sort( // Sort the contents in the Array according to the Sorting Function passed in.
+				function( elementA, elementB ) { 
+					// Return relative value of elementA to elementB:
+					// 	-1 	=> elementA will be placed before elementB.
+					// 	0 	=> elementA and elementB's relative ordering will be maintained.
+					// 	1	=> elementB will be placed before elementA.
+				}
+			);
+
+			var slicedArr = arr.slice(<start-index>, [<end-index>]); // Returns a Shallow Copy of the Array from the <start-index> inclusive to the <end-index> exclusive.
+
+			var deletedArr = arr.splice(<start-index>, <count>, <item-1>, ... ); // Can be used to Insert or Remove a Portion from an Array, starting at <start-index>.
+
+			var isSomeCondition = arr.some(
+				// Returns a boolean representing if any Elements in the Array satisfy the condition in the given Function.
+				// Note: If the Array is Empty, this always returns false.
+				function(element) {
+					// return true if the Element fulfills a condition, false otherwise.
+				}
+			);
+
+			var isEveryCondition = arr.every(
+				// Returns a boolean representing if all Elements in the Array satisfy the condition in the given Function.
+				// Note: If the Array is Empty, this always returns true.
+				function(element) {
+					// return true if the Element fulfills a condition, false otherwise.
+				}
+			);
 
 			// Iteration
-			for (const item of listName) {
+			for (const item of arr) {
 				// ...
 			}
 
