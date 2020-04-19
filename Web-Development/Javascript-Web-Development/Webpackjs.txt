@@ -281,6 +281,7 @@ Webpack.js
 					// CSS
 						fast-css-loader								// Alternative to css-loader. Does not support CSS Source Maps.
 
+						resolve-url-loader							// To allow for relative imports to work correctly in Sass.
 						sass-loader OR less-loader					// Enables use of extended CSS-related functionality.
 							fast-sass-loader
 

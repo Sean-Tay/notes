@@ -20,7 +20,9 @@ SCSS
 
 		Features:
 			Imports:
-				@import url(<url>);
+				@import url(<url>); // Note: Relative URLs must be with respect to the Output Root or Web Root.
+				@import '~<package-url>'; // Import SCSS Modules from Packages in node_modules. Note: Requires sass-loader to be used.
+
 				@use '_<scss-file-name>'; // Partials: SCSS Files with a leading underscore in their name will not be compiled to CSS.
 				@use '<scss-file-path>';
 
