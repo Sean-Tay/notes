@@ -238,7 +238,7 @@ Webpack.js
 						html-webpack-plugin							// Injection of Application JS and Application CSS into a HTML Template for eventual Browser usage.
 
 					// CSS
-						style-loader								// Injects JS Strings with CSS content into index.html through <style> HTML Elements during runtime. Implements Hot Module Reloading for Patching CSS.
+						style-loader								// Creates JS Code that will inject CSS Content Strings into index.html via <style> HTML Elements during runtime. Implements Hot Module Reloading for Patching CSS.
 						css-loader									// Resolves local references to and transforms CSS Resources into JS Modules containing JS Strings with CSS Content.
 
 					// JS
