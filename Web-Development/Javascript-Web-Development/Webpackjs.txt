@@ -279,6 +279,8 @@ Webpack.js
 						dynamic-webpack-cdn-plugin					// CDN for node_modules
 
 					// CSS
+						css-modules-typescript-loader				// Loader to make CSS Modules work with TypeScript. Place after css-loader in the Webpack Config Module Rules.
+
 						fast-css-loader								// Alternative to css-loader. Does not support CSS Source Maps.
 
 						resolve-url-loader							// To allow for relative imports to work correctly in Sass.
@@ -327,6 +329,7 @@ Webpack.js
 
 						css-loader
 							// CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
+								// Note: If using TypeScript, need to also use css-modules-typescript-loader.
 								// General Flow: Define CSS Classes in the CSS File, then in the JS Files:
 									// import classes from './index.css';
 									// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
