@@ -20,7 +20,7 @@ SCSS
 
 		Features:
 			Imports:
-				@import '<url>';
+				@import url(<url>);
 				@use '_<scss-file-name>'; // Partials: SCSS Files with a leading underscore in their name will not be compiled to CSS.
 				@use '<scss-file-path>';
 
