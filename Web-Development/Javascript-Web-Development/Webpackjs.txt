@@ -286,27 +286,31 @@ Webpack.js
 							transpileOnly: true,				// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
 						}
 
-			CSS Processors:
+			CSS Pre-Processors:
 				Webpack Packages:
-					resolve-url-loader								// To allow for relative imports to work correctly in Sass.
+					resolve-url-loader								// To allow for relative imports to work correctly in Sass or Less.
 					sass-loader OR less-loader						// Enables use of extended CSS-related functionality.
 						fast-sass-loader
 
-
 					extract-text-webpack-plugin 					// Predecessor to mini-css-extract-plugin.
 					mini-css-extract-plugin 						// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
+
+				Loaders:
+					css-loader
+						options: {
+							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
+						}
 				
-			CSS Modules:
+			CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
 				Webpack Packages:
 					css-modules-typescript-loader					// Loader to make CSS Modules work with TypeScript. Place after css-loader in the Webpack Config Module Rules.
 
 				Loaders:
 					css-loader
-						// CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
-							// Note: If using TypeScript, need to also use css-modules-typescript-loader.
-							// General Flow: Define CSS Classes in the CSS File, then in the JS Files:
-								// import classes from './index.css';
-								// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
+						// Note: If using TypeScript, need to also use css-modules-typescript-loader.
+						// General Flow: Define CSS Classes in the CSS File, then in the JS Files:
+							// import classes from './index.css';
+							// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
 						
 						options: {
 							modules: <boolean>, 					// Enable CSS Modules.
