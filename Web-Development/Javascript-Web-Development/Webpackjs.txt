@@ -267,6 +267,69 @@ Webpack.js
 							]
 						}
 
+			TypeScript:
+				Webpack Packages:
+					ts-loader									// Enables use of TypeScript. Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
+						// Type Checks with Resultant Errors will show an Error Page in the Browser if the Webpack Dev Server is running.
+
+					@babel/preset-typescript					// Newer Alternative to ts-loader - Enables use of TypeScript with Babel. 
+						// It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool.
+						// With this approach alone, Type Checking would not be done during development with Automatic Reload / Hot Module Replacement.
+						// Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
+
+					fork-ts-checker-webpack-plugin				// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
+						// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
+
+				Loaders:
+					ts-loader
+						options: {
+							transpileOnly: true,				// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
+						}
+
+			CSS Processors:
+				Webpack Packages:
+					resolve-url-loader								// To allow for relative imports to work correctly in Sass.
+					sass-loader OR less-loader						// Enables use of extended CSS-related functionality.
+						fast-sass-loader
+
+
+					extract-text-webpack-plugin 					// Predecessor to mini-css-extract-plugin.
+					mini-css-extract-plugin 						// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
+				
+			CSS Modules:
+				Webpack Packages:
+					css-modules-typescript-loader					// Loader to make CSS Modules work with TypeScript. Place after css-loader in the Webpack Config Module Rules.
+
+				Loaders:
+					css-loader
+						// CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
+							// Note: If using TypeScript, need to also use css-modules-typescript-loader.
+							// General Flow: Define CSS Classes in the CSS File, then in the JS Files:
+								// import classes from './index.css';
+								// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
+						
+						options: {
+							modules: <boolean>, 					// Enable CSS Modules.
+							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
+							sourceMap: <boolean>, 					// Create Source Map for the compiled CSS.
+						}
+
+			CSS Extraction:
+				Plugins:
+					new MiniCSSExtractPlugin({
+						filename: '<filename>.css' 					// File Names of the CSS Bundles.
+					})
+
+				Loaders:
+					MiniCssExtractPlugin.loader
+						options: {
+							esModule: <boolean>, 					// Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
+						}
+
+			React:
+				Webpack Packages:
+					@babel/preset-react 							// Enables use of JSX Syntax for React.
+
 			Additional:
 				Webpack Packages:
 					webpack-merge 									// Used to merge different Webpack Config Objects together, allowing for composability for Webpack Configuration.
@@ -279,39 +342,12 @@ Webpack.js
 						dynamic-webpack-cdn-plugin					// CDN for node_modules
 
 					// CSS
-						css-modules-typescript-loader				// Loader to make CSS Modules work with TypeScript. Place after css-loader in the Webpack Config Module Rules.
-
 						fast-css-loader								// Alternative to css-loader. Does not support CSS Source Maps.
-
-						resolve-url-loader							// To allow for relative imports to work correctly in Sass.
-						sass-loader OR less-loader					// Enables use of extended CSS-related functionality.
-							fast-sass-loader
-
-						extract-text-webpack-plugin 				// Predecessor to mini-css-extract-plugin.
-						mini-css-extract-plugin 					// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
 
 					// JS
 						@babel/plugin-transform-runtime 			// Enables re-use of Babel's injected helper code to save on code size. Not a Webpack Plugin.
 
-						@babel/preset-react 						// Enables use of JSX Syntax for React.
-
-						ts-loader									// Enables use of TypeScript. Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
-							// Type Checks with Resultant Errors will show an Error Page in the Browser if the Webpack Dev Server is running.
-
-						@babel/preset-typescript					// Newer Alternative to ts-loader - Enables use of TypeScript with Babel. 
-							// It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool.
-							// With this approach alone, Type Checking would not be done during development with Automatic Reload / Hot Module Replacement.
-							// Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
-
-						fork-ts-checker-webpack-plugin				// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
-							// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
-
 				Plugins:
-					// CSS
-						new MiniCSSExtractPlugin({
-							filename: '<filename>.css' 				// File Names of the CSS Bundles.
-						})
-
 					// JS:
 						new webpack.ProvidePlugin({ 
 							// Enables Automatic Importing of specified Modules / Functions in every Module of the Project.
@@ -319,32 +355,6 @@ Webpack.js
 							'<alias>': ['<module>', '<path-to-function>', ...],
 							// ...
 						})
-
-				Loaders:
-					// CSS:
-						MiniCssExtractPlugin.loader
-							options: {
-								esModule: <boolean>, 				// Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
-							}
-
-						css-loader
-							// CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
-								// Note: If using TypeScript, need to also use css-modules-typescript-loader.
-								// General Flow: Define CSS Classes in the CSS File, then in the JS Files:
-									// import classes from './index.css';
-									// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
-							
-							options: {
-								modules: <boolean>, 				// Enable CSS Modules.
-								importLoaders: <number>, 			// Indicate the number of Loaders that run before css-loader.
-								sourceMap: <boolean>, 				// Create Source Map for the compiled CSS.
-							}
-					
-					// JS:
-						ts-loader
-							options: {
-								transpileOnly: true,				// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
-							}
 
 	Commands: Requires the webpack-cli Package.
 		npx webpack-cli init 										// Interactively create a Webpack Config File.
