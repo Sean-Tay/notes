@@ -231,6 +231,7 @@ Webpack.js
 			Base:
 				Webpack Packages:
 					webpack											
+					webpack-merge 									// Used to merge different Webpack Config Objects together, allowing for composability of Webpack Configuration.
 					webpack-cli										// Run Webpack Commands.
 					webpack-dev-server 								// Enable Automatic Browser Reload.
 					
@@ -318,7 +319,7 @@ Webpack.js
 							sourceMap: <boolean>, 					// Create Source Map for the compiled CSS.
 						}
 
-			CSS Extraction:
+			CSS Extraction: Minifies and Extracts the content of all CSS Files used into a single CSS File. This allows the Browser to load the Page Structure (.html) and Page Styling (.css) in Parallel.
 				Plugins:
 					new MiniCSSExtractPlugin({
 						filename: '<filename>.css' 					// File Names of the CSS Bundles.
@@ -336,8 +337,6 @@ Webpack.js
 
 			Additional:
 				Webpack Packages:
-					webpack-merge 									// Used to merge different Webpack Config Objects together, allowing for composability for Webpack Configuration.
-
 					npm-install-webpack-plugin 						// Automatic Package Installation when imported.
 					write-file-webpack-plugin 						// Forces Webpack Dev Server to emit the Resolved Files.
 
