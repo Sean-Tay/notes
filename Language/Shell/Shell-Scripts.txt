@@ -120,10 +120,8 @@ Linux / Unix:
 
 			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
 			
-			find <filepath>	<pattern> - Find files in <filepath> that fulfil a certain condition.
+			find <filepath>	-name "<pattern>" 2> /dev/null - Find files in <filepath> that match a certain <pattern>, excluding quotes.
 				-mtime	<n>		- Check for files that are older than <n>*24 hours.
-				-name <filename> - Search for the specified <filename>.
-					cd /; find . -name <filename> 2> /dev/null
 				
 				-prune			- Do not traverse into directories.
 			
