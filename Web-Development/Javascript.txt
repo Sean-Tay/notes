@@ -665,6 +665,25 @@ Javascript
 					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
 					- If <regex> is globally scoped and saved, it will return the ith occurrance, alongside any capturing groups, on the ith iteration of the .exec call on the <regex> object.
 	
+		Resize Observer: To do something when there are Size Changes detected in one or more Observed DOM Elements.
+			const observer = new ResizeObserver(
+				// Callback that executes whenever a Resize of the Observed Targets are detected.
+				entries => {
+					// entries represent the Dimensions of each Observed Target during a Detection.
+						// entry.target
+
+						// These are similar to the result of getBoundingClientRect().
+							// entry.contentRect
+							// entry.borderBoxSize
+							// entry.contentBoxSize
+				}
+			);
+
+			observer.observe(<html-element>, ...);
+
+			observer.unobserve(<html-element>, ...);
+			observer.disconnect();
+
 	Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
 		DOM Elements:
 			var element = document.getElementsByClassName('classname'); // No need the . prefix

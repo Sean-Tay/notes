@@ -86,8 +86,12 @@ CSS:
 
 			Box Model:
 				Margin: Outer Separation from other neighbouring Elements.
-				Border: A border around the Element.
+				
+				/* Border-Box */
+				Border: A Border around the Element.
 				Padding: Inner Separation between the Content and the Border of the Element.
+
+				/* Content-Box */
 				Content: Element Children.
 
 		CSS Rules and Values:
