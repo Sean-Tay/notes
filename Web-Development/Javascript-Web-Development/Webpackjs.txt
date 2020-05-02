@@ -325,6 +325,9 @@ Webpack.js
 						}
 
 			CSS Extraction: Minifies and Extracts the content of all CSS Files used into a single CSS File. This allows the Browser to load the Page Structure (.html) and Page Styling (.css) in Parallel.
+				Webpack Packages:
+					mini-css-extract-plugin
+
 				Plugins:
 					new MiniCSSExtractPlugin({
 						filename: '<filename>.css' 					// File Names of the CSS Bundles.
@@ -335,6 +338,18 @@ Webpack.js
 						options: {
 							esModule: <boolean>, 					// Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
 						}
+
+			CSS Purging: Filters out unused CSS Content from Final Output by comparing against Source Files.
+				Webpack Packages:
+					glob											// Allows specification of more advanced File Paths.
+					purgecss-webpack-plugin							
+
+				Plugins:
+					new PurgeCssWebpackPlugin({
+						paths: () => glob.sync(`${<src-dir>}/**/*`, { nodir: true }), // Specify location of Source Files to analyze against.
+						whitelistPatterns: [<pattern>, ... ],		// Specify CSS Selector Patterns to avoid Purging for.
+						whitelistPatternsChildren: [<pattern>, ... ], // Specify CSS Selector Patterns to avoid Purging their Children Selectors for.
+					})
 
 			React:
 				Webpack Packages:
