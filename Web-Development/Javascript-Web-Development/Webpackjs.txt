@@ -314,7 +314,12 @@ Webpack.js
 							// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
 						
 						options: {
-							modules: <boolean>, 					// Enable CSS Modules.
+							modules: {  							// Enable CSS Modules.
+								localIdentName: '<selector-identifier-config>', // Specify how the Selectors are named in the Loader's Output.
+									// [local]						// Placeholder for the Original Name of the Selector.
+									// [hash:base64]				// Placeholder for a Unique Identifier for the Selector.
+							},
+
 							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
 							sourceMap: <boolean>, 					// Create Source Map for the compiled CSS.
 						}
