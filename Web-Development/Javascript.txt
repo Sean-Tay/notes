@@ -299,8 +299,9 @@ Javascript
 						...<Object>,
 						<property>: <value>
 					}
-
-				Reduce Pattern: <array>.reduce((prev, item) => ([ ...prev, item ]), <initial>);
+				
+				// Avoid this, as this re-creates the Iterable per loop.
+				Reduce Anti-Pattern: <array>.reduce((prev, item) => ([ ...prev, item ]), <initial>);
 
 				Conditional Object Property Pattern:
 					{
