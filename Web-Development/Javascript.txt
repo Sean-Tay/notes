@@ -301,7 +301,10 @@ Javascript
 					}
 				
 				// Avoid this, as this re-creates the Iterable per loop.
-				Reduce Anti-Pattern: <array>.reduce((prev, item) => ([ ...prev, item ]), <initial>);
+				// For the best performance, use for ... of, and mutate the Accumulator Iterable instead.
+				Reduce Anti-Patterns:
+					<array>.reduce((prev, item) => ([ ...prev, item ]), <initial-arr>);
+					<array>.reduce((prev, item) => ({ ...prev, item }), <initial-obj>));
 
 				Conditional Object Property Pattern:
 					{
