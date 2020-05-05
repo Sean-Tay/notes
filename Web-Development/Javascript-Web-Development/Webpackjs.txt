@@ -270,21 +270,21 @@ Webpack.js
 
 			TypeScript:
 				Webpack Packages:
-					ts-loader									// Enables use of TypeScript. Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
+					ts-loader										// Enables use of TypeScript. Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
 						// Type Checks with Resultant Errors will show an Error Page in the Browser if the Webpack Dev Server is running.
 
-					@babel/preset-typescript					// Newer Alternative to ts-loader - Enables use of TypeScript with Babel. 
+					@babel/preset-typescript						// Newer Alternative to ts-loader - Enables use of TypeScript with Babel. 
 						// It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool.
 						// With this approach alone, Type Checking would not be done during development with Automatic Reload / Hot Module Replacement.
 						// Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
 
-					fork-ts-checker-webpack-plugin				// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
+					fork-ts-checker-webpack-plugin					// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
 						// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
 
 				Loaders:
 					ts-loader
 						options: {
-							transpileOnly: true,				// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
+							transpileOnly: true,					// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
 						}
 
 			CSS Pre-Processors:
