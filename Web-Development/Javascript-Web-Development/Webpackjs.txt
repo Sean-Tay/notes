@@ -290,6 +290,30 @@ Webpack.js
 							transpileOnly: true,					// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
 						}
 
+			CSS Transpiler:
+				Webpack Packages:
+					postcss-loader									// Enables CSS Transpilation, in the same vein as Babel for JS.
+					postcss-import									// Enables inlining of Imported Resources.
+					postcss-preset-env								// Use latest CSS / CSSNext.
+						autoprefixer								// Adds or Removes Vendor Prefixes in CSS Rules for specified Browser Compatability. Already incorporated within postcss-preset-env. Note that it will not add other Vendor Prefixes if a specific Vendor-Prefixed CSS Rule is specified.
+
+				Loaders:
+					css-loader
+						options: {
+							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
+						}
+
+					postcss-loader
+						options: {
+							ident: 'postcss',						// Removes Webpack's usage of JSON.stringify to allow for Dynamic Module Imports within this Webpack Options Object.
+							plugins: (loader) => [
+								// Top-to-Bottom Order
+								require('postcss-import')({ root: loader.resourcePath }),
+								require('postcss-preset-env')(),
+								// ...
+							]
+						}
+
 			CSS Pre-Processors:
 				Webpack Packages:
 					resolve-url-loader								// To allow for relative imports to work correctly in Sass or Less.
