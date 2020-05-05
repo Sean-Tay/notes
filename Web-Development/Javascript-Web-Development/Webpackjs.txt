@@ -324,7 +324,7 @@ Webpack.js
 							sourceMap: <boolean>, 					// Create Source Map for the compiled CSS.
 						}
 
-			CSS Extraction: Minifies and Extracts the content of all CSS Files used into a single CSS File. This allows the Browser to load the Page Structure (.html) and Page Styling (.css) in Parallel.
+			CSS Extraction: Minifies and Extracts the content of all CSS Files used into a single CSS File. This allows the Browser to load the Page Structure (.html), Page Bundle (.js) and Page Styling (.css) in Parallel.
 				Webpack Packages:
 					mini-css-extract-plugin
 
@@ -340,6 +340,9 @@ Webpack.js
 						}
 
 			CSS Purging: Filters out unused CSS Content from Final Output by comparing against Source Files.
+				// Note: Only works with CSS Extraction implemented.
+				// Note: Source Maps will be lost upon implementing this functionality.
+			
 				Webpack Packages:
 					glob											// Allows specification of more advanced File Paths.
 					purgecss-webpack-plugin							
