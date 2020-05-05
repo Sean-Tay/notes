@@ -148,6 +148,9 @@ Webpack.js
 									{
 										loader: '<webpack-loader>',
 										options: {
+											// Unique Identifier to allow Webpack to avoid using JSON.stringify on this Options Object for the purposes of generating a Unique Module Identifier for the Resource and all involved Loaders.
+											ident: '<unique-id>',
+
 											// Dependent on each Loader.
 											// ...
 										}
