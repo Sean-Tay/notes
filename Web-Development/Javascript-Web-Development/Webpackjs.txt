@@ -246,9 +246,9 @@ Webpack.js
 						css-loader									// Resolves local references to and transforms CSS Resources into JS Modules containing JS Strings with CSS Content.
 
 					// JS
-						babel-loader								// ESNext Javascript Syntax.
+						babel-loader								// Enables JS Transpilation.
 						@babel/core									
-						@babel/preset-env							// Use Latest Javascript.
+						@babel/preset-env							// Use Latest Javascript / ESNext.
 
 				Plugins:
 					new webpack.HotModuleReplacementPlugin() 		// Enable Hot Module Reloading.
