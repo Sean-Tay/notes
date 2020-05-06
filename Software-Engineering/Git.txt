@@ -47,6 +47,7 @@ Git:
 			--track <remote-branch> - Set the currently checked out Local Branch to track <remote-branch>.
 			--unset-upstream - Set the currently checked out Local Branch to no longer track the Remote Branch it was assigned to track.
 
+		git branch -l			- List all Local Branches.
 		git branch -a 			- List all Local and Remote Branches.
 
 		git branch -m <new-name> - Rename currently checked out Local Branch.
