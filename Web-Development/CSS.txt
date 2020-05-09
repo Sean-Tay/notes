@@ -33,6 +33,19 @@ CSS:
 		Autoprefixing:			Technique used to transform CSS Syntax to Browser-Specific variants.
 	
 	Details:
+		CSS Specificity:
+			The Higher a CSS Rule-Set's Specificity, the Greater its Priority.
+				Increasing from Top to Bottom:
+					Type Selectors and Pseudo Elements.
+					Class Selectors.
+					ID Selectors.
+
+					Inline CSS.
+
+					!important.
+
+				/* Note: When Multiple Applicable Selectors have the same specificity, the one defined last (NOT applied last) will be the one applied.*/
+
 		Syntax and Markup Layout:
 			/* General Form */
 				<css-selector> { 
