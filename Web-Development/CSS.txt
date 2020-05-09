@@ -14,21 +14,39 @@ CSS:
 		CSS Reset:				Removes all CSS that a Browser automatically adds - make design consistent amongst different Browsers, which may have their own implicit styling for some Elements.
 
 		Inline CSS: 			CSS defined with the style attribute of the HTML Element. Performance friendly.
+
+		CSS-in-JS: 				The idea of writing CSS within JS Files, instead of with separate CSS External Files.
+			Note: Not the same as Inline CSS. Inline CSS only offers a subset of CSS Functionality.
+
+			Pros:
+				JS Interactivity: Allows for JS to better interact and control the Styling of UI Elements in the many suitable scenarios.
+				Less Files: There is now just one File to define a UI Element, rather than two.
+
+			Cons:
+				Single Responsibility: Each File now handles both Styling and Functionality.
+				Separation of Concerns: To modify the Styling, you would have to edit the File that also controls Functionality.
+
 		Internal CSS: 			CSS defined with the <style> </style> tags. Performance friendly.
-		External CSS: 			CSS defined in an external file, referenced by the current file through the <link> tag. Less Performance friendly.
 
-		BEM:					Naming Convention for CSS Classes.
-			Block:				Class for a reusable 'Component'.
-				/* Block */
-				.block {}
+		External CSS: 			CSS defined in an External File, referenced by the current file through the <link> tag. Less Performance friendly.
+			CSS Architecture:
+				BEM:					Naming Convention for CSS Classes.
+					Block:				Class for a reusable 'Component'.
+						/* Block */
+						.block {}
 
-			Modifier:			Class to modify the Block thematically.
-				/* Modifier */
-				.block--modifier {}
+					Modifier:			Class to modify the Block thematically.
+						/* Modifier */
+						.block--modifier {}
 
-			Element:			Class for child HTML Elements (that are not Blocks themselves).
-				/* Element */
-				.block__element {}
+					Element:			Class for child HTML Elements (that are not Blocks themselves).
+						/* Element */
+						.block__element {}
+
+				Atomic CSS: 			The idea of splitting up a CSS Rule-Set into multiple CSS Rule-Sets that each contain only a single CSS Rule specification.
+					Pros:
+						Lean CSS: 		CSS Code Duplication is reduced.
+						Predictable Changes: Following the Single Responsibility Principle, it's easy to understand what Adding / Removing a CSS Rule Set would do.
 
 		Autoprefixing:			Technique used to transform CSS Syntax to Browser-Specific variants.
 	
