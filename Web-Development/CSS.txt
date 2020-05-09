@@ -20,7 +20,7 @@ CSS:
 
 			Pros:
 				JS Interactivity: Allows for JS to better interact and control the Styling of UI Elements in the many suitable scenarios.
-				Less Files: There is now just one File to define a UI Element, rather than two.
+				Colocation of CSS with Components: There is now just one File to define a UI Element, rather than two.
 
 			Cons:
 				Single Responsibility: Each File now handles both Styling and Functionality.
