@@ -15,18 +15,18 @@ Webpack.js
 	Concepts:
 		Plugin:					Third-Party Extension that can utilize Webpack Hooks as a means to subscribe to various Events in the Webpack Execution Process.
 
-		Asset:					A File that does not contain code.
+		Asset:					A File that does not contain code. Usually will be emitted as separate Files in the Output.
 		Module:					A File or Directory in a Node Project which has some JS execution entry-point available, allowing it to be loaded in code.
 		Dependency:				In the context of a Module, another Asset or Module which it relies upon.
 		
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
 		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module. These are required for non JSON / Javascript Dependencies.
 
-		Chunk:					References a Module, or group of Modules, currently being handled by the Webpack Bundling Process.
+		Chunk:					Refers to an Asset, a Module, or a group of Assets and Modules that are currently being handled by the Webpack Bundling Process.
 		Chunk Group / Graph:	A collection of Chunks which are typically created and generated for each Entry-Point specified.
 
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
-		Bundle:					An emitted File consisting of the content from a group of Assets, Modules and potentially associated Dependencies, made to be easily consumable for a Browser.
+		Bundle:					An emitted File consisting of the content usually from a Chunk Group / Graph.
 
 		Source Map:				A mapping between the code in the Bundle and the original Source to aid in debugging during the development process. The Bundle would have a special line at the end to hint to the Browser that a Source Map is available (via a URL).
 	
