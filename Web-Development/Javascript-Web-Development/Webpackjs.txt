@@ -67,7 +67,7 @@ Webpack.js
 			// Note: Only CommonJS allowed here.
 			const path = require('path');
 
-			// <filename> Placeholders:
+			// <*-name> Placeholders:
 				// [name] - <entry-chunk-name> from the Entry-Point congifuration.
 				// [path] - <entry-point-file-path> from the Entry-Point configuration.
 				// [hash] - Build Hash.
@@ -239,7 +239,7 @@ Webpack.js
 					webpack-dev-server 								// Enable Automatic Browser Reload.
 					
 					// HTML
-						html-webpack-plugin							// Injection of Application JS and Application CSS into a HTML Template for eventual Browser usage.
+						html-webpack-plugin							// Injection of Application JS and Application CSS into a Generated or Existing HTML Template for eventual Browser usage.
 
 					// CSS
 						style-loader								// Creates JS Code that will inject CSS Content Strings into index.html via <style> HTML Elements during runtime. Implements Hot Module Reloading for Patching CSS.
@@ -253,10 +253,16 @@ Webpack.js
 				Plugins:
 					new webpack.HotModuleReplacementPlugin() 		// Enable Hot Module Reloading.
 
-					new HtmlWebpackPlugin( 
+					// Note: Instantiate a new Instance of HtmlWebpackPlugin per desired Output HTML File.
+					new HtmlWebpackPlugin(
 						// Note: Webpack always parses Application JS first, then potential Application CSS imported by the Application JS, then injection into the HTML Template.
 						{ 
-							template: <html-template-path>, 
+							template: <html-template-path>,
+
+							chunks: [ '<chunk-name>', ... ],		// Include the specified Chunks into the Output HTML File.
+							excludeChunks: [ '<chunk-name>', ... ], // Exclude the specified Chunks from the Output HTML File.
+
+							scriptLoading: { 'blocking' | 'defer' }, // Disables or Enables Loading JS Scripts in an Asynchronous Manner.
 							// ...
 						}
 					)
