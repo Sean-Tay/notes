@@ -327,7 +327,7 @@ Webpack.js
 						fast-sass-loader
 
 					extract-text-webpack-plugin 					// Predecessor to mini-css-extract-plugin.
-					mini-css-extract-plugin 						// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles. Does not support HMR.
+					mini-css-extract-plugin 						// Alternative to style-loader - Minifies and Extracts the CSS content into separate CSS Bundles.
 
 				Loaders:
 					css-loader
@@ -370,6 +370,8 @@ Webpack.js
 					MiniCssExtractPlugin.loader
 						options: {
 							esModule: <boolean>, 					// Converts the CSS-related CommonJS require / modules.export behaviour within the compiled JS Bundle into ES6 import / export behaviour. Useful for Tree-Shaking.
+
+							hmr: <boolean>,							// Specifies if HMR will be active.
 						}
 
 			CSS Purging: Filters out unused CSS Content from Final Output by comparing against Source Files.
