@@ -87,7 +87,8 @@ Webpack.js
 				// Specify the Entry-Points for Webpack.
 				// Note: Webpack will traverse the Entry-Points in the order that they are specified.
 				entry: {
-					<entry-chunk-name>: '<entry-point-file-path>',
+					<entry-chunk-name>: [ '<entry-point-file-path>', ... ],
+
 					// ...
 				},
 
