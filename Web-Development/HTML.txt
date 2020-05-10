@@ -8,7 +8,7 @@ HTML:
 		
 	
 	Concepts:
-		HTML Flushing:			Instead of sending the entire HTML Document to the Browser at once, the critical part of the HTML Document that contains Above-the-Fold Content can be sent first via a smaller but faster Network Responses, and secondary HTML containing Below-the-Fold Content can be deferred to later Network Responses.
+		HTML Flushing:			Instead of sending the entire HTML Document to the Browser at once, the critical part of the HTML Document that contains Above-the-Fold Content can be sent first via a smaller but faster Network Response, and secondary HTML containing Below-the-Fold Content can be deferred to later Network Responses.
 			Modern Browsers are able to "build up" the HTML Document that arrives with subsequent Network Reponses.
 	
 	Details:

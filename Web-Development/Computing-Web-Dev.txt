@@ -67,6 +67,9 @@ Web Dev:
 
 			Pre-flight Request: The requesting Client should send a prior HTTP Request to determine the Web Application's allowance for the actual HTTP Request, before sending the actual HTTP Request (which may cause side effects to the Server - HTTP Methods other than GET, or POST with certain MIME Types). This also gives the Server a chance to specify that the Client should send over credentials as part of the HTTP Request.
 
+		Above-the-Fold Content:	Content in the Web Application that would be initially in view in the Browser's Viewport.
+		Below-the-Fold Content:	Content in the Web Application that would be outside of the view in the Browser's Viewport.
+
 	Details:
 		Summary of Full-Stack:
 			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and static assets sent to a Client, like a Web Browser.
