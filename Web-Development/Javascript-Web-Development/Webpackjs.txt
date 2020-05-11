@@ -254,6 +254,10 @@ Webpack.js
 						@babel/core									
 						@babel/preset-env							// Use Latest Javascript / ESNext.
 
+						// Note: For resolving async / await Arrow Function Errors:
+						@babel/plugin-transform-runtime				// Allow for re-use of Babel's Injected Helper Code.
+						@babel/runtime								// The Production Variant of @babel/plugin-transform-runtime. Install as a Runtime Dependency.
+
 				Plugins:
 					new webpack.HotModuleReplacementPlugin() 		// Enable Hot Module Reloading.
 
@@ -278,7 +282,11 @@ Webpack.js
 
 							presets: [
 								'@babel/preset-env'
-							]
+							],
+
+							plugins: [
+								'@babel/plugin-transform-runtime'
+							],
 						}
 
 			TypeScript:
