@@ -132,8 +132,9 @@ Typescript:
 			// tsconfig.json
 			{
 				"extends": "<base-tsconfig-json-path>", // Specify parent tsconfig.json File to inherit Settings from.
-				"include": [			// Specify Directories and Files to compile. Overrides any inherited include Settings.
-					"./src/**/*",
+				"include": [			// Specify Directories and Files to compile. Dependencies in Files are automatically recursively traversed. Overrides any inherited include Settings.					
+					"./src/index.js",
+					// "./src/**/*",
 				],
 				"exclude": [			// Specify Directories or Files to not compile. Overrides any inherited exclude Settings.
 					"./node_modules",
@@ -153,7 +154,7 @@ Typescript:
 
 					"esModuleInterop": true, // Allow and Support import / export between CommonJS Modules and ES Modules.
 					"isolatedModules": true, // Disallow Features that requires Cross-File Analysis. Useful when Babel is to be used for compilation and transpilation instead.
-					"lib": ["ES6", ...], // Specify which Language Features will be available in the Target Runtime Environment. Injects in-built API TypeScript Declarations to avoid Compilation Errors.
+					"lib": ["DOM", "ES6", ...], // Specify which Language Features will be available in the Target Runtime Environment. Injects in-built API TypeScript Declarations to avoid Compilation Errors.
 					"module": "CommonJS", // Specify the Module Resolution System of the Target Runtime Environment.
 					"target": "ES5", 	// Specify which Version of the Language should the Source be compiled down to, for the Target Runtime Environment.
 
