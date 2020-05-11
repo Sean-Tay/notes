@@ -294,6 +294,9 @@ Webpack.js
 					fork-ts-checker-webpack-plugin					// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
 						// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
 
+						// Note: Runs Module Resolution independently from Webpack. This may cause it to run on Files that won't be included in the Final Bundle.
+							// If those Files have TypeScript Errors, fixing them will NOT trigger Automatic Reloading by Webpack, as it only does so on detecting a change in the Files from the Entry-Points.
+
 				Loaders:
 					ts-loader
 						options: {
