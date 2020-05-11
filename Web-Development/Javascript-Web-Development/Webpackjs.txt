@@ -22,7 +22,7 @@ Webpack.js
 		Entry-Point:			A User-specified Module that dictates where should Webpack start the Bundling Process from.
 		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module. These are required for non JSON / Javascript Dependencies.
 
-		Chunk:					Refers to an Asset, a Module, or a group of Assets and Modules that are currently being handled by the Webpack Bundling Process.
+		Chunk:					Refers to a group of Assets and Modules that are currently being handled by the Webpack Bundling Process.
 		Chunk Group / Graph:	A collection of Chunks which are typically created and generated for each Entry-Point specified.
 
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
@@ -38,7 +38,7 @@ Webpack.js
 		Webpack works by: 
 			1. Starting from User-specified Entry-Points in the Project.
 
-			2. Traversing and Constructing Dependency Graphs via defined Module Imports and Exports, rooted at each Entry-Point.
+			2. Traversing and Constructing Chunks / Chunk Graphs (Dependency Graphs) via defined Module Imports and Exports, rooted at each Entry-Point.
 				For the current Module, if the Module contains a Dependency, Webpack will proceed to recursively resolve the Dependencies first.
 				Each Module Dependency is checked against the config for (a) corresponding Loader(s) to transform the Dependency before adding it to the current Chunk / Chunk Graph.
 
