@@ -38,6 +38,9 @@ Typescript:
 					// ...
 				};
 
+				// Reference Function Return Type
+				type <function-return-type> = ReturnType<<function>>; // Include one set of Angled Brackets.
+
 				// Arrays
 					let <array-variable>: <type>[] = <value-array>;
 					// OR
