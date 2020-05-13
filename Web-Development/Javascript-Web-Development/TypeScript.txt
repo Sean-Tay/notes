@@ -33,6 +33,11 @@ Typescript:
 					// ...
 				};
 
+				// Asynchronous Function
+				const <async-function> = async (): Promise<<return-type>> => { // Include one set of Angled Brackets.
+					// ...
+				};
+
 				// Arrays
 					let <array-variable>: <type>[] = <value-array>;
 					// OR
