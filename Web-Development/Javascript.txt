@@ -140,10 +140,15 @@ Javascript
 			Object.keys(<targetObject>); // Obtain Array of keys defined in <targetObject>.
 			Object.values(<targetObject>); // Obtain Array of values within <targetObject>.
 
-			JSON.stringify(objectName); 						// Encode object as a JSON
+			JSON.stringify(objectName); // Encode object as a JSON
 
 			// Iteration
 			for (const key in objectName) {
+				// Note: Will also iterate over Keys that the Object inherits from its Constructor's Prototype.
+				// ...
+			}
+
+			for (const key of Object.keys(objectName)) {
 				// ...
 			}
 
