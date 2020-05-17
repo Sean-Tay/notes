@@ -27,9 +27,11 @@ React.js
 		State:						Information maintained by a React Component Instance which it itself can change.
 		Props: 						Information received by a React Component Instance from other React Component Instances which it should NOT change directly.
 
+		Rendering: 					The process by which React determines how the UI should look and appear by checking involved React Component Instances.
+
 		[Re-]Render: 				The process of [re-]creating any associated React Element from a React Component Instance. This often results in Reconciliation and Painting.
 		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI. The changes are accumulated before the actual diff-ing occurs as a form of optimization.
-		Painting:					The process of applying only the actual changes derived from the Reconciliation process onto the Actual DOM Tree, and causing the Browser to re-paint the affected part of the display.
+		Painting:					The synchronous process of applying only the actual changes derived from the Reconciliation process onto the Actual DOM Tree, and causing the Browser to re-paint the affected part of the display.
 
 		Mounting:					Phase in the Component Lifecycle in which a Component Instance is being Painted for the first time.
 		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
@@ -53,11 +55,34 @@ React.js
 				
 				render(<App />, document.getElementById('root'));
 		
-		React makes use of self-contained Component Instances with their own State.
-		By default, changing States or Props should cause the Component Instance to be Re-Rendered.
-			Presumably, the Props come from an Ancestor's State, and if the Ancestor's State changes, the Ancestor's Component Instance would be Re-Rendered, which by default should propagate the Re-Render call down to the current Component Instance.
+		Rendering:
+			During the Rendering Process, each Component will describe how the UI state should appear, given certain information that it has / receives (i.e. State / Props), usually via JSX.
+				React Elements are produced when inline JSX is compiled down to React.createElement() calls during Rendering.
+					Evaluation of any JS is only done via JS Injection within curly braces.
+						You cannot inject JS if-statements directly within JSX. Utilize either:
+							1. Ternary Operator - it always evaluates to a JS Expression (returns a value) unlike an if-else statement.
+							2. Immediately-Invoked JS Function - (() => {})()
+					Utilize the && operator for code that either will or will not appear. 
+					JSX can still be used within the braces.
+					Multi-line JSX should be enclosed with parentheses.
+				
+				React Elements can have attributes, akin to HTML DOM Elements.
+					Note: Replace the 'class' DOM attribute to 'className' for compiling from JSX -> JS, since 'class' is a reserved keyword in JS.
+					Note: CSS style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to kebab-case.
+					Note: HTML DOM Event Listener attributes have their names specified in camelCase instead of lowercase.
+					Note: Child Elements produced from mapping an Iterable need to have the top-level Child Element specify a distinguishing 'key' element.
 
-			Note: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
+				React Elements can be nested, akin to HTML DOM Elements.
+					All React Elements must have only exactly one outermost React Element. The first opening tag and the final closing tag must belong to the same React element.
+
+					Can use a <div> </div> or React Fragment (<> </>) to enclose the group.
+
+			By default, a Component Instance gets [Re-]Rendered when:
+				When the State of a Component Instance changes.
+					Presumably, Props come from an Ancestor's State, and if the Ancestor's State changes, the Ancestor's Component Instance would be Re-Rendered, which by default should propagate the Re-Render call down to the current Component Instance.
+						Note: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
+				
+				Whenever an Ancestor Component Instance gets [Re-]Rendered.
 		
 		Best Practices:
 			Rely only on a Single-Source of Truth for each variable. Go with either: 
@@ -132,27 +157,6 @@ React.js
 							// Examines this.props and this.state, and returns a React Element.
 							// Child Component Instances are also triggered to Render.
 							// This should be a Pure Function - do not call this.setState() or mutate any State here.
-							/*
-								React Elements are produced when inline JSX is compiled down to React.createElement() calls during Rendering.
-									Evaluation of any JS is only done via JS Injection within curly braces.
-										You cannot inject JS if-statements directly within JSX. Utilize either:
-											1. Ternary Operator - it always evaluates to a JS Expression (returns a value) unlike an if-else statement.
-											2. Immediately-Invoked JS Function - (() => {})()
-									Utilize the && operator for code that either will or will not appear. 
-									JSX can still be used within the braces.
-									Multi-line JSX should be enclosed with parentheses.
-								
-								React Elements can have attributes, akin to HTML DOM Elements.
-									Note: Replace the 'class' DOM attribute to 'className' for compiling from JSX -> JS, since 'class' is a reserved keyword in JS.
-									Note: CSS style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to kebab-case.
-									Note: HTML DOM Event Listener attributes have their names specified in camelCase instead of lowercase.
-									Note: Child Elements produced from mapping an Iterable need to have the top-level Child Element specify a distinguishing 'key' element.
-
-								React Elements can be nested, akin to HTML DOM Elements.
-									All React Elements must have only exactly one outermost React Element. The first opening tag and the final closing tag must belong to the same React element.
-
-									Can use a <div> </div> or React Fragment (<> </>) to enclose the group.
-							*/
 
 							let subReactElement = (
 								<div> 
