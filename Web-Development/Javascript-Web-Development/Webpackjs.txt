@@ -350,16 +350,13 @@ Webpack.js
 							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
 						}
 				
-			CSS Modules: Enforces Local Scope for the CSS imported and used by a JS Module through dynamically generated CSS Selector Names.
+			CSS Modules:											// Enforces Scoping for the CSS imported and used by a JS Module through Dynamically Generated CSS Selector Names.
 				Webpack Packages:
 					css-modules-typescript-loader					// Loader to make CSS Modules work with TypeScript. Place after css-loader in the Webpack Config Module Rules.
 
 				Loaders:
 					css-loader
 						// Note: If using TypeScript, need to also use css-modules-typescript-loader.
-						// General Flow: Define CSS Classes in the CSS File, then in the JS Files:
-							// import classes from './index.css';
-							// Set the class attribute of DOM Elements to be styled from Keys in the imported classes Object.
 						
 						options: {
 							modules: {  							// Enable CSS Modules.
@@ -371,6 +368,34 @@ Webpack.js
 							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
 							sourceMap: <boolean>, 					// Create Source Map for the compiled CSS.
 						}
+
+						/* 
+							General Flow: 
+								Define CSS Classes in the CSS Files:
+									/* By default, all CSS Selectors are going to be Locally Scoped by css-loader when CSS Modules are active: */
+									<css-selector> {
+										/* ... */
+									}
+									/* Would be the Same As: */
+									:local <css-selector> {
+										/* ... */
+									}
+
+									/* To Prevent Scoping Behaviour (i.e don't use a Dynamically Generated Name for <css-selector>) */
+									:global <css-selector> {
+										/* ... */
+									}
+
+									/* Scope Specifiers are Interchangable */
+									:local <css-selector-1> <css-selector-2> :global <css-selector-3> /* ... */ {
+										/* ... */
+									}
+								
+								In the JS Files:
+									import classes from './index.css';
+									// Set the class attribute of DOM Elements to be styled from Keys in the imported 'classes' Object.
+									// The imported Object is a Mapping between the <css-selector>'s Original Name and the Dynamically Generated Names.
+						*/
 
 			CSS Extraction: Minifies and Extracts the content of all CSS Files used into a single CSS File. This allows the Browser to load the Page Structure (.html), Page Bundle (.js) and Page Styling (.css) in Parallel.
 				Webpack Packages:

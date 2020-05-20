@@ -48,6 +48,8 @@ CSS:
 						Lean CSS: 		CSS Code Duplication is reduced.
 						Predictable Changes: Following the Single Responsibility Principle, it's easy to understand what Adding / Removing a CSS Rule Set would do.
 
+		CSS Modules: 			Technique for enforcing Scope on traditionally Global CSS Content.
+
 		Autoprefixing:			Technique used to transform CSS Syntax to Browser-Specific variants.
 	
 	Details:
