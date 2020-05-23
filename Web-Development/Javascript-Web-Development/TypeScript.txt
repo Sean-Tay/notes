@@ -19,27 +19,20 @@ Typescript:
 
 				const <variable>: <variable-type> = <value>;
 
-				const <function> = ( arg:<arg-type>, ... ): <return-type> => {
-					// ...
-				};
+				// Primitive Types:
+					// any: For when the intended Type is unknown.
+						let <any-type-variable>: any = <value>;
 
-				// Function with Object Destructuring
-				const <function> = ( { <key-1> , ... }: { <key-1>: <value-type-1> , ... }) => {
-					// ... 
-				};
+					// void: For when there should be no Type.
+						let <void-type-variable>: void; 
 
-				// Function with Generics
-				const <function> = <<Generic-Type>> ( arg:<Generic-Type>, ... ): <return-type> => {
-					// ...
-				};
+					// never: For when the value should never occur.
+						let <never-type-variable>: never;
 
-				// Asynchronous Function
-				const <async-function> = async (): Promise<<return-type>> => { // Include one set of Angled Brackets.
-					// ...
-				};
-
-				// Reference Function Return Type
-				type <function-return-type> = ReturnType<<function>>; // Include one set of Angled Brackets.
+						(): never => {
+							// Functions with unreachable end-points should have a 'never' return value.
+							throw new Error();
+						}
 
 				// Arrays
 					let <array-variable>: <type>[] = <value-array>;
@@ -51,33 +44,42 @@ Typescript:
 				// Tuples: For Arrays that hold different Types.
 					let <tuple-variable>: [<type>, ...] = [<value>, ...];
 
-				// enums: To provide more friendly names to sets of Numeric Values.
-					enum <enum-name> { <key>: <numeric-value>, ... };
-					let <example-variable>: <enum-name> = <enum-name>.<key>; 
-				
-				// any: For when the intended Type is unknown.
-					let <any-type-variable>: any = <value>;
+				// Functions
+					const <function> = ( arg:<arg-type>, ... ): <return-type> => {
+						// ...
+					};
 
-				// void: For when there should be no Type.
-					let <void-type-variable>: void; 
+					// Function with Object Destructuring
+					const <function> = ( { <key-1> , ... }: { <key-1>: <value-type-1> , ... }) => {
+						// ... 
+					};
 
-				// never: For when the value should never occur.
-					let <never-type-variable>: never;
+					// Function with Generics
+					const <function> = <<Generic-Type>, > ( arg:<Generic-Type>, ... ): <return-type> => {
+						// ...
+					};
 
-					(): never => {
-						// Functions with unreachable end-points should have a 'never' return value.
-						throw new Error();
-					}
+					// Asynchronous Function
+					const <async-function> = async (): Promise<<return-type>> => { // Include one set of Angled Brackets.
+						// ...
+					};
 
-				// Partial: To allow partial fulfillment of a Type.
-					// Useful for Prop instantiation?
-					let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
+					// Reference Function Return Type
+						type <function-return-type> = ReturnType<<function>>; // Include one set of Angled Brackets.
 
-				// Pick: To specify a subset of Type Properties from another Type through a 'whitelist' approach.
-					let <pick-type-variable>: Pick<<type>, '<property>' | ... > = {};
+				// Utility Types:
+					// Partial: To allow partial fulfillment of a Type.
+						// Useful for Prop instantiation?
+						let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
 
-				// Omit: To specify a subset of Type Properties from another Type through a 'blacklist' approach.
-					let <omit-type-variable>: Omit<<type>, '<property>' | ... > = {};
+					// Pick: To specify a subset of Type Properties from another Type through a 'whitelist' approach.
+						let <pick-type-variable>: Pick<<type>, '<property>' | ... > = {};
+
+					// Omit: To specify a subset of Type Properties from another Type through a 'blacklist' approach.
+						let <omit-type-variable>: Omit<<type>, '<property>' | ... > = {};
+
+					// Extract: To select for a subset of Type Properties from a Type that matches a certain specified Type.
+						let <extract-type-variable>: Extract<<type>, <specified-type>> = {};
 
 				// Intersection Types: Combines multiple Types into one.
 					// Union of Member Attributes.
@@ -91,6 +93,10 @@ Typescript:
 					<value> as <type>
 					// OR
 					<<type>><value> // Include one set of Angled Brackets.
+
+			Enums: To provide more friendly names to sets of Numeric Values.
+				enum <enum-name> { <key>: <numeric-value>, ... };
+				let <example-variable>: <enum-name> = <enum-name>.<key>; 
 
 			Type Alias:			Declare custom Types that can be reused in other Types or Interfaces.
 				type <type-alias> = <type> | ... ;
@@ -116,6 +122,22 @@ Typescript:
 
 					// ...
 				};
+
+				// Generic Interface
+				interface <generic-interface-name><<Generic-Type>> {
+					// ...
+				}
+
+				// Indexable Interface
+				interface <indexable-interface-name> {
+					[string]: <type>;
+					//OR
+					[number]: <type>;
+				}
+
+				// keyof: To specify for a Type that contains all accessible Interface Properties.
+				// string | number | symbol
+				type <Type> = keyof <interface>;
 
 				Strictness can change in different scenarios:
 					1. At least the required Types are accounted for in the Value.
