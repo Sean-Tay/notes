@@ -133,8 +133,8 @@ Redux.js
 
 			With Typescript:
 				Define State Types for the Reducer Functions, and one Generic Interface for Action Objects.
-					export interface IAnyMap {
-						[propName: string]: any
+					export interface IGenericMap<T> {
+						[propName: string]: T
 					}
 
 					export interface IReduxActionObject {
