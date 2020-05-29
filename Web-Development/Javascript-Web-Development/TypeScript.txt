@@ -116,6 +116,10 @@ Typescript:
 					// ...
 				};
 
+				// Reference a Type of a Property from an Interface
+				// Note: Different from Pick - Pick creates another Interface - Type will still refer to an Object.
+				type <type-name> = <interface-name>['<property>']
+
 				// Extending an existing Interface
 				interface <extended-interface-name> extends <existing-interfce-name> {
 					<additional-property>: <type>;
