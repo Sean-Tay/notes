@@ -186,7 +186,9 @@ CSS:
 						flex / inline-flex: 
 							One Dimensional Layout Model which allows the assigned Container to determine Children proportions for the best utilization of available space.
 							The Main Axis is the direction in which Children are placed along, whilst the Cross Axis is perpendicular to it.
-								The size of Children corresponding to the Main Axis will be overriden by flex behaviour. By default, sizes cannot be smaller than the content of Children.
+								The size of Children corresponding to the Main Axis will be overriden by flex behaviour.
+									By default, flex-items have min-width / min-height set to auto rather than 0, which is the default for other display modes. Set it to 0 to override this behaviour.
+
 								The size of Children corresponding to the Cross Axis will be honored by the Parent.
 
 							Children Margins (and directional variants) will automatically expand to consume available space if set to auto.
