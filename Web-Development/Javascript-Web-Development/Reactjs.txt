@@ -33,7 +33,7 @@ React.js
 		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI. The changes are accumulated before the actual diff-ing occurs as a form of optimization.
 		Painting:					The synchronous process of applying only the actual changes derived from the Reconciliation process onto the Actual DOM Tree, and causing the Browser to re-paint the affected part of the display.
 
-		Mounting:					Phase in the Component Lifecycle in which a Component Instance is being Painted for the first time.
+		Mounting:					Phase in the Component Lifecycle in which a Component Instance is going to be Painted for the first time.
 		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
 		Unmounting: 				Phase in the Component Lifecycle in which a Mounted Component Instance is being removed from the Actual DOM Tree. 
 
@@ -152,6 +152,14 @@ React.js
 							// ...
 						}
 
+						static getDerivedStateFromProps(props, state) {
+							// Exists to update State based on Props over time.
+							// Executes just before each Render.
+
+							// return an Object to update the State.
+							// return null to not update the State.
+						}
+
 						// Compulsory
 						render() {
 							// Examines this.props and this.state, and returns a React Element.
@@ -205,11 +213,15 @@ React.js
 							this.setState((state, props) => { // ... });
 						}
 
+						static getDerivedStateFromProps()
+
 						render()
 
 						componentDidMount() {
 							// Additional Function that is called only after a Component has been Mounted, and only once.
 							// Child Components also execute their componentDidMount Functions as well.
+
+							// this.setState can be used here, but it will trigger an extra Render before Painting, which can cause Performance Issues.
 
 							// setInterval ...
 							// AJAX Call for Data ...
@@ -217,15 +229,20 @@ React.js
 
 					// Updating:
 						UNSAFE_componentWillReceiveProps(nextProps) {
-							// Called only when Component will receive Props, regardless if old or new.
+							// Called whenever the Parent causes a re-render.
+							// Executes before the Component accepts new Props.
+							
+							// this.setState() is allowed here. Compare this.props and nextProps to ascertain whether or not to update State.
 						}
+
+						static getDerivedStateFromProps()
 						
 						shouldComponentUpdate(nextProps, nextState) {
 							// Default Behaviour is to re-render on any State or Prop change, or if a Parent re-renders.
 							// Note: Can be seen as the combination of the Dependency Arrays from all theoretical 'useEffect' Hooks in a Functional Component.
 
-							// return true if Component should update
-							// return false otherwise
+							// return true if Component should update.
+							// return false otherwise.
 						}
 						
 						UNSAFE_componentWillUpdate(nextProps, nextState) {
@@ -236,13 +253,18 @@ React.js
 						render() 
 
 						getSnapshotBeforeUpdate(prevProps, prevState) {
-							// Called before the Reconciliation process.
+							// Called before the Reconciliation / Painting process.
 							// Enables the Component to capture information from the Actual DOM before it is potentially changed.
+
+							// return data which will be passed into componentDidUpdate.
+							// return null otherwise.
 						}
 
 						componentDidUpdate(prevProps, prevState, snapshot) {
 							// Called immediately after any updating occurs.
 							// Meant for interactions outside of the React architecture.
+
+							// this.setState() is allowed here, but beware of infinite loops.
 						}
 
 					// Unmounting:
