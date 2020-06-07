@@ -81,6 +81,10 @@ Typescript:
 					// Extract: To select for a subset of Type Properties from a Type that matches a certain specified Type.
 						let <extract-type-variable>: Extract<<type>, <specified-type>> = {};
 
+					// Record: To create a Type whose possible keys are defined in another Type, and map them to a value Type.
+						type <keys-type> = 'key-a' | 'key-b' | ... | 'key-n';
+						let <record-type-variable>: Record<<keys-type>, <value-type>> = {};
+
 				// Intersection Types: Combines multiple Types into one.
 					// Union of Member Attributes.
 					let <union-type-variable>: <type> & ... = <value>;
@@ -143,8 +147,9 @@ Typescript:
 
 				// Mapped Indexable Types
 				// Note: For declaring possible Interface Keys.
+				// Note: Use the Record Utility Type here.
 				type <type-name> = 'key-a' | 'key-b' | // ... | 'key-n' ;
-				type <indexab;e-type-name> = {
+				type <indexable-type-name> = {
 					[key in <type-name>]: <type>;
 
 					// ...
