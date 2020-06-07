@@ -134,15 +134,26 @@ Typescript:
 
 				// Indexable Interface
 				interface <indexable-interface-name> {
-					[string]: <type>;
+					[key: string]: <type>;
 					//OR
-					[number]: <type>;
+					[key: number]: <type>;
+
+					// ...
+				}
+
+				// Mapped Indexable Types
+				// Note: For declaring possible Interface Keys.
+				type <type-name> = 'key-a' | 'key-b' | // ... | 'key-n' ;
+				type <indexab;e-type-name> = {
+					[key in <type-name>]: <type>;
 				}
 
 				// Mapped Indexable Types over Enums
 				// Note: For declaring possible Interface Keys via Enums.
-				type <type-name> = {
-					[key in <enum>]: <any>;
+				type <indexable-type-name> = {
+					[key in <enum>]: <type>;
+
+					// ...
 				}
 
 				// keyof: To specify for a Type that contains all accessible Interface Properties.
