@@ -146,6 +146,8 @@ Typescript:
 				type <type-name> = 'key-a' | 'key-b' | // ... | 'key-n' ;
 				type <indexab;e-type-name> = {
 					[key in <type-name>]: <type>;
+
+					// ...
 				}
 
 				// Mapped Indexable Types over Enums
