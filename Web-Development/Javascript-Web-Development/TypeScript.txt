@@ -213,11 +213,11 @@ Typescript:
 					React.FC<<component-props>>: To specify the Type for a Functional Component. Keep only one set of Angled Brackets.
 						// Note: Do not explicitly specify if forwarding Refs; let Typescript infer this.
 
-					React.ComponentPropsWithoutRef<'<element-class-name>'>: For default attributes available to Components / native HTML DOM Elements. The Quotes are required.
+					React.ComponentPropsWithoutRef<'<html-element-tag-type>'>: For default attributes available to Components / native HTML DOM Elements. The Quotes are required.
 
 					React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
 
-					React.RefObject<<html-element-type>>: To specify the type for a Ref Object. Keep only one set of Angled Brackets.
+					React.RefObject<<html-element-tag-type>>: To specify the type for a Ref Object. Keep only one set of Angled Brackets.
 
 					React.ReactText: To specify for a string | number Value.
 					React.ReactElement: To specify for the JS Object implicitly produced through the compilation of JSX.
