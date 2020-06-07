@@ -139,13 +139,15 @@ Typescript:
 					[number]: <type>;
 				}
 
+				// Mapped Indexable Types over Enums
+				// Note: For declaring possible Interface Keys via Enums.
+				type <type-name> = {
+					[key in <enum>]: <any>;
+				}
+
 				// keyof: To specify for a Type that contains all accessible Interface Properties.
 				// string | number | symbol
-				type <Type> = keyof <interface>;
-
-				Strictness can change in different scenarios:
-					1. At least the required Types are accounted for in the Value.
-					2. Only the required Types are accounted for in the Value.
+				type <type-name> = keyof <interface>;
 
 			Modules
 			Namespaces
