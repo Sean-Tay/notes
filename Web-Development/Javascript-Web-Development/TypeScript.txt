@@ -221,6 +221,8 @@ Typescript:
 
 					React.ReactText: To specify for a string | number Value.
 					React.ReactElement: To specify for the JS Object implicitly produced through the compilation of JSX.
+						// Note: JSX.Element is a more generic version of React.ReactElement.
+
 					React.ReactChild: To specify the Type for valid children of React Elements. Does not allow for falsy values.
 					React.ReactNode: A superset of React.ReactChild, with the same purpose as React.ReactChild. Allows for falsy values.
 
