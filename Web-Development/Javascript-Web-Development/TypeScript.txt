@@ -117,7 +117,7 @@ Typescript:
 				};
 
 				// Reference a Type of a Property from an Interface
-				// Note: Different from Pick - Pick creates another Interface - Type will still refer to an Object.
+				// Note: Different from Pick - Pick creates another Interface - the resultant Type will still refer to an Object.
 				type <type-name> = <interface-name>['<property>']
 
 				// Extending an existing Interface
@@ -203,7 +203,7 @@ Typescript:
 				// children?: React.ReactNode
 
 				// Forwarding Refs
-				const component = React.forwardRef<<html-element-type>, <component-prop-type>>(
+				const component = React.forwardRef<<html-element-tag-type>, <component-prop-type>>(
 					(props, ref) => { 
 						// ... 
 					}
@@ -225,6 +225,9 @@ Typescript:
 
 					React.ReactChild: To specify the Type for valid children of React Elements. Does not allow for falsy values.
 					React.ReactNode: A superset of React.ReactChild, with the same purpose as React.ReactChild. Allows for falsy values.
+					
+					React.FormEvent<<html-form-element-tag-name>>: To specify for the JS Event Object of a Form Element. Keep only one set of Angled Brackets.
+					React.FormEventHandler<<html-form-element-tag-name>>: To specify for a JS Event Handler Function for a Form Element. Keep only one set of Angled Brackets.
 
 	Commands:
 		tsc *.ts[x]				Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
