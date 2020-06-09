@@ -55,7 +55,7 @@ Typescript:
 					};
 
 					// Function with Generics
-					const <function> = <<Generic-Type>, > ( arg:<Generic-Type>, ... ): <return-type> => {
+					const <function> = <<generic-type> extends <base-type>, ... > ( arg:<generic-type>, ... ): <return-type> => {
 						// ...
 					};
 
@@ -132,7 +132,7 @@ Typescript:
 				};
 
 				// Generic Interface
-				interface <generic-interface-name><<Generic-Type>> {
+				interface <generic-interface-name><<generic-type>> {
 					// ...
 				}
 
