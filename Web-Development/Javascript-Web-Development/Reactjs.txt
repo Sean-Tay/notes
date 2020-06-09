@@ -546,6 +546,11 @@ React.js
 
 				// Error Boundaries:
 					// Allows Component to define logic for Handling Errors encountered during Rendering Child Components.
+						// Note: This means it won't catch:
+							// 1. Errors thrown from Asynchronous Code w.r.t Rendering.
+							// 2. Errors from Server-Side Rendering.
+							// 3. Errors thrown in the Error Boundary itself, rather than its Children.
+
 					// By default, any uncaught Errors will result in the Unmounting of the whole React Component Tree.
 
 					// Note: Only implementable via Class Components.
@@ -571,8 +576,6 @@ React.js
 
 							// ...
 						}
-
-					// Note: Error Boundaries will only catch Errors for its Descendent Components. If an Error happens within the Error Boundary itself, the Error Boundary will not catch it.
 
 			Rendering:
 				let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
