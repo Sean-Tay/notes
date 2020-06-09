@@ -555,7 +555,7 @@ React.js
 							// Called before the Render Phase of this Component (after the Render Phase of Child Components).
 							// Note: Works with Server-Side Rendering.
 							static getDerivedStateFromError(error) {
-								// ...
+								// Note: Side-Effects are not permitted here.
 
 								// return an Object to update the State.
 								// return null to not update the State.
@@ -564,7 +564,6 @@ React.js
 							// Called after the Render Phase.
 							// Note: Does not work with Server-Side Rendering.
 							componentDidCatch(error, info) {
-								// Declare Error Handling Behaviour.
 								// Note: Should be used for Side Effects, rather than updating State, as this triggers after the Render Phase.
 
 								// ...
