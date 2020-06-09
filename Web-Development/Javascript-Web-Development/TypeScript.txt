@@ -230,10 +230,14 @@ Typescript:
 				);
 
 				// Useful Types:
+					React.ComponentPropsWithoutRef<'<html-element-tag-type>'>: For default attributes available to Components / native HTML DOM Elements. The Quotes are required.
+
 					React.FC<<component-props>>: To specify the Type for a Functional Component. Keep only one set of Angled Brackets.
+						// Alias for React.FunctionComponent.
 						// Note: Do not explicitly specify if forwarding Refs; let Typescript infer this.
 
-					React.ComponentPropsWithoutRef<'<html-element-tag-type>'>: For default attributes available to Components / native HTML DOM Elements. The Quotes are required.
+					React.ComponentType<<component-props>>: To specify the Type for either a Functional or Class Component.
+						// React.FunctionComponent<P> | React.ComponentClass<P>
 
 					React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
 
