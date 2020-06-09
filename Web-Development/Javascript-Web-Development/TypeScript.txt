@@ -67,6 +67,13 @@ Typescript:
 					// Reference Function Return Type
 						type <function-return-type> = ReturnType<<function>>; // Include one set of Angled Brackets.
 
+				// Classes
+					// Classes with Generics
+					// Note: Static Members cannot use Generics, as Generics only apply to the Instances of a Class.
+					class <class-name><generic-type> {
+						// ...
+					}
+
 				// Utility Types:
 					// Partial: To allow partial fulfillment of a Type.
 						// Useful for Prop instantiation?
