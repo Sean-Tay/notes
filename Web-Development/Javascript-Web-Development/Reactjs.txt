@@ -548,12 +548,26 @@ React.js
 					// Allows Component to define logic for Handling Errors encountered during Rendering Child Components.
 					// By default, any uncaught Errors will result in the Unmounting of the whole React Component Tree.
 
-					// Note: Only implementable via Class Components, via the componentDidCatch() Lifecycle Method.
+					// Note: Only implementable via Class Components.
 						class ErrorBoundary extends React.Component {
 							// ...
 
+							// Called before the Render Phase of this Component (after the Render Phase of Child Components).
+							// Note: Works with Server-Side Rendering.
+							static getDerivedStateFromError(error) {
+								// ...
+
+								// return an Object to update the State.
+								// return null to not update the State.
+							}
+
+							// Called after the Render Phase.
+							// Note: Does not work with Server-Side Rendering.
 							componentDidCatch(error, info) {
-								// Declare Error Handling Behaviour
+								// Declare Error Handling Behaviour.
+								// Note: Should be used for Side Effects, rather than updating State, as this triggers after the Render Phase.
+
+								// ...
 							}
 
 							// ...
