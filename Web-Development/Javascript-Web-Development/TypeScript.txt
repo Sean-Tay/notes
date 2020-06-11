@@ -117,12 +117,16 @@ Typescript:
 				const <variable>: <type-alias> = <value>;
 
 			Interfaces:			Allows for explicit structure declaration of Values.
+				/** <interface-documentation */
 				interface <interface-name> {
 					<property>: <type>;
 					<optional-property>?: <type>;
 					readonly <readonly-property>: <type>;
 
 					<function-property>: ( arg:<arg-type>, ... ) => <return-type>;
+
+					/** <text> */
+					<documented-property>: <type>;
 
 					// ...
 				};
