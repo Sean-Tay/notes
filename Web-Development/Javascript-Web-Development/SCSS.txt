@@ -62,13 +62,13 @@ SCSS
 					// ...
 				}
 
-			Extension / Inheritance: Apply Rules from a 'virtual' Rule-Set to another. The 'virtual' Rule-Set will have no CSS footprint in the compiled CSS if not used.
-				%<virtual-rule-set> {
+			Extension / Inheritance: Apply Rules from a Silent Class to another. The Silent Class will have no CSS footprint in the compiled CSS if not used.
+				%<silent-class> {
 					// ...
 				}
 
 				<css-selector> {
-					@extends %<virtual-rule-set>;
+					@extend %<silent-class>;
 					// ...
 				}
 	
