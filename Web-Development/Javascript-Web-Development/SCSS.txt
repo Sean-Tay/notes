@@ -55,14 +55,23 @@ SCSS
 			Mixins: Use function-like Rule-Sets within other Rule-Sets.
 				@mixin <mixin-name>($<arg1>, ...) {
 					// ...
+
+					// If another Rule-Set is allowed to be passed in.
+					@content;
 				}
 
 				<css-selector> {
-					@include <mixin-name>(<val1>, ...);
+					@include <mixin-name>(<val1>, ...){
+						// Content for Rule-Set.
+
+						// ...
+					};
+
 					// ...
 				}
 
-			Extension / Inheritance: Apply Rules from a Silent Class to another. The Silent Class will have no CSS footprint in the compiled CSS if not used.
+			Extension / Inheritance: Apply Rules from a Class to another. 
+				// The Silent Class will have no CSS footprint in the compiled CSS if not used.
 				%<silent-class> {
 					// ...
 				}
