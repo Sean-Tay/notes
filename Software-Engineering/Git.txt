@@ -56,13 +56,17 @@ Git:
 			-B <new-branch>	- Creates a new Local Branch called <new-branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
 				--track <repo-url-alias> <branch> - Forces <new-branch> to track a specified Remote Branch.
 
+		git mv <folder-name> <new-folder-name> - Change the name of a Folder.
+			Note: Windows and Mac Filesystems will not recognize Case-Sensitive changes, but Git will.
+				git mv <folder-name> <temp> && git mv <temp> <folder-name>
+
 		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
 		git push -d <repo-url-alias> <branch> - Remove a Branch on the Remote Repository.
 
 		git checkout <commit-hash> -- <file> ... - Switch current version of <file> with the <commit-hash> version of <file>.
 
 		git merge [<repo-url-alias>] <branch> - Merge updates from the Branch <branch> into the currently checked out Local Branch.
-			Tip:				- If there are pending changes prior to the merge, *do a Commit for those changes first ; do NOT use stash*. In the event the merge is done wrongly, there will be a Commit containing all prior work to revert to.
+			Tip: If there are pending changes prior to the merge, *do a Commit for those changes first ; do NOT use stash*. In the event the merge is done wrongly, there will be a Commit containing all prior work to revert to.
 
 			--abort				- If Merge Conflicts will occur, this will revert the Merge. If there are prior Local Working Copy changes, those will be lost.
 			--continue			- If Merge Conflicts will occur, this will allow for retrying the Merge after the edits are made. 
