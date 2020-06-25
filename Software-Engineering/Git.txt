@@ -56,13 +56,6 @@ Git:
 			-B <new-branch>	- Creates a new Local Branch called <new-branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
 				--track <repo-url-alias> <branch> - Forces <new-branch> to track a specified Remote Branch.
 
-		git mv <folder-name> <new-folder-name> - Change the name of a Folder.
-			Note: Windows and Mac Filesystems will not recognize Case-Sensitive changes, but Git will.
-				git mv <folder-name> <temp> && git mv <temp> <folder-name>
-
-		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
-		git push -d <repo-url-alias> <branch> - Remove a Branch on the Remote Repository.
-
 		git checkout <commit-hash> -- <file> ... - Switch current version of <file> with the <commit-hash> version of <file>.
 
 		git merge [<repo-url-alias>] <branch> - Merge updates from the Branch <branch> into the currently checked out Local Branch.
@@ -82,6 +75,10 @@ Git:
 			--allow-unrelated-histories - Merges two Repos that started independently.
 
 		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
+
+		git mv <folder-name> <new-folder-name> - Change the name of a Folder.
+			Note: Windows and Mac Filesystems will not recognize Case-Sensitive changes, but Git will.
+				git mv <folder-name> <temp> && git mv <temp> <folder-name>
 
 		git diff [HEAD] <file> <file> - See differences between checked out <file> and Local Working Copy <file>.
 
@@ -131,7 +128,18 @@ Git:
 		git commit --amend --no-edit - Add in changes to the most recent Commit in the Local Staging List.
 		git commit --amend -m "<commit-message>" - Change the message of the most recent Commit. Note: Staged Changes will be included in this commit.
 
-		git rebase -i <earliest-hash-of-commit-to-amend>~1 - Technique to change one or more Commits prior to the most recent Commit of the checked out Local Branch. Change the operation to be performed on each row corresponding to the Commits to be amended from 'pick' to 'e'.
+		git rebase -i <earliest-hash-of-commit-to-amend>~1 - Technique to change one or more Commits prior to the most recent Commit of the checked out Local Branch.
+			Amending: Change the operation to be performed on each row corresponding to the Commits to be amended from 'pick' to 'e'.
+
+			Sorting:
+				dd to Cut a Line.
+				k to Move Up a Line.
+				p to Paste a Line.
+
+		git push <repo-url-alias> <commit-hash>:refs/heads/<branch> - Add the commits from the currently checked out Local Branch, up until <commit-hash>, to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
+		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
+
+		git push -d <repo-url-alias> <branch> - Remove a Branch on the Remote Repository.
 
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 			--soft 				- Keep accumulated changes from <number-of-commits> in the Local Staging List.
