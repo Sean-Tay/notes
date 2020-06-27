@@ -296,28 +296,6 @@ Webpack.js
 							],
 						}
 
-			TypeScript:
-				Webpack Packages:
-					ts-loader										// Enables use of TypeScript. Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
-						// Type Checks with Resultant Errors will show an Error Page in the Browser if the Webpack Dev Server is running.
-
-					@babel/preset-typescript						// Newer Alternative to ts-loader - Enables use of TypeScript with Babel. 
-						// It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool.
-						// With this approach alone, Type Checking would not be done during development with Automatic Reload / Hot Module Replacement.
-						// Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
-
-					fork-ts-checker-webpack-plugin					// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
-						// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
-
-						// Note: Runs Module Resolution independently from Webpack. This may cause it to run on Files that won't be included in the Final Bundle.
-							// If those Files have TypeScript Errors, fixing them will NOT trigger Automatic Reloading by Webpack, as Webpack only does so on detecting a change in the Files from the Entry-Points.
-
-				Loaders:
-					ts-loader
-						options: {
-							transpileOnly: true,					// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
-						}
-
 			CSS Transpiler:
 				Webpack Packages:
 					postcss-loader									// Enables CSS Transpilation, in the same vein as Babel for JS.
@@ -357,7 +335,7 @@ Webpack.js
 							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
 						}
 				
-			CSS Modules:											// Enforces Scoping for the CSS imported and used by a JS Module through Dynamically Generated CSS Selector Names.
+			CSS Modules: Enforces Scoping for the CSS imported and used by a JS Module through Dynamically Generated CSS Selector Names.
 				Webpack Packages:
 					css-modules-typescript-loader					// Loader to make CSS Modules work with TypeScript. Place after css-loader in the Webpack Config Module Rules.
 
@@ -435,6 +413,28 @@ Webpack.js
 						whitelistPatterns: [<pattern>, ... ],		// Specify CSS Selector Patterns to avoid Purging for.
 						whitelistPatternsChildren: [<pattern>, ... ], // Specify CSS Selector Patterns to avoid Purging their Children Selectors for.
 					})
+
+			TypeScript:
+				Webpack Packages:
+					ts-loader										// Enables use of TypeScript. Predecessor to @babel/preset-typescript. Use for Older Babel Compilers (i.e. < v7).
+						// Type Checks with Resultant Errors will show an Error Page in the Browser if the Webpack Dev Server is running.
+
+					@babel/preset-typescript						// Newer Alternative to ts-loader - Enables use of TypeScript with Babel. 
+						// It simply strips the TypeScript Code away, whilst assuming that the Type Checking is done separately by another Tool.
+						// With this approach alone, Type Checking would not be done during development with Automatic Reload / Hot Module Replacement.
+						// Remember to add the TypeScript File Extensions in the resolve.extensions part of the Webpack Config File.
+
+					fork-ts-checker-webpack-plugin					// Executes TypeScript Type Checking as a separate Process from the main Webpack Bundling Process to speed it up.
+						// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
+
+						// Note: Runs Module Resolution independently from Webpack. This may cause it to run on Files that won't be included in the Final Bundle.
+							// If those Files have TypeScript Errors, fixing them will NOT trigger Automatic Reloading by Webpack, as Webpack only does so on detecting a change in the Files from the Entry-Points.
+
+				Loaders:
+					ts-loader
+						options: {
+							transpileOnly: true,					// Disable Type Checking to speed up Builds. Used with the fork-ts-checker-webpack-plugin to allow Type Checking to occur on a separate Process.
+						}
 
 			React:
 				Webpack Packages:
