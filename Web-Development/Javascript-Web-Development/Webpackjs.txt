@@ -50,7 +50,7 @@ Webpack.js
 			
 			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and selectively recompile them.
 
-			Polyfill: 			Adds in functionality for newer Web APIs not implemented in older Browsers through emulation.
+			Polyfill: 			Adds in functionality for newer Web APIs not implemented in older Browsers / standardization for inconsistently implemented Web APIs between current Browsers, through emulation.
 			Code Transpilation: Transforms newer variants of code to equivalent, older variants to maintain compatability with older Browsers.
 
 			Code Minification: 	Only considers meaningful code during the Building Process. This can mean mangling variable names, or removing unreachable pieces of code.
@@ -147,7 +147,7 @@ Webpack.js
 
 							// Results of Applying the Rule.
 								// Specify which Loader(s) to use for the Resource that matches for the Rule.
-								// Note: the Loader order in the 'use' Array is reversed - the last Loader is applied first.
+								// Note: the Loader order in the 'use' Array is reversed - the last Loader specified is the one that is applied first.
 								use: [
 									{
 										loader: '<webpack-loader>',
@@ -191,7 +191,7 @@ Webpack.js
 					filename: '<filename>',
 				},
 				
-				// Webpack Dev Server Configuration for enabling Automatic Recompilation and Reload via an In-Memory Server Process
+				// Webpack Dev Server Configuration for enabling Automatic Recompilation and Reload via an In-Memory Server Process.
 				// Requires the webpack-dev-server Package.
 				// Run with npx webpack-dev-server.
 				devServer: {
@@ -303,7 +303,7 @@ Webpack.js
 						// Especially convenient when Automatic Reload / Hot Module Replacement is enabled.
 
 						// Note: Runs Module Resolution independently from Webpack. This may cause it to run on Files that won't be included in the Final Bundle.
-							// If those Files have TypeScript Errors, fixing them will NOT trigger Automatic Reloading by Webpack, as it only does so on detecting a change in the Files from the Entry-Points.
+							// If those Files have TypeScript Errors, fixing them will NOT trigger Automatic Reloading by Webpack, as Webpack only does so on detecting a change in the Files from the Entry-Points.
 
 				Loaders:
 					ts-loader
