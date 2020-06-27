@@ -312,7 +312,9 @@ Webpack.js
 					url-loader:
 						options: {
 							limit: <size>,							// Specify that if the Dependency exceeds <size> bytes, do not inline them into the Bundle.
-							fallback: '<loader-name>'				// If the Dependency exceeds <size> bytes, use <loader-name> to process the Dependency instead.
+							fallback: '<loader-name>',				// If the Dependency exceeds <size> bytes, use <loader-name> to process the Dependency instead.
+
+							name: './images/[name].[ext]'			// Specify location and name of copied Dependencies in the Output-Point. Sub-Folders need not be pre-created before the Bundling Process is run.
 						}
 
 			CSS Transpiler:
