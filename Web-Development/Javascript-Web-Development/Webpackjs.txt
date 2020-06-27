@@ -126,8 +126,15 @@ Webpack.js
 
 				// Specify how different Modules in the Project will be treated.
 				module: {
+					// Note: The Rules specified here only determines if any Loaders are applied to a Dependency; Webpack will still (attempt to) bundle a Dependency into the final Output, even if no Loaders are applied to it in the end.
+					// Note: The Rule order in the 'rules' Array is reversed - the last Rule specified is the one that is applied first.
 					rules: [
 						{
+							// Specifying Rule Categories / Order. Within each Category the standard Rule Order applies.
+								enforce: 'pre' | 'post'
+									// 'pre' - Specify that this Rule should be applied before the normal Rules are executed.
+									// 'post' - Specify that this Rule should be applied after the normal Rules are executed.
+
 							// Conditions for when the Rule Applies.
 								// Requesting Resource.
 								issuer: /<file-regex>/,
@@ -147,7 +154,7 @@ Webpack.js
 
 							// Results of Applying the Rule.
 								// Specify which Loader(s) to use for the Resource that matches for the Rule.
-								// Note: the Loader order in the 'use' Array is reversed - the last Loader specified is the one that is applied first.
+								// Note: The Loader order in the 'use' Array is reversed - the last Loader specified is the one that is applied first.
 								use: [
 									{
 										loader: '<webpack-loader>',
