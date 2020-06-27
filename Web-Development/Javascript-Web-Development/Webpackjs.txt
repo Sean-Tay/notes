@@ -296,6 +296,25 @@ Webpack.js
 							],
 						}
 
+			Adding General Assets:
+				Webpack Packages:
+					file-loader										// Copies referenced Dependencies wholesale into the Output-Point, and inserts Links to them inside the Bundle where needed.
+					url-loader										// Inlines referenced Dependencies into the Bundle directly as base64 Strings to save on Network Requests, or copies them wholesale into the Output-Point when the size-limit is exceeded. Depends on file-loader.
+						// Images:
+							svg-url-loader								// Inlines SVG Dependencies as UTF-8 Strings.
+
+							lqip-loader									// Additionally generates an inline base64 String that represents a blurred version of the Image Dependency.
+							image-trace-loader							// Additionally generates an SVG representing a monochrome silouette of the Image Dependency.
+
+							image-size-loader							// Additionally sends the Type, Dimensions and Size of the Image Dependency alongside.
+
+				Loaders:
+					url-loader:
+						options: {
+							limit: <size>,							// Specify that if the Dependency exceeds <size> bytes, do not inline them into the Bundle.
+							fallback: '<loader-name>'				// If the Dependency exceeds <size> bytes, use <loader-name> to process the Dependency instead.
+						}
+
 			CSS Transpiler:
 				Webpack Packages:
 					postcss-loader									// Enables CSS Transpilation, in the same vein as Babel for JS.
