@@ -79,6 +79,9 @@ Typescript:
 						// Useful for Prop instantiation?
 						let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
 
+					// NonNullable: To remove null and undefined from a Type.
+						let <non-null-non-undefined-type-variable>: NonNullable<<type>> = {}; // Include one set of Angled Brackets.
+
 					// Pick: To specify a subset of Type Properties from another Type through a 'whitelist' approach.
 						let <pick-type-variable>: Pick<<type>, '<property>' | ... > = {};
 
