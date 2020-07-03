@@ -75,12 +75,12 @@ Typescript:
 					}
 
 				// Utility Types:
-					// Partial: To allow partial fulfillment of a Type.
+					// Partial: To allow partial fulfillment of a Type (set all Properties to allow for undefined values).
 						// Useful for Prop instantiation?
 						let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
 
-					// NonNullable: To remove null and undefined from a Type.
-						let <non-null-non-undefined-type-variable>: NonNullable<<type>> = {}; // Include one set of Angled Brackets.
+					// Required: To demand full fulfillment of a Type (set all Properties to not allow for undefined values).
+						let <required-type-variable>: Required<<type>> = {}; // Include one set of Angled Brackets.
 
 					// Pick: To specify a subset of Type Properties from another Type through a 'whitelist' approach.
 						let <pick-type-variable>: Pick<<type>, '<property>' | ... > = {};
@@ -94,6 +94,9 @@ Typescript:
 					// Record: To create a Type whose possible keys are defined in another Type, and map them to a value Type.
 						type <keys-type> = 'key-a' | 'key-b' | ... | 'key-n';
 						let <record-type-variable>: Record<<keys-type>, <value-type>> = {};
+
+					// NonNullable: To remove null and undefined from a Type.
+						let <non-null-non-undefined-type-variable>: NonNullable<<type>> = {}; // Include one set of Angled Brackets.
 
 				// Intersection Types: Combines multiple Types into one.
 					// Union of Member Attributes.
