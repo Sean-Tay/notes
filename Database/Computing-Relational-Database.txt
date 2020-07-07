@@ -22,7 +22,8 @@ Relational Database:
 	Concepts:
 		Attribute:			A property of a Record / Table that can hold a value to meaningfully represent information about what the Record is supposed to represent.
 
-		Key: 				An Attribute / Attributes whose values can uniquely represent a Record in the Table.
+		Key: 				An Attribute of a Record in the Table.
+		Unique Key: 		An Attribute / Attributes whose values can uniquely represent any Record in the Table.
 
 		Record: 			Collection of related values pertaining to some Attributes.
 
