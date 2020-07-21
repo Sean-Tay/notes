@@ -20,6 +20,9 @@ Typescript:
 				const <variable>: <variable-type> = <value>;
 
 				// Primitive Types:
+					// object: Represents all non-primitive Types.
+					// Object: Describes functionality common to all Javascript Objects.
+
 					// any: For when the intended Type is unknown.
 						let <any-type-variable>: any = <value>;
 
@@ -253,8 +256,10 @@ Typescript:
 						// Alias for React.FunctionComponent.
 						// Note: Do not explicitly specify if forwarding Refs; let Typescript infer this.
 
+					React.Component<<component-props>>: Represents a Component Instance.
 					React.ComponentType<<component-props>>: To specify the Type for either a Functional or Class Component.
 						// React.FunctionComponent<P> | React.ComponentClass<P>
+						// Specify 'any' for the type of <component-props> for the least restrictions.
 
 					React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
 
