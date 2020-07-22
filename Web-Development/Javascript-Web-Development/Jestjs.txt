@@ -9,6 +9,8 @@ Jest
 	
 	Concepts:
 		Test Suite:				A File that contains all Unit Tests for the Code contained in another File.
+		
+		Matcher: 				A Class of Jest Functions that can be used in conjunction with the expect runner to check its resultant value in different ways.
 	
 	Details:
 		Package:
