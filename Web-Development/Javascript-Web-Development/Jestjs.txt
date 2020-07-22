@@ -10,7 +10,7 @@ Jest
 	Concepts:
 		Test Suite:				A File that contains all Unit Tests for the Code contained in another File.
 		
-		Matcher: 				A Class of Jest Functions that can be used in conjunction with the expect runner to check its resultant value in different ways.
+		Matcher: 				A Class of Jest Functions that can be chained off the expect runner to check the resultant value from the Test Run in different ways.
 	
 	Details:
 		Package:
@@ -38,10 +38,10 @@ Jest
 
 		Setup:
 			Webpack:
-
+				// TODO
 
 		Flow:
-			Test Suites are usually:
+			Test Suite Locations:
 				1. In the same Location as the to-be-tested File.
 					// For Jest to pick up the Test Suite, the File Name needs to follow the <name>.test.jsx? convention.
 					// Usually <name> is the same as the name of the to-be-tested File, for clarity.
@@ -57,14 +57,50 @@ Jest
 					() => {
 						// ...
 
-						// Unit Test Definition.
+						// Unit Test Definition:
 						test(
 							'<test-description>',
 							() => {
-								// Preparation Code?
+								// ...
 
-								// Execute Test:
+								// Execute Synchronous Test:
 								expect(<function>()).<matcher>(<value>);
+							}
+						);
+
+						// Asynchronous Unit Test Definition:
+						test(
+							'<async-test-description>',
+							async () => {
+								// Indicate to Jest to only pass this Unit Test once the correct number of assertions (expect + Matchers) have executed.
+								expect.assertions(<number>); 
+
+								const data = await <async-function>();
+
+								// expect ...
+							}
+
+							// OR
+
+							() => {
+								// Indicate to Jest to only pass this Unit Test once the correct number of assertions (expect + Matchers) have executed.
+								// In this case this can also help detect when the assertions in .then() or .catch() does not execute, depending on if the Unit Test checks for a success or failed state.
+								expect.assertions(<number>); 
+
+								return <async-function>()
+									.then(
+										data => {
+											// expect ...
+										}
+									);
+
+									// OR
+
+									.catch(
+										err => {
+											// expect ...
+										}
+									)
 							}
 						);
 
@@ -72,7 +108,7 @@ Jest
 					}
 				);
 
-				// Reruns all Tests in a Test Group with different specified Data each time.
+				// Reruns all Unit Tests in a Test Group with different specified Data each time.
 				// Note: There's also a test.each variant which works in the same way.
 				describe.each(
 					[
@@ -83,16 +119,12 @@ Jest
 					// Jest can inject special values into the name of the Test Group to help differentiate between different Runs.
 					'<test-group-description>-%o',
 					(<value-1a>, ...) => {
-						// ...
-
 						// expect ...
-
-						// ...
 					}
 				);
 
 			Matchers:
-				not					Inverts the Test Logic.
+				not					Inverts the Unit Test Logic.
 
 				toBe(<value>) 		For basic comparison of primitives or Object References (Shallow Check).
 
@@ -123,6 +155,7 @@ Jest
 				toStrictEqual(<object>) Deep Check if two Objects have the same specific Structure, Property Types, and Values.
 					// Note: Keys with undefined Values will not match with an Object without those Keys.
 
+				// Errors
 				toThrow(<error>)
 
 	Commands:
