@@ -70,7 +70,7 @@ Jest
 					}
 				);
 
-				// Reruns all Tests in a Group with different specified Data each time.
+				// Reruns all Tests in a Test Group with different specified Data each time.
 				// Note: There's also a test.each variant which works in the same way.
 				describe.each(
 					[
@@ -78,7 +78,7 @@ Jest
 						// ...
 					]
 				)(	
-					// Jest can inject special values into each Test Group Run with unique properties of each specified Data.
+					// Jest can inject special values into the name of the Test Group to help differentiate between different Runs.
 					'<test-group-description>-%o',
 					(<value-1a>, ...) => {
 						// ...
