@@ -123,10 +123,16 @@ Jest
 					}
 				);
 
-			Matchers:
-				not					Inverts the Unit Test Logic.
+			Lifecycle Methods:	For executing some Logic during different phases of Test Suite / Group execution.
+				beforeAll(<init-fn>);
+				beforeEach(<init-fn>);
+				afterEach(<cleanup-fn>);
+				afterAll(<cleanup-fn>);
 
-				toBe(<value>) 		For basic comparison of primitives or Object References (Shallow Check).
+			Matchers:
+				not				Inverts the Unit Test Logic.
+
+				toBe(<value>) 	For basic comparison of primitives or Object References (Shallow Check).
 
 				toBeNull()
 				toBeDefined()
@@ -146,12 +152,12 @@ Jest
 				toMatch({<string> | <reg-exp>})	Check if a given string value matches for a given <string> or <reg-exp>.
 
 				// Arrays
-				toContain(<item>)	Check if an Item exists within an Array.
+				toContain(<item>) Check if an Item exists within an Array.
 				toContainEqual(<item>) Deep Check if an Item with specific Structure and Values exists within an Array.
 				
 				// Objects
 				toMatchObject(<object>) Partial Deep Check if the Object to be tested has at least the Structure and Values in <object>.
-				toEqual(<object>)	Deep Check if two Objects have the same specific Structure and Values.
+				toEqual(<object>) Deep Check if two Objects have the same specific Structure and Values.
 				toStrictEqual(<object>) Deep Check if two Objects have the same specific Structure, Property Types, and Values.
 					// Note: Keys with undefined Values will not match with an Object without those Keys.
 
@@ -159,5 +165,6 @@ Jest
 				toThrow(<error>)
 
 	Commands:
-		
+		jest	// Triggers Jest Tests.
+		jest --watchAll // Triggers Jest Tests whenever there is a change in Code.
 	
