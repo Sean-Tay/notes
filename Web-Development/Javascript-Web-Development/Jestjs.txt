@@ -90,6 +90,8 @@ Jest
 				);
 
 			Matchers:
+				not					Inverts the Test Logic.
+
 				toBe(<value>) 		For basic comparison of primitives or Object References (Shallow Check).
 
 				toBeNull()
