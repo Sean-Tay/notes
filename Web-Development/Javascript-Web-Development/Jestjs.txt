@@ -8,13 +8,20 @@ Jest
 		https://www.toptal.com/react/tdd-react-unit-testing-enzyme-jest
 	
 	Concepts:
-		Test Suite:				A File that contains all Unit Tests for the Code contained in another File.
+		Target: 				The thing being tested.
 		
-		Matcher: 				A Class of Jest Functions that can be chained off the expect runner to check the resultant value from the Test Run in different ways.
+		Assertion: 				An expression which contains some testing logic for the Target Code.
+		Unit Test:				An atomic Procedure to check if the Target Code behaves in a specific, pre-determined way, via Assertions.
+
+		Test Group:				A block of Unit Tests that are related in some meaningful way.
+		Test Suite:				A File that contains all Unit Tests for Target Code, written in a separate File.	
+		
+		Matcher: 				A Class of Jest Functions that each provide different Assertion logic.
 	
 	Details:
-		Package:
-			jest
+		Packages:
+			jest				
+			babel-jest			Allows usage of Babel with Jest.
 
 		Configuration:
 			// package.json Configuration - specify a 'jest' Key to store the Configuration Object.
@@ -42,22 +49,24 @@ Jest
 
 		Flow:
 			Test Suite Locations:
-				1. In the same Location as the to-be-tested File.
+				1. In the same Location as the Target Code's File.
 					// For Jest to pick up the Test Suite, the File Name needs to follow the <name>.test.jsx? convention.
-					// Usually <name> is the same as the name of the to-be-tested File, for clarity.
+					// Usually <name> is the same as the name of the Target Code's File, for clarity.
 
 				2. Inside a __tests__ Folder.
 
 			Test Suite Anatomy:
 				// Jest automatically injects some commonly-used globals, so there is no need to manually import.
 
-				// Groups related Unit Tests together within a Test Suite, or within a parent describe Group.
+				// Groups related Unit Tests together within a Test Suite, or within a parent 'describe' Group.
+				// Note: Jest evaluates all 'describe' Handlers before any 'test' Handlers in a Test Suite.
 				describe(
 					'<test-group-description>',
 					() => {
 						// ...
 
 						// Unit Test Definition:
+						// Note: 'it' is an alias of 'test'.
 						test(
 							'<test-description>',
 							() => {
@@ -72,7 +81,7 @@ Jest
 						test(
 							'<async-test-description>',
 							async () => {
-								// Indicate to Jest to only pass this Unit Test once the correct number of assertions (expect + Matchers) have executed.
+								// Indicate to Jest to only pass this Unit Test once the correct number of Assertions have been executed.
 								expect.assertions(<number>); 
 
 								const data = await <async-function>();
@@ -83,8 +92,8 @@ Jest
 							// OR
 
 							() => {
-								// Indicate to Jest to only pass this Unit Test once the correct number of assertions (expect + Matchers) have executed.
-								// In this case this can also help detect when the assertions in .then() or .catch() does not execute, depending on if the Unit Test checks for a success or failed state.
+								// Indicate to Jest to only pass this Unit Test once the correct number of Assertions have executed.
+								// In this case this can also help detect when the Assertions in .then() or .catch() does not execute, depending on if the Unit Test checks for a success or failing state.
 								expect.assertions(<number>); 
 
 								return <async-function>()
@@ -112,7 +121,7 @@ Jest
 				// Note: There's also a test.each variant which works in the same way.
 				describe.each(
 					[
-						[<value-1a>, ...], // Each sub-Array corresponds to one run of this Test Group.
+						[<value-1a>, ...], // Each sub-Array corresponds to one single run of this Test Group.
 						// ...
 					]
 				)(	
@@ -124,6 +133,7 @@ Jest
 				);
 
 			Lifecycle Methods:	For executing some Logic during different phases of Test Suite / Group execution.
+				// Note: <init-fn> and <cleanup-fn> can return a Promise for Asynchronous Setup / Teardown operations.
 				beforeAll(<init-fn>);
 				beforeEach(<init-fn>);
 				afterEach(<cleanup-fn>);
