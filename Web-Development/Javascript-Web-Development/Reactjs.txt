@@ -380,7 +380,7 @@ React.js
 							// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed ( === type check ) after the first Render.
 							// Hint: Passing an Empty List here would make the submitted Function behave like componentDidMount.
 							// Hint: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
-							// Hint: For Functions, specify as it is (do NOT use JSON.stringify) to avoid false negatives.
+							// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
 							[ <variable>, ... ]
 						);
 
