@@ -13,8 +13,8 @@ Jest
 		Assertion: 				An expression which contains some testing logic for the Target Code.
 		Unit Test:				An atomic Procedure to check if the Target Code behaves in a specific, pre-determined way, via Assertions.
 
-		Test Group:				A block of Unit Tests that are related in some meaningful way.
-		Test Suite:				A File that contains all Unit Tests for Target Code, written in a separate File.	
+		Test Group:				A collection of Unit Tests that are related in some meaningful way.
+		Test Suite:				A File that contains all Unit Tests for Target Code, written in a separate File.
 		
 		Matcher: 				A Class of Jest Functions that each provide different Assertion logic.
 	
@@ -27,19 +27,16 @@ Jest
 			// package.json Configuration - specify a 'jest' Key to store the Configuration Object.
 			// Alternatively, specify a jest.config.js to store Configuration Object. Just export the Configuration Object (i.e. no need to key it to 'jest').
 			"jest": {
-				// ...
-
 				"verbose": true,
 
 				"bail": <number>, // Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
+
+				// ...
 			}
 
 			// Specifying a Test Command in package.json
 			scripts: {
-				// ...
-
 				test: "jest",
-
 				// ...
 			}
 
