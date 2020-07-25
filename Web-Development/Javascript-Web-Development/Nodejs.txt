@@ -68,7 +68,6 @@ Node.js:
 
 					// Additionally, one can specify these variable-value pairs inside an external .env File.
 						// Shell Commands can be used to load them into the Process:
-							// cat .env | node script.js
 							// export $(cat .env) && node script.js
 
 						// The 'dotenv' npm Package can also load these at runtime, without overriding existing variables:

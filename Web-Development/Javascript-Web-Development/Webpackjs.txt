@@ -496,16 +496,20 @@ Webpack.js
 
 			--mode=development 										// Optimizes the bundling process for Build Speed and Debugging.
 			--mode=production 										// Optimizes the bundling process for Runtime Speed and Bundle Size.
+				// Note: The Webpack Configuration can be in the form of a Function to receive the 'mode' value.
+				module.exports = (env, options) => {
+					// options.mode ...
+
+					// return Webpack Config Object
+				};
 
 			--env.<variable>										// Send in Environment Variables to the Webpack Configuration. 
-				// Note: The Webpack Configuration has to be in the form of a Function that receives the Object for this to be available.
+				// Note: The Webpack Configuration can be in the form of a Function to receive the 'env' Object.
 				// Note: This is different from the process.env.<variable> global Object from Node.
 				module.exports = (env) => {
 					// env.<variable> ...
 
-					return {
-						// ...
-					};
+					// return Webpack Config Object
 				};
 
 		// Tip: Use Nodemon to monitor for changes to the Webpack Config Files, and restart running Webpack Processes upon change.
