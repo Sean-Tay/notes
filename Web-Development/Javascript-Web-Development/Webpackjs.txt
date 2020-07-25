@@ -245,10 +245,12 @@ Webpack.js
 			Base:
 				Webpack Packages:
 					webpack											
-					webpack-merge 									// Used to merge different Webpack Config Objects together, allowing for composability of Webpack Configuration.
 					webpack-cli										// Run Webpack Commands.
 					webpack-dev-server 								// Enable Automatic Browser Reload.
-					
+
+					webpack-merge 									// Used to merge different Webpack Config Objects together, allowing for composability of Webpack Configuration.
+					webpack-chain 									// Alternative to webpack-merge.
+
 					// HTML
 						html-webpack-plugin							// Injection of Application JS and Application CSS into a Generated or Existing HTML Template for eventual Browser usage.
 
@@ -494,6 +496,17 @@ Webpack.js
 
 			--mode=development 										// Optimizes the bundling process for Build Speed and Debugging.
 			--mode=production 										// Optimizes the bundling process for Runtime Speed and Bundle Size.
+
+			--env.<variable>										// Send in Environment Variables to the Webpack Configuration. 
+				// Note: The Webpack Configuration has to be in the form of a Function that receives the Object for this to be available.
+				// Note: This is different from the process.env.<variable> global Object from Node.
+				module.exports = (env) => {
+					// env.<variable> ...
+
+					return {
+						// ...
+					};
+				};
 
 		// Tip: Use Nodemon to monitor for changes to the Webpack Config Files, and restart running Webpack Processes upon change.
 		nodemon --watch package.json --watch <config-file>.js --exec \" <command> \"
