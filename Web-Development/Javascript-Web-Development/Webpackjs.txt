@@ -265,7 +265,7 @@ Webpack.js
 
 						// Note: For resolving async / await Arrow Function Errors:
 						@babel/plugin-transform-runtime				// Allow for re-use of Babel's Injected Helper Code.
-						@babel/runtime								// The Production Variant of @babel/plugin-transform-runtime. Install as a Runtime Dependency.
+						@babel/runtime								// The Production Variant of @babel/plugin-transform-runtime. Install as a Runtime Dependency. Does not require manual specification inside the 'plugins' Array.
 
 				Plugins:
 					new webpack.HotModuleReplacementPlugin() 		// Enable Hot Module Reloading.
@@ -286,15 +286,23 @@ Webpack.js
 
 				Loaders:
 					babel-loader
+						// Loader Specific Configuration:
 						options: {
 							cacheDirectory: true,					// Caches the Compiled Results from Babel to speed up later Builds.
 
-							presets: [
-								'@babel/preset-env'
+							configFile: '<config-file-path>',		// Specify the location of the Babel Configuration File to use.
+						}
+
+						// Babel Configuration: Either specified within a Project-Wide babel.config.json, or a Folder .babelrc.
+						// Note: A Descendant .babelrc will merge and override the configuration specified by the Project-Wide babel.config.json and any Ancestor .babelrc.
+						// Note: The content here can also be placed within the Webpack Loader Options Object, but this will prevent other Tools from using Babel.
+						{
+							"presets": [
+								"@babel/preset-env"
 							],
 
-							plugins: [
-								'@babel/plugin-transform-runtime'
+							"plugins": [
+								"@babel/plugin-transform-runtime"
 							],
 						}
 
