@@ -226,10 +226,10 @@ Typescript:
 					"moduleResolution": { "Classic" | "Node" }, // Specify the in-built Method for resolving a Module's Dependencies.
 						// "Node" Module Resolution will set Typescript to search in the node_modules Folder too.
 
-					// Specify Universal Alias for shorter Imports.
+					// Specify Aliases that can be used to shorten import or require declarations in Files.
 					"baseUrl": ".",
 					"paths": {
-						"@/*": ["src/*"]
+						"<path-alias>/*": ["<path-relative-to-baseUrl>/*"]
 					},
 
 					"esModuleInterop": true, // Allow and Support import / export between CommonJS Modules and ES Modules.

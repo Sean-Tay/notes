@@ -9,6 +9,7 @@ Jest
 	
 	Concepts:
 		Target: 				The thing being tested.
+		Mock:					A Stub of the Target's Dependency, designed specifically for control and inspection during Test Runs.
 		
 		Assertion: 				An expression which contains some testing logic for the Target Code.
 		Unit Test:				An atomic Procedure to check if the Target Code behaves in a specific, pre-determined way, via Assertions.
@@ -21,7 +22,11 @@ Jest
 	Details:
 		Packages:
 			jest				
+			@types/jest			Allows Intellisense to properly work in Jest Test Files with Typescript.
+
 			babel-jest			Allows usage of Babel with Jest.
+
+			identity-obj-proxy	Used for Mocking CSS Module Assets.
 
 		Configuration:
 			// package.json Configuration - specify a 'jest' Key to store the Configuration Object.
@@ -30,19 +35,35 @@ Jest
 				"verbose": true,
 
 				"bail": <number>, // Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
+				
+				// A map between Dependency Regexes and Mock Module Paths.
+				// Note: Regexes and Paths are checked in sequence until one matches.
+				// Note: '<rootDir>' is a Jest defined String-Token - use with the Angled Brackets.
+				"moduleNameMapper": {
+					"\<dependency-regex>": [
+						"<rootDir>/__mocks__/stub.js",
+						...
+					],
+
+					// Aliases are used to shorten import or require declarations in Files.
+					"^<path-alias>/(*.)$": "<rootDir>/<path>/$1",
+
+					// ...
+				}
 
 				// ...
 			}
 
 			// Specifying a Test Command in package.json
 			scripts: {
-				test: "jest",
+				"test": "jest",
+				"test-with-config": "jest --config=jest.config.js",
 				// ...
 			}
 
-		Setup:
-			Webpack:
-				// TODO
+		Setup Considerations:
+			Webpack: 
+				Babel: Babel Configuration should ideally be specified in a separate babel.config.json / .babelrc, instead of within webpack.config.js alongside babel-loader specific Configuration.
 
 		Flow:
 			Test Suite Locations:
