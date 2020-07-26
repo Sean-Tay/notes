@@ -27,8 +27,11 @@ Application Development:
 		AHA:						Avoid Hasty Abstractions. Wait until a piece of Code has been Duplicated several times before looking into Abstraction to get a better sense of what the potential use-case for that piece of Code is.
 
 	Constructs:
-		Mixins:						Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
 		Shims:						Emulation of API for Legacy Environments that would not have them implemented / repair incorrect implementations of the API in Problematic Environments.
+		
+		Stub:						Dummy implementation of some part of a Program / Software / System, usually used in scenarios where the full functionality of the Program / Software / System is not strictly required.
+
+		Mixins:						Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
 
 	Metaprogramming:				The practice of making Programs that makes other Programs.
 		Introspection:				Finding out the structure and semantics of the Code that makes up the Program.
