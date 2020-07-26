@@ -11,6 +11,9 @@ Git:
 		
 	
 	Concepts: 
+		Monorepo				- A single Repository that manages all the parts of the Project.
+		Polyrepo				- A single Repository that manages individual Repositories, which each manage a part of the overall Project.
+		
 		origin					- A Local Alias for the Remote Repository's URL in interest.
 
 		HEAD					- A Local Alias for the latest Commit in the current Branch.
