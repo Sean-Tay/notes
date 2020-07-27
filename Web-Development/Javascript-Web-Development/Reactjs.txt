@@ -558,7 +558,7 @@ React.js
 					// Use the Contexts in Components.
 						// Single Context:
 							// Class Components
-							class ConsumingComponent extends React.Component {
+							class Consumer extends React.Component {
 								static contextValue = Context;
 
 								// ... this.contextValue
@@ -577,7 +577,7 @@ React.js
 
 							// OR
 
-							const ConsumingComponent = () => {
+							const Consumer = () => {
 								const contextValue = React.useContext(Context);
 
 								// ...
