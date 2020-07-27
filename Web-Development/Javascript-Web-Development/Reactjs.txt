@@ -515,6 +515,77 @@ React.js
 				}
 
 			Utilities:
+				// React Context API:
+					// Allows for any Descendant Component to access Data / Functionality specified / maintained at an Ancestor Component.
+					// Use only if the Data / Functionality needs to be accessible at many different levels of the Component Tree.
+
+					// Create a Context.
+					// Note: <default-value> is only used if there is no Ancestor Component that renders the corresponding Context.Provider.
+					// Note: Consider creating two different Contexts each time - one for State Data, and another for Dispatch Functionality.
+					export const Context = React.createContext(<default-value>);
+
+					// ...
+
+					// Render Context.Provider in an Ancestor Component.
+					// Useful for setting the <default-value> w.r.t some existing Component Instance (i.e. Running Applicaton) State.
+					import { Context } from '<Context-file-path>';
+
+					const Provider = ({children}) => {
+						// Can use useState or useReducer for the contextValue.
+						const [state, dispatch] = React.useReducer( // ... );
+
+						// Use Memoization to minimize re-renders in Descendant Components.
+						const contextValue = React.useMemo(
+							() => ({
+								state,
+								dispatch
+							}),
+							[ state, dispatch ]
+						);
+
+						return (
+							<Context.Provider 
+								value={contextValue}
+							>
+								{children}
+							</Context.Provider>
+						);
+					};
+
+					// ...
+
+					// Using the Context in Components.
+					import { Context } from '<Context-file-path>';
+
+					const ConsumingComponent = () => {
+						return (
+							<Context.Consumer>
+								{
+									// Function Component:
+									contextData => {
+										// ...
+									}
+								}
+							<Context.Consumer>
+						);
+					};
+
+					// OR
+
+					// Class Components
+					class ConsumingComponent extends React.Component {
+						static contextValue = Context;
+
+						// ... this.contextValue
+					}
+
+					// Function Components
+					const ConsumingComponent = () => {
+						const contextValue = React.useContext(Context);
+
+						// ...
+					};
+
 				// Ref Forwarding:
 					// Allows Users of the Component to specify ref in the same way that they would for a native HTML React Component.
 					React.forwardRef(
@@ -577,7 +648,7 @@ React.js
 							// ...
 						}
 
-			Rendering:
+			Application Rendering:
 				let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
 				ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.
 
@@ -598,9 +669,6 @@ React.js
 
 			When these HTML Input Elements have a 'value' attribute specified in the React Element specification, they switch from using their internal State to the React Component State instead:
 				<input value={this.state.value} onChange={this.onChangeHandlerFunction} />
-
-		React Context API / Redux: Application-Level State Managers to maintain and share State across multiple Components.
-			Central Store for all Components. Avoids complex “prop” graphs in Component Trees.
 	
 	Commands:
 		Create-React-App: CLI Tool for Creating Boilerplate React Apps.
