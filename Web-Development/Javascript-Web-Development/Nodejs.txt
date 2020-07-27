@@ -175,7 +175,7 @@ Node.js:
 			package.json - Specifies the configuration of a Node Project.
 				{
 					"scripts": { 										// Specify action(s) to be run upon certain Node Project lifecycle events.
-						// Note: May want to use npm-run-all to execute npm commands in parallel.
+						// Tip: May want to use npm-run-all to execute npm commands in parallel.
 						"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed.
 						"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed.
 					}							

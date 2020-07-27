@@ -162,7 +162,7 @@ Web Dev:
 		Web Security:
 			HTTP Headers:
 				// HTTPS Only:
-				// Note: Should be supplemented with automatic redirects to HTTPS connections if a Client attempts to load a URL with the regular HTTP protocol.
+				// Tip: Should be supplemented with automatic redirects to HTTPS connections if a Client attempts to load a URL with the regular HTTP protocol.
 					// Server Response Headers:
 						Strict-Transport-Security:
 							max-age=<expire-time> // The time in seconds that the Client should remember this Strict-Transport-Security configuration for this Site.
@@ -171,7 +171,7 @@ Web Dev:
 				// CSP:
 					// Server Response Headers:
 						Content-Security-Policy: <policy-directive>; ...
-							// Note: The more <policy-directive>s specified (including duplicated directives), the more restricted it becomes.
+							// Tip: The more <policy-directive>s specified (including duplicated directives), the more restricted it becomes.
 							
 							// Policy Directives
 								default-src: <source> [<source>]; // Can be seen as a fallback for other Directives if they are not specified. Specify this at the beginning of the Content-Security-Policy Directive string.
@@ -222,7 +222,7 @@ Web Dev:
 
 								// Note: This also requires that the Access-Control-Allow-Origin Header have a specific <origin> value, rather than the '*' wildcard.
 
-								// Note: Omit this if it should not be exposed.
+								// Tip: Omit this if it should not be exposed.
 					
 			Cookie Configuration: See the Security-Related Fields section of the Cookie concept above for more exposition on each Field listed below.
 				HttpOnly

@@ -80,7 +80,7 @@ React.js
 			By default, a Component Instance gets [Re-]Rendered when:
 				When the State of a Component Instance changes.
 					Presumably, Props come from an Ancestor's State, and if the Ancestor's State changes, the Ancestor's Component Instance would be Re-Rendered, which by default should propagate the Re-Render call down to the current Component Instance.
-						Note: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
+						Tip: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
 				
 				Whenever an Ancestor Component Instance gets [Re-]Rendered.
 		
@@ -378,8 +378,8 @@ React.js
 							}, 
 							// An optional 'Dependency List' of Variables can be specified as well to limit when the submitted Function executes.
 							// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed ( === type check ) after the first Render.
-							// Hint: Passing an Empty List here would make the submitted Function behave like componentDidMount.
-							// Hint: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
+							// Tip: Passing an Empty List here would make the submitted Function behave like componentDidMount.
+							// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
 							// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
 							[ <variable>, ... ]
 						);
@@ -394,11 +394,11 @@ React.js
 
 					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
 						// Important Note: The Dependency Array for Optimization Hooks is of a different nature than the ones used for Side-Effect Hooks. If the submitted Function may directly or indirectly reference any Component's State (it's own or from Ancestor Components' passed in as Props), the references should be placed in the Dependency List.
-						// Hint: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
-						// Hint: For Functions, specify as it is (do NOT use JSON.stringify) to avoid false negatives.
+						// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
+						// Tip: For Functions, specify as it is (do NOT use JSON.stringify) to avoid false negatives.
 
 						// Used to prevent unneccessary recalculation of some value per Re-Render.
-						// Hint: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
+						// Tip: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
 						React.useMemo(
 							() => {
 								// ...

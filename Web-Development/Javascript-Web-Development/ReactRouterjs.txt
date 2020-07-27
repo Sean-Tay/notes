@@ -45,7 +45,7 @@ React-Router:
 				import { Switch, Route } from 'react-router-dom';
 
 				// Switches contain Routes, and Routes contain Application Elements.
-				// Note: Application Elements may contain more nested Switches and Routes.
+				// Tip: Application Elements may contain more nested Switches and Routes.
 
 				const App = () => {
 					return (

@@ -164,7 +164,7 @@ Redux.js
 							yield call(<function>, <args-array>);
 
 							// Perform a State Change on the Component State, or trigger another Saga - Non-Blocking.
-							// Note: This may be preferable for testing with redux-saga-test-plan.
+							// Tip: This may be preferable for testing with redux-saga-test-plan.
 							yield put(<action-obj>);
 
 							// Call a Function - Non-Blocking. Attach Child Executing Instance to this Parent Generator / Saga.

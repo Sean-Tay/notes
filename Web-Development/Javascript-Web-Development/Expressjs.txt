@@ -45,7 +45,7 @@ Express.js
 
 					});
 
-					// Note: Also possible to attach Objects to pass into the next Function / Middleware via the Request Object.
+					// Tip: Also possible to attach Objects to pass into the next Function / Middleware via the Request Object.
 					
 					// Include 'return' to break from the Middleware.
 

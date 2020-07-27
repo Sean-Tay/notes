@@ -255,7 +255,7 @@ Javascript
 				return;
 			} finally {
 				// Always executes, even if there is a prior return statement.
-				// Hint: Use to combine common tail-functionality in the try and catch blocks.
+				// Tip: Use to combine common tail-functionality in the try and catch blocks.
 
 				// ...
 			}

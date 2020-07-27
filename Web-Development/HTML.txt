@@ -100,7 +100,7 @@ HTML:
 					alt="example.jpg" - Shows alternate text when the Image cannot be displayed.
 					
 				<canvas id="myCanvas" width="256" height="256"> </canvas> - A Tag that allows drawing of graphics via JS. 
-					Note: Need to set id Attribute so that can reference within JS.
+					Tip: Should set id Attribute for easier reference within JS.
 
 				<form onsubmit="handler()" action="/handler.js"> - Tags that specify an Input Form.
 					<label for="form-input-id-1" > 

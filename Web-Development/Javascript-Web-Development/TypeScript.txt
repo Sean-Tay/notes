@@ -167,7 +167,7 @@ Typescript:
 
 				// Mapped Indexable Types
 				// Note: For declaring possible Interface Keys.
-				// Note: Use the Record Utility Type here.
+				// Tip: Use the Record Utility Type here.
 				type <type-name> = 'key-a' | 'key-b' | // ... | 'key-n' ;
 				type <indexable-type-name> = {
 					[key in <type-name>]: <type>;

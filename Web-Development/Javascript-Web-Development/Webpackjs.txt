@@ -272,7 +272,7 @@ Webpack.js
 
 					// Note: Instantiate a new Instance of HtmlWebpackPlugin per desired Output HTML File.
 					new HtmlWebpackPlugin(
-						// Note: Webpack always parses Application JS first, then potential Application CSS imported by the Application JS, then injection into the HTML Template.
+						// Note: Webpack always parses Application JS first.
 						{ 
 							template: <html-template-path>,
 

@@ -120,7 +120,7 @@
 				1. If the Node is Childless, just remove.
 				2. If the Node has one Child, just bypass current Node to the Child Node directly from the Parent.
 				3. If the Node has two Children, replace Node with Predecessor / Successor key, and delete Predecessor / Successor Node.
-					- Note: Predecessor / Successor of a Node with 2 Children guaranteed to either only have zero or one Child.
+					- Tip: Predecessor / Successor of a Node with 2 Children guaranteed to either only have zero or one Child.
 
 			- Balance Factor: height(Left Sub-Tree) - height(Right Sub-Tree)
 				- A Metric for determining if a given [Sub-]Tree is adequately not-degenerate.

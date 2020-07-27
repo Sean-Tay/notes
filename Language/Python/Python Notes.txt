@@ -2,8 +2,7 @@
 Python Notes (as of 3.4)
 
 Note: Indentation is important. Curly braces cannot be used to group blocks of code here.
-Note: The comments that appear at the side for a given construct (for-loop, function, etc.) in this document should actually be placed within the construct so as to avoid 
-	  indentation issues. The comments are placed as such for clarity's sake.
+Note: The comments that appear at the side for a given construct (for-loop, function, etc.) in this document should actually be placed within the construct so as to avoid indentation issues. The comments are placed as such for clarity's sake.
 Note: x++ cannot be used here. Use x+=1 instead.
 Note: No switch control block in Python.
 Note: No function overloading in Python. Latest function with same name will be used.

@@ -179,7 +179,7 @@ Linux / Unix:
 				--exclude={'<regex>', ...} -cvf <file>.tar <pattern> ... - Bundle files matching <pattern>s into <file>.tar whilst preserving directory structure. 
 					- Note: Does not store and preserve permissions and ownership of intermediate directories when used with the -p option, unless they are explicitly added in.
 					- Note: For --exclude, if specifying a Directory, do not end with a '/'.
-					- Note: For --exclude, if only one item, just equate to one string and not an array.
+					- Tip: For --exclude, if only one item, just equate to one string and not an array.
 
 				-tvf <file>.tar - List all files within <file>.tar verbosely.
 
@@ -329,7 +329,7 @@ Linux / Unix:
 				
 				function <fn_name>() {
 					# Note: Empty Functions need to include at least the Dummy Command.
-					# Note: Functions are overridable.
+					# Tip: Functions are overridable.
 
 					<global_var>=<val>				# Specify a global variable.
 					readonly <global_var>=<val> 	# Specify a readonly global variable.

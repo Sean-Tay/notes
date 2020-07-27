@@ -79,7 +79,7 @@ Java Web:
 
 				<jsp:useBean id="<parameter_id>" class="<parameter_type>" scope="request | page | application"> </jsp:useBean> Declare Custom Objects. Note: parameter_value_id and <parameter_id> must be the same. Additionally, it will create the Custom Object if it does not already exist.
 					<jsp:setProperty name="<parameter_id>" property="<object_property_id>" value="<object_property_value>" /> Set a value manually.
-					<jsp:setProperty name="<parameter_id>" property="<object_property_id>" param="<request_param_id>" /> Set a value based on the Request parameter. Note: If the <request_param_id> and the <object_property_id> matches, do not need to specify the param attribute. Furthermore, if all properties for the DTO are to be set from the Request Object, can just do property="*".
+					<jsp:setProperty name="<parameter_id>" property="<object_property_id>" param="<request_param_id>" /> Set a value based on the Request parameter. Tip: If the <request_param_id> and the <object_property_id> matches, do not need to specify the param attribute. Furthermore, if all properties for the DTO are to be set from the Request Object, can just do property="*".
 
 				<jsp:getProperty name="<parameter_id>" property="<object_property_id>" /> Obtain previously declared Custom Objects. Note: The Tag will implicitly call the Object's Getter for the associated <object_property_id> specified.
 

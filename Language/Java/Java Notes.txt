@@ -303,7 +303,7 @@
 		
 		PathMatcher: 												Matches Path based on a specified Pattern.
 		
-			PathMatcher matcher = FileSystems.getDefault().getPathMatcher(<pattern>); Returns an instance of a PathMatcher compiled with the specified <pattern>. Note: <pattern> can start with the prefix "glob:" for the Glob Syntax.
+			PathMatcher matcher = FileSystems.getDefault().getPathMatcher(<pattern>); Returns an instance of a PathMatcher compiled with the specified <pattern>. Tip: <pattern> can start with the prefix "glob:" for the Glob Syntax.
 			
 			<matcher>.matches(<path>)								Returns if the specified <path> matches the Pattern compiled within the <matcher>.
 		

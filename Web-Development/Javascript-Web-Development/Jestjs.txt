@@ -151,7 +151,7 @@ Jest
 				);
 
 			Lifecycle Methods:	For executing some Logic during different phases of Test Suite / Group execution.
-				// Note: <init-fn> and <cleanup-fn> can return a Promise for Asynchronous Setup / Teardown operations.
+				// Tip: <init-fn> and <cleanup-fn> can return a Promise for Asynchronous Setup / Teardown operations.
 				beforeAll(<init-fn>);
 				beforeEach(<init-fn>);
 				afterEach(<cleanup-fn>);
