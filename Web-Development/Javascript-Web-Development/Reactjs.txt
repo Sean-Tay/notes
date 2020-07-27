@@ -519,24 +519,25 @@ React.js
 					// Allows for any Descendant Component to access Data / Functionality specified / maintained at an Ancestor Component.
 					// Use only if the Data / Functionality needs to be accessible at many different levels of the Component Tree.
 
+					// Tip: In the spirit of Modularity, define all Context-related specification detailed below inside one File.
+
 					// Create a Context.
-					// Note: <default-value> is only used if there is no Ancestor Component that renders the corresponding Context.Provider.
-					// Note: Consider creating two different Contexts each time - one for State Data, and another for Dispatch Functionality.
-					export const Context = React.createContext(<default-value>);
+					// Note: <default-xxx> is only used if there is no Ancestor Component that renders the corresponding Context.Provider.
+					// Tip: Create two different Contexts each time - one for State Data, and another for Dispatch Functionality - this prevents the need to memoize an additional Object later on.
+					const StateContext = React.createContext(<default-value>);
+					const DispatchContext = React.createContext(<default-dispatcher>);
 
 					// ...
 
 					// Render Context.Provider in an Ancestor Component.
 					// Useful for setting the <default-value> w.r.t some existing Component Instance (i.e. Running Applicaton) State.
-					import { Context } from '<Context-file-path>';
-
-					const Provider = ({children}) => {
-						// Can use useState or useReducer for the contextValue.
+					export const Provider = ({children}) => {
+						// Can use useState or useReducer for each Context's value.
 						const [state, dispatch] = React.useReducer( // ... );
 
-						// Use Memoization to minimize re-renders in Descendant Components.
+						// Tip: If only using one Context for both State and Dispatch, use Memoization to minimize re-renders in Descendant Components.
 						const contextValue = React.useMemo(
-							() => ({
+						 	() => ({
 								state,
 								dispatch
 							}),
@@ -544,47 +545,51 @@ React.js
 						);
 
 						return (
-							<Context.Provider 
-								value={contextValue}
-							>
-								{children}
-							</Context.Provider>
+							<StateContext.Provider value={state}>
+								<DispatchContext.Provider value={dispatch}>
+									{children}
+								</DispatchContext.Provider>
+							</StateContext.Provider>
 						);
 					};
 
 					// ...
 
-					// Using the Context in Components.
-					import { Context } from '<Context-file-path>';
+					// Use the Contexts in Components.
+						// Single Context:
+							// Class Components
+							class ConsumingComponent extends React.Component {
+								static contextValue = Context;
 
-					const ConsumingComponent = () => {
-						return (
-							<Context.Consumer>
-								{
-									// Function Component:
-									contextData => {
-										// ...
-									}
-								}
-							<Context.Consumer>
-						);
-					};
+								// ... this.contextValue
+							}
 
-					// OR
+							// Function Components
+							export const Consumer = ({children}) => {
+								return (
+									<Context.Consumer>
+										{
+											value => children(value)
+										}
+									</Context.Consumer>
+								);
+							};
 
-					// Class Components
-					class ConsumingComponent extends React.Component {
-						static contextValue = Context;
+							// OR
 
-						// ... this.contextValue
-					}
+							const ConsumingComponent = () => {
+								const contextValue = React.useContext(Context);
 
-					// Function Components
-					const ConsumingComponent = () => {
-						const contextValue = React.useContext(Context);
+								// ...
+							};
 
-						// ...
-					};
+						// State + Dispatch Contexts
+							export const useContext = () => {
+								const stateContext = React.useContext(StateContext);
+								const dispatchContext = React.useContext(DispatchContext);
+
+								return [stateContext, dispatchContext];
+							};
 
 				// Ref Forwarding:
 					// Allows Users of the Component to specify ref in the same way that they would for a native HTML React Component.
