@@ -588,6 +588,11 @@ React.js
 								const stateContext = React.useContext(StateContext);
 								const dispatchContext = React.useContext(DispatchContext);
 
+								if (stateContext === <defaultState> || dispatchContext === <defaultDispatch>) {
+									// Possibly throw an Error here to force usage of the Provider Component.
+									// throw new Error('Must be used within the corresponding Provider Component.');
+								}
+
 								return [stateContext, dispatchContext];
 							};
 
