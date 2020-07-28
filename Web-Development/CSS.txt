@@ -226,6 +226,11 @@ CSS:
 								/* Determine capability for Child to shrink to fit into space <number>-times proportionally w.r.t other Siblings along the Main Axis. */
 								flex-shrink: <number>;
 
+							/* Annoying Bugs and Inconsistencies: */
+								/* Nested Flex Containers */
+									/* Note: On Safari, setting height: 100% will not cause the Child to fill remaining space correctly in a nested Flex context (2 or more Levels). Specify height: 0 and flex-grow: 1 instead. */
+									/* Note: On Safari, set flex-shrink: 0 to ensure Child does not shrink beyond the minimum Height in a nested Flex context (2 or more Levels). */
+
 			Alternative to Element Borders:
 				box-shadow: inset <x-offset> <y-offset> <blur> <color>;
 
