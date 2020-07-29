@@ -89,6 +89,7 @@ Webpack.js
 
 				// Specify the Entry-Points for Webpack.
 				// Note: Webpack will traverse the Entry-Points in the order that they are specified.
+				// Note: <entry-point-file-path> is taken relative to where the Webpack Process is running, if not specified as an Absolute Path.
 				entry: {
 					<entry-chunk-name>: [ '<entry-point-file-path>', ... ],
 
@@ -193,6 +194,7 @@ Webpack.js
 				},
 
 				// Specify the Output-Points for Webpack.
+				// Note: path should be given an Absolute Path to some Directory.
 				output: {
 					path: path.resolve(__dirname, '<output-directory-path>'),
 					filename: '<filename>',
