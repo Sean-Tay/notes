@@ -91,7 +91,7 @@ Webpack.js
 				// Note: Webpack will traverse the Entry-Points in the order that they are specified.
 				// Note: <entry-point-file-path> is taken relative to where the Webpack Process is running, if not specified as an Absolute Path.
 				entry: {
-					<entry-chunk-name>: [ '<entry-point-file-path>', ... ],
+					<entry-chunk-name>: [ path.resolve(__dirname, '<entry-point-file-path>'), ... ],
 
 					// ...
 				},
