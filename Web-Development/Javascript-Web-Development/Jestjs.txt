@@ -9,7 +9,13 @@ Jest
 	
 	Concepts:
 		Target: 				The thing being tested.
-		Mock:					A Stub of the Target's Dependency, designed specifically for control and inspection during Test Runs.
+		Mock:					A Stub of the Target's Dependency, designed specifically for control and inspection during Test Runs. In the context of Jest, these are usually Functions.
+			This helps the Test to be focused on the Target itself, not both the Target and the Dependency.
+			Ensure consistent behaviour for the Dependency in the Test, across Test Runs.
+
+			Avoids Side Effects from Target Functional Dependencies that are non-optimal for Testing.
+				Slow Execution.
+				Environment Changing Execution.
 		
 		Assertion: 				An expression which contains some testing logic for the Target Code.
 		Unit Test:				An atomic Procedure to check if the Target Code behaves in a specific, pre-determined way, via Assertions.
@@ -150,48 +156,100 @@ Jest
 					}
 				);
 
+				// Mocking a Target's Functional Dependency.
+					import { <target> } from '<target>';
+
+					// Import the Module which houses the Target Functional Dependency into the Test File.
+					// Note: Import as Object.
+					import * as Dependencies from '<target-dependency>';
+
+					// Use Jest to substitute out the implementation for a Target's Function Dependency for a Jest Mock Function.
+					const dependencyMock = jest.spyOn(Dependencies, '<dependency>');
+
+					// Within a Test, invoke the Jest Mock Methods to define a controlled implementation of the Target's Function Dependency.
+					it(
+						'should be able to Mock',
+						() => {
+							dependencyMock.mockReturnedValue(<test-value>);
+
+							// Note: <target> will automatically call the Mock rather than the original implementation, as Jest replaces it internally.
+							expect(<target>()).toBe(<expected-value>);
+
+							// ...
+						}
+					);
+
+					// ...
+
+					// Resubstitute back in the original implementation for the Target's Dependency after all Tests in this Test Suite are finished.
+					afterAll(
+						() => {
+							dependencyMock.mockRestore();
+						}
+					);
+
+		Utilities:
 			Lifecycle Methods:	For executing some Logic during different phases of Test Suite / Unit Test execution.
 				// Tip: <init-fn> and <cleanup-fn> can return a Promise for Asynchronous Setup / Teardown operations.
 				beforeAll(<init-fn>);
-				beforeEach(<init-fn>);
-				afterEach(<cleanup-fn>);
+				beforeEach(<init-fn>); // Note: Operates at a Unit Test Level, NOT a Test Block Level.
+				afterEach(<cleanup-fn>); // Note: Operates at a Unit Test Level, NOT a Test Block Level.
 				afterAll(<cleanup-fn>);
 
+			Jest Mock Methods:	For defining the behaviour of a Stub, to simulate a Target's Functional Dependency:
+				// Tip: These are chainable with each other, as these return the Jest Mock itself at the end of execution.
+
+				// For Synchronous Functions:
+					// If the Target's Functional Dependency is called only once in the Target:
+						<mock>.mockReturnedValue(<test-value>);
+
+					// If the Target's Functional Dependency is called more than once:
+						<mock>.mockReturnedValueOnce(<test-value>);
+
+				// For Asynchronous Functions:
+					// If the Target's Functional Dependency is called only once in the Target:
+						<mock>.mockResolvedValue(<test-value>);
+						<mock>.mockRejectedValue(<test-value>);
+
+					// If the Target's Functional Dependency is called more than once:
+						<mock>.mockResolvedValueOnce(<test-value>);
+						<mock>.mockRejectedValueOnce(<test-value>);
+
 			Matchers:
-				not				Inverts the Unit Test Logic.
+				expect(<target-value>).not					Inverts the Unit Test Logic.
 
-				toBe(<value>) 	For basic comparison of primitives or Object References (Shallow Check).
+				expect(<target-value>).toBe(<test-value>); 	For basic comparison of primitives or Object References (Shallow Check).
 
-				toBeNull()
-				toBeDefined()
-				toBeUndefined()
-				toBeFalsy()
-				toBeTruthy()
+				expect(<target-value>).toBeNull();
+				expect(<target-value>).toBeDefined();
+				expect(<target-value>).toBeUndefined();
+				expect(<target-value>).toBeFalsy();
+				expect(<target-value>).toBeTruthy();
 
 				// Numbers
-				toBeCloseTo(<number>, <precision>) For optimal comparison of floats that accounts for floating-point Errors.
-				toBeLessThan(<number>)
-				toBeLessThanOrEqual(<number>)
-				toBeGreaterThanOrEqual(<number>)
-				toBeGreaterThan(<number>)
-				toBeNaN()
+				expect(<target-number>).toBeCloseTo(<number>, <precision>) For optimal comparison of floats that accounts for floating-point Errors.
+				expect(<target-number>).toBeLessThan(<number>)
+				expect(<target-number>).toBeLessThanOrEqual(<number>)
+				expect(<target-number>).toBeGreaterThanOrEqual(<number>)
+				expect(<target-number>).toBeGreaterThan(<number>)
+				expect(<target-number>).toBeNaN()
 
 				// Strings
-				toMatch({<string> | <reg-exp>})	Check if a given string value matches for a given <string> or <reg-exp>.
+				expect(<target-string>).toMatch({<string> | <reg-exp>})	Check if a given string value matches for a given <string> or <reg-exp>.
 
 				// Arrays
-				toContain(<item>) Check if an Item exists within an Array.
-				toContainEqual(<item>) Deep Check if an Item with specific Structure and Values exists within an Array.
+				expect(<target-array>).toContain(<item>) 	Check if an Item exists within an Array.
+				expect(<target-array>).toContainEqual(<item>) Deep Check if an Item with specific Structure and Values exists within an Array.
 				
 				// Objects
-				toHaveProperty(<string>) Check if the <string> Property exists on the Object.
-				toMatchObject(<object>) Partial Deep Check if the Object to be tested has at least the Structure and Values in <object>.
-				toEqual(<object>) Deep Check if two Objects have the same specific Structure and Values.
-				toStrictEqual(<object>) Deep Check if two Objects have the same specific Structure, Property Types, and Values.
+				expect(<target-object>).toHaveProperty(<string>) Check if the <string> Property exists on the Object.
+				expect(<target-object>).toMatchObject(<object>) Partial Deep Check if the Object to be tested has at least the Structure and Values in <object>.
+				expect(<target-object>).toEqual(<object>) Deep Check if two Objects have the same specific Structure and Values.
+				expect(<target-object>).toStrictEqual(<object>) Deep Check if two Objects have the same specific Structure, Property Types, and Values.
 					// Note: Keys with undefined Values will not match with an Object without those Keys.
 
 				// Errors
-				toThrow(<error>)
+				expect(<target-invocation>).toThrow(<error>)
 
 	Commands:
 		jest	// Triggers Jest Tests.
