@@ -20,7 +20,7 @@ Redux.js
 					User Interaction 			- 'CHANGE' type Actions which may feature one or more 'GET' and 'SET' Actions.
 					Network Event 				- 'GET' type Actions.
 
-			Action Creators are Functions that return Action Objects when invoked. The results of this invoked Function can be directly passed into the Store's dispatch Function.
+			Action Creators are Functions that return Action Objects when invoked. The results of this invoked Function can be directly passed into the Store's synchronous dispatch Function.
 				const <operation> = (args) => (
 					{
 						type: "<action-identifier>",
@@ -86,7 +86,7 @@ Redux.js
 				// Mainly used for updating UI Elements / re-Rendering of the DOM.
 				store.subscribe(<callback-function>);
 
-				// Execute a State Changing Action on the Store.
+				// Execute a synchronous State Changing Action on the Store.
 				// The Action can be serialized, logged or stored and later replayed.
 				store.dispatch(<action>);
 
