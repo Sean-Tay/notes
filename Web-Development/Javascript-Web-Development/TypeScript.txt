@@ -20,14 +20,12 @@ Typescript:
 				const <variable>: <variable-type> = <value>;
 
 				// Primitive Types:
-					// object: Represents all non-primitive Types.
-					// Object: Describes functionality common to all Javascript Objects.
-
 					// any: For when the intended Type is unknown.
 
 					// unknown: A type-safe counterpart to the any Type.
 
-					// void: For when there should be no Type.
+					// object: Represents all non-primitive Types.
+					// Object: Describes functionality common to all Javascript Objects.
 
 					// never: For when the value should never occur.
 						let <never-type-variable>: never;
@@ -36,6 +34,11 @@ Typescript:
 							// Functions with unreachable end-points should have a 'never' return value.
 							throw new Error();
 						}
+
+						// Can also be used to exclude undesirable Types from Type Unions:
+						type NonNullable<T> = T extends null | undefined ? never : T;
+
+					// void: For when there should be no Type.
 
 				// Arrays
 					let <array-variable>: <type>[] = <value-array>;
