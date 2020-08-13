@@ -61,7 +61,7 @@ Typescript:
 					};
 
 					// Function with Generics
-					const <function> = <<generic-type> extends <base-type>, ... > ( arg:<generic-type>, ... ): <return-type> => {
+					const <function> = <<generic-type> extends <base-type>, ... > ( arg:<generic-type>, ... ): <generic-type> => {
 						// ...
 					};
 
