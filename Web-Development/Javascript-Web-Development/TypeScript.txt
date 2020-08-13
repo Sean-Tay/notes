@@ -24,10 +24,10 @@ Typescript:
 					// Object: Describes functionality common to all Javascript Objects.
 
 					// any: For when the intended Type is unknown.
-						let <any-type-variable>: any = <value>;
+
+					// unknown: A type-safe counterpart to the any Type.
 
 					// void: For when there should be no Type.
-						let <void-type-variable>: void; 
 
 					// never: For when the value should never occur.
 						let <never-type-variable>: never;
