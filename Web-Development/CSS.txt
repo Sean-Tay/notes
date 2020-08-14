@@ -133,6 +133,13 @@ CSS:
 				visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, but an (empty) space is allocated in its place visually. It cannot receive Events.
 				opacity: 0			- The HTML DOM Node is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
 
+			Text Ellipsis:
+				width: calc(100%) // The Element must have a fixed width, but the calc method can derive a hard px value.
+				overflox-x: hidden:
+				whitespace: nowrap;
+				text-overflow: ellipsis;
+				padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
+
 			Arrangement:
 				position: Specify how the Element is to interpret its Positional Specifications.
 					static: 
@@ -228,8 +235,8 @@ CSS:
 
 							/* Annoying Bugs and Inconsistencies: */
 								/* Nested Flex Containers */
-									/* Note: On Safari, setting height: 100% will not cause the Child to fill remaining space correctly in a nested Flex context (2 or more Levels). Specify height: 0 and flex-grow: 1 instead. */
-									/* Note: On Safari, set flex-shrink: 0 to ensure Child does not shrink beyond the minimum Height in a nested Flex context (2 or more Levels). */
+									/* Note: On Safari, setting height: 100% will not cause the Child to fill remaining vertical space correctly in a nested Flex context (2 or more Levels). Specify height: 0 and flex-grow: 1 instead. */
+									/* Note: On Safari, set flex-shrink: 0 to ensure Child does not shrink beyond the minimum Height in a nested column-direction Flex context (2 or more Levels). */
 
 			Alternative to Element Borders:
 				box-shadow: inset <x-offset> <y-offset> <blur> <color>;
