@@ -112,6 +112,22 @@ Typescript:
 					// Intersection of Member Attributes.
 					let <intersection-type-variable>: <type> | ... = <value>;
 
+				// Type Guards: A Function that returns a boolean Value, letting TypeScript remove some possible Types during analysis of a Variable's Type when it is used.
+					function isType(arg: <type>): arg is <stricter-type> {
+						// ...
+
+						return <boolean>;
+					}
+
+					function isNotType<T extends unknown>(arg: T): arg is Exclude<T, <type>> {
+						// ...
+						
+						return <boolean>;
+					}
+
+					const variable: unknown = <value>;
+					const strictVariable: <stricter-type> = isType(variable);
+
 				// Type Assertion
 					<value> as <type>
 					// OR
