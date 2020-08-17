@@ -339,6 +339,7 @@ React.js
 
 					// Local Component State - No Re-Render
 						// Changes made to these Variables here will not cause a Re-Render.
+						// Tip: This can also be used to maintain references to non-primitive Variables across Renders.
 						const <ref-var> = React.useRef(<initial-value>);
 						// Access / Modify the Ref.
 						<ref-var>.current = <new-value>;
@@ -396,9 +397,11 @@ React.js
 						// Important Note: The Dependency Array for Optimization Hooks is of a different nature than the ones used for Side-Effect Hooks. If the submitted Function may directly or indirectly reference any Component's State (it's own or from Ancestor Components' passed in as Props), the references should be placed in the Dependency List.
 						// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
 						// Tip: For Functions, specify as it is (do NOT use JSON.stringify) to avoid false negatives.
+						// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
 
 						// Used to prevent unneccessary recalculation of some value per Re-Render.
 						// Tip: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
+						// Tip: Consider using useRef for defining 'initial values', rather than useMemo.
 						React.useMemo(
 							() => {
 								// ...
