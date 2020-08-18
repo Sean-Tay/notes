@@ -72,6 +72,7 @@ Git:
 			--squash			- Combine all updates from the Branch <branch> into one, and add that combined update as one Commit into the currently checked out Local Branch. Does not actually merge <branch>, which helps keep git history of the currently checked out Branch clean.
 
 		git cherry-pick <commit-hash> - Selectively bring in a Commit from another Branch to the currently checked out Local Branch.
+		git cherry-pick <older-commit-hash>~1..<newer-commit-hash> - Bring in a range of Commits from another Branch to the currently checked out Local Branch.
 			--no-commit			- Apply the changes only to the Local Working Copy without Commiting.
 
 		git pull [<repo-url-alias>] <branch> - git fetch + git merge.
