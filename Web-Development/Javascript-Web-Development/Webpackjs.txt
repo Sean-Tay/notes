@@ -28,7 +28,7 @@ Webpack.js
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
 		Bundle:					An emitted File consisting of the content usually from a Chunk Group / Graph.
 
-		Source Map:				A mapping between the code in the Bundle and the original Source to aid in debugging during the development process. The Bundle would have a special line at the end to hint to the Browser that a Source Map is available (via a URL).
+		Source Map:				A mapping between the transformed code in the Bundle and the original Source to aid in debugging during the development process.
 	
 	Details:
 		Webpack is best installed locally to each Project; this allows Continuous Integration to work properly.
@@ -45,17 +45,10 @@ Webpack.js
 			3. Emitting Output Bundle(s) based on the constructed Chunk Graphs.
 
 		Possible High-Level Features:
-			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
-				Code Split Vendors: Allows for node_modules Dependencies to be compiled into a separate 'Vendor' Bundle from the Application Bundle - most likely the Vendor Bundle won't change as often as the Application Bundle, and can therefore be cached.
-			
-			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and selectively recompile them.
-
 			Polyfill: 			Adds in functionality for newer Web APIs not implemented in older Browsers / standardization for inconsistently implemented Web APIs between current Browsers, through emulation.
 			Code Transpilation: Transforms newer variants of code to equivalent, older variants to maintain compatability with older Browsers.
 
-			Code Minification: 	Only considers meaningful code during the Building Process. This can mean mangling variable names, or removing unreachable pieces of code.
-
-			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
+			Automatic Recompilation: Configure Webpack to monitor for any changes in Resolved Files and selectively recompile them.
 
 			Automatic Reload: 	Triggers a full Browser Reload to propagate the changes in Resolved Files after Automatic Recompilation to the View. Requires the webpack-dev-server Package.
 			
@@ -63,6 +56,19 @@ Webpack.js
 				This requires implementation of the Hot Module Replacement Interface in the code:
 					module.hot										// Indicates if Hot Module Replacement has been enabled in Webpack.
 					module.hot.accept( ['<module>', ...], () => { /* ... */ } ) // Execute a Function whenever one of the '<module>' Dependencies for a File has changed.
+
+			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
+				Code Split Vendors: Allows for node_modules Dependencies to be compiled into a separate 'Vendor' Bundle from the Application Bundle - most likely the Vendor Bundle won't change as often as the Application Bundle, and can therefore be cached.
+
+			Code Minification: 	Only considers meaningful code during the Building Process. This can mean mangling variable names, or removing unreachable pieces of code.
+
+			Source Maps: 		Mapping between the Transformed Code and the original Source Code.
+				Types:
+					Inline:		The Bundle would have the Source Map content included within the Bundle itself. Typically more performant during Development.
+					Separate:	The Bundle will include a special line at the end to hint to the Browser that a Separate Source Map is available (via a URL). Typically more performant during Production.
+						Hidden:	The Bundle will not include any reference to the Separate Source Map.
+
+			Asset Hashing:		Allows Bundles to have a unique identifier as they are created. This helps to invalidate previous Bundles as new ones are made.
 
 		Configuration Template: Webpack will use 'webpack.config.js' if it exists in the Project Root.
 			// Note: Only CommonJS allowed here.
@@ -174,8 +180,12 @@ Webpack.js
 					],
 				},
 
-				// Specify completeness of any Source Maps generated from the transformations applied.
-				devtool: false | 'source-map',
+				// Specify completeness of any Source Maps generated from the transformations applied, vs Build Speed.
+					// Separate Source Map:
+						devtool: 
+							'hidden-source-map' 		// Does not include the URL to the Source Map at the end of the Output Bundle. Stack Trace Info will link to Output Bundle rather than Source Code.
+							| 'nosources-source-map' 	// Does not include the full Source Code in the Source Map. Stack Trace Info will still provide Source Code Line Numbers.
+							| 'source-map',
 
 				// Configure Webpack to monitor for any changes in Resolved Files and recompile them (only).
 				watch: true,
@@ -192,6 +202,15 @@ Webpack.js
 					// Specify a delay period for rebuilding to allow for consolidation of any changes that come in shortly after the first.
 					aggregateTimeout: <milliseconds>,
 				},
+				
+				// Override the default optimization actions that Webpack is set to perform whenever a Webpack mode is specified.
+				optimizations: {
+					// The algorithm used to derive Module IDs.
+					// In the Output Bundle, the Module IDs are used as Keys in the Collection fed into the Main Function, whilst the processed Module Content are the Values tied to each Key.
+					moduleIds: false | 'named',
+
+					// ...
+				}
 
 				// Specify the Output-Points for Webpack.
 				// Note: path should be given an Absolute Path to some Directory.
