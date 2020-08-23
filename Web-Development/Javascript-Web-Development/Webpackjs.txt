@@ -507,6 +507,7 @@ Webpack.js
 			--mode=development 										// Optimizes the bundling process for Build Speed and Debugging.
 			--mode=production 										// Optimizes the bundling process for Runtime Speed and Bundle Size.
 				// Note: The Webpack Configuration can be in the form of a Function to receive the 'mode' value.
+				// Note: Does NOT set process.env.NODE_ENV values automatically. Some third-party Webpack Loaders and Plugins may rely on this flag, so there is a need to set it independently in the Node Script Command as well.
 				module.exports = (env, options) => {
 					// options.mode ...
 
