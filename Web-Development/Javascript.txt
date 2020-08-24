@@ -261,6 +261,55 @@ Javascript
 			}
 	
 	> ES6:
+		Sets: Data Structure that can quickly check whether or not an Element (of any Type) has been stored within.
+			// Operations are sub-linear O(log(n)) or O(1) Time Complexity.
+			// Uses Value Equality Checking.
+			// The JS Data Structure implementation retains Insertion Order as an added feature, unlike the Sets in Math or other Languages.
+
+			const mySet = new Set([ <element-1>, ... , <element-n> ]);
+
+			mySet.size // Property, not Method.
+
+			mySet.add(<new-element>);
+			mySet.has(<new-element>); // true
+			mySet.delete(<new-element>);
+
+			// Space-Efficient Ordered Iteration:
+			for (let element of mySet) {
+				// ...
+			}
+
+			const myArray = Array.from(mySet); // Conversion back from Set to Array.
+
+			// WeakSet - Alternative to Set that:
+				// 1. Only stores Object References.
+				// 2. Object References inserted here are not considered during Garbage Collection (no need to remove the Weak Object References stored here manually).
+				// 3. Cannot be iterated over (Insertion Order is not kept for performance considerations).
+		
+		Maps: Data Structure that can quickly store and retrieve Key-Element pairs.
+			// Retains Insertion Order, unlike regular JS Objects.
+			// Performs better in scenarios involving frequent Addition / Removal of Key-Element pairs, as compared to regular JS Objects.
+
+			const myMap = new Map([
+				[ <element-key-1>, <element-1> ],
+				...
+				[ <element-key-n>, <element-n> ]
+			]);
+
+			myMap.size // Property, not Method.
+
+			myMap.set(<new-element-key>, <new-element>);
+			myMap.has(<new-element-key>); // true
+			myMap.get(<new-element-key>); // undefined | <new-element>
+			myMap.delete(<new-element-key>);
+
+			// Space-Efficient Ordered Iteration:
+			for (let [ elementKey, element ] of myMap) {
+				// ...
+			}
+
+			const myArray = Array.from(myMap); // Conversion back from Map to Array.
+			
 		Switch Case:
 			switch (variable) {
 				case 'value1': {
