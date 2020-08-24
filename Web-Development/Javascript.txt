@@ -274,7 +274,7 @@ Javascript
 			mySet.has(<new-element>); // true
 			mySet.delete(<new-element>);
 
-			// Space-Efficient Ordered Iteration:
+			// Space-Efficient Insertion Ordered Iteration:
 			for (let element of mySet) {
 				// ...
 			}
@@ -303,7 +303,7 @@ Javascript
 			myMap.get(<new-element-key>); // undefined | <new-element>
 			myMap.delete(<new-element-key>);
 
-			// Space-Efficient Ordered Iteration:
+			// Space-Efficient Insertion Ordered Iteration:
 			for (let [ elementKey, element ] of myMap) {
 				// ...
 			}
