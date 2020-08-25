@@ -366,6 +366,7 @@ Webpack.js
 
 					postcss-loader
 						options: {
+							sourceMap: <boolean>,					// Produces a Source Map if CSS Modules are used. Note: css-loader ultimately also needs to have this option enabled, as CSS Modules are a css-loader feature.
 							ident: 'postcss',						// Removes Webpack's usage of JSON.stringify to allow for Dynamic Module Imports within this Webpack Options Object.
 							plugins: (loader) => [
 								// Top-to-Bottom Order
@@ -389,6 +390,12 @@ Webpack.js
 						options: {
 							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
 						}
+
+					sass-loader OR less-loader {
+						options: {
+							sourceMap: <boolean>,					// Produces a Source Map if CSS Modules are used. Note: css-loader ultimately also needs to have this option enabled, as CSS Modules are a css-loader feature.
+						}
+					}
 				
 			CSS Modules: Enforces Scoping for the CSS imported and used by a JS Module through Dynamically Generated CSS Selector Names.
 				Webpack Packages:
