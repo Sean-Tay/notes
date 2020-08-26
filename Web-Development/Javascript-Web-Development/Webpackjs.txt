@@ -413,7 +413,8 @@ Webpack.js
 							},
 
 							importLoaders: <number>, 				// Indicate the number of Loaders that run before css-loader.
-							sourceMap: <boolean>, 					// Create Source Map for the compiled CSS.
+							sourceMap: <boolean>, 					// Create Source Map for the compiled CSS. 
+								// Note: If style-loader is used, the CSS Source Map information will be embedded in the JS Source Map, which means Webpack will also have to be configured via devtool.
 						}
 
 						/* 
