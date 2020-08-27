@@ -369,6 +369,10 @@ Webpack.js
 							sourceMap: <boolean>,					// Produces a Source Map if CSS Modules are used. Note: css-loader ultimately also needs to have this option enabled, as CSS Modules are a css-loader feature.
 							ident: 'postcss',						// Removes Webpack's usage of JSON.stringify to allow for Dynamic Module Imports within this Webpack Options Object.
 							plugins: (loader) => [
+								// loader Fields:
+									loader.context					// Containing Directory of the Dependency that Webpack is currently processing.
+									loader.resourcePath				// Absolute Path of the Dependency that Webpack is currently processing.
+
 								// Top-to-Bottom Order
 								require('postcss-import')({ root: loader.resourcePath }),
 								require('postcss-preset-env')(),
@@ -465,18 +469,55 @@ Webpack.js
 
 			CSS Purging: Filters out unused CSS Content from Final Output by comparing against Source Files.
 				// Note: Only works with CSS Extraction implemented.
-				// Note: Source Maps will be lost upon implementing this functionality.
+				// Note: Using purgecss-webpack-plugin will not allow control over which part of the Bundling Process will CSS Purging take place. This will result in lost CSS Source Maps.
+
+				// Tip: Check if the glob specification is working with Node CLI.
 			
 				Webpack Packages:
-					glob											// Allows specification of more advanced File Paths.
+					glob											// Allows specification of more advanced File Paths / multiple Files at once, ala Shell CLI.
+
 					purgecss-webpack-plugin							
 
+					// OR
+
+					postcss-loader									// CSS Transpiler.
+					@fullhuman/postcss-purgecss						// Alternative to purgecss-webpack-plugin.
+
 				Plugins:
+					// For purgecss-webpack-plugin:
 					new PurgeCssWebpackPlugin({
-						paths: () => glob.sync(`${<src-dir>}/**/*`, { nodir: true }), // Specify location of Source Files to analyze against.
+						paths: () => glob.sync(`${<src-dir>}/**/*`, { nodir: true }), // Specify location of Source Files to analyze.
 						whitelistPatterns: [<pattern>, ... ],		// Specify CSS Selector Patterns to avoid Purging for.
 						whitelistPatternsChildren: [<pattern>, ... ], // Specify CSS Selector Patterns to avoid Purging their Children Selectors for.
 					})
+
+				Loaders:
+					// For postcss-purgecss:
+					{
+						loader: 'postcss-loader',
+
+						options: {
+							// Removes Webpack's usage of JSON.stringify to allow for Dynamic Module Imports within this Webpack Options Object.
+							ident: 'postcss',
+
+							plugins: loader => [
+								// loader Fields:
+									loader.context					// Containing Directory of the Dependency that Webpack is currently processing.
+									loader.resourcePath				// Absolute Path of the Dependency that Webpack is currently processing.
+
+								require('@fullhuman/postcss-purgecss')({
+									// Each Dependency that is passed to the Loader will have its content that is unused by the Files specified here removed from the Output Bundle.
+									content: glob.sync(
+										`${<absolute-path>}/**/*`, 
+										{
+											nodir: true,
+											ignore: `${<absolute-path>}/**/*.${<file-extension>}*`
+										}
+									),
+								}),
+							],
+						}
+					}
 
 			TypeScript:
 				Webpack Packages:
