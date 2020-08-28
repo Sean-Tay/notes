@@ -469,7 +469,7 @@ Webpack.js
 
 			CSS Purging: Filters out unused CSS Content from Final Output by comparing against Source Files.
 				// Note: Only works with CSS Extraction implemented.
-				// Note: Using purgecss-webpack-plugin will not allow control over which part of the Bundling Process will CSS Purging take place. This will result in lost CSS Source Maps.
+				// Note: Using purgecss-webpack-plugin will not allow control over which part of the Bundling Process will CSS Purging take place. If CSS Modules are used, purgecss-webpack-plugin will compare Source Files with transformed CSS Selector Names, rather than the original CSS Selector Names.
 
 				// Tip: Check if the glob specification is working with Node CLI.
 			
