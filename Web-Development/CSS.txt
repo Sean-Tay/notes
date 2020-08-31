@@ -241,6 +241,10 @@ CSS:
 			Alternative to Element Borders:
 				box-shadow: inset <x-offset> <y-offset> <blur> <color>;
 
+		Notable Packages:
+			Node:
+				@stitches/css: 	Atomic CSS-in-JS Library.
+
 	Commands:
 		
 	
