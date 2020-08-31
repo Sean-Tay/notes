@@ -149,8 +149,11 @@ Git:
 			--soft 				- Keep accumulated changes from <number-of-commits> in the Local Staging List.
 			--hard				- Discard accumulated changes from <number-of-commits>.
 
-		git rebase <commit-hash>		- Shift (Reapply) all Commits in current Local Branch onto <commit-hash>.
+		git rebase <commit-hash> - Shift (Reapply) all Commits in current Local Branch onto <commit-hash>.
 		git rebase --onto <desired-branch-base> <old-branch-base> [<branch>] - Shift (Reapply) all Commits in <branch> to <desired-branch-base>.
+			Tip: If trying to rebase multiple Local Branches in the form of a linear Tree, just rebase the latest Local Branch, then slowly reset the references of the other Local Branches to point at the new Commits.
+
+		git branch -f <branch> <commit-hash> - Change the HEAD of <branch> to be the <commit-hash>.
 
 		git push <repo-url-alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
 
