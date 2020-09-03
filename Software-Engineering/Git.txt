@@ -137,8 +137,9 @@ Git:
 
 			Sorting:
 				dd to Cut a Line.
-				k to Move Up a Line.
-				p to Paste a Line.
+					k to Move Up a Line.
+					p to Move Down a Line.
+					p to Paste a Line.
 
 		git push <repo-url-alias> <commit-hash>:refs/heads/<branch> - Add the commits from the currently checked out Local Branch, up until <commit-hash>, to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
 		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
