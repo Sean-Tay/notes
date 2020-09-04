@@ -57,8 +57,10 @@ Webpack.js
 					module.hot										// Indicates if Hot Module Replacement has been enabled in Webpack.
 					module.hot.accept( ['<module>', ...], () => { /* ... */ } ) // Execute a Function whenever one of the '<module>' Dependencies for a File has changed.
 
-			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application Functionality, which can lead to performance improvements.
-				Code Split Vendors: Allows for node_modules Dependencies to be compiled into a separate 'Vendor' Bundle from the Application Bundle - most likely the Vendor Bundle won't change as often as the Application Bundle, and can therefore be cached.
+			Bundle Splitting: 	Allows for Webpack to generate multiple separate Bundles for the Application. Each Bundle isolates changes from the other Bundles, allowing for long-term Browser-Caching of unchanged parts of the Application.
+				Vendor Bundles: Allows for node_modules Dependencies to be compiled into a separate 'Vendor' Bundle from the Application Bundle - most likely the Vendor Bundle won't change as often as the Application Bundle, and can therefore be cached.
+
+			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application functionality, in which each can then be lazily-loaded / loaded in parallel.
 
 			Code Minification: 	Only considers meaningful code during the Building Process. This can mean mangling variable names, or removing unreachable pieces of code.
 
