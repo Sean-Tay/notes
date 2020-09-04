@@ -46,14 +46,14 @@ HTML:
 
 				<meta http-equiv="..." content="..."> - Tag to simulate a HTTP Response Header (specified by the http-equiv attribute) with the associated value (specified by the content attribute).
 
-				<style type="text/css"> ... </style> - Tags that specify an environment to define CSS with.
+				<style type="text/css"> ... </style> - Tags that specify an environment to define Internal CSS with.
 
-				<link type="text/css" rel="stylesheet | preload" href="main.css" /> - Reference CSS from an external CSS File.
+				<link type="text/css" rel="stylesheet" href="main.css" /> - Reference CSS from an External CSS File.
 					CDN - Can reference CSS Style libraries from the Content Delivery Network - no need to download and reference.
-					
-					<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 
-					rel="preload" - Suggest to the Browser that this Resource is one of priority, and should be loaded ASAP.
+				<link type="<mime-resource-type>" rel="preload" href="<resource-url>" as="<fetch-spec-resource-type>" /> - Indicates to the Browser that this Resource should be loaded ASAP (via the rel="preload" specification).
+					CSS:
+						<link type="text/css" rel="preload" href="main.css" as="style" /> 
 
 			<body> ... </body> - Tags that specify the start and end of the actual HTML Content.
 				<iframe src="" srcdoc="<html_code>" > ... </iframe> - Tags used to represent an Inline Section to show another HTML Document.
