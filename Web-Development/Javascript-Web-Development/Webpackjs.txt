@@ -69,14 +69,14 @@ Webpack.js
 						/* webpackInclude: <regex> */ // Dependencies which fulfill the <regex> will be included in the Chunk.
 						/* webpackExclude: <regex> */ // Dependencies which fulfill the <regex> will be excluded from the Chunk.
 						/* webpackChunkName: <name> */ // Chunks with the same <name> will be in the same Bundle. Accepts Filename Placeholders.
-						/* webpackMode: 'eager' | 'lazy' | 'lazy-once' | 'weak' */ // Specify how the Dependency will be loaded in during runtime:
+						/* webpackMode: "eager" | "lazy" | "lazy-once" | "weak" */ // Specify how the Dependency will be loaded in during runtime:
 							// eager - Like a regular Static Import.
 							// lazy - Default Behaviour. Generates a lazily-loaded Chunk for each potential Dependency.
 							// lazy-once - Generates one lazily-loaded Chunk for all potential Dependencies.
 							// weak - Only succeeds if the Bundle has been imported before somewhere else.
 						/* webpackPrefetch: true */ // Indicates to Webpack that the Dependency might be needed for future navigation. The Output then hints to the Browser to load the Dependency during idle time.
 						/* webpackPreload: true */ // Indicates to Webpack that the Dependency will be needed for current navigation. The Output then hints to the Browser to load the Dependency in parallel with the Requesting Resource.
-						/* webpackExports: ['default', 'named', ... ] */ // Indicates to Webpack to only include the used Exports of the Dependency into the Output Bundle.
+						/* webpackExports: ["default", "named", ... ] */ // Indicates to Webpack to only include the used Exports of the Dependency into the Output Bundle.
 						'<module>' // Note - A String Template can also be specified here to specifically import Dependencies based on runtime behaviour. If a Directory is specified, all of the contained content will be included into the Chunk.
 					)
 						.then(
