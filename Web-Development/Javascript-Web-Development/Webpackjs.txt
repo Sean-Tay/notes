@@ -54,13 +54,41 @@ Webpack.js
 			
 			Hot Module Replacement: Detects for changes in Bundles and triggers a patch of the running Browser State without a full Browser Reload.
 				This requires implementation of the Hot Module Replacement Interface in the code:
-					module.hot										// Indicates if Hot Module Replacement has been enabled in Webpack.
+					module.hot 	// Indicates if Hot Module Replacement has been enabled in Webpack.
 					module.hot.accept( ['<module>', ...], () => { /* ... */ } ) // Execute a Function whenever one of the '<module>' Dependencies for a File has changed.
 
 			Bundle Splitting: 	Allows for Webpack to generate multiple separate Bundles for the Application. Each Bundle isolates changes from the other Bundles, allowing for long-term Browser-Caching of unchanged parts of the Application.
 				Vendor Bundles: Allows for node_modules Dependencies to be compiled into a separate 'Vendor' Bundle from the Application Bundle - most likely the Vendor Bundle won't change as often as the Application Bundle, and can therefore be cached.
 
-			Code Splitting:		Allows for the Project to be split into multiple Bundles based on independent Application functionality, in which each can then be lazily-loaded / loaded in parallel.
+			Code Splitting:		Allows for the Application to be split into multiple Bundles based on independent Application functionality. Some can then be lazily-loaded / loaded in parallel via Network Requests when needed, allowing for better performance for the Initial Payload.
+				Utilize Dynamic Imports:
+					// Note: Generates Promises in the Output, so a Polyfill is required for older Browsers. Babel recommends core-js.
+					// Tip: At least two Bundles are created whenever a Dynamic Import is processed - one for the Requesting Resource, and one for all potential Dependencies in this import, based on the import String.
+					// Note: Webpack accepts Magic Comments, which provide extra control over how the Dependencies are incorporated into the Output.
+					import(
+						/* webpackInclude: <regex> */ // Dependencies which fulfill the <regex> will be included in the Chunk.
+						/* webpackExclude: <regex> */ // Dependencies which fulfill the <regex> will be excluded from the Chunk.
+						/* webpackChunkName: <name> */ // Chunks with the same <name> will be in the same Bundle. Accepts Filename Placeholders.
+						/* webpackMode: 'eager' | 'lazy' | 'lazy-once' | 'weak' */ // Specify how the Dependency will be loaded in during runtime:
+							// eager - Like a regular Static Import.
+							// lazy - Default Behaviour. Generates a lazily-loaded Chunk for each potential Dependency.
+							// lazy-once - Generates one lazily-loaded Chunk for all potential Dependencies.
+							// weak - Only succeeds if the Bundle has been imported before somewhere else.
+						/* webpackPrefetch: true */ // Indicates to Webpack that the Dependency might be needed for future navigation. The Output then hints to the Browser to load the Dependency during idle time.
+						/* webpackPreload: true */ // Indicates to Webpack that the Dependency will be needed for current navigation. The Output then hints to the Browser to load the Dependency in parallel with the Requesting Resource.
+						/* webpackExports: ['default', 'named', ... ] */ // Indicates to Webpack to only include the used Exports of the Dependency into the Output Bundle.
+						'<module>' // Note - A String Template can also be specified here to specifically import Dependencies based on runtime behaviour. If a Directory is specified, all of the contained content will be included into the Chunk.
+					)
+						.then(
+							module => {
+								// ...
+							}
+						)
+						.catch(
+							err => {
+								// ...
+							}
+						)
 
 			Code Minification: 	Only considers meaningful code during the Building Process. This can mean mangling variable names, or removing unreachable pieces of code.
 
