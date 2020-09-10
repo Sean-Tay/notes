@@ -70,6 +70,10 @@ Web Dev:
 		Above-the-Fold Content:	Content in the Web Application that would be initially in view in the Browser's Viewport.
 		Below-the-Fold Content:	Content in the Web Application that would be outside of the view in the Browser's Viewport.
 
+		Attachment:				The performance heavy Browser-level process of combining the Browser DOM Tree with a re-calculated CSSOM Tree to create a Render Tree. This is invoked whenever the Browser DOM Tree changes.
+		Layout:					The synchronous Browser-level process of the exact coordinates of DOM Nodes onto the Browser Screen via the information stored in the Render Tree, once Attachment is done.
+		Painting:				The Browser-Level process of using the Layout and the Render Tree to display what is needed on the Browser Screen.
+
 	Details:
 		Summary of Full-Stack:
 			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and static assets sent to a Client, like a Web Browser.

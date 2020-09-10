@@ -29,9 +29,8 @@ React.js
 
 		Rendering: 					The process by which React determines how the UI should look and appear by checking involved React Component Instances.
 
-		[Re-]Render: 				The process of [re-]creating any associated React Element from a React Component Instance. This often results in Reconciliation and Painting.
-		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI. The changes are accumulated before the actual diff-ing occurs as a form of optimization.
-		Painting:					The synchronous process of applying only the actual changes derived from the Reconciliation process onto the Actual DOM Tree, and causing the Browser to re-paint the affected part of the display.
+		[Re-]Render: 				The process of [re-]creating any associated React Element from a React Component Instance. This often results in Reconciliation.
+		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI / Actual DOM, and the minimum number of steps to do so. The changes are accumulated before the diff-ing occurs as a form of optimization.
 
 		Mounting:					Phase in the Component Lifecycle in which a Component Instance is going to be Painted for the first time.
 		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
@@ -42,7 +41,7 @@ React.js
 	
 	Details:
 		React.js Library manages the Virtual DOM.
-		ReactDOM.js Library handles the Reconciliation and Painting processes.
+		ReactDOM.js Library handles the Reconciliation process, as well as updating the Actual DOM.
 
 		React faciliates the construction of SPAs:
 			The default entry point, public/index.html, contains a top-level <div> 'root', which will contain the entirety of the React Application as part of the SPA functionality.
@@ -221,7 +220,7 @@ React.js
 							// Additional Function that is called only after a Component has been Mounted, and only once.
 							// Child Components also execute their componentDidMount Functions as well.
 
-							// this.setState can be used here, but it will trigger an extra Render before Painting, which can cause Performance Issues.
+							// this.setState can be used here, but it will trigger an extra Render, which can cause Performance Issues since the Browser has to do Attachment / Layout / Painting twice.
 
 							// setInterval ...
 							// AJAX Call for Data ...
@@ -253,7 +252,7 @@ React.js
 						render() 
 
 						getSnapshotBeforeUpdate(prevProps, prevState) {
-							// Called before the Reconciliation / Painting process.
+							// Called before the Reconciliation process.
 							// Enables the Component to capture information from the Actual DOM before it is potentially changed.
 
 							// return data which will be passed into componentDidUpdate.
@@ -367,7 +366,7 @@ React.js
 						);
 
 					// Side-Effects
-						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from painting the display.
+						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from Painting the display.
 						React.useEffect(
 							() => {
 								// ... 
