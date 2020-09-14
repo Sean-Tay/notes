@@ -590,6 +590,24 @@ Webpack.js
 					// JS
 						@babel/plugin-transform-runtime 			// Enables re-use of Babel's injected helper code to save on code size. Not a Webpack Plugin.
 
+						workerize-loader							// Enables better compatability between Web Worker requirements and the Modular Structure of the Project.
+							Note: Disable Babel's ES Modules to CommonJS transformation:
+								presets: [
+									[
+										"@babel/preset-env",
+										{
+											// ...
+											modules: false,
+											// ...
+										},
+									],
+									// ...
+								]
+
+							Note: Promise Polyfill required for IE11 and below.
+
+							Tip: Consider naming Worker Files .worker.js to avoid having to deal with Webpack-specific Import Syntax.
+
 				Plugins:
 					// JS:
 						new webpack.ProvidePlugin({ 

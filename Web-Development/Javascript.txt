@@ -742,6 +742,56 @@ Javascript
 			observer.unobserve(<html-element>, ...);
 			observer.disconnect();
 
+		Web Workers: For offloading CPU Intensive Tasks into a separate Background Thread.
+			Motivation: Javascript was designed for single-threaded execution, but most Computers nowadays have CPUs that have more than one Execution Core.
+
+			Characteristics:
+				Multiple in one Browser Tab.
+				Utilizes Message Passing for synchronization.
+
+				Subset of Functionality available to Main Thread:
+					Cannot access DOM.
+
+			Requirements:
+				Worker Code is placed entirely into a separate .js File, as Web Workers were designed to run in an isolated context for security and stability reasons.
+
+			// Code:
+				// main.js
+					const worker = new Worker('<file>.js');
+
+					// Note: By default, assume Data passed between the Main Thread and the Worker Thread is serialized / deserialized.
+						// Consider restructuring the Data into one that supports the Transferrable Interface, so that only the ownership of the Data Structure is changed.
+
+					worker.postMessage(<args>);
+					worker.onmessage(
+						e => {
+							// e.data === <results>
+							// ...
+						}
+					);
+
+					worker.terminate();
+
+				// worker.js
+					this.onmessage(
+						e => {
+							// e.data === <args>
+							// ...
+
+							this.postMessage(<results>);
+						}
+					);
+
+					this.close();
+
+		Service Workers: For a Proxy Server between the Browser and Server, enabling capability for offline-processing.
+			Characteristics:
+				Only one per Browser Tab.
+				Persists beyond the Browser Tab's Lifespan.
+
+			Requirements:
+				HTTPS to avoid MitM Attacks.
+
 	Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
 		DOM Elements:
 			var element = document.getElementsByClassName('classname'); // No need the . prefix
