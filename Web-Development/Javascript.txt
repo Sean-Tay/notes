@@ -482,7 +482,9 @@ Javascript
 		Async / Await Syntax:
 			const asyncFunction = async () => {
 				// Traditional try-catch-finally syntax works with async / await
-				try { 
+				try {
+					// Note: (Conncurrent) Execution only defers to another Task upon encountering an await Statement.
+
 					// await can work on a Promise, or a synchronous Result
 					var promiseResult = await promiseObj;
 

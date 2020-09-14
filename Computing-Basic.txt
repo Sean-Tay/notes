@@ -30,6 +30,10 @@ General Computing Notes:
 		Thread:					Basic Unit for which the Operating System allocates Processor Time.
 		Process:				A running Executable, in which potentially multiple Threads execute with shared resources (i.e. Variables, Address Space) and a common execution state, supporting basic OS-level isolation from other Processes.
 
+		Concurrent Execution: 	A Single Path of Execution interleaving the handling of Multiple Interruptable Tasks within a Time Period.
+		Parallel Execution: 	Multiple Paths of Execution handling Multiple Independent Tasks at literally the same time.
+		Asynchronous Execution: Non-Blocking Execution - encompasses both Concurrent Execution and Parallel Execution.
+
 		Daemon:					A non-interactive, background Process.
 		Service:				A Process which responds to requests from other Processes over some inter-process communication mechanism.
 
