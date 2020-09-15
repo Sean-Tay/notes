@@ -479,6 +479,19 @@ Javascript
 				}
 			);
 
+			// Nested Promises:
+			Promise.all([
+				// ...
+				Promise.all([
+					// ...
+				])
+				// ...
+			]).then(
+				() => {
+					// ...
+				}
+			)
+
 		Async / Await Syntax:
 			const asyncFunction = async () => {
 				// Traditional try-catch-finally syntax works with async / await
