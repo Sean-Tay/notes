@@ -73,6 +73,8 @@ Typescript:
 					// Reference Function Return Type
 						type <function-return-type> = ReturnType<typeof <function>>; // Include one set of Angled Brackets.
 
+						type <async-function-return-type> = awaited ReturnType<typeof <function>> // Include one set of Angled Brackets.
+
 				// Classes
 					// Classes with Generics
 					// Note: Static Members cannot use Generics, as Generics only apply to the Instances of a Class.
