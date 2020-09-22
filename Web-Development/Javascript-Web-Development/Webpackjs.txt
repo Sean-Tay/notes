@@ -23,6 +23,9 @@ Webpack.js
 		Loader:					Third-Party Extension that assists in the transformation of encountered Dependencies in a Module. These are required for non JSON / Javascript Dependencies.
 
 		Chunk:					Refers to a group of Assets and Modules that are currently being handled by the Webpack Bundling Process.
+			Entry Chunk: 		Chunk derived from an Entry-Point. It contains Webpack Runtime and Module Content.
+			Normal Chunk:		Chunks which do not contain the Webpack Runtime. Can be loaded dynamically while the Application is running.
+
 		Chunk Group / Graph:	A collection of Chunks which are typically created and generated for each Entry-Point specified.
 
 		Output-Point:			A User-specified Location that dictates where should Webpack output the Bundle(s) it creates.
@@ -109,8 +112,8 @@ Webpack.js
 				// [path] - <entry-point-file-path> from the Entry-Point configuration.
 
 				// [hash] - Build Hash. If any portion of the Build changes, this will change in value.
-				// [chunkhash] - Chunk Hash. If any portion of the Chunk changes, this will change in value.
-				// [contenthash] - Hash per Extracted Content of a Chunk. If that Content changes, this will change in value.
+				// [chunkhash] - Chunk Hash. If any portion of the Chunk changes, this will change in value. Incompatible with DevServer.
+				// [contenthash] - Hash per Extracted Content of a Bundle. If that Content changes, this will change in value. Incompatible with DevServer.
 
 			module.exports = {
 				// Indicate which pre-defined bundling behaviour should Webpack use.
@@ -234,10 +237,36 @@ Webpack.js
 				},
 				
 				// Override the default optimization actions that Webpack is set to perform whenever a Webpack mode is specified.
-				optimizations: {
+				optimization: {
 					// The algorithm used to derive Module IDs.
 					// In the Output Bundle, the Module IDs are used as Keys in the Collection fed into the Main Function, whilst the processed Module Content are the Values tied to each Key.
 					moduleIds: false | 'named',
+
+					runtimeChunk: false | 'single' | 'multiple', // Determines how the Webpack Runtime is added into the generated Output.
+						// false - Each Entry-Point Chunk will have the Webpack Runtime injected.
+						// single - A single Chunk is generated, to be shared by all generated Chunks.
+						// multiple - Each Entry-Point Bundle will have the Webpack Runtime injected.
+
+					// Options Object to pass into SplitChunksPlugin, which is used for Bundle Splitting.
+					// Note: Filenames should contain a Content Hash to allow for Cache Invalidation once a Dependency changes.
+					splitChunks: {
+						chunks: 'all',
+							// all - Option to segregate Application Content and Content from node_modules into 2 separate Bundles.
+
+						minSize: <number>, // Minimum Size in Bytes for a Bundle to be generated.
+						maxInitialRequests: <number>, // Maximum Number of Parallel Requests to allow at an Entry-Point. More useful in HTTP/2 environments.
+
+						// Define Bundle Splitting Configuration for groups of Modules.
+						cacheGroups: {
+							<cacheGroup>: {
+								test: <regex>, // Determines which Modules will be added into the Group.
+								name(module, chunks, <cacheGroup>) { // Determines the name of the generated Bundle(s). Note: Chunks of the same <name> will be added to the same Bundle.
+									// ...
+									return '<name>';
+								}
+							}
+						}
+					},
 
 					// ...
 				}
@@ -246,7 +275,7 @@ Webpack.js
 				// Note: path should be given an Absolute Path to some Directory.
 				output: {
 					path: path.resolve(__dirname, '<output-directory-path>'),
-					filename: '<filename>',
+					filename: '[name].[contenthash].js',
 				},
 				
 				// Webpack Dev Server Configuration for enabling Automatic Recompilation and Reload via an In-Memory Server Process.
