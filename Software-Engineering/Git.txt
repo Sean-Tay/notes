@@ -142,11 +142,6 @@ Git:
 					p to Paste a Line below the current Line.
 					P to Paste a Line above the current Line.
 
-		git push <repo-url-alias> <commit-hash>:refs/heads/<branch> - Add the commits from the currently checked out Local Branch, up until <commit-hash>, to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
-		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
-
-		git push -d <repo-url-alias> <branch> - Remove a Branch on the Remote Repository.
-
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 			--soft 				- Keep accumulated changes from <number-of-commits> in the Local Staging List.
 			--hard				- Discard accumulated changes from <number-of-commits>.
@@ -158,6 +153,13 @@ Git:
 		git branch -f <branch> <commit-hash> - Change the HEAD of <branch> to be the <commit-hash>.
 
 		git push <repo-url-alias> <branch> - Push the changes of the checked out Local Branch to the specified Remote Branch.
+
+		git push <repo-url-alias> <commit-hash>:refs/heads/<branch> - Add the commits from the currently checked out Local Branch, up until <commit-hash>, to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
+		git push -u <repo-url-alias> <branch> - Add the currently checked out Local Branch (with changes) to the Remote Repository <repo-url-alias> as a Remote Branch <branch>.
+
+		git push -d <repo-url-alias> <branch> - Remove a Branch on the Remote Repository.
+
+		git revert <commit-hash> - Revert a Commit (with another Commit that nullifies the changes of the Target Commit).
 
 		git tag 				- Mark an important Commit with a local reference.
 			-a <tag> -m <tag-annotation> - Create an annotated local reference for the Commit.
