@@ -259,3 +259,6 @@ Web Dev:
 					
 			Revving: An approach to change the name (and hence, the URI) of the Resource, each time it is changed. This helps with correct Cache Invalidation of the Resource itself, as well as other Resources that use it (so that Stale Local Copies are not used together with Fresh Local Copies).
 			
+		Debugging Tips:
+			If the Network Request is stuck on Pending, it might mean that there is an infinite loop in the UI Layer.
+		
