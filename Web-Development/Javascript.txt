@@ -479,6 +479,35 @@ Javascript
 				}
 			);
 
+			// Promise Utility Functions:
+			// Wait until all supplied Promises have resolved successfully. If even one of them rejects, Promise.all will defer execution to the Error Handler.
+			Promise.all([
+				<promise>,
+				// ...
+			]).then(
+				resultsArr => {
+					// ...
+				}
+			);
+
+			// Wait until all supplied Promises have either resolved or rejected.
+			Promise.allSettled([
+				<promise>,
+				// ...
+			]).then(
+				resultsArr => resultsArr.map(
+					result => {
+						// Each item is either a ResolvedPromise, or a Rejected Promise.
+						// Resolved Promise: { status: 'fulfilled', value: <value> }
+						// Rejeced Promise: { status: 'rejected', reason: <error> }
+
+						// ...
+
+						return result.value;
+					}
+				)
+			);
+
 			// Nested Promises:
 			Promise.all([
 				// ...
@@ -490,7 +519,7 @@ Javascript
 				() => {
 					// ...
 				}
-			)
+			);
 
 		Async / Await Syntax:
 			const asyncFunction = async () => {
