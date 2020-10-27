@@ -251,6 +251,8 @@ Web Dev:
 
 						no-cache // Indicate to the Browser that the Requested Resource can have a Local Copy made for future reference, but with each reference, to check with the Server (with the ETag stored with the Local Copy). A smaller 304 Network Response is sent from the Server to indicate that the Requested Resource has not changed from the last time, and that the Local Copy can still be used.
 
+						must-revalidate // Indicate to the Browser that the Requested Resource can reference a prior Local Copy, but must revalidate when the Local Copy becomes Stale.
+
 						private // Indicates that Caching should only occur on Browsers.
 						max-age=<seconds> // Determines the duration in which a stored Local Copy by the Browser is considered Fresh, and can be referred to correctly. The recommended value is 1 year.
 
