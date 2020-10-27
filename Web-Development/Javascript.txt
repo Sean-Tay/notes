@@ -234,6 +234,8 @@ Javascript
 				// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
 			
 		// this refers to the current scope's owner - can be a Class or a Function
+			// The value of this in a Function is determined by how the Function was called.
+
 			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
 
 		Error Handling:
