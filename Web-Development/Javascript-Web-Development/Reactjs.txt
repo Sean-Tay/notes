@@ -70,6 +70,7 @@ React.js
 					Note: CSS style DOM attribute to be specified as a JS Object, and with the names of usual CSS style properties in camelCase as opposed to kebab-case.
 					Note: HTML DOM Event Listener attributes have their names specified in camelCase instead of lowercase.
 					Note: Child Elements produced from mapping an Iterable need to have the top-level Child Element specify a distinguishing 'key' element.
+						Iterable Indexes are not ideal keys, as they will not work correctly in letting React know what has changed during element order-sensitive operations.
 
 				React Elements can be nested, akin to HTML DOM Elements.
 					All React Elements must have only exactly one outermost React Element. The first opening tag and the final closing tag must belong to the same React element.
