@@ -845,7 +845,12 @@ Javascript
 								// response.status
 							}
 
-							// response.body
+							// Converting the Response Data to another format is also an Asynchronous Operation; a Promise is returned from the <data-conversion-method> invocation:
+							return response.<data-conversion-method>();
+						}
+					)
+					.then(
+						convertedData => {
 							// ...
 						}
 					)
