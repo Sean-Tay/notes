@@ -794,16 +794,66 @@ Javascript
 					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
 					- If <regex> is globally scoped and saved, it will return the ith occurrance, alongside any capturing groups, on the ith iteration of the .exec call on the <regex> object.
 	
-		AJAX Requests: Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
-			const httpRequest = new XMLHttpRequest(); // Create a new AJAX Request
-			
-			httpRequest.open("{GET | POST | PUT | DELETE}", "<relative-url>"); // Specify HTTP Request Type and Target
-			
-			httpRequest.onload = function() { // Add Event Listeners 
-				// ... 
-			};
-			
-			httpRequest.send(null); // Actually fire off the AJAX Request
+		AJAX Requests: Mechanism to query an Endpoint and retrieve Data.
+			XHR:
+				// Create a new AJAX XHR Request:
+				const httpRequest = new XMLHttpRequest();
+				
+				// Specify HTTP Request Type and Target:
+				httpRequest.open("{GET | POST | PUT | DELETE}", "<relative-url>"); 
+				
+				// Add Event Listeners for dealing with Operation Lifecycle:
+				httpRequest.onload = function() { 
+					/*
+						Operation Lifecycle Phase Identifier
+						this.readyState:
+							0 - Unsent
+							3 - Loading
+							4 - Done
+							...
+					/*
+
+					// HTTP Status Code:
+					// this.status
+
+					// ... 
+				};
+				
+				// Fire off the AJAX XHR Request:
+				httpRequest.send(null); 
+
+			Fetch API:
+				// Promise Interface:
+				fetch(
+					'<url>',
+					// Request Object
+					{
+						method: <HTTP-method>,
+						mode: <CORS-mode>,
+						cache: <cache-control>, // for HTTP Request Content
+						headers: {
+							<HTTP-Request-Header-Field>: <value>,
+							// ...
+						},
+						body: JSON.stringify(<data>)
+					}
+				)
+					.then(
+						response => {
+							if (!response.ok) {
+								// To handle HTTP Statuses that represent Unsuccessful Operation.
+								// response.status
+							}
+
+							// response.body
+							// ...
+						}
+					)
+					.catch(
+						error => {
+							// ...
+						}
+					)
 
 		Web Workers: For offloading CPU Intensive Tasks into a separate Background Thread.
 			Motivation: Javascript was designed for single-threaded execution, but most Computers nowadays have CPUs that have more than one Execution Core.
