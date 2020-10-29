@@ -794,24 +794,16 @@ Javascript
 					- If <regex> is not globally scoped, it will return the first occurrance, alongside any capturing groups within <regex>.
 					- If <regex> is globally scoped and saved, it will return the ith occurrance, alongside any capturing groups, on the ith iteration of the .exec call on the <regex> object.
 	
-		Resize Observer: To do something when there are Size Changes detected in one or more Observed DOM Elements.
-			const observer = new ResizeObserver(
-				// Callback that executes whenever a Resize of the Observed Targets are detected.
-				entries => {
-					// entries represent the Dimensions of each Observed Target during a Detection.
-						// entry.target
-
-						// These are similar to the result of getBoundingClientRect().
-							// entry.contentRect
-							// entry.borderBoxSize
-							// entry.contentBoxSize
-				}
-			);
-
-			observer.observe(<html-element>, ...);
-
-			observer.unobserve(<html-element>, ...);
-			observer.disconnect();
+		AJAX Requests: Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
+			const httpRequest = new XMLHttpRequest(); // Create a new AJAX Request
+			
+			httpRequest.open("{GET | POST | PUT | DELETE}", "<relative-url>"); // Specify HTTP Request Type and Target
+			
+			httpRequest.onload = function() { // Add Event Listeners 
+				// ... 
+			};
+			
+			httpRequest.send(null); // Actually fire off the AJAX Request
 
 		Web Workers: For offloading CPU Intensive Tasks into a separate Background Thread.
 			Motivation: Javascript was designed for single-threaded execution, but most Computers nowadays have CPUs that have more than one Execution Core.
@@ -863,56 +855,64 @@ Javascript
 			Requirements:
 				HTTPS to avoid MitM Attacks.
 
-	Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
-		DOM Elements:
-			var element = document.getElementsByClassName('classname'); // No need the . prefix
-			var element = document.getElementById('idName'); // No need the # prefix
-	
-		DOM Properties: Initialized from the values assigned to HTML Attributes. These can mutate during runtime, unlike HTML Attributes which only dictate the starting values of these Properties.
-			element.innerText; 	// references the text content between opening and closing HTML tags 
-			element.innerHTML; 	// references the HTML content between opening and closing HTML tags
-			element.style; 		// references the js object representing the css of the HTML element
+		Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
+			DOM Elements:
+				var element = document.getElementsByClassName('classname'); // No need the . prefix
+				var element = document.getElementById('idName'); // No need the # prefix
 		
-		DOM Events:	
-			Add Event Listener:
-				element.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
-					// <eventType>: http://www.w3schools.com/jsref/dom_obj_event.asp
-					// event: the Object containing details about the Event that triggered the listener
-						// event.stopPropagation(): use to stop parent DOM elements from also receiving the event
-					// useCapture: false to specify function should fire during bubbling, true to specify the function should fire during capturing
-					// element.eventType = functionID; // Legacy shortcut
+			DOM Properties: Initialized from the values assigned to HTML Attributes. These can mutate during runtime, unlike HTML Attributes which only dictate the starting values of these Properties.
+				element.innerText; 	// references the text content between opening and closing HTML tags 
+				element.innerHTML; 	// references the HTML content between opening and closing HTML tags
+				element.style; 		// references the js object representing the css of the HTML element
 			
-			Remove Event Listener:
-				element.removeEventListener("eventType", functionID); // Doesn't seem to be able to remove anonymous functions
-				element.eventType = null; // Legacy shortcut
-			
-			// Note: Event Listeners return Event Objects
-				eventObject.target.value
-				// eventObject Properties: https://developer.mozilla.org/en-US/docs/Web/API/Event
+			DOM Events:	
+				Add Event Listener:
+					element.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
+						// <eventType>: http://www.w3schools.com/jsref/dom_obj_event.asp
+						// event: the Object containing details about the Event that triggered the listener
+							// event.stopPropagation(): use to stop parent DOM elements from also receiving the event
+						// useCapture: false to specify function should fire during bubbling, true to specify the function should fire during capturing
+						// element.eventType = functionID; // Legacy shortcut
+				
+				Remove Event Listener:
+					element.removeEventListener("eventType", functionID); // Doesn't seem to be able to remove anonymous functions
+					element.eventType = null; // Legacy shortcut
+				
+				// Note: Event Listeners return Event Objects
+					eventObject.target.value
+					// eventObject Properties: https://developer.mozilla.org/en-US/docs/Web/API/Event
 
-		Shadow DOM: An encapsulated DOM Tree which can be attached to any part of the regular DOM Tree, whilst still maintaining the encapsulation.
-			Code within the Shadow DOM cannot affect the regular DOM Tree.
+			Shadow DOM: An encapsulated DOM Tree which can be attached to any part of the regular DOM Tree, whilst still maintaining the encapsulation.
+				Code within the Shadow DOM cannot affect the regular DOM Tree.
 
-			Shadow Host: The regular DOM Tree Node to which a Shadow DOM Tree will be attached to.
-			Shadow Boundary: The boundary by which a Shadow DOM Tree and the regular DOM Tree are separated by. It does not contain the Shadow Host.
-			Shadow Root: The root node of a Shadow DOM Tree.
+				Shadow Host: The regular DOM Tree Node to which a Shadow DOM Tree will be attached to.
+				Shadow Boundary: The boundary by which a Shadow DOM Tree and the regular DOM Tree are separated by. It does not contain the Shadow Host.
+				Shadow Root: The root node of a Shadow DOM Tree.
 
-			// Creating a Shadow DOM Tree, and attaching it onto a Shadow Host.
-			let shadowDOMTree = element.attachShadow({
-				mode: {'open' | 'close'} // Allow if outside JS can access the Shadow DOM Tree.
-			});
+				// Creating a Shadow DOM Tree, and attaching it onto a Shadow Host.
+				let shadowDOMTree = element.attachShadow({
+					mode: {'open' | 'close'} // Allow if outside JS can access the Shadow DOM Tree.
+				});
 
-		API:
-			document.cookie		// Returns a semicolon separated list of Cookies, or sets a custom Cookie. Cannot be done if the Cookie has been set to HttpOnly in the HTTP Response Header from the Server.
+			API:
+				document.cookie		// Returns a semicolon separated list of Cookies, or sets a custom Cookie. Cannot be done if the Cookie has been set to HttpOnly in the HTTP Response Header from the Server.
 
-	AJAX Requests: Mechanism to query a (RESTful?) endpoint to dynamically update webpages.
-		const httpRequest = new XMLHttpRequest(); // Create a new AJAX Request
-		
-		httpRequest.open("{GET | POST | PUT | DELETE}", "<relative-url>"); // Specify HTTP Request Type and Target
-		
-		httpRequest.onload = function() { // Add Event Listeners 
-			// ... 
-		};
-		
-		httpRequest.send(null); // Actually fire off the AJAX Request
+		Resize Observer: To do something when there are Size Changes detected in one or more Observed DOM Elements.
+			const observer = new ResizeObserver(
+				// Callback that executes whenever a Resize of the Observed Targets are detected.
+				entries => {
+					// entries represent the Dimensions of each Observed Target during a Detection.
+						// entry.target
+
+						// These are similar to the result of getBoundingClientRect().
+							// entry.contentRect
+							// entry.borderBoxSize
+							// entry.contentBoxSize
+				}
+			);
+
+			observer.observe(<html-element>, ...);
+
+			observer.unobserve(<html-element>, ...);
+			observer.disconnect();
 
