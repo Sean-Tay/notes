@@ -826,7 +826,7 @@ Javascript
 				// Promise Interface:
 				fetch(
 					'<url>',
-					// Request Object
+					// HTTP Request Object
 					{
 						method: <HTTP-method>,
 						mode: <CORS-mode>,
@@ -839,14 +839,14 @@ Javascript
 					}
 				)
 					.then(
-						response => {
-							if (!response.ok) {
+						res => {
+							if (!res.ok) {
 								// To handle HTTP Statuses that represent Unsuccessful Operation.
-								// response.status
+								// res.status
 							}
 
 							// Converting the Response Data to another format is also an Asynchronous Operation; a Promise is returned from the <data-conversion-method> invocation:
-							return response.<data-conversion-method>();
+							return res.<data-conversion-method>();
 						}
 					)
 					.then(

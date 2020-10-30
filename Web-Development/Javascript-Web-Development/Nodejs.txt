@@ -2,7 +2,7 @@ Node.js:
 	Abbreviations:
 		AMD: 					Asynchronous Module Definition.
 	
-	Description: A configurable JS Runtime-Environment, independent of the Web Browser.
+	Description: A configurable JS Runtime-Environment, independent of the Web Browser. Based on Chrome's JS Runtime-Environment.
 	
 	Resources:
 		Front-End Node Project Template Creator: https://createapp.dev/
@@ -14,8 +14,8 @@ Node.js:
 		Node Dependency:		A Node Package or Node Module that is installed for use in one or more Node Projects.
 	
 	Details:
-		Front-End Code, Back-End Code, and Assets are usually pre-compiled and transformed down to HTML, CSS and CommonJS Assets. These Assets are then served by the Node Server process.
-			Although usually, Front-End Code is the one with the more involved Build Process:
+		Front-End Code and Assets are usually pre-compiled and transformed down to HTML, CSS and CommonJS Assets. These Assets are then served by the Node Server process.
+			Front-End Code is the one with the more involved Build Process:
 				Webpack does some useful optimizations on JS Code (tree shaking, bundling, minification), resulting in faster file transfer from Server Side to Client Side. There is no need to do this for Server Side operations ; the added complexity does not produce significant benefit.
 
 				Babel is required for Client Side, since Browsers may not natively support > ES6 spec. On the other hand, NodeJS is starting to support most of the ES6 spec, so Babel is not actually required for the Server Side.
@@ -24,7 +24,7 @@ Node.js:
 				That being said, special use-cases may warrant the usage of JS Build Processes for Back-End Code as well.
 
 		Code:
-			// CommonJS or ServerJS:
+			// CommonJS or ServerJS: Module System used before the Javascript Spec incorporated it.
 				// The importable functionality of a NodeJS File is defined within this module.exports JS Object.
 				module.exports = {
 					function1 : function () { // ... }, 
@@ -152,14 +152,22 @@ Node.js:
 			// Web Server:
 				const http = require('http');
 
-				let requestListener = (request, response) => {
-					request.method // POST, GET, PUT, DELETE
-					request.url // Route
+				let requestListener = (req, res) => {
+					// HTTP Request Variables:
+						// req.method // POST, GET, PUT / PATCH, DELETE
+						// req.url // Requested Route
 					
-					response.writeHead(200, {'Content-Type': 'text/plain' });
-					response.write('Hello World!\n');
+					// HTTP Response:
+						res.writeHead(
+							<HTTP-Status-Code>,
+							// HTTP Response Headers:
+							{
+								<HTTP-Response-Header-Field>: <value> 
+							}
+						);
+						res.write('Hello World!\n');
 
-					response.end();
+					res.end();
 				};
 
 				const server = http.createServer(requestListener);
