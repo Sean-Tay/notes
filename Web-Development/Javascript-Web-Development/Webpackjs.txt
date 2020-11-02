@@ -121,6 +121,7 @@ Webpack.js
 
 				// Specify additional Plugins to expand the functionality of Webpack.
 				// Note: Don't forget the new keyword.
+				// Note: Plugin order matters.
 				plugins: [
 					new <plugin>(<config-obj>),
 					// ...
