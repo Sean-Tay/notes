@@ -231,6 +231,7 @@ CSS:
 								flex-grow: <number>;
 
 								/* Determine capability for Child to shrink to fit into space <number>-times proportionally w.r.t other Siblings along the Main Axis. */
+								/* Note: A Flex Child cannot be smaller than its content along the Main Axis (flex-items have min-width / min-height set to auto rather than 0 ; set it to 0 to override this behaviour). */
 								flex-shrink: <number>;
 
 							/* Annoying Bugs and Inconsistencies: */
