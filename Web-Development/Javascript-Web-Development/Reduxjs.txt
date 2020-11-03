@@ -21,12 +21,16 @@ Redux.js
 					Network Event 				- 'GET' type Actions.
 
 			Action Creators are Functions that return Action Objects when invoked. The results of this invoked Function can be directly passed into the Store's synchronous dispatch Function.
-				const <operation> = (args) => (
-					{
+				// Tip: Side-Effects can also be executed in Action Creators.
+
+				const <operation> = (args) => {
+					// ...
+
+					return {
 						type: "<action-identifier>",
 						...args,
 					}
-				)
+				}
 
 				const store = createStore(<reducer-function>);
 				store.dispatch(<operation>());
