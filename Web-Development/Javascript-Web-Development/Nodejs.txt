@@ -220,8 +220,8 @@ Node.js:
 
 				npm view <dependency> version							// View the Node Dependency's latest version from its Node Registry.
 
-				npm update												// Update all Node Dependencies in a Node Project to their latest verisions.
-				npm update <dependency>									// Update a Node Dependency to the latest version.
+				npm update												// Update all Node Dependencies in a Node Project to their latest verisions (before a major version change).
+				npm update <dependency>									// Update a Node Dependency to the latest version (before a major version change).
 				npm update <dependency>@<version>						// Update a Node Dependency to the specific <version>.
 				
 				npm run <command> [-- <arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
