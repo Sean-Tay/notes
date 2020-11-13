@@ -53,8 +53,8 @@ Express.js
 			[ 				
 				// If four arguments are defined, this Middleware Function is set to only handle Errors.										
 				([err, ] req, res, next) => { 						
-					req.params.<parameter>	// Accesses the <parameter> passed into the Routes (i.e. '/route/:<parameter>').
-					req.query.<key>	// Accesses the <value> assigned to the <key> passed into the Routes (i.e. '/route/?<key>=<value> & ...').
+					req.params.<parameter>	// Accesses the <parameter> passed into the Routes (i.e. '/route/:<parameter>'). Note: <parameter> is a string.
+					req.query.<key>	// Accesses the <value> assigned to the <key> passed into the Routes (i.e. '/route/?<key>=<value> & ...'). Note: <value> is a string.
 
 					// Add Event Handlers when Events occur for the Request Object.
 					req.on('event-type', () => {					
@@ -64,6 +64,8 @@ Express.js
 					// Tip: Also possible to attach Objects to pass into the next Function / Middleware via the Request Object.
 					
 					// Include 'return' to break from the Middleware.
+
+					[return] res.[status(<http-status-code>].end(); // Finalize the Response Body with no Data, whilst setting an optional <http-status-code>.
 
 					[return] res.[status(<http-status-code>].send(<data>); // Include <data> in the Response Body, whilst setting an optional <http-status-code>.
 						// Useful to return Created / Updated / Deleted Object back to the Client for synchronization purposes.
@@ -100,14 +102,16 @@ Express.js
 		);
 
 		// Additional Useful Libaries:
-			morgan 													// Produces Logging Middleware Functions.
+			morgan 				// Produces Logging Middleware Functions.
 				morgan('<predefined-format-string>' [, <options-obj>]);
 				morgan(':<predefined-tokens> ...') [, <options-obj>];
 				morgan((tokens, req, res) => {
 					// ...
 				} [, <options-obj>]);
 
-			body-parser												// Produces Body-Parsing Middleware Functions.
+			json-parser			// Enables automatic conversion of stringified JSON Content attached in the Request Object into a JS Object, and attaches the result to the Body of the Request Object, for the convenience of downstream Middleware Functions. 
+
+			body-parser			// Produces Body-Parsing Middleware Functions.
 	
 	Commands:
 		
