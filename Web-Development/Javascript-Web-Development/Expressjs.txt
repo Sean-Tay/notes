@@ -9,28 +9,8 @@ Express.js
 	
 	Concepts:
 		Routing: Utilizes the HTTP Request Methods, as well as the Path section of the supplied URL in a received HTTP Request to determine what to do.
-		
-		HTTP Request Methods:
-			Create / POST 
-				Status Code: 
-					Success - 201 Created
-					Fail - 400 Bad Request
-			Read / GET
-				Status Code: 
-					Success - 200 OK
-					Fail - 404 Not Found
-			Update / PUT
-				Status Code: 
-					Success - 200 OK
-					Fail - 404 Not Found
-			Delete / DELETE
-				Status Code: 
-					Success - 204 No Content
-					Fail - 404 Not Found
 
-			Note: PUT and POST interchangeable for Updating, but PUT is idempotent (i.e. calling PUT repeatedly will only update once), whereas POST is not (i.e. calling POST repeatedly will update repeatedly).
-
-		Middleware: Code that executes on the Server between the time it receives a Request and sends a Response.
+		Middleware: Functions that may alter the HTTP Request and Response.
 	
 	Details:	
 		const express = require(); // Import the Express Module.
@@ -112,6 +92,8 @@ Express.js
 			json-parser			// Enables automatic conversion of stringified JSON Content attached in the Request Object into a JS Object, and attaches the result to the Body of the Request Object, for the convenience of downstream Middleware Functions. 
 
 			body-parser			// Produces Body-Parsing Middleware Functions.
+
+			cors				// Enables CORS in HTTP Responses. Important when dealing with different Origins (Frontend Server and Backend Server).
 	
 	Commands:
 		

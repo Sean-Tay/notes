@@ -38,6 +38,27 @@ Web Dev:
 
 		Origin: 				Protocol + Host + Domain + Port.
 
+		HTTP Request Methods:
+			Create / POST 
+				Status Code: 
+					Success - 201 Created
+					Fail - 400 Bad Request
+			Read / GET
+				Status Code: 
+					Success - 200 OK
+					Fail - 404 Not Found
+			Update / PUT
+				Status Code: 
+					Success - 200 OK
+					Fail - 404 Not Found
+			Delete / DELETE
+				Status Code: 
+					Success - 204 No Content
+					Fail - 404 Not Found
+
+			Safe Request Type:	HTTP Request Types which do not cause Side-Effects on Server State.
+			Idempotent Request Type: HTTP Request Types which, if applied multiple times, have the same result as when it is applied only once.
+
 		Routing: 				The process of using URLs to determine the part of the Web Application exposed to the User. Traditionally handled Server-Side.
 
 		JSON:					A readable implementation-independent Data Interchange Format.
