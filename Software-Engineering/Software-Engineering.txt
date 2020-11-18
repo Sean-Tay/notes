@@ -27,6 +27,8 @@ Application Development:
 		AHA:						Avoid Hasty Abstractions. Wait until a piece of Code has been Duplicated several times before looking into Abstraction to get a better sense of what the potential use-case for that piece of Code is.
 
 	Constructs:
+		Polyglot:					A single Entity which is designed to express the same functionality across usage of multiple Programming Languages at the same time.
+
 		Shims:						Emulation of API for Legacy Environments that would not have them implemented / repair incorrect implementations of the API in Problematic Environments.
 		
 		Stub:						Dummy implementation of some part of a Program / Software / System, usually used in scenarios where the full functionality of the Program / Software / System is not strictly required.

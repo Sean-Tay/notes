@@ -1,0 +1,48 @@
+Heroku:
+	Abbreviations:
+		
+	
+	Description: 				Cloud Platform as a Solution Provider.
+	
+	Resources:
+		
+	
+	Concepts:
+		Dyno:					Lightweight Linux Container.
+
+		Procfile:				File that specifies Commands to be executed during the Application's startup procedure.
+	
+	Details:
+		Dyno:
+			Defined Types:
+				Web:			Can receive HTTP traffic from Heroku's Routing Stack. 'web' Process Type.
+				Worker:			Typically used for Background Tasks. Any other Process Type that is not 'web'.
+				One-Off:		Temporary Dynos that are suited for One-Off Short-Lived Processes. Can attach Input / Output to a Local Terminal.
+
+		Procfile:
+			Note:				The File should be placed in the Root Folder of the Project, and be named 'Procfile', without a File Extension.
+
+			Format:
+				<process-type>: <command>
+					# Special Process Types:
+						web
+						release
+	
+	Commands:					Heroku Commands require installation of the Heroku CLI.
+		export HTTP[S]_PROXY=<origin> # Specify a Proxy to use for Heroku Commands that connect to the Cloud Service.
+
+		heroku login			# Use the System's Web Browser to login to Heroku's Services. 
+		heroku login -i 		# Use the Terminal to login to Heroku's Services.
+		
+		heroku create			# Registers / Creates a new Heroku Remote Repository tied to the Login Account. If used in an existing Local Git Repository, its Remote (aliased as 'heroku') is automatically set to the Remote Repository created on Heroku.
+
+		heroku local <process-type>	# Starts the Application Locally.
+
+		git push heroku master 	# Push the Local Changes to the Heroku Remote, which also triggers Continuous Deployment.
+
+		heroku ps				# Check the number of running Dynos.
+		heroku ps:scale <process-type>=<number> # Scales the number of running Dynos of the matching <process-type> to the <number> specified.
+
+		heroku logs --tail		# Opens and Streams the Application's Terminal Output.
+
+		heroku open				# Opens the Application running on Heroku in the System's Web Browser.
