@@ -255,6 +255,14 @@ Node.js:
 
 				yarn [run] <command> [<arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 			
+			Bash Script to check for Local Deprecated Dependencies for Node Project:
+				jq -r '.dependencies,.devDependencies|keys[]' package.json | while read line; do \
+					printf "$line: "
+					[ "$(npm show "$line" | grep -ic 'DEPRECATED')" != "0" ] && \
+					printf "\e[1;31m""DEPRECATED\n""\e[0m" || \
+					printf "\e[1;32m""not deprecated.\n""\e[0m"
+				done
+
 		Nodemon.js - Wraps around Node to enable Hot Reloading of changed files in the Node Project during runtime.
 
 		Rewire.js - Adds a special Setter and Getter Method to Modules so you can modify their behaviour for better Unit Testing.
