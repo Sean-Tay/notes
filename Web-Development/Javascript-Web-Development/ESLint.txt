@@ -1,0 +1,71 @@
+ESLint:
+	Abbreviations:
+	
+	Description: Code Quality Checker Tool for Node JS Projects.
+	
+	Resources:
+	
+	Concepts:
+		
+	
+	Details:
+		Configuration: A Javascript, JSON or YAML File.
+			{
+				// Prevent ESLint from checking certain Source Files.
+				ignorePatterns: [ '<file>', ... ],
+
+				// Configure how ESLint reads the Source Files.
+				parserOptions: {
+					ecmaVersion: '<version>',
+					sourceType: 'script' | 'module' // (ECMA Modules)
+					ecmaFeatures: {
+						jsx: true // For React.
+					}
+				},
+
+				// Presets that describe in what kind of Environment the Scripts are going to execute in.
+				"env": {
+					"browser": true,
+					"node": true
+				},
+
+				// Specify legitimate Globals, so that Rules do not perceive their usage as incorrect (e.g. ES6 Set). 
+				"globals": {
+					"<var>": "off" | "readonly" | "writable",
+					// ...
+				},
+
+				// Extend the functionality of the base ESLint with npm installed Third-Party Tools.
+				"plugins": [
+					"<plugin-name>",
+					// ...
+				],
+
+				// Extend from existing Groups of Rules / Presets.
+				"extends": [
+					"<preset-name>",
+					// ...
+				],
+
+				// Override Preset Rules:
+				"rules": {
+					/*
+						General Rule Format:
+							<rule>: "<error-level>"
+							// OR
+							<rule>: [
+								"<error-level>",
+								{
+									// ...
+								}
+							]
+
+							<error-level> = "off" | "warn" | "error"
+					*/
+					// ...
+				}
+			}
+
+	Commands:
+		
+	
