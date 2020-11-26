@@ -1,7 +1,7 @@
 ESLint:
 	Abbreviations:
 	
-	Description: Code Quality Checker Tool for Node JS Projects.
+	Description: Flexible Code Quality Checker Tool for Node JS Projects.
 	
 	Resources:
 	
@@ -9,46 +9,85 @@ ESLint:
 		
 	
 	Details:
-		Configuration: A Javascript, JSON or YAML File.
+		Useful Packages:
+			eslint-plugin-react // For React specific Linting Rules.
+			@typescript-eslint/eslint-plugin // Defines ESLint Rules that are Typescript specific.
+
+			eslint-config-prettier // Allows Prettier to turn off ESLint Rules that may conflict with the defined Style Rules it uses.
+
+		Configuration: 
+			// .eslintignore
+				.vscode
+				node_modules
+
+				<directory>/**
+
+			// .eslintrc.js: A Javascript, JSON or YAML File.
 			{
+				// Prevent ESLint from looking further up the File Directory Hierarchy when searching for the ESLint Config File for each Input File.
+				// Tip: Disable to allow Cross-Project consistency.
+				root: true,
+
 				// Prevent ESLint from checking certain Source Files.
-				ignorePatterns: [ '<file>', ... ],
+				// Tip: Add this Config File to the ignorePatterns.
+				ignorePatterns: [ "<file-pattern>", ... ],
+
+				// Configure the Parser that ESLint uses. 
+				parser: "<parser-node-package-name>", // @typescript-eslint/parser
 
 				// Configure how ESLint reads the Source Files.
 				parserOptions: {
-					ecmaVersion: '<version>',
-					sourceType: 'script' | 'module' // (ECMA Modules)
+					ecmaVersion: "<version>",
+					sourceType: "script" | "module" // (ECMA Modules)
 					ecmaFeatures: {
 						jsx: true // For React.
-					}
+					},
+
+					project: "<path-to-tsconfig.json>" // For using Rules that require Type Information.
 				},
 
-				// Presets that describe in what kind of Environment the Scripts are going to execute in.
-				"env": {
+				// Presets that describes the Environment the Scripts are going to execute in. Specifies Globals that will be allowed.
+				env: {
 					"browser": true,
 					"node": true
 				},
 
 				// Specify legitimate Globals, so that Rules do not perceive their usage as incorrect (e.g. ES6 Set). 
-				"globals": {
+				globals: {
 					"<var>": "off" | "readonly" | "writable",
 					// ...
 				},
 
 				// Extend the functionality of the base ESLint with npm installed Third-Party Tools.
-				"plugins": [
-					"<plugin-name>",
+				plugins: [
 					// ...
 				],
 
 				// Extend from existing Groups of Rules / Presets.
-				"extends": [
+				// Note: The order is important in determining which Presets override others.
+				extends: [
+					/*
+						Format:
+							"<vendor>:<plugin-name>/<config-name>"
+								"eslint:<plugin-name>" // For ESLint Extensions. Omittable.
+								"plugin:<plugin-name>" // For Third-Party Extensions.
+
+						Extension Examples:
+							"plugin:react/recommended"
+							"plugin:@typescript-eslint/recommended"
+
+							// Prettier Overrides:
+							"prettier",
+							"prettier/@typescript-eslint"
+							"prettier/babel"
+							"prettier/react"
+					*/
 					"<preset-name>",
 					// ...
 				],
 
 				// Override Preset Rules:
-				"rules": {
+				rules: {
 					/*
 						General Rule Format:
 							<rule>: "<error-level>"
@@ -60,12 +99,12 @@ ESLint:
 								}
 							]
 
-							<error-level> = "off" | "warn" | "error"
+							// <error-level> = "off" | "warn" | "error"
 					*/
 					// ...
 				}
 			}
 
 	Commands:
-		
+		eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx <entry-point>
 	
