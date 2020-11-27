@@ -134,6 +134,8 @@ CSS:
 				opacity: 0			- The HTML DOM Node is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
 
 			Text Ellipsis:
+				// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
+
 				width: calc(100%) // The Element must have a fixed width, but the calc method can derive a hard px value.
 				overflox-x: hidden:
 				whitespace: nowrap;
