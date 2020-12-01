@@ -168,6 +168,9 @@ CSS:
 						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 
 					sticky:
+						Requires a Top, Bottom, Left or Right Rule specification.
+							Top Nav Bar: top: 0;
+
 						Whilst the position derived from Document Flow is in Browser Viewport: follows the 'relative' positioning.
 						Whilst the position derived from Document Flow is outside Browser Viewport: follows the 'fixed' positioning.
 						Interprets Top, Bottom, Left, and Right settings when 'fixed' positioning is active.
