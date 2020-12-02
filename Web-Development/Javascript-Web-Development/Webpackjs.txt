@@ -503,6 +503,12 @@ Webpack.js
 									:local <css-selector-1> <css-selector-2> :global <css-selector-3> /* ... */ {
 										/* ... */
 									}
+
+									/* Alternate Scope Specifier Specification */
+									/* Useful for '&' Placeholder */
+									&:global(<css-selector>) {
+										/* ... */
+									}
 								
 								In the JS Files:
 									import classes from './index.css';
