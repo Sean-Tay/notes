@@ -90,6 +90,35 @@ Typescript:
 					// Intersection of Member Attributes.
 					let <intersection-type-variable>: <type> | ... = <value>;
 
+					// Discriminatory Unions:
+					// Allows TypeScript to automatically infer individual Types from a Union Type when appropriate.
+						enum E {
+							ONE = 'one',
+							TWO = 'two'
+						}
+
+						interface I1 {
+							<common-literal-field>: E.ONE,
+
+							<I1-prop>: <type>,
+							// ...
+						}
+
+						interface I2 {
+							<common-literal-field>: E.TWO,
+
+							<I2-prop>: <type>,
+							// ...
+						}
+
+						type TDU = I1 | I2;
+
+						const example: TDU = {
+							<common-literal-field>: E.ONE,
+
+							// Typescript will automatically infer further I1 Props based on value set for the <common-literal-field>.
+						};
+
 				// Utility Types:
 					// Extract: To select for a subset of Types from a Union Type.
 						let <extract-type-variable>: Extract<<type>, <specified-type>> = ... ;
