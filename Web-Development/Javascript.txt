@@ -712,6 +712,8 @@ Javascript
 				const className = <class>;
 
 				export {className}; // Compiles down to: module.exports.className = <class>;
+				
+				export const <variable> = <value>; // Alternative Specification for the above.
 
 				// ...
 
