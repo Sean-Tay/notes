@@ -378,7 +378,8 @@ React.js
 								};
 							}, 
 							// An optional 'Dependency List' of Variables can be specified as well to limit when the submitted Function executes.
-							// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed ( === type check ) after the first Render.
+							// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed ( === type check ) after the first, and only after each subsequent Render.
+							// Note: The values in the Dependency Array only get updated per Render. If these change, the Component may NOT automatically re-Render.
 							// Tip: Passing an Empty List here would make the submitted Function behave like componentDidMount.
 							// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
 							// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
