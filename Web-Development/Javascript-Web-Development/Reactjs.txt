@@ -374,6 +374,7 @@ React.js
 
 								// Return an optional cleanup Function that is executed just before each subsequent Render.
 								return () => {
+									// Note: The references here will be w.r.t the last Render before the subsequent Render.
 									// ...
 								};
 							}, 
