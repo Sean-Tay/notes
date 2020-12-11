@@ -132,6 +132,7 @@ Typescript:
 
 						return <boolean>;
 					}
+					// Type Guard Type: (arg: <type>) => arg is <stricter-type>
 
 					function isNotType<T extends unknown>(arg: T): arg is Exclude<T, <type>> {
 						// ...
