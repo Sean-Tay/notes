@@ -133,15 +133,6 @@ CSS:
 				visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, but an (empty) space is allocated in its place visually. It cannot receive Events.
 				opacity: 0			- The HTML DOM Node is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
 
-			Text Ellipsis:
-				// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
-
-				width: calc(100%) // The Element must have a fixed width, but the calc method can derive a hard px value.
-				overflox-x: hidden:
-				whitespace: nowrap;
-				text-overflow: ellipsis;
-				padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
-
 			Arrangement:
 				position: Specify how the Element is to interpret its Positional Specifications.
 					static: 
@@ -247,8 +238,44 @@ CSS:
 			Alternative to Element Borders:
 				box-shadow: inset <x-offset> <y-offset> <blur> <color>;
 
+			Optimal Vertical Scroll Setup:
+				// Child Stretches, whilst accounting for Parent Padding.
+
+				Parent:
+					height: 100%;
+					
+					// If in a Flex Context:
+						flex-grow: 1;
+
+						height: 0;
+						min-height: 0;
+
+					display: flex;
+					flex-direction: column;
+					justify-content: stretch;
+
+				Child:
+					min-height: 0;
+					height: 100%;
+
+					display: flex;
+					flex-direction: column;
+
+					// ...
+
+					overflow-y: scroll;
+
 			Font Configuration:
 				text-size-adjust: none; // Ensures that the Browser doesn't automatically inflate Text that is too small, making font-size specifications the Single Source of Truth.
+
+			Text Ellipsis:
+				// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
+
+				width: calc(100%) // The Element must have a fixed width, but the calc method can derive a hard px value.
+				overflox-x: hidden:
+				whitespace: nowrap;
+				text-overflow: ellipsis;
+				padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
 
 		Notable Packages:
 			Node:
