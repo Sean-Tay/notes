@@ -268,10 +268,12 @@ CSS:
 			Font Configuration:
 				text-size-adjust: none; // Ensures that the Browser doesn't automatically inflate Text that is too small, making font-size specifications the Single Source of Truth.
 
-			Text Ellipsis:
+			Optimal Text Ellipsis Setup:
 				// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
+					min-width: auto;
 
-				width: calc(100%) // The Element must have a fixed width, but the calc method can derive a hard px value.
+				display: block;
+				width: calc(100%); // The Element must have a fixed width, but the calc method can derive a hard px value.
 				overflox-x: hidden:
 				whitespace: nowrap;
 				text-overflow: ellipsis;
