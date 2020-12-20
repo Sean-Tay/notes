@@ -1,0 +1,39 @@
+Prettier
+	Abbreviations:
+	
+	Description: Flexible Code Format Formatter Tool for Node JS Projects.
+	
+	Resources:
+	
+	Concepts:
+		
+	
+	Details:
+		Supports Javascript, Typescript, CSS, GraphQL, JSON and Markdown.
+
+		Configuration:
+			// .prettierignore: Plain Text File that specifies a Path / Comment on each Row.
+			# Comment
+			.vscode
+			node_modules
+
+			// .prettierrc: 
+			{
+				"<formatting-option>": <value>,
+				// ...
+			}
+
+			// Editor Integration
+				// VSCode: 
+					// Use UI to enable "Format On Save".
+					
+					// OR
+
+					// In VSCode's Settings File:
+					"[javascript]": {
+						"editor.formatOnSave": true
+					}
+
+	Commands:
+		prettier --write '**/*.{<file-format>, ...}'
+	
