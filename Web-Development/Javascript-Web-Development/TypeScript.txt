@@ -299,6 +299,8 @@ Typescript:
 					"module": "CommonJS", // Specify the Module Resolution System of the Target Runtime Environment.
 					"target": "ES5", 	// Specify which Version of the Language should the Source be compiled down to, for the Target Runtime Environment.
 
+					"downlevelIteration": true,	// Explicitly allows iterating through Iterables with for-of Loops.
+
 					"noEmit": true, 	// Do not emit any Artifacts once checking is done. Useful with the @babel/preset-typescript Package.
 					"outDir": "<output-path>", // Specify Directory that will house the compiled Artifacts.
 				}
