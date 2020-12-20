@@ -1,7 +1,7 @@
 ESLint:
 	Abbreviations:
 	
-	Description: Flexible Code Quality Checker Tool for Node JS Projects.
+	Description: Flexible Code Format Checker Tool for Node JS Projects.
 	
 	Resources:
 	
@@ -10,15 +10,25 @@ ESLint:
 	
 	Details:
 		Useful Packages:
-			eslint-plugin-react // For React specific Linting Rules.
-			@typescript-eslint/eslint-plugin // Defines ESLint Rules that are Typescript specific.
+			eslint // Linting Tool for Javascript.
+			babel-eslint // Enables ESLint to correctly parse Code that would be later transpiled by Babel. Useful for Webpack Integration with eslint-loader.
 
-			eslint-config-prettier // Allows Prettier to turn off ESLint Rules that may conflict with the defined Style Rules it uses.
+			@typescript-eslint/parser // Enables ESLint to correctly parse Typescipt.
+				@typescript-eslint/eslint-plugin // Defines ESLint Rules that are Typescript specific.
+
+			eslint-plugin-prettier // Configures ESLint to also actively check for Prettier Code-Style violations. Also will enable Prettier to run before Linting.
+			eslint-config-prettier // Turns off Style-Oriented ESLint Rules that may conflict with Prettier.
+
+			eslint-plugin-react // For React specific Linting Rules.
 
 		Configuration: 
 			// .eslintignore
 				.vscode
 				node_modules
+
+				dist
+
+				/*.* // Ignore Files in the same Folder Level as .eslintignore.
 
 				<directory>/**
 
@@ -33,7 +43,9 @@ ESLint:
 				ignorePatterns: [ "<file-pattern>", ... ],
 
 				// Configure the Parser that ESLint uses. 
-				parser: "<parser-node-package-name>", // @typescript-eslint/parser
+				parser: "<parser-node-package-name>", 
+					// babel-eslint
+					// @typescript-eslint/parser
 
 				// Configure how ESLint reads the Source Files.
 				parserOptions: {
@@ -43,13 +55,16 @@ ESLint:
 						jsx: true // For React.
 					},
 
+					// Note: If what @typescript-eslint can access is larger than what Typescript can access, all inaccessible Files w.r.t Typescript will have ESLint Errors.
 					project: "<path-to-tsconfig.json>" // For using Rules that require Type Information.
 				},
 
 				// Presets that describes the Environment the Scripts are going to execute in. Specifies Globals that will be allowed.
 				env: {
 					"browser": true,
-					"node": true
+					"node": true,
+					"es6": true,
+					"jest": true
 				},
 
 				// Specify legitimate Globals, so that Rules do not perceive their usage as incorrect (e.g. ES6 Set). 
@@ -58,8 +73,10 @@ ESLint:
 					// ...
 				},
 
-				// Extend the functionality of the base ESLint with npm installed Third-Party Tools.
+				// Specify Third-Party Extensions that contain implementation for additional Rules that ESLint can be configured to check for.
 				plugins: [
+					// @typescript-eslint,
+					// prettier // Requires eslint-plugin-prettier,
 					// ...
 				],
 
@@ -73,14 +90,15 @@ ESLint:
 								"plugin:<plugin-name>" // For Third-Party Extensions.
 
 						Extension Examples:
-							"plugin:react/recommended"
-							"plugin:@typescript-eslint/recommended"
+							"eslint:recommended",
+							"plugin:@typescript-eslint/recommended",
+							"plugin:react/recommended",
 
 							// Prettier Overrides:
 							"prettier",
-							"prettier/@typescript-eslint"
-							"prettier/babel"
-							"prettier/react"
+							"prettier/babel",
+							"prettier/@typescript-eslint",
+							"prettier/react",
 					*/
 					"<preset-name>",
 					// ...
@@ -100,11 +118,14 @@ ESLint:
 							]
 
 							// <error-level> = "off" | "warn" | "error"
+
+						Example Rules:
+							"prettier/prettier": ["warn"], // Trigger ESLint to warn when Code violates Prettier Code Style Rules. Requires the eslint-plugin-prettier Configuration.
 					*/
 					// ...
 				}
 			}
 
 	Commands:
-		eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx <entry-point>
+		eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx 'src/**/*.{<file-extension>, ...}'
 	
