@@ -267,16 +267,18 @@ Typescript:
 			// tsconfig.json
 			{
 				"extends": "<base-tsconfig-json-path>", // Specify parent tsconfig.json File to inherit Settings from.
-				"include": [			// Specify Directories and Files to compile. Dependencies in Files are automatically recursively traversed. Overrides any inherited include Settings.					
-					"./src/index.js",
-					// "./src/**/*",
+				"include": [			// Specify Directories and Files to process. 
+					"src",
+
+					// Dependencies in Files are automatically recursively traversed. Overrides any inherited include Settings.
+						// "./src/index.js",
 				],
 				"exclude": [			// Specify Directories or Files to not compile. Overrides any inherited exclude Settings.
 					"./node_modules",
 					"**/*.spec.ts"
 				],
 				"compilerOptions": {
-					"types": ['<package>', ... ], // Specify that TypeScript should only Type Check the following Library Packages (which have the corresponding @types/'<package>' Scoped Package installed). Note: This Option is independent of the 'exclude' Option specified above.
+					"types": ['<package>', ... ], // Specify which Type Definitions are 'visible' in the Global Scope, in addition to which are 'visible' in the Local Scope. Note: This Option is independent of the 'exclude' Option specified above.
 					
 					"noImplicitAny": true, // Raise Error on Expressions with an implicit 'any' Type.
 					"strict": true,		// Enables some Syntax Rules.

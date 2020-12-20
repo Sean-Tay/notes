@@ -17,6 +17,8 @@ Prettier
 			.vscode
 			node_modules
 
+			dist
+
 			// .prettierrc: 
 			{
 				"<formatting-option>": <value>,
@@ -35,5 +37,5 @@ Prettier
 					}
 
 	Commands:
-		prettier --write '**/*.{<file-format>, ...}'
+		prettier --write '**/*.{<file-extension>, ...}'
 	
