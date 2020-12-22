@@ -149,6 +149,17 @@ React-Router:
 						// 	<key> : <value>
 						// }
 
+						// Access Query Params:
+							useEffect(
+								() => {
+									const searchParams = new URLSearchParams(location.search);
+
+									const value = searchParams.get('<key>');
+
+									// ...
+								}, [location]
+							);
+
 					// history Object acts as an interface for the History API.
 						useEffect(
 							() => history.listen(
