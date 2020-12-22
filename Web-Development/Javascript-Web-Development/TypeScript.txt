@@ -36,7 +36,7 @@ Typescript:
 						}
 
 						// Can also be used to exclude undesirable Types from Type Unions:
-						type NonNullable<T> = T extends null | undefined ? never : T;
+						type NonType<T, NT> = T extends NT ? never : T;
 
 					// void: For when there should be no Type.
 
