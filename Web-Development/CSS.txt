@@ -11,7 +11,9 @@ CSS:
 		
 	
 	Concepts:
-		CSS Reset:				Removes all CSS that a Browser automatically adds - make design consistent amongst different Browsers, which may have their own implicit styling for some Elements.
+		User-Agent Stylesheet:	CSS that is automatically added by a Browser to every Page. Each Browser may have its own custom styling for HTML Elements.
+		Normalize CSS:			Attempts to choose one Style between all User-Agent Stylesheet styles for each HTML Element to make their Styling consistent across all Browsers.
+		CSS Reset:				Removes all Styling from User-Agent Stylesheets to make HTML Element Styling consistent across all Browsers.
 
 		Inline CSS: 			CSS defined with the style attribute of the HTML Element. Performance friendly.
 
