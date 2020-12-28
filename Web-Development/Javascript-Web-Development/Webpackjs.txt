@@ -304,10 +304,17 @@ Webpack.js
 
 					// Enable the requesting of resources from Webpack Dev Server to other Servers.
 					proxy: {
+						// <request-path>: (Path + Query).
+						// <full-request-URL>: Actual Origin to prepend to the <request-path>.
+
 						'<request-path>': '<full-request-URL>',
 						'<request-path>': {
 							target: '<full-request-URL>',
-							changeOrigin: true, // For URLs that involve external Domains
+							changeOrigin: true, // For Resources on different Domains / Ports
+							secure: true | false, // Depends on HTTP Protocol / BE Logic used
+							pathRewrite: {
+								'<pattern>': '<replacement>', // Replace all matching patterns in the '<request-path>' with '<replacement>'
+							}
 							// ...
 						},
 						// ...

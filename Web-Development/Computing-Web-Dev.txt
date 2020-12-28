@@ -2,6 +2,7 @@ Web Dev:
 	Abbreviations:
 		HTTP:					HyperText Transfer Protocol.
 
+		URI: 					Universal Resource Identifier.
 		URL:					Universal Resource Locator.
 
 		JSON:					Javascript Object Notation.
@@ -29,7 +30,7 @@ Web Dev:
 		Web Server:				A running Process that listens for incoming Requests for information over the Web and sends back Responses.
 		App Server:				Hosts and Exposes Business Logic and Processes.
 
-		URL:					A String that uniquely identifies a Resource / Site / Service on the Web. Consists of:
+		URL:					A String that specifies the location of a Resource / Site / Service on the Web. Consists of:
 			Protocol:			The Protocol used to specify the communication mode with the Server.
 			Host and Domain:	The Entity that the Server is running on, and the Administrative Space the Entity is in.
 			Port:				The Network Port used to interact with the Server Process that is running on the Host.
