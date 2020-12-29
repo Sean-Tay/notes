@@ -305,16 +305,30 @@ Webpack.js
 					// Enable the requesting of resources from Webpack Dev Server to other Servers.
 					proxy: {
 						// <request-path>: (Path + Query).
-						// <full-request-URL>: Actual Origin to prepend to the <request-path>.
+						// <true-origin-path>: Actual Origin to prepend to the <request-path>.
 
-						'<request-path>': '<full-request-URL>',
+						'<request-path>': '<true-origin-path>',
 						'<request-path>': {
-							target: '<full-request-URL>',
+							target: '<true-origin-path>',
 							changeOrigin: true, // For Resources on different Domains / Ports
 							secure: true | false, // Depends on HTTP Protocol / BE Logic used
+
 							pathRewrite: {
 								'<pattern>': '<replacement>', // Replace all matching patterns in the '<request-path>' with '<replacement>'
 							}
+
+							// OR
+							
+							pathRewrite (path, req) {
+								// path: <request-path>
+
+								// Tip: To see console.log output, export the following in the Shell Terminal that will host the running Webpack Dev Server Process:
+								// export DEBUG='express:*' // Enable
+								// export DEBUG=			// Disable
+
+								// path.replace('<pattern>', '')
+							}
+
 							// ...
 						},
 						// ...
