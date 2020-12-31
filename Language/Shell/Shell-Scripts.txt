@@ -33,6 +33,7 @@ Linux / Unix:
 			3. For Commands that accept <file> inputs:
 				a. stdin and stdout are also considered as 'files'.
 				b. '|' operator redirects LHS command stdout to RHS command stdin.
+				c. Don't pipe from the ls Command - use either Glob Patterns or find.
 		
 	Commands:
 		* Command arguments are always separated with spaces.
