@@ -14,7 +14,7 @@ Relational Database:
 		OLTP: 				OnLine Transaction Processing.
 	
 	Description:
-		A Database that focuses on the efficient storage and retrival of Relational Data from Disk.
+		A Database that focuses on the efficient storage and retrival of Structured Relational Data from Disk.
 	
 	Resources:
 
@@ -27,14 +27,14 @@ Relational Database:
 
 		Record: 			Collection of related values pertaining to some Attributes.
 
-		View:				Collection of Records resulting from the processing of some Query ; Result-Set.
-
 		Table: 				Collection of Records with the same defined Attributes.
 
-		Sharding: 			Splitting a Table by Rows.
-		Normalization: 		Splitting a Table by Columns.
+		View:				Collection of Records resulting from the processing of some Query ; Result-Set.
 
-		Index: 				An additional sparse Data Structure accompanying a Table that maps between data from specified Table Attribute(s) and virtual addresses of the actual Table Records on disk.
+		Index: 				An additional Data Structure accompanying a Table that speeds up Record Access during Queries.
+
+		Sharding:			Horizontal Database Partitioning / Split Table by Rows.
+		Normalization: 		Vertical Database Partitioning / Split Table by Columns.
 
 		Database: 			Collection of Tables.
 		

@@ -1,8 +1,8 @@
 Database
 	Abbreviations: 
-		DBMS:				DataBase Management System.
+		DBMS:					DataBase Management System.
 
-		CMDB: 				Configuration Management Database.
+		CMDB: 					Configuration Management Database.
 
 	Description: 
 		A Database is an Organized, Long-Term Collection of Data, generally Stored, Managed and Accessed via some System.
@@ -10,6 +10,18 @@ Database
 	Resources:
 	
 	Concepts:
+		Data Types:
+			Structured Data:	Data whose Elements are Directly Addressible (i.e. Tabular or Array-like Data).
+			Semi-Structured Data: Data whose Elements may not be Directly Addressible, but still contain other forms of Organizational Properties (i.e. Tagged Data: XML).
+			Unstructured Data:	Data which is currently observed to have no immediately helpful Pre-Defined Format (i.e. Binary Data: PDFs).
+
+		Attribute / Key / Field: Refers to a characteristic of some type of Entity.
+		Record:					A collection of Attributes pertaining to some instance of an Entity.
+		Group:					A collection of Records.
+
+		Index: 					An additional sparse Data Structure accompanying a Group that maps between a defined subset of each Record's Data, and Virtual Addresses of the Full Records on Disk.
+			The optimization is more effective when Records are large => Less Records per Disk Partition => More Disk Accesses without an Index, which are Expensive.
+
 		Database Types:
 			Relational Database
 			Document Database
@@ -17,7 +29,11 @@ Database
 			Key-Value Database
 			In-Memory Database
 			Data Warehouse
-	
+
+		Database Partitioning:
+			Horizontal Partitioning: Different Records into Separate Groups (e.g. Sharding).
+			Vertical Partitioning: Different Record Attributes into Separate Groups (e.g. Normalization or simple Record Splitting).
+
 	Details:
 		
 	
