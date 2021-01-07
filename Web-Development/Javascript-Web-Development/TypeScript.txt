@@ -336,6 +336,7 @@ Typescript:
 
 					React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
 
+					React.EffectCallback: To specify the Type for Functions sent into React Hooks.
 					React.DependencyList: To specify the Type for the Dependency Array of a Hook.
 
 					React.RefObject<<html-element-tag-type>>: To specify the type for a Ref Object. Used in scenarios where React is to 'maintain control' of the Ref Object. Keep only one set of Angled Brackets.
