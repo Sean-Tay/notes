@@ -31,6 +31,9 @@ MongoDB:
 		Shard:					A group of Server Processes or Replica Sets that each handle Database Operations for different Document subsets of a Collection to achieve Horizontal Scalability.
 	
 	Details:
+		MongoDB is known as a schemaless Database. This means that the Database does not enforce a consistent Data Structure in the Data that it stores.
+			Application Level Drivers may enforce their own Schema Definitions outside of MongoDB (i.e. Mongoose.js).
+
 		Default Port:			27017
 
 		Document:
