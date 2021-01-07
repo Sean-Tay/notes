@@ -50,6 +50,8 @@ Typescript:
 				// Tuples: For Arrays that hold different Types.
 					let <tuple-variable>: [<type>, ...] = [<value>, ...];
 
+					const <tuple-variable> =  [<value>, ...] as const;
+
 				// Functions
 					const <function> = ( arg:<arg-type>, ... ): <return-type> => {
 						// ...
@@ -333,6 +335,8 @@ Typescript:
 						// Specify 'any' for the type of <component-props> for the least restrictions.
 
 					React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
+
+					React.DependencyList: To specify the Type for the Dependency Array of a Hook.
 
 					React.RefObject<<html-element-tag-type>>: To specify the type for a Ref Object. Used in scenarios where React is to 'maintain control' of the Ref Object. Keep only one set of Angled Brackets.
 					React.MutableRefObject<<value> | null>: To specify the type for a mutable Ref Object. Used in scenarios where the User is the one 'maintaining control' of the Ref Object. Keep only one set of Angled Brackets.
