@@ -5,6 +5,7 @@ MongoDB:
 		Cross-Platform Document Database.
 	
 	Resources:
+		MongoDB Atlas: 			Cloud-Based MongoDB Service Provider.
 	
 	Concepts:
 		Non-Relational Database: Databases that store their Data in a Document-based Approach / Semi-Structured Manner. 
