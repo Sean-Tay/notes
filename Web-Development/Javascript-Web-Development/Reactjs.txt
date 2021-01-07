@@ -367,7 +367,7 @@ React.js
 						);
 
 					// Side-Effects
-						// Similar Behaviour to componentDidMount, componentDidUpdate and componentWillUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from Painting the display.
+						// Similar Behaviour to componentDidMount, componentDidUpdate and componentDidUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from Painting the display.
 						React.useEffect(
 							() => {
 								// ... 
