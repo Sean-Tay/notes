@@ -130,6 +130,8 @@ React-Router:
 					<Redirect exact from="/<switch-base-path>" to={"/<destination-route-path>" | <location-type-obj>} />
 				</Switch>
 
+			Prompt: Component that prevents automatic Routing Behaviour when Rendered. Useful for Forms.
+
 		API Interaction:
 			// API Description:
 				const someComponent = ({match, location, history}) => {
