@@ -212,6 +212,7 @@ CSS:
 								justify-content: <'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-evenly'>
 
 								/* Determine Children Behaviour / Proportion along the Cross Axis. */
+								/* Note: This will apply the Behaviour to each 'line' if there are multiple 'lines' from Wrapping. Use align-content to get previous align-items Behaviour for this case. */
 								align-items: <'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'>
 
 								/* Determine Children Wrapping Behaviour along the Main Axis. */
@@ -235,6 +236,12 @@ CSS:
 								/* Determine capability for Child to shrink to fit into space <number>-times proportionally w.r.t other Siblings along the Main Axis. */
 								/* Note: A Flex Child cannot be smaller than its content along the Main Axis (flex-items have min-width / min-height set to auto rather than 0 ; set it to 0 to override this behaviour). */
 								flex-shrink: <number>;
+
+								/* Specify the Flex Positioning of the Child along the Main Axis. */
+								justify-self: <flex-property>;
+
+								/* Specify the Flex Positioning of the Child along the Cross Axis. */
+								align-self: <flex-property>;
 
 							/* Annoying Bugs and Inconsistencies: */
 								/* Nested Flex Containers */
