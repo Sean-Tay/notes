@@ -293,7 +293,7 @@ React.js
 				
 				// ...
 
-			Functional Component:
+			Function Component:
 				// Useful as Presentational Components
 				const ExampleComponent = (props) => { // Recall that all Properties defined via JSX gets put into a singular 'props' Object by React.
 					// Extract / Consume the Props that are used.
