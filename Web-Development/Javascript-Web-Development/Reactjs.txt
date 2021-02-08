@@ -690,8 +690,8 @@ React.js
 			Features:
 				Dev Server with Hot Reload
 			
-			npx create-react-app <app-name> - Create a Boilerplate React ES6 Nodejs Project without installing the create-react-app package locally.
-			npm run build 			- Invoke Code Compilation and Minification of Assets within the 'src' folder, and transfers the generated Artifacts into a separate 'build' folder.
-			npm run eject			- Import the (Webpack) configuration files from create-react-app for more customization of the local React Project.
+			npx create-react-app <app-name> # Create a Boilerplate React ES6 Nodejs Project without installing the create-react-app package locally.
+			npm run build 			# Invoke Code Compilation and Minification of Assets within the 'src' folder, and transfers the generated Artifacts into a separate 'build' folder.
+			npm run eject			# Import the (Webpack) configuration files from create-react-app for more customization of the local React Project.
 			
 	

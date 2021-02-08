@@ -176,9 +176,9 @@ Node.js:
 	
 	Commands:
 		Node.js:
-			node "<file.js>"											// Run a .js file under Node.
-			node --prof "file.js" 										// Run a .js file under Node with profiling, storing the profiling in a .txt file.
-			node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) // Process the text file produced from profiling.
+			node "<file.js>"											# Run a .js file under Node.
+			node --prof "file.js" 										# Run a .js file under Node with profiling, storing the profiling in a .txt file.
+			node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) # Process the text file produced from profiling.
 			
 			package.json - Specifies the configuration of a Node Project.
 				{
@@ -197,63 +197,63 @@ Node.js:
 				}
 
 			npm - A package manager for a Node Project. Skip to yarn if possible.
-				npm config set @<scope>:registry <registry-url>			// Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
+				npm config set @<scope>:registry <registry-url>			# Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
 
-				npm install -g node 									// Update Node.
-				npm install -g npm stable								// Update npm.
+				npm install -g node 									# Update Node.
+				npm install -g npm stable								# Update npm.
 			
-				npm init 												// Initialize a new Node Project.
-					-y													// Initialize a new Node Project with default metadata.
+				npm init 												# Initialize a new Node Project.
+					-y													# Initialize a new Node Project with default metadata.
 				
-				npm install 											// Add all Node Dependency specified within a package.json locally to the current Node Project.
-					i													// Alias for the above.
+				npm install 											# Add all Node Dependency specified within a package.json locally to the current Node Project.
+					i													# Alias for the above.
 
-				npm install <dependency> 								// Add a Node Dependency locally to the current Node Project. Older versions of npm will not automatically add it into the Node Project's package.json.
-					--save-dev											// Add a development-level Node Dependency locally to the current Node Project, and save it to its package.json.
-					--save												// Add a Node Dependency locally to the current Node Project, and save it to package.json.
-					-g													// Install a Node Dependency globally (outside of the current Node Project).
+				npm install <dependency> 								# Add a Node Dependency locally to the current Node Project. Older versions of npm will not automatically add it into the Node Project's package.json.
+					--save-dev											# Add a development-level Node Dependency locally to the current Node Project, and save it to its package.json.
+					--save												# Add a Node Dependency locally to the current Node Project, and save it to package.json.
+					-g													# Install a Node Dependency globally (outside of the current Node Project).
 				
-				npm uninstall <dependency>								// Remove a Node Dependency from the current Node Project. Older versions of npm will not automatically remove it from package.json.
-					--save-dev											// Remove a development-level Node Dependency locally from the current Node Project, and propagate the changes to its package.json.
-					--save												// Remove a Node Dependency locally from the current Node Project, and propagate the changes to its package.json.
-					-g													// Remove a globally installed Node Dependency.
+				npm uninstall <dependency>								# Remove a Node Dependency from the current Node Project. Older versions of npm will not automatically remove it from package.json.
+					--save-dev											# Remove a development-level Node Dependency locally from the current Node Project, and propagate the changes to its package.json.
+					--save												# Remove a Node Dependency locally from the current Node Project, and propagate the changes to its package.json.
+					-g													# Remove a globally installed Node Dependency.
 				
-				npm list 												// View all installed Node Dependencies in the current Node Project.
-					--depth=0											// Without Dependencies.
-				npm list -g												// View all user-installed Node Dependencies alongside their version information.
-					--depth=0											// Without Dependencies.
+				npm list 												# View all installed Node Dependencies in the current Node Project.
+					--depth=0											# Without Dependencies.
+				npm list -g												# View all user-installed Node Dependencies alongside their version information.
+					--depth=0											# Without Dependencies.
 
-				npm view <dependency> version							// View the Node Dependency's latest version from its Node Registry.
+				npm view <dependency> version							# View the Node Dependency's latest version from its Node Registry.
 
-				npm update												// Update all Node Dependencies in a Node Project to their latest verisions (before a major version change), respecting specified semver in package.json.
-				npm update <dependency>									// Update a Node Dependency to the latest version (before a major version change), respecting specified semver in package.json.
-				npm update <dependency>@<version>						// Update a Node Dependency to the specific <version>, respecting specified semver in package.json.
+				npm update												# Update all Node Dependencies in a Node Project to their latest verisions (before a major version change), respecting specified semver in package.json.
+				npm update <dependency>									# Update a Node Dependency to the latest version (before a major version change), respecting specified semver in package.json.
+				npm update <dependency>@<version>						# Update a Node Dependency to the specific <version>, respecting specified semver in package.json.
 				
-				npm run <command> [-- <arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
+				npm run <command> [-- <arg>, ...]						# Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 				
-				npx <command> [-- <arg>, ...]							// Execute a <command> for a locally installed Node Dependency.
+				npx <command> [-- <arg>, ...]							# Execute a <command> for a locally installed Node Dependency.
 				
-				npm publish "<file-path>"								// Publish a Node Dependency rooted at <file-path> to a Node Registry.
+				npm publish "<file-path>"								# Publish a Node Dependency rooted at <file-path> to a Node Registry.
 			
 			yarn - A better version of npm. Avoid installing with npm - install separately.
-				yarn config set registry <registry-url>					// Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
+				yarn config set registry <registry-url>					# Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
 
-				yarn init												// Initialize a new Node Project.
+				yarn init												# Initialize a new Node Project.
 
-				yarn install											// Add all Node Dependencies specified within a package.json locally to the current Node Project.
+				yarn install											# Add all Node Dependencies specified within a package.json locally to the current Node Project.
 
-				yarn add <dependency>[@<{ version | tag }>]				// Add a Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
-					--dev												// Add a development-level Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
+				yarn add <dependency>[@<{ version | tag }>]				# Add a Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
+					--dev												# Add a development-level Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
 
-				yarn upgrade <dependency>[@<{ version | tag }>]			// Upgrade any Node Dependency, optionally to a specific version or tag, within the local Node Project, and propagate the changes to the  Node Project's package.json.
+				yarn upgrade <dependency>[@<{ version | tag }>]			# Upgrade any Node Dependency, optionally to a specific version or tag, within the local Node Project, and propagate the changes to the  Node Project's package.json.
 
-				yarn remove <dependency>								// Remove any Node Dependency from the local Node Project, and propagate the changes to the Node Project's package.json.
+				yarn remove <dependency>								# Remove any Node Dependency from the local Node Project, and propagate the changes to the Node Project's package.json.
 
-				yarn global add <dependency>[@<{ version | tag }>]		// Install a Node Dependency globally (outside the Node Project).
-				yarn global upgrade <dependency>[@<{ version | tag }>]	// Upgrade a globally installed Node Dependency.
-				yarn global remove <dependency>							// Remove a globally installed Dependency.
+				yarn global add <dependency>[@<{ version | tag }>]		# Install a Node Dependency globally (outside the Node Project).
+				yarn global upgrade <dependency>[@<{ version | tag }>]	# Upgrade a globally installed Node Dependency.
+				yarn global remove <dependency>							# Remove a globally installed Dependency.
 
-				yarn [run] <command> [<arg>, ...]						// Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
+				yarn [run] <command> [<arg>, ...]						# Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 			
 			Bash Script to check for Local Deprecated Dependencies for Node Project:
 				jq -r '.dependencies,.devDependencies|keys[]' package.json | while read line; do \

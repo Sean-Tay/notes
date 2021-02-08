@@ -360,6 +360,6 @@ Typescript:
 					React.FormEventHandler<<html-form-element-tag-name>>: To specify for a JS Event Handler Function for a Form Element. Keep only one set of Angled Brackets.
 
 	Commands:
-		tsc *.ts[x]				Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
-			--watch 			Auto-Compile when Typescript code changes are detected.
+		tsc *.ts[x]				# Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
+			--watch 			# Auto-Compile when Typescript code changes are detected.
 	

@@ -252,6 +252,6 @@ Jest
 				expect(<target-invocation>).toThrow(<error>)
 
 	Commands:
-		jest	// Triggers Jest Tests.
-		jest --watchAll // Triggers Jest Tests whenever there is a change in Code.
+		jest	# Triggers Jest Tests.
+		jest --watchAll # Triggers Jest Tests whenever there is a change in Code.
 	

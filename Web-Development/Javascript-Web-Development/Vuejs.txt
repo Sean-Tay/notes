@@ -130,7 +130,7 @@ Vue.js:
 				Dev Server with Hot Reload
 				Vue GUI for managing Application.
 
-			vue create "<name>" 	- Create an Application with name <name>.
+			vue create "<name>" 	# Create an Application with name <name>.
 
-			vue ui 					- Launch a GUI for Project Management.
+			vue ui 					# Launch a GUI for Project Management.
 
