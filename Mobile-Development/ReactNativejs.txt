@@ -1,0 +1,111 @@
+React Native
+	Abbreviations:
+	
+	Description: A React-inspired Framework that aids in the development of Mobile Applications.
+	
+	Resources:
+		@react-native-community/hooks	// Useful Hooks npm Package.
+			// Better Dimensions API.
+			// Orientation Detection.
+	
+	Concepts:
+		
+	
+	Details:
+		By default, React Native uses Function Components.
+
+		React - React Native Component Mapping:
+			style - StyleSheet
+				const styles = StyleSheet.create({
+					<class-name>: {
+						<camelCase-CSS-Rule>: <value>,
+						// ...
+					}
+
+					// Differences in Behaviour:
+						// Specify Dimensions in Density Independent Pixels.
+
+						// position:
+							// All Components have 'relative' Positioning by default.
+
+						// flex:
+							// flexDirection is set to 'column' by default.
+							// alignItems is set to 'stretch' by default.
+
+							// Flex Children have their associated Dimensions respected in the Main Axis.
+				})
+
+				// styles.<class-name>
+				// <Component styles={[styles.<class-name>, ...]} />
+
+			div - View
+				SafeAreaView // Display Content in a manner that accounts for Notches in some Phones.
+
+			img - Image
+				// Local Images (shipped with the App) need not have Image Dimensions passed into the Props.
+				// Network Images (loaded during runtime in the App) need.
+
+			p - Text // All Text-based Content must be wrapped with this Component. This is unlike regular React.
+
+			button - Button
+
+		React Native Unique Components and API:
+			// Touchable: HOCs that takes other React Native Components and opens an Interface for handling Touch Events.
+				TouchableWithoutFeedback
+				TouchableOpacity // Reduces the Opacity of the contained Elements for a small period when Touched.
+				TouchableHighlight // Reduces the RGB of the contained Elements for a small period when Touched.
+
+			// Platform: Module that returns Platform Information:
+				Platform.OS // Contains a value denoting the current Platform that the code will run in.
+
+			// StatusBar: Module that returns Device Specific Mobile Status Bar Information:
+				StatusBar.currentHeight // Contains a value denoting the current Height of the Status Bar in the Device running the Code.
+
+			// Dimensions: Module that returns Device Specific Screen Dimensions
+				Dimensions.get( 'screen' | 'window' ) // 'screen' returns Information for the Entire Screen, 'window' returns Information for the Visible Area of the Screen.
+					{
+						"fontScale": <value>,
+						"width": <value>,
+						"height": <value>,
+						"scale": <value> // Scale Factor of the Mobile Device (number of Pixels that is in one Unit Point of the Device Screen)
+					}
+
+		Metro Bundler: Webpack, but specifically for React Native Development.
+	
+	Commands:
+		Expo: Bootstrap for React Native Projects:
+			npm i -g expo-cli # Install Expo CLI
+
+			expo init <project-name> # Quick Start for a New Project.
+				# Managed Project: Pure JS + TS Source Code.
+					# Note: Contains Source for the entire Expo SDK by default.
+
+				# Barebones Project: Eject from Expo - potential to modify Android or iOS Specific Files.
+
+			npm start # Opens an Android / iOS Emulator with Dev Server / Automatic Reload Capabilities.
+				# Note: Android Emulator needs Android Studio to run.
+					# For Mac / Linux Platforms:
+					vi ~/.bash_rc
+					export ANDROID_SDK=<path-to-android-sdk> # /Users/myuser/Library/Android/sdk
+
+					# For Mac Platforms:
+					vi ~/.bash_rc
+					export PATH=<path-to-platform-tools>:$PATH # /Users/myuser/Library/Android/sdk/platform-tools
+
+					# Make sure this is runnable in the Terminal
+					adb
+
+				# Note: iOS Emulator needs XCode to run.
+
+				# Note: Emulators do not have the full range of capabilities that a Real Device has.
+					# Bluetooth
+					# Camera
+					# Gyroscope
+			
+			expo publish # Compile and Publish the Project to Expo's Cloud.
+				# Suitable for Dev Purposes.
+
+			Expo Client:
+				// iOS or Android Runtime that load the Project after it has been published.
+				// Note: Make sure Phone is connected to the same Network as Hosting Device.
+	
