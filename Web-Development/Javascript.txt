@@ -835,6 +835,10 @@ Javascript
 						cache: <cache-control>, // for HTTP Request Content
 						headers: {
 							<HTTP-Request-Header-Field>: <value>,
+
+							// Content-Type: 'application/json', // Indicates Format of Payload to be sent.
+							// Accept: 'application/json',	// Indicates Preferred Format for Payload to be received.
+
 							// ...
 						},
 						body: JSON.stringify(<data>)
@@ -848,11 +852,15 @@ Javascript
 							}
 
 							// Converting the Response Data to another format is also an Asynchronous Operation; a Promise is returned from the <data-conversion-method> invocation:
-							return res.<data-conversion-method>();
+							return res.<data-conversion-method>(); // res.json();
 						}
 					)
 					.then(
 						convertedData => {
+							if (convertedData && convertedData.success) {
+								// ...
+							}
+
 							// ...
 						}
 					)
