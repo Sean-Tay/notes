@@ -870,6 +870,19 @@ Javascript
 						}
 					)
 
+		Storage: To persist Data from a given Origin locally.
+			Local Storage: Read-Only Storage with no Expiration Time.
+				// localStorage.setItem('<key>', <item>);
+				// localStorage.getItem('<key>');
+				// localStorage.removeItem('<key>');
+				// localStorage.clear();
+
+			Session Storage: Read-Only Storage which only persists for as long as the current Tab / Browsing Session does. Survives Page Reloads and Page Refreshes.
+				// sessionStorage.setItem('<key>', <item>);
+				// sessionStorage.getItem('<key>');
+				// sessionStorage.removeItem('<key>');
+				// sessionStorage.clear();
+
 		Web Workers: For offloading CPU Intensive Tasks into a separate Background Thread.
 			Motivation: Javascript was designed for single-threaded execution, but most Computers nowadays have CPUs that have more than one Execution Core.
 
