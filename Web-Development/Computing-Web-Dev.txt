@@ -202,6 +202,11 @@ Web Dev:
 
 		Web Security:
 			HTTP Headers:
+				// Sending Credentials over to the Server:
+				// Note: Use HTTPS as base-64 Encoding can be reversed.
+					// Client-Request Headers:
+						Authorization: <type> <base-64 username:password string>
+
 				// HTTPS Only:
 				// Tip: Should be supplemented with automatic redirects to HTTPS connections if a Client attempts to load a URL with the regular HTTP protocol.
 					// Server Response Headers:
