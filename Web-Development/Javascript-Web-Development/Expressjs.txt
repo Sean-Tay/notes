@@ -10,7 +10,7 @@ Express.js
 	Concepts:
 		Routing: Utilizes the HTTP Request Methods, as well as the Path section of the supplied URL in a received HTTP Request to determine what to do.
 
-		Middleware: Functions that may alter the HTTP Request and Response.
+		Middleware: Route-Attachable Functions that execute on a HTTP Request / Response Cycle.
 	
 	Details:	
 		const express = require(); // Import the Express Module.
@@ -30,18 +30,21 @@ Express.js
 				// ...
 			],
 			// Specify Middleware Functions:
-			[ 				
-				// If four arguments are defined, this Middleware Function is set to only handle Errors.										
-				([err, ] req, res, next) => { 						
+			[
+				// If four arguments are defined, this Middleware Function is set to only handle Errors.
+				([err, ] req, res, next) => {
 					req.params.<parameter>	// Accesses the <parameter> passed into the Routes (i.e. '/route/:<parameter>'). Note: <parameter> is a string.
 					req.query.<key>	// Accesses the <value> assigned to the <key> passed into the Routes (i.e. '/route/?<key>=<value> & ...'). Note: <value> is a string.
 
 					// Add Event Handlers when Events occur for the Request Object.
-					req.on('event-type', () => {					
+					req.on('event-type', () => {
 						// ...
 					});
 
 					// Tip: Also possible to attach Objects to pass into the next Function / Middleware via the Request Object.
+
+					res.redirect('<route>'); // Redirect execution to another Route.
+					res.locals.'<field>' = '<value>'; // Share data between Routes scoped to the Response Object.
 					
 					// Include 'return' to break from the Middleware.
 
@@ -62,7 +65,7 @@ Express.js
 		);
 		
 		// Mount a Router to the Express Server Instance.
-		app.use(													
+		app.use(
 			"<route-path>",	 	// All Middleware attached to the Router will now be assumed to have the <route-path> specified here prepended to their corresponding Route Paths.
 			router				// The Router to mount to the Express Server Instance.
 		);
@@ -76,12 +79,34 @@ Express.js
 			process.env.PORT || <port>,
 			
 			// Callback Function that is triggered once Server is running.
-			() => {		
+			() => {
 				// ...
 			}
 		);
 
 		// Additional Useful Libaries:
+			json-parser			// Enables automatic conversion of stringified JSON Content attached in the Request Object into a JS Object, and attaches the result to the Body of the Request Object, for the convenience of downstream Middleware Functions. 
+
+			body-parser			// Produces Body-Parsing Middleware Functions.
+
+			cors				// Enables CORS in HTTP Responses. Important when dealing with different Origins (Frontend Server and Backend Server).
+
+			express-session 	// Produces Client Session Management Express-Server Level Middleware Functions.
+				const session = require('express-session');
+				app.use(
+					session({
+						secret: '<app-secret>',
+						cookie: {
+							maxAge: <milliseconds>,
+							sameSite: true,
+							secure: true
+						}
+					})
+				);
+
+				// ... 
+				// req.session.<field>
+
 			morgan 				// Produces Logging Middleware Functions.
 				morgan('<predefined-format-string>' [, <options-obj>]);
 				morgan(':<predefined-tokens> ...') [, <options-obj>];
@@ -89,12 +114,6 @@ Express.js
 					// ...
 				} [, <options-obj>]);
 
-			json-parser			// Enables automatic conversion of stringified JSON Content attached in the Request Object into a JS Object, and attaches the result to the Body of the Request Object, for the convenience of downstream Middleware Functions. 
-
-			body-parser			// Produces Body-Parsing Middleware Functions.
-
-			cors				// Enables CORS in HTTP Responses. Important when dealing with different Origins (Frontend Server and Backend Server).
-	
 	Commands:
 		
 	
