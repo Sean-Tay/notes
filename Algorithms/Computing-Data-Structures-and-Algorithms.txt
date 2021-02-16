@@ -1,11 +1,21 @@
-# Data Structures: Data organized in a specific way to support efficient Insertion, Searching / Updating, and Removal of data in Memory. Contrast with DMBS for efficient storage in Disk.
+# Data Structures: Data organized in a specific way to support efficient Insertion, Searching / Updating, and Removal of Data in Memory. Contrast with DMBS for efficient storage in Disk.
 	Linked List: 
+		- Time Complexities:
+			- Search / Update: O(n)
+			- Insertion: O(n)
+			- Deletion: O(n)
 
-	Queue:
+		- Properties: vs. Arrays:
+			Linked List can dynamically adjust their Lengths, whilst Arrays have Fixed Lengths.
+				Elements need not be of the same size.
+			
+			Array Elements can be accessed in Constant Time due to their Contiguous Nature.
 
-	Stack:
+	Queue: FIFO Data Structure.
 
-	Hash Table: Maps Keys to the Datasets they represent via a Hashing Function that efficiently determines Dataset location within the Data Structure.
+	Stack: LIFO Data Structure.
+
+	Hash Table: Maps Keys to the Values they represent via a Hashing Function that efficiently determines Value location within the Data Structure.
 		- Time Complexities:
 			- Search / Update: Amortized O(1)
 				- findMin: O(n)
@@ -32,15 +42,13 @@
 				- Separate Chaining:
 					- Store Collisions together in a separate Data Structure associated with the Key.
 					
-					- Coalesced Chaining: A combination of Linear Probing and Chaining - rather than utilizing a separate Data Structure at each Bucket, use the Buckets in the HashTable to track the collision chain to save Memory.
-				
 				- Open Addressing: 
 					- Linear Probing:
 						- Upon Collision, scan through the Table in constant Strides to search for the next available Empty Space.
 						- Caution: Beware of Deletion - use Lazy Deletion instead to prevent incorrect conclusion.
 						
 						- Primary Clustering: When many consecutive occupied slots are used.
-						- Optimization: Stride a (consistent) number of slots instead of just 1 slot per check. Make Stride Size coprime to Array Size in order to cover all slots in the Array.
+						- Optimization: Stride a (consistent) number of slots instead of just 1 slot per check. Make Stride Size coprime to Array Size (no Common Factors between Two Numbers) in order to cover all slots in the Array.
 						
 					- Quadratic Probing:
 						- Upon Collision, scan through the Table with increasingly larger steps to search for the next available Empty Space.
@@ -49,15 +57,17 @@
 						- Secondary Clustering:	Occurs when many entries in the given Input Sequence have the same starting point.
 						
 					- Double Hashing:
-						- Extension of Linear Probing. Use Primary Hash Function to determine starting point, followed by a Secondary Hash Function to determine Stride Size for each Key.					
+						- Extension of Linear Probing. Use Primary Hash Function to determine starting point, followed by a Secondary Hash Function to determine Stride Size for each Key.
 						- Caution: Secondary Hash Function cannot return a 0.
+
+				- Coalesced Chaining: A combination of Seperate Chaining and Open Addressing (Linear Probing) - rather than utilizing a separate Data Structure at each Bucket, use the Buckets in the HashTable to additionally track the location of the next Element in the Collision Chain. This is better than Separate Chaining as the Table no longer has a chance to never be completely filled.
 
 	Binary Heap: 
 		- Time Complexities:
-			- Search / Update: O(n) for general Node / O(1) for Maximum / Minimum Node
+			- Search / Update: O(n) for general Node
 			- Insertion: O(logn)
 				- Heapification: Create a Heap with a given sequence of Elements: O(n): Execute shiftDown() on all Non-Leaf Nodes, from the lowest level to the top.
-			- Deletion: O(logn)	
+			- Deletion: O(logn)
 
 		- Properties: 
 			- Max Heap: Parent is always larger than or equal to both Child Nodes ; Min Heap: Parent is always smaller than or equal to both Child Nodes.
@@ -75,11 +85,13 @@
 
 			- Insertion: 
 				1. Insert into index corresponding to heapSize. 
-				2. Execute shiftUp(inserted Node) until Heap Property is no longer violated.
+				2. Execute shiftUp on inserted Node until Heap Property is no longer violated.
 			
 			- Deletion: 
 				1. Extract Root, set Node at index corresponding to heapSize as root instead.
-				2. Execute shiftDown(new Root) until Heap Property is no longer violated.
+				2. Execute shiftDown on new Root until Heap Property is no longer violated.
+
+			- Non-Leaf Node Starting Index: parent(heapSize);
 
 		- Finds use in Priority Queues.
 
