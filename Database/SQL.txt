@@ -265,6 +265,7 @@ SQL:
 			GROUP BY <alias>.<attribute_name>, ...
 			HAVING <aggregate_conditional>
 			ORDER BY <alias>.<attribute_name>, ...
+			OFFSET <number_offset>
 			LIMIT <number_rows>
 			;
 
