@@ -265,8 +265,7 @@ SQL:
 			GROUP BY <alias>.<attribute_name>, ...
 			HAVING <aggregate_conditional>
 			ORDER BY <alias>.<attribute_name>, ...
-			OFFSET <number_offset>
-			LIMIT <number_rows>
+			LIMIT <number_offset>, <number_rows>
 			;
 
 			-- Stop Saving further Query Results to Local File at <filepath>.
@@ -279,6 +278,10 @@ SQL:
 
 		-- Confirm any pending DML Transactions.
 		COMMIT;
+
+		-- MySQL Variable Declaration
+			DECLARE <variable_name> <variable_type>;
+			SET <variable_name> = /* ... */ ;
 
 		-- Oracle PL/SQL Template.
 			DECLARE / CREATE
