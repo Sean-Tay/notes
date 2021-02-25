@@ -361,7 +361,8 @@ Webpack.js
 
 					// CSS
 						style-loader								// Creates JS Code that will inject CSS Content Strings into index.html via <style> HTML Elements during runtime. Implements Hot Module Reloading for Patching CSS.
-						css-loader									// Resolves local references to and transforms CSS Resources into JS Modules containing JS Strings with CSS Content.
+						css-loader									// Resolves local references to and transforms CSS Resources into JS Modules containing JS Strings with CSS Content. 
+							// Note: To ensure CSS Styles are loaded in the correct order, place CSS-related Import Statements *before* any Child Module Import Statements (otherwise Child Module CSS will get overriden).
 
 					// JS
 						babel-loader								// Enables JS Transpilation.
