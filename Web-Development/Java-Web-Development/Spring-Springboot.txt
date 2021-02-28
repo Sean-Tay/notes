@@ -1,0 +1,21 @@
+Spring / Springboot:
+	Abbreviations: 
+	
+	Description: 
+		Spring: A Framework that provides Comprehensive Infrastructure Support (Libraries / Modules) for Java Applications.
+		Springboot: A Bootstrap / Extension of the Spring Framework which elimnates much of the Boilerplate Configuration required for setting up Spring Applications.
+	
+	Resources:
+		Spring Initializer: https://start.spring.io/ // A Website for Generating Spring Configuration Files
+	
+	Concepts:
+		JAR Files: Java Archive. Contains Libraries, Resources and Assets.
+		WAR Files: Web Application Archive. Contains the Web Application in a specific structure that can be deployed on any Web Container / Java Application Server.
+		EAR Files: Enterprise Application ArchiveContains both JAR and WAR Files. It contains additional Application Metadata as well.
+	
+	Details:
+		Spring / Springboot may seem bloated and heavyweight, but that is because it provides a superb set of Industrial Strength Solutions suited for Heavy Enterprise Applications.
+	
+	Commands:
+		
+	

@@ -110,6 +110,9 @@ CSS:
 				/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
 				selector1 selector2 ... {}
 
+				/* To select selector1 HTML Elements with a specific attribute */
+				selector1[<attribute>=<value>] ... {}
+
 		Unit Specification:
 			x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
 			
@@ -131,7 +134,7 @@ CSS:
 
 		CSS Rules and Values:
 			Transition Effects:
-				transition: <css-prop>, ... <transition-curve> <duration>;
+				transition: <css-prop> <transition-curve> <duration>, ... ;
 
 			Hiding an Element:
 				display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.

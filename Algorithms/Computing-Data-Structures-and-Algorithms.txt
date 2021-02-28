@@ -91,7 +91,7 @@
 				1. Extract Root, set Node at index corresponding to heapSize as root instead.
 				2. Execute shiftDown on new Root until Heap Property is no longer violated.
 
-			- Non-Leaf Node Starting Index: parent(heapSize);
+			- Non-Leaf Node Starting Index: parent(heapSize)
 
 		- Finds use in Priority Queues.
 

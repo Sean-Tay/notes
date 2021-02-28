@@ -155,6 +155,9 @@ Typescript:
 				enum <enum-name> { <key>: <numeric-value>, ... };
 				let <example-variable>: <enum-name> = <enum-name>.<key>; 
 
+				// TypeScript correctly infers the Enum through the following:
+				type <enum> = <enum>[keyof <enum>];
+
 			Type Alias:			Declare custom Types that can be reused in other Types or Interfaces.
 				type <type-alias> = <type> | ... ;
 

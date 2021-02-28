@@ -1,0 +1,81 @@
+GraphQL:
+	Abbreviations:
+		GraphQL: Graph Query Language.
+
+		SDL: Schema Definition Language.
+	
+	Description: A Query Lanaguage for APIs.
+	
+	Resources:
+	
+	Concepts:
+		Declarative Data Fetching: The process in which the Client declares exactly what Data should be retrieved from a single Endpoint.
+
+		Resolver Functions: Server Functions that are used to collect the Data required by the Client.
+	
+	Details:
+		Implementations using GraphQL only expose a single Endpoint between the Client and Server that can return many different Data Structures. 
+		This contrasts with RESTful APIs, in which multiple Endpoints are created between Client and Server that returns fixed Data Structures.
+
+		Motivation:
+			Ability to finely define what the Client needs from the Server through a flexible Query Language.
+			Faster Iteration Cycles - there is just one way for Data to be exposed on the Server's end, which results in less maintainence and changes required for each Feature Release / Change.
+
+		Schemas are used to define the Contract between Client and Server (the ways in which Data can be accessed).
+		SDL:
+			// Entity Definition?
+			type <type-name> {
+				<field>: <type>
+				<required-field>: <type>!
+
+				<array-field>: [<type>]
+				<required-array-field>: [<type>!]!
+
+				<field-with-args>( <param>:<arg>, ... ): <type>
+			}
+
+			// Special Root Types
+			type Query { ... }
+			type Mutation { ... }
+			type Subscription { ... }
+
+		Language:
+			Queries: Read Operations
+				{
+					<root-field> {
+						// Query Payload
+						<field>
+
+						// Nested Entities
+						<field> {
+							// Query Payload
+							// ...
+						}
+
+						// With Arguments - Need Appropriate SDL
+						<field>( <param>:<arg>, ... ) {
+							// Query Payload
+							// ...
+						}
+					}
+				}
+
+			Mutations: Create / Update / Delete Operations
+				mutation {
+					<root-field>( <param>:<arg>, ... ) {
+						// Query Payload - For requesting additional information alongside this Request.
+						// ...
+					}
+				}
+
+			Subscriptions: Stream Updates to Client
+				subscription {
+					<root-field> {
+						// Query Payload
+						// ...
+					}
+				}
+		
+	Commands:
+		
+	
