@@ -688,10 +688,13 @@ React.js
 	Commands:
 		Create-React-App: CLI Tool for Creating Boilerplate React Apps.
 			Features:
-				Dev Server with Hot Reload
+				Dev Server with Hot Reload.
+				DotEnv Functionality.
+					For injection of DotEnv Variables into the App Bundle, prefix the Variable Names with 'REACT_APP_'.
 			
-			npx create-react-app <app-name> # Create a Boilerplate React ES6 Nodejs Project without installing the create-react-app package locally.
-			npm run build 			# Invoke Code Compilation and Minification of Assets within the 'src' folder, and transfers the generated Artifacts into a separate 'build' folder.
+			npx create-react-app <app-name> # Create a Boilerplate React Project.
+				--template=typescript # Create a Boilerplate React + Typescript Project.
+
 			npm run eject			# Import the (Webpack) configuration files from create-react-app for more customization of the local React Project.
 			
 	
