@@ -424,6 +424,7 @@ Javascript
 		Maps: Data Structure that can quickly store and retrieve Key-Element pairs.
 			// Retains Insertion Order, unlike regular JS Objects.
 			// Performs better in scenarios involving frequent Addition / Removal of Key-Element pairs, as compared to regular JS Objects.
+				// Note: Objects are better if the keys are of the string type, and it is mainly a Write-Once Read-Heavy Workload.
 
 			const myMap = new Map([
 				[ <element-key-1>, <element-1> ],
