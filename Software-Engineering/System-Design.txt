@@ -1,0 +1,35 @@
+System Design:
+	Abbreviations:
+		
+	
+	Description: 
+	
+	Resources:
+		
+	
+	Concepts:
+		
+	
+	Details:
+		Methodology:
+			1. Clarify the Domain to help with Data Modelling.
+
+			2. From the Data Modelling, create CRUD API.
+
+			3. Data Flow.
+			
+			4. Performance and Scalability.
+				Persistency Requirements
+				Read-Write I/O Frequency
+
+		Benchmarks:
+			1 - Bad.
+			2 / 3 - Depends.
+			4 - Good.
+
+		Case Studies:
+			Design Twitter
+	
+	Commands:
+		
+	
