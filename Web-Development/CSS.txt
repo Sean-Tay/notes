@@ -110,8 +110,15 @@ CSS:
 				/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
 				selector1 selector2 ... {}
 
-				/* To select selector1 HTML Elements with a specific attribute */
+				/* To select selector1 HTML Elements with a specific attribute. */
 				selector1[<attribute>=<value>] ... {}
+
+			/* Pseudo Elements and Psuedo Classes */
+				/** To select for the Last Child of selector1 HTML Element. */
+				selector1:last-child ... {}
+
+				/** To select for the Last Type of selector1 HTML Element among siblings. */
+				selector1:last-of-type ... {}
 
 		Unit Specification:
 			x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
