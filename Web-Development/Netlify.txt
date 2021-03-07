@@ -1,0 +1,58 @@
+Netlify
+	Abbreviations:
+		
+
+	Description:				Platform for Hosting and Managing Static Sites and Web Applications.
+
+	Resources: 
+		
+
+	Concepts: 
+		
+
+	Details: 
+		Features:
+			Git CI
+			Global CDN
+			HTTPS Certificates
+			
+			Serverless:
+				Form Handling
+
+				Lambda Functions
+					Background Functions (cronjobs / Long Running Operations)
+
+		Configuration:			netlify.toml
+			# Settings in the [build] Context are global and are applied to all Contexts unless otherwise overridden by more specific Contexts.
+			[build]
+				# Default Build Command.
+				command = "<command>"
+
+				# Directory that contains the Deploy Ready Built Files and Assets.
+				publish = "<build-dir>/"
+
+				# Directory that contains Serverless Functions to deploy to AWS.
+				functions = "<functions-dir>/"
+	
+	Commands:					Netlify Commands require installation of the Netlify CLI.
+		netlify init			Automatic Setup to integrate Netlify Services / Continuous Deployment for Github Repos.
+			--manual 			Manual Setup for non Github Repos.
+
+		netlify dev				Start a Local Dev Server.
+		netlify build			Build and Compile the Application Locally.
+		netlify link			Link a Local Repo or Project to an existing site on Netlify.
+			# Note: For others to collaborate on this Project, there might be a need to configure the Team Member Site Settings on the Netlify Web Interface.
+				# Select the Site > Site Settings > General > Site Members
+
+		netlify deploy			Deploy the Application to Netlify.
+			# Netlify will rebuild before deploying.
+
+		netlify functions		Manage Netlify Serverless Functions.
+			functions:create	Create a Function from a given Template.
+			functions:build		Build Functions locally.
+
+		# netlify-lambda 		Build Tool for Serverless Functions. Useful for TypeScript, etc.
+			// Note: Required Packages must be installed in the root's package.json.
+
+			netlify-lambda build <function-dir>
+	
