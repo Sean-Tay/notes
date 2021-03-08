@@ -624,8 +624,8 @@ Javascript
 
 		Classes:
 			class className [extends parentClass] {
-				<public-property>;
-				#<private-property>;
+				public <public-property>;
+				private _<private-property>;
 				static <static-property>;
 				
 				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
@@ -643,8 +643,58 @@ Javascript
 					// ...
 				}
 
+				// Accessor Properties
+				get <property>() {
+					// ...
+				}
+
 				// ...
 			}
+
+		Decorators: Functions called on JavaScript Syntax Forms (i.e. Public, Private or Static Class Mechanisms such as Class Fields, Accessors and Methods).
+			/*
+				Acts on:
+					1. Parameter Decorators, followed by Method, Accessor, or Property Decorators are applied for each Class Instance Member.
+					2. Parameter Decorators, followed by Method, Accessor, or Property Decorators are applied for each Static Member.
+					3. Parameter Decorators are applied for the Class Constructor.
+					4. Class Decorators are applied for the Class.
+
+				Capabilities:
+					1. Ability to replace the Value being decorated with another Value with the same Semantics / Type.
+					2. Ability to associate Metadata with the Value being decorated.
+			*/
+			
+			// Class Level Decorators:
+				@<class-decorator>(<arg>, ... )
+				class <class-name> {
+					// ...
+				}
+
+				function <class-decorator>(<arg>, ... ) {
+					return function decorator(target) {
+						target.<metadata-property> = <arg>;
+
+						// ...
+					}
+				}
+
+			// Class Method Level Decorators:
+				class <class-name> {
+					@<method-decorator>(<arg>, ...)
+					method() {
+						// ...
+					}
+
+					method(@<method-argument-decorator> <arg>, ... ) {
+						// ...
+					}
+				}
+
+				function <method-decorator>(<arg>, ...) {
+					return function decorator(target, key, descriptor) {
+						// ...
+					}
+				}
 
 		Symbol: Reflection Metaprogramming within Implementation - used to change the behaviour of existing Classes and Objects.
 			// Primitive Data Type.
