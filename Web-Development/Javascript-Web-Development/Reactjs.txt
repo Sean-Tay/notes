@@ -522,7 +522,12 @@ React.js
 			Utilities:
 				// React Context API:
 					// Allows for any Descendant Component to access Data / Functionality specified / maintained at an Ancestor Component.
-					// Use only if the Data / Functionality needs to be accessible at many different levels of the Component Tree.
+						// Use only if infrequently updated Data / Functionality needs to be accessible at many different levels of the Component Tree.
+
+					// Comparison to Redux:
+						// Context can replace Redux if you're just avoiding passing down Props to many intermediate Components to a Deeply Nested one.
+
+						// Redux has many other Features, such as Middleware Integration, Time-Travel Debugging and the Redux Devtool Browser Extension.
 
 					// Tip: In the spirit of Modularity, define all Context-related specification detailed below inside one File.
 
