@@ -689,6 +689,9 @@ React.js
 
 			When these HTML Input Elements have a 'value' attribute specified in the React Element specification, they switch from using their internal State to the React Component State instead:
 				<input value={this.state.value} onChange={this.onChangeHandlerFunction} />
+
+				// Note: If the React Component State is updated asynchronously after each Event (i.e. use a useEffect to change Local State based on prop changes), React will override the internal HTML Input Element State incorrectly.
+					// The issue is that the Virtual DOM is not automatically synced to changes in the HTML Input Element State. Update what the Virtual DOM knows via a manual update to the Component State once the State is to change.
 	
 	Commands:
 		Create-React-App: CLI Tool for Creating Boilerplate React Apps.
