@@ -120,13 +120,15 @@
 						- Note: If using Moris Traversal / Threaded Binary Trees, terminate when the Descendent links back to Node.
 					2. Given Node has specific Ancestor: 'Left' Ancestor ; findPredecessor / 'Right' Ancestor ; findSuccessor
 				
-				- size(Node): Utilize BFS / Level-Order Traversal to obtain size of [Sub-]Tree rooted at Node.
+				- size(Node): Utilize BFS / Level-Order Traversal to obtain size of [Sub-]Tree[s] rooted at Node.
 					- Size of Empty Tree == 0
+					- Size of Node == size(Left Sub-Tree) + size(Right Sub-Tree) + 1
 
 				- rank(Node): size(Left Sub-Tree) + 1
 
 				- height(Node): max(height(Left Sub-Tree), height(Right Sub-Tree)) + 1
 					- Height of Empty Tree == -1
+					- Height of Leaf Node == 0
 
 			- Deletion: 
 				1. If the Node is Childless, just remove.
