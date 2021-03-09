@@ -145,14 +145,14 @@
 						right_rotate(Node): Make Left Child Parent of Node, transfer Right Sub-Tree of Left Child to become Left Sub-Tree of Node.
 
 					- Upon Insertion / Deletion of a Node, traverse back up the Tree all the way to the Root.
-					- Upon encountering an unbalanced Ancestor Node, execute one of the four cases:
-						1. Balance Factor 2: LEFT Ancestor Child and LEFT Ancestor Grandchild: right_rotate(Ancestor Node)
-						2. Balance Factor -2: RIGHT Ancestor Child and RIGHT Ancestor Grandchild: left_rotate(Ancestor Node)
+					- Upon encountering an unbalanced Ancestor Node (Balance Factor == 2 or == -2 at Node), execute one of the four cases:
+						1. Balance Factor 2: LEFT Ancestor Node's Child and LEFT Ancestor Ancestor's Node Child: right_rotate(Ancestor Node)
+						2. Balance Factor -2: RIGHT Ancestor Node's Child and RIGHT Ancestor Ancestor's Node Child: left_rotate(Ancestor Node)
 						
-						3. Balance Factor 2: LEFT Ancestor Child and RIGHT Ancestor Grandchild: left_rotate(LEFT Ancestor Child), then Case 1: right_rotate(Ancestor Node)
-						4. Balance Factor -2: RIGHT Ancestor Child and LEFT Ancestor Grandchild: right_rotate(RIGHT Ancestor Child), then Case 2: left_rotate(Ancestor Node)
+						3. Balance Factor 2: LEFT Ancestor Node's Child and RIGHT Ancestor Ancestor Node's Child: left_rotate(LEFT Ancestor Node's Child), then Case 1: right_rotate(Ancestor Node)
+						4. Balance Factor -2: RIGHT Ancestor Node's Child and LEFT Ancestor Ancestor Node's Child: right_rotate(RIGHT Ancestor Node's Child), then Case 2: left_rotate(Ancestor Node)
 
-						- At the end of the operation, new Ancestor Node will have a Balance Factor of 0.
+						- At the end of the operation, the Ancestor Node will have a Balance Factor of 0.
 
 					- Pretty good Balancing Mechanism, but will result in more Rotations.
 
