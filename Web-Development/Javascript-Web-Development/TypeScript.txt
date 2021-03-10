@@ -85,6 +85,9 @@ Typescript:
 						// ...
 					}
 
+					// Class Type:
+					type TClass = new (...args: any[]) => {};
+
 				// Intersection Types: Combines multiple Types into one.
 					// Union of Member Attributes.
 					let <union-type-variable>: <type> & ... = <value>;

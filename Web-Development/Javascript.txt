@@ -651,6 +651,16 @@ Javascript
 				// ...
 			}
 
+			// Mixin Pattern: Class Extension Factories (NOT Class Instance)
+			const <function-name> = (<class-name>) => {
+				return class <extended-class-name> extends <class-name> {
+					// ES2020 Private Fields
+					_<private-property> = <value>;
+
+					// ...
+				}
+			}
+
 		Decorators: Functions called on JavaScript Syntax Forms (i.e. Public, Private or Static Class Mechanisms such as Class Fields, Accessors and Methods).
 			/*
 				Acts on:
