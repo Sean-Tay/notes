@@ -226,17 +226,49 @@ Javascript
 
 			}
 		
-		Prototype Properties
-			// Allows the addition of Properties and Methods to all instances of a Type.
-				// This is useful for adding Properties and Methods to a Type in which the Type Definition is not available.
-
-			// Also allows the extension of Parent Types to add aforementioned Properties and Methods to Child Types.
-				// Avoid doing so if the use-case makes more sense as an Interface Implementation (has-a vs is-a).
-			
 		// this refers to the current scope's owner - can be a Class or a Function
 			// The value of this in a Function is determined by how the Function was called.
 
 			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
+
+		Prototype Properties
+			// Prototype: The mechanism by which Javascript Objects inherit Features off each other.
+				// Each Object has a __proto__ Property that references a "template" Object which contains Properties and Methods the Object will inherit from.
+					// Instanced Objects have their __proto__ Property set when instantiated by a Constructor, via the Constructor's prototype Property.
+						// Tip: The __proto__ Property is for the Prototype Chain, whereas the prototype Property is for defining which Properties are inheritable.
+							// The Constructor has its own __proto__ Property, but this is different:
+								// The Constructor's __proto__ Property points to the Function prototype Property. The Function __proto__ Property references it's own Function prototype Property. 
+									// This makes sense because the Constructor is created with the Root Function.
+
+							// The Constructor's prototype.__proto__ Property continues the Prototype Chain for the Instanced Object.
+
+						// Constructor Function:
+							function <class-name>(<arg>, ...) {
+								this.<instance-property> =  <value>;
+
+								// ...
+							}
+
+						// Constructor Invocation:
+							let <new-object-instance> = new <class-name>();
+
+							// Access the Constructor Function used to create the Object Instance
+							<new-object-instance>.constructor
+
+						// Tip: One can inject additional Properties via a Constructor's prototype during Runtime, which allows for ALL Instanced Objects to immediately be able to access the Properties.
+							// If an Instanced Object tries to change the value of the Property, it will only affect itself (and other downstream Objects?). Further changes to the Property Value via the Constructor prototype will also no longer affect it.
+
+							// <class-name>.prototype.<new-property> = // ... ;
+
+			// Prototype Chain: Chain of Inheritance for Javascript Objects.
+				// Properties for Objects are discovered / accessed by walking up the Prototype Chain.
+					// Note: Chain is through the __proto__ Property of Javascript Objects / Constructors.
+						// <new-object-instance>.__proto__ === <class-name>.prototype
+						// <new-object-instance>.__proto__.__proto__ === <class-name>.prototype.__proto
+
+				// Note: Modifying an Object's Properties does NOT involve the Prototype Chain.
+
+				// Root Object: Prototype is null.
 
 		Error Handling:
 			try {
