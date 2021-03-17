@@ -169,7 +169,7 @@
 
 			- Each Element has an accompanying:
 				- 'Parent' Status: The value here is the index of a 'Parent' Element. If the 'Parent' Element is itself, it is considered the representative Element of a [Sub-]Set. At creation, an Element's Parent is itself (it is the representative Element of its own Set).
-				- 'Rank' Status: An *upperbound* metric that represents the 'height' of the [Sub-]Tree rooted at the given Element. At creation, an Element's Rank is 0.
+				- 'Rank' Status: An *upperbound* metric that represents the 'height' of the [Sub-]Tree rooted at the given Element. At creation, an Element's Rank is 0. It is used to help keep the Trees short during Union Operations.
 
 			- Utility Operations:
 				- findSet(Element): Using the 'Parent' Status of each Element, recursively visit Ancestor Elements until the representative Element of the [Sub-]Set the Element belongs to is found. To keep the future search time low:
@@ -347,8 +347,8 @@
 	
 	Sorting:
 		Comparison Based Sorting:
-			Selection Sort:
-			Insertion Sort:
+			Selection Sort:		We select for the Minimum / Maximum Element per Iteration.
+			Insertion Sort:		We select the next Element in each Iteration, and decide where to put it within an accumulating Sorted List.
 			Bubble Sort:
 			Merge Sort:
 			Quick Sort:
