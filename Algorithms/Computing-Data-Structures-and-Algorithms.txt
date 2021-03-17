@@ -348,10 +348,38 @@
 	Sorting:
 		Comparison Based Sorting:
 			Selection Sort:		We select for the Minimum / Maximum Element per Iteration.
+
 			Insertion Sort:		We select the next Element in each Iteration, and decide where to put it within an accumulating Sorted List.
+
 			Bubble Sort:
-			Merge Sort:
-			Quick Sort:
+
+			Merge Sort:			We split up the Input List, then combine the Lists, whilst sorting them.
+				Stable, Not-In-Place Sort.
+
+			Quick Sort:			
+				Non-Stable, In-Place Sort.
+
+				Key Idea: Given a Pivot Element, the Iteration is complete when Elements toward the left of the List is smaller than the Pivot, and Elements toward the right of the List is greater than the Pivot Element.
+
+				For a given List:
+					If the List Length < 1, terminate execution and return the original List.
+
+					Select any Element from the List to be the "Pivot" for this Iteration.
+						The choice of "Pivot" will affect the Performance, given different Data Patterns. Best to use the Middle Element as the Pivot.
+					
+					Hoare Partition Scheme:
+						Initialize two Indices at each end of the List.
+
+						Loop:
+							Start moving the "Left" Index, and stop if it encounters an Element greater than or equal to the Pivot.
+							Start moving the "Right" Index, and	stop if it encounters an Element smaller than or equal to the Pivot.
+
+							Swap the two Elements at the Indexes, then start the movement of the Indexes again, with the same rules in mind as before.
+
+						When the Indexes meet, it should be at the Pivot Element. The Pivot Element's Index will be the Index at where the List should be split.
+							Note: The Pivot Element may change position during the Iteration, especially if there are Repeated Pivot Elements.
+					
+					Split the List, then recursively process the Sub-Lists.
 			
 			Heap Sort:
 		
