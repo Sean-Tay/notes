@@ -225,6 +225,9 @@ CSS:
 								/* Note: This will apply the Behaviour to each 'line' if there are multiple 'lines' from Wrapping. Use align-content to get previous align-items Behaviour for this case. */
 								align-items: <'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'>
 
+								/* Shorthand for both justify-items and align-items */
+								place-items: <justify-items> <align-items>
+
 								/* Determine Children Wrapping Behaviour along the Main Axis. */
 								/* Main Axis will wrap to another 'line' if set to wrap, potentially causing Overflow along the Cross Axis if there's not enough space. */
 								flex-wrap: <'nowrap' | 'wrap' | 'wrap-reverse'>
