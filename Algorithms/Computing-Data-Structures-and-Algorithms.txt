@@ -466,9 +466,11 @@
 	Dynamic Programming: Involves Problems that have overlapping Sub-Problems.
 		1) Top-Down: Recursion / Memoize
 			- Avoids recomputing some Past States in overlapping Sub-Problems.
+			- Use Dictionaries for the Memoization?
 			
 		2) Bottom-Up: For Loops
 			- Avoids Recursion Overhead.
+			- Use Multidimensional Arrays for the Memoization?
 
 	Exhaustive Search
 
