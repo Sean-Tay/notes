@@ -1,0 +1,132 @@
+MobX
+	Abbreviations:
+		
+	
+	Description: 				Global State Manager. Alternative to Redux.
+	
+	Resources: 
+	
+	Concepts:
+		Action:					Thing that alters the Application State.
+
+		Derivation:				Thing that can derived from the Application State without further interaction. Synchronously updated Automatically and Atomically.
+			Computed Value:		Derivation that can be calculated from the Application State via a Pure Function. Updated lazily (i.e. only when it is needed).
+			Reaction: 			External Side-Effects triggered from changes in Application State.
+	
+	Details:
+		Strategy: Make it impossible to obtain an Invalid or Out-of-Sync Application State, by making sure all possible derivations from Application State are done Automatically.
+			Application State is the Single Source of Truth.
+
+		Store Entities:
+			import { 
+				makeObservable, 
+				observable, 
+				computed, 
+				action, 
+				runInAction, 
+				flow, 
+				autorun 
+			} from 'mobx';
+
+			// observable: Indicate to MobX that the Items wrapped can change over time.
+			// computed: Indicate to MobX a Computed Value.
+
+			// action: Indicate to MobX a Method that should be a Synchronous or Asynchronous Action.
+			// runInAction: Indicate to MobX a Temporary Method that should immediately be invoked as a Action.
+			// flow: Indicate to MobX a Cancellable Asynchronous Action, implemented as a Generator Function (i.e. alternative to async / await).
+
+			// autorun: Execute a Reaction at the start, then each time related Observable or Computed Items change.
+
+			// Object Based
+			const <store-name> = observable( // ... );
+
+			// Class Based
+			class <store-name> {
+				<static-property> = <initial-value>;
+				// ...
+
+				constructor() {
+					makeObservable(
+						this, {
+							<static-property>: observable,
+							// ...
+							<computed-property>: computed,
+							// ...
+							<synchronous-action-name>: action,
+							// ...
+							<flow-name>: flow,
+						}
+					)
+
+					// OR
+
+					makeAutoObservable(this);
+
+					autorun(
+						() => {
+							// ...
+						}
+					)
+				}
+
+				get <computed-property> () {
+					// this.<static-property>
+					// ...
+				}
+				
+				// ...
+
+				<synchronous-action-name>() {
+					// this.<static-property>
+					// ...
+				}
+
+				// Note: Don't specify this in makeObservable.
+				async <asynchronous-action-name>() {
+					// ...
+
+					// Note: State should be updated within the runInAction Wrapper
+					runInAction(
+						() => {
+							// this.<static-property>
+							// ...
+						}
+					)
+				}
+
+				// ...
+
+				*<flow-name>() {
+					// Tip: yield instead of await
+
+					// this.<static-property>
+					// ...
+				}
+			}
+
+			const <store-instance> = new <store-name>();
+
+			export default <store-instance>;
+
+			// We can use the Class Mixin Pattern to compose Functionality together.
+
+		External Libraries:
+			React: mobx-react or mobx-react-lite
+				import { observer } from 'mobx-react-lite';
+
+				const <react-component> = observer(
+					// Tip: The observer Wrapper essentially puts the Component Render Function inside the autorun MobX Function, to keep the Render upated with the latest Store changes.
+					// Note: If a Child Component is wrapped with the observer Wrapper, it will not necessarily re-Render even if the Observed Parent Component re-Renders.
+
+					// React Function Component Implementation
+					({ <mobxInstanceStore> }) => {
+						// ...
+					}
+				);
+
+				// ... 
+				<ReactComponent mobxInstanceStore={ // ... } />
+	
+	Commands:
+		
+	
