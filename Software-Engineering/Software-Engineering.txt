@@ -18,9 +18,9 @@ Application Development:
 			Interface Segregation:	Have a specific Interface for each Client as opposed to one big Interface.
 			Dependency Inversion:	High Level Modules should not depend on concrete Low Level Modules, both should depend on Abstractions which dictate the details.
 			
-		Dependency Injection:		Allow Dependencies of a Client be initialized and passed in by an external Server.
+		Dependency Injection:		Allow Dependencies of one Entity be initialized and passed in by another Entity.
 		
-		Inversion of Control:		Reverses the flow of control between Client Applications and Frameworks.
+		Inversion of Control:		Rather than having the Application determine when the Framework Functionality is used, the flow is reversed, and the Framework will trigger specified Application Functionality. May make use of Dependency Injection for this.
 		
 		DRY:						Don't Repeat Yourself. Avoid Code Duplication whenever possible.
 		WET:						Write Everything Twice. Avoid Over Abstraction, which can be more harmful than Code Duplication. 
