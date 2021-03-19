@@ -311,7 +311,86 @@
 
 	Fenwick Tree
 
-	Trie
+	Trie: Tree Data Structure that is used to store collections of Sequences with no repeated sub-Sequences.
+		- Time Complexities:
+			- Search: O(l), where l is the average length of the Sequences to be Searched.
+			- Insertion: O(n * l), where n is the number of Sequences to be Inserted, and l is the average length of the Sequences to be Inserted.
+			- Deletion: O(n * l), where n is the number of Sequences to be Deleted, and l is the average length of the Sequences to be Deleted.
+
+		- Properties:
+			- Each Node should store:
+				- A Map of Child Characters to Child Nodes / Array of Child Nodes in Lexicographic Order of the Characters, if all Characters are known.
+					- Default: Empty Map / Array of Nulls.
+
+				- A 'Complete Sequence' boolean that indicates if the Path to this Node is a given Sequence.
+					- Default: false.
+					- Note: The Nodes whose Complete Sequence boolean is set to true may / may not have Children.
+						- No Children: Leaf Node / Complete Sequence.
+						- Children: Complete Sequence which is a sub-Sequence of another.
+
+				- Intuitively / Visually, the Character that a Node represents is stored at its Parent Node.
+					- Traverse down first, then check Complete Sequence Boolean.
+
+			- Search:
+				- Primarily for Prefix-based Searching.
+
+				- Starting from the Root Node, for each Character in the Sequence to be Searched:
+					 - Is there a Child Node that contains the Current Character?
+					 	- If not:
+						 	- Sequence does not exist in the Trie.
+
+						- Else:
+							1. Traverse down to the corresponding Child Node.
+								- If the Character is the last in the Sequence:
+									- Check the Child Node's Complete Sequence boolean:
+										- If false, Sequence exists as a Prefix in the Trie, but it was not inserted into the Trie.
+										- If true, Sequence exists within the Trie.
+
+								- Else, move on to the next Character in the Sequence to be Searched, repeating the above.
+
+			- Insertion:
+				- Starting from the Root Node, for each Character in the Sequence to be Inserted:
+					- Is there a Child Node that contains the Current Character?
+						- If so:
+							1. Traverse down to the corresponding Child Node.
+								- If the Character is the last in the Sequence:
+									- Set the corresponding Child Node's Complete Sequence boolean to be true.
+
+								- Else, move on to the next Character in the Sequence to be Inserted, repeating the above.
+
+						- Else:
+							1. Create a new Child Node with the Current Character.
+							2. Track the Current Character - Child Node Mapping in the Current Node.
+							3. Traverse down to the new Child Node.
+								- If the Character is the last in the Sequence:
+									- Set the corresponding Child Node's Complete Sequence boolean to be true.
+
+								- Else, move on to the next Character in the Sequence to be Inserted, repeating the above.
+
+			- Deletion: Use Recursion or a Stack to track the Nodes traversed.
+				- Starting from the Root Node, for each Character in the Sequence to be Inserted:
+					- Is there a Child Node that contains the Current Character?
+						- If so:
+							1. Push the Current Node into the Stack.
+
+							2. Traverse down to the corresponding Child Node.
+								- If the Character is the last in the Sequence:
+									- If the Child Node has Children:
+										- Set the corresponding Child Node's Complete Sequence boolean to be false.
+
+									- Else:
+										- For each Node in the Stack:
+											- Note: The Stack does not contain the last Node in the Sequence.
+
+											- Remove the Character - Child Mapping from the Node.
+												- If the Node has no more Children as a result, delete the Current Node and move on to the next Node in the Stack.
+												- If the Node still has Children, stop here.
+
+								- Else, move on to the next Character in the Sequence to be Deleted, repeating the above.
+
+		- Good for Prefix-Based Searching.
+			- Valid Prefix.
+			- Autocomplete.
 
 	Bitmask
 
@@ -388,7 +467,6 @@
 				- Radix: The smallest number that can only be represented by more than one symbol.
 			Counting Sort:
 			Bucket Sort:
-
 	
 	Binary Search:
 
