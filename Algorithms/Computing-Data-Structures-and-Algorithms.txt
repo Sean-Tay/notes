@@ -465,7 +465,9 @@
 		Non-Comparison Based Sorting:
 			Radix / Base Sort:
 				- Radix: The smallest number that can only be represented by more than one symbol.
+
 			Counting Sort:
+
 			Bucket Sort:
 	
 	Binary Search:
@@ -524,8 +526,10 @@
 	Minimum / Maximum Spanning Tree: A Tree covering all Vertices in the overall Graph, and whose Cost is the minimum / maximum possible.
 		- Prim's: 		BFS, but with a Priority Queue acting on the Edge Weight as opposed to a regular Queue.
 			- Time Complexity: O(E log(V))
+
 		- Boruvka's: 	In each iteration, find Vertices / Components in the Graph, and add the cheapest Edges incident to each Vertex / Component that links to a different Vertex / Component. 
 			- Time Complexity: O(E log(V))
+
 		- Kruskal's: 	Sort the Edges (in an Edge List) in Ascending / Descending Order, and on each Edge determine if it can be added to the overall Tree without forming a Cycle (use UFDS to determine if two vertices already have the same Parent).
 			- Time Complexity: O(E log(V))
 
@@ -552,5 +556,5 @@
 
 	Exhaustive Search
 
-	Backtracking
+	Backtracking: Technique for solving Problems recursively by building the Solution incrementally one piece at a time, but also stopping the building up of Solutions that fail to meet the requirements (i.e. "Backtracking" on the Solution).
 
