@@ -13,6 +13,15 @@ System Design:
 	Details:
 		Methodology:
 			1. Clarify the Domain to help with Data Modelling.
+				Database Design:
+					a. Start with a Conceptual Data Model. This describes at a High Level the sorts of Data required, and how they relate to each other. For example, what sort of Entities are required.
+
+					b. From the Conceptual Data Model, we can then start on the Logical Data Model. This involves Abstract Details like Tables, Columns, Primary Keys, but also further metadata that may be required of each Entity.
+						Note: A good Logical Data Model does not depend on any one Database Implementation.
+						Note: Any Relational Database can be used to implement the Design - the Design is free from Specific Implementation Details.
+
+					c. Once the Logical Data Model is finished, Physical Data Models can be created from the Logical Data Model, each of which deals with some of the DBMS-specific Implementation Details.
+							Example: Which Rows of the Table are stored in which Storage Device, Which Columns should be used as part of Indexes.
 
 			2. From the Data Modelling, create CRUD API.
 
