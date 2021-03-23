@@ -9,7 +9,7 @@ MobX
 	Concepts:
 		Action:					Thing that alters the Application State.
 
-		Derivation:				Thing that can derived from the Application State without further interaction. Synchronously updated Automatically and Atomically.
+		Derivation:				Thing that can be derived from the Application State without further interaction. Synchronously updated Automatically and Atomically.
 			Computed Value:		Derivation that can be calculated from the Application State via a Pure Function. Updated lazily (i.e. only when it is needed).
 			Reaction: 			External Side-Effects triggered from changes in Application State.
 	
