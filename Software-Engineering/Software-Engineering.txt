@@ -7,20 +7,35 @@ Application Development:
 		
 		OOP:						"OO is about managing Dependencies by selectively inverting key Dependencies in the architecture to prevent the problems with Bad Code."
 			Abstraction:			To hide away low level implementation details and only expose high level functionality.
+
 			Encapsulation:			Group Fields and related Methods together.
+
 			Inheritance:			Extend parent Class functionality with child Classes that have a "is-a" relationship.
-			Polymorphism: 			The provision of a single Interface to Entities of different types.
+
+			Polymorphism: 			The provision of a single Symbol / Interface to represent Entities of different types.
+				Note: The behaviour of the more specific Entity overrides whatever behaviour it may have Inherited from the less specific Entity, even if it is referenced as a less specific Entity.
 		
 		SOLID:
 			Single Responsibility:	
+
 			Open-Close:				Components should be Open to Extension but Closed for Modification. Basically, Inherit rather than modify.
-			Liskov Substitution:	
-			Interface Segregation:	Have a specific Interface for each Client as opposed to one big Interface.
+				Tip: More about improving Code Maintenability by reducing chance of Regression / Bugs.
+
+			Liskov Substitution:	Instances of a Higher Level should be replaceable by Instances of a Lower Level, without breaking the Application.
+				Note: Not just in terms of the Contractual Interface, but also the behaviour of the two.
+				Example: Ellipse and Circle. A Circle may be modelled as a special kind of Ellipse, but it violates the Liskov Substituion Principle.
+
+			Interface Segregation:	No Module should be forced to depend on Functionality it does not use, given an Interface.
+				Tip: Prefer Simple Interfaces for Composability over Large, General ones. Classes can then more easily implement these Interfaces.
+				Tip: Prefer adjectives in Interface Names that more concretely document the functinality and purpose of the Interface (i.e. IOrderCalculator instead of IOrderManager).
+
 			Dependency Inversion:	High Level Modules should not depend on concrete Low Level Modules, both should depend on Abstractions which dictate the details.
+				Tip: Avoid coupling High Level Modules with specific types of Low Level Modules by introducing Abstractions on the Lower Level Modules.
 			
 		Dependency Injection:		Allow Dependencies of one Entity be initialized and passed in by another Entity.
 		
-		Inversion of Control:		Rather than having the Application determine when the Framework Functionality is used, the flow is reversed, and the Framework will trigger specified Application Functionality. May make use of Dependency Injection for this.
+		Inversion of Control:		Rather than having the Application determine when the Framework Functionality is used, the flow is reversed, and the Framework will trigger specified Application Functionality. It helps with Dependency Injection.
+			Analogy: Hollywood Principle - Don't Call Us, We'll Call You.
 		
 		DRY:						Don't Repeat Yourself. Avoid Code Duplication whenever possible.
 		WET:						Write Everything Twice. Avoid Over Abstraction, which can be more harmful than Code Duplication. 
