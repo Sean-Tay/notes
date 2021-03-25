@@ -8,7 +8,8 @@ Application Development:
 		OOP:						"OO is about managing Dependencies by selectively inverting key Dependencies in the architecture to prevent the problems with Bad Code."
 			Abstraction:			To hide away low level implementation details and only expose high level functionality.
 
-			Encapsulation:			Group Fields and related Methods together.
+			Encapsulation:			The act of grouping all the Elements of a Concern within a Structure.
+				Tip: Functions, Classes, Objects and Modules can be "Structures".
 
 			Inheritance:			Extend parent Class functionality with child Classes that have a "is-a" relationship.
 
