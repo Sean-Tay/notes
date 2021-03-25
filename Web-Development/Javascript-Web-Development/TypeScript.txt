@@ -64,7 +64,7 @@ Typescript:
 					};
 
 					// Function with Generics
-					const <function> = <<generic-type> extends <base-type>, ... > ( arg:<generic-type>, ... ): <generic-type> => {
+					const <function> = <<generic-type> extends <base-type> = <default-type>, ... > ( arg:<generic-type>, ... ): <generic-type> => {
 						// ...
 					};
 
@@ -89,12 +89,14 @@ Typescript:
 					type TClass = new (...args: any[]) => {};
 
 				// Intersection Types: Combines multiple Types into one.
-					// Union of Member Attributes.
-					let <union-type-variable>: <type> & ... = <value>;
+					// More specific Type or sub Type.
+					// Note: Intersected Interfaces === Union of Member Attributes
+					let <intersection-type-variable>: <type> & ... = <value>;
 
 				// Union Types: Designate one of the following Types.
-					// Intersection of Member Attributes.
-					let <intersection-type-variable>: <type> | ... = <value>;
+					// Less specific Type or super Type.
+					// Note: Unioned Interfaces === Intersection of Member Attributes
+					let <union-type-variable>: <type> | ... = <value>;
 
 					// Discriminatory Unions:
 					// Allows TypeScript to automatically infer individual Types from a Union Type when appropriate.
@@ -124,6 +126,9 @@ Typescript:
 
 							// Typescript will automatically infer further I1 Props based on value set for the <common-literal-field>.
 						};
+
+				// Generic Types:
+					type <type-name><T extends <base-type> = <default-type>, ... > = ... ;
 
 				// Utility Types:
 					// Extract: To select for a subset of Types from a Union Type.
@@ -195,11 +200,12 @@ Typescript:
 					};
 
 				// Generic Interface
-					interface <generic-interface-name><<generic-type>> {
+					interface <generic-interface-name><<generic-type> extends <base-type> = <default-type>, ... > {
 						// ...
 					}
 
 				// Indexable Interface
+				// Tip: Indexable Signatures should reflect any possible Indexable Results.
 					interface <indexable-interface-name> {
 						[key: string]: <type>;
 						//OR
@@ -210,7 +216,7 @@ Typescript:
 
 				// Mapped Indexable Types
 				// Note: For declaring possible Interface Keys.
-				// Tip: Use the Record Utility Type here.
+				// Tip: Use the Record Utility Type instead.
 					type <type-name> = 'key-a' | 'key-b' | // ... | 'key-n' ;
 					type <indexable-type-name> = {
 						[key in <type-name>]: <type>;
@@ -220,6 +226,7 @@ Typescript:
 
 				// Mapped Indexable Types over Enums
 				// Note: For declaring possible Interface Keys via Enums.
+				// Tip: Use the Record Utility Type instead.
 					type <indexable-type-name> = {
 						[key in <enum>]: <type>;
 
