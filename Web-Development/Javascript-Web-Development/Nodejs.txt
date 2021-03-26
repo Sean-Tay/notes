@@ -188,7 +188,7 @@ Node.js:
 						"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed.
 					}
 					"dependencies": { // ... // }						// Specifies the Node Dependencies that the Node Project depends on to run correctly.
-					"devDependencies": { // ... // }					// Specifies the Node Dependencies that the Node Project uses during development.
+					"devDependencies": { // ... // }					// Specifies the Node Dependencies that the Node Project uses during development. This is more important for Node Projects that get deployed "as-is" without things like Project Bundlers. Specifying them here would exclude these Packages from being deployed together with the Node Project.
 
 					"engines : {
 						"npm": "<version>"								// Specifes version of NPM to use when installing the Node Project's Dependencies.
