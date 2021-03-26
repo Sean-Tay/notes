@@ -22,6 +22,7 @@ Typescript:
 
 		Features:
 			Static Typing: 		Allows for optional explicit declaration of Variable Types. Compiler will ensure Variables are not assigned Values of the wrong Type.
+				// Note: The below notes mainly use Type Annotation to set the Typings of the variables.
 				// Compare this with Dynamic Typing, which can only perform Type-Checks during runtime.
 
 				const <variable>: <variable-type> = <value>;
@@ -33,6 +34,10 @@ Typescript:
 
 					// object: Represents all non-primitive Types.
 					// Object: Describes functionality common to all Javascript Objects.
+					
+					// number: Represents a Numerical Value.
+					// bigint: Represents a Large Integer Value.
+					let <bigint-variable> = <number>n;
 
 					// never: For when the value should never occur.
 						let <never-type-variable>: never;
@@ -165,6 +170,8 @@ Typescript:
 					<value> as <type>
 					// OR
 					<<type>><value> // Include one set of Angled Brackets.
+
+					// Note: If using for Objects, Type Assertions do NOT check for extra Object Properties, unlike the usual Type Annotations.
 
 			Enums: To provide more friendly names to sets of Numeric Values.
 				enum <enum-name> { <key>: <numeric-value>, ... };
