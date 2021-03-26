@@ -8,7 +8,14 @@ Typescript:
 		
 	
 	Concepts:
-		
+		Type Variance: Describes the Degree of Interchangeability between two different Types of diferent Specificity.
+			Invariant: 		No Interchangeability between both Types.
+			Covariant: 		Less Specific (Super) -> More Specific (Sub).
+			Contravariant: 	More Specific (Sub) -> Less Specific (Super).
+			Bivariant: 		Full Interchangeability between both Types.
+
+		Nominal Type Checking: Checking based on the Names of the Types.
+		Structural Type Checking: Checking based on the Structures of the Types.
 	
 	Details:
 		Note: The use of Types below may reference either Type Aliases or Interfaces.
