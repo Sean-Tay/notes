@@ -297,6 +297,9 @@ Javascript
 			}
 	
 	> ES6:
+		String:
+			let repeatedString = <str>.repeat(<numTimes>); // repeatedString === <str><str> ... <str>
+
 		Switch Case:
 			switch (variable) {
 				case 'value1': {
