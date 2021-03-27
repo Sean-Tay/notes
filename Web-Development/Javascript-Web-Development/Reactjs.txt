@@ -450,9 +450,11 @@ React.js
 					// Tips:
 						1. Define an external Pure Function to Deeply Clone the Initial State for a Component, so that the Shape of the Component's State is easy to see in one place.
 							Single Source of Truth: In places where the State needs to be reset, this approach would prevent unwanted Code Duplication.
+
+						2. Leverage on Custom Hooks to improve Readability and Extensibility.
 						
-						2. Prefer useCallback for situations where setting Component State is involved, and external Pure Functions where it is not.
-							For controlled execution of Callbacks after asynchronous setStates, utilize useEffect and special State flags, of which the Callbacks will trigger only when the State flag is true, and sets it back to false after execution is finished.
+						3. Prefer useCallback for situations where setting Component State is involved, and external Pure Functions where it is not.
+							For controlled execution of Callbacks after asynchronous setStates, utilize useEffect and special State Sentinel Values, of which the Callbacks will trigger only when those Sentinel Values change.
 
 					return (
 						<>
