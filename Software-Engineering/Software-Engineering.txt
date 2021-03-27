@@ -16,8 +16,10 @@ Application Development:
 			Polymorphism: 			The provision of a single Symbol / Interface to represent Entities of different types.
 				Note: The behaviour of the more specific Entity overrides whatever behaviour it may have Inherited from the less specific Entity, even if it is referenced as a less specific Entity.
 		
-		SOLID:
-			Single Responsibility:	
+		SOLID:						Set of Design Principles to make Software more Flexible, Understandable and Maintainable.
+			Single Responsibility:	Components should only handle one part of the Software's Specification, and it should only have one reason to change.
+				Tip: Bad for Maintenability if two things are Coupled, which could change differently / at different times.
+				Example: Module for Compiling a Report, and Module for Printing the Report.
 
 			Open-Close:				Components should be Open to Extension but Closed for Modification. Basically, Inherit rather than modify.
 				Tip: More about improving Code Maintenability by reducing chance of Regression / Bugs.
@@ -28,7 +30,7 @@ Application Development:
 
 			Interface Segregation:	No Module should be forced to depend on Functionality it does not use, given an Interface.
 				Tip: Prefer Simple Interfaces for Composability over Large, General ones. Classes can then more easily implement these Interfaces.
-				Tip: Prefer adjectives in Interface Names that more concretely document the functinality and purpose of the Interface (i.e. IOrderCalculator instead of IOrderManager).
+				Tip: Prefer adjectives in Interface Names that more concretely document the functionality and purpose of the Interface (i.e. IOrderCalculator instead of IOrderManager).
 
 			Dependency Inversion:	High Level Modules should not depend on concrete Low Level Modules, both should depend on Abstractions which dictate the details.
 				Tip: Avoid coupling High Level Modules with specific types of Low Level Modules by introducing Abstractions on the Lower Level Modules.
