@@ -397,7 +397,9 @@
 # Algorithms
 	Analysis
 		- Bound Notation:
-			- Big O: Defines a set of Functions whose Growth Rates at most differ by a constant when considering sufficiently large inputs. Represents the Upper Bound of a given Growth Rate.
+			- Big Omega: Represents the Lower Bound of a given Growth Rate. The Lower Bound may be lesser than the actual Growth Rate (Better than Expected).
+			- Big Theta: Represents both the Upper and Lower Bound (Tight Binding) of a given Growth Rate. Usually mixed with Big O.
+			- Big O: Represents the Upper Bound of a given Growth Rate. The Upper Bound may be greater than the actual Growth Rate (Worse than Expected).
 	
 		Complexity Hierarchy: O(1) < O(log(logn)) < O(logn) < O((logn)^k) < O(n) < O(nlog*n) < O(nlogn) == O(log(n!)) < O(n^k) < O(n^(log(n))) < O(k^n) < O(n!) < O(n^n)
 	
