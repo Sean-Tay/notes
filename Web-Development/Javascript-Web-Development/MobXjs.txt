@@ -76,13 +76,13 @@ MobX
 				
 				// ...
 
-				<synchronous-action-name>() {
+				public <synchronous-action-name>() {
 					// this.<static-property>
 					// ...
 				}
 
 				// Note: Don't specify this in makeObservable.
-				async <asynchronous-action-name>() {
+				public async <asynchronous-action-name>() {
 					// ...
 
 					// Note: State should be updated within the runInAction Wrapper
@@ -96,7 +96,7 @@ MobX
 
 				// ...
 
-				*<flow-name>() {
+				public *<flow-name>() {
 					// Tip: yield instead of await
 
 					// this.<static-property>
