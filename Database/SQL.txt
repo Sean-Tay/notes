@@ -184,6 +184,9 @@ SQL:
 			DROP DATABASE <database_name>; 
 
 		-- Table Modification
+			-- Drop any existing Table first before creating a new one.
+			DROP TABLE if exists <table_name>;
+
 			CREATE TABLE <table_name>(
 				<attribute_name> <attribute_datatype> <attribute_constraint>,
 				...
