@@ -28,7 +28,7 @@ MobX
 				autorun 
 			} from 'mobx';
 
-			// observable: Indicate to MobX that the Items wrapped can change over time.
+			// observable: Indicate to MobX that the Items wrapped should be tracked as they can change over time.
 			// computed: Indicate to MobX a Computed Value.
 
 			// action: Indicate to MobX a Method that should be a Synchronous or Asynchronous Action.
@@ -41,14 +41,14 @@ MobX
 			const <store-name> = observable( // ... );
 
 			// Class Based
-			class <store-name> {
-				<static-property> = <initial-value>;
+			class <store-name> extends <base-store-name> {
+				public <property> = <initial-value>;
 				// ...
 
 				constructor() {
 					makeObservable(
 						this, {
-							<static-property>: observable,
+							<property>: observable,
 							// ...
 							<computed-property>: computed,
 							// ...
@@ -70,14 +70,14 @@ MobX
 				}
 
 				get <computed-property> () {
-					// this.<static-property>
+					// this.<property>
 					// ...
 				}
 				
 				// ...
 
 				public <synchronous-action-name>() {
-					// this.<static-property>
+					// this.<property>
 					// ...
 				}
 
@@ -88,7 +88,7 @@ MobX
 					// Note: State should be updated within the runInAction Wrapper
 					runInAction(
 						() => {
-							// this.<static-property>
+							// this.<property>
 							// ...
 						}
 					)
@@ -99,9 +99,26 @@ MobX
 				public *<flow-name>() {
 					// Tip: yield instead of await
 
-					// this.<static-property>
+					// this.<property>
 					// ...
 				}
+			}
+
+			// OR
+
+			// With Annotations
+			class <store-name> extends <base-store-name> {
+				@observable
+				public <property> = <value>;
+
+				// ...
+
+				@action.bound
+				public <action-name>() {
+					this.<property> = // ... ;
+				}
+
+				// ...
 			}
 
 			const <store-instance> = new <store-name>();
