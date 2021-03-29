@@ -356,6 +356,10 @@ Typescript:
 					React.FC<<component-props>>: To specify the Type for a Functional Component. Keep only one set of Angled Brackets.
 						// Alias for React.FunctionComponent.
 						// Note: Do not explicitly specify if forwarding Refs; let Typescript infer this.
+						
+						// Note: Has several downsides:
+							// Declaring a Component with this Type will implicitly make the Component accept Children, which may not be wanted.
+							// Does not preserve Generic-ness for Generic Components.
 
 					React.Component<<component-props>>: Represents a Component Instance.
 					React.ComponentType<<component-props>>: To specify the Type for either a Functional or Class Component.
