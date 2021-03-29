@@ -406,6 +406,9 @@
 		- Amortized Analysis: Overall Algo Behaviour when not considering infrequent, extreme bottlenecks (the Average Case Scenario).
 			- Example: Adding an Element to an Array -> O(1) usually, occasional O(n) when expanding Array.
 		- Asymptotic Analysis: Algo Behaviour when considering increasingly large inputs (the Worst Case Scenario).
+
+		- Space Complexity: How much Memory is required for the Algorithm.
+			- Stack Space for Recursive Calls count as well.
 	
 	Array:
 		- Circular:
