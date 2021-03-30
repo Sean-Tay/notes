@@ -57,7 +57,7 @@ CSS:
 	Details:
 		CSS Specificity:
 			The Higher a CSS Rule-Set's Specificity, the Greater its Priority.
-				Increasing from Top to Bottom:
+				In Ascending Order:
 					Type Selectors and Pseudo Elements.
 					Class Selectors.
 					ID Selectors.
