@@ -659,9 +659,10 @@ Javascript
 
 		Classes:
 			class className [extends parentClass] {
-				public <public-property>;
-				private _<private-property>;
 				static <static-property>;
+
+				private <private-property>;
+				[public] <public-property>;
 				
 				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
 				// Else:
@@ -670,7 +671,13 @@ Javascript
 
 					//...
 
-					this.#<private-property> = <value>;
+					this.<private-property> = <value>;
+				}
+
+				// OR
+				// Shorthand for specifying Class Properties in the Constructor
+				constructor(public <public-property>, private <private-property>, ... ) {
+					// ...
 				}
 
 				// A Class Definition defines Prototype Methods.
@@ -678,9 +685,17 @@ Javascript
 					// ...
 				}
 
-				// Accessor Properties
+				// Spy Methods for Properties:
 				get <property>() {
 					// ...
+
+					return this.<property>;
+				}
+
+				set <property>(<val>) {
+					// ...
+
+					this.<property> = <val>;
 				}
 
 				// ...
