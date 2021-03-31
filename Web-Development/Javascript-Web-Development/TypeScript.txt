@@ -46,7 +46,9 @@ Typescript:
 					
 					// number: Represents a Numerical Value.
 					// bigint: Represents a Large Integer Value.
-					let <bigint-variable> = <number>n;
+
+					// Template Type Literals: String Literal Permutation
+					type <type> = `${<type1>}-${<type2>}`;
 
 					// never: For when the value should never occur.
 						let <never-type-variable>: never;
@@ -154,6 +156,10 @@ Typescript:
 				// Generic Types:
 					type <type-name><T extends <base-type> = <default-type>, ... > = ... ;
 
+				// Recursive Types:
+					// Tip: Useful for letting a Type declare that it can be an Array / Object of itself.
+					type <type-name> = <type-name>[] | { [key: string]: <type-name> } | ... ;
+
 				// Utility Types:
 					// Extract: To select for a subset of Types from a Union Type.
 						let <extract-type-variable>: Extract<<type>, <specified-type>> = ... ;
@@ -233,6 +239,10 @@ Typescript:
 				// Indexable Interface
 				// Tip: Indexable Signatures should reflect any possible Indexable Results.
 					interface <indexable-interface-name> {
+						<known-property>: <sub-type>;
+
+						// ...
+
 						[key: string]: <type>;
 						//OR
 						[key: number]: <type>;

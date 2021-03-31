@@ -11,6 +11,7 @@ Javascript
 		boolean:											Literal true / false.
 		string
 		number:												Literal Integers, Floats / Doubles, Infinity, NaN.
+		bigint = <number>n;									
 		null
 		undefined
 		Symbols
