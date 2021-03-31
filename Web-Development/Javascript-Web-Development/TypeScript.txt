@@ -71,6 +71,9 @@ Typescript:
 				// Tuples: For Arrays that hold different Types.
 					let <tuple-variable>: [<type>, ...] = [<value>, ...];
 
+					// Labelled Tuple Types
+					type <labelled-tuple-type> = [<label>: <type>, ...];
+
 					// Note: TypeScript will assume declared Tuples are Arrays by default. A shorthand to let TypeScript know that the Array is a Tuple Type is through the 'const' keyword.
 					const <tuple-variable> =  [<value>, ...] as const;
 
