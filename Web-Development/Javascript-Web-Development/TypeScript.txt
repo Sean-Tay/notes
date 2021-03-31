@@ -293,7 +293,7 @@ Typescript:
 				// Classes
 					class <class-name> {
 						// Readonly Class Variable
-						<private | public | static> readonly <readonly-variable> = <value>;
+						<private | protected | public | static> readonly <readonly-variable> = <value>;
 
 						// ...
 					}

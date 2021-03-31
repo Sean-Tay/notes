@@ -397,7 +397,7 @@ Javascript
 
 		Nullish Coalescing Syntax: A Logical Operator that returns the value on its right-han side, when the value on the left-hand side is null or undefined.
 			// const fallback = null || <fallback>; // Will assign <fallback> if left value is falsy (i.e. false, 0 , '').
-			const fallback = null ?? <fallback>;
+			const fallback = null ?? <fallback>; // Will assign <fallback> if left value is null or undefined.
 
 		Arrow Function: A Function that has a shorter syntactic definition than a regular (Anonymous) Function.
 			function () {} becomes () => {};
@@ -661,8 +661,8 @@ Javascript
 			class className [extends parentClass] {
 				static <static-property>;
 
-				private <private-property>;
-				[public] <public-property>;
+				#<hard-private-property>; // Not detectable at all outside the Class. Usable in native JS.
+				<public-property>;
 				
 				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
 				// Else:
