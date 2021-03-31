@@ -2,12 +2,13 @@ Typescript:
 	Abbreviations:
 		OOP: 					Object-Oriented Programming.
 	
-	Description: An extension to Javascript.
+	Description: A syntactic superset to Javascript, "Type" Linter, Compiler and a Language Server.
 	
 	Resources:
-		
 	
 	Concepts:
+		Language Server: Implements useful IDE Features such as Autocompletion and File Navigation from Code.
+
 		Type Variance: Describes the Degree of Interchangeability between two different Types of diferent Specificity.
 			Invariant: 		No Interchangeability between both Types.
 			Covariant: 		Less Specific (Super) -> More Specific (Sub).
@@ -18,6 +19,14 @@ Typescript:
 		Structural Type Checking: Checking based on the Structures of the Types.
 	
 	Details:
+		Usefulness:
+			Effective Management of Contracts between two Code Entities (Functions or Modules) as Projects Scale.
+				Design by Intent rather than Design by Growth.
+
+			Adds DX for JS Authoring Environments.
+
+			Brings subset of JavaScript Errors into Compile Time, instead of Run-Time.
+
 		Note: The use of Types below may reference either Type Aliases or Interfaces.
 
 		Features:
@@ -281,6 +290,13 @@ Typescript:
 			Modules
 			Namespaces
 			OOP Support
+				// Classes
+					class <class-name> {
+						// Readonly Class Variable
+						<private | public | static> readonly <readonly-variable> = <value>;
+
+						// ...
+					}
 
 		Typescript code will eventually be compiled down to Javascript code. This additional step serves as another point whereby problematic code can be caught.
 
