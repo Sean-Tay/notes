@@ -661,7 +661,7 @@ Javascript
 			class className [extends parentClass] {
 				static <static-property>;
 
-				#<hard-private-property>; // Not detectable at all outside the Class. Usable in native JS.
+				#<hard-private-property>; // Not detectable at all outside the Class during Compile Time or Run Time. Usable in native JS.
 				<public-property>;
 				
 				// Note: If a Constructor is not defined, a default Constructor with the super() Function is used during creation.
