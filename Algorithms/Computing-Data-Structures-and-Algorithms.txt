@@ -401,7 +401,9 @@
 			- Big Theta: Represents both the Upper and Lower Bound (Tight Binding) of a given Growth Rate. Usually mixed with Big O.
 			- Big O: Represents the Upper Bound of a given Growth Rate. The Upper Bound may be greater than the actual Growth Rate (Worse than Expected).
 	
-		Complexity Hierarchy: O(1) < O(log(logn)) < O(logn) < O((logn)^k) < O(n) < O(nlog*n) < O(nlogn) == O(log(n!)) < O(n^k) < O(n^(log(n))) < O(k^n) < O(n!) < O(n^n)
+		- Complexity Hierarchy: O(1) < O(log(logn)) < O(logn) < O((logn)^k) < O(n^(k less than 1)) < O(n) < O(nlog*n) < O(nlogn) == O(log(n!)) < O(n^(k more than 1)) < O(n^(log(n))) < O(k^n) < O(n!) < O(n^n)
+			- Common Formulae:
+				- Sum of Arithmetic Series: 	1 + 2 + ... + (n-1) + (n) => n(n-1) / 2
 	
 		- Amortized Analysis: Overall Algo Behaviour when not considering infrequent, extreme bottlenecks (the Average Case Scenario).
 			- Example: Adding an Element to an Array -> O(1) usually, occasional O(n) when expanding Array.
@@ -420,6 +422,9 @@
 	
 	String Manipulation:
 		- Regex.
+
+		- String Comparison is not O(1).
+			- Sorting String Array: each Comparison may take O(s) Time.
 	
 	Recursion:
 		- Typically:
