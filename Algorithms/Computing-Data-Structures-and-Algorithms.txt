@@ -419,6 +419,10 @@
 				- When full, Head and Tail Pointer should be separated by one empty Index to ensure no confusion with Empty state.
 
 		- Two Pointers / Sliding Window	
+
+		- Tip: 
+			- For frequent lookups to Unsorted Arrays, consider converting the Array to a Map (Element-Index) first.
+			- For frequent lookups to (already) Sorted Arrays, consider using Binary Search.
 	
 	String Manipulation:
 		- Regex.
