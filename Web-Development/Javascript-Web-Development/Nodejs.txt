@@ -186,14 +186,16 @@ Node.js:
 						// Tip: May want to use npm-run-all to execute npm commands in parallel.
 						"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed.
 						"start": "<command1> & <command2> ..."			// Specify commands(s) to be executed when 'npm start' is executed.
-					}
-					"dependencies": { // ... // }						// Specifies the Node Dependencies that the Node Project depends on to run correctly.
-					"devDependencies": { // ... // }					// Specifies the Node Dependencies that the Node Project uses during development. This is more important for Node Projects that get deployed "as-is" without things like Project Bundlers. Specifying them here would exclude these Packages from being deployed together with the Node Project.
+					},
+					"dependencies": { // ... // },						// Specifies the Node Dependencies that the Node Project depends on to run correctly.
+					"devDependencies": { // ... // },					// Specifies the Node Dependencies that the Node Project uses during development. This is more important for Node Projects that get deployed "as-is" without things like Project Bundlers. Specifying them here would exclude these Packages from being deployed together with the Node Project.
 
-					"engines : {
+					"engines": {
 						"npm": "<version>"								// Specifes version of NPM to use when installing the Node Project's Dependencies.
 						"node": "<version>"								// Specifies version of Node to use to run the Node Project.
-					}
+					},
+
+					"types": "<typing-file-path>",						// Indicates Typing Information for this Node Project. Useful for Library Packages.
 				}
 
 			npm - A package manager for a Node Project. Skip to yarn if possible.
