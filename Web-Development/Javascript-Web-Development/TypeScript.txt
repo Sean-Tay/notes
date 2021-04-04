@@ -349,12 +349,13 @@ Typescript:
 					"**/*.spec.ts"
 				],
 				"compilerOptions": {
-					"types": ['<package>', ... ], // Specify which Type Definitions are 'visible' in the Global Scope, in addition to which are 'visible' in the Local Scope. Note: This Option is independent of the 'exclude' Option specified above.
+					"types": ['<package>', ... ], // Specify which Type Definitions will be 'visible' in the Global Scope (i.e. for Global Objects / Variables) without the need to import them manually in the consuming Files. Note: This Option is independent of the 'exclude' Option specified above.
 					
 					"noImplicitAny": true, // Raise Error on Expressions with an implicit 'any' Type.
 					"strict": true,		// Enables some Syntax Rules.
 
-					"allowJs": true,	// Allow JS Files to be processed with Type Checking.
+					"allowJs": true,	// Allow JS Files to be processed.
+					"checkJs": true, 	// Allow JS Files to be Type Checked via JSDoc info.
 					"jsx": true | "react", // Support JSX usage, usually from React.
 
 					"moduleResolution": { "Classic" | "Node" }, // Specify the in-built Method for resolving a Module's Dependencies.
@@ -366,16 +367,23 @@ Typescript:
 						"<path-alias>/*": ["<path-relative-to-baseUrl>/*"]
 					},
 
-					"esModuleInterop": true, // Allow and Support import / export between CommonJS Modules and ES Modules.
+					"esModuleInterop": true, // Treat CommonJS Modules as though they have ES-like default exports for compatibility with ES Modules. Note: Forces consuming Packages to also activate this.
 					"isolatedModules": true, // Disallow Features that requires Cross-File Analysis. Useful when Babel is to be used for compilation and transpilation instead.
 					"lib": ["DOM", "ES6", ...], // Specify which Language Features will be available in the Target Runtime Environment. Injects in-built API TypeScript Declarations to avoid Compilation Errors.
 					"module": "CommonJS", // Specify the Module Resolution System of the Target Runtime Environment.
 					"target": "ES5", 	// Specify which Version of the Language should the Source be compiled down to, for the Target Runtime Environment.
+						// Tip: If writing a Library, there's no reason to set this low if the Output generated is still TypeScript.
+
+					// "skipLibCheck": true, // Disables Type Errors from being produced by Dependencies with broken Types.
 
 					"downlevelIteration": true,	// Explicitly allows iterating through Iterables with for-of Loops.
 
 					"noEmit": true, 	// Do not emit any Artifacts once checking is done. Useful with the @babel/preset-typescript Package.
 					"outDir": "<output-path>", // Specify Directory that will house the compiled Artifacts.
+					"rootDir": "<src-path>", // Prevents the Source Folder itself from being inserted into the Output Path (the Children are directly inserted into the Output Directory). 
+
+					"declaration": true, // Produce the Type Declaration Files alongside the JavaScript Bundle. Tip: Useful for Packages that consume this Project as a Library.
+					"stripInternal": true, // Do not include Code that has the '@internal' JSDoc Annotation attached to it. Tip: Useful for Code within the Source that aids in Testing.
 				}
 			}
 
@@ -432,6 +440,9 @@ Typescript:
 					React.FormEventHandler<<html-form-element-tag-name>>: To specify for a JS Event Handler Function for a Form Element. Keep only one set of Angled Brackets.
 
 	Commands:
+		tsc --init				# Generates a Boilerplate TypeScript Configuration File, with Comments as Explanation for each Config Object Field.
+
 		tsc *.ts[x]				# Compiles Typescript code in relevant .ts or .tsx files to Javascript code in .js or .jsx files.
 			--watch 			# Auto-Compile when Typescript code changes are detected.
+			--preserveWatchOutput # Do not erase past output from previous code changes.
 	
