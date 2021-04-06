@@ -56,6 +56,7 @@ ESLint:
 					},
 
 					// Note: If what @typescript-eslint can access is larger than what Typescript can access, all inaccessible Files w.r.t Typescript will have ESLint Errors.
+					// Tip: ESLint expects one tsconfig.json for entire Codebase, including Tests. Create a separate tsconfig.eslint.json that extends off the original tsconfig.json if the original is only meant for the Code Source.
 					project: "<path-to-tsconfig.json>" // For using Rules that require Type Information.
 				},
 
@@ -92,6 +93,7 @@ ESLint:
 						Extension Examples:
 							"eslint:recommended",
 							"plugin:@typescript-eslint/recommended",
+							"plugin:@typescript-eslint/recommended-require-type-checking",
 							"plugin:react/recommended",
 
 							// Prettier Overrides:
