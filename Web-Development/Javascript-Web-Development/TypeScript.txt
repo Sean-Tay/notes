@@ -338,6 +338,16 @@ Typescript:
 			// tsconfig.json
 			{
 				"extends": "<base-tsconfig-json-path>", // Specify parent tsconfig.json File to inherit Settings from.
+				"references": [			// Specify local, external Projects for reference in this Project.
+					// When the external Project is imported in the current Project:
+						// Typing Information is derived from the generated Type Declaration Files for that external Project.
+						// Building the current Project will also build the referenced Project if needed.
+
+					{
+						path: "<directory-containing-tsconfig-json-path>", // Project's tsconfig.json.
+					},
+				],
+
 				"include": [			// Specify Directories and Files to process. 
 					"src",
 
@@ -384,6 +394,8 @@ Typescript:
 
 					"declaration": true, // Produce the Type Declaration Files alongside the JavaScript Bundle. Tip: Useful for Packages that consume this Project as a Library.
 					"stripInternal": true, // Do not include Code that has the '@internal' JSDoc Annotation attached to it. Tip: Useful for Code within the Source that aids in Testing.
+
+					"composite": true, // Allow external Prokects to reference this Project. Should have the "rootDir" and "declaration" Settings.
 				}
 			}
 
