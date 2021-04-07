@@ -147,6 +147,7 @@ CSS:
 				display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
 				visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, but an (empty) space is allocated in its place visually. It cannot receive Events.
 				opacity: 0			- The HTML DOM Node is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
+					user-select: none - Can be additionally specified to prevent Element from being selectable by User.
 					pointer-events: none - Can be additionally specified to prevent Element from receiving Mouse Events. Useful for transition Effects.
 
 			Arrangement:
@@ -268,7 +269,7 @@ CSS:
 				// Child Stretches, whilst accounting for Parent Padding.
 
 				Parent:
-					height: 100%;
+					height: 100%; // Ensure body has 100vh set.
 					
 					// If in a Flex Context:
 						flex-grow: 1;
