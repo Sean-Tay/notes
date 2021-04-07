@@ -320,6 +320,11 @@ Typescript:
 						// Readonly Class Variable
 						<private | protected | public | static> readonly <readonly-variable> = <value>;
 
+						// Parameter Properties
+						constructor(public <public-property>, private <private-property>, ... ) {
+							// ...
+						}
+
 						// ...
 					}
 

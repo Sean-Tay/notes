@@ -659,7 +659,7 @@ Javascript
 				}
 
 		Classes:
-			class className [extends parentClass] {
+			class <class-name> [extends <parent-class>] {
 				static <static-property>;
 
 				#<hard-private-property>; // Not detectable at all outside the Class during Compile Time or Run Time. Usable in native JS.
@@ -672,17 +672,16 @@ Javascript
 
 					//...
 
-					this.<private-property> = <value>;
-				}
+					<class-name>.<static-property> = <value>;
 
-				// OR
-				// Shorthand for specifying Class Properties in the Constructor
-				constructor(public <public-property>, private <private-property>, ... ) {
-					// ...
+					this.<public-property> = <value>;
+					this.#<hard-private-property> = <value>;
 				}
 
 				// A Class Definition defines Prototype Methods.
 				<method>(params) {
+					super.<parent-method>(params);
+
 					// ...
 				}
 
@@ -705,9 +704,6 @@ Javascript
 			// Mixin Pattern: Class Extension Factories (NOT Class Instance)
 			const <function-name> = (<class-name>) => {
 				return class <extended-class-name> extends <class-name> {
-					// ES2020 Private Fields
-					_<private-property> = <value>;
-
 					// ...
 				}
 			}
