@@ -856,6 +856,16 @@ Javascript
 				// Do not mix import and NodeJS module.export.
 
 	Utilities:
+		JSDoc Annotations: /** ... */
+			@internal			- Denotes that the following piece of Code is meant for internal use only.
+
+			@alpha				- Denotes that the following piece of Code is intended to eventually be released, but is not ready for public consumption yet.
+			@beta				- Denotes that the following piece of Code is unstable.
+			@public				- Denotes that the following piece of Code is stable enough for external consumption.
+			@deprecated			- Denotes that the following piece of Code is to be removed in the future. Generates warnings in external consumers that use these.
+
+			@param - ... 		- Provides an explanation for the params received by a function.
+
 		Mathematical Functions: 
 			Math.floor();
 			Math.random();
