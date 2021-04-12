@@ -218,7 +218,7 @@ Typescript:
 				const <variable>: <type-alias> = <value>;
 
 			Interfaces:			Allows for explicit structure declaration of Values.
-				/** <interface-documentation */
+				/** <interface-documentation> */
 				interface <interface-name> {
 					<property>: <type>;
 					<optional-property>?: <type>;
@@ -228,6 +228,13 @@ Typescript:
 
 					/** <text> */
 					<documented-property>: <type>;
+
+					// ...
+				};
+
+				// Note: Redeclaration of an existing Interface will add onto it. This is not possible with Interface-like Type Aliases.
+				interface <interface-name> {
+					<more-properties>: <type>;
 
 					// ...
 				};
@@ -366,8 +373,10 @@ Typescript:
 				"compilerOptions": {
 					"types": ['<package>', ... ], // Specify which Type Definitions will be 'visible' in the Global Scope (i.e. for Global Objects / Variables) without the need to import them manually in the consuming Files. Note: This Option is independent of the 'exclude' Option specified above.
 					
-					"noImplicitAny": true, // Raise Error on Expressions with an implicit 'any' Type.
 					"strict": true,		// Enables some Syntax Rules.
+					"noImplicitAny": true, // Raise a Lint Error on Expressions which TypeScript is unable to infer, and would normally assume the 'any' Type.
+					"noImplicitThis": true, // Raise a Lint Error on situations when 'this' refers to the unintended Type.
+					"strictNullChecks": true, // Make sure 'null' is its own Type. If this is off, any other Type can also hold 'null' values.
 
 					"allowJs": true,	// Allow JS Files to be processed.
 					"checkJs": true, 	// Allow JS Files to be Type Checked via JSDoc info.
