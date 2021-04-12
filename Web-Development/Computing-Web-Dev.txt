@@ -84,7 +84,7 @@ Web Dev:
 			// Security-Related Fields:
 			HTTP / HttpOnly:	Prevents Client-Side manipulation of the Cookie via JS and other vectors - the Cookie is only used for Server-Side meta-session activity.
 			Secure:				Only transmit the assosicated Field over HTTPS.
-			SameSite:			Used to prevent CSRF Attacks.
+			SameSite:			Prevents the Response of a Request from being read in another Domain.
 
 		CSP: 					A backwards-compatable HTTP Response mechanism that allows a Web Application to specify the acceptable types and sources of Resources that can be used by the Client for the Web Application's Resource currently loaded. This allows increased flexibility from the default Same-Origin only policy whilst still preventing the Web Application from inadvertedly loading malicious Resources from a Third-Party, and is helpful in mitigating Injection Attacks, particularly XSS.
 			The Web Application defends against being compromised by its own activity.
@@ -201,6 +201,11 @@ Web Dev:
 					In-Built Load Balancing.
 
 		Web Security:
+			OWASP:
+				CSRF:
+					Example: Email with HTML Content is received and read by a User that is currently logged on to <some-important-site>.
+						<img src="https://<bank-site>/api/transfer?recipient=<malicious-id>&amount=1000" />
+
 			HTTP Headers:
 				// Sending Credentials over to the Server:
 				// Note: Use HTTPS as base-64 Encoding can be reversed.
