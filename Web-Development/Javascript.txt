@@ -481,6 +481,11 @@ Javascript
 			}
 
 			const myArray = Array.from(myMap); // Conversion back from Map to Array.
+
+			// WeakMap - Alternative to Map that:
+				// 1. Only stores Object References as its Keys.
+				// 2. Keys here are not considered during Garbage Collection (no need to remove the Weak Object References stored here manually).
+				// 3. Cannot be iterated over.
 		
 		Promise: Object representing a Value which will eventually be available.
 			const asyncOperation = () => (
@@ -659,6 +664,7 @@ Javascript
 				}
 
 		Classes:
+			// Class Statement:
 			class <class-name> [extends <parent-class>] {
 				static <static-property>;
 
@@ -680,6 +686,8 @@ Javascript
 
 				// A Class Definition defines Prototype Methods.
 				<method>(params) {
+					// Note: super cannot be used to access Static Parent Variables. Use a Parent get Method to access those.
+					// Tip: Use a specific Function for getting those Static Parent Variables, so as to not mislead others into thinking ALL Static Parent Variables are accessible via the 'super' keyword.
 					super.<parent-method>(params);
 
 					// ...
@@ -701,12 +709,21 @@ Javascript
 				// ...
 			}
 
-			// Mixin Pattern: Class Extension Factories (NOT Class Instance)
-			const <function-name> = (<class-name>) => {
-				return class <extended-class-name> extends <class-name> {
+			// Class Expressions
+			// Tip: Can be used to provide 'instanced' Static Variables:
+			const <class-generator> = (<arg>) => 
+				// Note: The <class-name> only applies to the scope of the Class Definition.
+				class <class-name> {
+					static <property> = <arg>;
+					
 					// ...
 				}
-			}
+
+			// Mixin Pattern
+			const <mixin-name> = (<class-name>) => 
+				class <extended-class-name> extends <class-name> {
+					// ...
+				}
 
 		Decorators: Functions called on JavaScript Syntax Forms (i.e. Public, Private or Static Class Mechanisms such as Class Fields, Accessors and Methods).
 			/*
@@ -1061,6 +1078,8 @@ Javascript
 				node.classList.remove("<class-name>", ...); // Remove Class from DOM Node. No need the . prefix.
 
 				node.style; 		// references the Inline Style set specifically on the DOM Node.
+					node.style = `<value>`; // Must be string.
+
 				window.getComputedStyle(node); // references the Style from the DOM Node.
 
 				node.innerText; 	// references the text content between opening and closing HTML tags 
