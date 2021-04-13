@@ -29,6 +29,8 @@ MobX
 			} from 'mobx';
 
 			// observable: Indicate to MobX that the Items wrapped should be tracked as they can change over time.
+				// Note: Handles Objects, Arrays, Sets and Maps correctly without the need to recreate them per change.
+
 			// computed: Indicate to MobX a Computed Value.
 
 			// action: Indicate to MobX a Method that should be a Synchronous or Asynchronous Action.
