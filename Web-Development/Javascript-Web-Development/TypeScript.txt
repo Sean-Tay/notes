@@ -413,6 +413,15 @@ Typescript:
 				}
 			}
 
+		JavaScript Examples:
+			Event Targets:
+				Typescript might complain that event.target is not neccessarily an Element in the DOM Tree. This is because the target of an Event can also be other Objects (e.g. XMLHttpRequest, AudioNode, ...).
+					We can use a Instance Type Guard to narrow it down:
+						const eventTarget = event.target;
+						if (eventTarget instanceof Element) {
+							// ...
+						}
+
 		External Libraries:
 			React:
 				// The Type for the children argument passed in via Component Props should be specified as React.ReactNode.
