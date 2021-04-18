@@ -10,6 +10,7 @@
 				Elements need not be of the same size.
 			
 			Array Elements can be accessed in Constant Time due to their Contiguous Nature.
+				However, Linked List Nodes can also be accessed in O(1) Time if the context that is interested in the Node stores the Reference to the Node. If it is a Doubly Linked List, then Insertion and Deletion can actually be O(1) Time as well.
 
 	Queue: FIFO Data Structure.
 
@@ -423,6 +424,9 @@
 		- Tip: 
 			- For frequent lookups to Unsorted Arrays, consider converting the Array to a Map (Element-Index) first.
 			- For frequent lookups to (already) Sorted Arrays, consider using Binary Search.
+
+			- If order of Elements are unimportant, Deletion need not be O(n):
+				- Swap the Element to be Deleted and the Last Element, then just pop it off.
 	
 	String Manipulation:
 		- Regex.
