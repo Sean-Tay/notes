@@ -77,6 +77,10 @@ System Design:
 											1 to 2 Seconds Delay, which may be okay depending on Data Consistency Requirements. If not, just immediately Read from the Master after the Write Operation.
 
 										Improve Read Performance by using Indexes on certain Table Columns.
+											Cons:
+												Larger Disk Space Requirement.
+												Slows down Write Operations.
+													// If Index is on Primary Key only, it should not affect.
 
 										In Memory Cache for even better performance?
 											Application to handle Reading from DB and storing it in Cache if Cache does not have requested Information?
