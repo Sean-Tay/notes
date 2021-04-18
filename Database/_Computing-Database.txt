@@ -19,7 +19,11 @@ Database
 		Record:					A collection of Attributes pertaining to some instance of an Entity.
 		Group:					A collection of Records.
 
-		Index: 					An additional sparse Data Structure accompanying a Group that maps between a defined subset of each Record's Data, and Virtual Addresses of the Full Records on Disk.
+		Index: 					An additional Data Structure accompanying a Group that maps between a defined subset of each Record's Data, and Virtual Addresses of the Full Records on Disk.
+			Types:
+				Sparse:			Contains a mapping only for every n Records in the Table to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
+				Dense:			Contains a mapping for every Record in the Table to the Disk Location.
+
 			The optimization is more effective when Records are large => Less Records per Disk Partition => More Disk Accesses without an Index, which are Expensive.
 
 		In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
