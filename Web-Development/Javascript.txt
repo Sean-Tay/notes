@@ -57,10 +57,15 @@ Javascript
 				// ...
 			}
 
-			To check if two things are equal to each other (same values check only): ==
-			To check if two things are unequal to each other (different values check only): !=
-			To check if two things are equal to each other (same values and types check): ===
-			To check if two things are unequal to each other (different values and types check): !==
+			Abstract Equality Operator:
+				To check if two things are equal to each other (same values check only): ==
+				To check if two things are unequal to each other (different values check only): !=
+
+				// Tip: arg == null returns true for both null and undefined
+
+			Strict Equality Operator:
+				To check if two things are equal to each other (same values and types check): ===
+				To check if two things are unequal to each other (different values and types check): !==
 
 			// Note: Objects, Arrays and Functions are never equal to each other, unless the equality check is done through the same reference:
 			const ref = {};
@@ -227,10 +232,14 @@ Javascript
 
 			}
 		
-		// this refers to the current scope's owner - can be a Class or a Function
-			// The value of this in a Function is determined by how the Function was called.
-
-			<function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
+		// this refers to different things, depending on how the Context was established:
+			// In Ascending Priority:
+				// this refers to the global Object, or undefined if 'use strict' was enabled.
+				// this refers to the Object if it is used within an Object's Method.
+				// <function>.bind(this); // To make any usage of 'this' refer to the containing scope's definition of 'this' where the statement was invoked.
+				// this (within a Function) by default refers to the Object being created if the new keyword was used.
+			
+			// If this is used within an Arrow Function, it will refer to the meaning of this in the containing scope where the Arrow Function was created.
 
 		Prototype Properties
 			// Prototype: The mechanism by which Javascript Objects inherit Features off each other.
@@ -458,6 +467,7 @@ Javascript
 				// 3. Cannot be iterated over (Insertion Order is not kept for performance considerations).
 		
 		Maps: Data Structure that can quickly store and retrieve Key-Element pairs.
+			// Operations are sub-linear O(log(n)) or O(1) Time Complexity.
 			// Retains Insertion Order, unlike regular JS Objects.
 			// Performs better in scenarios involving frequent Addition / Removal of Key-Element pairs, as compared to regular JS Objects.
 				// Note: Objects are better if the keys are of the string type, and it is mainly a Write-Once Read-Heavy Workload.
@@ -879,6 +889,13 @@ Javascript
 
 			@param - ... 		- Provides an explanation for the params received by a function.
 
+		Performance Profiling:
+			Chrome has the ability to analyze the per-line Execution Time per Performance Profiling Session.
+				Open Developer Tools.
+				Go to the Performance Tab.
+				Record a Performance Profile.
+				Click on the Sources Tab, and select the relevant File.
+
 		Mathematical Functions: 
 			Math.floor();
 			Math.random();
@@ -1086,6 +1103,15 @@ Javascript
 				node.innerHTML; 	// references the HTML content between opening and closing HTML tags
 			
 			DOM Events:	
+				// Event Bubbling: 	Event propagtes from Child to Parent.
+				// Event Capturing: Event travels back from Parent to Child.
+
+				// Note: Event Listeners send in Event Objects when invoked:
+					eventObject.target.value // target is the DOM Node that triggered the Event
+					eventObject.currentTarget.value // currentTarget is the DOM Node that the Event Listener is attached to
+
+				// Tip: For optimization, implement Event Delegation by creating the Event Listener on the Parent rather than attaching specific Event Listeners on all Child Objects. If the Event can Bubble, this should work.
+
 				Add Event Listener:
 					node.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
 						// <eventType>: http://www.w3schools.com/jsref/dom_obj_event.asp
@@ -1098,10 +1124,6 @@ Javascript
 					node.removeEventListener("eventType", functionID); // Doesn't seem to be able to remove anonymous functions
 					node.eventType = null; // Legacy shortcut
 				
-				// Note: Event Listeners return Event Objects
-					eventObject.target.value // target is the DOM Node that triggered the Event
-					eventObject.currentTarget.value // currentTarget is the DOM Node that the Event Listener is attached to
-
 			Shadow DOM: An encapsulated DOM Tree which can be attached to any part of the regular DOM Tree, whilst still maintaining the encapsulation.
 				Code within the Shadow DOM cannot affect the regular DOM Tree.
 
