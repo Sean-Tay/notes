@@ -37,7 +37,7 @@ System Design:
 								Encryption of Data?
 
 							Storage Requirements?
-								Blob Cloud Storage for Non-Primitive Information: Generates a URL to the Resource.
+								Cloud Distributed File Storage for Blob-Like Information: Generates a URL to the Resource.
 
 						Non-Functional Requirements?
 							Availability?
@@ -61,24 +61,39 @@ System Design:
 									Per Hour?
 
 								Horizontal Scalability: How easy is it to add more Machines to each part of the System.
+									Load Balancing: Something that helps to distribute Traffic to other multiple identical Web Servers.
+										Server Software: Nginx
+										DNS Load Balancing: A Technique which gives different IP Addresses of the different available Web Servers per Request.
+											Hash the IP Address of the Request?
+
 								Vertical Scalability: Improve the existing Machines by replacing sub-optimal Parts with better Performing ones.
 
 							Available Budget of Compute Resources?
 								Message Queue to prevent dropped Requests if Server is at Full Load?
 
 								Read-Write I/O Frequency
-									Master (Read / Write) - Slave (Read)?
-									Sharding Service for Write-Heavy Database?
+									Database: 
+										Master (Read / Write) - Slave (Read)?
+											1 to 2 Seconds Delay, which may be okay depending on Data Consistency Requirements. If not, just immediately Read from the Master after the Write Operation.
+
+										Improve Read Performance by using Indexes on certain Table Columns.
+
+										In Memory Cache for even better performance?
+											Application to handle Reading from DB and storing it in Cache if Cache does not have requested Information?
+
+											Pre-Caching Service to compute Calculation Intensive Results -> Cache?
+
+										Partitioning for Write-Heavy Database?
 
 							Latency?
+								Global CDN - for Static Asset Files.
+									Saves Content to a Storage in a Local Area so that Users in that Area can all access from that Storage, which may be faster in terms of distance.
+
+								Peer-to-Peer Distribution between Local Data Centers?
 
 							Bandwidth? For Areas with Poor Internet Access?
 								1 Byte - 1 Character
 								Compression?
-
-							Pre-Caching Service to compute Calculation Intensive Results -> Cache?
-
-							CDN?
 
 			2. Create API based on Functional Requirements:
 				Application API Considerations:
