@@ -279,9 +279,32 @@ SQL:
 			DROP VIEW <view_name>
 			;
 
-		-- Confirm any pending DML Transactions.
-		COMMIT;
+		-- Multi-Command Transaction Flow:
+			BEGIN TRY;
+				BEGIN TRANSACTION <transaction-name>;
 
+					<command>;
+
+					-- ...
+
+					BEGIN TRY;
+						<command>;
+					END TRY;
+					BEGIN CATCH;
+
+					END CATCH;
+
+					-- ...
+
+				COMMIT TRANSACTION <transaction-name>;
+			END TRY;
+			BEGIN CATCH;
+				-- ...
+
+				-- Cancel the Transaction.
+				ROLLBACK TRANSACTION <transaction-name>;
+			END CATCH;
+			
 		-- MySQL Variable Declaration
 			DECLARE <variable_name> <variable_type>;
 			SET <variable_name> = /* ... */ ;
