@@ -26,6 +26,8 @@ General Computing Notes:
 
 		Multiplexer:			Mechanism for routing multiple inputs into a single channel, based on additional selector inputs.
 
+		Main Memory:			Volatile but Highly Accessible Memory. RAM.
+
 		OS:						Low Level Software which supports the use of a Computer's Physical Hardware and its functionality.
 		Thread:					Basic Unit for which the Operating System allocates Processor Time.
 		Process:				A running Executable, in which potentially multiple Threads execute with shared resources (i.e. Variables, Address Space) and a common execution state, supporting basic OS-level isolation from other Processes.
