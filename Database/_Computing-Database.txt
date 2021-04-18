@@ -22,6 +22,8 @@ Database
 		Index: 					An additional sparse Data Structure accompanying a Group that maps between a defined subset of each Record's Data, and Virtual Addresses of the Full Records on Disk.
 			The optimization is more effective when Records are large => Less Records per Disk Partition => More Disk Accesses without an Index, which are Expensive.
 
+		In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
+
 		Database Types:
 			Relational Database:
 				Pros:
@@ -43,58 +45,44 @@ Database
 				Examples:
 					PrestoDB:	Facebook's Distributed SQL Query Engine.
 
-			Document Database:
-				Pros:
-					Scalability:
-						Queries are handled as fast as possible.
-						Easier to Scale Horizontally without ACID Considerations.
+			NoSQL: Anything that is not storing Data in a Structured Table Format:
+				Document Database:
+					Pros:
+						Scalability:
+							Queries are handled as fast as possible.
+							Easier to Scale Horizontally without ACID Considerations.
 
-				Cons:
-					No ACID-based Reliability as a result of Speed and Simplicity.
+					Cons:
+						No ACID-based Reliability as a result of Speed and Simplicity.
 
-				Related Content:
-					NoSQL
+					Related Content:
 
-				Examples:
-					MongoDB
+					Examples:
+						MongoDB
+						DynamoDB:	Amazon's NoSQL Solution.
+						Firestorm
 
-			Graph Database:
-				Pros:
+				Graph Database:
+					Pros:
 
-				Cons:
+					Cons:
 
-				Related Content:
+					Related Content:
 
-				Examples:
-					Cassandra
+					Examples:
+						Cassandra
 
-			Key-Value Database:
-				Pros:
+				Key-Value Database:
+					Pros:
 
-				Cons:
+					Cons:
 
-				Related Content:
+					Related Content:
 
-				Examples:
-					Redis: In-Memory based Database with Disk Persistence that is often used as a Caching Layer on top of other RDBMSes.
-
-			In-Memory Database:
-				Pros:
-					Much faster as Main Memory is used instead of I/O on Disk - suitable for operations in which Response Time is critical.
-
-				Cons:
-
-				Related Content:
-
-				Examples:
-					VoltDB: NewSQL based.
+					Examples:
+						Redis: In-Memory based Database with Disk Persistence that is often used as a Caching Layer on top of other RDBMSes.
 
 			Data Warehouse
-				Pros:
-
-				Cons:
-
-				Related Content:
 
 		Database Partitioning:
 			Horizontal Partitioning: Different Records into Separate Groups (e.g. Sharding).
