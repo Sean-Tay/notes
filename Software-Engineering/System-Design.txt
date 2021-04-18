@@ -2,17 +2,89 @@ System Design:
 	Abbreviations:
 		
 	
-	Description: 
+	Description: Problems designed to test your ability to keep progressing through scenarios with Limited Detail but Greater Flexibility.
+		Keep Probing after each Step?
+		Have to Dig Deep.
 	
 	Resources:
 		
 	
 	Concepts:
-		
+		Continuous Availability: Full Availability 24/7.
+		High Availability:		Operational Performance for a higher than normal period.
+			Focus on eliminating Unscheduled Downtime due to Physical Hardware Failures.
+				Eliminate Single Points of Failure.
+				Reliable Crossover between Redundancies.
+				Failure Detection.
+
+		Service Oriented Architecture: Style of Software Design where Servcies are provided to other Components by Application-related Components, through a Communication Protocol over a Network.
+
+		API Gateway:			An Interceptor for API / Microservice Requests that acts as a Single Entry Point to help implement Standardized Access across all APIs / Microservices.
+			Protocol Translation
+			Service Discovery
+			Authentication and Security Policy
+			Stabilization and Load Balancing
+			Cache Management
+			Global API Monitoring, Logging and Analytics
 	
 	Details:
 		Methodology:
-			1. Clarify the Domain to help with Data Modelling.
+			1. Clarify the Problem:
+				Derivation of Concrete Details based on Estimation of Fuzzy Details:
+					Requirements:
+						Functional Requirements?
+							What is the App / Service supposed to do, and Scope.
+								Encryption of Data?
+
+							Storage Requirements?
+								Blob Cloud Storage for Non-Primitive Information: Generates a URL to the Resource.
+
+						Non-Functional Requirements?
+							Availability?
+								Uptime?
+									90% -> 36.5 Days Offline per Year
+									95% -> 18.25 Days Offline per Year
+									99% -> 3.65 Days Offline Per Year
+									99.9% -> 8.77 Hours Offline Per Year
+									99.99% -> 1 Hour Offline Per Year
+
+									Internal or External Usage?
+
+								Redundancy?
+
+								Server Health Monitoring?
+
+							Scalability?
+								Peak Usage Scenarios for provided Service?
+									Per Second?
+									Per Minute?
+									Per Hour?
+
+								Horizontal Scalability: How easy is it to add more Machines to each part of the System.
+								Vertical Scalability: Improve the existing Machines by replacing sub-optimal Parts with better Performing ones.
+
+							Available Budget of Compute Resources?
+								Message Queue to prevent dropped Requests if Server is at Full Load?
+
+								Read-Write I/O Frequency
+									Master (Read / Write) - Slave (Read)?
+									Sharding Service for Write-Heavy Database?
+
+							Latency?
+
+							Bandwidth? For Areas with Poor Internet Access?
+								1 Byte - 1 Character
+								Compression?
+
+							Pre-Caching Service to compute Calculation Intensive Results -> Cache?
+
+							CDN?
+
+			2. Create API based on Functional Requirements:
+				Application API Considerations:
+					RESTful API / RPC
+					CRUD API
+
 				Database Design:
 					a. Start with a Conceptual Data Model. This describes at a High Level the sorts of Data required, and how they relate to each other. For example, what sort of Entities are required.
 
@@ -23,20 +95,9 @@ System Design:
 					c. Once the Logical Data Model is finished, Physical Data Models can be created from the Logical Data Model, each of which deals with some of the DBMS-specific Implementation Details.
 							Example: Which Rows of the Table are stored in which Storage Device, Which Columns should be used as part of Indexes.
 
-			2. From the Data Modelling, create CRUD API.
-
-			3. Data Flow.
-			
-			4. Performance and Scalability.
-				Persistency Requirements
-				Read-Write I/O Frequency
-
-		Benchmarks:
-			1 - Bad.
-			2 / 3 - Depends.
-			4 - Good.
-
 		Case Studies:
+			Design a Coffee Ordering System
+
 			Design Twitter
 	
 	Commands:
