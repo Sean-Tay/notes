@@ -304,7 +304,7 @@
 										- Send the neighbouring Parent Element down to the Child Node.
 										- Set the Predecessor or Successor Element of the Sibling Node in the Parent Element's position.
 									- If both immediate Sibling Nodes have less than ceil(m/2) Elements, merge one of the Siblings together with the Child Node, with one the Parent Element becoming the Median Element of the Child Node.
-									
+
 								- Continue Traversal.
 								- If Traversal has reached a Leaf Node, delete Element from Leaf Node if it exists.
 	
@@ -482,6 +482,7 @@
 							Start moving the "Right" Index, and	stop if it encounters an Element smaller than or equal to the Pivot.
 
 							Swap the two Elements at the Indexes, then start the movement of the Indexes again, with the same rules in mind as before.
+								Note: If one of the Indexes encounters the Pivot, it means that one of the Indexes will only ever be at the Pivot moving forward.
 
 						When the Indexes meet, it should be at the Pivot Element. The Pivot Element's Index will be the Index at where the List should be split.
 							Note: The Pivot Element may change position during the Iteration, especially if there are Repeated Pivot Elements.
