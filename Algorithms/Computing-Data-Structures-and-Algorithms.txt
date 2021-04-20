@@ -262,13 +262,15 @@
 			- Deletion: O(logn)
 		
 		- Properties: 
-			- Each Node can now store up to m-1 Elements, and m references to Children Nodes (m Degree).
+			- Each Node can now store up to m-1 Elements, and m references to Children Nodes (m Degree / Order).
 				- References to Child Nodes can be visualized as being stored 'between' the Elements.
 				- Element Order in each Node is important.
 			
 			- Self-Balancing Properties:
 				- All Non-Root Nodes with Children should have at least ceil(m/2) Child Nodes.
 					- A Child Node can only be created if this property is fulfilled for the given Non-Leaf Node.
+
+				- All Leaf Nodes should have at least ceil(m/2) - 1 Elements.
 
 				- All Leaf Nodes (Nodes with no Children) should be at the same Level.
 					- (Proactive) Insertion: Advantageous of not visiting a Node twice.
@@ -287,18 +289,24 @@
 									- Obtain the Predecessor / Successor of the Element, depending on which Child Node has enough Elements.
 									- Replace Element with Predecessor / Successor Element.
 									- Delete Predecessor / Successor - guaranteed to be in Leaf Node.
+									
 								- Else: Both Child Nodes has less than ceil(m/2)-1 Elements:
 									- Merge Both Child Nodes together, set Element to be Median Key of Child Node.
 									- Traverse to new Child Node, and recursively delete Key from Child Node.
+
+									- Note: Parent may have less than ceil(m/2)-1 Elements as a result of this operation, but this will be resolved in subsequent Deletes.
+
 							- Else: Element is not in Current Non-Leaf Node.
 								- Determine next Child Node to traverse to.
+
 								- If Child Node has less than the minimum ceil(m/2)-1 Elements:
 									- If an immediate Sibling Node has at least ceil(m/2) Elements, execute a left or right Rotation on one of the neighbouring Parent Elements.
 										- Send the neighbouring Parent Element down to the Child Node.
 										- Set the Predecessor or Successor Element of the Sibling Node in the Parent Element's position.
 									- If both immediate Sibling Nodes have less than ceil(m/2) Elements, merge one of the Siblings together with the Child Node, with one the Parent Element becoming the Median Element of the Child Node.
+
 								- Continue Traversal.
-								- If Traversal has reached a Leaf Node, if delete Element from Leaf Node if it exists.
+								- If Traversal has reached a Leaf Node, delete Element from Leaf Node if it exists.
 	
 		- Finds use in Multi-Level Database Indexes.
 			- Leaf Nodes - Dense Index.
@@ -474,6 +482,7 @@
 							Start moving the "Right" Index, and	stop if it encounters an Element smaller than or equal to the Pivot.
 
 							Swap the two Elements at the Indexes, then start the movement of the Indexes again, with the same rules in mind as before.
+								Note: If one of the Indexes encounters the Pivot, it means that one of the Indexes will only ever be at the Pivot moving forward.
 
 						When the Indexes meet, it should be at the Pivot Element. The Pivot Element's Index will be the Index at where the List should be split.
 							Note: The Pivot Element may change position during the Iteration, especially if there are Repeated Pivot Elements.
