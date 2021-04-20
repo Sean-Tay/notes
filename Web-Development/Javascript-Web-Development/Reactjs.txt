@@ -320,6 +320,7 @@ React.js
 						// Each State Variable defined in the manner below is independent from one another.
 						// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
 						// Note: The State Value does NOT get updated if it was initialized from a Prop and that Prop changes. Update it via useEffect.
+						// Tip: For ES6 Sets and Maps (mutable Data Structure) States, each time their Content is changed, simply do <state-var-setter-function>(oldDS => new DS(oldDS)) to let React know to Re-Render.
 						const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
 
 						// Modify the State.
@@ -400,6 +401,7 @@ React.js
 						// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
 						// Tip: For Functions, specify as it is (do NOT use JSON.stringify) to avoid false negatives.
 						// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
+							// Tip: For ES6 Sets and Maps (mutable Data Structure) States, each time their Content is changed, simply do <state-var-setter-function>(oldDS => new DS(oldDS)) to let React know to Re-Render.
 
 						// Used to prevent unneccessary recalculation of some value per Re-Render.
 						// Tip: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
