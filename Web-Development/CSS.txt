@@ -184,6 +184,16 @@ CSS:
 						Interprets Top, Bottom, Left, and Right settings when 'fixed' positioning is active.
 						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 			
+				float: Specify how the Element is to position itself.
+					Useful in situations where Elements should look like they are Absolutely Positioned, but not removed from the Document Flow.
+
+					Note: If an Element only contains Floating Elements, Height would be 0. Use the clearfix to overcome this.
+
+				clear: Specify if the Element should position itself below another Floating Element rather than beside it.
+					left: Set the Element to go below the Floating Element if the Floating Element would be to the left of the Element normally.
+					right: Set the Element to go below the Floating Element if the Floating Element would be to the right of the Element normally.
+					both: Set the Element to go below Floating Elements.
+
 				display: Specify if the Element is block or inline, and the layout of Child Elements.
 					Element Display:
 						block:
