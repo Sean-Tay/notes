@@ -36,10 +36,37 @@ System Design:
 							What is the App / Service supposed to do, and Scope.
 								Encryption of Data?
 
+								Geospatial Design?
+									Google S2 Library for Lat-Long Sphere Mapping.
+
+								Asynchronous Messaging Event-Driven Channel between User and Server?
+									Web Socket via NodeJS
+
 							Storage Requirements?
 								Cloud Distributed File Storage for Blob-Like Information: Generates a URL to the Resource.
 
+								Databases
+									Can use more than one Type if needed.
+
 						Non-Functional Requirements?
+							Estimation of Application Usage Metrics:
+								Traffic:
+									Peak Usage Scenarios for provided Service?
+										Per Second?
+										Per Minute?
+										Per Hour?
+
+									Ratio of Read to Writes.
+										80-20 Rule: 20% of Writes will lead to 80% of subsequent Reads.
+
+								Storage:
+									Number of Bytes for Single Business Data Object.
+									Longevity of Data Stored.
+
+								Bandwidth:
+
+								Nemory: For Caching.
+
 							Availability?
 								Uptime?
 									90% -> 36.5 Days Offline per Year
@@ -55,21 +82,19 @@ System Design:
 								Server Health Monitoring?
 
 							Scalability?
-								Peak Usage Scenarios for provided Service?
-									Per Second?
-									Per Minute?
-									Per Hour?
-
 								Horizontal Scalability: How easy is it to add more Machines to each part of the System.
 									Load Balancing: Something that helps to distribute Traffic to other multiple identical Web Servers.
 										Server Software: Nginx
-										DNS Load Balancing: A Technique which gives different IP Addresses of the different available Web Servers per Request.
+
+										Layer 3: IP Load Balancing: Different IP Address per User IP Address.
+										Layer 4: DNS Load Balancing: A Technique which gives different IP Addresses of the different available Web Servers per Request.
 											Hash the IP Address of the Request?
 
 								Vertical Scalability: Improve the existing Machines by replacing sub-optimal Parts with better Performing ones.
 
 							Available Budget of Compute Resources?
 								Message Queue to prevent dropped Requests if Server is at Full Load?
+									Kafka: Publish Subscribe Nessage Queue Mechanism
 
 								Read-Write I/O Frequency
 									Database: 
@@ -98,6 +123,17 @@ System Design:
 							Bandwidth? For Areas with Poor Internet Access?
 								1 Byte - 1 Character
 								Compression?
+
+								HTTP Polling vs WebSockets:
+									WebSockets allow for Server-side Changes to be Event Driven, meaning less Requests sent than HTTP Polling.
+										Requests contain Header Information and Cookie Information, which eats into the Bandwidth.
+
+							Security?
+								Web Application Firewall?
+
+							Analysis?
+								ELK
+								Splunk
 
 			2. Create API based on Functional Requirements:
 				Application API Considerations:
