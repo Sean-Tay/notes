@@ -482,6 +482,20 @@ Webpack.js
 							sourceMap: <boolean>,					// Produces a Source Map if CSS Modules are used. Note: css-loader ultimately also needs to have this option enabled, as CSS Modules are a css-loader feature.
 						}
 					}
+
+					/* 
+						Sharing Variables between Sass and JS:
+							// SCSS
+							:export {
+								<variable>: <value>
+								// ...
+							}
+
+							// JS
+							import content from '<import-scss>.scss';
+
+							// content.<variable>
+					*/
 				
 			CSS Modules: Enforces Scoping for the CSS imported and used by a JS Module through Dynamically Generated CSS Selector Names.
 				Webpack Packages:
