@@ -136,15 +136,18 @@ Redux.js
 					</Provider>
 
 			With Typescript:
-				Define State Types for the Reducer Functions, and one Generic Interface for Action Objects.
-					export interface IGenericMap<T> {
-						[propName: string]: T
-					}
+				Define State Types for the Reducer Functions, and extend off the Base Redux Action Type for correctly typing Application Action Objects.
+					// Action Object Types
+						import { Action } from 'redux';
 
-					export interface IReduxActionObject {
-						type: string,
-						payload?: any
-					}
+						export interface IAppActionObj extends Action {
+							payload?: unknown
+						}
+
+						export interface ISpecificActionObj extends IAppActionObj {
+							type: string,
+							payload?: <type>
+						}
 
 			With redux-saga: Handles Asynchronous Functionality through ES6 Generators.
 				Define individual Saga Functions to handle Asynchronous Functionality.
@@ -162,6 +165,9 @@ Redux.js
 
 							// Await Promise Result - Blocking.
 							const promiseResult = yield <promise>;
+
+							// Tip: If TypeScript gives an Error regarding the <function> Argument, one can make the Error more specific by specifying the value of the Generic <function> Argument that the Functions below take:
+							// e.g. yield call<typeof <function>>(<function>, <args-array>);
 
 							// Call a Function - Blocking.
 							// Note: If <function> has Child Executing Instances, it will wait until all Child Executing Instances has finished.
