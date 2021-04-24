@@ -55,19 +55,6 @@ CSS:
 		Autoprefixing:			Technique used to transform CSS Syntax to Browser-Specific variants.
 	
 	Details:
-		CSS Specificity:
-			The Higher a CSS Rule-Set's Specificity, the Greater its Priority.
-				In Ascending Order:
-					Type Selectors and Pseudo Elements.
-					Class Selectors.
-					ID Selectors.
-
-					Inline CSS.
-
-					!important.
-
-				/* Note: When Multiple Applicable Selectors have the same specificity, the one defined last (NOT applied last) will be the one applied.*/
-
 		Syntax and Markup Layout:
 			/* General Form */
 				<css-selector> { 
@@ -119,6 +106,38 @@ CSS:
 
 				/** To select for the Last Type of selector1 HTML Element among siblings. */
 				selector1:last-of-type ... {}
+
+		CSS Specificity:
+			The Higher a CSS Rule-Set's Specificity, the Greater its Priority.
+				In Ascending Order:
+					Type Selectors and Pseudo Elements.
+						Nested Selectors.
+
+					Class Selectors, Pseudo Class Selectors and DOM Attributes.
+						Nested Class Selectors.
+
+					ID Selectors.
+
+					Inline CSS.
+
+					!important.
+
+				/* Note: When Multiple Applicable Selectors have the same specificity, the one defined last (NOT applied last) will be the one applied.*/
+
+		Browser Behaviour: 
+			Browsers read CSS from right to left - all Elements that match the rightmost Selector is obtained first, and is gradually filtered out as the Browser reads the left Selectors / traverses up Parent Elements.
+				As such, the rightmost Selector (the Key Selector) is the one with the greatest impact. Use a Class or ID Key Selector for faster Performance.
+				The shorter the overall Selector, the better it will be for Performance.
+
+			General Performance Ranking:
+				ID
+				Class
+				DOM Element
+				Sibling Selectors
+				Child and Descendent
+				Universal: *
+				DOM Attribute
+				Pseudo Classes and Elements
 
 		Unit Specification:
 			x vw, y vh - Relatively scale Element by x% of the viewport width and y% of the viewport height.
