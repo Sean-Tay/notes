@@ -45,6 +45,16 @@ CSS:
 						/* Element */
 						.block__element {}
 
+				SMACSS:					Scalable and Modular Architecture for CSS.
+					5 Categories of CSS Content:
+						Theme			Color Scheme or Typographic Scheme.
+						Base			Defaults Styling (Browser Defaults) for Elements.
+						Layout			Major Components that divide the Page into different Sections - these are not expected to be reusable.
+						Module			Reusable Modular Components of Design.
+						State			Content that describes how an Element will change its appearance when it is in a certain State (e.g. Focused, Blurred).
+
+				Object Oriented CSS:	Encourage Code Reuse via Common Patterns for Faster, more Efficient and Maintenable Stylesheets.
+
 				Atomic CSS: 			The idea of splitting up a CSS Rule-Set into multiple CSS Rule-Sets that each contain only a single CSS Rule specification.
 					Pros:
 						Lean CSS: 		CSS Code Duplication is reduced.
