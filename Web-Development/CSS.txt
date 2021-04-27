@@ -340,8 +340,8 @@ CSS:
 
 				display: block;
 				width: calc(100%); // The Element must have a fixed width, but the calc method can derive a hard px value.
-				overflox-x: hidden:
-				whitespace: nowrap;
+				overflow-x: hidden:
+				white-space: nowrap;
 				text-overflow: ellipsis;
 				padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
 
