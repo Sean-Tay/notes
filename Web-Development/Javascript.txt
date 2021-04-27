@@ -1116,8 +1116,10 @@ Javascript
 					node.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
 						// <eventType>: http://www.w3schools.com/jsref/dom_obj_event.asp
 						// event: the Object containing details about the Event that triggered the listener
-							// event.stopPropagation(): use to stop parent DOM Node from also receiving the event
+							// event.preventDefault(): prevent the default handling of this event (implemented by the User Agent)  from being executed
+							// event.stopPropagation(): stop parent DOM Node from also receiving the event
 						// useCapture: false to specify function should fire during bubbling, true to specify the function should fire during capturing
+
 						// node.eventType = functionID; // Legacy shortcut
 				
 				Remove Event Listener:
