@@ -335,15 +335,24 @@ CSS:
 				text-size-adjust: none; // Ensures that the Browser doesn't automatically inflate Text that is too small, making font-size specifications the Single Source of Truth.
 
 			Optimal Text Ellipsis Setup:
-				// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
-					min-width: auto;
+				// Single-Line:
+					// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
+						min-width: auto;
 
-				display: block;
-				width: calc(100%); // The Element must have a fixed width, but the calc method can derive a hard px value.
-				overflow-x: hidden:
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
+					display: block;
+					width: calc(100%); // The Element must have a fixed width, but the calc method can derive a hard px value.
+					overflow-x: hidden:
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
+
+				// Multiple-Lines:
+					// Note: This should be directly applied to the containing Block Level Element.
+					    display: -webkit-box;
+						-webkit-box-orient: vertical;
+					    width: @dropdown-width;
+    					overflow: hidden;
+    					-webkit-line-clamp: <number>; // Number of Lines to truncate at.
 
 		Notable Packages:
 			Node:
