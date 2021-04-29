@@ -16,6 +16,8 @@ Web Dev:
 
 		REST: 					Representational State Transfer.
 
+		SPA:					Single Page Application.
+
 		HTTPS:					HyperText Transfer Protocol Secure.
 		CSP:					Content Security Policy.
 		CORS:					Cross Origin Resource Sharing.
@@ -199,6 +201,16 @@ Web Dev:
 					Client-Initiated Duplex Streaming Capability vs Request-Response: As a result of leveraging on HTTP 2.0.
 					Strong-Typing vs Serialization for Payload Data.
 					In-Built Load Balancing.
+
+			SPA: An Application Style that controls Application Routing through Client Side JavaScript.
+				Background:
+					Before SPA, Applications had to be split up between different HTML, CSS, and JavaScript Files with regards to the Frontend Resources.
+						This meant that Clients would have to repeatedly Request Resources each time they accessed a different part of the Application.
+
+					With the advent of Bundlers, it is now possible to send the entirety of the Application Frontend Resources over to the Client with one Request-Response.
+						Clients see different parts of the Application through simulation via JavaScript, even if they are just accessing the same Frontend Resources.
+
+			Micro-Frontend: An Application Style that allows for the consolidation of separate SPAs into Frontend Resource. Can be seen as a "Single-SPA" approach.
 
 		Web Security:
 			OWASP:
