@@ -47,6 +47,10 @@ Typescript:
 					// number: Represents a Numerical Value.
 					// bigint: Represents a Large Integer Value.
 
+					// Literal Variables: To allow TypeScript to more accurately scope the Values in these Variables.
+					// const <literal-const> = <value>;
+					// let <literal-value> = <value> as const;
+
 					// Template Type Literals: String Literal Permutation
 					type <type> = `${<type1>}-${<type2>}`;
 
@@ -217,6 +221,14 @@ Typescript:
 
 				const <variable>: <type-alias> = <value>;
 
+				// Interface-like Types:
+				type <interface-like-type> = {
+					<key>: <value>,
+					// ...
+				}
+
+				type <extended-interface-like-type> = <interface-like-type> & ... ;
+
 			Interfaces:			Allows for explicit structure declaration of Values.
 				/** <interface-documentation> */
 				interface <interface-name> {
@@ -232,7 +244,7 @@ Typescript:
 					// ...
 				};
 
-				// Note: Redeclaration of an existing Interface will add onto it. This is not possible with Interface-like Type Aliases.
+				// Note: Redeclaration of an existing Interface will add onto it.
 				interface <interface-name> {
 					<more-properties>: <type>;
 
@@ -256,33 +268,17 @@ Typescript:
 					}
 
 				// Indexable Interface
-				// Tip: Indexable Signatures should reflect any possible Indexable Results.
+				// Note: Interfaces that are not Indexable are not compatible with Interfaces / Interface-Like Types that are. Use the IndexableLikeType Utility Type below to convert the non-Indexable Interface into an InterfaceLikeType.
 					interface <indexable-interface-name> {
 						<known-property>: <sub-type>;
 
 						// ...
 
-						[key: string]: <type>;
-						//OR
 						[key: number]: <type>;
+						// OR
+						[key: string]: <type>;
 
-						// ...
-					}
-
-				// Mapped Indexable Types
-				// Note: For declaring possible Interface Keys.
-				// Tip: Use the Record Utility Type instead.
-					type <type-name> = 'key-a' | 'key-b' | // ... | 'key-n' ;
-					type <indexable-type-name> = {
-						[key in <type-name>]: <type>;
-
-						// ...
-					}
-
-				// Mapped Indexable Types over Enums
-				// Note: For declaring possible Interface Keys via Enums.
-				// Tip: Use the Record Utility Type instead.
-					type <indexable-type-name> = {
+						[key in <union-literal-type>]: <type>;
 						[key in <enum>]: <type>;
 
 						// ...
@@ -318,6 +314,9 @@ Typescript:
 
 					// NonNullable: To remove null and undefined from a Type.
 						let <non-null-non-undefined-type-variable>: NonNullable<<type>> = {}; // Include one set of Angled Brackets.
+
+				// Utility for converting an Interface into an Interface-Like Type:
+					export type InterfaceLikeType<T> = { [ K in keyof T ]: T[ K ] };
 
 			Modules
 			Namespaces
@@ -424,6 +423,12 @@ Typescript:
 
 		External Libraries:
 			React:
+				// For Functions which accepts only one Generic Type, specify the Function as such:
+				// Note: The comma is neccessary to prevent unwanted JSX Syntax Inference.
+					const <generic-function> = <T,>(arg: T) => {
+						// ...
+					}
+
 				// The Type for the children argument passed in via Component Props should be specified as React.ReactNode.
 				// children?: React.ReactNode
 
