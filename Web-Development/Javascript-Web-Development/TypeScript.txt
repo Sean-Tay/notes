@@ -240,6 +240,9 @@ Typescript:
 
 					/** <text> */
 					<documented-property>: <type>;
+					
+					// Allows an Interface Property to reference another Property within the same Interface via F-bounded Polymorphism.
+					<dependent-property>: this['<property>'];
 
 					// ...
 				};
