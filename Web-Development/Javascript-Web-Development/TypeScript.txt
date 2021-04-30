@@ -318,8 +318,17 @@ Typescript:
 					// NonNullable: To remove null and undefined from a Type.
 						let <non-null-non-undefined-type-variable>: NonNullable<<type>> = {}; // Include one set of Angled Brackets.
 
-				// Utility for converting an Interface into an Interface-Like Type:
+				// Utility Type for converting an Interface into an Interface-Like Type:
 					export type InterfaceLikeType<T> = { [ K in keyof T ]: T[ K ] };
+
+				// Pattern for detecting Record / Dictionary Value Type based on provided Key.
+					export type <interface-like-type><T> = {
+						[K in keyof T]-?: {
+							key: K;
+
+							// <field>: T[K]
+						}
+					}[keyof T]
 
 			Modules
 			Namespaces
