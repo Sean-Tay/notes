@@ -172,4 +172,13 @@ Git:
 		git log					- See information about past Commits, with the first Commit being the most recent.
 		git log --all --decorate --oneline --graph - Observe Commit history of the current Local Repository as a graph.
 		
+		git bisect				- Utility that uses a Binary Search Algorithm to find a specific Commit.
+			start				- Starts a Searching Session.
+			old	<commit-hash>	- Specify the "left" Boundary of the Binary Search via a Commit Hash.
+			new	<commit-hash>	- Specify the "right" Boundary of the Binary Search via a Commit Hash.
+
+			old					- Specify that the Binary Search should continue within the "right" Section.
+			new					- Specify that the Binary Search should continue within the "left" Section.
+
+			reset				- Stop the Session and return to HEAD.
 	
