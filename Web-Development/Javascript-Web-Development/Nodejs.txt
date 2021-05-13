@@ -25,7 +25,10 @@ Node.js:
 
 		Code:
 			// CommonJS or ServerJS: Module System used before the Javascript Spec incorporated it.
-				// The importable functionality of a NodeJS File is defined within this module.exports JS Object.
+				// Specify an Export for this Module:
+				exports.<item> = // ...;
+
+				// Specify a Default Export for this Module:
 				module.exports = {
 					function1 : function () { // ... }, 
 					function2 : function () { // ... }, 
@@ -190,9 +193,10 @@ Node.js:
 					"dependencies": { // ... // },						// Specifies the Node Dependencies that the Node Project depends on to run correctly.
 					"devDependencies": { // ... // },					// Specifies the Node Dependencies that the Node Project uses during development. This is more important for Node Projects that get deployed "as-is" without things like Project Bundlers. Specifying them here would exclude these Packages from being deployed together with the Node Project.
 
+					// Minimum Node / NPM Version requires 'engine-strict=true' within a .npmrc File in the same Directory as package.json.
 					"engines": {
-						"npm": "<version>"								// Specifes version of NPM to use when installing the Node Project's Dependencies.
-						"node": "<version>"								// Specifies version of Node to use to run the Node Project.
+						"npm": ">=<version>"							// Specifies minimum version of NPM to use when installing the Node Project's Dependencies.
+						"node": ">=<version>"							// Specifies minimum version of Node to use to run the Node Project.
 					},
 
 					"types": "<typing-file-path>",						// Indicates Typing Information for this Node Project. Useful for Library Packages.
