@@ -27,6 +27,8 @@ Prettier
 
 			// Editor Integration
 				// VSCode: 
+					// Set "Editor: Default Formatter" to be prettier.
+
 					// Use UI to enable "Format On Save".
 					
 					// OR
@@ -37,5 +39,5 @@ Prettier
 					}
 
 	Commands:
-		prettier --write .
+		prettier --write . 		# Runs Prettier on accessible Files.
 	
