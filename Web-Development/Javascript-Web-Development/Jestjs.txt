@@ -27,10 +27,14 @@ Jest
 	
 	Details:
 		Packages:
+			Tip: Jest is a Test Runner, not just a Testing Framework. In that sense, Jest just needs to be configured to handle different Syntaxes if needed.
+
 			jest				
 			@types/jest			Allows Intellisense to properly work in Jest Test Files with Typescript.
 
 			babel-jest			Allows usage of Babel with Jest.
+
+			ts-jest				Allows Jest to preprocess TypeScript Test Files.
 
 			identity-obj-proxy	Used for Mocking CSS Module Assets.
 
@@ -38,10 +42,14 @@ Jest
 			// package.json Configuration - specify a 'jest' Key to store the Configuration Object.
 			// Alternatively, specify a jest.config.js to store Configuration Object. Just export the Configuration Object (i.e. no need to key it to 'jest').
 			"jest": {
-				"verbose": true,
+				"rootDir": "<project-root-directory>",
 
-				"bail": <number>, // Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
-				
+				// Subject matched Test Files to Parsers first before running them.
+				"transform": { 
+					"<file-name-regex>": "<parser>",
+					"^.+\\.(ts|tsx)$": "ts-jest"
+				},
+
 				// A map between Dependency Regexes and Mock Module Paths.
 				// Note: Regexes and Paths are checked in sequence until one matches.
 				// Note: '<rootDir>' is a Jest defined String-Token - use with the Angled Brackets.
@@ -52,10 +60,14 @@ Jest
 					],
 
 					// Aliases are used to shorten import or require declarations in Files.
-					"^<path-alias>/(*.)$": "<rootDir>/<path>/$1",
+					"^<path-alias>/(.*)$": "<rootDir>/<path>/$1",
 
 					// ...
-				}
+				},
+
+				"verbose": true,
+
+				"bail": <number>, // Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
 
 				// ...
 			}
@@ -70,6 +82,8 @@ Jest
 		Setup Considerations:
 			Webpack: 
 				Babel: Babel Configuration should ideally be specified in a separate babel.config.json / .babelrc, instead of within webpack.config.js alongside babel-loader specific Configuration.
+
+			TypeScript: Consider creating a separate tsconfig.json if all Tests are contained in a Test Folder.
 
 		Flow:
 			Test Suite Locations:
@@ -252,6 +266,8 @@ Jest
 				expect(<target-invocation>).toThrow(<error>)
 
 	Commands:
-		jest	# Triggers Jest Tests.
-		jest --watchAll # Triggers Jest Tests whenever there is a change in Code.
+		jest --init				# Generate a basic Jest Config File.
+
+		jest					# Runs Jest Tests.
+		jest --watchAll 		# Runs Jest Tests whenever there is a change in Code.
 	
