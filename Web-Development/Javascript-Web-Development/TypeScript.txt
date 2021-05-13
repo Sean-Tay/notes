@@ -334,7 +334,9 @@ Typescript:
 			Namespaces
 			OOP Support
 				// Classes
-					class <class-name> {
+					class <class-name> implements <interface> {
+						// Note: Implemented Interfaces do not enforce the Typing of Member Attributes - they only serve to declare to Clients that the Class can be treated as the Interface Type.
+
 						// Readonly Class Variable
 						<private | protected | public | static> readonly <readonly-variable> = <value>;
 
