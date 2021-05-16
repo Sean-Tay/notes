@@ -263,7 +263,7 @@ Jest
 					// Note: Keys with undefined Values will not match with an Object without those Keys.
 
 				// Errors
-				expect(<target-invocation>).toThrow(<error>)
+				expect(() => <function>()).toThrow(<error>)
 
 	Commands:
 		jest --init				# Generate a basic Jest Config File.
