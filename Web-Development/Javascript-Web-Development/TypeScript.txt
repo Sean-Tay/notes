@@ -196,9 +196,11 @@ Typescript:
 						// Note: This Function should NOT return if the Assertion is false:
 							// if (!(typeof(arg) !== '<stricter-type>')) throw new TypeError(' ... ');
 							// if (!(arg instanceof <stricter-type>)) throw new Error(' ... '); 
-
-						return <boolean>;
 					}
+
+					// Note: An Explicit Call Signature is required for Assertion-Signature Type Guards assigned to Variables:
+					// export const assertIsType: <explicit-call-signature> = () => { // ... };
+					export const assertIsType: (arg: <type>): asserts arg is <stricter-type> = () => { // ... };
 
 				// Type Assertion
 					<value> as <type>
