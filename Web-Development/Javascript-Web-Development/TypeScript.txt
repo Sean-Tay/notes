@@ -337,7 +337,8 @@ Typescript:
 			OOP Support
 				// Classes
 					// Note: Implemented Interfaces do not enforce the Typing of Member Attributes - they only serve to declare to Clients that the Class can be treated as the Interface Type.
-					// Tip: Use Abstract Base Classes that implement the Interface to help declare Instances of Implementable Interfaces.
+					// Note: Implemented Interfaces have their Member Attributes set to Public by default.
+					// Tip: Use Abstract Base Classes that implement the Interface to help declare Instances of Implementable Interfaces, or for Non-Public Member Attributes.
 					abstract <base-class-name> implements <interface> {
 						<protected | public> abstract <variable-name>: <variable-type>;
 
