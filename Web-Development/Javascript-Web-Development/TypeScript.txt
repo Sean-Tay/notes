@@ -414,10 +414,13 @@ Typescript:
 						// "Node" Module Resolution will set Typescript to search in the node_modules Folder too.
 
 					// Specify Aliases that can be used to shorten import or require declarations in Files.
+					// Note: If using TypeScript to compile, additional Tools are required to correctly convert the baseUrl and <path-alias> during Compilation. 
+						// ttypscript + @zerollup/ts-transform-paths ; use ttsc to trigger the compilation rather than tsc
 					"baseUrl": ".",
 					"paths": {
 						"<path-alias>/*": ["<path-relative-to-baseUrl>/*"]
 					},
+					"plugins": [{ "transform": "@zerollup/ts-transform-paths" }],
 
 					"esModuleInterop": true, // Treat CommonJS Modules as though they have ES-like default exports for compatibility with ES Modules. Note: Forces consuming Packages to also activate this.
 					"isolatedModules": true, // Disallow Features that requires Cross-File Analysis. Useful when Babel is to be used for compilation and transpilation instead.
