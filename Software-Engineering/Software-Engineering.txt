@@ -23,6 +23,7 @@ Application Development:
 
 			Open-Close:				Components should be Open to Extension but Closed for Modification. Basically, Inherit rather than modify.
 				Tip: More about improving Code Maintenability by reducing chance of Regression / Bugs.
+				Tip: Avoid using Private Variables when considering this.
 
 			Liskov Substitution:	Instances of a Higher Level should be replaceable by Instances of a Lower Level, without breaking the Application.
 				Note: Not just in terms of the Contractual Interface, but also the behaviour of the two.
