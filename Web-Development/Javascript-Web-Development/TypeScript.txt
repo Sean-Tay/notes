@@ -357,6 +357,9 @@ Typescript:
 							// ...
 						}
 
+						// Note: Getters and Setters for Class Variables must have the same Visibility.
+						// Tip: readonly Variable and dedicated Setter?
+
 						// ...
 					}
 
