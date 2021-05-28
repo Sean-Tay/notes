@@ -362,7 +362,7 @@ CSS:
 					// Note: This should be directly applied to the containing Block Level Element.
 					    display: -webkit-box;
 						-webkit-box-orient: vertical;
-					    width: @dropdown-width;
+					    width: <value>;
     					overflow: hidden;
     					-webkit-line-clamp: <number>; // Number of Lines to truncate at.
 
