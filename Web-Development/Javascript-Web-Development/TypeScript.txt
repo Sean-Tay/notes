@@ -339,6 +339,7 @@ Typescript:
 					// Note: Implemented Interfaces do not enforce the Typing of Member Attributes - they only serve to declare to Clients that the Class can be treated as the Interface Type.
 					// Note: Implemented Interfaces have their Member Attributes set to Public by default.
 					// Tip: Use Abstract Base Classes that implement the Interface to help declare Instances of Implementable Interfaces, or for Non-Public Member Attributes.
+						// Prefer Protected Members for Base Classes, so as to not force Child Classes to make inherited / overridable Members Public.
 					abstract <base-class-name> implements <interface> {
 						<protected | public> abstract <variable-name>: <variable-type>;
 
@@ -356,6 +357,9 @@ Typescript:
 						constructor(public <public-property>, private <private-property>, ... ) {
 							// ...
 						}
+
+						// Note: Getters and Setters for Class Variables must have the same Visibility.
+						// Tip: readonly Variable and dedicated Setter?
 
 						// ...
 					}
