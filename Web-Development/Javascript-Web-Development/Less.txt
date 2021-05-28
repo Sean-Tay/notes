@@ -62,20 +62,29 @@ Less
 					// ... 
 				}
 
+			Rule-Set Extension:
+				// vs. Mixins: Less CSS generated, can extend one potentially complex Selector.
+				<css-selector-A>:extend(<css-selector-B>) {
+					// ...
+				}
+
 			Mixins: Use Rule-Sets within other Rule-Sets.
-				<css-selector-A> {								// CSS-Visible Mixin Definition
-					<rule-A>: <value-A>;
+				// vs. Extensions: More CSS generated, can extend multiple simple Selectors.
+				<less-mixin>(@argument: <default-value>, ... , @rest) {	// Mixin Definition
+					<rule>: @argument;
+
+					<rule>: @arguments; 						// Special keyword to refer to all specified Arguments.
+
 					// ...
 				}
 
-				<invisible-selector>() {						// CSS-Invisible Mixin Definition
-					<rule>: <value>;
+				<less-invisible-mixin>() {						// Mixin that is not included in compiled CSS Output.
 					// ...
 				}
 
-				<css-selector-B> {
+				<css-selector-B> {								// Mixin Use
+					<less-mixin>(@<parameter>: <value>, @<list-parameter>: ~(<list-value-1>, <list-value-2>, ...), ...);				
 					<rule-B>: <value-B>;
-					<css-selector-A>();							// Mixin Call
 				}
 
 				{ # | . }() {									// Anonymous Mixin Definition
