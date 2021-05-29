@@ -19,6 +19,7 @@ Application Development:
 		SOLID:						Set of Design Principles to make Software more Flexible, Understandable and Maintainable.
 			Single Responsibility:	Components should only handle one part of the Software's Specification, and it should only have one reason to change.
 				Tip: Bad for Maintenability if two things are Coupled, which could change differently / at different times.
+				Tip: Avoid coupling State of a Component with the Operations of the Component. Use a Class to solely represent State, and another Class that acts upon the State?
 				Example: Module for Compiling a Report, and Module for Printing the Report.
 
 			Open-Close:				Components should be Open to Extension but Closed for Modification. Basically, Inherit rather than modify.
