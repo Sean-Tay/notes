@@ -704,7 +704,7 @@ React.js
 				DotEnv Functionality.
 					For injection of DotEnv Variables into the App Bundle, prefix the Variable Names with 'REACT_APP_'.
 			
-			npx create-react-app <app-name> # Create a Boilerplate React Project.
+			npx create-react-app <path-name> # Create a Boilerplate React Project at the given Path.
 				--template=typescript # Create a Boilerplate React + Typescript Project.
 
 			npm run eject			# Import the (Webpack) configuration files from create-react-app for more customization of the local React Project.
