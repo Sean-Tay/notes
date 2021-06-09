@@ -362,6 +362,13 @@ Typescript:
 						// Tip: readonly Variable and dedicated Setter?
 
 						// ...
+
+						// Override Keyword - used to let TypeScript know that there should be a corresponding Method in the Parent Class; if not, issue a Compile Error
+						// Tip: Useful with the --noImplicitOverride Flag enabled in the Compiler Configuration.
+						override <function-name>() {
+							// super.<function-name>();
+							// ...
+						}
 					}
 
 					// Constructor Signature
@@ -408,6 +415,7 @@ Typescript:
 					"strict": true,		// Enables some Syntax Rules.
 					"noImplicitAny": true, // Raise a Lint Error on Expressions which TypeScript is unable to infer, and would normally assume the 'any' Type.
 					"noImplicitThis": true, // Raise a Lint Error on situations when 'this' refers to the unintended Type.
+					"noImplicitOverride": true, // Raise a Lint Error when a Child Class overrides a Parent Class Method without the corresponding Keyword.
 					"strictNullChecks": true, // Make sure 'null' is its own Type. If this is off, any other Type can also hold 'null' values.
 
 					"allowJs": true,	// Allow JS Files to be processed.
