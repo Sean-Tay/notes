@@ -30,7 +30,7 @@ React.js
 		Rendering: 					The process by which React determines how the UI should look and appear by checking involved React Component Instances.
 
 		[Re-]Render: 				The process of [re-]creating any associated React Element from a React Component Instance. This often results in Reconciliation.
-		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI / Actual DOM, and the minimum number of steps to do so. The changes are accumulated before the diff-ing occurs as a form of optimization.
+		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI / Actual DOM, and the minimum number of steps to do so. The changes are batched before the diff-ing occurs as a form of optimization.
 
 		Mounting:					Phase in the Component Lifecycle in which a Component Instance is going to be Painted for the first time.
 		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
@@ -56,7 +56,7 @@ React.js
 		
 		Rendering:
 			During the Rendering Process, each Component will describe how the UI state should appear, given certain information that it has / receives (i.e. State / Props), usually via JSX.
-				React Elements are produced when inline JSX is compiled down to React.createElement() calls during Rendering.
+				React Elements are produced when inline JSX is compiled down (via a suitable Transpiler) to React.createElement() calls during Rendering.
 					Evaluation of any JS is only done via JS Injection within curly braces.
 						You cannot inject JS if-statements directly within JSX. Utilize either:
 							1. Ternary Operator - it always evaluates to a JS Expression (returns a value) unlike an if-else statement.
@@ -79,10 +79,10 @@ React.js
 
 			By default, a Component Instance gets [Re-]Rendered when:
 				When the State of a Component Instance changes.
-					Presumably, Props come from an Ancestor's State, and if the Ancestor's State changes, the Ancestor's Component Instance would be Re-Rendered, which by default should propagate the Re-Render call down to the current Component Instance.
-						Tip: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
 				
 				Whenever an Ancestor Component Instance gets [Re-]Rendered.
+					Presumably, Props come from an Ancestor's State, and if the Ancestor's State changes, the Ancestor's Component Instance would be Re-Rendered, which by default should propagate the Re-Render call down to the current Component Instance.
+						Tip: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
 		
 		Best Practices:
 			Rely only on a Single-Source of Truth for each variable. Go with either: 
