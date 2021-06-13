@@ -85,6 +85,8 @@ React.js
 						Tip: Be careful of derived State from Props - it is not obvious that the State won't update further as a result of a change in Props.
 		
 		Best Practices:
+			Avoid having Components that are overly large (longer than 300 LoC).
+
 			Rely only on a Single-Source of Truth for each variable. Go with either: 
 				Controlled Child Component:
 					Pass Parent Component State / State Changer Function into the Controlled Child Component as Props.
@@ -136,6 +138,7 @@ React.js
 							this.setState(
 								(state, props) => {
 									return {
+										...state,
 										// New Object that represents the intended changes to the State Object.
 										// DO NOT mutate the State Object directly.
 									};
@@ -270,8 +273,7 @@ React.js
 					// Unmounting:
 						componentWillUnmount() {
 							// Called immediately before a Component Instance is removed from the Actual DOM Tree and is destroyed.
-
-							// clearInterval ...
+							// Suitable for Clean-Up Actions to avoid Memory Leaks
 						}
 				}
 				
@@ -319,19 +321,19 @@ React.js
 					// Local Component State
 						// Each State Variable defined in the manner below is independent from one another.
 						// Note: Old State Values for each Variable will always be completely replaced when using the accompanying Setter Function. Keep in mind when updating Data Structures.
-						// Note: The State Value does NOT get updated if it was initialized from a Prop and that Prop changes. Update it via useEffect.
+						// Note: getDerivedStateFromProps - The State Value does NOT get updated if it was initialized from a Prop and that Prop changes. Update it via useEffect.
 						// Tip: For ES6 Sets and Maps (mutable Data Structure) States, each time their Content is changed, simply do <state-var-setter-function>(oldDS => new DS(oldDS)) to let React know to Re-Render.
 						const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
 
-						// Modify the State.
-						<state-var-setter-function>(<new-value>);
-						// Modify the State based on the previous State.
-						<state-var-setter-function>(
-							(<prev-value>) => {
-								// ...
-								return <new-value>;
-							}
-						);
+							// Modify the State.
+							<state-var-setter-function>(<new-value>);
+							// Modify the State based on the previous State.
+							<state-var-setter-function>(
+								(<prev-value>) => {
+									// ...
+									return <new-value>;
+								}
+							);
 
 						// To minimize the amount of times the State gets updated, do the following:
 							1. Create a separate copy of the <state-var> to be changed at the start of the scope.
@@ -342,8 +344,9 @@ React.js
 						// Changes made to these Variables here will not cause a Re-Render.
 						// Tip: This can also be used to maintain references to non-primitive Variables across Renders.
 						const <ref-var> = React.useRef(<initial-value>);
-						// Access / Modify the Ref.
-						<ref-var>.current = <new-value>;
+
+							// Access / Modify the Ref.
+							<ref-var>.current = <new-value>;
 
 					// Advanced Local Component State Management
 						// The key difference between useState and useReducer is that for useReducer the State can be altered in a controlled manner as opposed to simply using the <state-var-setter-function>.
@@ -380,8 +383,8 @@ React.js
 								};
 							}, 
 							// An optional 'Dependency List' of Variables can be specified as well to limit when the submitted Function executes.
-							// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed ( === type check ) after the first, and only after each subsequent Render.
-							// Note: The cached values in the Dependency Array only get updated per Render. If these change, the Component may NOT automatically re-Render.
+							// By submitting this List of Variables, React will then additionally only execute the submitted Function if any of the Variables in the List are changed ( Shallow Comparison ) after the first, and only after each subsequent Render.
+							// Note: The cached values in the Dependency Array only get updated per Render. If these change outside of Renders, the Component may NOT automatically re-Render.
 							// Tip: Passing an Empty List here would make the submitted Function behave like componentDidMount.
 							// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
 							// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
@@ -398,10 +401,6 @@ React.js
 
 					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
 						// Important Note: The Dependency Array for Optimization Hooks is of a different nature than the ones used for Side-Effect Hooks. If the submitted Function may directly or indirectly reference any Component's State (it's own or from Ancestor Components' passed in as Props), the references should be placed in the Dependency List.
-						// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
-						// Tip: For Functions, specify as it is (do NOT use JSON.stringify) to avoid false negatives.
-						// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
-							// Tip: For ES6 Sets and Maps (mutable Data Structure) States, each time their Content is changed, simply do <state-var-setter-function>(oldDS => new DS(oldDS)) to let React know to Re-Render.
 
 						// Used to prevent unneccessary recalculation of some value per Re-Render.
 						// Tip: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
@@ -417,15 +416,11 @@ React.js
 								return <ExampleComponent arg={<variable>} />;
 							},
 							// Optional 'Dependency List' of Variables.
+							// Tip: For Arrays and Objects, use JSON.stringify for a cheap deep comparison.
+							// Tip: For Functions, specify as it is (do NOT use JSON.stringify) to avoid false negatives.
+							// Note: For Functions, ES6 Sets and Maps, the default JSON.stringify does not work correctly on them. Stick to comparing their References.
+							// Tip: For ES6 Sets and Maps (mutable Data Structure) States, each time their Content is changed, simply do <state-var-setter-function>(oldDS => new DS(oldDS)) to let React know to Re-Render.
 							[ <variable>,  ... ]
-
-							// OR
-
-							// Optional Comparator Function
-							(prev, next) => {
-								// return true if the value should not be recalculated
-								// return false otherwise
-							}
 						);
 						
 						// Used to define Functions within Functional Components that won't be unneccessarily recreated per Re-Render.
@@ -454,6 +449,7 @@ React.js
 							Single Source of Truth: In places where the State needs to be reset, this approach would prevent unwanted Code Duplication.
 
 						2. Leverage on Custom Hooks to improve Readability and Extensibility.
+							Especially for useEffect - use Custom Hooks to provide better self-describing names to Effects for easier Readability.
 						
 						3. Prefer useCallback for situations where setting Component State is involved, and external Pure Functions where it is not.
 							For controlled execution of Callbacks after asynchronous setStates, utilize useEffect and special State Sentinel Values, of which the Callbacks will trigger only when those Sentinel Values change.
