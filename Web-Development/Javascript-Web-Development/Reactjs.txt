@@ -34,6 +34,7 @@ React.js
 			The changes are Batched before the diff-ing occurs as a form of optimization.
 				React <= v17:		Only Batch Synchronous State Changes within Browser Event Handlers.
 				React >= v18:		Automatic Batching: Batch all State Changes where possible.
+		Commit:						The process of applying the actual changes needed for the UI to the Actual DOM.
 
 		Mounting:					Phase in the Component Lifecycle in which a Component Instance is going to be Painted for the first time.
 		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
@@ -41,6 +42,9 @@ React.js
 
 		Uncontrolled Component:		A React Component Instance that maintains its own internal State.
 		Controlled Component:		A React Component Instance that does not maintain internal State.
+
+		Side-Effects:				Anything that changes something that is not within that current scope. In React's case, it involves any functionality that interacts with things outside of what React typically handles (DOM Tree mutations arising from State changes).
+		Pure Function:				A Function with no Side-Effects.
 	
 	Details:
 		React.js Library manages the Virtual DOM.
@@ -102,7 +106,7 @@ React.js
 					Using the special 'key' Prop would offer the Parent Component some way to reset the Uncontrolled Child Component.
 					Expose a method in the Uncontrolled Child Component for the Parent Component to invoke (use a Ref to get a reference to the Child Component Instance).
 
-			Keep the Render Functionality of a Component free from any resource-intensive operations, or long running side-effects.
+			Keep the Render Functionality of a Component free from any resource-intensive operations, or long running Side-Effects.
 
 		React Components:
 			import * as React from 'react';
@@ -118,6 +122,7 @@ React.js
 				// Note: Class Names to begin with a Capital Letter to help React distinguish between HTML Elements and React / JSX Element.
 				class ExampleComponent extends React.Component {
 					// Initialization:
+						// Note: Should be a Pure Function.
 						constructor(props) {
 							super(props);
 
@@ -139,6 +144,7 @@ React.js
 							// Use setState() instead to merge in changes to the State, which will also implicitly re-render the Component.
 							// Don't reference this.state directly as the update triggered by this.setState is asynchronous - use the update function argument form, as shown below.
 							this.setState(
+								// Note: Should be a Pure Function.
 								(state, props) => {
 									return {
 										...state,
@@ -158,6 +164,7 @@ React.js
 							// ...
 						}
 
+						// Note: Should be a Pure Function.
 						static getDerivedStateFromProps(props, state) {
 							// Exists to update State based on Props over time.
 							// Executes just before each Render.
@@ -167,10 +174,10 @@ React.js
 						}
 
 						// Compulsory
+						// Note: Should be a Pure Function.
 						render() {
 							// Examines this.props and this.state, and returns a React Element.
 							// Child Component Instances are also triggered to Render.
-							// This should be a Pure Function - do not call this.setState() or mutate any State here.
 
 							let subReactElement = (
 								<div> 
@@ -210,7 +217,8 @@ React.js
 							)
 						}
 
-					// Mounting: 
+					// Mounting:
+						// Note: Should be a Pure Function.
 						UNSAFE_componentWillMount() {
 							// Called before the render Function is invoked - a chance to change the State before the Component Instance is Rendered.
 							// A preferred alternative would be to set the desired State in the constructor as part of Initialization.
@@ -234,6 +242,7 @@ React.js
 						}
 
 					// Updating:
+						// Note: Should be a Pure Function.
 						UNSAFE_componentWillReceiveProps(nextProps) {
 							// Called whenever the Parent causes a re-render.
 							// Executes before the Component accepts new Props.
@@ -243,6 +252,7 @@ React.js
 
 						static getDerivedStateFromProps()
 						
+						// Note: Should be a Pure Function.
 						shouldComponentUpdate(nextProps, nextState) {
 							// Default Behaviour is to re-render on any State or Prop change, or if a Parent re-renders.
 							// Note: Can be seen as the combination of the Dependency Arrays from all theoretical 'useEffect' Hooks in a Functional Component.
@@ -251,6 +261,7 @@ React.js
 							// return false otherwise.
 						}
 						
+						// Note: Should be a Pure Function.
 						UNSAFE_componentWillUpdate(nextProps, nextState) {
 							// Cannot call this.setState() here.
 							// Meant for interactions outside of the React architecture.
@@ -300,6 +311,7 @@ React.js
 
 			Function Component:
 				// Useful as Presentational Components
+				// Note: The Function Component Body should be a Pure Function.
 				const ExampleComponent = (props) => { // Recall that all Properties defined via JSX gets put into a singular 'props' Object by React.
 					// Extract / Consume the Props that are used.
 					// other will contain all other unused Props via destructuring, which can then be separately passed down to Child Components.
@@ -356,11 +368,7 @@ React.js
 						// It is also more suited for managing State Objects that have multiple sub-values.
 						const [ <state-var>, <dispatch-function> ] = React.useReducer( 
 							(state, action) => {
-								// Reducer Function - A Function that combines two or more Arguments and returns the combination.
-								// Practically, it should be a Pure Function that:
-									// Does not mutate Arguments.
-									// Does not generate Side-Effects (API Calls, etc).
-									// Execute Impure Functions within.
+								// Reducer Function - A Pure Function that combines two or more Arguments and returns the combination.
 
 								// Based on action's Properties, a new State based on the passed in state should be returned.
 									// Switch on action.type
