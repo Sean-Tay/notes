@@ -30,7 +30,10 @@ React.js
 		Rendering: 					The process by which React determines how the UI should look and appear by checking involved React Component Instances.
 
 		[Re-]Render: 				The process of [re-]creating any associated React Element from a React Component Instance. This often results in Reconciliation.
-		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI / Actual DOM, and the minimum number of steps to do so. The changes are batched before the diff-ing occurs as a form of optimization.
+		Reconciliation:				The asynchronous process of diff-ing the current Virtual DOM Tree, and the next Virtual DOM Tree with changes from any Re-Renders applied to ascertain the actual changes needed for the UI / Actual DOM, and the minimum number of steps to do so. 
+			The changes are Batched before the diff-ing occurs as a form of optimization.
+				React <= v17:		Only Batch Synchronous State Changes within Browser Event Handlers.
+				React >= v18:		Automatic Batching: Batch all State Changes where possible.
 
 		Mounting:					Phase in the Component Lifecycle in which a Component Instance is going to be Painted for the first time.
 		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
@@ -669,18 +672,23 @@ React.js
 						}
 
 			Application Rendering:
-				let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
-				ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.
+				React <= v17:
+					let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
+					ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.
 
-				// OR
+					// OR
 
-				ReactDOM.render(<ExampleComponent />, document.getElementById('...'));
+					ReactDOM.render(<ExampleComponent />, document.getElementById('...'));
 
-				// OR 
+					// OR 
 
-				ReactDOM.render(<ExampleComponent> // ... </ExampleComponent>, document.getElementById('...'));
-				// Within ExampleComponent, the special props.children can be used to reference all nested React Elements that is a child of this ExampleComponent.
-				// React.Children API Methods.
+					ReactDOM.render(<ExampleComponent> // ... </ExampleComponent>, document.getElementById('...'));
+					// Within ExampleComponent, the special props.children can be used to reference all nested React Elements that is a child of this ExampleComponent.
+					// React.Children API Methods.
+
+				React >= v18:
+					const root = ReactDOM.createRoot(document.getElementById('...'));
+					root.render(<ExampleComponent />);
 		
 		React Form: Modified HTML Form that uses React State as a single-source of truth.
 			Typical HTML Form Elements maintain their own State (Uncontrolled). However, the React version of these Elements use the Component State instead (Controlled).
