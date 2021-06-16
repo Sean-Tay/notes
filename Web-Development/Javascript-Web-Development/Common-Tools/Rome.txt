@@ -1,0 +1,48 @@
+Rome:
+	Abbreviations:
+	
+	Description: A Linter, Compiler, Tester and Bundler (all-in-one Build Tool) for Projects containing TypeScript, JavaScript, CSS and HTML.
+	
+	Resources:
+	
+	Concepts:
+		Diagnostics: Project Issues raised by Rome.
+	
+	Details:
+		Behaviour:
+			Linting Rules cannot be disabled, and can only be suppressed.
+				HTML: <!-- rome-ignore <category-path>: <description> ... -->
+				CSS and JS: /* rome-ignore <category-path>: <description> ... */
+
+			Testing: Files with the .test.* Naming Convention will be treated as Tests.
+
+		Configuration:
+			// Editor Integration:
+				// VSCode:
+					Install the Rome VSCode Extension for Rome support on VSCode.
+
+		Considerations:
+			Blob Asset Bundling?
+
+	Commands:
+		rome 
+			init	 			# Initialize Rome Config File (inside a .config Sub-Folder).
+				--apply			# Initialize Rome for an already established Project.
+			
+			config				# Adjust Rome Configuration for Project in current Directory.
+				set-directory extends <rome-config-file-path> # Inherit Configuration from another File and Merge Configuration.
+
+				enable root		# Prevent Rome from going up further the File Hierarchy to initialize Parent Projects.
+
+				push lint.ignore <path>	... # Prevent Linting on Files at / within <path>.
+
+			check				# Execute Linting.
+				<path>			# Execute Linting on a File / all Files within a Directory.
+				--watch			# Execute Linting upon change.
+
+				--review		# Selectively apply suggested Linting Improvements.
+				--format-only	# Apply only safe Formatting Improvements suggested by Rome.
+				--apply			# Apply all safe Linting Improvements suggested by Rome.
+
+			bundle <entry-point-file-path> <output-file-path> # Trigger Asset Transformation and File Paths.
+

@@ -7,8 +7,6 @@ Typescript:
 	Resources:
 	
 	Concepts:
-		Language Server: Implements useful IDE Features such as Autocompletion and File Navigation from Code.
-
 		Type Variance: Describes the Degree of Interchangeability between two different Types of diferent Specificity.
 			Invariant: 		No Interchangeability between both Types.
 			Covariant: 		Less Specific (Super) -> More Specific (Sub).

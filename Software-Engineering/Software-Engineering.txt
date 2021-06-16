@@ -1,4 +1,7 @@
 Application Development:
+	Concepts:
+		Language Server Protocol: 	The Protocol used for communication between IDEs and a Language Server to provide advanced Developer Features such as Autocompletion or Reference Navigation.
+
 	Design:
 		Bad Code:					Mainly caused by Coupling.
 			Rigidity:				Modification of one part of code requires changes to other parts of the code due to non-isolation and coupling.
