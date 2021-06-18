@@ -1038,13 +1038,21 @@ Javascript
 					)
 
 		Storage: To persist Data from a given Origin locally.
+			// Note: Same-Origin Policy.
+
 			Local Storage: Read-Only Storage with no Expiration Time.
 				// localStorage.setItem('<key>', <item>);
 				// localStorage.getItem('<key>');
 				// localStorage.removeItem('<key>');
 				// localStorage.clear();
 
+			IndexedDB: Storage meant for keeping large amounts of Structured Data.
+				// Transactional Key-Value Pair Database System for JavaScript Objects (i.e. not Tabular Data).
+					// Note: Transactions auto-commit.
+
 			Session Storage: Read-Only Storage which only persists for as long as the current Tab / Browsing Session does. Survives Page Reloads and Page Refreshes.
+				// Note: Duplicated upon Tab Duplication.
+
 				// sessionStorage.setItem('<key>', <item>);
 				// sessionStorage.getItem('<key>');
 				// sessionStorage.removeItem('<key>');
