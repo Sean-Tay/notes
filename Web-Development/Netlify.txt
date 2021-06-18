@@ -1,14 +1,12 @@
 Netlify
 	Abbreviations:
-		
 
 	Description:				Platform for Hosting and Managing Static Sites and Web Applications.
 
 	Resources: 
-		
 
 	Concepts: 
-		
+		Lambda Functions:		Serverless Functions that only consume Server Capacity when they are executed, as opposed to traditional Server Side / Backend Applications.
 
 	Details: 
 		Features:
