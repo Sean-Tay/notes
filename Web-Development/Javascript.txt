@@ -1040,23 +1040,41 @@ Javascript
 		Storage: To persist Data from a given Origin locally.
 			// Note: Same-Origin Policy.
 
-			Local Storage: Read-Only Storage with no Expiration Time.
-				// localStorage.setItem('<key>', <item>);
-				// localStorage.getItem('<key>');
-				// localStorage.removeItem('<key>');
-				// localStorage.clear();
+			// Synchronous: Key-Value Databases:
+				// Note: 5MB Maximum Storage Capacity.
+				// Note: Only Strings can be stored. Use JSON.stringify to store more Complex Data.
 
-			IndexedDB: Storage meant for keeping large amounts of Structured Data.
-				// Transactional Key-Value Pair Database System for JavaScript Objects (i.e. not Tabular Data).
-					// Note: Transactions auto-commit.
+				// Note: Not recommended by Google Chrome:
+					// Blocks the Main Thread (Synchronous API).
+					// Cannot be used by Workers.
 
-			Session Storage: Read-Only Storage which only persists for as long as the current Tab / Browsing Session does. Survives Page Reloads and Page Refreshes.
-				// Note: Duplicated upon Tab Duplication.
+				Local Storage: Read-Only Storage with no Expiration Time.
+					// localStorage.setItem('<key>', '<item>');
+					// localStorage.getItem('<key>');
+					// localStorage.removeItem('<key>');
+					// localStorage.clear();
 
-				// sessionStorage.setItem('<key>', <item>);
-				// sessionStorage.getItem('<key>');
-				// sessionStorage.removeItem('<key>');
-				// sessionStorage.clear();
+				Session Storage: Read-Only Storage which only persists for as long as the current Tab / Browsing Session does. Survives Page Reloads and Page Refreshes.
+					// Note: Duplicated upon Tab Duplication.
+
+					// sessionStorage.setItem('<key>', '<item>');
+					// sessionStorage.getItem('<key>');
+					// sessionStorage.removeItem('<key>');
+					// sessionStorage.clear();
+			
+			// Asynchronous:
+				IndexedDB: Storage meant for keeping large amounts of Data.
+					// Note: > 100+ MB of Data.
+
+					// Transactional Key-Value Pair Database System.
+						// Note: Transactions auto-commit.
+
+			// Shared Storage:
+				Cookie: 'Storage' that can be shared with the Server, or between multiple Applications in different sub-Domains.
+					// Note: Data must be small to avoid overly large Request Payloads (Cookies are sent with every Request).
+					// Note: Only String Data can be stored. Use JSON.stringify to transform JS Objects into String Data.
+
+					document.cookie		// Returns a semicolon separated list of Cookies, or sets a custom Cookie. Cannot be done if the Cookie has been set to HttpOnly in the HTTP Response Header from the Server.
 
 		Web Workers: For offloading CPU Intensive Tasks into a separate Background Thread.
 			Motivation: Javascript was designed for single-threaded execution, but most Computers nowadays have CPUs that have more than one Execution Core.
@@ -1160,9 +1178,6 @@ Javascript
 				let shadowDOMTree = element.attachShadow({
 					mode: {'open' | 'close'} // Allow if outside JS can access the Shadow DOM Tree.
 				});
-
-			API:
-				document.cookie		// Returns a semicolon separated list of Cookies, or sets a custom Cookie. Cannot be done if the Cookie has been set to HttpOnly in the HTTP Response Header from the Server.
 
 		Resize Observer: To do something when there are Size Changes detected in one or more Observed DOM Nodes.
 			const observer = new ResizeObserver(
