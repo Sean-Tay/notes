@@ -94,6 +94,8 @@ React.js
 		Best Practices:
 			Avoid having Components that are overly large (longer than 300 LoC).
 
+			Use Class-based Components for 'Container' Components / Components with significant Business Logic, and Function-based Components for Re-usable Components.
+
 			Rely only on a Single-Source of Truth for each variable. Go with either: 
 				Controlled Child Component:
 					Pass Parent Component State / State Changer Function into the Controlled Child Component as Props.
@@ -105,8 +107,6 @@ React.js
 
 					Using the special 'key' Prop would offer the Parent Component some way to reset the Uncontrolled Child Component.
 					Expose a method in the Uncontrolled Child Component for the Parent Component to invoke (use a Ref to get a reference to the Child Component Instance).
-
-			Keep the Render Functionality of a Component free from any resource-intensive operations, or long running Side-Effects.
 
 		React Components:
 			import * as React from 'react';
@@ -449,11 +449,6 @@ React.js
 					const nodeRef = React.useRef();
 					// ... <div ref={{nodeRef}}> </div> ...
 					// ... nodeRef.current ...
-
-					// Flow:
-						1. Define initial States via useState Hooks if necessary. Avoid deriving State from Props.
-						2. Query backend API and update State with useEffect / custom Hooks, and with a Dependency List containing Props that pertain to the HTTP Request and REST Query Parameters.
-						3. Render the actual Component only when a certain flag passed from the backend API changes. Use a placeholder 'Loading' Component if the flag is not of a certain state.
 
 					// Tips:
 						1. Define an external Pure Function to Deeply Clone the Initial State for a Component, so that the Shape of the Component's State is easy to see in one place.
