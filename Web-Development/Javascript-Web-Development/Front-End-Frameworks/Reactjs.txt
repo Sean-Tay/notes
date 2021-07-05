@@ -446,9 +446,10 @@ React.js
 						);
 
 					// DOM Node Reference
-					const nodeRef = React.useRef();
-					// ... <div ref={{nodeRef}}> </div> ...
-					// ... nodeRef.current ...
+						// Note: Unaffected by "display: none".
+						const nodeRef = React.useRef();
+						// ... <div ref={{nodeRef}}> </div> ...
+						// ... nodeRef.current ...
 
 					// Imperative Handle for Parent Component
 						// Tip: Try to avoid.
