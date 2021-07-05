@@ -450,6 +450,17 @@ React.js
 					// ... <div ref={{nodeRef}}> </div> ...
 					// ... nodeRef.current ...
 
+					// Imperative Handle for Parent Component
+						// Tip: Try to avoid.
+						useImperativeHandle(
+							ref, // Note: Requires Ref Forwarding.
+							() => ({
+								<publicly-accessible-component-property>: // ...							
+							}),
+							// 'Dependency List'
+							[]
+						)
+
 					// Tips:
 						1. Define an external Pure Function to Deeply Clone the Initial State for a Component, so that the Shape of the Component's State is easy to see in one place.
 							Single Source of Truth: In places where the State needs to be reset, this approach would prevent unwanted Code Duplication.
