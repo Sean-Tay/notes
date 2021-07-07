@@ -314,6 +314,10 @@ CSS:
 									/* Note: On Safari, set flex-shrink: 0 to ensure Child does not shrink beyond the minimum Height in a nested column-direction Flex context (2 or more Levels). */
 
 			Alternative to Element Borders:
+				// Note: Cannot support Rounded Corners.
+				// Note: Cannot support Borders only on individual sides.
+				outline: <thickness> <line-style> <color>;
+
 				box-shadow: inset <x-offset> <y-offset> <blur> <color>;
 
 			Optimal Vertical Scroll Setup:
