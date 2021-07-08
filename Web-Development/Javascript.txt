@@ -799,63 +799,82 @@ Javascript
 					}
 				}
 
-		Symbol: Reflection Metaprogramming within Implementation - used to change the behaviour of existing Classes and Objects.
+		Symbols:
 			// Primitive Data Type.
 
-			// Creation: Do not use the 'new' keyword with the 'constructor'.
+			// Creation: 
+				// Tip: Do not use the 'new' keyword with the 'constructor'.
+				// Tip: '<description>' is primarily used for debugging.
 				var mySym = Symbol('<description>');
+
+				console.log(mySym.toString()); // '<description>'
 
 				// Creation of the Symbol in a 'global' namespace.
 				var myGlobalSym = Symbol.for('<description>');
+					// To check if a Symbol was created in the 'global' namespace:
+					Symbol.keyFor( myGlobalSym ) !== undefined; 
 
-			// A Symbol's Description is primarily used for debugging purposes.
-			// Two Symbols will normally not be equivalent, even if they have the same Description.
-				assert.notEqual(Symbol('foo'), Symbol('foo'));
+			// Equivalence:
+				// Two Symbols will normally not be equivalent, even if they have the same Description.
+					assert.notEqual(Symbol('foo'), Symbol('foo'));
 
-			// If the Symbols were created via Symbol.for(), then equivalence via same Description becomes possible.
-				assert.equal(Symbol.for('foo'), Symbol.for('foo'));
+				// If the Symbols were created via Symbol.for(), then equivalence via same Description becomes possible.
+					assert.equal(Symbol.for('foo'), Symbol.for('foo'));
 
-			// To check if a Symbol was created in the 'global' namespace:
-				Symbol.keyFor( myGlobalSym ) !== undefined; 
+			// Usage:
+				// Enforce Uniqueness / Strict String Enums:
+					const <strict-enum> = Symbol('<value>');
 
-			// Object:
-				// Primarily used as Object Keys, similar to String Keys:
-					var myObj = {};
-					myobj[mySym] = <value>;
+					// ...
 
-				// Symbols are only ever visible within an Object via: 
-					Object.getOwnPropertySymbols(myobj); // Returns a List of Symbols assigned to the Object.
-					
-				// They do not show up when the Object's Keys are iterated over, or via existing Reflection Tools.
-
-				// Can be regarded as a special separate namespace for Object Keys.
-
-			// Classes:
-				// Useful in declaring Private Properties:
-					class ExampleClass {
-						// Declare the Private Variable
-							[<private-variable>] = <private-value>;
-
-						// ...
-
-						// Reference the Private Variable
-							this[<private-variable>]
+					// Example:
+					const <function> = (input) => {
+						if (input !== <strict-enum>) {
+							throw new Error();
+						}
 					}
 
-			// Symbols can be used to activate / change some specific behaviour for an API that takes into account Symbol-Value Mapping.
+					// Will throw Error:
+					<function>('<value>');
+					<function>(Symbol('<value>'));
 
-			// Well-Known Symbols:
-				Symbol.hasInstance - used by instanceof
-				Symbol.iterator - used by of in for ... of
-				Symbol.isConcatSpreadable
-				Symbol.unscopables
-				
-				Symbol.match - used by String.match()
-				Symbol.replace - used by String.replace()
-				Symbol.search - used by String.search()
-				Symbol.split - used by String.split()
+				// Object:
+					// Ensures unique Object Keys, similar to String Keys:
+						var myObj = {};
+						myobj[<key-symbol>] = <value>;
 
-				Symbol.species - Points to the constructor value of Classes
+					// Symbols are only ever visible within an Object via: 
+						Object.getOwnPropertySymbols(myobj); // Returns a List of Symbols assigned to the Object.
+						
+					// They do not show up when the Object's Keys are iterated over, or via existing Reflection Tools.
+
+					// Can be regarded as a special separate namespace for Object Keys.
+
+				// Classes:
+					// Useful in declaring Private Properties:
+						class ExampleClass {
+							// Declare the Private Variable
+								[<private-symbol>] = <private-value>;
+
+							// ...
+
+							// Reference the Private Variable
+								this[<private-symbol>]
+						}
+
+				// Symbols can be used to activate / change some specific behaviour for an API that takes into account Symbol-Value Mapping.
+					// Examples:
+						Symbol.hasInstance - used by instanceof
+						Symbol.iterator - used by of in for ... of
+						Symbol.isConcatSpreadable
+						Symbol.unscopables
+						
+						Symbol.match - used by String.match()
+						Symbol.replace - used by String.replace()
+						Symbol.search - used by String.search()
+						Symbol.split - used by String.split()
+
+						Symbol.species - Points to the constructor value of Classes
 
 		Reflect: Reflection Metaprogramming through Introspection - used to discover low level information about Code.
 
