@@ -22,6 +22,8 @@ Web Dev:
 		CSP:					Content Security Policy.
 		CORS:					Cross Origin Resource Sharing.
 		CSRF:					Cross Site Request Forgery.
+
+		CMS:					Content-Management System.
 	
 	Concepts:
 		Web Site:				A Service hosted on the Web - meant for Humans.
@@ -103,7 +105,8 @@ Web Dev:
 		Cache Invalidation:  	To force the Browser to discard their Local Copy of a Resource, and to Request it again from the Server.
 		Cache Eviction:			To remove some Local Copies and free up space for other Resources.
 
-		JAMStack:				Modern Architectural Pattern for Web Projects.
+		CMS:					Traditional Architectural Pattern for Web Projects. Involves the Server actively rendering any custom UI per API Request. 
+		JAMStack:				Modern Architectural Pattern for Web Projects. Involves Pre-Compilation of the Web Application into Static Assets which can then be deployed to CDNs for quick delivery to Clients.
 
 		Above-the-Fold Content:	Content in the Web Application that would be initially in view in the Browser's Viewport.
 		Below-the-Fold Content:	Content in the Web Application that would be outside of the view in the Browser's Viewport.
@@ -115,14 +118,22 @@ Web Dev:
 	Details:
 		Summary of Full-Stack:
 			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and Static Assets sent to a Client, like a Web Browser.
-				Traditionally done in Monolithic Content Management System.
-					Database, Content and Frontend Templating were all handled by the same System.
-					Additional Strain on Servers to generate HTML Content in each User Request.
+				Traditionally done in Monolithic CMS.
+					Characteristics:
+						Database, Content and Frontend Templating were all handled by the same System.
+						Additional Strain on Servers to generate HTML Content in each User Request.
 
 				Nowadays done in a JAMStack-like Manner.
-					JavaScript - Any Language which allows control over what content and experience the User sees.
-					APIs - Request Data from any API, not just ones for the Web Application.
-					Markup - Cacheable with Static Markup, this takes the load of rendering content for the User away from the Server, and onto the Client-Side JavaScript.
+					Characteristics:
+						JavaScript: (Any) Language which allows control over what content and experience the User sees.
+						APIs: Interaction with any publicly accessible Web API, not just ones specific for the Web Application (this is more from the naturally changing landscape rather than from JAMStack itself).
+						Markup: Web Project pre-compiled into Static Assets.
+					
+					Benefits:
+						Performance / Separation of Concerns: Compared to the traditional CMS, Servers now need not handle the UI workload - that is now offloaded to Clients.
+						Portability: No Infra Lock-In; since the end result is just Static HTML / CSS / JavaScript, any service with delivery capabilities can be used to host this Web Application.
+						Scalability: The Static Assets are deployable on a CDN, which is optimized for delivery of media to a high number of Client Machines.
+						Maintenability: With the introduction of Web APIs, Cloud Technologies (with their own dedicated Maintainence Teams) can be easily leveraged on as well. This lessens the Maintenance Workload for the Web Application.
 
 			A Web Server is a running Process that listens for incoming Requests for information over the Web and sends back Responses.
 
