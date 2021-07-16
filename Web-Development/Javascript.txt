@@ -925,13 +925,18 @@ Javascript
 			@public				- Denotes that the following piece of Code is stable enough for external consumption.
 			@deprecated			- Denotes that the following piece of Code is to be removed in the future. Generates warnings in external consumers that use these.
 
-			@param {<type>} <name> ... - Provides an explanation for the params received by a Function.
-			@param {Object} <object-name> ... - Specify an Object-type Paramenter.
-			@param {<type>} <object-name>.<field-name> ... - Specify a Field within an Object-type Parameter.
+			@param {<type>} <param-name> <description> - Provides explanation for the params received by a Function.
+			@param {Object} <object-param-name> <description> - Specify an Object-type Paramenter.
+			@param {<type>} <object-param-name>.<field-name> <description> - Specify a Field within an Object-type Parameter.
 
-			@typedef {<type>} <type-name> ... - Define a Custom Type that can be used in other JSDoc Annotations.
-			@property {<type>} <field-name> ... - Specify a Field within an Object Type.
+			@typedef {<type>} <type-name> <description> - Define a Custom Type that can be used in other JSDoc Annotations.
+			@property {<type>} <field-name> <description> - Specify a Field within an Object Type.
 
+			// For <name>s
+			... [<name>] ... - Specify that this Property is Optional.
+			... [<name>=<value>] ... - Specify that this Optional Property has a Default Value.
+
+			// Within <description>
 			... { @link <type-namepath> } ... - Show a Clickable Link to the Custom Type in the Editor Hints.
 
 		Performance Profiling:
