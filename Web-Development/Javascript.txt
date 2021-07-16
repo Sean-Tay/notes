@@ -925,9 +925,14 @@ Javascript
 			@public				- Denotes that the following piece of Code is stable enough for external consumption.
 			@deprecated			- Denotes that the following piece of Code is to be removed in the future. Generates warnings in external consumers that use these.
 
-			@param {<type>} <name> - Provides an explanation for the params received by a function.
-			@param {Object} <object-name> - Specify an Object-Type Paramenter.
-			@param {<type>} <object-name>.<field-name> - Specify a Field within an Object-Type Parameter.
+			@param {<type>} <name> ... - Provides an explanation for the params received by a Function.
+			@param {Object} <object-name> ... - Specify an Object-type Paramenter.
+			@param {<type>} <object-name>.<field-name> ... - Specify a Field within an Object-type Parameter.
+
+			@typedef {<type>} <type-name> ... - Define a Custom Type that can be used in other JSDoc Annotations.
+			@property {<type>} <field-name> ... - Specify a Field within an Object Type.
+
+			... { @link <type-namepath> } ... - Show a Clickable Link to the Custom Type in the Editor Hints.
 
 		Performance Profiling:
 			Chrome has the ability to analyze the per-line Execution Time per Performance Profiling Session.
