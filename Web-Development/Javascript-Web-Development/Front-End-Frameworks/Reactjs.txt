@@ -383,6 +383,7 @@ React.js
 
 					// Side-Effects
 						// Similar Behaviour to componentDidMount, componentDidUpdate and componentDidUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from Painting the display.
+						// Note: If Effect will change DOM Node appearance between the time the Component Renders and the Browser Paints, use useLayoutEffect instead to avoid a UI Flicker.
 						React.useEffect(
 							() => {
 								// ... 
@@ -403,6 +404,8 @@ React.js
 						);
 
 						// Same functionality as with useEffect, except that it DOES block the Browser from Painting until the execution is over.
+						// Note: Useful for doing DOM Mutations, or triggering another Render before the Browser Paints the accumulated Node Tree changes.
+						// Tip: Use these to update Refs.
 						React.useLayoutEffect(
 							() => {
 								// ...
