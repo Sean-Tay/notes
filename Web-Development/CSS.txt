@@ -63,6 +63,8 @@ CSS:
 		CSS Modules: 			Technique for enforcing Scope on traditionally Global CSS Content.
 
 		Autoprefixing:			Technique used to transform CSS Syntax to Browser-Specific variants.
+
+		CSS Containment:		Technique to improve Page Rendering Performance by manually indicating where Page Content can be processed in isolation from other Page Content.
 	
 	Details:
 		Syntax and Markup Layout:
@@ -181,11 +183,32 @@ CSS:
 				Content: Element Children.
 
 		CSS Rules and Values:
+			CSS Containment:
+				contain: Specify how the associated Content can be processed separately from other Content on the Page for Performance Improvements.
+					size:
+						Allows the Browser to skip examining Descendant Elements when considering the size of the current Element.
+
+					layout:
+						Indicates that nothing outside the Element may affect its internal Layout, and vice versa.
+
+					style:
+						Indicates that, for Styling Properties that can affect more than just an Element and its Descendants, those should remain constrained within the containing Element.
+
+					paint:
+						Indicates that Descendants Elements should not display outside of the Parent Element's Bounds.
+
+				content-visibility: auto; // Automatically determines which Containment Procedures to use for a given Element, primarily based if it is on-screen or off-screen.
+
+				contain-intrinsic-size: <size>; // Denote the natural size of the Element, if under the effects of the Size CSS Containment.
+
 			Transition Effects:
 				transition: <css-prop> <transition-curve> <duration>, ... ;
 
 			Hiding an Element:
 				display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
+
+				content-visibility: hidden - The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
+					Note: More performant than display: none, as it preserves Rendering State.
 
 				visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, but an (empty) space is allocated in its place visually. It cannot receive Events.
 					Note: Doesn't affect the visibility of child Elements.
