@@ -1,5 +1,4 @@
-Vue.js: 
-	
+Vue.js:
 	Abbreviations:
 		SPA: 						Single Page Application.
 	
@@ -12,26 +11,66 @@ Vue.js:
 		Virtual DOM: A Tree whose Nodes represent Logical HTML Tags.
 	
 	Details:
-		Vue faciliates the construction of SPAs:
-			The default entry point, index.html, should reference a <div id='app'> </div> Element.
-		
-			The default Javascript entry point, index.js, should reference a root Vue Instance 'App' and render it in the top-level <div id='app'> </div> Element.
-				import Vue from 'vue';
-				import App from './App.vue';
+		Configuration:
+			// Editor Integration:
+				// VSCode:
+					Install the es6-string-html VSCode Extension for Typing Support within Template Literals on VSCode.
 
-				new Vue({
-				  el: '#app', // Specifies the id of the <div> HTML Element that the root Vue Instance will be attached to.
-				  template: '<App/>',
-				  components: { App }
-				})
+		Syntactically, Vue introduces JS into your HTML.
+
+		Vue faciliates the construction of SPAs:
+			Root Component:
+				// JS
+					import Vue from 'vue';
+					const app = Vue.createApp(
+						// Options Object
+						{
+							data: () => ({
+								// Return an Object with Key-Value Pairs that can be referenced in the HTML Source
+								'<key>': <value>,
+							})
+						}
+					);
+
+					const mountedApp = app.mount('#<id>');
+
+				// HTML
+					<body>
+						<div id="<id>">
+							<!-- Double Curly Braces allow the injection of any legitimate Javascript Syntax -->
+							{{ <key> }}
+						</div>
+					</body>
+
+		Directives: Used to express Behaviour within HTML Syntax:
+			Usage: <html-tag <directive>[="<value>"]> ... </html-tag>
+
+			v-for="<item> in <data-object-key>"					
 			
-		Vue makes use of self-contained Components with their own Component-Level State. 
-			Vue Components eschew the traditional idea of Separation of Concerns - HTML, CSS and JS no longer need to be in separate files. Instead, the code meant for each is combined within a single .vue file per Vue Component.		
-		
-			When these States change, it manipulates the Virtual DOM to invoke changes to just parts of the Pages, as opposed to reloading the whole Page.
+			<!-- Bring a JS Value into HTML -->
+			v-bind: 
+				v-bind:key="<item>.id" 
+				v-bind:class="{<class-name>:<boolean>}"
+				v-bind:<other-component-prop>="<data-object-key>"
+
+			<!-- DOM Event Listeners -->
+			v-on: 
+				<!-- Tip: @ - shorthand for "v-on:" -->
+
+				v-on:<dom-event>="<custom-function>"
+				v-on:<dom-event>="$emit('<custom-dom-event>', <props> ...)"
+
+			<!-- Two-Way Binding (for Inputs) - Combination of v-bind and v-on -->
+			v-model: 
+				v-model="<data-object-key>"
 
 		Vue Components: 
-			Global Components: Pure Javascript - can be assessed by any root Vue Instance created after these Global Components are created, or sub-Components.
+			Vue makes use of self-contained Components with their own Component-Level State. 
+				Vue Components eschew the traditional idea of Separation of Concerns - HTML, CSS and JS no longer need to be in separate files. Instead, the code meant for each is combined within a single .vue file per Vue Component.		
+			
+				When these States change, it manipulates the Virtual DOM to invoke changes to just parts of the Pages, as opposed to reloading the whole Page. This is managed by the Vue Reactivity System.
+
+			Global Components: Pure Javascript - can be assessed by any root Vue Instance or sub-Components created after these Global Components are created.
 				import Vue from 'vue';
 			
 				Vue.component(
@@ -41,10 +80,10 @@ Vue.js:
 						data() {
 							return {
 								<data-object-key>: "",
-								...
+								// ...
 							}
 						},
-						...
+						// ...
 					}
 				);
 		
@@ -52,28 +91,10 @@ Vue.js:
 				(HTML) Output:
 					<template>
 						<div id="<component-name>">
-							... HTML Interpolation and Construction for Dynamic Content ...
-							... <other-component-name <other-component-prop>="val"> </other-component-name> ...
+							// ... HTML Interpolation and Construction for Dynamic Content ...
+							// ... <other-component-name <other-component-prop>="val"> </other-component-name> ...
 						</div>
 					</template>
-
-					Component Directives: Prefixed with "v_" without quotes.
-						v-for="<item> in <data-object-key>"					
-						
-						v-bind: // Bring a JS Value into HTML
-							v-bind:<other-component-prop>="<data-object-key>"
-							v-bind:class="{<class-name>:<boolean>}"
-							v-bind:key="<item>.id" 
-
-						v-on: // On DOM Event Emitter
-						v-on: // On DOM Event Emitter
-							@ - shorthand for "v-on:"
-
-							v-on:<dom-event>="<custom-function>"
-							v-on:<dom-event>="$emit('<custom-dom-event>', <props> ...)"
-
-						v-model: // Two-Way Binding (for Inputs) - Combination of v-bind and v-on.
-							v-model="<data-object-key>"
 
 				(JS) Functionality: 
 					import <other-component-name> from "<other-component-path>";

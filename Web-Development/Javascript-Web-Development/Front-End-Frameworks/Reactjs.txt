@@ -47,6 +47,8 @@ React.js
 		Pure Function:				A Function with no Side-Effects.
 	
 	Details:
+		Syntactically, React introduces HTML into your JS.
+
 		React.js Library manages the Virtual DOM.
 		ReactDOM.js Library handles the Reconciliation process, as well as updating the Actual DOM.
 
