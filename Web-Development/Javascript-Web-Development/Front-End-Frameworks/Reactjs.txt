@@ -340,6 +340,9 @@ React.js
 						// Tip: For ES6 Sets and Maps (mutable Data Structure) States, each time their Content is changed, simply do <state-var-setter-function>(oldDS => new DS(oldDS)) to let React know to Re-Render.
 						const [ <state-var>, <state-var-setter-function> ] = React.useState(<initial-value>);
 
+							// Note: Lazy Initialization Functions can be used for <initial-value>s that are Computationally Expensive to derive (because Functions are cheaper to create).
+							const [ // ... // ] = React.useState(() => <initial-value>);
+
 							// Modify the State.
 							<state-var-setter-function>(<new-value>);
 							// Modify the State based on the previous State.
