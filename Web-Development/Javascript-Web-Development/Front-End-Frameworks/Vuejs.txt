@@ -2,19 +2,22 @@ Vue.js:
 	Abbreviations:
 		SPA: 						Single Page Application.
 	
-	Description: A Frontend Framework for building Web Applications.
+	Description: 				A Frontend Framework for building Web Applications.
 	
 	Resources:
-		Quick Start: https://youtu.be/Wy9q22isx3U
+		Quick Start: 			https://youtu.be/Wy9q22isx3U
 	
 	Concepts:
-		Virtual DOM: A Tree whose Nodes represent Logical HTML Tags.
+		Virtual DOM: 			A Tree whose Nodes represent Logical HTML Tags.
+
+		Vue Reactivity System: 	Manipulates the DOM according to ascertained Changes from the Virtual DOM triggered by State Changes.
 	
 	Details:
 		Configuration:
 			// Editor Integration:
 				// VSCode:
 					Install the es6-string-html VSCode Extension for Typing Support within Template Literals on VSCode.
+						// Activate the Extension with a /*html*/ Comment above the Template Literal.
 
 		Syntactically, Vue introduces JS into your HTML.
 
@@ -22,127 +25,175 @@ Vue.js:
 			Root Component:
 				// JS
 					import Vue from 'vue';
+
 					const app = Vue.createApp(
 						// Options Object
 						{
-							data: () => ({
-								// Return an Object with Key-Value Pairs that can be referenced in the HTML Source
-								'<key>': <value>,
-							})
+							// Note: See below for Options Object Outline
 						}
 					);
 
 					const mountedApp = app.mount('#<id>');
 
-				// HTML
+				<!-- HTML File -->
 					<body>
 						<div id="<id>">
 							<!-- Double Curly Braces allow the injection of any legitimate Javascript Syntax -->
-							{{ <key> }}
+							{{ /* ... */ }}
 						</div>
 					</body>
 
-		Directives: Used to express Behaviour within HTML Syntax:
+			Components:
+				// JS
+					import Vue from 'vue';
+
+					// Note: "Vue" or Root Component:
+					{ Vue | app }.component(
+						'<component-name>',
+						// Options Object
+						{
+							// Component Parameters
+							props: {
+								<component-prop>: {
+									type: <component-prop-type>,
+									required: <boolean>
+								},
+								// ...
+							}
+
+							// Function that Triggers when the Vue Component is loaded
+							created() {
+								// ...
+							},
+
+							// Return a Data Object with Key-Value Pairs that can be referenced in the HTML Source
+							// State
+							data(): {
+								return {
+									'<data-object-key>': <value>,
+								}
+							},
+							// Specify a Methods Object with Custom Functions that can be referenced in the HTML Source
+							methods: {
+								<custom-function>() {
+									// this.<data-object-key> ...
+
+									// Trigger behaviour in other Components through Event Handling
+									// this.$emit('<event-name>', <props>, ...)
+								},
+							}
+
+							// Specify a Computed Properties Object that can derive new Values from the Data Object when needed
+							// Memoized Values
+							computed: {
+								<computed-property>() {
+									// return this.<data-object-key> ...
+								},
+							},
+							// Specify Custom Directives to use within the HTML Source
+							directives: {
+								<custom-directive>: {
+									{ bind | inserted | update | componentUpdated | unbind }: function(el) {
+										// ...
+									}
+								},
+							},
+
+							// HTML Definition in a String Template Format
+							template: `<div> ... </div>`,
+
+							// ...
+						}
+					);
+
+				// .vue Files:
+					(HTML) Output:
+						<template>
+							<div id="<component-name>">
+								// ... HTML Interpolation and Construction for Dynamic Content ...
+								// ... <other-component-name <other-component-prop>="val"> </other-component-name> ...
+							</div>
+						</template>
+
+					(JS) Functionality: 
+						import <other-component-name> from "<other-component-path>";
+
+						export default {
+							name: "<component-name>",
+
+							components: {
+								<other-component-name>,
+								...
+							},
+						}
+
+					(CSS) Style:
+						<style scoped> // Styling only affects the Component
+							...
+						<style>
+
+		Directives: Used to express JS-like Behaviour within HTML Syntax:
+			Configuration:
+				import Vue from 'vue';
+
+				// Add Custom Global Directives
+				Vue.directive(
+					'<directive-name>',
+					{
+						{ bind | inserted | update | componentUpdated | unbind }: function(el) {
+							...
+						}
+					}
+				);
+
 			Usage: <html-tag <directive>[="<value>"]> ... </html-tag>
 
-			v-for="<item> in <data-object-key>"					
+			v-if="<data-object-key>"
+			<!-- ... -->
+			v-else-if="<data-object-key"
+			<!-- ... -->
+			v-else
+
+			v-for="(<item>, <idx>) in <data-object-key>"
+				<!-- "<item>" and "<idx>" now "in scope" for Current and Child Elements -->
+			
+			<!-- Change Element Style to have display: none -->
+			v-show="<data-object-key>"
 			
 			<!-- Bring a JS Value into HTML -->
 			v-bind: 
-				v-bind:key="<item>.id" 
-				v-bind:class="{<class-name>:<boolean>}"
-				v-bind:<other-component-prop>="<data-object-key>"
+				v-bind:key="<data-object-key>.id" 
+				
+				v-bind:class="{<css-class>:<boolean>}"
+				<!-- Class Inline Ternary Operator -->
+				v-bind:class="[<boolean> ? <css-class-1> : <css-class-2>]"
 
-			<!-- DOM Event Listeners -->
+				v-bind:<other-attribute>="<data-object-key>"
+
+				v-bind:<other-attribute>="<computed-property>"
+
+				<!-- Tip: : - shorthand for "v-bind:" -->
+
+			<!-- Event Listeners -->
 			v-on: 
-				<!-- Tip: @ - shorthand for "v-on:" -->
+				v-on:<event>="<custom-function>"
+				v-on:<event>="<custom-function>( ... )"
+				v-on:<event>="$emit('<another-event>', <props>, ...)"
 
-				v-on:<dom-event>="<custom-function>"
-				v-on:<dom-event>="$emit('<custom-dom-event>', <props> ...)"
+				<!-- Tip: @ - shorthand for "v-on:" -->
 
 			<!-- Two-Way Binding (for Inputs) - Combination of v-bind and v-on -->
 			v-model: 
 				v-model="<data-object-key>"
 
-		Vue Components: 
-			Vue makes use of self-contained Components with their own Component-Level State. 
-				Vue Components eschew the traditional idea of Separation of Concerns - HTML, CSS and JS no longer need to be in separate files. Instead, the code meant for each is combined within a single .vue file per Vue Component.		
-			
-				When these States change, it manipulates the Virtual DOM to invoke changes to just parts of the Pages, as opposed to reloading the whole Page. This is managed by the Vue Reactivity System.
+				<!-- Typecast Input -->
+				v-model.<type>="<data-object-key>" 
 
-			Global Components: Pure Javascript - can be assessed by any root Vue Instance or sub-Components created after these Global Components are created.
-				import Vue from 'vue';
-			
-				Vue.component(
-					'<component-name>', 
-					{
-						template: '<div> ... </div>',
-						data() {
-							return {
-								<data-object-key>: "",
-								// ...
-							}
-						},
-						// ...
-					}
-				);
-		
-			Single File Components: .vue files
-				(HTML) Output:
-					<template>
-						<div id="<component-name>">
-							// ... HTML Interpolation and Construction for Dynamic Content ...
-							// ... <other-component-name <other-component-prop>="val"> </other-component-name> ...
-						</div>
-					</template>
+		External Configuration:
+			VueX: Utility that handles Application-Level State Management to maintain and share States across multiple Components, similar to Redux / Flux.
+				Central Store for all Components. Avoids complex “prop” graphs in Component Trees.
 
-				(JS) Functionality: 
-					import <other-component-name> from "<other-component-path>";
-
-					export default {
-						name: "<component-name>",
-						props: {
-							// Component Parameters
-							<component-prop>: <component-prop-type>,
-						}
-						components: {
-							<other-component-name>,
-							...
-						},
-						methods: {
-							<custom-function>() {
-
-							},
-							...
-						},
-						directives: {
-							<custom-directive>: {
-								{ bind | inserted | update | componentUpdated | unbind }: function(el) {
-									...
-								}
-							},
-						},
-						created() {
-							// Function that Triggers when the Vue Component is loaded
-						},
-						data() {
-							// Function that returns a Data Object
-							return {
-								<data-object-key>: "",
-								...
-							}
-						},
-					}
-
-				(CSS) Style:
-					<style scoped> // Styling only affects the Component
-						...
-					<style>
-
-		VueX: Utility that handles Application-Level State Management to maintain and share States across multiple Components, similar to Redux / Flux.
-			Central Store for all Components. Avoids complex “prop” graphs in Component Trees.
-
-			Actions: Update Global State and trigger responses from Components.
+				Actions: Update Global State and trigger responses from Components.
 	
 	Commands: 
 		Vue CLI 3:
