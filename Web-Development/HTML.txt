@@ -28,12 +28,12 @@ HTML:
 				lang="en-US" - Attribute that specifies language of the Webpage.
 
 			<script> ... </script> - Tags that specify a scripting environment where JS functionality can be executed.
-				<script src="js/main.js"> </script> - Same as above, but the JS is from another separate File. If the src Tag is non-empty, there cannot be anything between the Script Tags.
+				<script src="js/main.js"> </script> - Downloads and Executes JS specified in another File. Blocks further HTML Parsing until JS Process is completed.
+					async - Allows HTML Parsing and JS Downloading to happen concurrently. Blocks further HTML Parsing until JS Execution completes.
+					defer - Allows HTML Parsing and JS Downloading to happen concurrently. Blocks JS Execution until HTML Parsing is complete.
 
-				CDN - Can reference JS Script Libraries from Content Delivery Network - no need to download and reference.
-				
-				<script async="async" src="js/main.js"> </script> - Same as above, but this doesn't block.
-				<script defer="defer" src="js/main.js"> </script> - Blocks the execution of the JS File until the Webpage has fully loaded.
+					type="module" - Similar to defer, except allows downloading of JS Dependencies at the same time.
+						aysnc - Similar to async, except allows downloading of JS Dependencies at the same time.
 				
 				<script src="jslib/require.js" data-main="main.js"> </script> - Loads the require.js module loader, which then synchronously initializes / runs the JS File.
 
