@@ -116,6 +116,9 @@ Javascript
 					// 	0 	=> elementA and elementB's relative ordering will be maintained.
 					// 	1	=> elementB will be placed before elementA.
 				}
+
+				// Tip: Use Intl.Collator to easily perform a Language-Sensitive String Sort.
+				// new Intl.Collator('<locale>').compare
 			);
 
 			var slicedArr = arr.slice(<start-index>, [<end-index>]); // Returns a Shallow Copy of the Array from the <start-index> inclusive to the <end-index> exclusive.
