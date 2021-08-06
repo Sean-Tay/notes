@@ -32,8 +32,12 @@ HTML:
 					async - Allows HTML Parsing and JS Downloading to happen concurrently. Blocks further HTML Parsing until JS Execution completes.
 					defer - Allows HTML Parsing and JS Downloading to happen concurrently. Blocks JS Execution until HTML Parsing is complete.
 
-					type="module" - Similar to defer, except allows downloading of JS Dependencies at the same time.
-						aysnc - Similar to async, except allows downloading of JS Dependencies at the same time.
+					type="module" - Similar to defer, except allows downloading of JS ES Module Dependencies at the same time (interprets JS in 'strict' Mode).
+						async - Similar to async, except allows downloading of JS ES Module Dependencies at the same time.
+
+						nomodule - Runs the included Script in case a sibling Script Tag with type="module" is unable to be processed.
+
+						importmap - Defines an Import Map between Package Names and Package URLs, such that JS ES Modules need only reference the Package Name for Imports.
 				
 				<script src="jslib/require.js" data-main="main.js"> </script> - Loads the require.js module loader, which then synchronously initializes / runs the JS File.
 

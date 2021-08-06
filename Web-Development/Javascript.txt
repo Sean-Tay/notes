@@ -881,27 +881,42 @@ Javascript
 		Proxy: Reflection Metaprogramming through Intercession - used to wrap Objects and intercept their behaviour through traps.
 
 		Import / Export Syntax:
-			// Named Imports and Exports:
-				const className = <class>;
+			// Import
+				// Synchronous
+					import <item> from '<module>';
+					import <item> from '<{ absolute | relative}-module-path>';
+					import <item> from '<module-url>'; // CORS check enabled.
 
-				export {className}; // Compiles down to: module.exports.className = <class>;
-				
-				export const <variable> = <value>; // Alternative Specification for the above.
+					import <item> as <renamed-item> from '<module-source>';
 
-				// ...
+					import * as <all-module-item-object> from '<module-source>';
 
-				import {className as '<alias>'} from '<module>'; // Compiles down to: const <alias> = require('<module>').className;
+				// Asynchronous / Dynamic Module Loading:
+					// Promises
+						import('<module-source>').then(
+							(<item>) => {
+								// ...
+							}
+						);
 
-				// Namespace Import
-				import * as '<alias>' from '<module>'; // Compiles down to: const <alias> = require('<module>');
-				// <alias>.className 
+					// Fetch API:
+						// Tip: Only suitable in Browsers?
+						const <item> = fetch('<module-source>');
 
-			// Default Exports:
-				export default className; // Make 'className' the only export of the <module>. Compiles down to: module.exports.default = className;
+			// Export
+				// Synchronous
+					export const <item> = <value>;
 
-				// ...
+					// OR
 
-				import className as <alias> from '<module>'; // Compiles down to: const <alias> = require('<module>');
+					export <item>;
+
+				// Asynchronous (Imported <item>s via Fetch API)
+					// Specify that all Modules importing this Module will have to wait until <item> has loaded.
+					export default await <item>;
+
+			// Default Export
+				export default <item>;
 
 			// Tips:
 				// To force a plain JS File to be interpreted as a Module rather than a Script, specify an empty import or export Statement:
@@ -913,8 +928,6 @@ Javascript
 				export { ... } from '<module>';
 					export { <module-item> [as <export-name>], ... } from '<module>';
 					export { default [as <export-name>] } from '<module>';
-
-				// Do not mix import and NodeJS module.export.
 
 	Utilities:
 		JSDoc Annotations: /** ... */

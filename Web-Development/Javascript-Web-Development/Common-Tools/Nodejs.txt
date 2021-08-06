@@ -24,36 +24,72 @@ Node.js:
 				That being said, special use-cases may warrant the usage of JS Build Processes for Back-End Code as well.
 
 		Code:
-			// CommonJS or ServerJS: Module System used before the Javascript Spec incorporated it.
-				// Specify an Export for this Module:
-				exports.<item> = // ...;
+			// Modules: Mechanism to split up Programs into reusable portions.
+				// In the past, Modules were actually just Scripts with Immediately Invoked Factory Functions. Definitions were established to ensure consistency in Module Development and Usage, as well as solve some Problems such as Global Scope Pollution.
 
-				// Specify a Default Export for this Module:
-				module.exports = {
-					function1 : function () { // ... }, 
-					function2 : function () { // ... }, 
-					component1 : React.createClass({ render : function () { return; } })
-				};
-				
-				// References the module.exports Object defined in the specified fileToImport.js synchronously.
-				const importedModule = require("./fileToImport.js"); 		
-					// Checks if the string passed in is a relative path, and attempts to find the required Dependency from the Project itself.
-					// If it does not find it in the step above, it will proceed to check the node_modules Directory.
+				// Definitions:
+					// CommonJS / ServerJS:
+						// Used in Server Side Node Javascript Applications, and the development of Browser-Side Javascript Applications via Node.
+						// Synchronous Loads.
 
-				// Execute function2().
-				importedModule.function2(); 								
+						// Old Syntax:
+							// Import
+								// Checks for Relative Path; if not, check within the node_modules Folder.
+								const <module> = require('<module-path>');
 
-			// ES6: Depending on the Node version or Project configuration, the following syntax may be used instead. See the section under 'Javascript' notes for more exposition.
-				const exportObj = {
-					// ...
-				}
+							// Export
+								exports.<item> = <value>;
 
-				export { exportObj }
+							// Default Export
+								module.exports = {
+									<item>: <value>,
+									// ...
+								};
 
-				import { exportObj as importedObj } from './exportObjFile.js';
-					// Note: This will not automatically search under node_modules directory - as per the ES6 spec. Requires Babel to compile it to require().
-				
-				// Use importedObj ...
+						// New Syntax: Same as ES Import / Export Syntax.
+							// Requires either File to be saved as .mjs Type, or { "type": "module" } inside package.json.
+
+					// AMD / RequireJS:
+						// Asynchronous Loads.
+
+						define(
+							// Define an Optional ID for the Module. 
+							// Tip: The Function can differentiate between a String and Array Argument.
+							'<optional-module-id>',
+
+							// Dependency Array for this Module.
+							['require', 'exports', '<{ absolute | relative }-dependency-module-id>', ... ],
+
+							// Factory Function to generate Module Exports. Only triggered once all Dependencies have been loaded.
+							// Note: Dependencies defined in earlier Array passed as Factory Function Arguments.
+							function (require, exports, <{ absolute | relative }-dependency-module-id>, ...) {
+								// Tip: To avoid overly long Dependency Arrays and Function Parameter Lists, we can use the Wrapper Format. The Loader will automatically parse and transform the Dependency Array and Function Parameter List for this define() call.
+									// Synchronous CommonJS Dependency Wrapper.
+									const <item> = require('<import-path>');
+
+									// Asynchronous Dependency Wrapper.
+									require(
+										['<{ absolute | relative }-dependency-module-id>', ...],
+										function (<{ absolute | relative }-dependency-module-id>, ...) {
+											// ...
+										}
+									);
+
+								exports.<item> = <value>;
+
+								// OR
+
+								return {
+									<item>: <value>
+								};
+							}
+						);
+
+					// ES:
+						// Default Browser Mechanism to Load Modules.
+						// See JavaScript Import / Export Syntax Notes for more details.
+
+						// SystemJS: Browser Polyfill for Import Maps, and other Javascript Module Features.
 
 			// In-Built Variables:
 				global														// Contains built-in Objects available to all Node Modules.
