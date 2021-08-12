@@ -619,7 +619,7 @@ React.js
 								// ...
 							};
 
-						// State + Dispatch Contexts
+						// State + Dispatch Contexts - use a Custom Hook to provide re-usable Consumer Functionality.
 							export const useContext = () => {
 								const stateContext = React.useContext(StateContext);
 								const dispatchContext = React.useContext(DispatchContext);
