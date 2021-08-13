@@ -560,34 +560,34 @@ React.js
 					// Create a Context.
 					// Note: <default-xxx> is only used if there is no Ancestor Component that renders the corresponding Context.Provider.
 					// Tip: Create two different Contexts each time - one for State Data, and another for Dispatch Functionality - this prevents the need to memoize an additional Object later on.
-					const StateContext = React.createContext(<default-value>);
-					const DispatchContext = React.createContext(<default-dispatcher>);
+						const StateContext = React.createContext(<default-value>);
+						const DispatchContext = React.createContext(<default-dispatcher>);
 
 					// ...
 
 					// Render Context.Provider in an Ancestor Component.
 					// Useful for setting the <default-value> w.r.t some existing Component Instance (i.e. Running Applicaton) State.
-					export const Provider = ({children}) => {
-						// Can use useState or useReducer for each Context's value.
-						const [state, dispatch] = React.useReducer( // ... );
+						export const Provider = ({children}) => {
+							// Can use useState or useReducer for each Context's value.
+							const [state, dispatch] = React.useReducer( // ... );
 
-						// Tip: If only using one Context for both State and Dispatch, use Memoization to minimize re-renders in Descendant Components.
-						const contextValue = React.useMemo(
-						 	() => ({
-								state,
-								dispatch
-							}),
-							[ state, dispatch ]
-						);
+							// Tip: If only using one Context for both State and Dispatch, use Memoization to minimize re-renders in Descendant Components.
+							const contextValue = React.useMemo(
+								() => ({
+									state,
+									dispatch
+								}),
+								[ state, dispatch ]
+							);
 
-						return (
-							<StateContext.Provider value={state}>
-								<DispatchContext.Provider value={dispatch}>
-									{children}
-								</DispatchContext.Provider>
-							</StateContext.Provider>
-						);
-					};
+							return (
+								<StateContext.Provider value={state}>
+									<DispatchContext.Provider value={dispatch}>
+										{children}
+									</DispatchContext.Provider>
+								</StateContext.Provider>
+							);
+						};
 
 					// ...
 
