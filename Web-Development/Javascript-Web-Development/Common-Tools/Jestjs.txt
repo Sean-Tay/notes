@@ -24,7 +24,9 @@ Jest
 		Test Suite:				A File that contains all Unit Tests for Target Code, written in a separate File.
 		
 		Matcher: 				A Class of Jest Functions that each provide different Assertion logic.
-	
+
+		Snapshot Testing:		Involves tests that check against Target Output with a previously saved version of the Target Output. Useful for Regression Tests.
+
 	Details:
 		Packages:
 			Tip: Jest is a Test Runner, not just a Testing Framework. In that sense, Jest just needs to be configured to handle different Syntaxes if needed.
@@ -65,9 +67,13 @@ Jest
 					// ...
 				},
 
+				// Specifies a Module that will allow adjustment on where Snapshot Files are produced, based on Test File location.
+				"snapshotResolver": "./snapshotResolver.js",
+
 				"verbose": true,
 
-				"bail": <number>, // Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
+				/ Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
+				"bail": <number>, 
 
 				// ...
 			}
@@ -79,11 +85,42 @@ Jest
 				// ...
 			}
 
+			// snapshotResolver.js
+				// Note: Paths here are Absolute Paths.
+				// Tip: snapshotExtension refers to the File Type Suffix of the Snapshot Files (i.e. '.snap').
+				// Tip: testPathForConsistencyCheck is a Virtual Value to check that resolveSnapshotPath and resolveTestPath mirror each other correctly.
+
+				// Configuration to colocate Test and Snapshot Files as siblings:
+					module.exports = {
+						resolveSnapshotPath: (testPath, snapshotExtension) =>
+							testPath.replace(/\.test\.([tj]sx?)/, `${snapshotExtension}.$1`),
+
+						resolveTestPath: (snapshotFilePath, snapshotExtension) =>
+							snapshotFilePath.replace(snapshotExtension, '.test'),
+
+						testPathForConsistencyCheck: '<path>/example.test.js',
+					}
+
+				// Configuration to set Snapshot Files in a single Top-Level Folder, away from Source and Test Files:
+					module.exports = {
+						resolveSnapshotPath: (testPath, snapshotExtension) =>
+							testPath
+								.replace(/.test.([tj]sx?)/, '.test' + snapshotExtension)
+								.replace(/src([/\\]components)/, '__snapshots__'),
+
+						resolveTestPath: (snapshotFilePath, snapshotExtension) =>
+							snapshotFilePath.replace(snapshotExtension, '.js').replace('__snapshots__', 'src/components'),
+
+						testPathForConsistencyCheck: '<path>/example.test.js',
+					}
+
 		Setup Considerations:
 			Webpack: 
 				Babel: Babel Configuration should ideally be specified in a separate babel.config.json / .babelrc, instead of within webpack.config.js alongside babel-loader specific Configuration.
 
 			TypeScript: Consider creating a separate tsconfig.json if all Tests are contained in a Test Folder.
+
+			React: Jest can can be used with react-test-renderer / react-testing-library / Enzyme to test React Components more effectively.
 
 		Flow:
 			Test Suite Locations:
@@ -202,6 +239,28 @@ Jest
 						}
 					);
 
+				// Snapshot Testing
+					// Note: If a Snapshot is unavailable, the Test will pass and generate the Test Snapshot.
+				
+					// Utilize toMatchSnapshot() to check against a prior Test Snapshot of the serialized output when a Component is rendered.
+					it(
+						'renders',
+						() => {
+							expect(<serializableTarget>).toMatchSnapshot();
+						}
+					);
+
+					// Utilize toMatchInlineSnapshot() to inject and save the Snapshot Data to the Test File.
+					it(
+						'renders',
+						() => {
+							expect(<serializableTarget>).toMatchInlineSnapshot();
+
+							// In Subsequent Runs:
+							// expect(<serializableTarget>).toMatchInlineSnapshot(`<priorSerializedTarget>`);
+						}
+					);
+
 		Utilities:
 			Lifecycle Methods:	For executing some Logic during different phases of Test Suite / Unit Test execution.
 				// Tip: <init-fn> and <cleanup-fn> can return a Promise for Asynchronous Setup / Teardown operations.
@@ -265,9 +324,15 @@ Jest
 				// Errors
 				expect(() => <function>()).toThrow(<error>)
 
+				// Snapshot Testing
+				expect(<target>).toMatchSnapshot(<optional-property-matcher-for-objects>, '<optional-hint>')
+				expect(<target>).toMatchInlineSnapshot(<optional-property-matcher-for-objects>, '<target-snapshot>')
+
 	Commands:
 		jest --init				# Generate a basic Jest Config File.
 
 		jest					# Runs Jest Tests.
 		jest --watchAll 		# Runs Jest Tests whenever there is a change in Code.
+
+		jest -u					# Update UI Component Snapshots that fail their Tests.
 	
