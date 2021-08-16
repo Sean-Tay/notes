@@ -423,6 +423,9 @@ Javascript
 			// If at any point the chain access fails, the statement will short-circuit into one with an 'undefined' fallback value.
 			const undefinedValue = example?.<non-existant-key>?.<deep-key>;
 
+			// Optional Function Invocation
+			<function>?.( <args> );
+
 		Nullish Coalescing Syntax: A Logical Operator that returns the value on its right-han side, when the value on the left-hand side is null or undefined.
 			// const fallback = null || <fallback>; // Will assign <fallback> if left value is falsy (i.e. false, 0 , '').
 			const fallback = null ?? <fallback>; // Will assign <fallback> if left value is null or undefined.
