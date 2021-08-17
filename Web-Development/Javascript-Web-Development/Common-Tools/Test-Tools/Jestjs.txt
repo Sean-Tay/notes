@@ -2,7 +2,7 @@ Jest
 	Abbreviations:
 
 	
-	Description: Unit Testing Framework that has native support for React.
+	Description: Testing Framework.
 	
 	Resources:
 		https://www.toptal.com/react/tdd-react-unit-testing-enzyme-jest
@@ -120,7 +120,7 @@ Jest
 
 			TypeScript: Consider creating a separate tsconfig.json if all Tests are contained in a Test Folder.
 
-			React: Jest can can be used with react-test-renderer / react-testing-library / Enzyme to test React Components more effectively.
+			React: Jest can can be used with react-test-renderer / react-testing-library / jest-enzyme to test React Components more effectively.
 
 		Flow:
 			Test Suite Locations:
