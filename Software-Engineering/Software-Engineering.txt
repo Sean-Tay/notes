@@ -2,6 +2,12 @@ Application Development:
 	Concepts:
 		Language Server Protocol: 	The Protocol used for communication between IDEs and a Language Server to provide advanced Developer Features such as Autocompletion or Reference Navigation.
 
+		Unit Testing: 				These Tests focus on a small part / unit of the Codebase, but in a very detailed way (i.e. both correct and incorrect scenarios).
+		Integration Testing: 		These Tests focus on the integration of Modules within a part of the Tech Stack (i.e. Backend or Frontend, in isolation).
+		End to End Testing: 		These Tests run across the Full Tech Stack (i.e. both Backend and Frontend). They usually simulate User Actions.
+
+		Black Box Testing: 			Tests that are implemented with no perspective on the internals of the Entity that they test.
+
 	Design:
 		Bad Code:					Mainly caused by Coupling.
 			Rigidity:				Modification of one part of code requires changes to other parts of the code due to non-isolation and coupling.
