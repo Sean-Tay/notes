@@ -242,22 +242,26 @@ Jest
 				// Snapshot Testing
 					// Note: If a Snapshot is unavailable, the Test will pass and generate the Test Snapshot.
 				
-					// Utilize toMatchSnapshot() to check against a prior Test Snapshot of the serialized output when a Component is rendered.
+					// Utilize toMatchSnapshot() to check against a prior Test Snapshot of the Serializable Target.
 					it(
-						'renders',
+						'has not changed',
 						() => {
-							expect(<serializableTarget>).toMatchSnapshot();
+							const serializedOutput = <serializeFunction>(<serializableOutput>);
+
+							expect(serializedOutput).toMatchSnapshot();
 						}
 					);
 
-					// Utilize toMatchInlineSnapshot() to inject and save the Snapshot Data to the Test File.
+					// Utilize toMatchInlineSnapshot() to inject and save the Snapshot Data to the Test File itself.
 					it(
-						'renders',
+						'has not changed',
 						() => {
-							expect(<serializableTarget>).toMatchInlineSnapshot();
+							const serializedOutput = <serializeFunction>(<serializableOutput>);
+
+							expect(serializedOutput).toMatchInlineSnapshot();
 
 							// In Subsequent Runs:
-							// expect(<serializableTarget>).toMatchInlineSnapshot(`<priorSerializedTarget>`);
+							// expect(serializableOutput).toMatchInlineSnapshot(`<priorSerializedTarget>`);
 						}
 					);
 
