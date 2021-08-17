@@ -1,0 +1,43 @@
+Enzyme:
+	Abbreviations:
+		
+	
+	Description: Testing Oriented Utility that allows for the examination of the internals of UI Components for Testing Purposes.
+	
+	Resources:
+
+	
+	Concepts:
+		
+	
+	Details:
+		Enzyme by itself cannot run Tests - it is simply a Utility to examine the internals of UI (mostly React) Components at a given time. A Test Runner (such as Jest) is needed as the Testing Framework.
+			Note: React Enzyme internally uses react-test-renderer.
+
+		Configuration: An adapter for the specific version of the Frontend Framework needs to be installed alongside the respective Enzyme Core Package.
+
+		API:
+			// shallow - Allows isolated testing of a Component, with the assurance that Child Components are not being tested at the same time.
+				const wrapper = shallow(
+					<rendered-component>, // React Element
+					{	
+						// To pass Context into the UI Node.
+						context: <context>,
+						
+						// Specify a Parent Wrapping Component (which must render its Children).
+						// Note: NOT the Component Instance / React Element (ignore the Arrow Brackets).
+						wrappingComponent: <Component>,
+						wrappingComponentProps: {
+							// ...
+						},
+					}
+				);
+
+				// Commonly-Used API
+					wrapper.find('<css-selector>');			Obtain all Wrapped Nodes in the Render Tree of the Wrapped Node that matches the specified <css-selector>.
+
+					wrapper.contains(<rendered-sub-component>); Determines if the Render Tree of the Wrapped Node contains the <rendered-sub-component>, as well as the Children.
+	
+	Commands:
+		
+	
