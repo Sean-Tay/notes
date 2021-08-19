@@ -5,7 +5,7 @@ Enzyme:
 	Description: Testing Oriented Utility that allows examination of the internals of UI Components.
 	
 	Resources:
-
+		Differences between the Major Enzyme APIs: https://github.com/enzymejs/enzyme/issues/465#issuecomment-227697726
 	
 	Concepts:
 		
@@ -36,7 +36,7 @@ Enzyme:
 				configure({ adapter: new Adapter() });
 
 		API:
-			// shallow - Allows isolated testing of a Component from the DOM Tree. Tests the Component from the perspective of the UI Library.
+			// shallow - Allows isolated testing of a Component from the DOM Tree and any Child Components.
 				const wrapper = shallow(
 					<rendered-component>, // React Element
 					{	
@@ -52,8 +52,9 @@ Enzyme:
 					}
 				);
 
-			// mount / unmount - Allows testing of a Component with the DOM Tree, or for Components that make use of Lifecycle Methods.
+			// mount / unmount - Allows testing of a Component with the DOM Tree and Child Components, or for Components that make use of certain Lifecycle Methods.
 				// Note: Requires the full DOM API to be in Global Scope (e.g. jsdom Package).
+				// Tip: Allows testing of Components that require componentDidMount / componentDidUpdate, unlike shallow.
 				const wrapper = mount(
 					<rendered-component>, // React Element
 					{	
@@ -84,7 +85,7 @@ Enzyme:
 
 				wrapper.simulate('<dom-event>', <data-obj>); Simulate a DOM Event on a Wrapped Node.
 
-			// render - Test the HTML Structure that the Component generates when rendered.
+			// render - Test the HTML Structure that the Component (and Child Components) generate when rendered.
 				// Note: Uses the Cheerio Library to assist in HTML Parsing and Traversal.
 				const cheerioWrapper = render(
 					<rendered-component>,
