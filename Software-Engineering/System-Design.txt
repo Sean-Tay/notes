@@ -89,6 +89,13 @@ System Design:
 										Layer 3: IP Load Balancing: Different IP Address per User IP Address.
 										Layer 4: DNS Load Balancing: A Technique which gives different IP Addresses of the different available Web Servers per Request.
 											Hash the IP Address of the Request?
+											
+											// BIND Protocol
+
+											// IP Address Caching on User Machine is a factor of Unequal Distribution for Workload.
+
+										URL Resource-Type Based Routing: Split the Requests based on Content Type, embedded via URL?
+											// Example: images.xxx.com ; gifs.xxx.com
 
 								Vertical Scalability: Improve the existing Machines by replacing sub-optimal Parts with better Performing ones.
 
@@ -129,6 +136,10 @@ System Design:
 										Requests contain Header Information and Cookie Information, which eats into the Bandwidth.
 
 							Security?
+								Secure Communication Protocols:
+									HTTPS
+									SFTP: Secure File Transfer Protocol
+
 								Web Application Firewall?
 
 							Analysis?
