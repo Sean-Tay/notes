@@ -207,6 +207,9 @@ Typescript:
 
 					// Note: If using for Objects, Type Assertions do NOT check for extra Object Properties, unlike the usual Type Annotations.
 
+					// Non-Null Type Assertion Shorthand: Does not assure Runtime Safety unlike Optional Chaining.
+					<non-null-object>!.<property>
+
 			Enums: To provide more friendly names to sets of Numeric Values.
 				enum <enum-name> { <key>: <numeric-value>, ... };
 				let <example-variable>: <enum-name> = <enum-name>.<key>; 
