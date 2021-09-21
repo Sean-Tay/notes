@@ -419,10 +419,11 @@ React.js
 						);
 
 					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
-						// Important Note: The Dependency Array for Optimization Hooks is of a different nature than the ones used for Side-Effect Hooks. If the submitted Function may directly or indirectly reference any Component's State (it's own or from Ancestor Components' passed in as Props), the references should be placed in the Dependency List.
+						// Note: The Dependency Array for Optimization Hooks is of a different nature than the ones used for Side-Effect Hooks. If the submitted Function may directly or indirectly reference any Component's State (it's own or from Ancestor Components' passed in as Props), the references should be placed in the Dependency List.
 
 						// Used to prevent unneccessary recalculation of some value per Re-Render.
 						// Tip: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
+						// Note: useMemo will block the Main Thread / Rendering phase. If the computation is asynchronous, use a useState + useEffect combo instead.
 						// Tip: Consider using useRef for defining 'initial values', rather than useMemo.
 						React.useMemo(
 							() => {
