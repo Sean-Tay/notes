@@ -38,6 +38,8 @@ Jest
 
 			ts-jest				Allows Jest to preprocess TypeScript Test Files.
 
+			moxios 				Used for Mocking Axios Calls.
+
 			identity-obj-proxy	Used for Mocking CSS Module Assets.
 
 		Configuration:
@@ -207,14 +209,15 @@ Jest
 					}
 				);
 
-				// Mocking a Target's Functional Dependency.
+				// Mocking a Target's Function Dependency.
 					import { <target> } from '<target>';
 
-					// Import the Module which houses the Target Functional Dependency into the Test File.
+					// Import the Module which houses the Target's Function Dependency into the Test File.
 					// Note: Import as Object.
 					import * as Dependencies from '<target-dependency>';
 
-					// Use Jest to substitute out the implementation for a Target's Function Dependency for a Jest Mock Function.
+					// Use jest.spyOn to allow modification of the <dependency>'s implementation.
+					// Note: vs. jest.fn which just aims to entirely replace the <dependency>'s implementation.
 					const dependencyMock = jest.spyOn(Dependencies, '<dependency>');
 
 					// Within a Test, invoke the Jest Mock Methods to define a controlled implementation of the Target's Function Dependency.
@@ -238,6 +241,17 @@ Jest
 							dependencyMock.mockRestore();
 						}
 					);
+
+				// Mocking Global JavaScript Functions
+					// ...
+
+					// Global Scope
+					const globalDependencyMock = jest.spyOn(this, '<dependency>');
+
+					// NodeJS
+					const globalDependencyMock = jest.spyOn(global, '<dependency>');
+
+					// ...
 
 				// Snapshot Testing
 					// Note: If a Snapshot is unavailable, the Test will pass and generate the Test Snapshot.
