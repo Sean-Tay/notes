@@ -332,6 +332,48 @@ Jest
 				expect(<target>).toMatchSnapshot(<optional-property-matcher-for-objects>, '<optional-hint>')
 				expect(<target>).toMatchInlineSnapshot(<optional-property-matcher-for-objects>, '<target-snapshot>')
 
+		External Libraries:
+			Moxios:
+				// Moxios can be used to Mock API Data delivered via Axios Calls.
+				describe(
+					'Moxios',
+					() => {
+						let optionalAxiosInstance;
+
+						// ...
+
+						beforeEach(
+							() => {
+								optionalAxiosInstance = axios.create();
+								moxios.install(optionalAxiosInstance);
+							}
+						);
+
+						afterEach(
+							() => {
+								moxios.uninstall(optionalAxiosInstance);
+							}
+						);
+
+						// ...
+
+						it(
+							'should be able to Mock API Data',
+							async () => {
+								// Mock all Requests to an API Endpoint
+								moxios.stubRequest(
+									'<url>', {
+										code: <code>,
+										request: <data>
+									}
+								);
+
+								// ...
+							}
+						);
+					}
+				);
+
 	Commands:
 		jest --init				# Generate a basic Jest Config File.
 
