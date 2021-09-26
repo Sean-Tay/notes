@@ -1,0 +1,205 @@
+Kotlin
+	Abbreviations:
+		
+	
+	Description: Programming Language that is compatable with Java, and can target JVM and JavaScript Environments. Designed by JetBrains.
+	
+	Resources: 
+	
+	Concepts:
+		JAR Files: Java Archive. Contains Libraries, Resources and Assets.
+		WAR Files: Web Application Archive. Contains the Web Application in a specific structure that can be deployed on any Web Container / Java Application Server.
+
+	Details:
+		Features:
+			Functional Programming.
+			Immutability Support.
+
+		Syntax:
+			Types:
+				// Primitive Types:
+					Any?
+					Array
+					String
+
+					Double
+					Float
+					Int
+					
+					Boolean
+
+					Unit // Void Type for Functions that don't return anything.
+					Void // Void Type from Java.
+					Nothing // Analogous to never Type in TypeScript
+
+				// Nullable Type:
+					<type>?
+				
+			Constants:
+				val <constant-name>: <type> = <value>;
+
+			Variables:
+				var <variable-name>: <type> = <value>;
+
+			Strings:
+				// Multiline Strings:
+				val multiline = """
+				<text>
+				...
+				""";
+
+				// Templates:
+					// Simple: For just referencing Values / Variables
+					val i = <value>;
+					val string = "$i ...";
+
+					// Expression: For referencing the result of an Inline Expression
+					val string = "${ i + 5 } ...";
+
+			Functions:
+				// First-Class Citizens. Higher-Order Functions possible.
+				
+				fun <function-name>(<arg>:<type>, ... ): <return-type> {
+					// ...
+
+					return <value>: <return-type>;
+				}
+
+				// Note: Main Function determines Execution Entry-Point for Program.
+				fun main(args: Array<string>) {
+					// ...
+				}
+
+			Objects:
+				// Note: Lazily Initalized only during the first access.
+				// Tip: Effectively Singleton Classes:
+				object <object-name>: <interface-type> {
+					// ... Class-Compatable Member Declarations here ...
+				}
+
+			Classes:
+				// Note: Classes can omit the Curly Braces if the Class has no Body.
+				// Tip: Define Data Objects as Classes with no Braces.
+				class <class-name>(<property>:<type> = <default-value>, ...)
+
+				class <class-name>[ {public | private} @<annotation> constructor](
+					// Primary Constructor / Default Constructor
+					// Tip: Allows for Parameter Properties (Instance Properties defined in Constructor Signature)
+					// Note: Preceding 'constructor' Keyword needed if the Constructor has Visibility Modifiers or Annotations
+					<property>:<type> = <default-value>, ...
+				) {
+					// ...
+
+					// Declaring additional Class Properties / Initialize:
+					var <property>:<type> = ... ;
+
+					// Initialization Block: For Code to be run during Object Instantiation.
+					// Note: Executed in the order they are declared in.
+					init {
+						// ...
+					}
+
+					// Secondary Constructor:
+					// Note: If there is a non-default Primary Constructor, the Secondary Constructor will have to delegate to it.
+					// Note: Therefore, code from Primary Constructors, Property Initializers and Initialization Blocks are executed before Secondary Constructors.
+					constructor( ... ): this( ... ) {
+						// ...
+					}
+
+					// Companion Objects:
+					// Note: Replaces Static Class Members.
+					companion object [<c-object-name>]: <interface-type> {
+						// ...
+					}
+
+					// ...
+				}
+
+				// Inheritance:
+					// Mark a Class as Inheritable by Sub-Classes via the 'open' Keyword.
+					open class <inheritable-class>( ... ) {
+						// Mark a Class Property as Overridable by Sub-Classes via the 'open' Keyword.
+						open val <property>:<type>;
+					}
+
+					// Note: Multiple Inheritance is possible.
+					// Note: Sub-Classes must provide Arguments for the Inheritable Class's Parameter Properties, if any.
+					class <sub-class>(): <inheritable-class>( ... ), ... {
+						// Override Property from <inheritable-class>:
+						// Note: Overriden Properties are themselves considered Overridable by any Sub-Class. Use the 'final' Keyword to prevent Overriding.
+						// Tip: 'final' is not necessary in cases where the Class has not been marked 'open'.
+						// Note: In the event of Multiple Inheritance with Common Class Properties, it is required to Override these to eliminate ambiguity.
+						[final] override val <property>;
+
+						// Access <inheritable-class> Implementation via the 'super' Keyword.
+						// Note: In the event of Multiple Inheritance, define which <inheritable-class> 'super' refers to via:
+						super<<inheritable-class>>
+
+						// Note: Inherited Constant Properties can be changed to Variable once Overriden.
+						override var <property>:<type>;
+					}
+
+				// Instantiate a Class Instance:
+					// Note: No 'new' Keyword.
+					val instance = <class-name>();
+
+				// Accessing Companion Objects within Classes:
+					// If Companion Object was not given a Name:
+					<class-name>.Companion
+
+					<class-name>.<c-object-name>
+
+			Operators:
+				// Elvis Operator: Nullish Coalescing - evaluates <expression-1> and returns the result if it is not null, otherwise <expression-2> will be evaluated.
+					// Tip: Avoids double-evaluation of <expression-1>.
+					<expression-1> ?: <expression-2>;
+
+				// Structural Equality Comparator: 
+					// Check if two Values are equivalent: ==
+					// Check if two Values are NOT equivalent: !=
+
+				// Referential Equality Comparator: 
+					// Check if two Values are equivalent and refer to the same Entity: ===
+					// Check if two Values are NOT equivalent, or refers to different Entities: ===
+
+			Control-Flow:
+				// Single Line If-Else:
+				if (<boolean-expression>) ? <true-expression> : <false-expression>;
+
+				// Resultant If-Else:
+				val result = if (<boolean-expression>) {
+					<result>
+				} else if (<boolean-expression>) {
+					<result>
+				} else {
+					<result>
+				}
+
+			Utilities:
+				// Print to Console:
+					print("<text>");
+					println("<text>"); // With Line Break
+
+			Project Configuration:
+				// ...
+	
+	Commands:
+		# Kotlin
+			set KOTLIN_HOME
+
+			# Start Interactive REPL:
+			kotlinc
+
+			# Generate Class File from Kotlin Files:
+			kotlinc <kotlin-file> ...
+
+			# Compile JAR File:
+			kotlinc <kotlin-file> ... -include-runtime -d <jar-name>.jar
+
+		# Java
+			# Run generated Class File with Java:
+			java -cp .;<kotlin-runner-JAR-path> <generated-class-file-without-extension>
+
+			# Run generated JAR File in Java:
+			java -jar <jar-name>.jar
+	
