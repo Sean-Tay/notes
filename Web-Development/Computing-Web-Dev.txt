@@ -38,8 +38,8 @@ Web Dev:
 			Protocol:			The Protocol used to specify the communication mode with the Server.
 			Host and Domain:	The Entity that the Server is running on, and the Administrative Space the Entity is in.
 			Port:				The Network Port used to interact with the Server Process that is running on the Host.
-			Path:				The part that points to a Resource within the Host (i.e. one or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"}).
-			Query:				Optional appended String to the Path that represents URL Arguments in Key-Value Pairs (i.e. <path>/?<key>=<value>& ...).
+			Path / Path Params:	The part that points to a Resource within the Host (i.e. one or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"}).
+			Query Params:		Optional appended String to the Path that represents URL Arguments in Key-Value Pairs (i.e. <path>/?<key>=<value>& ...).
 
 		Origin: 				Protocol + Host + Domain + Port.
 

@@ -139,7 +139,15 @@ React-Router:
 						// match.isExact
 						// match.url 		// Matched portion of the URL.
 						// match.path 		// The path pattern used to match.
-						// match.params 	// Object with Key-Value Pairs referencing passed parameters.
+
+						// match.params 	// Object with Key-Value Pairs referencing Path Params.
+							useEffect(
+								() => {
+									if (match?.params?.<param-name>) {
+										// ...
+									}
+								}, [match]
+							);
 
 					// location Object represents where the User is within the Component.
 						// Note: Prefer location over history.location due to immutability.
