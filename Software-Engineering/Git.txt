@@ -75,6 +75,9 @@ Git:
 		git cherry-pick <older-commit-hash>~1..<newer-commit-hash> - Bring in a range of Commits from another Branch to the currently checked out Local Branch.
 			--no-commit			- Apply the changes only to the Local Working Copy without Commiting.
 
+			--continue			- Continue the operation, in case it was interrupted by a Merge Conflict.
+				Note: git add and git commit to let Git know the Merge Conflict has been handled first.
+
 		git pull [<repo-url-alias>] <branch> - git fetch + git merge.
 			--allow-unrelated-histories - Merges two Repos that started independently.
 
