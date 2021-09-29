@@ -180,9 +180,46 @@ Kotlin
 					print("<text>");
 					println("<text>"); // With Line Break
 
-			Project Configuration:
-				// ...
-	
+		Project Configuration:
+			// IntelliJ + Gradle + Maven
+				// build.gradle
+					// Build Script Config Section
+					buildscript {
+						// ...
+
+						repositories {
+							// ...
+
+							maven {
+								// Specify URI of accessible Kotlin Distributable in case it's not accessible from the Central Maven Repository.
+								url "https://dl.bintray.com/kotlin/kotlin-eap-<version>"
+							}
+
+							// ...
+						}
+
+						// ...
+					}
+
+					// ...
+
+					// Main Script Config Section 
+
+					// ...
+
+					repositories {
+						mavenCentral()
+
+						maven {
+							// Specify URI of accessible Kotlin Distributable in case it's not accessible from the Central Maven Repository.
+							url "https://dl.bintray.com/kotlin/kotlin-eap-<version>"
+						}
+					}
+
+					// ...
+
+		Compilation: Kotlin will convert <name>.kt Kotlin Files into <name>Kt Class Files when Compiling. 
+
 	Commands:
 		# Kotlin
 			set KOTLIN_HOME
