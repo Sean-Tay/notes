@@ -1,0 +1,58 @@
+JSON Schema
+	Abbreviations:
+
+	Description: A JSON Metadata Object that defines constraints that can then be used by Validation Tools to check if incoming JSON Objects conform to them.
+	
+	Resources: 
+		Intro: https://json-schema.org/learn/getting-started-step-by-step
+		Tools: https://json-schema.org/implementations.html#validators
+	
+	Concepts:
+		Keyword:				Special Field Identifier.
+	
+	Details:
+		Schema Format:
+			{	
+				// Specifies which Draft of the Standard this Schema is written w.r.t
+				"$schema": "<schema-url>",
+
+				// Defines a URI for this Schema, and acts as a Base URI for any Child Schemas within.
+				"$id": "<uri>",
+
+				// References another available Schema given its URI.
+				"$ref": "<uri>",
+
+				// Desribes the purpose of the Schema.
+				// Tip: Non-Constraining Annotations.
+				"title": "<schema-name>",
+				"description": "<schema-description>",
+
+				// Specify the Type of Data the Schema is describing.
+				// Note: Only applies to the Current Level. Properties and Child Schemas should have their own Type Specifications.
+				"type": "<type>",
+
+				// Types and associated Unique Keywords:
+					object
+						// Specifies Properties and Required Properties, only for an 'object' Type.
+						"properties": {
+							"<property-name>": <sub-Schema>
+						},
+						"required": [ "<property-name>", ... ]
+
+					integer
+						"exclusiveMinimum": <number>,
+						"minimum": <number>,
+						"maximum": <number>,
+						"exclusiveMaximum": <number>,
+
+					string
+
+					array
+						minItems: <number>,
+						maxItems: <number>,
+						uniqueItems: true,
+			}
+	
+	Commands:
+		
+	
