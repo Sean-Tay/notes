@@ -172,6 +172,10 @@ Kotlin
 					// Tip: Avoids double-evaluation of <expression-1>.
 					<expression-1> ?: <expression-2>;
 
+				// Type Checking:
+					// Note: Boolean Expression.
+					is <type>
+
 				// Structural Equality Comparator: 
 					// Check if two Values are equivalent: ==
 					// Check if two Values are NOT equivalent: !=
@@ -181,21 +185,38 @@ Kotlin
 					// Check if two Values are neither equivalent, nor refers to different Entities: ===
 
 			Control-Flow:
+				// Iteration over a Collection:
+					<collection>.forEach { key, value -> <code> };
+
 				// If-Else:
-					// Note: If-Else is an Expression, meaning it can return Values once evaluated:
-						val result = if (<boolean-expression>) {
-							<result>
-						} else if (<boolean-expression>) {
-							<result>
-						} else {
-							<result>
-						}
+					// Note: if-else is an Expression, meaning it can return Values once evaluated.
+					val result = if (<boolean-expression>) {
+						<result>
+					} else if (<boolean-expression>) {
+						<result>
+					} else {
+						<result>
+					}
 					
 					// Single Line:
 					if (<boolean-expression>) ? <true-expression> : <false-expression>;
 
-				// Iteration over a Collection:
-					<collection>.forEach { key, value -> <code> };
+				// Switch-Case:
+					// Note: when is an Expression, meaning it can return Values once evaluated.
+					val result = when (<variable>) {
+						// Specific Case(s)
+						<case-value>, ... -> {
+							// ...
+						}
+						// Specific Conditionals
+						<boolean-expression> -> {
+							// ...
+						}
+						// Default Case:
+						else -> {
+							// ...
+						}
+					}
 
 				// Coroutines:
 					// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
