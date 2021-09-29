@@ -7,6 +7,8 @@ Kotlin
 	Resources: 
 	
 	Concepts:
+		Coroutines: Unit of Suspendable Concurrent Execution.
+
 		JAR Files: Java Archive. Contains Libraries, Resources and Assets.
 		WAR Files: Web Application Archive. Contains the Web Application in a specific structure that can be deployed on any Web Container / Java Application Server.
 
@@ -34,6 +36,12 @@ Kotlin
 
 				// Nullable Type:
 					<type>?
+
+				// Function Type:
+					(<arg-type>,  ...) -> <return-type>
+
+				// Suspendable Function Type:
+					suspend (<arg-type>, ...) -> <return-type>
 				
 			Constants:
 				val <constant-name>: <type> = <value>;
@@ -66,7 +74,17 @@ Kotlin
 				}
 
 				// Note: Main Function determines Execution Entry-Point for Program.
-				fun main(args: Array<string>) {
+				fun main(args: Array<String>) {
+					// ...
+				}
+
+				// Suspendable Function:
+				// Tip: Analogous to Asynchronous Function in JavaScript.
+				suspend fun <suspendable-function-name>() {
+					// Concurrent Code ...
+
+					// Note: Calling another Suspendable Function will defer execution of this Function.
+
 					// ...
 				}
 
@@ -160,20 +178,45 @@ Kotlin
 
 				// Referential Equality Comparator: 
 					// Check if two Values are equivalent and refer to the same Entity: ===
-					// Check if two Values are NOT equivalent, or refers to different Entities: ===
+					// Check if two Values are neither equivalent, nor refers to different Entities: ===
 
 			Control-Flow:
-				// Single Line If-Else:
-				if (<boolean-expression>) ? <true-expression> : <false-expression>;
+				// If-Else:
+					// Note: If-Else is an Expression, meaning it can return Values once evaluated:
+						val result = if (<boolean-expression>) {
+							<result>
+						} else if (<boolean-expression>) {
+							<result>
+						} else {
+							<result>
+						}
+					
+					// Single Line:
+					if (<boolean-expression>) ? <true-expression> : <false-expression>;
 
-				// Resultant If-Else:
-				val result = if (<boolean-expression>) {
-					<result>
-				} else if (<boolean-expression>) {
-					<result>
-				} else {
-					<result>
-				}
+				// Iteration over a Collection:
+					<collection>.forEach { key, value -> <code> };
+
+				// Coroutines:
+					// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
+					<coroutine-builder-function> {
+						// Regular Code
+
+						// Create a new Coroutine
+						val <handle> = launch {
+							// Concurrently-Executed Code
+							// Suspendable Function Call
+						}
+
+						// Block Regular Code execution and Await Coroutine completion
+						<handle> join();
+
+						// Regular Code
+					}
+
+					// Coroutine Builder Functions:
+						// runBlocking: Regular Function that when executed, blocks the current Thread. Waits for all Child Coroutines to complete before releasing.
+						// coroutineScope: Suspendable Function that when executed, blocks and releases the current Thread for other usage. Waits for all Child Coroutines to complete before releasing.
 
 			Utilities:
 				// Print to Console:
