@@ -337,7 +337,7 @@ Typescript:
 						[key in ... as Exclude<key, '<excluded-key>'>]: <type>
 					}
 
-					// Pattern for detecting Record / Dictionary Value Type based on provided Key.
+					// Mapped Lookup Signature: Pattern for detecting Record / Dictionary Value Type based on provided Key.
 					// Tip: [keyof T] transforms the Mapped Type into a Discriminatory Union of Mapped Type Properties.
 					export type <interface-like-type><T> = {
 						[K in keyof T]-?: {
@@ -515,6 +515,8 @@ Typescript:
 						// Specify 'any' for the type of <component-props> for the least restrictions.
 
 					React.CSSProperties: To specify the inline-CSS Styles Object within JSX.
+
+					React.Context<<context-type>>: Represents the Type of a created Context.
 
 					React.EffectCallback: To specify the Type for Functions sent into React Hooks.
 					React.DependencyList: To specify the Type for the Dependency Array of a Hook.
