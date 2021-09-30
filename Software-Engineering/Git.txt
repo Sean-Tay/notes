@@ -39,6 +39,8 @@ Git:
 		git fetch				- Preview updates for all Local Branches tracking Remote Branches.
 			FETCH_HEAD			- Creates a short-lived reference that keeps track of what has just been fetched from the Remote Repository. 
 
+			-p 					- Clear Local Branches that track deleted Remote Branches.
+
 		git branch -r 			- List all Remote Branches.
 		git fetch <repo-url-alias> <remote-branch> <local-branch> - Creates a new Local Branch that tracks the specified Remote Branch.
 
