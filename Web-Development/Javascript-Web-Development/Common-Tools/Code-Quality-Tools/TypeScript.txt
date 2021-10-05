@@ -38,6 +38,8 @@ Typescript:
 					// any: For when the intended Type is unknown.
 
 					// unknown: A type-safe counterpart to the any Type.
+						// Note: 'any' might still be more preferrable in certain cases:
+							// Inference of Generic Rest Parameters.
 
 					// object: Represents all non-primitive Types.
 					// Object: Describes functionality common to all Javascript Objects.
