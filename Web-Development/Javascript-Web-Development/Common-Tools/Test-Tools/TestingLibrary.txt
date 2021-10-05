@@ -1,0 +1,67 @@
+(DOM) Testing Library
+	Abbreviations:
+	
+	Description: Allows for Testing of UI Components in a User-centric Way.
+	
+	Resources:
+	
+	Concepts:
+		data-testid: 			Convention: Custom Element Property that allows for quick test-only lookups via queryById. Can be stripped away during Compilation via babel-plugin-react-remove-properties.
+	
+	Details:
+		Packages:
+			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Nodes.
+				// screen: Interface for obtaining Nodes from the DOM State. Re-exported by the Wrapper Packages.
+					// query* Functions will return the Element or null if it can't be found.
+					// get* Functions will return the Element or throw an Error if it can't be found.
+					// findBy* Asynchronous Functions that will resolve with the Element or reject if the default timeout of 10000ms is exceeded.
+
+			@testing-library/jest-dom: Provides custom Jest Matchers for testing DOM State.
+				// toBeInTheDocument(): Jest Matcher for checking if Elements are in the DOM State.
+
+			@testing-library/user-event: Provides Utility Methods to simulate User Events.
+				// click(<dom-node>)
+				// type(<dom-node>, <text>)
+
+			@testing-library/react: Renders React Components into DOM Nodes.
+				// render: Render a React Component onto the DOM State.
+				// Tip: 'queries' have the same Methods as 'screen', except there is no need to specify the DOM Node to start the search from.
+					const queries = render(<element />, {
+						// Specify a DOM Node to append the <element /> to.
+						// Defaults to document.body.appendChild(document.createElement('table'))
+						container: <dom-node>,
+					})
+
+			@testing-library/react-hooks: Creates a simple Test Harness for React Hooks, avoiding the need to create unnecessary Function Components in tests.
+				// The package will auto-detect which Renderer is available to use for the Test Harness.
+				// If a Renderer is required, use more specific Import Paths:
+					'@testing-library/react-hooks/dom'
+					'@testing-library/react-hooks/native'
+					'@testing-library/react-hooks/server'
+
+				// Note: console.error gets mocked when importing from this library. This can affect Tests that rely on asserting an output from console.error.
+
+				// renderHook: Render a Test Component that will call <custom-hook> each time it renders.
+					const { result, waitFor, waitForNextUpdate } = renderHook(() => <custom-hook>( ... ))
+						// Tip: Avoid destructuring the 'result' Object to prevent Closure-related Issues.
+
+						// result.current: The current Return Value from <custom-hook>.
+						// result.error: Any thrown Errors from the <custom-hook>.
+						// result.all: An Array of all results from the Testing thus far.
+
+					// Wait for Hook to trigger one re-Render.
+					await waitForNextUpdate()
+
+					// Wait for Hook to update a particular variable.
+					await waitFor(() => result.current.<variable> === <value>)
+
+				// act: Wrapper Function to wrap any Code that would trigger a State Update.
+					act(() => { ... })
+					await act(async () => { ... })
+
+				// cleanup: Unmounts all Rendered Hooks, ensuring all Effects have been flushed.
+					// Tip: Automatically called if Testing Framework supports the afterEach global.
+
+	Commands:
+		
+	
