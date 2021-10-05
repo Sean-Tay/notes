@@ -54,6 +54,13 @@ Jest
 					"^.+\\.(ts|tsx)$": "ts-jest"
 				},
 
+				// Specify Setup Files that configures the Testing Environment before other Test Frameworks are installed.
+				// Note: Each Test File will have an isolated Testing Environment, so the Setup Files are re-executed per Test File.
+				"setupFiles": [
+					"<file-path>",
+					...
+				],
+
 				// A map between Dependency Regexes and Mock Module Paths.
 				// Note: Regexes and Paths are checked in sequence until one matches.
 				// Note: '<rootDir>' is a Jest defined String-Token - use with the Angled Brackets.
@@ -74,7 +81,7 @@ Jest
 
 				"verbose": true,
 
-				/ Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
+				// Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
 				"bail": <number>, 
 
 				// ...
@@ -216,8 +223,10 @@ Jest
 					// Note: Import as Object.
 					import * as Dependencies from '<target-dependency>';
 
+					// Use jest.fn to entirely replace the <dependency>'s implementation with a Stub.
+					const dependencyMock = jest.fn(<new-function>)
+
 					// Use jest.spyOn to allow modification of the <dependency>'s implementation.
-					// Note: vs. jest.fn which just aims to entirely replace the <dependency>'s implementation.
 					const dependencyMock = jest.spyOn(Dependencies, '<dependency>');
 
 					// Within a Test, invoke the Jest Mock Methods to define a controlled implementation of the Target's Function Dependency.
@@ -292,19 +301,19 @@ Jest
 
 				// For Synchronous Functions:
 					// If the Target's Functional Dependency is called only once in the Target:
-						<mock>.mockReturnedValue(<test-value>);
+						<stub>.mockReturnedValueOnce(<test-value>);
 
 					// If the Target's Functional Dependency is called more than once:
-						<mock>.mockReturnedValueOnce(<test-value>);
+						<stub>.mockReturnedValue(<test-value>);
 
 				// For Asynchronous Functions:
 					// If the Target's Functional Dependency is called only once in the Target:
-						<mock>.mockResolvedValue(<test-value>);
-						<mock>.mockRejectedValue(<test-value>);
+						<stub>.mockResolvedValueOnce(<test-value>);
+						<stub>.mockRejectedValueOnce(<test-value>);
 
 					// If the Target's Functional Dependency is called more than once:
-						<mock>.mockResolvedValueOnce(<test-value>);
-						<mock>.mockRejectedValueOnce(<test-value>);
+						<stub>.mockResolvedValue(<test-value>);
+						<stub>.mockRejectedValue(<test-value>);
 
 			Matchers:
 				expect(<target-value>).not					Inverts the Unit Test Logic.
@@ -340,7 +349,8 @@ Jest
 					// Note: Keys with undefined Values will not match with an Object without those Keys.
 
 				// Errors
-				expect(() => <function>()).toThrow(<error>)
+				expect(<function>()).toThrow(<error>)
+				expect(<async-function>()).rejects.toThrow(<error>)
 
 				// Snapshot Testing
 				expect(<target>).toMatchSnapshot(<optional-property-matcher-for-objects>, '<optional-hint>')
