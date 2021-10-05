@@ -7,6 +7,7 @@ Application Development:
 		End to End Testing: 		These Tests run across the Full Tech Stack (i.e. both Backend and Frontend). They usually simulate User Actions.
 
 		Black Box Testing: 			Tests that are implemented with no perspective on the internals of the Entity that they test.
+		Brittle Tests:				Tests that would have to change each time a new Feature or Modification is done to the content being Tested.
 
 	Design:
 		Bad Code:					Mainly caused by Coupling.
