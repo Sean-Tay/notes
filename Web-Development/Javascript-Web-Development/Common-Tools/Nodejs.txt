@@ -267,9 +267,9 @@ Node.js:
 
 				npm view <dependency> version							# View the Node Dependency's latest version from its Node Registry.
 
-				npm update												# Update all Node Dependencies in a Node Project to their latest verisions (before a major version change), respecting specified semver in package.json.
-				npm update <dependency>									# Update a Node Dependency to the latest version (before a major version change), respecting specified semver in package.json.
-				npm update <dependency>@<version>						# Update a Node Dependency to the specific <version>, respecting specified semver in package.json.
+				npm update												# Update all Node Dependencies in a Node Project to their latest verisions (before a major version change), respecting specified semver ranges in package.json.
+				npm update <dependency>									# Update a Node Dependency to the latest version (before a major version change), respecting specified semver ranges in package.json.
+				npm update <dependency>@<version>						# Update a Node Dependency to the specific <version>, respecting specified semver ranges in package.json.
 				
 				npm run <command> [-- <arg>, ...]						# Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 				
@@ -287,7 +287,8 @@ Node.js:
 				yarn add <dependency>[@<{ version | tag }>]				# Add a Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
 					--dev												# Add a development-level Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
 
-				yarn upgrade <dependency>[@<{ version | tag }>]			# Upgrade any Node Dependency, optionally to a specific version or tag, within the local Node Project, and propagate the changes to the  Node Project's package.json.
+				yarn upgrade <dependency>[@<{ version | tag }>]			# Upgrade any Node Dependency, optionally to a specific version or tag, within the local Node Project, and propagate the changes to the Node Project's package.json.
+					--latest											# Upgrade Node Dependencies to the latest versions, ignoring the semver ranges specified in package.json.
 
 				yarn remove <dependency>								# Remove any Node Dependency from the local Node Project, and propagate the changes to the Node Project's package.json.
 
