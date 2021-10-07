@@ -224,43 +224,57 @@ Jest
 					import * as Dependencies from '<target-dependency>';
 
 					// Use jest.fn to entirely replace the <dependency>'s implementation with a Stub.
-					const dependencyMock = jest.fn(<new-function>)
+					const dependencyStub = jest.fn(<new-function>)
 
 					// Use jest.spyOn to allow modification of the <dependency>'s implementation.
-					const dependencyMock = jest.spyOn(Dependencies, '<dependency>');
+					const dependencyStub = jest.spyOn(Dependencies, '<dependency>');
 
-					// Within a Test, invoke the Jest Mock Methods to define a controlled implementation of the Target's Function Dependency.
-					it(
-						'should be able to Mock',
-						() => {
-							dependencyMock.mockReturnedValue(<test-value>);
-
-							// Note: <target> will automatically call the Mock rather than the original implementation, as Jest replaces it internally.
-							expect(<target>()).toBe(<expected-value>);
-
-							// ...
-						}
-					);
-
-					// ...
-
-					// Resubstitute back in the original implementation for the Target's Dependency after all Tests in this Test Suite are finished.
-					afterAll(
-						() => {
-							dependencyMock.mockRestore();
-						}
-					);
+					// Within a Test, invoke the Jest Stub Methods to define a controlled implementation of the Target's Function Dependency.
 
 				// Mocking Global JavaScript Functions
 					// ...
 
 					// Global Scope
-					const globalDependencyMock = jest.spyOn(this, '<dependency>');
+					const globalDependencyStub = jest.spyOn(this, '<dependency>');
 
 					// NodeJS
-					const globalDependencyMock = jest.spyOn(global, '<dependency>');
+					const globalDependencyStub = jest.spyOn(global, '<dependency>');
 
 					// ...
+
+				// Mocking a Target's Module Dependency.
+					import { <target> } from '<target>';
+					
+					// Control what the Module provides for the Tests in this Test File.
+					// Note: 'mock' Calls are automatically hoisted up to the top of the Test File by babel-jest.
+					jest.mock('<target-dependency>', () => {
+						const <target-dependency-original> = jest.requireActual('<target-dependency');
+
+						return {
+							...<target-dependency-original>,
+							__esModule: true, // For ES6 Modules
+
+							// Override Exported Property
+							<exported-property>: // ...
+						}
+					})
+
+					// Control what the Module provides for each Test.
+					// Note: Requires babel-plugin-dynamic-import-node.
+					jest.doMock('<target-dependency>', () => {
+						const <target-dependency-original> = jest.requireActual('<target-dependency');
+
+						return {
+							...<target-dependency-original>,
+							__esModule: true, // For ES6 Modules
+
+							// Override Exported Property
+							<exported-property>: // ...
+						}
+					})
+
+					// Reset Module Implementation back to normal.
+					jest.resetModules()
 
 				// Snapshot Testing
 					// Note: If a Snapshot is unavailable, the Test will pass and generate the Test Snapshot.
@@ -296,8 +310,8 @@ Jest
 				afterEach(<cleanup-fn>); // Note: Operates at a Unit Test Level, NOT a Test Block Level.
 				afterAll(<cleanup-fn>);
 
-			Jest Mock Methods:	For defining the behaviour of a Stub, to simulate a Target's Functional Dependency:
-				// Tip: These are chainable with each other, as these return the Jest Mock itself at the end of execution.
+			Jest Stub Methods:	For defining the behaviour of a Stub, to simulate a Target's Functional Dependency:
+				// Tip: These are chainable with each other, as these return the Jest Stub itself at the end of execution.
 
 				// For Synchronous Functions:
 					// If the Target's Functional Dependency is called only once in the Target:
@@ -327,34 +341,37 @@ Jest
 				expect(<target-value>).toBeTruthy();
 
 				// Numbers
-				expect(<target-number>).toBeCloseTo(<number>, <precision>) For optimal comparison of floats that accounts for floating-point Errors.
-				expect(<target-number>).toBeLessThan(<number>)
-				expect(<target-number>).toBeLessThanOrEqual(<number>)
-				expect(<target-number>).toBeGreaterThanOrEqual(<number>)
-				expect(<target-number>).toBeGreaterThan(<number>)
-				expect(<target-number>).toBeNaN()
+					expect(<target-number>).toBeCloseTo(<number>, <precision>) For optimal comparison of floats that accounts for floating-point Errors.
+					expect(<target-number>).toBeLessThan(<number>)
+					expect(<target-number>).toBeLessThanOrEqual(<number>)
+					expect(<target-number>).toBeGreaterThanOrEqual(<number>)
+					expect(<target-number>).toBeGreaterThan(<number>)
+					expect(<target-number>).toBeNaN()
 
 				// Strings
-				expect(<target-string>).toMatch({<string> | <reg-exp>})	Check if a given string value matches for a given <string> or <reg-exp>.
+					expect(<target-string>).toMatch({<string> | <reg-exp>})	Check if a given string value matches for a given <string> or <reg-exp>.
 
 				// Arrays
-				expect(<target-array>).toContain(<item>) 	Check if an Item exists within an Array.
-				expect(<target-array>).toContainEqual(<item>) Deep Check if an Item with specific Structure and Values exists within an Array.
+					expect(<target-array>).toContain(<item>) 	Check if an Item exists within an Array.
+					expect(<target-array>).toContainEqual(<item>) Deep Check if an Item with specific Structure and Values exists within an Array.
 				
 				// Objects
-				expect(<target-object>).toHaveProperty(<string>) Check if the <string> Property exists on the Object.
-				expect(<target-object>).toMatchObject(<object>) Partial Deep Check if the Object to be tested has at least the Structure and Values in <object>.
-				expect(<target-object>).toEqual(<object>) Deep Check if two Objects have the same specific Structure and Values.
-				expect(<target-object>).toStrictEqual(<object>) Deep Check if two Objects have the same specific Structure, Property Types, and Values.
-					// Note: Keys with undefined Values will not match with an Object without those Keys.
+					expect(<target-object>).toHaveProperty(<string>) Check if the <string> Property exists on the Object.
+					expect(<target-object>).toMatchObject(<object>) Partial Deep Check if the Object to be tested has at least the Structure and Values in <object>.
+					expect(<target-object>).toEqual(<object>) Deep Check if two Objects have the same specific Structure and Values.
+					expect(<target-object>).toStrictEqual(<object>) Deep Check if two Objects have the same specific Structure, Property Types, and Values.
+						// Note: Keys with undefined Values will not match with an Object without those Keys.
+
+				// Functions
+					expect(<function>).toHaveBeenCalledWith(<value>)
 
 				// Errors
-				expect(<function>()).toThrow(<error>)
-				expect(<async-function>()).rejects.toThrow(<error>)
+					expect(<function>()).toThrow(<error>)
+					expect(<async-function>()).rejects.toThrow(<error>)
 
 				// Snapshot Testing
-				expect(<target>).toMatchSnapshot(<optional-property-matcher-for-objects>, '<optional-hint>')
-				expect(<target>).toMatchInlineSnapshot(<optional-property-matcher-for-objects>, '<target-snapshot>')
+					expect(<target>).toMatchSnapshot(<optional-property-matcher-for-objects>, '<optional-hint>')
+					expect(<target>).toMatchInlineSnapshot(<optional-property-matcher-for-objects>, '<target-snapshot>')
 
 		External Libraries:
 			Moxios:
@@ -397,6 +414,10 @@ Jest
 						);
 					}
 				);
+
+			ReactRouter:
+				// history:
+					// Simply use an Array in place of the history Object.
 
 	Commands:
 		jest --init				# Generate a basic Jest Config File.
