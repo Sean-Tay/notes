@@ -36,8 +36,8 @@
 				// Tip: Already wrapped with 'act'.
 					const queries = render(<element />, {
 						// Specify a DOM Node to append the <element /> to.
-						// Defaults to document.body.appendChild(document.createElement('table'))
-						container: <dom-node>,
+						// Defaults to document.body.
+						container: <dom-node>, // document.body.appendChild(document.createElement('<html-element-type>'))
 					})
 
 				// fireEvent: Alternative to @testing-library/user-event.
