@@ -416,8 +416,19 @@ Jest
 				);
 
 			ReactRouter:
-				// history:
-					// Simply use an Array in place of the history Object.
+				// Tip: Render a Router and Route alongside the Components that are being tested to allow them to receive the Route Props.
+				// Tip: Inject Custom History and track it during the Test via createMemoryHistory().
+					import { createMemoryHistory } from 'history';
+
+					// Note: <current-path> is the Path with values for the Params.
+					const history = createMemoryHistory({ initialEntries: ['<current-path>'] });
+
+					render(
+						<Router history={history}>
+							// Note: <route-path> is the Path that defines the available Params for the Component.
+							<Route path={'<route-path>'} component={<Component>}/>
+						</Router>
+					)
 
 	Commands:
 		jest --init				# Generate a basic Jest Config File.
