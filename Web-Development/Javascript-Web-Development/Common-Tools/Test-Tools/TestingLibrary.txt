@@ -13,24 +13,40 @@
 			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Nodes.
 				// screen: Interface for obtaining Nodes from the DOM State. Re-exported by the Wrapper Packages.
 					// query* Functions will return the Element or null if it can't be found.
-					// get* Functions will return the Element or throw an Error if it can't be found.
+						// Tip: Use these only when asserting an Element's existence.
+
+					// get* Functions will return the Element or throw an Error (with the full DOM Structure in readable format) if it can't be found.
+
 					// findBy* Asynchronous Functions that will resolve with the Element or reject if the default timeout of 10000ms is exceeded.
+						// Note: Useful to avoid the 'act' Error Output by waiting for a Component to finish loading when it calls an API on Mount.
 
 			@testing-library/jest-dom: Provides custom Jest Matchers for testing DOM State.
-				// toBeInTheDocument(): Jest Matcher for checking if Elements are in the DOM State.
+				// expect( ... ).toBeInTheDocument(): Jest Matcher for checking if Elements are in the DOM State.
+				// expect( ... ).toBeDisabled(): Jest Matcher to check if an Element is correctly disabled.
 
 			@testing-library/user-event: Provides Utility Methods to simulate User Events.
-				// click(<dom-node>)
-				// type(<dom-node>, <text>)
+				import userEvent from '@testing-library/user-event';
+
+				userEvent.click(<dom-node>)
+				userEvent.type(<dom-node>, <text>)
 
 			@testing-library/react: Renders React Components into DOM Nodes.
 				// render: Render a React Component onto the DOM State.
 				// Tip: 'queries' have the same Methods as 'screen', except there is no need to specify the DOM Node to start the search from.
+				// Tip: Already wrapped with 'act'.
 					const queries = render(<element />, {
 						// Specify a DOM Node to append the <element /> to.
 						// Defaults to document.body.appendChild(document.createElement('table'))
 						container: <dom-node>,
 					})
+
+				// fireEvent: Alternative to @testing-library/user-event.
+				// Tip: Already wrapped with 'act'.
+				// Tip: Use @testing-library/user-event over this - the methods more closely resemble typical User Interactions than the ones in fireEvent.
+
+				// act: Wrapper Function to wrap any Code that would trigger a State Update.
+					act(() => { ... })
+					await act(async () => { ... })
 
 			@testing-library/react-hooks: Creates a simple Test Harness for React Hooks, avoiding the need to create unnecessary Function Components in tests.
 				// The package will auto-detect which Renderer is available to use for the Test Harness.
@@ -54,10 +70,6 @@
 
 					// Wait for Hook to update a particular variable.
 					await waitFor(() => result.current.<variable> === <value>)
-
-				// act: Wrapper Function to wrap any Code that would trigger a State Update.
-					act(() => { ... })
-					await act(async () => { ... })
 
 				// cleanup: Unmounts all Rendered Hooks, ensuring all Effects have been flushed.
 					// Tip: Automatically called if Testing Framework supports the afterEach global.
