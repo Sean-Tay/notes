@@ -164,20 +164,19 @@ Jest
 						// Asynchronous Unit Test Definition:
 						test(
 							'<async-test-description>',
-							async () => {
-								// Indicate to Jest to only pass this Unit Test once the correct number of Assertions have been executed.
-								expect.assertions(<number>); 
+							// Use a Callback to indicate to Jest that this Unit Test has finished executing.
+							(done) => {
+								// ...
 
-								const data = await <async-function>();
-
-								// expect ...
+								done(); // To pass the Test.
+								done(error); // To fail the Test.
 							}
 
 							// OR
-
+							// Return a Promise that must resolve to pass the Test.
 							() => {
 								// Indicate to Jest to only pass this Unit Test once the correct number of Assertions have executed.
-								// In this case this can also help detect when the Assertions in .then() or .catch() does not execute, depending on if the Unit Test checks for a success or failing state.
+								// This can also help detect when the Assertions in .then() or .catch() does not execute, depending on if the Unit Test checks for a success or failing state.
 								expect.assertions(<number>); 
 
 								return <async-function>()
@@ -194,6 +193,16 @@ Jest
 											// expect ...
 										}
 									)
+							}
+
+							// OR
+							async () => {
+								// Indicate to Jest to only pass this Unit Test once the correct number of Assertions have been executed.
+								expect.assertions(<number>); 
+
+								const data = await <async-function>();
+
+								// expect ...
 							}
 						);
 
@@ -429,6 +438,9 @@ Jest
 							<Route path={'<route-path>'} component={<Component>}/>
 						</Router>
 					)
+
+		Sanity Checks:
+			Does the Component have Virtualization on Displayed Content?
 
 	Commands:
 		jest --init				# Generate a basic Jest Config File.
