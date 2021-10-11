@@ -9,20 +9,24 @@
 		data-testid: 			Convention: Custom Element Property that allows for quick test-only lookups via queryById. Can be stripped away during Compilation via babel-plugin-react-remove-properties.
 	
 	Details:
+		Function: UI Component Framework Representation -> DOM Nodes -> Test on DOM Nodes
+
 		Packages:
 			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Nodes.
 				// screen: Interface for obtaining Nodes from the DOM State. Re-exported by the Wrapper Packages.
-					// query* Functions will return the Element or null if it can't be found.
-						// Tip: Use these only when asserting an Element's existence.
+					// query* Functions will return the DOM Node or null if it can't be found.
+						// Tip: Use these only when asserting an DOM Node's existence.
 
-					// get* Functions will return the Element or throw an Error (with the full DOM Structure in readable format) if it can't be found.
+					// get* Functions will return the DOM Node or throw an Error (with the full DOM Structure in readable format) if it can't be found.
 
-					// findBy* Asynchronous Functions that will resolve with the Element or reject if the default timeout of 10000ms is exceeded.
+					// findBy* Asynchronous Functions that will resolve with the DOM Node or reject if the default timeout of 10000ms is exceeded.
 						// Note: Useful to avoid the 'act' Error Output by waiting for a Component to finish loading when it calls an API on Mount.
+						// Note: Calls cannot be run concurrently via Promise.all.
+							// Tip: Just await each Call - it will immediately resolve if it can be found.
 
 			@testing-library/jest-dom: Provides custom Jest Matchers for testing DOM State.
-				// expect( ... ).toBeInTheDocument(): Jest Matcher for checking if Elements are in the DOM State.
-				// expect( ... ).toBeDisabled(): Jest Matcher to check if an Element is correctly disabled.
+				// expect( <dom-node> ).toBeInTheDocument(): Jest Matcher for checking if DOM Nodes are in the DOM State.
+				// expect( <dom-node> ).toBeDisabled(): Jest Matcher to check if an DOM Node is correctly disabled.
 
 			@testing-library/user-event: Provides Utility Methods to simulate User Events.
 				import userEvent from '@testing-library/user-event';
