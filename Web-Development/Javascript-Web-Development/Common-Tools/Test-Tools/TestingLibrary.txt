@@ -44,6 +44,13 @@
 				// Tip: Already wrapped with 'act'.
 				// Tip: Use @testing-library/user-event over this - the methods more closely resemble typical User Interactions than the ones in fireEvent.
 
+				// waitFor: Wait until some Asynchronous Condition becomes true.
+					await waitFor(async () => <boolean-expression>)
+
+				// waitForElementToBeRemoved: Will resolve once the specified DOM Node has been removed - it will check each time there is a mutation to the DOM State.
+					// Note: Will throw an Error if the DOM Node does not already exist on the first check.
+					await waitForElementToBeRemoved(async () => <dom-node>)
+
 				// act: Wrapper Function to wrap any Code that would trigger a State Update.
 					act(() => { ... })
 					await act(async () => { ... })
