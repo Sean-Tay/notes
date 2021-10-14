@@ -48,7 +48,8 @@
 				// Tip: Already wrapped with 'act'.
 				// Tip: Use @testing-library/user-event over this - the methods more closely resemble typical User Interactions than the ones in fireEvent.
 
-				// waitFor: Wait until some Asynchronous Condition becomes true.
+				// waitFor: Wait until some Assertion / Asynchronous Condition becomes true.
+					await waitFor(() => { <assert-fn>( ... ).toBe( ... ) })
 					await waitFor(async () => <boolean-expression>)
 
 				// waitForElementToBeRemoved: Will resolve once the specified DOM Node has been removed - it will check each time there is a mutation to the DOM State.
@@ -81,6 +82,10 @@
 
 					// Wait for Hook to update a particular variable.
 					await waitFor(() => result.current.<variable> === <value>)
+
+				// act: Wrapper Function to wrap any Code that would trigger a State Update.
+					act(() => { ... })
+					await act(async () => { ... })
 
 				// cleanup: Unmounts all Rendered Hooks, ensuring all Effects have been flushed.
 					// Tip: Automatically called if Testing Framework supports the afterEach global.
