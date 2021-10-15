@@ -372,7 +372,7 @@ Jest
 					expect(<target-array>).toContainEqual(<item>) Deep Check if an Item with specific Structure and Values exists within an Array.
 
 					expect(<target-array>).toEqual(expect.arrayContaining(<expected-array>)) Check if <target-array> contains the Items inside <expected-array>.
-					expect(<target-array>.sort()).toEqual(<expected-array>.sort()) Check if both Arrays are equal.
+					expect(<target-array>).sort()).toEqual(<expected-array>.sort()) Check if both Arrays are equal.
 				
 				// Objects
 					expect(<target-object>).toHaveProperty(<string>) Check if the <string> Property exists on the Object.
@@ -420,7 +420,8 @@ Jest
 						it(
 							'should be able to Mock API Data',
 							async () => {
-								// Mock all Requests to an API Endpoint
+								// Mock all Requests to an API Endpoint.
+								// Note: Need to mock the URL exactly (i.e. with the correct Path and Query Params).
 								moxios.stubRequest(
 									'<url>', {
 										code: <code>,

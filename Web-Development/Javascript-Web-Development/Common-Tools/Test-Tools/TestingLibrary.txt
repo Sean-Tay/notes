@@ -80,8 +80,9 @@
 					// Wait for Hook to trigger one re-Render.
 					await waitForNextUpdate()
 
-					// Wait for Hook to update a particular variable.
-					await waitFor(() => result.current.<variable> === <value>)
+					// waitFor: Wait until some Assertion / Asynchronous Condition becomes true.
+					await waitFor(() => { <assert-fn>( ... ).toBe( ... ) })
+					await waitFor(async () => <boolean-expression>)
 
 				// act: Wrapper Function to wrap any Code that would trigger a State Update.
 					act(() => { ... })
