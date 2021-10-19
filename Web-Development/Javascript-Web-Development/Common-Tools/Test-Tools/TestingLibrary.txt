@@ -38,11 +38,16 @@
 				// render: Render a React Component onto the DOM State.
 				// Tip: 'queries' have the same Methods as 'screen', except there is no need to specify the DOM Node to start the search from.
 				// Tip: Already wrapped with 'act'.
+				// Note: If calling 'render' multiple times within the same Test, be sure to invoke 'cleanup' before each subsequent 'render' Call to remove the rendered results from the DOM State.
 					const queries = render(<element />, {
 						// Specify a DOM Node to append the <element /> to.
 						// Defaults to document.body.
 						container: <dom-node>, // document.body.appendChild(document.createElement('<html-element-type>'))
 					})
+
+					// ...
+
+					cleanup()
 
 				// fireEvent: Alternative to @testing-library/user-event.
 				// Tip: Already wrapped with 'act'.
