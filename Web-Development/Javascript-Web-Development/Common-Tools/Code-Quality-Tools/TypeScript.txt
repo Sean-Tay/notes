@@ -43,6 +43,8 @@ Typescript:
 
 					// object: Represents all non-primitive Types.
 					// Object: Describes functionality common to all Javascript Objects.
+
+					// Function: Represents Function Types.
 					
 					// number: Represents a Numerical Value.
 					// bigint: Represents a Large Integer Value.
@@ -173,6 +175,7 @@ Typescript:
 
 				// Type Guards: A Function that returns a boolean Value, letting TypeScript remove some possible Types during analysis of a Variable's Type when it is used.
 					// Tip: Use typeof or instanceof if needed.
+						// Function Types: <function> instanceof Function
 
 					function isType(arg: <type>): arg is <stricter-type> {
 						// ...
