@@ -7,21 +7,24 @@
 	
 	Concepts:
 		data-testid: 			Convention: Custom Element Property that allows for quick test-only lookups via queryById. Can be stripped away during Compilation via babel-plugin-react-remove-properties.
-			// Tip: To get the data-testid specified on a DOM Node, use <dom-node>.getAttribute('data-testid')
 	
 	Details:
 		Function: UI Component Framework Representation -> DOM Nodes -> Test on DOM Nodes
 
 		Packages:
 			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Nodes.
+				// Tip: Useful DOM Node Methods and Patterns: 
+					// To get the data-testid specified on a DOM Node, use <dom-node>.getAttribute('data-testid')
+
+					// To get the closest Ancestrial DOM Node that fulfills a criteria, use <dom-node>.closest('<selector>')
+
+					// To get the closest Descendent DOM Nodes that fulfills a criteria, use <dom-node>.querySelectorAll(':scope > <selector>')
+
 				// screen: Interface for obtaining Nodes from the DOM State. Re-exported by the Wrapper Packages.
 					// query* Functions will return the DOM Node or null if it can't be found.
 						// Tip: Use these only when asserting an DOM Node's existence.
 
 					// get* Functions will return the DOM Node or throw an Error (with the full DOM Structure in readable format) if it can't be found.
-						// Tip: To get the closest Ancestrial DOM Node of a certain HTML Element Type, use <dom-node>.closest('<html-element-type>')
-						// Tip: To get the closest Descendent DOM Nodes of a certain HTML Element Type, use <dom-node>.getElementsByTagName('<html-element-type>')
-							// Note: getElementsByTagName will only work for HTML Element Types whose name are all lowercase. Use <dom-node>.getElementsByTagNameNS('<locale>', '<html-element-type>') instead.
 
 					// findBy* Asynchronous Functions that will resolve with the DOM Node or reject if the default timeout of 10000ms is exceeded.
 						// Note: Useful to avoid the 'act' Error Output by waiting for a Component to finish loading when it calls an API on Mount.
