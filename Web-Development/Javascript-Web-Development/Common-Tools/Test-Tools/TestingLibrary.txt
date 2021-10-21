@@ -19,6 +19,9 @@
 						// Tip: Use these only when asserting an DOM Node's existence.
 
 					// get* Functions will return the DOM Node or throw an Error (with the full DOM Structure in readable format) if it can't be found.
+						// Tip: To get the closest Ancestrial DOM Node of a certain HTML Element Type, use <dom-node>.closest('<html-element-type>')
+						// Tip: To get the closest Descendent DOM Nodes of a certain HTML Element Type, use <dom-node>.getElementsByTagName('<html-element-type>')
+							// Note: getElementsByTagName will only work for HTML Element Types whose name are all lowercase. Use <dom-node>.getElementsByTagNameNS('<locale>', '<html-element-type>') instead.
 
 					// findBy* Asynchronous Functions that will resolve with the DOM Node or reject if the default timeout of 10000ms is exceeded.
 						// Note: Useful to avoid the 'act' Error Output by waiting for a Component to finish loading when it calls an API on Mount.
