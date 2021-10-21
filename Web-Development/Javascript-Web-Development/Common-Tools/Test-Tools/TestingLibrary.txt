@@ -57,8 +57,12 @@
 				// Tip: Already wrapped with 'act'.
 				// Tip: Use @testing-library/user-event over this - the methods more closely resemble typical User Interactions than the ones in fireEvent.
 
-				// waitFor: Wait until some Assertion / Asynchronous Condition becomes true.
+				// waitFor: Wait until some Assertion becomes true / Asynchronous Condition resolves.
+					// Note: For Synchronous Conditions, waitFor will re-call the Callback on a set Interval (default: 50ms).
 					await waitFor(() => { <assert-fn>( ... ).toBe( ... ) })
+
+					// Note: For Asynchronous Conditions, waitFor will re-call the Callback only once it rejects.
+					await waitFor(async () => { <assert-fn>( await ... ).toBe( ... ) })
 					await waitFor(async () => <boolean-expression>)
 
 				// waitForElementToBeRemoved: Will resolve once the specified DOM Node has been removed - it will check each time there is a mutation to the DOM State.
@@ -89,9 +93,13 @@
 					// Wait for Hook to trigger one re-Render.
 					await waitForNextUpdate()
 
-					// waitFor: Wait until some Assertion / Asynchronous Condition becomes true.
-					await waitFor(() => { <assert-fn>( ... ).toBe( ... ) })
-					await waitFor(async () => <boolean-expression>)
+					// waitFor: Wait until some Assertion becomes true / Asynchronous Condition resolves.
+						// Note: For Synchronous Conditions, waitFor will re-call the Callback on a set Interval (default: 50ms).
+						await waitFor(() => { <assert-fn>( ... ).toBe( ... ) })
+
+						// Note: For Asynchronous Conditions, waitFor will re-call the Callback only once it rejects.
+						await waitFor(async () => { <assert-fn>( await ... ).toBe( ... ) })
+						await waitFor(async () => <boolean-expression>)
 
 				// act: Wrapper Function to wrap any Code that would trigger a State Update.
 					act(() => { ... })
