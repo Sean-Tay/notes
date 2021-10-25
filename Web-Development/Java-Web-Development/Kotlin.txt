@@ -321,6 +321,8 @@ Kotlin
 							// ...
 						}
 					}
+					
+					// Tip: when can be used without any <variable>s, which can be seen as a nicer if-else alternative.
 
 				// Coroutines: Deals with Asynchronous Programming Constructs.
 					// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
