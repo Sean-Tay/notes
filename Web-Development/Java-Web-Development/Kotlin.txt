@@ -220,6 +220,11 @@ Kotlin
 					// ...
 				}
 
+				// Data Class: Classes meant to describe Objects that just hold Data. Analogous to POJOs.
+				// Tip: Kotlin will automatically define a default 'equals', 'hashCode', 'copy' and 'toString' Utility Methods for the created Data Class.
+				// Tip: Properties on a Data Class Instance can be Deconstructed via Spreading.
+				data class ( ... ) 
+
 				// Interface Implementation:
 				class <class-name>( ... ): <interface-name> {
 					// ... Usual Function Definitions ...
@@ -278,9 +283,12 @@ Kotlin
 					// Tip: Avoids double-evaluation of <expression-1>.
 					<expression-1> ?: <expression-2>;
 
-				// Spread Operator: *
-					// Note: Only usable when passing in Arguments to a varargs Function.
-					*<array-variable> // Spreads out <array-variable>
+				// Spread Operator: 
+					*
+						// Note: Only usable when passing in Arguments to a varargs Function.
+						*<array-variable> // Spreads out <array-variable>
+
+					val ( <property>, ... ) = <data-class-instance>
 
 			Control-Flow:
 				// Iteration over a Collection:
