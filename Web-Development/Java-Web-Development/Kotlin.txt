@@ -13,6 +13,8 @@ Kotlin
 		WAR Files: Web Application Archive. Contains the Web Application in a specific structure that can be deployed on any Web Container / Java Application Server.
 
 	Details:
+		Designed to be a "better" Java.
+
 		Features:
 			Functional Programming.
 			Immutability Support.
@@ -66,6 +68,7 @@ Kotlin
 
 			Functions: First-Class Citizens. Higher-Order Functions possible.
 				// Note: Functions with Block Body (Curly Braces) must explicitly define their <return-type>.
+				// Note: <function-name> can be a String Template as well.
 				fun <function-name>(<arg>:<type>, ... ): <return-type> {
 					// ...
 
@@ -184,11 +187,19 @@ Kotlin
 						// ...
 					}
 
+					// ...
+
 					// Companion Objects:
 					// Note: Replaces Static Class Members.
 					companion object [<c-object-name>]: <interface-type> {
 						// ...
 					}
+
+					// Accessing Companion Objects within Classes:
+						// If Companion Object was not given a Name:
+						<class-name>.Companion
+
+						<class-name>.<c-object-name>
 
 					// ...
 				}
@@ -222,12 +233,6 @@ Kotlin
 				// Instantiate a Class Instance:
 					// Note: No 'new' Keyword.
 					val instance = <class-name>();
-
-				// Accessing Companion Objects within Classes:
-					// If Companion Object was not given a Name:
-					<class-name>.Companion
-
-					<class-name>.<c-object-name>
 
 			Operators:
 				// Type Checking:
@@ -284,7 +289,7 @@ Kotlin
 						}
 					}
 
-				// Coroutines:
+				// Coroutines: Deals with Asynchronous Programming Constructs.
 					// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
 					<coroutine-builder-function> {
 						// Regular Code
