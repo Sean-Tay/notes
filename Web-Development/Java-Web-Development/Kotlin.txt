@@ -66,6 +66,28 @@ Kotlin
 					// Expression: For referencing the result of an Inline Expression
 					val string = "${ i + 5 } ...";
 
+			Collections:
+				// Arrays
+					var mutableArray = mutableListOf( <item>, ... )
+					val array = listOf( <item>, ... )
+
+					array.size
+					
+					mutableArray.add( <new-item> )
+
+				// Maps
+					var mutableMap = mutableMapOf(
+						<key> to <value>,
+						// ...
+					)
+					val map = mapOf(
+						<key> to <value>,
+						// ...
+					)
+
+					map.contains( <potential-key> )
+					map.get( <key> )
+
 			Objects:
 				// Note: Lazily Initalized only during the first access.
 					// Tip: Effectively Singleton Classes:
