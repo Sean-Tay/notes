@@ -158,6 +158,14 @@ Kotlin
 						// ... Class-Compatable Member Declarations here ...
 					}
 
+			Interfaces: Used to declare Public API for Implementing Constructs.
+				interface <interface-name> {
+					fun <function-name>(<arg>: <type>, ... ): <return-type>
+					suspend <function-name>(<arg>: <type>, ... ): <return-type>
+
+					// ...
+				}
+
 			Classes:
 				// Note: Classes can omit the Curly Braces if the Class has no Body.
 				// Tip: Define Data Objects as Classes with no Braces.
@@ -167,7 +175,7 @@ Kotlin
 					// Primary Constructor / Default Constructor
 					// Tip: Allows for Parameter Properties (Instance Properties defined in Constructor Signature)
 					// Note: Preceding 'constructor' Keyword needed if the Constructor has Visibility Modifiers or Annotations
-					<property>:<type> = <default-value>, ...
+					[{ val | var }] <property>:<type> = <default-value>, ...
 				) {
 					// ...
 
@@ -183,7 +191,11 @@ Kotlin
 					// Secondary Constructor:
 					// Note: If there is a non-default Primary Constructor, the Secondary Constructor will have to delegate to it.
 					// Note: Therefore, code from Primary Constructors, Property Initializers and Initialization Blocks are executed before Secondary Constructors.
-					constructor( ... ): this( ... ) {
+					// Tip: Prefer Default Values in the Primary Constructor as opposed to Secondary Constructors.
+					constructor(
+						// Note: Specifying 'val' or 'var' here for Parameter Properties will not be correct for those already specified in the Primary Constructor.
+						... 
+					): this( ... ) {
 						// ...
 					}
 
@@ -193,6 +205,10 @@ Kotlin
 					// Note: Replaces Static Class Members.
 					companion object [<c-object-name>]: <interface-type> {
 						// ...
+
+						// Mark the following Method as a Static Method for the JVM
+						@JvmStatic
+						fun <function-name>( ... ) { ... }
 					}
 
 					// Accessing Companion Objects within Classes:
@@ -204,19 +220,30 @@ Kotlin
 					// ...
 				}
 
+				// Interface Implementation:
+				class <class-name>( ... ): <interface-name> {
+					// ... Usual Function Definitions ...
+
+					override fun <function-name> ( ... ) { ... }
+					override suspend fun <function-name> ( ... ) { ... }
+				}
+
 				// Inheritance:
+					// Note: Classes are treated as 'final' or Non-Inheritable by default.
 					// Mark a Class as Inheritable by Sub-Classes via the 'open' Keyword.
-					open class <inheritable-class>( ... ) {
+					open class <inheritable-class>() {
 						// Mark a Class Property as Overridable by Sub-Classes via the 'open' Keyword.
 						open val <property>:<type>;
 					}
 
 					// Note: Multiple Inheritance is possible.
 					// Note: Sub-Classes must provide Arguments for the Inheritable Class's Parameter Properties, if any.
-					class <sub-class>(): <inheritable-class>( ... ), ... {
+					class <sub-class>(
+						// Note: Specifying 'val' or 'var' here for Parameter Properties will re-create the Inherited Property within this Sub-Class, rather than just passing it to the Base Class.
+						... 
+					): <inheritable-class>( ... ), ... {
 						// Override Property from <inheritable-class>:
 						// Note: Overriden Properties are themselves considered Overridable by any Sub-Class. Use the 'final' Keyword to prevent Overriding.
-						// Tip: 'final' is not necessary in cases where the Class has not been marked 'open'.
 						// Note: In the event of Multiple Inheritance with Common Class Properties, it is required to Override these to eliminate ambiguity.
 						[final] override val <property>;
 
@@ -353,7 +380,7 @@ Kotlin
 
 					// ...
 
-		Compilation: Kotlin will convert <name>.kt Kotlin Files into <name>Kt Class Files when Compiling. 
+		Compilation: Kotlin will convert <name>.kt Kotlin Files into <name>Kt Class Files when it detects during Compilation some Top-Level Functions inside.
 
 	Commands:
 		# Kotlin
