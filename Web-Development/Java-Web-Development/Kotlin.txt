@@ -72,7 +72,7 @@ Kotlin
 					val array = listOf( <item>, ... )
 
 					array.size
-					
+
 					mutableArray.add( <new-item> )
 
 				// Maps
@@ -291,11 +291,14 @@ Kotlin
 						// ...
 					}
 
-					// Note: If the last Argument to a Function is a Function itself, it can be omitted from the Argument List during the Call.
+					// Tip: If the last Argument to a Function Call is a Lambda, it can be omitted from the Argument List during the Call.
 					<calling-function>(<arg>, ... ) { <arg>: <type>, ... -> // ... }
 
-					// Note: If the sole Argument to a Function is a Function itself, the Parenthesis can be omitted entirely during the Call.
+					// Tip: If the sole Argument to a Function Call is a Lambda itself, the Parenthesis can be omitted entirely during the Call.
 					<calling-function> { <arg>: <type>, ... -> // ... }
+
+					// Tip: If the sole Argument to a Function Call is a Lambda with only one Argument, the following shorthand can be used:
+					<calling-function>(::<lambda>)
 
 					// Note: Withn Inline Functions, return statements from Lambdas will exit the Inline Function rather than the Lambda itself.
 					// Tip: Use a Label to return the Lambda itself:
