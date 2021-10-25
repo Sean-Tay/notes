@@ -66,89 +66,6 @@ Kotlin
 					// Expression: For referencing the result of an Inline Expression
 					val string = "${ i + 5 } ...";
 
-			Functions: First-Class Citizens. Higher-Order Functions possible.
-				// Note: Functions with Block Body (Curly Braces) must explicitly define their <return-type>.
-				// Note: <function-name> can be a String Template as well.
-				fun <function-name>(<arg>:<type>, ... ): <return-type> {
-					// ...
-
-					return <value>: <return-type>;
-				}
-
-				// Note: Main Function determines Execution Entry-Point for Program.
-					fun main(args: Array<String>) {
-						// ...
-					}
-
-				// Function with variable number of Arguments:
-					fun <function-name>(vararg <arg-name>: <individual-arg-type>): <return-type> {
-						// Note: <arg-name> will be an Array Type.
-						// ...
-					}
-
-				// Single-Expression Function: Curly Braces can be omitted.
-					fun <function-name>(<arg>: <type>, ...): <return-type> = <expression>
-
-				// Generic-Type Function
-					fun <<generic-type>> <function-name>(<arg>: <generic-type>, ...): <return-type> {
-						// ...
-					}
-
-				// Inline Function: To allow the Compiler to inject the Code inside the Function directly at the Call Site.
-					// Tip: Can improve performance where Closures are not needed.
-					inline fun <inline-function-name>(<arg>: <type>, ...) {
-						// ...
-					}
-
-				// Suspendable Function: Analogous to Asynchronous Function in JavaScript.
-					suspend fun <suspendable-function-name>() {
-						// Concurrent Code ...
-
-						// Note: Calling another Suspendable Function will defer execution of this Function.
-
-						// ...
-					}
-
-				// Lambda Expressions / Function Literals / Arrow Functions:
-					// Note: The Curly Braces are needed to obtain an Instance of the Lambda.
-					val <lambda>: (<type>, ... ) -> <return-type> = {
-						<arg>, ... -> 
-							// ... 
-
-							// Note: Last Expression in a Lambda is treated as a Return Expression.
-							<return-expression>
-					}
-
-					// Lambdas with only one Argument
-					val <lambda> = {
-						// 'it' will refer to the Parameter
-						// ...
-					}
-
-					// Lambdas with no Arguments
-					val <lambda> = {
-						// ...
-					}
-
-					// Note: If the last Argument to a Function is a Function itself, it can be omitted from the Argument List during the Call.
-					<calling-function>(<arg>, ... ) { <arg>: <type>, ... -> // ... }
-
-					// Note: If the sole Argument to a Function is a Function itself, the Parenthesis can be omitted entirely during the Call.
-					<calling-function> { <arg>: <type>, ... -> // ... }
-
-					// Note: Withn Inline Functions, return statements from Lambdas will exit the Inline Function rather than the Lambda itself.
-					// Tip: Use a Label to return the Lambda itself:
-					lit@ {
-						// ... 
-
-						// if (<boolean-expression>) return@lit <return-value>;
-
-						// ...
-					}
-
-				// Anonymous Function: 
-					fun (<arg>: <type>, ... ) = // ...
-
 			Objects:
 				// Note: Lazily Initalized only during the first access.
 					// Tip: Effectively Singleton Classes:
@@ -287,6 +204,89 @@ Kotlin
 						*<array-variable> // Spreads out <array-variable>
 
 					val ( <property>, ... ) = <data-class-instance>
+
+			Functions: First-Class Citizens. Higher-Order Functions possible.
+				// Note: Functions with Block Body (Curly Braces) must explicitly define their <return-type>.
+				// Note: <function-name> can be a String Template as well.
+				fun <function-name>(<arg>:<type>, ... ): <return-type> {
+					// ...
+
+					return <value>: <return-type>;
+				}
+
+				// Note: Main Function determines Execution Entry-Point for Program.
+					fun main(args: Array<String>) {
+						// ...
+					}
+
+				// Function with variable number of Arguments:
+					fun <function-name>(vararg <arg-name>: <individual-arg-type>): <return-type> {
+						// Note: <arg-name> will be an Array Type.
+						// ...
+					}
+
+				// Single-Expression Function: Curly Braces can be omitted.
+					fun <function-name>(<arg>: <type>, ...): <return-type> = <expression>
+
+				// Generic-Type Function
+					fun <<generic-type>> <function-name>(<arg>: <generic-type>, ...): <return-type> {
+						// ...
+					}
+
+				// Inline Function: To allow the Compiler to inject the Code inside the Function directly at the Call Site.
+					// Tip: Can improve performance where Closures are not needed.
+					inline fun <inline-function-name>(<arg>: <type>, ...) {
+						// ...
+					}
+
+				// Suspendable Function: Analogous to Asynchronous Function in JavaScript.
+					suspend fun <suspendable-function-name>() {
+						// Concurrent Code ...
+
+						// Note: Calling another Suspendable Function will defer execution of this Function.
+
+						// ...
+					}
+
+				// Lambda Expressions / Function Literals / Arrow Functions:
+					// Note: The Curly Braces are needed to obtain an Instance of the Lambda.
+					val <lambda>: (<type>, ... ) -> <return-type> = {
+						<arg>, ... -> 
+							// ... 
+
+							// Note: Last Expression in a Lambda is treated as a Return Expression.
+							<return-expression>
+					}
+
+					// Lambdas with only one Argument
+					val <lambda> = {
+						// 'it' will refer to the Parameter
+						// ...
+					}
+
+					// Lambdas with no Arguments
+					val <lambda> = {
+						// ...
+					}
+
+					// Note: If the last Argument to a Function is a Function itself, it can be omitted from the Argument List during the Call.
+					<calling-function>(<arg>, ... ) { <arg>: <type>, ... -> // ... }
+
+					// Note: If the sole Argument to a Function is a Function itself, the Parenthesis can be omitted entirely during the Call.
+					<calling-function> { <arg>: <type>, ... -> // ... }
+
+					// Note: Withn Inline Functions, return statements from Lambdas will exit the Inline Function rather than the Lambda itself.
+					// Tip: Use a Label to return the Lambda itself:
+					lit@ {
+						// ... 
+
+						// if (<boolean-expression>) return@lit <return-value>;
+
+						// ...
+					}
+
+				// Anonymous Function: 
+					fun (<arg>: <type>, ... ) = // ...
 
 			Control-Flow:
 				// Iteration over a Collection:
