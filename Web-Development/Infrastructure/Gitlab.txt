@@ -1,0 +1,141 @@
+GitLab:
+	Abbreviations:
+		CI:						Continuous Integration.
+		CD:						Continuous Delivery / Deployment.
+	
+	Description:
+	
+	Resources:
+	
+	Concepts:
+		Continuous Integration: The process of Building and Testing an Application each time a change is made.
+
+		Continuous Delivery: 	Continuous Integration, but with the ability to trigger a subsequent Deployment manually.
+		Continuous Deployment: 	Continuous Integration, but with the ability to trigger a subsequent Deployment automatically.
+
+		Pipeline:				Top-Level Component for implementing CI/CD.
+			Job:				Defines what to do during a Stage.
+				Runners:		Agents that execute a Job in the Pipeline within their Environment.
+
+			Stage:				Defines when to run a group of Jobs (in parallel). Will only trigger if the subsequent Stage before it was successful.
+
+		Review App:				Allows preview of an Application after a change is made and it passes the Pipeline.
+
+	Details:
+		CI/CD Setup:
+			Pipeline Configuration is specified through a .gitlab-ci.yml File:
+			Note: Do NOT use Tabs; use Spaced Indentation.
+				---
+				# Comment
+
+				# Define custom prefilled Variables to be used within the Pipeline:
+				variables:
+					<key>: <value>
+
+					# OR
+
+					<key>:
+						value: <value>
+						description: <description>
+
+				workflow:
+					# Describe Rules to control the conditions in which the Pipeline will be created and run:
+					rules:
+						- if: <boolean-expression>
+						  # Note: Will override Global Variables defined above:
+						  variables:
+							# ...
+						  when: always | on_success | never
+
+						# ...
+
+						# Note: Avoid a final 'when: always' Catch-All, as this can cause multiple Pipelines to be created and run in parallel.
+						# - when: always
+
+				# Define default Job Behaviors:
+				default:
+					<job-keyword>: # ...
+
+					# Example:
+					# after_each: echo "Job Completed" # Each Job will printout "Job Completed" unless they have their own after_each Command(s) defined.
+
+				# Define the Stages in a Pipeline:
+				stages:
+					- <stage-name>
+					# ...
+
+				# Define a Job:
+				<job-name>:
+					# Define another Job to base off from:
+					extends: <job-name>
+					extends: .<hidden-job-name>
+
+					# Define the Stage a Job belongs to:
+					stage: <stage-name>
+
+					# Specify when should Jobs be executed, ignoring which Stage it belongs to:
+					# Note: If needs: [], the Job will immediately execute.
+					# Note: Default Limit on Array Size: 50.
+					needs: [ <job-name>, ... ]
+						# In case the Job was triggered from another Pipeline:
+						pipeline: <absolute-gitlab-path>
+
+					# Define the Environment / Docker Image that the Job will be executed in:
+					image: <image-name> # Latest Tag
+					image: <image-name>:<tag> # Specific Version
+					image: <image-name>@<digest>
+
+					# Define Job-specific Variables:
+					# Note: These cannot be prefilled when the Pipeline is triggered manually.
+					variables:
+						# ...
+
+					# Describe "Whitelist" / "Blacklist" type Conditions in which the Job will be added to the Pipeline and run:
+					only/except:
+						# Refs:
+							- <branch-name>
+
+						# CI/CD Variables:
+							- $<variable> == <value>
+
+						# ...
+
+					# Describe the Conditions in which the Job will be run:
+					rules:
+						# ...
+
+					# Cross-Project Specifics:
+						# Trigger a Pipeline in another Downstream Project:
+						trigger:
+							project: <absolute-gitlab-path>
+							branch: <branch-name>
+							strategy: depend # Mirror the Status of this Job based on the outcome of the triggered Downstream Pipeline
+
+					# Job Scripts:
+						# Commands to run before the Job is executed:
+						before_script:
+							- <command>
+							# ...
+
+						# Commands to execute when the Job is executed by a Runner:
+						script:
+							- <command>
+							# ...
+
+						# Commands to run after the Job is executed:
+						after_script:
+							- <command>
+							# ...
+
+				# Define a Hidden Job that will be ignored by the Runner:
+				# Tip: Useful to define base Jobs that other Jobs can extend from:
+				.<hidden-job-name>:
+					# ...
+
+				# Define a Job that belongs to a Group:
+				<group-name> <part-number>/<total-number-parts>:
+					# ...
+
+	Commands:
+		
+	
