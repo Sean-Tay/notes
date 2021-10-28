@@ -119,7 +119,17 @@ Linux / Unix:
 					- printf
 				- Certain external commands, such as xargs and find are aware of ARG_MAX variable and repeatedly perform actions under that limit.
 
+			ps					- Get snapshot of current processes.
+				axo <field>		- Get only part of the information.
+
+				-u				- Get snapshot of current processes owned by the current user.
+			
+			pgrep "<pattern>"	- Get PIDs whose process information matches <pattern>.
+				-f				- Use all of the process information, rather than just the process name.
+
 			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
+				-I <placeholder> - Allows usage of stdin at specific parts inside <command> via <placeholder>.
+				-n<number> 		- Limit the number of arguments 
 			
 			find <filepath>	-name "<pattern>" 2> /dev/null - Find files in <filepath> that match a certain <pattern>, excluding quotes.
 				-mtime	<n>		- Check for files that are older than <n>*24 hours.
