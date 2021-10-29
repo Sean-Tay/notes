@@ -54,6 +54,7 @@ Linux / Unix:
 			
 			( <command1> ... ) - Execute <command> in a subshell.
 			$( <command1> ... ) - Command Substitution: Execute <command> in a subshell and return the output of the last executed <command> back.
+			<( <command1> ... ) - Process Substitution: Execute <command> in a subshell and return the output of the last executed <command> back as a File Handle, avoiding the need to explicitly create temp Files.
 			
 			{ <command1> ... } - Group Command: Execute <command> with the current shell.
 			
@@ -358,19 +359,6 @@ Linux / Unix:
 				
 				<fn_name> [<arg>, ...] # To use a Function	
 				${string_return} # Obtain Return Value from Function.
-			
-			# Execution Flow:
-				{ <command1> ... } - Group Command: Execute <command> with the current shell.
-				
-				( <command1> ... ) - Execute <command> in a subshell.
-				$( <command1> ... ) - Command Substitution: Execute <command> in a subshell and return the output of the last executed <command> back.
-				
-				ssh '<rights_level>@<host>' -i '<identity_file_url>' "<command1> ..." - Execute <command>s on a separate SSH Server.
-					- https://blog.myhro.info/2017/01/how-ssh-authentication-works
-					
-					- ssh_keygen: Generate private-public key files for authentication.
-						- https://www.ssh.com/ssh/keygen/#sec-What-Is-ssh-keygen
-						- https://www.ssh.com/ssh/identity-key
 			
 			$(( <expr> ))		- Arithmetic Evaluation. Allows Arithmetic Parenthesises to be used.
 			
