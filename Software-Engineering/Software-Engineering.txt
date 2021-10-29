@@ -2,6 +2,8 @@ Application Development:
 	Concepts:
 		Language Server Protocol: 	The Protocol used for communication between IDEs and a Language Server to provide advanced Developer Features such as Autocompletion or Reference Navigation.
 
+		Idempotency:				Property of Operations that allow them to be applied multiple times without changing the end result beyond the initial application.
+
 		Unit Testing: 				These Tests focus on a small part / unit of the Codebase, but in a very detailed way (i.e. both correct and incorrect scenarios).
 		Integration Testing: 		These Tests focus on the integration of Modules within a part of the Tech Stack (i.e. Backend or Frontend, in isolation).
 		End to End Testing: 		These Tests run across the Full Tech Stack (i.e. both Backend and Frontend). They usually simulate User Actions.
@@ -69,7 +71,11 @@ Application Development:
 		Introspection:				Finding out the structure and semantics of the Code that makes up the Program.
 		Reflection:					Finding out and adjusting the structure and semantics of the of the Code that makes up the Program.
 
-Application Lifecycle:
+Systems:
+	Configuration Management:		Process of establishing and ensuring a System's Function throughout its lifespan.
+
 	Containerization:				Bundling an Application, related Binaries and Libaries into some Self-Contained Package for execution.
 
 	Container Orchestration: 		Schedules and Manages Container Deployment.
+
+	Software Agent:					A Program that acts on behalf of a User / another Program.
