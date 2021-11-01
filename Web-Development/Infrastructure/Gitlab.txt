@@ -25,8 +25,8 @@ GitLab:
 		CI/CD Setup:
 			Pipeline Configuration is specified through a .gitlab-ci.yml File:
 			Note: Do NOT use Tabs; use Spaced Indentation.
+				# Specify start of YAML File via 3 Dashes
 				---
-				# Comment
 
 				# Define custom prefilled Variables to be used within the Pipeline:
 				variables:
@@ -135,6 +135,9 @@ GitLab:
 				# Define a Job that belongs to a Group:
 				<group-name> <part-number>/<total-number-parts>:
 					# ...
+
+				# Specify end of YAML File via 3 Dots:
+				...
 
 	Commands:
 		
