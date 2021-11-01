@@ -420,18 +420,24 @@ Linux / Unix:
 				tr <string1> <string2> - Translate <string1> occurrences into <string2> from stdin to stdout.
 					-d 			- Delete characters in <string1>, do not translate.
 				
-				grep "<regex>" <file_pattern> - Search through files matching <file_pattern> and only print to stdout the lines which matches <regex>.
+				grep <regex> <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches <regex>.
+				grep -e <regex> ... <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches at least one of the <regex>s.
+				grep -f <regex_file> <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches the content in <regex_file>.
+					-E 			- Use Extended Regex functionality (deprecated shorthand: egrep).
+					-F			- Treat <regex> / content within <regex_file> as a literal and not as a Regex.
+
+					-r 			- Recursive search for files in subdirectories as well.
+
 					-i 			- Ignore case.
 					-w 			- Only consider exact matches.
-					-F			- Treat <regex> as a literal and not as a pattern.
 					-v 			- Invert the selection matched by the <regex>.
-					-E 			- Use Extended grep functionality.
 
 					-q 			- Suppress output to stdout.
-					-r 			- Recursive search through subdirectories.
 					-l			- Print only the filenames that contain content that matches against the <regex>, and not individual lines.
 				
-				sed " <address>{<command> ; ...} ; ... " <file> - Stream Transforms based on given <command>s. 
+				sed " <address>{<command> ; ...} ; ... " <file> - Stream Transforms based on given <command>s.
+					-r 			- Use Extended Regex functionality.
+
 					-n 			- Suppress automatic printout of pattern space.
 					-e			- Read from stdin instead. Multiple -e can be chained, with each -e specifying a new string of <command>s.
 
