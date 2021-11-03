@@ -13,6 +13,12 @@
 
 		Packages:
 			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Nodes.
+				// Tip: During Test Setup, we can change what the Testing Library treats as a data-testid attribute:
+					import { configure } from '@testing-library/dom'
+					configure({ testIdAttribute: '<id>' })
+
+					// Tip: data-testid can be changed to id for better compatibility with vanilla Selector Mechanisms.
+
 				// Tip: Useful DOM Node Methods and Patterns: 
 					// To get the data-testid specified on a DOM Node, use <dom-node>.getAttribute('data-testid')
 
