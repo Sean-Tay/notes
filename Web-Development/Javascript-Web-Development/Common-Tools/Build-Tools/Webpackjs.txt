@@ -497,7 +497,7 @@ Webpack.js
 							// content.<variable>
 					*/
 				
-			CSS Modules: Enforces Scoping for the CSS imported and used by a JS Module through Dynamically Generated CSS Selector Names.
+			CSS Modules: Enforces Scoping for the CSS imported and used by a JS Module through Dynamically Generated CSS DOM Selector Identifiers.
 				Webpack Packages:
 					css-modules-typescript-loader					// Loader to make CSS Modules work with TypeScript. Place after css-loader in the Webpack Config Module Rules.
 
@@ -507,7 +507,7 @@ Webpack.js
 						
 						options: {
 							modules: {  							// Enable CSS Modules.
-								localIdentName: '<selector-identifier-config>', // Specify how the Selectors are named in the Loader's Output.
+								localIdentName: '<selector-identifier-config>', // Specify how the CSS DOM Selectors are named in the Loader's Output.
 									// [local]						// Placeholder for the Original Name of the Selector.
 									// [hash:base64]				// Placeholder for a Unique Identifier for the Selector.
 							},
@@ -521,35 +521,35 @@ Webpack.js
 						/* 
 							General Flow: 
 								Define CSS Classes in the CSS Files:
-									/* By default, all CSS Selectors are going to be Locally Scoped by css-loader when CSS Modules are active: */
-									<css-selector> {
+									/* By default, all CSS DOM Selectors are going to be Locally Scoped by css-loader when CSS Modules are active: */
+									<css-dom-selector> {
 										/* ... */
 									}
 									/* Would be the Same As: */
-									:local <css-selector> {
+									:local <css-dom-selector> {
 										/* ... */
 									}
 
-									/* To Prevent Scoping Behaviour (i.e don't use a Dynamically Generated Name for <css-selector>) */
-									:global <css-selector> {
+									/* To Prevent Scoping Behaviour (i.e don't use a Dynamically Generated Name for <css-dom-selector>) */
+									:global <css-dom-selector> {
 										/* ... */
 									}
 
 									/* Scope Specifiers are Interchangable */
-									:local <css-selector-1> <css-selector-2> :global <css-selector-3> /* ... */ {
+									:local <css-dom-selector-1> <css-dom-selector-2> :global <css-dom-selector-3> /* ... */ {
 										/* ... */
 									}
 
 									/* Alternate Scope Specifier Specification */
 									/* Useful for '&' Placeholder */
-									&:global(<css-selector>) {
+									&:global(<css-dom-selector>) {
 										/* ... */
 									}
 								
 								In the JS Files:
 									import classes from './index.css';
 									// Set the class attribute of DOM Elements to be styled from Keys in the imported 'classes' Object.
-									// The imported Object is a Mapping between the <css-selector>'s Original Name and the Dynamically Generated Names.
+									// The imported Object is a Mapping between the <css-dom-selector>'s Original Name and the Dynamically Generated Names.
 						*/
 
 			CSS Extraction: Minifies and Extracts the content of all CSS Files used into a single CSS File. This allows the Browser to load the Page Structure (.html), Page Bundle (.js) and Page Styling (.css) in Parallel.
@@ -571,7 +571,7 @@ Webpack.js
 
 			CSS Purging: Filters out unused CSS Content from Final Output by comparing against Source Files.
 				// Note: Only works with CSS Extraction implemented.
-				// Note: Using purgecss-webpack-plugin will not allow control over which part of the Bundling Process will CSS Purging take place. If CSS Modules are used, purgecss-webpack-plugin will compare Source Files with transformed CSS Selector Names, rather than the original CSS Selector Names.
+				// Note: Using purgecss-webpack-plugin will not allow control over which part of the Bundling Process will CSS Purging take place. If CSS Modules are used, purgecss-webpack-plugin will compare Source Files with transformed CSS DOM Selector Names, rather than the original CSS DOM Selector Names.
 
 				// Tip: Check if the glob specification is working with Node CLI.
 			
@@ -589,8 +589,8 @@ Webpack.js
 					// For purgecss-webpack-plugin:
 					new PurgeCssWebpackPlugin({
 						paths: () => glob.sync(`${<src-dir>}/**/*`, { nodir: true }), // Specify location of Source Files to analyze.
-						whitelistPatterns: [<pattern>, ... ],		// Specify CSS Selector Patterns to avoid Purging for.
-						whitelistPatternsChildren: [<pattern>, ... ], // Specify CSS Selector Patterns to avoid Purging their Children Selectors for.
+						whitelistPatterns: [<pattern>, ... ],		// Specify CSS DOM Selector Patterns to avoid Purging for.
+						whitelistPatternsChildren: [<pattern>, ... ], // Specify CSS DOM Selector Patterns to avoid Purging their Children Selectors for.
 					})
 
 				Loaders:

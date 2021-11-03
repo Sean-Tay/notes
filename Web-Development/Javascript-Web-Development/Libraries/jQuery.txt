@@ -5,12 +5,12 @@ jQuery - A JS library useful for interacting and manipulating with the DOM witho
 	$() 														// Alias for jQuery()
 
 	$(document).ready(main); 									// Wait until the HTML has loaded before executing the main callback function
-	var $jQueryvariable = $("<selector>"); 						// Convention: $ to denote jQuery variable
+	var $jQueryvariable = $("<dom-selector>"); 						// Convention: $ to denote jQuery variable
 
 	$(this) 													// Refer to the element that triggered the execution of the anonymous function
 	
-	$("<selector>").<action>() 									// CSS-style selector to find specified HTML / DOM elements, and perform an <action> that is meant for the specified HTML / DOM elements
-		$("<selector>")[0] 										// Access the raw js DOM element
+	$("<dom-selector>").<action>() 									// DOM Selector to find specified HTML / DOM elements, and perform an <action> that is meant for the specified HTML / DOM elements
+		$("<dom-selector>")[0] 										// Access the raw js DOM element
 	
 		<action>:
 			hide() 												- Add the CSS property display:none to elements of a selected type.
@@ -26,5 +26,5 @@ jQuery - A JS library useful for interacting and manipulating with the DOM witho
 
 			on('event', function() { // ... } ) 				- Executes the anonymous function when elements of selected type experiences a specified DOM event. Unlocks the specified event functionality for the elements with the attached selectors (e.g. click).
 				
-			find("<selector>") 									- Grab any elements that reside as a child of the element targeted by the parent <selector>.
+			find("<dom-selector>") 									- Grab any elements that reside as a child of the element targeted by the parent <dom-selector>.
 			next() 												- Refer to the neighbour of a specified element within the same DOM hierarchy / level.	

@@ -9,7 +9,7 @@ Less
 	
 	Concepts:
 		Rule:					A <{key | rule}>: <value> pair specifying a CSS property.
-		Rule-Set:				A grouping of CSS Rules that is usually applied to <css-selectors>.
+		Rule-Set:				A grouping of CSS Rules that is usually applied to CSS DOM Selectors.
 
 		List:					A comma or space delimited series of Values.
 	
@@ -49,7 +49,7 @@ Less
 						// @{index}
 						// @{value}
 
-					<css-selector> {							// Mixin / Anoymous Mixin Specification
+					<css-dom-selector> {							// Mixin / Anoymous Mixin Specification
 						// ...
 					}
 				});
@@ -58,18 +58,18 @@ Less
 				@<variable>: (<value>);
 
 			Guards: Conditional Usage of Rule-Sets.
-				<css-selector> when (<conditional>) {
+				<css-dom-selector> when (<conditional>) {
 					// ... 
 				}
 
 			Rule-Set Extension:
-				// vs. Mixins: Less CSS generated, can extend one potentially complex Selector.
-				<css-selector-A>:extend(<css-selector-B>) {
+				// vs. Mixins: Less CSS generated, can extend one potentially complex DOM Selector.
+				<css-dom-selector-A>:extend(<css-dom-selector-B>) {
 					// ...
 				}
 
 			Mixins: Use Rule-Sets within other Rule-Sets.
-				// vs. Extensions: More CSS generated, can extend multiple simple Selectors.
+				// vs. Extensions: More CSS generated, can extend multiple simple DOM Selectors.
 				<less-mixin>(@argument: <default-value>, ... , @rest) {	// Mixin Definition
 					<rule>: @argument;
 
@@ -82,8 +82,8 @@ Less
 					// ...
 				}
 
-				<css-selector-B> {								// Mixin Use
-					<less-mixin>(@<parameter>: <value>, @<list-parameter>: ~(<list-value-1>, <list-value-2>, ...), ...);				
+				<css-dom-selector-B> {								// Mixin Use
+					<less-mixin>(@<parameter>: <value>, @<list-parameter>: ~(<list-value-1>, <list-value-2>, ...), ...);
 					<rule-B>: <value-B>;
 				}
 
@@ -92,43 +92,43 @@ Less
 				}
 
 				// Each Rule-Set has its own Namespace.
-				<css-selector-C> {
-					<css-selector-B><css-selector-A>();
+				<css-dom-selector-C> {
+					<css-dom-selector-B><css-dom-selector-A>();
 				}
 				
 				// Mixins with Parameters:
-				<css-selector-D>(@<parameter-1>: <default-value-1>, <default-value-2>, ... ; @<parameter-2>: ... ; ... ) {
+				<css-dom-selector-D>(@<parameter-1>: <default-value-1>, <default-value-2>, ... ; @<parameter-2>: ... ; ... ) {
 					// ... 
 				}
 
 				#example {
 					// Positional Parameter Specification
-					<css-selector-D>(<value1>, <value2>, ... ; <valueA> ; ...);
+					<css-dom-selector-D>(<value1>, <value2>, ... ; <valueA> ; ...);
 
 					// Named Parameter Specification
-					<css-selector-D>(@<parameter-1>: <value1>, <value2>, ... ; @<parameter-2>: <valueA> ; ...);
+					<css-dom-selector-D>(@<parameter-1>: <value1>, <value2>, ... ; @<parameter-2>: <valueA> ; ...);
 				}
 
 				/* Mixin Overloading: 
 					Multiple Mixin Definitions with the same IDs can be created with different Parameters.
 					When referencing the Mixin, all possible Mixins with the matching Parameters will be incorporated.
 				*/
-				<css-selector-E>(@<parameter-1>) {
+				<css-dom-selector-E>(@<parameter-1>) {
 					// A
 				}
 
-				<css-selector-E>(@<parameter-1>; @<parameter-2>:<default-value>) {
+				<css-dom-selector-E>(@<parameter-1>; @<parameter-2>:<default-value>) {
 					// B
 				}
 
-				<css-selector-F> {
-					@<css-selector-E>(@<parameter-1>: <value1>); // A and B
+				<css-dom-selector-F> {
+					@<css-dom-selector-E>(@<parameter-1>: <value1>); // A and B
 				}
 
 			Rule-Set Nesting: Similar to Mixins, but inner Rule-Sets can be defined within outer Rule-Sets to mimick corresponding HTML structure.
-				<outer-css-selector> {
+				<outer-css-dom-selector> {
 					// ...
-					<inner-css-selector> { // Equivalent to '<outer-css-selector> <inner-css-selector>'
+					<inner-css-dom-selector> { // Equivalent to '<outer-css-dom-selector> <inner-css-dom-selector>'
 						// ... 
 					}
 				}

@@ -10,7 +10,7 @@ SCSS
 	
 	Concepts:
 		Rule:					A <{key | rule}>: <value> pair specifying a CSS property.
-		Rule-Set:				A grouping of CSS Rules that is usually applied to <css-selectors>.
+		Rule-Set:				A grouping of CSS Rules that is usually applied to CSS DOM Selectors.
 
 		List:					A comma or space delimited series of Values.
 	
@@ -33,27 +33,27 @@ SCSS
 			Variable Definition:
 				$<variable-name>: <value>;
 
-				<css-selector>-base-example {
+				<css-dom-selector>-base-example {
 					<rule>: $<variable-name>; // Variable Usage for a CSS Rule Value.
 				}
 
-				<css-selector>#{$<variable-name>}-interpolation-example { // Variable Usage for a CSS Selector Name.
+				<css-dom-selector>#{$<variable-name>}-interpolation-example { // Variable Usage for a CSS DOM Selector Name.
 					// ...
 				}
 
 			Nested Rule-Sets:
-				<outer-css-selector> {
+				<outer-css-dom-selector> {
 
 					// ...
 
-					<inner-css-selector> { // Equivalent to '<outer-css-selector> <inner-css-selector>'
+					<inner-css-dom-selector> { // Equivalent to '<outer-css-dom-selector> <inner-css-dom-selector>'
 						// ... 
 					}
 
 					// ...
 
-					// Note: & will refer to <outer-css-selector>.
-					// Note: @at-root will force the <inner-css-selector> to be at the level of the <outer-css-selector>.
+					// Note: & will refer to <outer-css-dom-selector>.
+					// Note: @at-root will force the <inner-css-dom-selector> to be at the level of the <outer-css-dom-selector>.
 				}
 
 			Mixins: Use function-like Rule-Sets within other Rule-Sets.
@@ -64,7 +64,7 @@ SCSS
 					@content;
 				}
 
-				<css-selector> {
+				<css-dom-selector> {
 					@include <mixin-name>(<val1>, ...){
 						// Content for Rule-Set.
 
@@ -80,7 +80,7 @@ SCSS
 					// ...
 				}
 
-				<css-selector> {
+				<css-dom-selector> {
 					@extend %<silent-class>;
 					// ...
 				}

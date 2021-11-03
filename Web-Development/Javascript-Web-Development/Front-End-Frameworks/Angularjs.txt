@@ -68,7 +68,7 @@ Angular.js - Client-Side SPA Javascript Framework that extends HTML by allowing 
 			
 			@Component(
 				{
-					selector: '...', // Specify a CSS-Class formatted handle to reference this Component within HTML.
+					selector: '...', // Specify a DOM Selector to reference this Component within HTML.
 						Tag: 'component-name' -> <component-name> </component-name>
 						Class Name: '.component-name' -> <div class='component-name'> </div>
 						Property: '[component-name]' -> <div 'component-name'> </div>

@@ -69,7 +69,7 @@ CSS:
 	Details:
 		Syntax and Markup Layout:
 			/* General Form */
-				<css-selector> { 
+				<css-dom-selector> { 
 					<rule>: <value>; 
 				}
 
@@ -84,64 +84,22 @@ CSS:
 					// css here
 				}
 
-			/* Selector Forms */
-				/* To select for HTML Elements are either selector1 OR selector2. */
-				selector1,selector2 ... {}
+			/* To introduce a Virtual "Replaced" Element before selector1 HTML Elements. */
+				selector1::before ... { content: '', ... }
 
-				/* To select for HTML Elements that satisfy both selector1 AND selector2. */
-				selector1selector2 ... {}
-
-				/* To select an immediate selector2 HTML Element that follows after a sibling selector1 HTML Element. */
-				selector1+selector2 ... {}
-
-				/* To select any selector2 HTML Element that follows after a sibling selector1 HTML Element. */
-				selector1~selector2 ... {}
-
-				/* To select only direct selector2 HTML Elements contained within a selector1 HTML Element. */
-				selector1>selector2 ... {}
-
-				/* To select all selector2 HTML Elements contained within a selector1 HTML Element. */
-				selector1 selector2 ... {}
-
-				/* To select selector1 HTML Elements with a specific attribute. */
-				/* Tip: selector1 is not necessary. */
-				selector1[<attribute>="<value>"] ... {}
-
-				/* To select for HTML Elements, but only under a certain condition. */
-				selector1:pseudo-class ... {}
-					/** To select for the Last Child of selector1 HTML Element. */
-					selector1:last-child ... {}
-
-					/** To select for the Last Type of selector1 HTML Element among siblings. */
-					selector1:last-of-type ... {}
-
-				/* To style certain parts of selected HTML Elements. */
-				selector1::pseudo-element ... {}
-					/** To introduce a Virtual "Replaced" Element before selector1 HTML Elements. */
-					selector1::before ... { content: '', ... }
-
-					/** To select for the first letter within selector1 HTML Elements. */
-					selector1::first-letter ... {}
-
-					/** To select for all Content in the first line within selector1 HTML Elements. */
-					selector1::first-line ... {}
-
-					/** To select for List Markers of selector1 HTML Elements. */
-					selector1::marker ... {}
-
-					/** To introduce a Virtual "Replaced" Element before selector1 HTML Elements. */
-					selector1::after ... { content: '', ... }
+			/* To introduce a Virtual "Replaced" Element before selector1 HTML Elements. */
+				selector1::after ... { content: '', ... }
 
 		CSS Specificity:
 			The Higher a CSS Rule-Set's Specificity, the Greater its Priority.
 				In Ascending Order:
-					Type Selectors and Pseudo Elements.
-						Nested Selectors.
+					Type DOM Selectors and Pseudo Elements.
+						Nested DOM Selectors.
 
-					Class Selectors, Pseudo Class Selectors and DOM Attributes.
-						Nested Class Selectors.
+					Class DOM Selectors, Pseudo Class DOM Selectors and DOM Attributes.
+						Nested Class DOM Selectors.
 
-					ID Selectors.
+					ID DOM Selectors.
 
 					Inline CSS.
 
@@ -150,7 +108,7 @@ CSS:
 				/* Note: When Multiple Applicable Selectors have the same specificity, the one defined last (NOT applied last) will be the one applied.*/
 
 		Browser Behaviour: 
-			Browsers read CSS from right to left - all Elements that match the rightmost Selector is obtained first, and is gradually filtered out as the Browser reads the left Selectors / traverses up Parent Elements.
+			Browsers parse CSS DOM Selectors from right to left - all Elements that match the rightmost Selector is obtained first, and is gradually filtered out as the Browser reads the left Selectors / traverses up Parent Elements.
 				As such, the rightmost Selector (the Key Selector) is the one with the greatest impact. Use a Class or ID Key Selector for faster Performance.
 				The shorter the overall Selector, the better it will be for Performance.
 
