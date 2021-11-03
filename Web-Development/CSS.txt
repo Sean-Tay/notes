@@ -104,7 +104,8 @@ CSS:
 				selector1 selector2 ... {}
 
 				/* To select selector1 HTML Elements with a specific attribute. */
-				selector1[<attribute>=<value>] ... {}
+				/* Tip: selector1 is not necessary. */
+				selector1[<attribute>="<value>"] ... {}
 
 				/* To select for HTML Elements, but only under a certain condition. */
 				selector1:pseudo-class ... {}
