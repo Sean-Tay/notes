@@ -145,6 +145,8 @@ Linux / Unix:
 			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
 				-I <placeholder> - Allows usage of stdin at specific parts inside <command> via <placeholder>.
 				-n<number> 		- Limit the number of arguments 
+
+				-r 				- Prevent execution if stdin is empty.
 			
 			find <filepath>	-name "<pattern>" 2> /dev/null - Find files in <filepath> that match a certain <pattern>, excluding quotes.
 				-mtime	<n>		- Check for files that are older than <n>*24 hours.
