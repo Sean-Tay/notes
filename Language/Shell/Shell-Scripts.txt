@@ -117,6 +117,8 @@ Linux / Unix:
 				cd -			- Change Present Working Directory to the last Directory.
 			
 			pwd					- View path of Present Working Directory.
+			
+			tree 				- View structure of Present Working Directory.
 				
 			chmod <permissions> <file> - Change <file> permissions.
 				-R				- Apply <permissions> recursively to contents within directory <file>.
