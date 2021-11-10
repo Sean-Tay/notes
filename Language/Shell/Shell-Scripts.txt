@@ -54,7 +54,7 @@ Linux / Unix:
 			
 			( <command1> ... ) - Execute <command> in a subshell.
 			$( <command1> ... ) - Command Substitution: Execute <command> in a subshell and return the output of the last executed <command> back.
-			<( <command1> ... ) - Process Substitution: Execute <command> in a subshell and return the output of the last executed <command> back as a File Handle, avoiding the need to explicitly create temp Files.
+			<( <command1> ... ) - Process Substitution: Execute <command> in a subshell and return the output of the last executed <command> back as a File Handle, avoiding the need to explicitly create temp Files. Note: Not supported by Pure Shell (use Bash to execute).
 			
 			{ <command1> ... } - Group Command: Execute <command> with the current shell.
 			
