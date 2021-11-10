@@ -119,6 +119,7 @@ Linux / Unix:
 			pwd					- View path of Present Working Directory.
 			
 			tree 				- View structure of Present Working Directory.
+				find . -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g" - Alternative to above.
 				
 			chmod <permissions> <file> - Change <file> permissions.
 				-R				- Apply <permissions> recursively to contents within directory <file>.
