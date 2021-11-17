@@ -80,10 +80,14 @@ Enzyme:
 
 			// Common API
 				wrapper.find('<dom-selector>');			Obtain all Wrapped Nodes in the Render Tree of the Wrapped Node that matches the specified <dom-selector>.
+					// Note: Returns a ReactWrapper.
 
 				wrapper.contains(<rendered-sub-component>); Determines if the Render Tree of the Wrapped Node contains the <rendered-sub-component>, as well as the Children.
+					// Note: Returns a Boolean, so use a Boolean Matcher.
 
 				wrapper.simulate('<dom-event>', <data-obj>); Simulate a DOM Event on a Wrapped Node.
+
+				wrapper.debug(); Generate a Printable String representation of the Render Tree.
 
 			// render - Test the HTML Structure that the Component (and Child Components) generate when rendered.
 				// Note: Uses the Cheerio Library to assist in HTML Parsing and Traversal.
