@@ -46,7 +46,11 @@ Kotlin
 					suspend (<arg>: <arg-type>, ...) -> <return-type>
 				
 			Constants:
-				val <constant-name>: <type> = <value>;
+				val <runtime-constant-name>: <type> = <value>;
+
+				// For Properties known at Compile Time:
+				// Tip: Faster Performance.
+				const val <compile-constant-name>: <type> = <value>;
 
 			Variables:
 				var <variable-name>: <type> = <value>;
