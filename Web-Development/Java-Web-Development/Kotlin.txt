@@ -234,7 +234,7 @@ Kotlin
 			Functions: First-Class Citizens. Higher-Order Functions possible.
 				// Note: Functions with Block Body (Curly Braces) must explicitly define their <return-type>.
 				// Note: <function-name> can be a String Template as well.
-				fun <function-name>(<arg>:<type>, ... ): <return-type> {
+				fun <function-name>(<arg>:<type>, ... , <optional-arg>:<type> = <default-value>, ... ): <return-type> {
 					// ...
 
 					return <value>: <return-type>;
