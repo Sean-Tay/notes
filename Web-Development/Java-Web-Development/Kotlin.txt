@@ -128,6 +128,7 @@ Kotlin
 
 					// Initialization Block: For Code to be run during Object Instantiation.
 					// Note: Executed in the order they are declared in.
+					// Tip: Don't need explicit init Block for Class Properties initialized above inline.
 					init {
 						// ...
 					}
