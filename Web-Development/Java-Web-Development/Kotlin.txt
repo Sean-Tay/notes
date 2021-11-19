@@ -383,6 +383,49 @@ Kotlin
 					print("<text>");
 					println("<text>"); // With Line Break
 
+				// Date:
+					// Point in Time via UTC
+					Instant
+						// Quick way to get an Instance of Instant:
+						val <instant> = Instant.now()
+
+						// get LocalTime
+						<instant>
+							.atZone(ZoneOffset.UTC).toLocalTime()
+
+						// set
+						<instant>
+							// Convert to ZonedDateTime
+							.atZone(ZoneOffset.UTC)
+								.withYear(<year>)
+
+								.withMonth(<month>)
+								.withDay(<day>)
+
+								// OR
+
+								.withDayOfYear(<day>) // 1 - 365
+
+								.withHour(<hour>)
+								.withMinute(<minute>)
+								.withSecond(<second>)
+								.withNano(<nano>)
+
+							// Convert back to Instant
+							.toInstant()
+
+					// Point in Time via Offset from UTC
+					OffsetDateTime
+
+					// Point in Time via Timezone Specification (Continent/Region)
+					ZonedDateTime
+
+					// Date and Time Representation
+					// Note: Cannot represent Point in Time because it lacks Timezone
+					LocalTime
+					LocalDate
+					LocalDateTime 
+
 		Project Configuration:
 			// IntelliJ + Gradle + Maven
 				// build.gradle
