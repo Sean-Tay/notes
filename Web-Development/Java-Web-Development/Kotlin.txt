@@ -24,6 +24,7 @@ Kotlin
 				// Primitive Types:
 					Any?
 					Array
+					Character
 					String
 
 					Double
@@ -56,6 +57,8 @@ Kotlin
 				var <variable-name>: <type> = <value>;
 
 			Strings:
+				// Note: Use Double Quotes to define String Values; Single Quotes define Character Values.
+
 				// Multiline Strings:
 				val multiline = """
 				<text>
