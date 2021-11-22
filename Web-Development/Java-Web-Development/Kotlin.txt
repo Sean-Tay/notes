@@ -224,7 +224,8 @@ Kotlin
 					// Check if two Values are equivalent and refer to the same Entity: ===
 					// Check if two Values are neither equivalent, nor refers to different Entities: ===
 
-				// Elvis Operator: Nullish Coalescing - evaluates <expression-1> and returns the result if it is not null, otherwise <expression-2> will be evaluated.
+				// Elvis Operator: 
+					// Nullish Coalescing - evaluates <expression-1> and returns the result if it is not null, otherwise <expression-2> will be evaluated.
 					// Tip: Avoids double-evaluation of <expression-1>.
 					<expression-1> ?: <expression-2>;
 
@@ -282,6 +283,8 @@ Kotlin
 					// Note: The Curly Braces are needed to obtain an Instance of the Lambda.
 					val <lambda>: (<type>, ... ) -> <return-type> = {
 						<arg>, ... -> 
+							// Note: Function Body of a Lambda requires no Curly Braces.
+
 							// ... 
 
 							// Note: Last Expression in a Lambda is treated as a Return Expression.
