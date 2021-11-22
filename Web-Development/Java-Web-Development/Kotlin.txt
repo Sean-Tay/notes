@@ -23,7 +23,12 @@ Kotlin
 			Types:
 				// Primitive Types:
 					Any?
-					Array
+
+					[Mutable]Map
+					[Mutable]List
+
+					ClosedRange<T> // For Ranges
+
 					Character
 					String
 
@@ -52,6 +57,17 @@ Kotlin
 				// For Properties known at Compile Time:
 				// Tip: Faster Performance.
 				const val <compile-constant-name>: <type> = <value>;
+
+			Ranges:
+				<min> .. <max> [step <step>]
+					.first 		// Get First Value within the Range
+					.last 		// Get Last Value within the Range
+					.step		// Get Step Amount for the Range
+
+					.reversed()	// Reverse the Order of the Range
+					.filter <lambda>
+					.map <lambda>
+					.reduce <lambda>
 
 			Variables:
 				var <variable-name>: <type> = <value>;
@@ -325,8 +341,21 @@ Kotlin
 					fun (<arg>: <type>, ... ) = // ...
 
 			Control-Flow:
-				// Iteration over a Collection:
-					<collection>.forEach { key, value -> <code> };
+				// Iteration:
+					repeat(number) {
+						// ... it ...
+					}
+
+					for (<value> in <range>) {
+						// ...
+					}
+
+					for (<value> in <iterable>) {
+						// ...
+					}
+
+					// Over a Collection:
+						<collection>.forEach { key, value -> <code> };
 
 				// If-Else:
 					// Note: if-else is an Expression, meaning it can return Values once evaluated.
