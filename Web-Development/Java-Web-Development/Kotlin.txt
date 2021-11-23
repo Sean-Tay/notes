@@ -465,6 +465,37 @@ Kotlin
 					LocalDate // Replaces java.sql.Date
 					LocalDateTime
 
+				// IO:
+					// Files:
+						val fileHandle = File("<absolute-file-path>")
+
+						// Read
+							// Obtain a List of Lines in the File.
+							// Tip: Suitable for Large Files, as this uses a Lazy Evaluation over a Stream, which is good for open File Handle count.
+								<file-handle>.useLines {
+									// ... it.toList() ...
+								}
+
+							// Execute a Function for each Line in the File.
+								<file-handle>.forEachLine {
+									// ... it ...
+								}
+
+						// Write
+							// Write Content piecewise into the File via a PrintWriter.
+							// Note: PrintWriter internally uses a BufferedWriter.
+								<file-handle>.printWriter().use {
+									out -> 
+										// ... out.print(<content>) ...
+										// ... out.println(<line-content>) ...
+
+										out.flush()
+										out.close()
+								}
+
+							// Write Text into the File.
+								<file-handle>.writeText(<file-content>)
+
 		Project Configuration:
 			// IntelliJ + Gradle + Maven
 				// build.gradle
