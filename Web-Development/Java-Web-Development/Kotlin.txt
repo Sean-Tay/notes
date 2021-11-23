@@ -90,13 +90,13 @@ Kotlin
 					val string = "${ i + 5 } ...";
 
 			Collections:
-				// Arrays
-					var mutableArray = mutableListOf( <item>, ... )
-					val array = listOf( <item>, ... )
+				// Lists
+					var mutableList = mutableListOf( <item>, ... )
+					val list = listOf( <item>, ... )
 
-					array.size
+					mutableList.size
 
-					mutableArray.add( <new-item> )
+					mutableList.add( <new-item> )
 
 				// Maps
 					var mutableMap = mutableMapOf(
@@ -107,6 +107,9 @@ Kotlin
 						<key> to <value>,
 						// ...
 					)
+
+					mutableMap.keys
+					mutableMap.values
 
 					map.contains( <potential-key> )
 					map.get( <key> )
