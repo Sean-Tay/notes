@@ -416,7 +416,7 @@ Kotlin
 					println("<text>"); // With Line Break
 
 				// Date:
-					// Point in Time via UTC
+					// Point in Time via UTC (replaces java.util.Date & java.util.Timestamp)
 					Instant
 						// Quick way to get an Instance of Instant:
 						val <instant> = Instant.now()
@@ -449,14 +449,14 @@ Kotlin
 					// Point in Time via Offset from UTC
 					OffsetDateTime
 
-					// Point in Time via Timezone Specification (Continent/Region)
+					// Point in Time via Timezone Specification (Continent/Region) (replaces java.util.GregorianCalendar & javax.xml.datatype.XMLGregorianCalendar)
 					ZonedDateTime
 
 					// Date and Time Representation
 					// Note: Cannot represent Point in Time because it lacks Timezone
-					LocalTime
-					LocalDate
-					LocalDateTime 
+					LocalTime // Replaces java.sql.Time
+					LocalDate // Replaces java.sql.Date
+					LocalDateTime
 
 		Project Configuration:
 			// IntelliJ + Gradle + Maven
