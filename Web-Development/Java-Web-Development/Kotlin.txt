@@ -50,6 +50,10 @@ Kotlin
 
 				// Suspendable Function Type:
 					suspend (<arg>: <arg-type>, ...) -> <return-type>
+
+				// Tip: Use Reflection to find out the Type of a Variable during Runtime:
+					println(<variable>!!::class.simpleName)
+					println(<variable>!!::class.qualifiedName)
 				
 			Constants:
 				val <runtime-constant-name>: <type> = <value>;
