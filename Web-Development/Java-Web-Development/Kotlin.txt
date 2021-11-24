@@ -63,7 +63,8 @@ Kotlin
 				const val <compile-constant-name>: <type> = <value>;
 
 			Ranges:
-				<min> .. <max> [step <step>]
+				<inclusive-min> .. <inclusive-max> [step <step>]
+				<inclusive-min> until <exclusive-max> [step <step>]
 					.first 		// Get First Value within the Range
 					.last 		// Get Last Value within the Range
 					.step		// Get Step Amount for the Range
