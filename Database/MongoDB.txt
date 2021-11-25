@@ -45,7 +45,9 @@ MongoDB:
 					// Last 6 Numbers represent an incrementing sequence for each Document entered.
 	
 	Commands:
-		MongoDB Shell: JS-like Syntax:
+		MongoDB Shell: JavaScript / Nodejs REPL Environment:
+			mongosh <mongodb-url> // Connect to the MongoDB Deployment at the URL specified.
+
 			use <database>		// Switch to the Database named <database>. MongoDB will automatically create the Database when the first instance of Data is stored.
 			db					// Get the name of the current Database in use.
 
