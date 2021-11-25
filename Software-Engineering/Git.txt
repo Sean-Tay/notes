@@ -26,6 +26,11 @@ Git:
 	
 	Commands:
 		git config				- Configure Git.
+			# Scope
+				--local			- Per Repo.
+				--global		- Per User.
+				--system		- System-Wide.
+
 			--global http."https://code.example.com/".sslVerify false - Disable SSL Cert Check for "code.example.com" domain.
 
 		git init <directory>	- Create a Local Repository in the current *empty* Local Directory.
