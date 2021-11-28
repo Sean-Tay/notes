@@ -12,11 +12,11 @@ MongoDB:
 			No Joins Required: Data pertaining to an Entity is stored together, making the average Query more performant than traditional Relational Databases.
 			Flexible Structure: Because the Data is stored in a non-Tabular Format, Data of different Types can be stored together.
 
-		Document:				Flexible Data Structure that features Attribute-Value Pairs. Analogous to a Record.
+		Document:				Flexible Data Structure that features field-Value Pairs. Analogous to a Record.
 		Collection:				A grouping of Documents. Analogous to a Table from a Relational Database.
 
 		Index:					An additional Data Structure accompanying a Collection that speeds up Document Access during Queries.
-			Single Field Index: An Index which tracks Documents based on a single Attribute.
+			Single Field Index: An Index which tracks Documents based on a single field.
 			Compound Field Index: An Index which tracks Documents based on multiple Attributes.
 
 			Multikey Index:	An Index which accounts for Attributes with Array / Document Type Values.
@@ -72,8 +72,8 @@ MongoDB:
 			// Create an Index on a Collection:
 			db.<collection-name>.createIndex( 
 				{ 
-					// The Index orders the Documents based on their values for the <attribute>s, prioritising the Attributes which are specified first:
-					"<attribute>": <{ 1 | -1 }>, 
+					// The Index orders the Documents based on their values for the <field>s, prioritising the Attributes which are specified first:
+					"<field>": <{ 1 | -1 }>, 
 					// ...
 				}, 
 				{	
@@ -92,30 +92,30 @@ MongoDB:
 				Common Operators: https://docs.mongodb.com/manual/reference/operator/
 					<query>
 						{
-							"<attribute>": <value> // To Select for Documents whose value under the <attribute> matches the <value> exactly.
+							"<field>": <value> // To Select for Documents whose value under the <field> matches the <value> exactly.
 
 							// OR
 
-							"<attribute>": {
-								"$in": [<value>, ... ], // To Select for Documents whose value under the <attribute> matches one of the <value>s in the specified Array.
-								"$ne": <value>, // To Select for Documents whose value under the <attribute> does NOT match the <value>.
-								"$nin": [<value>, ... ], // To Select for Documents whose value under the <attribute> does NOT match all of the <value>s in the specified Array.
+							"<field>": {
+								"$in": [<value>, ... ], // To Select for Documents whose value under the <field> matches one of the <value>s in the specified Array.
+								"$ne": <value>, // To Select for Documents whose value under the <field> does NOT match the <value>.
+								"$nin": [<value>, ... ], // To Select for Documents whose value under the <field> does NOT match all of the <value>s in the specified Array.
 
-								"$gte": <value>, // To Select for Documents whose value under the <attribute> is greater than or equal to <value>.
-								"$lte": <value>, // To Select for Documents whose value under the <attribute> is lesser than or equal to <value>.
+								"$gte": <value>, // To Select for Documents whose value under the <field> is greater than or equal to <value>.
+								"$lte": <value>, // To Select for Documents whose value under the <field> is lesser than or equal to <value>.
 
-								"$size": <length>, // To Select for Documents whose value under the <attribute> is an Array containing <length> Elements.
+								"$size": <length>, // To Select for Documents whose value under the <field> is an Array containing <length> Elements.
 							}
 							
 							// OR
 
 							// Embedded Document Query:
-							"<document-attribute>.<sub-attribute>. ... ": // ...
+							"<document-field>.<sub-field>. ... ": // ...
 						}
 
 						// <query> can be an empty Document to match all Documents under a Collection.
 
-					<projection> // Specifies the Attributes to include for each Document that fulfills <query> criteria.
+					<projection> // Specifies the Fields to include for each Document that fulfills <query> criteria.
 
 					<pipeline> // https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
 			*/
@@ -127,7 +127,7 @@ MongoDB:
 			results.skip(<length>) // Ignore the first <length> Matches.
 			results.pretty() // Format into Human-Readable Output.
 
-			// Execute Aggregate-Type Queries under <collection-name>, according to the specified <pipeline> Array.
+			// Execute Aggregate-Type Queries under <collection-name>, according to the specified Aggregation <pipeline> Array.
 			const aggregateResults = db.<collection-name>.aggregate(<pipeline>)
 			
 			// Update Document(s) in <collection-name>:
@@ -141,3 +141,19 @@ MongoDB:
 			// Delete Document(s) in <collection-name>:
 			db.<collection-name>.remove(<query>, <justOne>)
 			
+	Language Syntax:
+		Kotlin:
+			Relevant Packages: 
+				com.mongo.*
+				org.bson.Document
+
+			Example Document for CRUD Operations:
+				val <operation> = Document(mapOf(
+					"<field>" to "<value>"
+
+					// ...
+
+					"\$<operator>" to Document(mapOf(
+						// ...
+					))
+				))
