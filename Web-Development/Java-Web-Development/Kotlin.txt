@@ -497,6 +497,11 @@ Kotlin
 							// Write Text into the File.
 								<file-handle>.writeText(<file-content>)
 
+				// Execution:
+					// Block Execution of the Process by the specified amount of <milliseconds>.
+					// Note: Not compatable with Coroutines.
+					Thread.sleep(<milliseconds>);
+
 		Project Configuration:
 			// IntelliJ + Gradle + Maven
 				// build.gradle
