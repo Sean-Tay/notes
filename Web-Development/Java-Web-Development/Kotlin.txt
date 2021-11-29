@@ -399,13 +399,18 @@ Kotlin
 
 				// Coroutines: Deals with Asynchronous Programming Constructs.
 					// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
+					// Tip: Parent Coroutines cannot complete until all Child Coroutines complete.
 					<coroutine-builder-function> {
 						// Regular Code
 
 						// Create a new Coroutine
 						val <handle> = launch {
 							// Concurrently-Executed Code
+
 							// Suspendable Function Call
+							// <suspend-function>()
+
+							// delay(<milliseconds>)
 						}
 
 						// Block Regular Code execution and Await Coroutine completion
@@ -415,8 +420,8 @@ Kotlin
 					}
 
 					// Coroutine Builder Functions:
-						// runBlocking: Regular Function that when executed, blocks the current Thread. Waits for all Child Coroutines to complete before releasing.
-						// coroutineScope: Suspendable Function that when executed, blocks and releases the current Thread for other usage. Waits for all Child Coroutines to complete before releasing.
+						// runBlocking: Regular Function that when executed, blocks the current Thread.
+						// coroutineScope: Suspendable Function that when executed, blocks and releases the current Thread for other usage.
 
 			Utilities:
 				// Print to Console:
