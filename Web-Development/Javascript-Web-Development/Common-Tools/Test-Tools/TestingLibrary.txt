@@ -49,14 +49,21 @@
 
 			@testing-library/react: Renders React Components into DOM Nodes.
 				// render: Render a React Component onto the DOM State.
-				// Tip: 'queries' have the same Methods as 'screen', except there is no need to specify the DOM Node to start the search from.
+				// Tip: 'renderResults' have the same Methods as 'screen', except there is no need to specify the DOM Node to start the search from.
 				// Tip: Already wrapped with 'act'.
 				// Note: If calling 'render' multiple times within the same Test, be sure to invoke 'cleanup' before each subsequent 'render' Call to remove the rendered results from the DOM State.
-					const queries = render(<element />, {
+					const renderResults = render(<element />, {
 						// Specify a DOM Node to append the <element /> to.
 						// Defaults to document.body.
 						container: <dom-node>, // document.body.appendChild(document.createElement('<html-element-type>'))
 					})
+
+					// Preview DOM Tree Structure
+						// Entire DOM:
+						screen.debug(undefined, Infinity)
+
+						// Specific DOM:
+						renderResults.debug(undefined, Infinity)
 
 					// ...
 
