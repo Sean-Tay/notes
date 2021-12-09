@@ -137,6 +137,12 @@ Linux / Unix:
 					- printf
 				- Certain external commands, such as xargs and find are aware of ARG_MAX variable and repeatedly perform actions under that limit.
 
+			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
+				-I <placeholder> - Allows usage of stdin at specific parts inside <command> via <placeholder>.
+				-n<number> 		- Limit the number of arguments 
+
+				-r 				- Prevent execution if stdin is empty.
+
 			ps					- Get snapshot of User's current processes.
 				-e 				- Get snapshot of all processes.
 
@@ -144,12 +150,8 @@ Linux / Unix:
 			
 			pgrep "<pattern>"	- Get PIDs whose process information matches <pattern>.
 				-f				- Use all of the process information, rather than just the process name.
-
-			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
-				-I <placeholder> - Allows usage of stdin at specific parts inside <command> via <placeholder>.
-				-n<number> 		- Limit the number of arguments 
-
-				-r 				- Prevent execution if stdin is empty.
+				
+				pgrep -f "<pattern>" | xargs -n1 -I PID readlink -f /proc/PID/exe - Get Executable of PIDs whose process information matches <pattern>.
 			
 			find <filepath>	-name "<pattern>" 2> /dev/null - Find files in <filepath> that match a certain <pattern>, excluding quotes.
 				-mtime	<n>		- Check for files that are older than <n>*24 hours.
