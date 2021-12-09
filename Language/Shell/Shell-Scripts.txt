@@ -137,10 +137,10 @@ Linux / Unix:
 					- printf
 				- Certain external commands, such as xargs and find are aware of ARG_MAX variable and repeatedly perform actions under that limit.
 
-			ps					- Get snapshot of current processes.
-				axo <field>		- Get only part of the information.
+			ps					- Get snapshot of User's current processes.
+				-e 				- Get snapshot of all processes.
 
-				-u				- Get snapshot of current processes owned by the current user.
+				axo <field>		- Get only part of the information.
 			
 			pgrep "<pattern>"	- Get PIDs whose process information matches <pattern>.
 				-f				- Use all of the process information, rather than just the process name.
