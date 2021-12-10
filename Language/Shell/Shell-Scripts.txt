@@ -202,11 +202,7 @@ Linux / Unix:
 			. ./<file.sh> [<args>, ...] - Execute executable <file.sh> in the current shell.
 			./<file.sh> [<args>, ...] - Execute executable <file.sh> in a child shell.
 
-			unzip <file>.zip	- Utility to unbundle files.
-				-d 	<directory>	- Specify custom directory to extract files to.
-				-j 				- Extract all files to the current directory without creating expanded archive directory.
-
-			tar	<file>.tar 		- Utility to bundle or unbundle files together.
+			tar	<file>.tar 		- Utility to bundle or unbundle files together, without compression.
 				-p				- Preserve Permissions of bundled or unbundled files.
 				
 				--exclude={'<regex>', ...} -cvf <file>.tar <pattern> ... - Bundle files matching <pattern>s into <file>.tar whilst preserving directory structure. 
@@ -222,6 +218,14 @@ Linux / Unix:
 
 				-z				- Activate compression for the file bundle. This operation can be invoked separately by the gzip command.
 		
+			gzip <file>.gz		- Utility to compress / uncompress specified file.
+				-d				- Decompress <file>.gz
+				-c				- Output Result to stdout.
+
+			unzip <file>.zip	- Utility to uncompress specified file.
+				-d 	<directory>	- Specify custom directory to extract file to.
+				-j 				- Extract all file to the current directory without creating expanded archive directory.
+
 		Script Specific:
 			#!<script_interpreter>: Shebang or Hashbang Line to specify which Interpreter to use to read and execute the program.
 			
