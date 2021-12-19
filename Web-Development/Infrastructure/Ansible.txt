@@ -1,0 +1,306 @@
+Ansible:
+	Abbreviations:
+	
+	Description: Open Source Agentless Tool that helps in running Distributed Procedures aimed at Configuration Management correctly on a group of Machines. Sponsored by RedHat.
+		Note: Machines here do not just refer to Server-oriented Machines - any Computing Machine (Routers, Firewalls, etc. ) can be managed by Ansible.
+
+	Resources:
+	
+	Concepts:
+		Configuration Management: Process of establishing and ensuring a System's Function throughout its lifespan.
+
+		Agentless Program:		Does not require any Additional Program to act on its behalf. Note that Ansible requires Python and Pip to be installed on Machines before they can be managed.
+
+		Ansible Engine:			Product built for the Ansible Automation Language.
+			Plugin:				Extends Ansible's Core Functionality and offers support for other Platforms.
+			Module:				Discrete pieces of Functionality that can be used by Ad-Hoc Ansible Commands / Playbooks to perform managed Actions in the Machines. When triggered by Ad-Hoc Commands these generate Python Scripts which are sent over to the Machines to be executed.
+
+		Control Node:			The Machine that hosts the Ansible Runtime + Engine. Multiple Control Nodes are allowed.
+
+		Ansible Tower:			Enterprise UI/API for controlling, securing, managing and extending Ansible-enabled automation.
+			AWX Project:		Open-Source Version of Ansible Tower hosted on the Ansible GitHub.
+
+		Collection:				Distribution Format for Ansible Content that is aimed to be usable out-of-the-box. 
+
+		Inventory:				Refers to the Machines that are to be managed by Ansible for the current Project.
+		Host / Inventory File:	Describes an unchanging / infrequently changing Inventory.
+		Dynamic Inventory:		Usually involves Machines hosted in the Cloud.
+
+		Ansible Vault:			Utility to help store Sensitive Content in Encrypted (i.e. not Plaintext) Format.
+
+		Role:					A Directory that contains a Playbook and their related Materials.
+
+		Playbook:				Defines a sequence of Tasks to run. When triggered these generate [Python?] Scripts which are sent over to the Machines to be executed.
+			Task:				Unit of Action that may invoke one or more Modules.
+
+		Fact Gathering:			Process to get more Information about the Machines. Handled by the setup Module.
+		Fact:					Discovered Properties from the Machines stored as Variables during Fact Gathering.
+
+	Details:
+		Background:
+			History:
+				In the past, it was possible for Manual Configuration Management, since there usually only were a small number of Physical Machines.
+				Nowadays, it is not feasible, as the number of Machines has increased, with the concept of Virtual Machines + Cloud.
+
+			Ansible aims to help ensure that the desired End-State is achieved for the Machines once the Procedures are complete.
+				Compare this to writing pure Shell Script:
+					Need to be able to access the Machines.
+
+					Need to account for Exceptional Use-Cases:
+						Different OSes / APIs to perform Actions in various Machines.
+						User with incorrect Permissions.
+						Unavailable File.
+					
+					Need to tailor implementation for each Machine.
+
+					Not easy to write a Shell Script that features Idempotency.
+
+			Ansible requires no additional Agent Software to be installed on the Machines it targets.
+				Note: Still requires Python for Linux Distributions.
+
+		Alternatives:
+			Puppet (used to be popular, but overtaken by Ansible)
+			Salt-Stack
+			Chef
+
+		Pre-Requisites:
+			User Account with enough Permissions
+				Tip: 'wheel' Group to allow User to perform Admin Actions without the need to keep entering a Password.
+				Tip: Configure 'wheel' Group capabilities via visudo.
+
+			Key-Based SSH
+				Tip: Generate SSH Pub/Pri Key Pair using ssh-keygen, and utilize ssh-copy-id to copy the SSH Pub Key over to the Target Host to allow Control Node to login to Target Host without the need for a Password.
+
+		Variable Priority: Ascending Priority (more Specific overrides more Generic)
+			Built In Variables
+			Command Line Variables
+			Role Variables
+			Playbook Variables
+			Role Default Variables
+			Host Variables
+			Group Variables
+				Child Group
+				Parent Group
+				'all' Group
+			Inventory Variables?
+
+		Modules:
+			command				Used to run Terminal Commands.
+			shell				Used to run Shell Commands.
+				shell: <command>
+				args:
+					executable: <interpreter-path> # Changes the Interpreter used.
+						/bin/sh	# Default
+						/bin/bash
+			script				Used to implement and execute multiple Terminal Commands written as though they were within an actual Script.
+
+			register			Used to store the Output of Commands into a Variable.
+				register: <register-variable>
+
+				# ...
+
+				<register-variable>.rc
+				<register-variable>.stdout.find('<value>')
+				
+				# ...
+
+				<register-variable> is failed
+				<register-variable> is succeeded
+				<register-variable> is skipped
+
+			debug				Used to print the Output of Commands via a Variable.
+				debug:
+					var: <variable>.stdout # Print out the contents of a Variable.
+
+					msg: " ... {{ <variable> }} ... " # Print out a Custom Message (additionally using the content of some <variable>).
+
+			copy				Used to create Files, or copy Content from an existing File over to another File.
+				copy:
+					src: <source-filepath>
+					# OR 
+					content: " ... "
+
+					dest: <dest-filepath>
+					force: no | yes # Don't override if File is present, or override only when Content differs.
+
+			package				Used to manage Packages.
+				package:
+					name: <package-name>
+					state: present
+
+			service				Used to manage Services.
+				service:
+					name: <service-name>
+					state: started | stopped | reloaded | restarted
+					enabled: true # Whether the Service should start on boot.
+
+			firewalld			Used to manage Machine Firewall Settings.
+				firewalld:
+					service: <service-name>
+					state: enabled | disabled # Allow the Service to operate through the Firewall, or prevent the Service from doing so.
+					permanent: no | yes
+
+		Configuration:
+			Note: For the Control Node, there exists a Directory that contains the master variants of the Ansible Files described below. These master variants contain useful Comments and Documentation that describe what can be added to such Files.
+				Linux: /etc/ansible
+
+			Host / Inventory File:
+				# Tip: All Hosts specified here can be referenced by the 'all' Group.
+
+				# Specify a Group which can then be referenced by other parts in the Ansible Project.
+				[<host-group>]
+				# Each Host can be defined by their IP Address or Fully Qualified Names.
+				<host> <host-variable>=<value> # ...
+
+				# Alternatively, an Alias can be used to describe a Host in a more Readable way.
+				<alias> ansible_host=<host> # ...
+
+				# ...
+
+				# Declare a Parent Group containing Child Groups:
+				[<parent-group>:children]
+				<host-group>
+				# ...
+
+				# ...
+
+				# Declare Variables for a <host-group>.
+				# Tip: Alternatively, one can do this via a "group_vars" Directory at Project Root, with the Content stored within a File whose name matches <host-group>.
+				[<host-group>:vars]
+				<group-variable>=<value>
+				# ...
+
+				# ...
+
+				# Note: Dynamic Inventory Scripts must return Host Information in a JSON Format.
+
+			ansible.cfg:
+				# Describe how the Connections should be made to the Machines:
+				[defaults]
+				inventory = <inventory-file-path>
+				remote_user = <login-user> 			# User on <target-host>
+				host_key_checking = false
+
+				# Describe how Commands should be executed on the Machines:
+				[privilege_escalation]
+				become = True 						# Specify that Ansible needs to login as another User in order to run Commands on the Machines.
+				become_method = sudo				# Specify the Method that Ansible will use to login as another User.
+				become_user = root					# Specify that Root-Level privileges are needed to run the Commands.
+				become_ask_pass = false				# Specify if a Password is required to login as the User.
+
+			Playbooks: 
+				Written in YAML Files.
+				Note: Do NOT use Tabs; use Spaced Indentation.
+					# Specify start of YAML File via 3 Dashes
+					---
+
+					# Reference Facts via ansible_facts.<key>. ...
+
+					# Define a Task:
+					# Note: Optional to include a 'tasks:' as one of the first Lines.
+					- name: <task-name>
+						hosts: <host-group>, ...
+
+						# Specify to skip the Fact Gathering Process for this Playbook.
+						gather_facts: no
+
+						remote_user: <login-user>
+
+						# Define Variables locally within a Task:
+						vars:
+							# Note: Reference this later via {{ <variable> }} - use Double Quotes as well if it is the first item on a Line.
+							<variable>: <value>
+
+							# Note: Use {{ <list-variable>[<index>] }} to reference the <index>th Item in the <list-variable>.
+							<list-variable>:
+								- <value>
+								# ...
+
+							# Note: Use {{ <dict-variable>['<key>'] }} to reference the Item stored with the <key>.
+							<dict-variable>:
+								<key>: <value>
+								# ...
+
+							# ...
+
+						# Reference Variables stored within a YAML File.
+						# Tip: Useful to access Sensitive Variables protected by Ansible Vault.
+						vars_files:
+							- <file>.yml
+
+						# Will only execute on Hosts for which this Boolean Expression returns "true":
+						# Note: Not necessary to put Curly Braces when referencing a Variable here.
+						when: <variable> == <value>
+							# <register-variable> is succeeded
+							# <register-variable> is failed
+							# <register-variable> is skipped
+
+						# Execute the same Tasks for each <item> in the List below.
+						# Tip: Reference "<item>" inside the Task via "{{ item }}".
+						loop:
+							- <item>
+							# ...
+						
+						# Define Child Tasks (same structure as above):
+						tasks:
+						# - name: <task-name>
+						# 	<module-name>: 
+						# 		<module-parameter>: <value>
+						# 		...
+						# 	...
+						# 	# ignore-errors: yes
+
+						# Trigger Handlers:
+						notify: <handler-name>
+
+						# Define Task Fail Condition
+						register: <register-variable>
+						failed_when: # ... <register-variable> ...
+					
+					# ...
+
+					# Define Handlers (Tasks) that need to be triggered to run:
+					# Note: Each Handler will only run once, even if notified by multiple Tasks.
+					handlers:
+						# - name: <handler-name> ...
+						# 	...
+
+						# ...
+
+					# ...
+					
+					# Specify end of YAML File via 3 Dots:
+					...
+
+			Roles:
+				tasks:
+					main.yml: Has the same syntax as a YAML File defining a Playbook, but:
+						Each Task cannot have the 'hosts' and 'tasks' Attribute.
+
+	Commands:
+		# List all available Modules
+		ansible_doc -l
+
+		# Get Documentation for <module>
+		ansible_doc <module>
+
+		# Ad-hoc Ansible Command Format
+		# Note: One Command per Line.
+		ansible -e "<variable>=<value> ..."  -i <inventory-file-path> <group> -m <module> -a "<module-argument>=<value> ..."
+		ansible <target-host> # ...
+
+		# Check that all Hosts specified in the Host / Inventory File can be reached by the Ansible Runner:
+		ansible -i <inventory-file-path> all -m ping
+
+		# Display all Facts from Machine(s):
+		ansible -i <inventory-file-path> -m setup
+
+		# Store sensitive Variables via Ansible Vault:
+		ansible-vault create <encrypted-variable-file>.yml
+
+		# Run an Ansible Playbook
+		ansible-playbook <playbook>.yml
+			-v[v[v[v]] 			Enable Verbose Output (up to Level 4).
+
+			--ask-vault-pass 	Enable Playbook to access Password-Secured Ansible Vault Files via a prompt to the current User.
+			--vault-password-file=<filepath> Enable Playbook to access Password-Secured Ansible Vault Files via a File which stores the Password.
