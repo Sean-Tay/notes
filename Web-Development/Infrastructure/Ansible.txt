@@ -28,9 +28,10 @@ Ansible:
 
 		Ansible Vault:			Utility to help store Sensitive Content in Encrypted (i.e. not Plaintext) Format.
 
-		Role:					A Directory that contains a Playbook and their related Materials.
+		Role:					A Directory that contains Tasks and their related Specifications.
 
-		Playbook:				Defines a sequence of Tasks to run. When triggered these generate [Python?] Scripts which are sent over to the Machines to be executed.
+		Playbook:				Defines a sequence of Plays to run. When triggered these generate [Python?] Scripts which are sent over to the Machines to be executed.
+			Play:				Ties Tasks to Hosts for execution.
 			Task:				Unit of Action that may invoke one or more Modules.
 
 		Fact Gathering:			Process to get more Information about the Machines. Handled by the setup Module.
@@ -196,9 +197,9 @@ Ansible:
 
 					# Reference Facts via ansible_facts.<key>. ...
 
-					# Define a Task:
-					# Note: Optional to include a 'tasks:' as one of the first Lines.
-					- name: <task-name>
+					# Define a Play:
+					- name: <play-name>
+						# Defining Difference between a Play and a Task - specifies the Machines on which the Task will run.
 						hosts: <host-group>, ...
 
 						# Specify to skip the Fact Gathering Process for this Playbook.
@@ -206,7 +207,7 @@ Ansible:
 
 						remote_user: <login-user>
 
-						# Define Variables locally within a Task:
+						# Define Variables locally within this Play:
 						vars:
 							# Note: Reference this later via {{ <variable> }} - use Double Quotes as well if it is the first item on a Line.
 							<variable>: <value>
@@ -235,32 +236,38 @@ Ansible:
 							# <register-variable> is failed
 							# <register-variable> is skipped
 
-						# Execute the same Tasks for each <item> in the List below.
+						# Execute the Play for each <item> in the List below.
 						# Tip: Reference "<item>" inside the Task via "{{ item }}".
 						loop:
 							- <item>
 							# ...
 						
-						# Define Child Tasks (same structure as above):
+						# Define Tasks for the Play:
 						tasks:
 						# - name: <task-name>
+						#
+						# 	# Include Tasks defined in other Files (not Playbooks):
+						#   import_tasks: <file-path> # Static Preprocessing: Variables do not apply to this Statement, only to Imported Tasks
+						#   include_tasks: <file-path> # Dynamic Processing: Variables apply to this Statement, as well as to Imported Tasks
+						# 
 						# 	<module-name>: 
 						# 		<module-parameter>: <value>
 						# 		...
 						# 	...
+						# 
 						# 	# ignore-errors: yes
 
 						# Trigger Handlers:
 						notify: <handler-name>
 
-						# Define Task Fail Condition
+						# Define Play Fail Condition
 						register: <register-variable>
 						failed_when: # ... <register-variable> ...
 					
 					# ...
 
-					# Define Handlers (Tasks) that need to be triggered to run:
-					# Note: Each Handler will only run once, even if notified by multiple Tasks.
+					# Define Actions that need to be triggered to run:
+					# Note: Each Handler will only run once, even if notified by multiple Plays.
 					handlers:
 						# - name: <handler-name> ...
 						# 	...
