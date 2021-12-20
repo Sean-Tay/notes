@@ -145,6 +145,7 @@ Linux / Unix:
 
 			ps					- Get snapshot of User's current processes.
 				-e 				- Get snapshot of all processes.
+				-f / -F 		- See more process Info.
 
 				axo <field>		- Get only part of the information.
 			
