@@ -90,6 +90,8 @@ Linux / Unix:
 			df 					- Display free Disk Space.
 				-h				- Display in terms of Megabytes.
 
+			free				- Display Memory Occupancy Information.
+
 			top					- View all running processes.
 				E				- Cycle through Size Magnitudes.
 
