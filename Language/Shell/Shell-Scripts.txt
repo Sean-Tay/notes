@@ -85,12 +85,38 @@ Linux / Unix:
 
 			du <path>			- Display used Disk Space within <path>.
 				-s				- Display only top-level Files and Directories.
-				-h				- Display in terms of Megabytes.
+				-h				- Display number of Bytes in terms of the next smallest Unit of Measurement.
 			
 			df 					- Display free Disk Space.
-				-h				- Display in terms of Megabytes.
+				-h				- Display number of Bytes in terms of the next smallest Unit of Measurement.
 
 			free				- Display Memory Occupancy Information.
+				-h				- Display number of Bytes in terms of the next smallest Unit of Measurement.
+
+			which <executable>	- View location of specified executable.
+			
+			cd <path>			- Change Present Working Directory.
+				cd -			- Change Present Working Directory to the last Directory.
+			
+			pwd					- View path of Present Working Directory.
+			
+			tree 				- View structure of Present Working Directory.
+				find . -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g" - Alternative to above.
+				
+			chmod <permissions> <file> - Change <file> permissions.
+				-R				- Apply <permissions> recursively to contents within directory <file>.
+
+			chown <user>:<group> <file> - Change <file>'s ownership.
+				-R				- Apply ownership recursively to contents within directory <file>.
+
+			curl <url>			- Interact with an Application hosted on <url>
+				-u <username>:<password> - Declare Username / Password.
+				
+				-o <file>		- Download content from <url> into a <file>.
+				-O				- Download content from <url> into a file, keeping the name as is in the <url>.
+
+				-T <file>		- Upload a <file> to the FTP <url>.
+					-a			- Upload and append Content into the file at the FTP <url>.
 
 			top					- View all running processes.
 				E				- Cycle through Size Magnitudes.
@@ -112,22 +138,6 @@ Linux / Unix:
 				Remove Job: crontab -u <user> -l | grep -v "<job>" | crontab -u <user> -
 
 				Note: Comments are not allowed to be on the same line as cronjobs.
-
-			which <executable>	- View location of specified executable.
-			
-			cd <path>			- Change Present Working Directory.
-				cd -			- Change Present Working Directory to the last Directory.
-			
-			pwd					- View path of Present Working Directory.
-			
-			tree 				- View structure of Present Working Directory.
-				find . -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g" - Alternative to above.
-				
-			chmod <permissions> <file> - Change <file> permissions.
-				-R				- Apply <permissions> recursively to contents within directory <file>.
-
-			chown <user>:<group> <file> - Change <file>'s ownership.
-				-R				- Apply ownership recursively to contents within directory <file>.
 
 			clear				- Clear accumulated output produced by previous commands from the current view.
 
