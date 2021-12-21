@@ -6,6 +6,8 @@ Linux / Unix:
 		Cronjob 				- A Shell Script that gets executed periodically.
 	
 	Details:
+		Hint: Try using Git Bash in Environments that don't have Bash by default.
+
 		Metadata:
 			File Permissions: For executable jobs defined in script, need to set the eXecutable bit.
 				- File Type {- | d | c | l | p | s | b | D} (1)
@@ -102,7 +104,17 @@ Linux / Unix:
 			
 			tree 				- View structure of Present Working Directory.
 				find . -print | sed -e "s;[^/]*/;|____;g;s;____|; |;g" - Alternative to above.
-				
+
+			ls ...				- List files and directories in Present Working Directory.
+				-l 				- List all files with their permissions.
+				-a				- List all files, including hidden files.
+				-r				- List all files in reverse lexicographic order.
+				-t 				- List files sorted according to date ; newest to oldest.
+				-h				- List files alongside their disk occupancy in terms of greater orders of magnitude.
+
+				-R 				- List files within sub-Directories recursively.
+				-o				- Like -a, but without group permissions.
+
 			chmod <permissions> <file> - Change <file> permissions.
 				-R				- Apply <permissions> recursively to contents within directory <file>.
 
@@ -115,7 +127,7 @@ Linux / Unix:
 				-o <file>		- Download content from <url> into a <file>.
 				-O				- Download content from <url> into a file, keeping the name as is in the <url>.
 
-				-T <file>		- Upload a <file> to the FTP <url>.
+				-T <file>		- Upload a <file> to the FTP <url>. <url> needs "/<file>" appended at the end.
 					-a			- Upload and append Content into the file at the FTP <url>.
 
 			top					- View all running processes.
@@ -150,10 +162,11 @@ Linux / Unix:
 				- Certain external commands, such as xargs and find are aware of ARG_MAX variable and repeatedly perform actions under that limit.
 
 			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
+				-r 				- Prevent execution if stdin is empty.
+				-0				- Input Items are terminated by a Null Character vs a Whitespace. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes. Used when preceding Command piping Input has the -print0 Flag.
+
 				-I <placeholder> - Allows usage of stdin at specific parts inside <command> via <placeholder>.
 				-n<number> 		- Limit the number of arguments 
-
-				-r 				- Prevent execution if stdin is empty.
 
 			ps					- Get snapshot of User's current processes.
 				-e 				- Get snapshot of all processes.
@@ -166,21 +179,14 @@ Linux / Unix:
 				
 				pgrep -f "<pattern>" | xargs -n1 -I PID readlink -f /proc/PID/exe - Get Executable of PIDs whose process information matches <pattern>.
 			
-			find <filepath>	-name "<pattern>" 2> /dev/null - Find files in <filepath> that match a certain <pattern>, excluding quotes.
-				-mtime	<n>		- Check for files that are older than <n>*24 hours.
-				
+			find <filepath>	-name "*<pattern>*" 2> /dev/null - Find files in <filepath> that contains a certain <pattern>, excluding quotes.
+				# <filepath> can terminate with * to avoid having "./" in the Output.
+
+				-print0			- Use Null Characters as the Delimiter instead. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes.
 				-prune			- Do not traverse into directories.
+
+				-mtime	<n>		- Check for files that are older than <n>*24 hours.
 			
-			ls ...				- List files and directories in Present Working Directory.
-				-l 				- List all files with their permissions.
-				-a				- List all files, including hidden files.
-				-r				- List all files in reverse lexicographic order.
-				-t 				- List files sorted according to date ; newest to oldest.
-				-h				- List files alongside their disk occupancy in terms of greater orders of magnitude.
-
-				-R 				- List files within sub-Directories recursively.
-				-o				- Like -a, but without group permissions.
-
 			touch <file>		- Create <file> or edit <file> metadata.
 				-a 				- accessed
 				-m 				- modified
