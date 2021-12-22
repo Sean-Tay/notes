@@ -127,7 +127,7 @@ Linux / Unix:
 				-o <file>		- Download content from <url> into a <file>.
 				-O				- Download content from <url> into a file, keeping the name as is in the <url>.
 
-				-T <file>		- Upload a <file> to the FTP <url>. <url> needs "/<file>" appended at the end.
+				-T <file>		- Upload a <file> to the FTP <url>. <url> needs "/" appended at the end. Defaults to PUT for HTTP(S).
 					-a			- Upload and append Content into the file at the FTP <url>.
 
 			top					- View all running processes.
@@ -221,19 +221,19 @@ Linux / Unix:
 			. ./<file.sh> [<args>, ...] - Execute executable <file.sh> in the current shell.
 			./<file.sh> [<args>, ...] - Execute executable <file.sh> in a child shell.
 
-			tar	<file>.tar 		- Utility to bundle or unbundle files together, without compression.
-				-p				- Preserve Permissions of bundled or unbundled files.
-				
-				--exclude={'<regex>', ...} -cvf <file>.tar <pattern> ... - Bundle files matching <pattern>s into <file>.tar whilst preserving directory structure. 
-					- Note: Does not store and preserve permissions and ownership of intermediate directories when used with the -p option, unless they are explicitly added in.
-					- Note: For --exclude, if specifying a Directory, do not end with a '/'.
-					- Tip: For --exclude, if only one item, just equate to one string and not an array.
-
+			tar 				- Utility to bundle or unbundle files (by default, without compression).
 				-tvf <file>.tar - List all files within <file>.tar verbosely.
+
+				-p				- Preserve Permissions of bundled or unbundled files.
 
 				-xvf <file>.tar - Extract all <file>s within <file>.tar into a new folder at the current directory whilst preserving directory structure.
 				--overwrite -xvpPf <file>.tar - Extract all <file>s within <file>.tar whilst preserving directory structure.
 				-C <path> - Extract all <file>s to <path>.
+
+				--exclude={'<regex>', ...} -cvf <file>.tar <pattern> ... - Bundle files matching <pattern>s into <file>.tar whilst preserving directory structure. 
+					- Note: Does not store and preserve permissions and ownership of intermediate directories when used with the -p option, unless they are explicitly added in.
+					- Note: For --exclude, if specifying a Directory, do not end with a '/'.
+					- Tip: For --exclude, if only one item, just equate to one string and not an array.
 
 				-z				- Activate compression for the file bundle. This operation can be invoked separately by the gzip command.
 		
