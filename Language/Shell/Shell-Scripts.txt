@@ -182,13 +182,18 @@ Linux / Unix:
 				
 				pgrep -f "<pattern>" | xargs -n1 -I PID readlink -f /proc/PID/exe - Get Executable of PIDs whose process information matches <pattern>.
 			
-			find <filepath>	-name "*<pattern>*" 2> /dev/null - Find files in <filepath> that contains a certain <pattern>, excluding quotes.
+			find <filepath>	-name "*<pattern>*" 2> /dev/null - Find Files in <filepath> that contains a certain <pattern>, excluding quotes.
 				# <filepath> can terminate with * to avoid having "./" in the Output.
 
 				-print0			- Use Null Characters as the Delimiter instead. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes.
-				-prune			- Do not traverse into directories.
 
-				-mtime	<n>		- Check for files that are older than <n>*24 hours.
+				-type <type> 	- Specify the type of Files / Directories to process.
+					f 			- Regular File.
+					d 			- Directory.
+
+				-prune			- Do not traverse into Directories.
+
+				-mtime	<n>		- Check for Files that are older than <n>*24 hours.
 			
 			touch <file>		- Create <file> or edit <file> metadata.
 				-a 				- accessed
