@@ -346,6 +346,12 @@ Linux / Unix:
 				else
 					...
 				fi
+
+				# Command Conditional Blocks
+				if <command> | ...
+				then
+					...
+				fi
 				
 				# Switch Case
 				case ${<variable>} in
