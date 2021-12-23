@@ -229,9 +229,7 @@ Linux / Unix:
 				-a 				- Copy <fileA> exactly as they are (archive).
 			
 			mv <fileA> <fileB>	- Move or Rename <fileA> as <fileB>. If <fileB> is present, it will be overriden.
-			
-			. ./<file.sh> [<args>, ...] - Execute executable <file.sh> in the current shell.
-			./<file.sh> [<args>, ...] - Execute executable <file.sh> in a child shell.
+			mv -T <source-directory> <target-directory> - Move or Rename all Content from <source-directory> to <target-directory>.
 
 			tar 				- Utility to bundle or unbundle files (by default, without compression).
 				-tvf <file>.tar - List all files within <file>.tar verbosely.
