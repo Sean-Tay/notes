@@ -321,7 +321,7 @@ Linux / Unix:
 				# Test Command: [
 				# '[' requires ']' as the last argument.
 				[ <conditional> ]
-					-ne, -gt, ... - Numeric / Algebraic Inequality
+					-ne, -gt, -ge, ... - Numeric / Algebraic Inequality
 					!=, ==, ...	- String Inequality
 					=~			- Regex Matching Operator
 					
