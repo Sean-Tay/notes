@@ -39,6 +39,9 @@ Linux / Unix:
 		
 	Commands:
 		Note: Command arguments are always separated with spaces.
+
+		. ./<command> [<args>, ...] - Execute executable <command> in the current shell.
+		./<command> [<args>, ...] - Execute executable <command> in a child shell.
 		
 		: 						- Dummy Command
 		
