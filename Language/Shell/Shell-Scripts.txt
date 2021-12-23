@@ -165,6 +165,8 @@ Linux / Unix:
 				- Certain external commands, such as xargs and find are aware of ARG_MAX variable and repeatedly perform actions under that limit.
 
 			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
+				# Tip: <command> can be: sh -c ' <command-1>; <command-2>; ... ' to allow execution of multiple Commands. -I's <placeholder> works as is.
+
 				-r 				- Prevent execution if stdin is empty.
 				-0				- Input Items are terminated by a Null Character vs a Whitespace. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes. Used when preceding Command piping Input has the -print0 Flag.
 
