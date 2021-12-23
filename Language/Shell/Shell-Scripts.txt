@@ -227,10 +227,11 @@ Linux / Unix:
 			tar 				- Utility to bundle or unbundle files (by default, without compression).
 				-tvf <file>.tar - List all files within <file>.tar verbosely.
 
+				-v				- List all files processed verbosely.
 				-p				- Preserve Permissions of bundled or unbundled files.
 
-				-xvf <file>.tar - Extract all <file>s within <file>.tar into a new folder at the current directory whilst preserving directory structure.
-				--overwrite -xvpPf <file>.tar - Extract all <file>s within <file>.tar whilst preserving directory structure.
+				-xf <file>.tar - Extract all <file>s within <file>.tar into a new directory at the current directory whilst preserving directory structure.
+				--overwrite -xpPf <file>.tar - Extract all <file>s within <file>.tar whilst preserving directory structure.
 				-C <path> - Extract all <file>s to <path>.
 
 				--exclude={'<regex>', ...} -cvf <file>.tar <pattern> ... - Bundle files matching <pattern>s into <file>.tar whilst preserving directory structure. 
