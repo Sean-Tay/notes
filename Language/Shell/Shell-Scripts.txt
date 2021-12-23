@@ -187,7 +187,7 @@ Linux / Unix:
 				pgrep -f "<pattern>" | xargs -n1 -I PID readlink -f /proc/PID/exe - Get Executable of PIDs whose process information matches <pattern>.
 			
 			find <filepath>	-name "*<pattern>*" 2> /dev/null - Find Files in <filepath> that contains a certain <pattern>, excluding quotes.
-				# <filepath> can terminate with * to avoid having "./" in the Output.
+				# Tip: <filepath> can terminate with * to avoid having "./" in the Output.
 
 				-print0			- Use Null Characters as the Delimiter instead. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes.
 
@@ -223,7 +223,7 @@ Linux / Unix:
 				-u				- Only print unique lines.
 
 			cp <fileA> <fileB> 	- Duplicate or Overwrite <fileA> as <fileB>.
-				-r 				- If <fileA> is a directory, also copy contents within with the same directory structure.
+				-r 				- If <fileA> is a directory, also copy contents into <fileB> with the same directory structure.
 				-p				- Preserve permissions and ownership when copying.
 
 				-a 				- Copy <fileA> exactly as they are (archive).
@@ -243,7 +243,7 @@ Linux / Unix:
 				--overwrite -xpPf <file>.tar - Extract all <file>s within <file>.tar whilst preserving directory structure.
 				-C <path> - Extract all <file>s to <path>.
 
-				--exclude={'<regex>', ...} -cvf <file>.tar <pattern> ... - Bundle files matching <pattern>s into <file>.tar whilst preserving directory structure. 
+				--exclude={'<regex>', ...} -cf <file>.tar <pattern> ... - Bundle files matching <pattern>s into <file>.tar whilst preserving directory structure. 
 					- Note: Does not store and preserve permissions and ownership of intermediate directories when used with the -p option, unless they are explicitly added in.
 					- Note: For --exclude, if specifying a Directory, do not end with a '/'.
 					- Tip: For --exclude, if only one item, just equate to one string and not an array.
