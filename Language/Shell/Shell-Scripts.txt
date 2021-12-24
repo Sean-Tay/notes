@@ -430,17 +430,22 @@ Linux / Unix:
 
 				mktemp 			- Create Temp File.
 					-d			- Create a Directory instead of a File.
-			
-				echo "<output>"	- Output <output> to output stream.
-					-n			- Disable automatic newline after execution.
-					-e			- Enable interpretation of backslashes in <output>.
-				
-				print '<format_string>' "<output>" - Output <output> to output stream. More portability and functionality than echo.
-					\r			- <format_string> - Carriage Return. Useful for fixed-position output that gets updated.
 
-				tee <file>		- Write to both stdout and <file>.
-					- a			- Append as opposed to overwrite to <file>.
-				
+				grep <regex> <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches <regex>.
+				grep -e <regex> ... <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches at least one of the <regex>s.
+				grep -f <regex_file> <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches the content in <regex_file>.
+					-E 			- Use Extended Regex functionality (deprecated shorthand: egrep).
+					-F			- Treat <regex> / content within <regex_file> as a literal and not as a Regex.
+
+					-r 			- Recursive search for files in subdirectories as well.
+
+					-i 			- Ignore case.
+					-w 			- Only consider exact matches.
+					-v 			- Invert the selection matched by the <regex>.
+
+					-q 			- Suppress output to stdout.
+					-l			- Print only the filenames that contain content that matches against the <regex>, and not individual lines.
+
 				read <var1> <var2> ... - Read user input and store it in <var1>, <var2>, etc.
 					-a 			- Store multiple user inputs in an array. Only one <var> is allowed if this is used.
 					-d			- Specify termination delimiter.
@@ -461,28 +466,23 @@ Linux / Unix:
 				tail <input>	- Extract the last part of <input>.
 					-<number>	- Specify number of lines to display.
 
+				echo "<output>"	- Output <output> to output stream.
+					-n			- Disable automatic newline after execution.
+					-e			- Enable interpretation of backslashes in <output>.
+				
+				print '<format_string>' "<output>" - Output <output> to output stream. More portability and functionality than echo.
+					\r			- <format_string> - Carriage Return. Useful for fixed-position output that gets updated.
+
+				tee <file>		- Write to both stdout and <file>.
+					- a			- Append as opposed to overwrite to <file>.
+
 				cut <input>	- Remove or cut out sections of <input>.
 					-d '<delimiter>' - Specify delimiter to seperate <input> into fields.
 					-f <field_index> - Specify field to extract from <input>. Is 1-index based.
 
 				tr <string1> <string2> - Translate <string1> occurrences into <string2> from stdin to stdout.
 					-d 			- Delete characters in <string1>, do not translate.
-				
-				grep <regex> <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches <regex>.
-				grep -e <regex> ... <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches at least one of the <regex>s.
-				grep -f <regex_file> <file_pattern> ... - Search through files matching <file_pattern> and only print to stdout the lines which matches the content in <regex_file>.
-					-E 			- Use Extended Regex functionality (deprecated shorthand: egrep).
-					-F			- Treat <regex> / content within <regex_file> as a literal and not as a Regex.
 
-					-r 			- Recursive search for files in subdirectories as well.
-
-					-i 			- Ignore case.
-					-w 			- Only consider exact matches.
-					-v 			- Invert the selection matched by the <regex>.
-
-					-q 			- Suppress output to stdout.
-					-l			- Print only the filenames that contain content that matches against the <regex>, and not individual lines.
-				
 				sed " <address>{<command> ; ...} ; ... " <file> - Stream Transforms based on given <command>s.
 					-r 			- Use Extended Regex functionality.
 
