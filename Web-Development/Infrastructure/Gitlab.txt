@@ -110,6 +110,7 @@ GitLab:
 					# Describe the Conditions in which the Job will be run:
 					rules:
 						# ...
+						# when: manual
 
 					# Cross-Project Specifics:
 						# Trigger a Pipeline in another Downstream Project:
