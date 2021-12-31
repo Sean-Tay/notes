@@ -56,6 +56,7 @@ Jest
 
 				// Specify Setup Files that configures the Testing Environment before other Test Frameworks are installed.
 				// Note: Each Test File will have an isolated Testing Environment, so the Setup Files are re-executed per Test File.
+				// Tip: Useful for running Polyfills on Jest's jsdom.
 				"setupFiles": [
 					"<file-path>",
 					...
@@ -124,6 +125,10 @@ Jest
 					}
 
 		Setup Considerations:
+			jsdom: This does not completely simulate all functionality of an actual DOM Environment.
+				URL.createObjectURL()
+				window.scrollTo()
+
 			Webpack: 
 				Babel: Babel Configuration should ideally be specified in a separate babel.config.json / .babelrc, instead of within webpack.config.js alongside babel-loader specific Configuration.
 
