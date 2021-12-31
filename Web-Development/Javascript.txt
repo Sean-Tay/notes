@@ -884,7 +884,29 @@ Javascript
 
 		Reflect: Reflection Metaprogramming through Introspection - used to discover low level information about Code.
 
-		Proxy: Reflection Metaprogramming through Intercession - used to wrap Objects and intercept their behaviour through traps.
+		Proxy: Reflection Metaprogramming through Intercession - used to wrap Objects and intercept and redefine Fundamental Operations for that Object through traps.
+			// Proxy Handlers:
+				// Get / Set Object Functions:
+					const <handler> = {
+						get: function (<target-object>, <property-accessed>, <proxy>) {
+							// ...
+
+							// Execute the original Function with the supplied Arguments and return the Result to the Caller
+							return Reflect.get( ...arguments )
+						},
+
+						set: function (<target-object>, <property-accessed>, value) {
+							// ...
+
+							// Execute the original Function with the supplied Arguments and return the Result to the Caller
+							return Reflect.set( ...arguments )
+						}
+					}
+
+					const proxy = new Proxy(<target-obj>, <handler>)
+
+					// The Proxy Functionality will be additionally invoked when a Property is retrieved / saved via the <proxy>.
+					<proxy>.<property>
 
 		Import / Export Syntax:
 			// Import
