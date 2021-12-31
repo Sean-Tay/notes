@@ -100,12 +100,15 @@
 				// Note: console.error gets mocked when importing from this library. This can affect Tests that rely on asserting an output from console.error.
 
 				// renderHook: Render a Test Component that will call <custom-hook> each time it renders.
-					const { result, waitFor, waitForNextUpdate } = renderHook(() => <custom-hook>( ... ))
+					const { result, waitForValueToChange, waitForNextUpdate,  waitFor } = renderHook(() => <custom-hook>( ... ))
 						// Tip: Avoid destructuring the 'result' Object to prevent Closure-related Issues.
 
 						// result.current: The current Return Value from <custom-hook>.
 						// result.error: Any thrown Errors from the <custom-hook>.
 						// result.all: An Array of all results from the Testing thus far.
+
+					// Wait for result to update.
+					await waitForValueToChange(async () => result.<{ current | error | all }>)
 
 					// Wait for Hook to trigger one re-Render.
 					await waitForNextUpdate()
