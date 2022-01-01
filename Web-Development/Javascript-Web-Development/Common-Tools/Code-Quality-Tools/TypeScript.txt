@@ -96,6 +96,7 @@ Typescript:
 					};
 
 					// Function with Generics
+					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
 					const <function> = <<generic-type> extends <base-type> = <default-type>, ... > ( arg:<generic-type>, ... ): <generic-type> => {
 						// ...
 					};
@@ -112,6 +113,7 @@ Typescript:
 
 				// Classes
 					// Classes with Generics
+					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
 					// Note: Static Members cannot use Generics, as Generics only apply to the Instances of a Class.
 					class <class-name><generic-type> {
 						// ...
@@ -160,6 +162,7 @@ Typescript:
 						};
 
 				// Generic Types:
+					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
 					type <type-name><T extends <base-type> = <default-type>, ... > = ... ;
 
 				// Recursive Types:
@@ -274,6 +277,7 @@ Typescript:
 					};
 
 				// Generic Interface
+					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
 					interface <generic-interface-name><<generic-type> extends <base-type> = <default-type>, ... > {
 						// ...
 					}
