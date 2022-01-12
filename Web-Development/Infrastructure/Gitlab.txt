@@ -134,6 +134,10 @@ GitLab:
 						after_script:
 							- <command>
 							# ...
+					
+					# Define if the Job is allowed to fail:
+					# Default behaviour is to allow failure when triggered Manually.
+					allow_failure: true
 
 				# Define a Hidden Job that will be ignored by the Runner:
 				# Tip: Useful to define base Jobs that other Jobs can extend from:
