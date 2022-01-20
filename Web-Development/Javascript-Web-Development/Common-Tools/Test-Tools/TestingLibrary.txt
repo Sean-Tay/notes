@@ -107,6 +107,10 @@
 						// result.error: Any thrown Errors from the <custom-hook>.
 						// result.all: An Array of all results from the Testing thus far.
 
+					// Tip: Render a Hook within some Context.
+					const wrapper = ({ children }) => <Context ... > { children } </Context>
+					const { result, waitForValueToChange, waitForNextUpdate,  waitFor } = renderHook(() => <custom-hook>( ... ), { wrapper })
+
 					// Wait for result to update.
 					await waitForValueToChange(async () => result.<{ current | error | all }>)
 
