@@ -327,8 +327,8 @@ Jest
 			Lifecycle Methods:	For executing some Logic during different phases of Test Suite / Unit Test execution.
 				// Tip: <init-fn> and <cleanup-fn> can return a Promise for Asynchronous Setup / Teardown operations.
 				beforeAll(<init-fn>);
-				beforeEach(<init-fn>); // Note: Operates at a Unit Test Level, NOT a Test Block Level.
-				afterEach(<cleanup-fn>); // Note: Operates at a Unit Test Level, NOT a Test Block Level.
+				beforeEach(<init-fn>); // Note: Operates at a Unit Test Level (including Nested), NOT a Test Block Level.
+				afterEach(<cleanup-fn>); // Note: Operates at a Unit Test Level (including Nested), NOT a Test Block Level.
 				afterAll(<cleanup-fn>);
 
 			Jest Stub Methods:	For defining the behaviour of a Stub, to simulate a Target's Functional Dependency:
