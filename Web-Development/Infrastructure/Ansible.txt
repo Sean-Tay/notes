@@ -257,10 +257,10 @@ Ansible:
 						# 
 						# 	# ignore-errors: yes
 
-						# Trigger Handlers:
+						# Trigger Handlers (only on 'changed' Hosts):
 						notify: <handler-name>
 
-						# Define Play Fail Condition
+						# Define Custom Play Fail Condition
 						register: <register-variable>
 						failed_when: # ... <register-variable> ...
 					
@@ -268,6 +268,7 @@ Ansible:
 
 					# Define Actions that need to be triggered to run:
 					# Note: Each Handler will only run once, even if notified by multiple Plays.
+					# Note: Each Handler will execute in the order that they are defined in the File.
 					handlers:
 						# - name: <handler-name> ...
 						# 	...
