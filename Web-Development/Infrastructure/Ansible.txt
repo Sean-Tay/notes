@@ -236,6 +236,8 @@ Ansible:
 							# <register-variable> is failed
 							# <register-variable> is skipped
 
+							# '<string>' in <register-variable>.stdout ...
+
 						# Execute the Play for each <item> in the List below.
 						# Tip: Reference "<item>" inside the Task via "{{ item }}".
 						loop:
