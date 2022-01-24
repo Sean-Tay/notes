@@ -196,7 +196,8 @@ Linux / Unix:
 					f 			- Regular File.
 					d 			- Directory.
 
-				-prune			- Do not traverse into Directories.
+				-maxdepth 0		- Do not traverse into Directories.
+				-prune			- If a Directory is found, do not descend into it.
 
 				-mtime	<n>		- Check for Files that are older than <n>*24 hours.
 			
