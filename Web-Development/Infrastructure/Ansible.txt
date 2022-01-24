@@ -291,6 +291,12 @@ Ansible:
 					main.yml: Has the same syntax as a YAML File defining a Playbook, but:
 						Each Task cannot have the 'hosts' and 'tasks' Attribute.
 
+				defaults: Default Variables for the Role. Can be overriden by those defined in 'vars' Directory.
+					main.yml
+
+				vars: Variables for the Role.
+					main.yml
+
 	Commands:
 		# List all available Modules
 		ansible_doc -l
