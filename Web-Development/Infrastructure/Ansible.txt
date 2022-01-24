@@ -269,6 +269,14 @@ Ansible:
 						# Define Custom Play Fail Condition
 						register: <register-variable>
 						failed_when: # ... <register-variable> ...
+
+						# Specify that this Play should stop running when any Host fails to execute.
+						# Note: By default, Ansible will continue the Play for remaining Hosts that succeed (i.e. false).
+						any_errors_fatal: true 
+						
+						# Define Timeout Condition
+						wait_for:
+							timeout: <seconds> 
 					
 					# ...
 
