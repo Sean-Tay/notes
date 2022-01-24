@@ -72,6 +72,10 @@ Ansible:
 			Key-Based SSH
 				Tip: Generate SSH Pub/Pri Key Pair using ssh-keygen, and utilize ssh-copy-id to copy the SSH Pub Key over to the Target Host to allow Control Node to login to Target Host without the need for a Password.
 
+		Ansible Yaml Files are processed with the Jinja2 Templating Syntax. Examples:
+			Using "{{ <variable> }}" to reference a Variable's Value.
+			Using "{{ <variable> | default('<default-value>') }} to specify a default when referencing a Variable's Value.
+
 		Variable Priority: Ascending Priority (more Specific overrides more Generic)
 			Built In Variables
 			Command Line Variables
