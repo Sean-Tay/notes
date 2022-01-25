@@ -250,8 +250,12 @@ Ansible:
 						
 						# Define Tasks for the Play:
 						tasks:
+						# - name: Quick Check for Host Connectivity
+						# 	# Specify how long Ansible should try to connect to the Host, before timing out.
+						# 	wait_for_connection:
+						#		timeout: <seconds>
+
 						# - name: <task-name>
-						#
 						# 	# Include Tasks defined in other Files (not Playbooks):
 						#   import_tasks: <file-path> # Static Preprocessing: Variables do not apply to this Statement, only to Imported Tasks
 						#   include_tasks: <file-path> # Dynamic Processing: Variables apply to this Statement, as well as to Imported Tasks
@@ -260,23 +264,19 @@ Ansible:
 						# 		<module-parameter>: <value>
 						# 		...
 						# 	...
-						# 
+						#
+						# 	# Define Custom Task Fail Condition: 
+						# 	register: <register-variable>
+						# 	failed_when: # ... <register-variable> ...
+
 						# 	# ignore-errors: yes
 
 						# Trigger Handlers (only on 'changed' Hosts):
 						notify: <handler-name>
 
-						# Define Custom Play Fail Condition
-						register: <register-variable>
-						failed_when: # ... <register-variable> ...
-
 						# Specify that this Play should stop running when any Host fails to execute.
 						# Note: By default, Ansible will continue the Play for remaining Hosts that succeed (i.e. false).
 						any_errors_fatal: true 
-						
-						# Define Timeout Condition
-						wait_for:
-							timeout: <seconds> 
 					
 					# ...
 
