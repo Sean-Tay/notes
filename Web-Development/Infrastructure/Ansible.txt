@@ -250,9 +250,16 @@ Ansible:
 						
 						# Define Tasks for the Play:
 						tasks:
-						# - name: Quick Check for Host Connectivity
+						# - name: Quick Check for Host Connectivity (no SSH)
 						# 	# Specify how long Ansible should try to connect to the Host, before timing out.
 						# 	wait_for_connection:
+						#		timeout: <seconds>
+
+						# - name: Quick Check for Host Connectivity (SSH)
+						# 	# Specify how long Ansible should try to connect to the Host, before timing out.
+						# 	wait_for:
+						# 		host: "{{ inventory_hostname }}"
+						# 		port: 22
 						#		timeout: <seconds>
 
 						# - name: <task-name>
