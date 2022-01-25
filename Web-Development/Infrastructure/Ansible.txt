@@ -260,9 +260,18 @@ Ansible:
 						#   import_tasks: <file-path> # Static Preprocessing: Variables do not apply to this Statement, only to Imported Tasks
 						#   include_tasks: <file-path> # Dynamic Processing: Variables apply to this Statement, as well as to Imported Tasks
 						# 
+						# 	# Await Asynchronous Task Execution
+						# 	async: <seconds> # <seconds> indicate the Maximum Time Ansible will wait for the Task to complete.
+						# 	poll: <seconds> # Determines the Interval at which Ansible will check the Task. Defaults to 15.
+						# 
+						# 	# Execute Task Concurrently with next Task below.
+						# 	async: <seconds>
+						# 	poll: 0
+						# 
 						# 	<module-name>: 
 						# 		<module-parameter>: <value>
 						# 		...
+						#
 						# 	...
 						#
 						# 	# Define Custom Task Fail Condition: 
