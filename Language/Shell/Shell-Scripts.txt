@@ -170,7 +170,7 @@ Linux / Unix:
 				# Note: -r0 -n1 ; the Order is important.
 
 				-r 				- Prevent execution if stdin is empty.
-				-0				- Input Items are terminated by a Null Character vs a Whitespace. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes. Used when preceding Command piping Input has the -print0 Flag.
+				-0				- Input Items are terminated by a Null Character vs a Whitespace. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes.
 
 				-n<number> 		- Limit the number of arguments 
 
@@ -190,14 +190,14 @@ Linux / Unix:
 			find <filepath>	-name "*<pattern>*" 2> /dev/null - Find Files in <filepath> that contains a certain <pattern>, excluding quotes.
 				# Tip: <filepath> can terminate with * to avoid having "./" in the Output.
 
-				-print0			- Use Null Characters as the Delimiter instead. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes.
+				-maxdepth 0		- Do not traverse into Directories. Specify immediately after <filepath>.
+				-prune			- If a Directory is found, do not descend into it.
 
 				-type <type> 	- Specify the type of Files / Directories to process.
 					f 			- Regular File.
 					d 			- Directory.
 
-				-maxdepth 0		- Do not traverse into Directories.
-				-prune			- If a Directory is found, do not descend into it.
+				-print0			- Use Null Characters as the Delimiter instead. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes. Should be placed after other Flags to avoid Errors.
 
 				-mtime	<n>		- Check for Files that are older than <n>*24 hours.
 			
@@ -446,6 +446,8 @@ Linux / Unix:
 
 					-q 			- Suppress output to stdout.
 					-l			- Print only the filenames that contain content that matches against the <regex>, and not individual lines.
+
+					-z			- Set Null Characters to be the Delimiter instead for stdin / stdout. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes.
 
 				read <var1> <var2> ... - Read user input and store it in <var1>, <var2>, etc.
 					-a 			- Store multiple user inputs in an array. Only one <var> is allowed if this is used.
