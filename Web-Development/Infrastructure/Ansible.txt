@@ -76,18 +76,26 @@ Ansible:
 			Using "{{ <variable> }}" to reference a Variable's Value.
 			Using "{{ <variable> | default('<default-value>') }} to specify a default when referencing a Variable's Value.
 
-		Variable Priority: Ascending Priority (more Specific overrides more Generic)
-			Built In Variables
-			Command Line Variables
+		Variable Priority: 
+			Built In Variables					# Highest Priority
+			Command Line Extra Variables
+
+			set_fact Variables
+
+			Task Variables
 			Role Variables
-			Playbook Variables
-			Role Default Variables
-			Host Variables
-			Group Variables
-				Child Group
-				Parent Group
-				'all' Group
-			Inventory Variables?
+			Play Variables
+
+			Playbook Host Variables
+			Inventory Host Variables
+			Playbook Child Group Variables
+			Inventory Child Group Variables
+			Playbook Parent Group Variables
+			Inventory Parent Group Variables
+			Playbook 'all' Group Variables
+			Inventory 'all' Group Variables
+
+			Role Default Variables				# Lowest Priority
 
 		Modules:
 			command				Used to run Terminal Commands.
@@ -235,7 +243,9 @@ Ansible:
 
 						# Will only execute on Hosts for which this Boolean Expression returns "true":
 						# Note: Not necessary to put Curly Braces when referencing a Variable here.
-						when: <variable> == <value>
+						when: <variable> == <value> # or / and ...
+							# <variable> is [not] defined
+
 							# <register-variable> is succeeded
 							# <register-variable> is failed
 							# <register-variable> is skipped
