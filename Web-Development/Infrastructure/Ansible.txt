@@ -251,12 +251,6 @@ Ansible:
 							# <register-variable> is skipped
 
 							# '<string>' in <register-variable>.stdout ...
-
-						# Execute the Play for each <item> in the List below.
-						# Tip: Reference "<item>" inside the Task via "{{ item }}".
-						loop:
-							- <item>
-							# ...
 						
 						# Define Tasks for the Play:
 						tasks:
@@ -284,7 +278,15 @@ Ansible:
 						# 	# Execute Task Concurrently with next Task below.
 						# 	async: <seconds>
 						# 	poll: 0
-						# 
+						#
+						# 	# Execute the Task for each <item> in the List below.
+						# 	# Tip: Reference "<item>" inside the Task via "{{ item }}".
+						#	loop:
+						#		- <item>
+						#		- [ <element>, ... ] 
+						#		- { <key>: <value>, ... }
+						#		# ...
+						#
 						# 	<module-name>: 
 						# 		<module-parameter>: <value>
 						# 		...
@@ -321,15 +323,16 @@ Ansible:
 					...
 
 			Roles:
-				tasks:
-					main.yml: Has the same syntax as a YAML File defining a Playbook, but:
-						Each Task cannot have the 'hosts' and 'tasks' Attribute.
+				Directory Structure for a Role:
+					tasks:
+						main.yml: Has the same syntax as a YAML File defining a Playbook, but:
+							Each Task cannot have the 'hosts' and 'tasks' Attribute.
 
-				defaults: Default Variables for the Role. Can be overriden by those defined in 'vars' Directory.
-					main.yml
+					defaults: Default Variables for the Role. Can be overriden by those defined in 'vars' Directory.
+						main.yml
 
-				vars: Variables for the Role.
-					main.yml
+					vars: Variables for the Role.
+						main.yml
 
 	Commands:
 		# List all available Modules
