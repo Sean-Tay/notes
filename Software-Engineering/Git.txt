@@ -14,6 +14,8 @@ Git:
 		Monorepo				- A single Repository that manages all the parts of the Project.
 		Polyrepo				- A single Repository that manages individual Repositories, which each manage a part of the overall Project.
 		
+		Submodule				- Representation of the Local Copy of another Repository within the current Repository.
+
 		origin					- A Local Alias for the Remote Repository's URL in interest.
 
 		HEAD					- A Local Alias for the latest Commit in the current Branch.
@@ -23,6 +25,15 @@ Git:
 		Upstream				- Information Flow from Local Repo to Remote Repo.
 	
 	Details:
+		Files:
+			.gitmodules			- Houses metadata regarding the Submodules used in the current Repository.
+				.git/config		- Houses metadata regarding the Submodules used in the current Repository for the Local Copy. Can be synchronized with .gitmodules via 'git submodules sync'.
+
+			.gitignore			- Tracks Files and Directories to be ignored by Git.
+				.git/info/exclude - Tracks Files and Directories to be ignored by Git for the Local Copy.
+
+		Submodules:
+			Treat these as their own Repositories: Local Changes can be done / commited in these in the same way as how Local Changes are done in a regular Repository.
 	
 	Commands:
 		git config				- Configure Git.
@@ -37,6 +48,8 @@ Git:
 		git clone <repo-url>	- Copies a Remote Repository into the current *empty* Local Directory; creates Local Branches that track each available Remote Branch, before checking out the Local Branch that tracks the active Remote Branch of the Remote Repository.
 			-o <repo-url-alias> - Specify a custom Local Alias to reference the Remote Repository URL (default is origin).
 
+			--recurse-submodules - Also populate Submodule Directories w.r.t the Commit SHA specified in the Submodule Directory Object.
+
 		git remote add <repo-url-alias> <username>@<server>:<repo-path-on-server> - Add a Local Alias for a Remote Repository URL.
 		git remote -v			- View all Local Aliases within the current Repo.
 		git remote remove <repo-url-alias> - Remove a Local Alias for a Remote Repository URL.
@@ -49,7 +62,7 @@ Git:
 		git branch -r 			- List all Remote Branches.
 		git fetch <repo-url-alias> <remote-branch> <local-branch> - Creates a new Local Branch that tracks the specified Remote Branch.
 
-		git branch <branch> 	- Create a new Local Branch.
+		git branch <branch> [<commit-hash>] - Create a new Local Branch, optionally at a specified <commit-hash>. Tip: Do NOT use # in the Branch Name - will interfere with certain Commands.
 			-d <branch> 		- Delete a Local Branch.
 
 			-u <repo-url-alias>/<remote-branch> <branch> - Set which Remote Branch the Local Branch pushes to.
@@ -66,6 +79,8 @@ Git:
 			-B <new-branch>	- Creates a new Local Branch called <new-branch> based on the current Local Working Copy if it doesn't already exist, or resets it if it does already exist, and switches over to it.
 				--track <repo-url-alias> <branch> - Forces <new-branch> to track a specified Remote Branch.
 
+			--recurse-submodules - Ensure that Submodules are in the right state for the Local Branch being switched to.
+
 		git checkout <commit-hash> -- <file> ... - Switch current version of <file> with the <commit-hash> version of <file>.
 
 		git merge [<repo-url-alias>] <branch> - Merge updates from the Branch <branch> into the currently checked out Local Branch.
@@ -78,6 +93,11 @@ Git:
 			
 			--squash			- Combine all updates from the Branch <branch> into one, and add that combined update as one Commit into the currently checked out Local Branch. Does not actually merge <branch>, which helps keep git history of the currently checked out Branch clean.
 
+		git pull [<repo-url-alias>] <branch> - git fetch + git merge.
+			--allow-unrelated-histories - Merges two Repos that started independently.
+
+			--recurse-submodules - Also populate Submodule Directories w.r.t the Commit SHA specified in the Submodule Directory Object.
+
 		git cherry-pick <commit-hash> - Selectively bring in a Commit from another Branch to the currently checked out Local Branch.
 		git cherry-pick <older-commit-hash>~1..<newer-commit-hash> - Bring in a range of Commits from another Branch to the currently checked out Local Branch.
 			--no-commit			- Apply the changes only to the Local Working Copy without Commiting.
@@ -85,10 +105,31 @@ Git:
 			--continue			- Continue the operation, in case it was interrupted by a Merge Conflict.
 				Note: git add and git commit to let Git know the Merge Conflict has been handled first.
 
-		git pull [<repo-url-alias>] <branch> - git fetch + git merge.
-			--allow-unrelated-histories - Merges two Repos that started independently.
-
 		git status				- Get status of added, modified and removed <file>s in the current Local Branch.
+
+		git submodule add <repo-url> [<local-submodule-path>] - Create a Submodule Entry that references the master Branch of the other Repository.
+
+		git submodule set-branch -b <submodule-branch> -- <local-submodule-path> - Set the Branch of the other Repository that a Submodule will reference.
+		git submodule set-branch -d -- <local-submodule-path> - Reset the Branch of the other Repository that a Submodule will reference to the default.
+
+		git submodule sync --recursive [-- <local-submodule-path>] - Syncs the Submodule Entry / Entries in the .git/config File with .gitmodules.
+
+		git submodule update --recursive [-- <local-submodule-path>] - Updates the Local Copies and Contents of the Submodule(s) to the matching Commits.
+			--init 				- Initialize .git/config for the Submodule(s) if they are not already present in the Local Copy.
+
+			--remote 			- Updates the Local Copies and Contents of the Submodule(s) to be of their latest Commits.
+
+			--merge 			- Merge in any Upstream Changes with Local Changes made to the Submodule(s).
+			--rebase			- Rebase Local Changes on top of Upstream Changes made to the Submodule(s).
+
+		git submodule status	- Reports the Status of all Local Submodules.
+
+		git submodule foreach '<git-command>' - Execute a Git Command on each Submodule.
+			Tip: Useful <git-command>s:
+				git stash
+				git diff
+
+		git push --recurse-submodules=on-demand - Push Local Changes to Submodules to the Upstream.
 
 		git mv <folder-name> <new-folder-name> - Change the name of a Folder.
 			Note: Windows and Mac Filesystems will not recognize Case-Sensitive changes, but Git will.
