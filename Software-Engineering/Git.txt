@@ -129,6 +129,8 @@ Git:
 				git stash
 				git diff
 
+		git deinit -- [<local-submodule-path> ...] - Unregister the specified Submodules locally. 
+
 		git push --recurse-submodules=on-demand - Push Local Changes to Submodules to the Upstream.
 
 		git mv <folder-name> <new-folder-name> - Change the name of a Folder.
