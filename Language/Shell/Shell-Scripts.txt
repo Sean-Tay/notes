@@ -134,6 +134,10 @@ Linux / Unix:
 				-T <file>		- Upload a <file> to the FTP <url>. <url> needs "/" appended at the end. Defaults to PUT for HTTP(S).
 					-a			- Upload and append Content into the file at the FTP <url>.
 
+				-X <http-request-method> - Use another HTTP Request Method, aside from GET. There are also other HTTP Request Specific curl Options to substitute for this general Option.
+					POST
+						-d "<data>"	- Send specified Data in the same way that Data is sent when a Web Form is filled.
+
 			top					- View all running processes.
 				E				- Cycle through Size Magnitudes.
 
