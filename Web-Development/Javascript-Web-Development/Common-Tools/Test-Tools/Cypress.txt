@@ -1,0 +1,152 @@
+Cypress
+	Abbreviations:
+	
+	Description: End to End Testing Library for Web Projects via a Web Browser.
+	
+	Resources: 
+	
+	Concepts:
+		End to End Testing: Involves Tests that run across the Full Tech Stack (i.e. both Backend and Frontend). They usually simulate complex User Actions that may extend across multiple features.
+	
+	Details:
+		Cypress works by simulating a Browser and performing Real-Time User-like Actions on Web Application that it will run.
+			Cypress also allows programmatic control over Actions done during Testing.
+
+		Configuration:
+			cypress.json
+				{	
+					// If Cypress should rerun when a Test File is changed (saved).
+					"watchForFileChanges": <boolean>
+				}
+
+			tsconfig.json
+				"compilerOptions": {
+    				"types": ["cypress"]
+  				}
+
+			Directory Structure:
+				fixtures:		Used to store Test Data (usually in JSON format).
+				integration:	Used to store Test Files. These usually have the *.spec.ts Name Format.
+				plugins:		Extend Cypress Behaviour.
+				screenshots:	Screenshots for Failures.
+				support:		Used to store Reusable Code (e.g. Custom Commands).
+				videos:			Contains Videos of Test Execution.
+
+			File:
+				// Enable Type Checking for the File.
+				/// <reference types="cypress" />
+
+		API:
+			// Custom Commands:
+				Cypress.Commands.add('<command-id>', ( ... ) => { // ... <cy-command>s ... })
+
+				// ...
+
+				cy.<command-id>( ... )
+
+			// Tests:
+				// Test Flow:
+					before
+					beforeEach
+
+					it
+
+					afterEach
+					after
+
+				// Cypress Commands: cy.<command>
+
+				// Exeucte JS on the System (outside of the Test Browser):
+					cy.task('<task-plugin-id>')
+
+				// Routing:
+					// Visit a Route in a Running Web App:
+						cy.visit('<url>')
+
+					// Obtain the current URL Path:
+						cy.location('pathname')
+
+				// Requests:
+					// Trigger a Request:
+						cy.request('<url>')
+
+					// Spy on a Request, and optionally test the Request / Response Cycle:
+						cy.intercept({ method: '<http-method>', url: '<url>' }, <stub-response>).as('<alias>')
+
+						// OR
+
+						cy.intercept({ method: '<http-method>', url: '<url>' }, { fixture: '<fixture>.json' }).as('<alias>') // where <fixture>.json is in the fixtures Directory
+
+						cy.wait('@<alias>')
+							.then((intercept) => {
+								// intercept.request
+									// body
+
+								// intercept.response
+									// body
+									// statusCode
+
+									// setDelay(<delay>)
+									// setThrottle(<kbps>)
+							})
+
+				// DOM Nodes:
+					// Getting a DOM Node:
+					// (From the Root of the DOM Tree) / From a DOM Node as the Starting Point:
+						const <node> = cy
+							.contains("<text>")	// Get the deepest DOM Node containing the supplied <text>.
+								// Note: Only the first matched Node will be returned.
+
+								// If any of the following is present higher in the DOM Tree than the would be deepest DOM Node, the higher DOM Node will be returned instead.
+									input[type='default']
+									button
+									a
+									label
+								
+							.contains("<dom-selector>", "<text>") // Get the (highest?) DOM Node that matches the <dom-selector> and contains the <text> within.
+
+							.get("<dom-selector>") // Get DOM Nodes that match the supplied <dom-selector>.
+
+					// Actions:
+						<node>.<action>()
+							<node>.click()
+							<node>.type('<input>')
+
+				// Allows work on the <subject> yielded from the Previous Command:
+					<cy-command>.then((<subject>) => {
+						// ...
+					})
+
+				// Assertions:
+					// Tip: Cypress makes no distinction between Synchronous and Asynchronous Behaviour - it will keep trying until the timeout is hit. Hence, no need to manually specify delay behaviour in the Testing Code.
+
+					<cy-command>.should('<chainer>', <value>).and('<chainer>', <value>). ...
+						// '<chainer>' follows Chai / Chai-jQuery / Sinon-Chai Format;  a '.' delimited String featuring one or more Logical Conjunctions.
+						// 'and' is another alias for 'should'
+
+						'not'
+
+						'have'
+							'id'
+							'class'
+							'attr'
+
+						'be'
+							'selected'
+							'disabled'
+
+					<cy-command>.should((<dom-element>) => {
+						// ...
+					})
+	
+	Commands:
+		npm i -D cypress		# Install Cypress Locally into Project. Brings along associated Type Definitions.
+
+		npx cypress open		# Open the Cypress Desktop App.
+			# When first run in a new Project, Cypress will try and detect for Cypress Test Files within the Project.
+
+		npx cypress run			# Run Cypress Headlessly (without a Browser).
+			# Test Run Video Recording enabled by default.
+
+			--parallel 			# Distribute and Run Test Files across multiple CI Machines.
+	
