@@ -7,6 +7,7 @@ Application Development:
 		Unit Testing: 				These Tests focus on a small part / unit of the Codebase, but in a very detailed way (i.e. both correct and incorrect scenarios).
 		Integration Testing: 		These Tests focus on the integration of Modules within a part of the Tech Stack (i.e. Backend or Frontend, in isolation).
 		Smoke Tests:				These Tests check for Simple Failures (i.e. is the API available?) that may cause other, more extensive Tests to fail as well.
+		Functional Testing:			These Tests are similar to End to End Testing, but are not as expensive as they only verify the final Output of a given Input across the Web App.
 		End to End Testing: 		These Tests run across the Full Tech Stack (i.e. both Backend and Frontend). They usually simulate complex User Actions that may extend across multiple features.
 
 		Black Box Testing: 			Tests that are implemented with no perspective on the internals of the Entity that they test.
