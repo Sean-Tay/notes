@@ -458,6 +458,10 @@ Jest
 		Sanity Checks:
 			Does the Component have Virtualization on Displayed Content?
 
+			Out of Memory Errors:
+				Did a Component clear used resources when it Unmounts?
+					Timers and Intervals.
+
 	Commands:
 		jest --init				# Generate a basic Jest Config File.
 
