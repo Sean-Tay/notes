@@ -76,6 +76,14 @@ Ansible:
 			Using "{{ <variable> }}" to reference a Variable's Value.
 			Using "{{ <variable> | default('<default-value>') }} to specify a default when referencing a Variable's Value.
 
+			Using Jinja2 Plugins:
+			{{ <plugin>( ... ) }}
+
+			For Loops:
+			{% for <item> in <list> %}
+				# ...
+			{% endfor %}
+
 		Variable Priority: 
 			Built In Variables					# Highest Priority
 			Command Line Extra Variables
