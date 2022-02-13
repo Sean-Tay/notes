@@ -240,17 +240,6 @@ Ansible:
 						# Tip: Useful to access Sensitive Variables protected by Ansible Vault.
 						vars_files:
 							- <file>.yml
-
-						# Will only execute on Hosts for which this Boolean Expression returns "true":
-						# Note: Not necessary to put Curly Braces when referencing a Variable here.
-						when: <variable> == <value> # or / and ...
-							# <variable> is [not] defined
-
-							# <register-variable> is succeeded
-							# <register-variable> is failed
-							# <register-variable> is skipped
-
-							# '<string>' in <register-variable>.stdout ...
 						
 						# Define Tasks for the Play:
 						tasks:
@@ -270,7 +259,18 @@ Ansible:
 						# 	# Include Tasks defined in other Files (not Playbooks):
 						#   import_tasks: <file-path> # Static Preprocessing: Variables do not apply to this Statement, only to Imported Tasks
 						#   include_tasks: <file-path> # Dynamic Processing: Variables apply to this Statement, as well as to Imported Tasks
-						# 
+						#
+						#	# Will only execute on Hosts for which this Boolean Expression returns "true":
+						#	# Note: Not necessary to put Curly Braces when referencing a Variable here.
+						#	when: <variable> == <value> # or / and ...
+						#		# <variable> is [not] defined
+						#
+						#		# <register-variable> is succeeded
+						#		# <register-variable> is failed
+						#		# <register-variable> is skipped
+						#
+						#		# '<string>' in <register-variable>.stdout ...
+						#
 						# 	# Await Asynchronous Task Execution
 						# 	async: <seconds> # <seconds> indicate the Maximum Time Ansible will wait for the Task to complete.
 						# 	poll: <seconds> # Determines the Interval at which Ansible will check the Task. Defaults to 15.
@@ -296,11 +296,11 @@ Ansible:
 						# 	# Define Custom Task Fail Condition: 
 						# 	register: <register-variable>
 						# 	failed_when: # ... <register-variable> ...
-
+						#
 						# 	# ignore-errors: yes
-
-						# Trigger Handlers (only on 'changed' Hosts):
-						notify: <handler-name>
+						#
+						#	# Trigger Handlers (only on 'changed' Hosts):
+						#	notify: <handler-name>
 
 						# Specify that this Play should stop running when any Host fails to execute.
 						# Note: By default, Ansible will continue the Play for remaining Hosts that succeed (i.e. false).
