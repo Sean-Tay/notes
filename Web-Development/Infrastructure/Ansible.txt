@@ -30,6 +30,8 @@ Ansible:
 
 		Role:					A Directory that contains Tasks and their related Specifications.
 
+		Ansible Galaxy:			Community Repository for Roles.
+
 		Playbook:				Defines a sequence of Plays to run. When triggered these generate [Python?] Scripts which are sent over to the Machines to be executed.
 			Play:				Ties Tasks to Hosts for execution.
 			Task:				Unit of Action that may invoke one or more Modules.
@@ -91,7 +93,7 @@ Ansible:
 			set_fact Variables
 
 			Task Variables						# via 'vars' Keyword
-			Role Variables						# via 'vars' Keyword
+			Role Variables						# via 'vars' Keyword / vars Directory in Role Directory
 			Play Variables						# via 'vars' Keyword
 
 			Playbook host_vars/* Variables File
@@ -160,7 +162,7 @@ Ansible:
 
 			template			Used to create Files with Jinja2 Templating (i.e. with Ansible Variables)
 				template:
-					src: <path> # From Ansible Project's 'templates' Directory
+					src: <path>.j2 # From Ansible Project's 'templates' Directory (Jinja2 Files often have the .j2 File Extension)
 					dest: <path> # From Target's Root Directory
 
 			package				Used to manage Packages.
@@ -267,6 +269,11 @@ Ansible:
 						# Tip: Useful to access Sensitive Variables protected by Ansible Vault.
 						vars_files:
 							- <file>.yml
+
+						# Define Roles to execute for this Play
+						roles:
+							- role: <role-name>
+							# ...
 						
 						# Define Tasks for the Play:
 						tasks:
@@ -350,17 +357,26 @@ Ansible:
 					# Specify end of YAML File via 3 Dots:
 					...
 
-			Roles:
+			Custom Roles:
 				Directory Structure for a Role:
 					tasks:
 						main.yml: Has the same syntax as a YAML File defining a Playbook, but:
 							Each Task cannot have the 'hosts' and 'tasks' Attribute.
+
+					handlers: Defines Handlers for use in Playbooks.
+						main.yml
 
 					defaults: Default Variables for the Role. Can be overriden by those defined in 'vars' Directory.
 						main.yml
 
 					vars: Variables for the Role.
 						main.yml
+
+					templates: Defines Jinja2 Templates for use with the 'templates' Module.
+
+					tests:
+						inventory
+						test.yml
 
 	Commands:
 		# List all available Modules
@@ -382,6 +398,12 @@ Ansible:
 
 		# Store sensitive Variables via Ansible Vault:
 		ansible-vault create <encrypted-variable-file>.yml
+
+		# Find Roles available on Ansible Galaxy
+		ansible-galaxy search <search-term> --platform <os>
+
+		# Download Roles from Ansible Galaxy
+		ansible-galaxy install <role-name>
 
 		# Run an Ansible Playbook
 		ansible-playbook <playbook>.yml
