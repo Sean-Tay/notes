@@ -82,18 +82,18 @@ Ansible:
 
 			set_fact Variables
 
-			Task Variables
-			Role Variables
-			Play Variables
+			Task Variables						# via 'vars' Keyword
+			Role Variables						# via 'vars' Keyword
+			Play Variables						# via 'vars' Keyword
 
-			Playbook Host Variables
-			Inventory Host Variables
-			Playbook Child Group Variables
-			Inventory Child Group Variables
-			Playbook Parent Group Variables
-			Inventory Parent Group Variables
-			Playbook 'all' Group Variables
-			Inventory 'all' Group Variables
+			Playbook host_vars/* Variables File
+			Inventory Inline Host Variable
+			Playbook Child group_vars/* Variables File
+			Inventory Inline Child Group Variable
+			Playbook Parent group_vars/* Variables File
+			Inventory Inline Parent Group Variable
+			Playbook 'all' group_vars/* Variables File
+			Inventory Inline 'all' Group Variable
 
 			Role Default Variables				# Lowest Priority
 
