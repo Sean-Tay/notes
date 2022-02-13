@@ -269,7 +269,7 @@ Ansible:
 						#		# <register-variable> is failed
 						#		# <register-variable> is skipped
 						#
-						#		# '<string>' in <register-variable>.stdout ...
+						#		# "<string>" in <register-variable>.stdout ...
 						#
 						# 	# Await Asynchronous Task Execution
 						# 	async: <seconds> # <seconds> indicate the Maximum Time Ansible will wait for the Task to complete.
@@ -299,8 +299,9 @@ Ansible:
 						#
 						# 	# ignore-errors: yes
 						#
-						#	# Trigger Handlers (only on 'changed' Hosts):
-						#	notify: <handler-name>
+						#	# Trigger Handlers:
+						#	notify: 
+						#		- <handler-name>
 
 						# Specify that this Play should stop running when any Host fails to execute.
 						# Note: By default, Ansible will continue the Play for remaining Hosts that succeed (i.e. false).
@@ -308,7 +309,7 @@ Ansible:
 					
 					# ...
 
-					# Define Actions that need to be triggered to run:
+					# Note: Handlers will only run if all Tasks are successful, and only on 'changed' Hosts
 					# Note: Each Handler will only run once, even if notified by multiple Plays.
 					# Note: Each Handler will execute in the order that they are defined in the File.
 					handlers:
