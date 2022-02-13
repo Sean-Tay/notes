@@ -136,7 +136,21 @@ Ansible:
 					dest: <dest-filepath>
 					force: no | yes # Don't override if File is present, or override only when Content differs.
 
-			template			used to create Files with Jinja2 Templating (i.e. with Ansible Variables)
+			blockinfile 		Used to append / remove some Lines in a Target File.
+				blockinfile:
+					path: <filepath>
+					block: |
+						<line>
+						...
+					state: { present | absent }
+
+			lineinfile 			Used to append / remove a single Line in a Target File.
+				lineinfile:
+					dest: <filepath>
+					regexp: "<regex>"
+					line: "<line-content>"
+
+			template			Used to create Files with Jinja2 Templating (i.e. with Ansible Variables)
 				template:
 					src: <path> # From Ansible Project's 'templates' Directory
 					dest: <path> # From Target's Root Directory
