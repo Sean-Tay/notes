@@ -55,6 +55,9 @@ Cypress
 					after
 
 				// Cypress Commands: cy.<command>
+				
+				// Queue a Delay before Cypress moves on to the next Command:
+					cy.wait(<milliseconds>)
 
 				// Exeucte JS on the System (outside of the Test Browser):
 					cy.task('<task-plugin-id>')
@@ -67,16 +70,17 @@ Cypress
 						cy.location('pathname')
 
 				// Requests:
-					// Trigger a Request:
-						cy.request('<url>')
-
-					// Spy on a Request, and optionally test the Request / Response Cycle:
+					// Spy on subsequent Requests, and optionally test the Request / Response Cycle:
 						cy.intercept({ method: '<http-method>', url: '<url>' }, <stub-response>).as('<alias>')
 
 						// OR
 
 						cy.intercept({ method: '<http-method>', url: '<url>' }, { fixture: '<fixture>.json' }).as('<alias>') // where <fixture>.json is in the fixtures Directory
+					
+					// Trigger a Request:
+						cy.request('<url>')
 
+					// Test the Request / Response of a captured API Call:
 						cy.wait('@<alias>')
 							.then((intercept) => {
 								// intercept.request
