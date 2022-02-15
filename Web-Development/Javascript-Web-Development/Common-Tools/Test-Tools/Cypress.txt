@@ -16,7 +16,14 @@ Cypress
 			cypress.json
 				{	
 					// If Cypress should rerun when a Test File is changed (saved).
-					"watchForFileChanges": <boolean>
+					"watchForFileChanges": <boolean>,
+
+					// Configure if Cypress will discard Screenshots and Videos from Prior Test Runs before triggering another Run
+					"trashAssetsBeforeRuns": <boolean>,
+
+					// Configure Cypress Videos of Test Runs
+					"video": <boolean>, // Note: This will enable Video Recording of both Successful and Failing Test Runs. Use the 'after:spec' Event in a Cypress Plugin to delete Videos of Successful Test Cases.
+					"videoCompression": <number>, // Ranges from 0 - 52, with 52 being the Highest Quality. Note: Large Time Cost in Compressing Videos.
 				}
 
 			tsconfig.json
@@ -27,7 +34,61 @@ Cypress
 			Directory Structure:
 				fixtures:		Used to store Test Data (usually in JSON format).
 				integration:	Used to store Test Files. These usually have the *.spec.ts Name Format.
-				plugins:		Extend Cypress Behaviour.
+
+				plugins:		Extend Cypress Behaviour. This Folder only has one File - index.ts - which is executed by the Node Process both before the Test Browser is Launched and during Test Runs.
+					// ... Functionality can be executed here as well ...
+
+					export default (on, config) => {
+						// Note: Cypress Commands cannot be used here.
+						// Use 'on' to register Event Listeners for particular Events.
+
+						// Executes beforethe Test Browser launches.
+						on('before:browser:launch', ( browser = {}, launchOptions ) => {
+							// browser
+								// name: electron | firefox | chrome | edge
+
+							// launchOptions
+								// args: []
+
+							// ...
+
+							return launchOptions
+						})
+
+						// Executes before all Spec Files are run.
+						on('before:run', ( details ) => {
+							// ...
+						})
+
+						// Executes before a Spec File is run.
+						on('before:spec', ( spec ) => {
+							// ...
+						})
+
+						// Executes after a Spec File is run.
+						on('after:spec', ( spec, results ) => {
+							// spec
+								// name: Name of Spec File run.
+								// relative: Relative Filepath of Spec File (from Project Root).
+								// absolute: Absolute Filepath of Spec File.
+
+							// results
+								// stats
+									// failures
+									// passes
+									// skipped
+
+								// video: Filepath of Video generated for Test Run.
+
+							// ...
+						})
+
+						// Executes after all Spec Files are run.
+						on('after:run', ( results ) => {
+							// ...
+						})
+					}
+
 				screenshots:	Screenshots for Failures.
 				support:		Used to store Reusable Code (e.g. Custom Commands).
 				videos:			Contains Videos of Test Execution.
