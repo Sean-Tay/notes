@@ -425,9 +425,11 @@ React.js
 					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
 						// Note: The Dependency Array for Optimization Hooks is of a different nature than the ones used for Side-Effect Hooks. If the submitted Function may directly or indirectly reference any Component's State (it's own or from Ancestor Components' passed in as Props), the references should be placed in the Dependency List.
 
-						// Used to prevent unneccessary recalculation of some value per Re-Render.
-						// Tip: That 'some value' can be a React Element too. Note that if the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
+						// Caches a Computed Value, and avoids recalculation per re-Render if none of its specified Dependencies change. Only one Value is stored at a time (i.e. the last Computed Value).
+						// Note: This Cache is per Component Instance, and will be initialized and destroyed when the Component Instance Mounts and Unmounts respectively.
 						// Note: useMemo will block the Main Thread / Rendering phase. If the computation is asynchronous, use a useState + useEffect combo instead.
+						// Tip: The Computed Value can be a React Element too.
+							// Note: If the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
 						// Tip: Consider using useRef for defining 'initial values', rather than useMemo.
 						React.useMemo(
 							() => {
@@ -469,20 +471,23 @@ React.js
 						useImperativeHandle(
 							ref, // Note: Requires Ref Forwarding.
 							() => ({
-								<publicly-accessible-component-property>: // ...							
+								<publicly-accessible-component-property>: // ... 
 							}),
 							// 'Dependency List'
 							[]
 						)
 
 					// Tips:
-						1. Define an external Pure Function to Deeply Clone the Initial State for a Component, so that the Shape of the Component's State is easy to see in one place.
-							Single Source of Truth: In places where the State needs to be reset, this approach would prevent unwanted Code Duplication.
+						1. Be aware that by defining Constant Values with Complex Computation outside of Components, the amount of work done during an App's first load will be increased, delaying the time at which First Paint occurs.
 
-						2. Leverage on Custom Hooks to improve Readability and Extensibility.
+						2. Define an external Pure Function to Deeply Clone the Initial State for a Component, so that the Shape of the Component's State is easy to see in one place.
+							Single Source of Truth: In places where the State needs to be reset, this approach would prevent unwanted Code Duplication.
+							Lazy Initialization: Does not necessarily delay App's first load.
+
+						3. Leverage on Custom Hooks to improve Readability and Extensibility.
 							Especially for useEffect - use Custom Hooks to provide better self-describing names to Effects for easier Readability.
 						
-						3. Prefer useCallback for situations where setting Component State is involved, and external Pure Functions where it is not.
+						4. Prefer useCallback for situations where setting Component State is involved, and external Pure Functions where it is not.
 							For controlled execution of Callbacks after asynchronous setStates, utilize useEffect and special State Sentinel Values, of which the Callbacks will trigger only when those Sentinel Values change.
 
 					return (
