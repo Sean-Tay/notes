@@ -2,7 +2,7 @@ Kotlin
 	Abbreviations:
 		
 	
-	Description: Programming Language that is compatable with Java, and can target JVM and JavaScript Environments. Designed by JetBrains.
+	Description: Programming Language that is compatable with Java, and can target JVM and JavaScript Environments. Designed by JetBrains to be a "better" Java.
 	
 	Resources: 
 	
@@ -13,8 +13,6 @@ Kotlin
 		WAR Files: Web Application Archive. Contains the Web Application in a specific structure that can be deployed on any Web Container / Java Application Server.
 
 	Details:
-		Designed to be a "better" Java.
-
 		Features:
 			Functional Programming.
 			Immutability Support.
@@ -141,9 +139,15 @@ Kotlin
 
 				class <class-name>[ {public | private} @<annotation> constructor](
 					// Primary Constructor / Default Constructor
-					// Tip: Allows for Parameter Properties (Instance Properties defined in Constructor Signature)
 					// Note: Preceding 'constructor' Keyword needed if the Constructor has Visibility Modifiers or Annotations
-					[{ val | var }] <property>:<type> = <default-value>, ...
+					
+					// Constructor Parameters
+					// Note: Not creating a new Property in the Class, but rather allowing Constructors / Initialization Blocks to access a Value which can be used to initialize other Properties.
+					<parameter>:<type> = <default-value>, ...
+
+					// Instance Properties
+					// Note: Creates a new Property on the Class.
+					{ val | var } <property>:<type> = <default-value>, ...
 				) {
 					// ...
 
