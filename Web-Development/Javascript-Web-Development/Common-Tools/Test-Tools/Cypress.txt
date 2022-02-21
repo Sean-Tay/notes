@@ -15,10 +15,13 @@ Cypress
 		Configuration:
 			cypress.json
 				{	
+					// URL used to access the Running Frontend Instance.
+					baseUrl: "<url>",
+
 					// If Cypress should rerun when a Test File is changed (saved).
 					"watchForFileChanges": <boolean>,
 
-					// Configure if Cypress will discard Screenshots and Videos from Prior Test Runs before triggering another Run
+					// Configure if Cypress will discard Screenshots and Videos from Prior Test Runs before triggering another Run.
 					"trashAssetsBeforeRuns": <boolean>,
 
 					// Configure Cypress Videos of Test Runs
@@ -124,7 +127,7 @@ Cypress
 					cy.task('<task-plugin-id>')
 
 				// Routing:
-					// Visit a Route in a Running Web App:
+					// Visit a Route in a Running Web App, w.r.t the baseUrl Setting:
 						cy.visit('<url>')
 
 					// Obtain the current URL Path:
