@@ -10,6 +10,7 @@ Relational Database:
 
 		DBMS:				DataBase Management System.
 		RDBMS:				Relational DataBase Management System.
+		ORDBMS:				Object Relational DataBase Management System. An RDBMS with Object-oriented Features such as Table Inheritance, Method Overloading, etc. 
 
 		OLTP: 				OnLine Transaction Processing.
 	
