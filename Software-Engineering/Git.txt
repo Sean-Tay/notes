@@ -42,6 +42,8 @@ Git:
 				--global		- Per User.
 				--system		- System-Wide.
 
+			--get <variable>	- Check Git Config Variable.
+
 			--global http."https://code.example.com/".sslVerify false - Disable SSL Cert Check for "code.example.com" domain.
 
 		git init <directory>	- Create a Local Repository in the current *empty* Local Directory.
