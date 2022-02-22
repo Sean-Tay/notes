@@ -176,6 +176,7 @@ Cypress
 							.get("<dom-selector>") // Get DOM Nodes that match the supplied <dom-selector>.
 
 					// Actions:
+						// Tip: If the <node> only becomes enabled after a loading / processing operation, it may be better for stability to add a check that the <node> is not disabled before actually triggering the <action>. This will give more room for page processing instability, as Cypress will retry a failing check several times until the timeout is hit.
 						<node>.<action>()
 							<node>.click()
 							<node>.type('<input>')
