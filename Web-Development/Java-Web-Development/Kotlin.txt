@@ -242,7 +242,8 @@ Kotlin
 			Operators:
 				// Type Checking:
 					// Note: Boolean Expression.
-					is <type>
+					<value> is <type>
+					<value> !is <type>
 
 				// Structural Equality Comparator: 
 					// Check if two Values are equivalent: ==
