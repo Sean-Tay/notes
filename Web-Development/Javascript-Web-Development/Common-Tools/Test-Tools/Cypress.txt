@@ -178,7 +178,10 @@ Cypress
 					// Actions:
 						// Tip: If the <node> only becomes enabled after a loading / processing operation, it may be better for stability to add a check that the <node> is not disabled before actually triggering the <action>. This will give more room for page processing instability, as Cypress will retry a failing check several times until the timeout is hit.
 						<node>.<action>()
-							<node>.click()
+							<node>.click({
+								force: true, // Click through Visually Blocking Elements
+							})
+								
 							<node>.type('<input>')
 
 				// Allows work on the <subject> yielded from the Previous Command:
