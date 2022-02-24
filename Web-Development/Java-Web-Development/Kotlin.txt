@@ -436,6 +436,11 @@ Kotlin
 					print("<text>");
 					println("<text>"); // With Line Break
 
+				// Execution:
+					// Block Execution of the Process by the specified amount of <milliseconds>.
+					// Note: Not compatable with Coroutines.
+					Thread.sleep(<milliseconds>);
+
 				// Date:
 					// Point in Time via UTC (replaces java.util.Date & java.util.Timestamp)
 					Instant
@@ -510,10 +515,83 @@ Kotlin
 							// Write Text into the File.
 								<file-handle>.writeText(<file-content>)
 
-				// Execution:
-					// Block Execution of the Process by the specified amount of <milliseconds>.
-					// Note: Not compatable with Coroutines.
-					Thread.sleep(<milliseconds>);
+				// JSON Manipulation
+					// Relevant Packages:
+						com.fasterxml.jackson.* // Serialization / Deserialization Library for JSON Objects
+
+					// Relevant Types:
+						ObjectMapper
+
+						JsonNode // Documentation: https://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/JsonNode.html
+							ContainerNode
+								ObjectNode
+								ArrayNode
+
+							ValueNode
+								TextNode
+								NumericNode
+								BooleanNode
+								NullNode
+								MissingNode
+
+					// Helper to Serialize / Deserialize Classes into JSON / from JSON.
+					// Note: Costly to instantiate - use for multiple uses.
+					ObjectMapper mapper = ObjectMapper()
+						// Configure Serialization / Deserialization Behaviour
+							// mapper.configure( ... )
+
+						// JSON <-> Jackson JsonNode
+							// mapper.readTree(<json-string>)
+
+							// mapper.writeValue(<destination>, <jackson-node>)
+
+						// JSON <-> Java Object
+							// mapper.readValue(<json-string>, <class>)
+
+							// mapper.writeValue(<output-stream>, <class-instance>)
+							// mapper.writeValueAsString(<class-instance>)
+
+						// Java Object <-> Jackson JsonNode
+							// mapper.valueToTree(<java-object>)
+
+							// mapper.valueToTree(<jackson-node>, <class>)
+
+					// Node Creation
+						val node: JsonNode = mapper.createObjectNode()
+
+					// Detecting the Node Type
+						// node.isObjectNode
+						// node.isArrayNode
+						// node.isValueNode
+						// node.isMissingNode
+
+					// Get a Node Value
+						// get - returns null for Missing Nodes
+						val value = <object-node>.get("<key>")?.intValue()
+						val value = <object-node>.get("<key>")?.textValue()
+
+						// path - returns a Node for which isMissingNode() will return true
+						val node: JsonNode = <object-node>.path("<key>").path("<sub-key>")
+						// node.isMissingNode() === true
+
+						// with - upserts a Node at "<key>" if it does not exist, and returns it
+						val node = <object-node>.with("<key>")
+						val node = <object-node>.withArray("<key>")
+
+					// Set a Node Value
+						// put
+						val node = <object-node>.put("<key>", <primitive-value>)
+
+						// replace
+						val oldNode: JsonNode = <object-node>.replace("<key>", <json-node>)
+
+						// set
+						val node: ObjectNode = <object-node>.set("<key>", <json-node>)
+
+					// Removing a Node Value
+						// remove
+						val removedNode: JsonNode = <node>.remove("<key>")
+						val adjustedNode: JsonNode = <node>.remove(listOf("<key>", ...))
 
 		Project Configuration:
 			// IntelliJ + Gradle + Maven
