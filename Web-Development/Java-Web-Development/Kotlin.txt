@@ -132,6 +132,14 @@ Kotlin
 					// ...
 				}
 
+				// Interface Implementation:
+				{class | object} <name>( ... ): <interface-name> {
+					// ... Usual Function Definitions ...
+
+					override fun <function-name> ( ... ) { ... }
+					override suspend fun <function-name> ( ... ) { ... }
+				}
+
 			Classes:
 				// Note: Classes can omit the Curly Braces if the Class has no Body.
 				// Tip: Define Data Objects as Classes with no Braces.
@@ -197,14 +205,6 @@ Kotlin
 				// Tip: Kotlin will automatically define a default 'equals', 'hashCode', 'copy' and 'toString' Utility Methods for the created Data Class.
 				// Tip: Properties on a Data Class Instance can be Deconstructed via Spreading.
 				data class ( ... ) 
-
-				// Interface Implementation:
-				class <class-name>( ... ): <interface-name> {
-					// ... Usual Function Definitions ...
-
-					override fun <function-name> ( ... ) { ... }
-					override suspend fun <function-name> ( ... ) { ... }
-				}
 
 				// Inheritance:
 					// Note: Classes are treated as 'final' or Non-Inheritable by default.
