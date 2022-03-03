@@ -94,7 +94,7 @@ Kotlin
 
 			Collections:
 				// Lists
-					var mutableList = mutableListOf( <item>, ... )
+					val mutableList = mutableListOf( <item>, ... )
 					val list = listOf( <item>, ... )
 
 					mutableList.size
@@ -102,7 +102,7 @@ Kotlin
 					mutableList.add( <new-item> )
 
 				// Maps
-					var mutableMap = mutableMapOf(
+					val mutableMap = mutableMapOf(
 						<key> to <value>,
 						// ...
 					)
@@ -116,6 +116,23 @@ Kotlin
 
 					map.contains( <potential-key> )
 					map.get( <key> )
+
+					// Java Concurrent Maps for Thread-Safe Add / Delete
+						val concurrentMap = ConcurrentHashMap()
+
+						concurrentMap.keys
+						concurrentMap.values
+
+						concurrentMap.contains( <potential-key> )
+						concurrentMap.getOrDefault( <potential-key>, <default-value> )
+
+						concurrentMap.put( <key>, <value> )
+						concurrentMap.putIfAbsent( <key>, <value> ) // Set-like Functionality
+						concurrentMap.remove( <key> )
+						
+						// Converting to a Concurrent Set (Universal Lock - multiple Concurrent Reads not supported)
+						val concurrentSet = Collections.newSetFromMap( <map> ) // Creates a Wrapper for Set Behaviour
+						val concurrentSet = ConcurrentHashMap.newKeySet()
 
 			Objects:
 				// Note: Lazily Initalized only during the first access.
@@ -561,7 +578,7 @@ Kotlin
 
 					// Detecting the Node Type
 						// node.isObjectNode
-						// node.isArrayNode
+						// node.isArray
 						// node.isValueNode
 						// node.isMissingNode
 
