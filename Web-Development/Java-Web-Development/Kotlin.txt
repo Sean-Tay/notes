@@ -30,10 +30,12 @@ Kotlin
 					Character
 					String
 
+					AtomicInteger
+
 					Double
 					Float
 					Int
-					
+
 					Boolean
 
 					Unit // Void Type for Functions that don't return anything.
@@ -48,6 +50,11 @@ Kotlin
 
 				// Suspendable Function Type:
 					suspend (<arg>: <arg-type>, ...) -> <return-type>
+
+				// Runtime Type Checking:
+					// Note: Boolean Expression.
+					<value> is <type>
+					<value> !is <type>
 
 				// Tip: Use Reflection to find out the Type of a Variable during Runtime:
 					println(<variable>!!::class.simpleName)
@@ -257,11 +264,6 @@ Kotlin
 					val instance = <class-name>();
 
 			Operators:
-				// Type Checking:
-					// Note: Boolean Expression.
-					<value> is <type>
-					<value> !is <type>
-
 				// Structural Equality Comparator: 
 					// Check if two Values are equivalent: ==
 					// Check if two Values are NOT equivalent: !=
@@ -553,16 +555,18 @@ Kotlin
 
 					// Helper to Serialize / Deserialize Classes into JSON / from JSON.
 					// Note: Costly to instantiate - use for multiple uses.
-					ObjectMapper mapper = ObjectMapper()
+					val mapper = ObjectMapper()
 						// Configure Serialization / Deserialization Behaviour
 							// mapper.configure( ... )
 
-						// JSON <-> Jackson JsonNode
+						// JSON String <-> Jackson JsonNode
 							// mapper.readTree(<json-string>)
 
 							// mapper.writeValue(<destination>, <jackson-node>)
 
-						// JSON <-> Java Object
+							// mapper.writeValueAsString(<node>)
+
+						// JSON String <-> Java Object
 							// mapper.readValue(<json-string>, <class>)
 
 							// mapper.writeValue(<output-stream>, <class-instance>)
@@ -580,12 +584,17 @@ Kotlin
 						// node.isObjectNode
 						// node.isArray
 						// node.isValueNode
+							// node.isTextual
+
 						// node.isMissingNode
 
 					// Get a Node Value
 						// get - returns null for Missing Nodes
 						val value = <object-node>.get("<key>")?.intValue()
-						val value = <object-node>.get("<key>")?.textValue()
+						
+						// Tip: Don't use toString(), as it'll add Quotes to all String Values which will mess up CSV Parsing. Best Practice: See JSON String <-> Jackson JsonNode Section above.
+						// Note: textValue will return null if the Value is NOT an actual Text Value (i.e. isTextual).
+						val value = <object-node>.get("<key>")?.textValue() 
 
 						// path - returns a Node for which isMissingNode() will return true
 						val node: JsonNode = <object-node>.path("<key>").path("<sub-key>")
