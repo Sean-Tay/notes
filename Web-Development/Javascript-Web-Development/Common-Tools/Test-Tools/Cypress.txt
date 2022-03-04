@@ -26,7 +26,7 @@ Cypress
 
 					// Configure Cypress Videos of Test Runs
 					"video": <boolean>, // Note: This will enable Video Recording of both Successful and Failing Test Runs. Use the 'after:spec' Event in a Cypress Plugin to delete Videos of Successful Test Cases.
-					"videoCompression": <number>, // Ranges from 0 - 52, with 52 being the Highest Quality. Note: Large Time Cost in Compressing Videos.
+					"videoCompression": <number>, // Ranges from 0 - 52, with 0 being the Highest Quality. Note: Large Time Cost in Compressing Videos.
 				}
 
 			tsconfig.json
