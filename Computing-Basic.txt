@@ -36,6 +36,9 @@ General Computing Notes:
 		Parallel Execution: 	Multiple Paths of Execution handling Multiple Independent Tasks at literally the same time.
 		Asynchronous Execution: Non-Blocking Execution - encompasses both Concurrent Execution and Parallel Execution.
 
+		Semaphore:				Construct that manages access of a shared Resource between different Threads.
+		Mutex:					Construct that controls access of a shared Resource between different Threads (similar to a Binary Semaphore), but only the Mutex-owning Thread can change whether the Mutex is Open / Closed.
+
 		Daemon:					A non-interactive, background Process.
 		Service:				A Process which responds to requests from other Processes over some inter-process communication mechanism.
 
