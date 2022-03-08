@@ -415,42 +415,48 @@ Kotlin
 					Thread.sleep(<milliseconds>);
 
 				// Asynchronousity:
-					// Concurrency / Single-Threaded:
-						// Suspendable Function: Analogous to an Asynchronous Function in JavaScript.
-						suspend fun <suspendable-function-name>() {
-							// Concurrent Code ...
+					// Suspendable:
+						// Coroutines: A tracked instance of Pausable Computation.
+							// Tip: Creating a Coroutine incurs less overhead than creating a Thread.
 
-							// Note: Calling another Suspendable Function will defer execution of this Function.
+							// Note: Parent Coroutines cannot complete until all Child Coroutines complete (following the princple of Structured Concurrency).
 
-							// ...
-						}
+							// Coroutine Scopes:
+								// CoroutineScope: Defines an environment for which Coroutines can be created in.
+									// runBlocking: A Normal Function that when executed, creates a local CoroutineScope and blocks current execution from continuing beyond it, and *additionally locks down the execution to the code within the created scope*. Can be used as a bridge between non-Suspendable Code and Suspendable Code.
 
-						// Coroutines: Deals with Concurrent Programming Constructs.
-							// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
-							// Tip: Parent Coroutines cannot complete until all Child Coroutines complete.
-							// Tip: Coroutines have less overhead than Threads.
-							<coroutine-builder-function> {
-								// Regular Code
+									// coroutineScope: A Suspendable Function that when executed, creates a local CoroutineScope and blocks current execution from continuing beyond it, but *does not additionally lock down the execution to the code within the created scope*, and releases the calling Thread to perform other execution.
 
-								// Create a new Coroutine
-								val <handle> = launch {
-									// Concurrently-Executed Code
+								// GlobalScope: A Globally Accessible CoroutineScope, usually meant for Coroutines operating throughout the Application lifetime.
 
-									// Suspendable Function Call
-									// <suspend-function>()
+							// Coroutine Builder Functions: Only usable from / within a Coroutine Scope.
+								// launch 		Starts a new Coroutine.
+								// join 		Wait for the completion of the created Coroutine.
 
-									// delay(<milliseconds>)
+								// async 		Starts a new Coroutine that is used to compute some Result, represented by an instance of Deferred. Note: Will NOT cause the Application to crash upon encountering an unhandled Exception.
+								// await 		Wait for the completion of the created Coroutine, and realize the Result of the Deferred Instance.
+
+							// Suspendable Function: Pausable Function; Analogous to an Asynchronous Function in JavaScript.
+							// Note: Only can be used in other Suspendable Functions / Coroutines.
+								suspend fun <suspendable-function-name>() {
+									// Concurrent Code ...
+
+									// Note: Calling another Suspendable Function will defer execution of this Function.
+
+									// ...
 								}
 
-								// Block Regular Code execution and Await Coroutine completion
-								<handle> join();
+								// ...
 
-								// Regular Code
-							}
+								fun main() {
+									runBlocking {
+										val handle = launch { <suspendable-function-name>() }
+										
+										// ...
 
-							// Coroutine Builder Functions:
-								// runBlocking: Regular Function that when executed, blocks the current Thread.
-								// coroutineScope: Suspendable Function that when executed, blocks and releases the current Thread for other usage.
+										handle.join()
+									}
+								}
 
 					// Parallelism / Multi-Threaded:
 						// Note: Threads are more expensive to create than Coroutines.
