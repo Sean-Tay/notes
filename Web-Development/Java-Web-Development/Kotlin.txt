@@ -421,15 +421,15 @@ Kotlin
 
 							// Note: Parent Coroutines cannot complete until all Child Coroutines complete (following the princple of Structured Concurrency).
 
-							// Coroutine Scopes:
-								// CoroutineScope: Defines an environment for which Coroutines can be created in.
-									// runBlocking: A Normal Function that when executed, creates a local CoroutineScope and blocks current execution from continuing beyond it, and *additionally locks down the execution to the code within the created scope*. Can be used as a bridge between non-Suspendable Code and Suspendable Code.
+							// CoroutineScope: Defines an environment for which Coroutines can be created in.
+								// Constructor Functions:
+									// runBlocking: A Normal Function that when executed, instantiates a local CoroutineScope and blocks current execution from continuing beyond it, and *additionally locks down the execution to the code within the created scope*. Can be used as a bridge between non-Suspendable Code and Suspendable Code.
 
-									// coroutineScope: A Suspendable Function that when executed, creates a local CoroutineScope and blocks current execution from continuing beyond it, but *does not additionally lock down the execution to the code within the created scope*, and releases the calling Thread to perform other execution.
+									// coroutineScope: A Suspendable Function that when executed, instantiates a local CoroutineScope and blocks current execution from continuing beyond it, but *does not additionally lock down the execution to the code within the created scope*, and releases the calling Thread to perform other execution.
 
-								// GlobalScope: A Globally Accessible CoroutineScope, usually meant for Coroutines operating throughout the Application lifetime.
+								// GlobalScope: A Globally Accessible CoroutineScope, usually meant for Top-Level Coroutines operating throughout the Application lifetime.
 
-							// Coroutine Builder Functions: Only usable from / within a Coroutine Scope.
+							// Coroutine Builder Functions: Only usable from / within a CoroutineScope.
 								// launch 		Starts a new Coroutine.
 								// join 		Wait for the completion of the created Coroutine.
 
