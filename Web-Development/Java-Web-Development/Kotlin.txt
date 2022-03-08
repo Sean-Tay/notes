@@ -22,15 +22,8 @@ Kotlin
 				// Primitive Types:
 					Any?
 
-					[Mutable]Map
-					[Mutable]List
-
-					ClosedRange<T> // For Ranges
-
 					Character
 					String
-
-					AtomicInteger
 
 					Double
 					Float
@@ -51,14 +44,14 @@ Kotlin
 				// Suspendable Function Type:
 					suspend (<arg>: <arg-type>, ...) -> <return-type>
 
-				// Runtime Type Checking:
-					// Note: Boolean Expression.
-					<value> is <type>
-					<value> !is <type>
+			// Runtime Type Checking:
+				// Note: Boolean Expression.
+				<value> is <type>
+				<value> !is <type>
 
-				// Tip: Use Reflection to find out the Type of a Variable during Runtime:
-					println(<variable>!!::class.simpleName)
-					println(<variable>!!::class.qualifiedName)
+			// Tip: Use Reflection to find out the Type of a Variable during Runtime:
+				println(<variable>!!::class.simpleName)
+				println(<variable>!!::class.qualifiedName)
 				
 			Constants:
 				val <runtime-constant-name>: <type> = <value>;
@@ -68,8 +61,11 @@ Kotlin
 				const val <compile-constant-name>: <type> = <value>;
 
 			Ranges:
-				<inclusive-min> .. <inclusive-max> [step <step>]
-				<inclusive-min> until <exclusive-max> [step <step>]
+				// val range: ClosedRange<Int>
+				val range: IntRange = <inclusive-min> .. <inclusive-max> [step <step>]
+				val range: IntRange = <inclusive-min> until <exclusive-max> [step <step>]
+
+				range
 					.first 		// Get First Value within the Range
 					.last 		// Get Last Value within the Range
 					.step		// Get Step Amount for the Range
@@ -464,6 +460,8 @@ Kotlin
 							// Note: Universal Lock - multiple Concurrent Reads not supported
 								val concurrentSet = Collections.newSetFromMap( <map> ) // Creates a Wrapper for Set Behaviour
 								val concurrentSet = ConcurrentHashMap.newKeySet()
+
+						// 
 
 						// Semaphores:
 							// CountDownLatch - simple Counting Semaphore:
