@@ -428,6 +428,7 @@ Kotlin
 						// Coroutines: Deals with Concurrent Programming Constructs.
 							// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
 							// Tip: Parent Coroutines cannot complete until all Child Coroutines complete.
+							// Tip: Coroutines have less overhead than Threads.
 							<coroutine-builder-function> {
 								// Regular Code
 
@@ -452,6 +453,8 @@ Kotlin
 								// coroutineScope: Suspendable Function that when executed, blocks and releases the current Thread for other usage.
 
 					// Parallelism / Multi-Threaded:
+						// Note: Threads are more expensive to create than Coroutines.
+
 						// Thread-Safe Read-Write Data Structures:
 							// Concurrent Map:
 								val concurrentMap = ConcurrentHashMap()
