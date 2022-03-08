@@ -120,6 +120,16 @@ Kotlin
 					map.contains( <potential-key> )
 					map.get( <key> )
 
+				// Streams: Used for Function-Oriented Processing of Immutable Element Sequences obtained from a Collection.
+					val stream = <collection>.stream()
+
+					stream
+						.forEach
+						.map
+						.filter
+
+						// ...
+
 			Objects:
 				// Note: Lazily Initalized only during the first access.
 					// Tip: Effectively Singleton Classes:
@@ -404,9 +414,9 @@ Kotlin
 					// Note: Not compatable with Coroutines.
 					Thread.sleep(<milliseconds>);
 
-				// Concurrency:
-					// Non-Threaded:
-						// Suspendable Function: Analogous to Asynchronous Function in JavaScript.
+				// Asynchronousity:
+					// Concurrency / Single-Threaded:
+						// Suspendable Function: Analogous to an Asynchronous Function in JavaScript.
 						suspend fun <suspendable-function-name>() {
 							// Concurrent Code ...
 
@@ -415,7 +425,7 @@ Kotlin
 							// ...
 						}
 
-						// Coroutines: Deals with Asynchronous Programming Constructs.
+						// Coroutines: Deals with Concurrent Programming Constructs.
 							// Note: Coroutines can only be launched inside certain Builder Functions, which bridges regular Blocking Code with Concurrent Code.
 							// Tip: Parent Coroutines cannot complete until all Child Coroutines complete.
 							<coroutine-builder-function> {
@@ -441,7 +451,7 @@ Kotlin
 								// runBlocking: Regular Function that when executed, blocks the current Thread.
 								// coroutineScope: Suspendable Function that when executed, blocks and releases the current Thread for other usage.
 
-					// Multi-Threaded:
+					// Parallelism / Multi-Threaded:
 						// Thread-Safe Read-Write Data Structures:
 							// Concurrent Map:
 								val concurrentMap = ConcurrentHashMap()
@@ -461,7 +471,19 @@ Kotlin
 								val concurrentSet = Collections.newSetFromMap( <map> ) // Creates a Wrapper for Set Behaviour
 								val concurrentSet = ConcurrentHashMap.newKeySet()
 
-						// 
+							// Parallel Streams: Used for Function-Oriented Parallel Processing of Immutable Element Sequences obtained from a Collection.
+								// To change the number of Threads created by ForkJoinPool, of which ParallelStream uses for Thread Creation:
+								// Note: Usually this defaults to # of Available Cores - 1
+								System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "<number>")
+
+								val parallelStream = <collection>.parallelStream()
+								
+								parallelStream
+									.forEach
+									.map
+									.filter
+
+									// ...
 
 						// Semaphores:
 							// CountDownLatch - simple Counting Semaphore:
