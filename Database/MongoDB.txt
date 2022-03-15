@@ -24,8 +24,8 @@ MongoDB:
 			Sparse Index:		An Index which only tracks Documents that have the Attributes involved in the Index.
 			Partial Index:		An Index which only tracks Documents that fulfill some Filter Expression.
 
-		Aggregation Pipeline:	Data Processing Pipeline focusing on Grouping-Type Operations.
-		View:					In-Memory Read-Only Data Structure whose Contents are defined via an Aggregation Pipeline on Collections or other Views, and is generated only when a Query to that View has been made.
+		Aggregation Pipeline:	Equivalent to a Multi-Step Query that would allow for Grouping-Type Operations.
+		View:					In-Memory Read-Only Data Structure whose Contents are defined via an Aggregation Pipeline on Collections or other Views, and is generated only when a Query to that View has been made. Queries to a View are appended to the underlying Aggregation Pipeline that defines the View.
 
 		Replica Set:			A Cluster of Server Processes that maintain copies of the same Data Set to achieve High Availability.
 		Shard:					A group of Server Processes or Replica Sets that each handle Database Operations for different Document subsets of a Collection to achieve Horizontal Scalability.
@@ -88,8 +88,9 @@ MongoDB:
 
 			db.<collection-name>.dropIndex("<index-name>") // Drop <index-name> from <collection-name>.
 			
-			/*
-				Common Operators: https://docs.mongodb.com/manual/reference/operator/
+			// Select Documents under <collection-name> which satisfy the <query>'s Criteria.
+			const results = db.<collection-name>.find(<query>, <projection>)
+				// Operators: https://docs.mongodb.com/manual/reference/operator/
 					<query>
 						{
 							"<field>": <value> // To Select for Documents whose value under the <field> matches the <value> exactly.
@@ -97,6 +98,8 @@ MongoDB:
 							// OR
 
 							"<field>": {
+								"$<operator>": <value>,
+
 								"$in": [<value>, ... ], // To Select for Documents whose value under the <field> matches one of the <value>s in the specified Array.
 								"$ne": <value>, // To Select for Documents whose value under the <field> does NOT match the <value>.
 								"$nin": [<value>, ... ], // To Select for Documents whose value under the <field> does NOT match all of the <value>s in the specified Array.
@@ -117,18 +120,28 @@ MongoDB:
 
 					<projection> // Specifies the Fields to include for each Document that fulfills <query> criteria.
 
-					<pipeline> // https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
-			*/
-
-			// Select Documents under <collection-name> which satisfy the <query>'s Criteria.
-			const results = db.<collection-name>.find(<query>, <projection>)
-
 			results.limit(<length>) // Get only the first <length> Matches.
 			results.skip(<length>) // Ignore the first <length> Matches.
 			results.pretty() // Format into Human-Readable Output.
 
 			// Execute Aggregate-Type Queries under <collection-name>, according to the specified Aggregation <pipeline> Array.
-			const aggregateResults = db.<collection-name>.aggregate(<pipeline>)
+			const aggregateResults = db.<collection-name>.aggregate(
+				// Pipeline Operations: https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
+				[
+					{
+						"$<pipeline-operation>": {
+							"<field>": <value>,
+
+							"<field>": {
+								"$<operator>": <value>
+							},
+
+							// ...
+						}
+					},
+					// ...
+				]
+			)
 			
 			// Update Document(s) in <collection-name>:
 			db.<collection-name>.update(<query>, <update>, <options>)
@@ -147,12 +160,16 @@ MongoDB:
 				com.mongo.*
 				org.bson.Document
 
+			Operations:
+				// Get a Collection
+				val collection = db.getCollection("<collection-name>")
+
 			Example Document for CRUD Operations:
 				val <operation> = Document(mapOf(
 					"<field>" to "<value>"
 
 					// ...
-					
+
 					"<field>" to Document(mapOf(
 						"\$<operator>" to // ...
 					))
