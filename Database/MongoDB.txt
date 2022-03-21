@@ -125,8 +125,9 @@ MongoDB:
 			results.pretty() // Format into Human-Readable Output.
 
 			// Execute Aggregate-Type Queries under <collection-name>, according to the specified Aggregation <pipeline> Array.
-			const aggregateResults = db.<collection-name>.aggregate(
+			db.<collection-name>.aggregate(
 				// Pipeline Operations: https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
+				// Note: Sort the Collection first before doing Grouping Operations.
 				[
 					{
 						"$<pipeline-operation>": {
