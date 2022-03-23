@@ -387,7 +387,7 @@ Jest
 						// Note: Keys with undefined Values will not match with an Object without those Keys.
 
 				// Functions
-					expect(<function>).toHaveBeenCalledWith(<value>)
+					expect(<function>).toHaveBeenCalledWith(<value>, ...)
 
 				// Errors
 					expect(<function>()).toThrow(<error>)

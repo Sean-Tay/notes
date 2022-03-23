@@ -41,6 +41,8 @@
 				// expect( <dom-node> ).toBeInTheDocument(): Jest Matcher for checking if DOM Nodes are in the DOM State.
 				// expect( <dom-node> ).toBeDisabled(): Jest Matcher to check if an DOM Node is correctly disabled.
 
+				// expect( <dom-node> ).toHaveTextContent( '<text-content>' ): Jest Matcher to check if the DOM Node has the specified <text-content> anywhere within.
+
 			@testing-library/user-event: Provides Utility Methods to simulate User Events.
 				import userEvent from '@testing-library/user-event';
 
