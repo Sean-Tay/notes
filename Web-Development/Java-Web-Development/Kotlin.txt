@@ -296,6 +296,18 @@ Kotlin
 						// ...
 					}
 
+				// Function with a Function Argument:
+					fun <function-name>(fnArg: <function-type>): <return-type> {
+						// fnArg( ... )
+					}
+
+					// Passing an Instance of the <function-type> when calling <function-name>:
+						val <some-function>: <function-type> = ( ... ) -> {
+							// ...
+						}
+
+						<function-name>([<some-function-package-scope>]::<some-function>)
+
 				// Single-Expression Function: Curly Braces can be omitted.
 					fun <function-name>(<arg>: <type>, ...): <return-type> = <expression>
 
@@ -417,6 +429,8 @@ Kotlin
 				// Asynchronousity:
 					// Suspendable:
 						// Coroutines: A tracked instance of Pausable Computation.
+							// Type: Job.
+
 							// Tip: Creating a Coroutine incurs less overhead than creating a Thread.
 
 							// Note: Parent Coroutines cannot complete until all Child Coroutines complete (following the princple of Structured Concurrency).
