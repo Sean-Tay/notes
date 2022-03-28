@@ -248,6 +248,21 @@ Kotlin
 						// Note: Inherited Function Properties cannot have their default Argument Values changed when Overriding.
 					}
 
+				// Delegation: Allows usage of a secondary Class to fulfil part of a Class' API.
+					interface <interface-name> {
+						fun <example-function>( ... ): <return-type>
+					}
+
+					class <delegate-class>( ... ) : <interface-name> {
+						override fun <example-function>( ... ) = {
+							// ...
+						}
+					}
+
+					class <delegating-class>(private val <delegate>: <interface-name>) : <interface-name> by <delegate> {
+						// ...
+					}
+
 				// Instantiate a Class Instance:
 					// Note: No 'new' Keyword.
 					val instance = <class-name>();
