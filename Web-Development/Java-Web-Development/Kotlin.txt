@@ -217,7 +217,8 @@ Kotlin
 				// Data Class: Classes meant to describe Objects that just hold Data. Analogous to POJOs.
 				// Tip: Kotlin will automatically define a default 'equals', 'hashCode', 'copy' and 'toString' Utility Methods for the created Data Class.
 				// Tip: Properties on a Data Class Instance can be Deconstructed via Spreading.
-				data class ( ... ) 
+				data class <data-class-name>( ... ) 
+					// Tip: For Instances of Immutable Data Classes, use the 'copy' Method to avoid having to copy every unchanged Property if the Instance is to be 'updated'.
 
 				// Inheritance:
 					// Note: Classes are treated as 'final' or Non-Inheritable by default.
@@ -421,6 +422,10 @@ Kotlin
 						}
 						// Specific Conditionals
 						<boolean-expression> -> {
+							// ...
+						}
+						// Type Checking
+						is <type> -> {
 							// ...
 						}
 						// Default Case:
