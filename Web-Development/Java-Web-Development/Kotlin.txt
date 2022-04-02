@@ -400,7 +400,7 @@ Kotlin
 
 					// Star Type Projection: For when the Type does not actually matter. Variables of Star Types are Read-Only.
 
-					// Covariant: To denote that the Type can be assigned to a Supertype Reference.
+					// Covariant Types: To denote that the Type can be assigned to a Supertype Reference.
 						// Functions: 
 							fun < out <producer-generic-type>, ... > <producer-function>(): <producer-generic-type> {
 								// ...
