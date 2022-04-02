@@ -5,9 +5,12 @@ Kotlin
 	Description: Programming Language that is compatable with Java, and can target JVM and JavaScript Environments. Designed by JetBrains to be a "better" Java.
 	
 	Resources: 
+		Generic Types: https://typealias.com/guides/illustrated-guide-covariance-contravariance/
 	
 	Concepts:
 		Coroutines: Unit of Suspendable Concurrent Execution.
+
+		Type Projection: Taking and Reducing an existing Type to what is minimally needed, until it becomes possible to Subtype it.
 
 		JAR Files: Java Archive. Contains Libraries, Resources and Assets.
 		WAR Files: Web Application Archive. Contains the Web Application in a specific structure that can be deployed on any Web Container / Java Application Server.
@@ -388,24 +391,65 @@ Kotlin
 					fun (<arg>: <type>, ... ) = // ...
 
 			Generics:
-				// Functions
-					// Invariant: Once a Type is inferred for <invariant-generic-type>, all other places where <invariant-generic-type> appears are assumed to be of that Type.
-						fun < <invariant-generic-type>, ... > <function-name>( <arg>: <invariant-generic-type>, ... ): <invariant-generic-type> {
-							// ...
-						}
-					
-					// Contravariant:
-						fun < in <consumer-generic-type>, ... > <consumer-function>( <arg>: <consumer-generic-type>, ... ) {
+				// Types modified by Projection:
+					// Invariant Types: Once a Type is inferred for <invariant-generic-type>, all other places where <invariant-generic-type> appears are assumed to be of that Type.
+						// Functions:
+							fun < <invariant-generic-type>, ... > <function-name>( <arg>: <invariant-generic-type>, ... ): <invariant-generic-type> {
+								// ...
+							}
+
+					// Star Type Projection: For when the Type does not actually matter. Variables of Star Types are Read-Only.
+
+					// Covariant: To denote that the Type can be assigned to a Supertype Reference.
+						// Functions: 
+							fun < out <producer-generic-type>, ... > <producer-function>(): <producer-generic-type> {
+								// ...
+							}
+
+							val <value>: <super-type> = <producer-function>()
+
+						// Classes:
+							class <parameterised-producer-class>< out <producer-generic-type>, ... >(private val value: <producer-generic-type>, private val genericValue: <another-generic-type><<producer-generic-type>>, ...) {
+								fun get(): <producer-generic-type> {
+									return value
+								}
+							}
+
+							val parameterizedProducerClass = <parameterised-producer-class><<sub-type>>( ... )
+
+							val ref: <parameterised-producer-class><<super-type>> = parameterizedProducerClass
+
+					// Contravariant Types: To denote that the Type can be assigned to a Subtype Reference.
+						// Note: Contravariant Argument Types are not supported by default to support Method Overloading, but there are workarounds.
+
+						// Functions:
+							fun < in <consumer-generic-type>, ... > <consumer-function>( <arg>: <consumer-generic-type>, ... ) {
+								// ...
+							}
+
+						// Classes:
+							class <parameterised-consumer-class>< in <consumer-generic-type>, ... >( ... ) {
+								fun <function-name>(value: <consumer-generic-type>): ... {
+									// ...
+								}
+							}
+
+							val parameterizedConsumerClass = <parameterised-consumer-class><<super-type>>( ... )
+
+							val ref: <parameterised-consumer-class><<sub-type>> = parameterizedConsumerClass
+
+				// Type Bounding:
+					// Note: If a <generic-type> has multiple Bounds, that means that the Concrete Type passed in must fulfill all Bounds.
+
+					// Functions:
+						fun < <generic-type>, ... > <function-name>( arg: <generic-type>, genericArg: <another-generic-type><<generic-type>>, ... ) where <generic-type>: <type>, <generic-type>: <another-generic-type><<generic-type>>, ... {
 							// ...
 						}
 
-					// Covariant:
-						fun < out <producer-generic-type>, ... > <producer-function>(): <producer-generic-type> {
+					// Classes:
+						class <class-name>< <generic-type>, ... >( arg: <generic-type>, genericArg: <another-generic-type><<generic-type>>, ... ) where <generic-type>: <type>, <generic-type>: <another-generic-type><<generic-type>>, ... {
 							// ...
 						}
-
-				// Interfaces
-				// Parameterized Classes: Classes whose Generic Types can be derived from their Parameters.
 
 			Control-Flow:
 				// Iteration:
