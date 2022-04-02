@@ -155,8 +155,17 @@ Kotlin
 
 			Classes:
 				// Note: Classes can omit the Curly Braces if the Class has no Body.
-				// Tip: Define Data Objects as Classes with no Braces.
-				class <class-name>(<property>:<type> = <default-value>, ...)
+
+				// Data Class: Classes meant to describe Objects that just hold Data. Analogous to POJOs.
+				// Note: Cannot allow Overridance.
+				// Tip: Kotlin will automatically define a default 'equals', 'hashCode', 'copy' and 'toString' Utility Methods for the created Data Class if there are no explicit definitions for those Methods in the Class Body.
+				// Tip: Properties on a Data Class Instance can be Deconstructed via Spreading.
+				data class <data-class-name>( { val | var } <property>:<type> = <default-value>, ... ) {
+					// Note: Properties declared in the Body of the Data Class will not be considered during the invocation of the automatically generated Utility Methods mentioned above.
+
+					// ...
+				}
+					// Tip: For Instances of Immutable Data Classes, use the 'copy' Method to avoid having to copy every unchanged Property if the Instance is to be 'updated'.
 
 				class <class-name>[ {public | private} @<annotation> constructor](
 					// Primary Constructor / Default Constructor
@@ -214,32 +223,32 @@ Kotlin
 					// ...
 				}
 
-				// Data Class: Classes meant to describe Objects that just hold Data. Analogous to POJOs.
-				// Tip: Kotlin will automatically define a default 'equals', 'hashCode', 'copy' and 'toString' Utility Methods for the created Data Class.
-				// Tip: Properties on a Data Class Instance can be Deconstructed via Spreading.
-				data class <data-class-name>( ... ) 
-					// Tip: For Instances of Immutable Data Classes, use the 'copy' Method to avoid having to copy every unchanged Property if the Instance is to be 'updated'.
+				// Interface Implementation:
+					class <implementing-class-name> ( ... ): <interface>, ... {
+						
+					}
 
 				// Inheritance:
 					// Note: Classes are treated as 'final' or Non-Inheritable by default.
 					// Mark a Class as Inheritable by Sub-Classes via the 'open' Keyword.
-					open class <inheritable-class>() {
+					// Note: Sub-Classes must provide Arguments for the Inheritable Class's Parameter Properties, if any.
+					open class <inheritable-class-name>() {
 						// Mark a Class Property as Overridable by Sub-Classes via the 'open' Keyword.
 						open val <property>:<type>;
 					}
 
-					// Note: Multiple Inheritance is possible.
+					// Note: Sub-Classes must have only one Parent, but they can implement multiple Interfaces.
 					// Note: Sub-Classes must provide Arguments for the Inheritable Class's Parameter Properties, if any.
-					class <sub-class>(
+					class <sub-class-name>(
 						// Note: Specifying 'val' or 'var' here for Parameter Properties will re-create the Inherited Property within this Sub-Class, rather than just passing it to the Base Class.
 						... 
-					): <inheritable-class>( ... ), ... {
-						// Override Property from <inheritable-class>:
+					): <inheritable-class-name>( ... ), <interface-name>, ... {
+						// Override Property from <inheritable-class-name>:
 						// Note: Overriden Properties are themselves considered Overridable by any Sub-Class. Use the 'final' Keyword to prevent Overriding.
 						// Note: In the event of Multiple Inheritance with Common Class Properties, it is required to Override these to eliminate ambiguity.
 						[final] override val <property>;
 
-						// Access <inheritable-class> Implementation via the 'super' Keyword.
+						// Access <inheritable-class-name> Implementation via the 'super' Keyword.
 						// Note: In the event of Multiple Inheritance, define which <inheritable-class> 'super' refers to via:
 						super<<inheritable-class>>
 
@@ -327,11 +336,6 @@ Kotlin
 				// Single-Expression Function: Curly Braces can be omitted.
 					fun <function-name>(<arg>: <type>, ...): <return-type> = <expression>
 
-				// Generic-Type Function
-					fun <<generic-type>> <function-name>(<arg>: <generic-type>, ...): <return-type> {
-						// ...
-					}
-
 				// Inline Function: To allow the Compiler to inject the Code inside the Function directly at the Call Site.
 					// Tip: Can improve performance where Closures are not needed.
 					inline fun <inline-function-name>(<arg>: <type>, ...) {
@@ -382,6 +386,20 @@ Kotlin
 
 				// Anonymous Function: 
 					fun (<arg>: <type>, ... ) = // ...
+
+			Generics:
+				// Interfaces
+
+
+				// Classes
+					class <class-name><>( ... ): <inheritable-class>( ... ) {
+
+					}
+
+				// Function
+					fun <<generic-type>> <function-name>(<arg>: <generic-type>, ...): <return-type> {
+						// ...
+					}
 
 			Control-Flow:
 				// Iteration:
