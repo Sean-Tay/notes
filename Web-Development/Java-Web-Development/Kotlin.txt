@@ -388,18 +388,24 @@ Kotlin
 					fun (<arg>: <type>, ... ) = // ...
 
 			Generics:
+				// Functions
+					// Invariant: Once a Type is inferred for <invariant-generic-type>, all other places where <invariant-generic-type> appears are assumed to be of that Type.
+						fun < <invariant-generic-type>, ... > <function-name>( <arg>: <invariant-generic-type>, ... ): <invariant-generic-type> {
+							// ...
+						}
+					
+					// Contravariant:
+						fun < in <consumer-generic-type>, ... > <consumer-function>( <arg>: <consumer-generic-type>, ... ) {
+							// ...
+						}
+
+					// Covariant:
+						fun < out <producer-generic-type>, ... > <producer-function>(): <producer-generic-type> {
+							// ...
+						}
+
 				// Interfaces
-
-
-				// Classes
-					class <class-name><>( ... ): <inheritable-class>( ... ) {
-
-					}
-
-				// Function
-					fun <<generic-type>> <function-name>(<arg>: <generic-type>, ...): <return-type> {
-						// ...
-					}
+				// Parameterized Classes: Classes whose Generic Types can be derived from their Parameters.
 
 			Control-Flow:
 				// Iteration:
