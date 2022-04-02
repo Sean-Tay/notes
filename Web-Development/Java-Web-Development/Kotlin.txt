@@ -420,8 +420,6 @@ Kotlin
 							val ref: <parameterised-producer-class><<super-type>> = parameterizedProducerClass
 
 					// Contravariant Types: To denote that the Type can be assigned to a Subtype Reference.
-						// Note: Contravariant Argument Types are not supported by default to support Method Overloading, but there are workarounds.
-
 						// Functions:
 							fun < in <consumer-generic-type>, ... > <consumer-function>( <arg>: <consumer-generic-type>, ... ) {
 								// ...
@@ -437,6 +435,8 @@ Kotlin
 							val parameterizedConsumerClass = <parameterised-consumer-class><<super-type>>( ... )
 
 							val ref: <parameterised-consumer-class><<sub-type>> = parameterizedConsumerClass
+
+							// Note: Contravariant Argument Types are not supported when Overriding a Class Method to support Method Overloading, but Functions can be assigned as Class Properties as a workaround.
 
 				// Type Bounding:
 					// Note: If a <generic-type> has multiple Bounds, that means that the Concrete Type passed in must fulfill all Bounds.
