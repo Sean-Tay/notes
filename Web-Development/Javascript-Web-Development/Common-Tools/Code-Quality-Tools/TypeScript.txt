@@ -296,7 +296,7 @@ Typescript:
 					// Omit: To specify a subset of Type Properties from another Type through a 'blacklist' approach.
 						let <omit-type-variable>: Omit<<type>, '<property>' | ... > = {};
 
-					// Record: To create a Type whose possible keys are defined in another Type, and map them to a value Type.
+					// Record: To specify a Data Object Type (separate from Functions and Arrays, which are also Objects in Javascript).
 						type <keys-type> = 'key-a' | 'key-b' | ... | 'key-n';
 						let <record-type-variable>: Record<<keys-type>, <value-type>> = {};
 
