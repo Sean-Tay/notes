@@ -404,10 +404,10 @@ Kotlin
 							}
 						}
 
-				// Types modified by Projection:
+				// Declaration Site Variance:
 					// Star Type Projection: For when the Type does not actually matter. Variables of Star Types are Read-Only.
 
-					// Covariant Types: Cannot be used in Parameter Types (i.e. only "out" Positions such as Return Types), but allows for Types to be assigned to a Supertype Reference. 
+					// Covariant Types: Cannot be used in Parameter Types (i.e. only "out" Positions such as Return Types), but allows for Types to be assigned to a Supertype Reference in the Invoking Code.
 						// Functions: 
 							fun < out <producer-generic-type>, ... > <producer-function>(): <producer-generic-type> {
 								// ...
@@ -426,7 +426,7 @@ Kotlin
 
 							val ref: <parameterised-producer-class><<super-type>> = parameterizedProducerClass
 
-					// Contravariant Types: Cannot be used in Return Types (i.e. only "in" Positions such as Parameter Types), but allows for Types to be given a Subtype Reference.
+					// Contravariant Types: Cannot be used in Return Types (i.e. only "in" Positions such as Parameter Types), but allows for Types to be given a Subtype Reference in the Invoking Code.
 						// Functions:
 							fun < in <consumer-generic-type>, ... > <consumer-function>( <arg>: <consumer-generic-type>, ... ) {
 								// ...
@@ -445,18 +445,23 @@ Kotlin
 
 							// Note: Contravariant Argument Types are not supported when Overriding a Class Method to support Method Overloading, but Functions can be assigned as Class Properties as a workaround.
 
-				// Type Bounding:
-					// Note: If a <generic-type> has multiple Bounds, that means that the Concrete Type passed in must fulfill all Bounds.
+					// Type Bounding:
+						// Note: If a <generic-type> has multiple Bounds, that means that the Concrete Type passed in must fulfill all Bounds.
 
-					// Functions:
-						fun < <generic-type>, ... > <function-name>( arg: <generic-type>, genericArg: <another-generic-type><<generic-type>>, ... ) where <generic-type>: <type>, <generic-type>: <another-generic-type><<generic-type>>, ... {
-							// ...
-						}
+						// Functions:
+							fun < <generic-type>, ... > <function-name>( arg: <generic-type>, genericArg: <another-generic-type><<generic-type>>, ... ) where <generic-type>: <type>, <generic-type>: <another-generic-type><<generic-type>>, ... {
+								// ...
+							}
 
-					// Classes:
-						class <class-name>< <generic-type>, ... >( arg: <generic-type>, genericArg: <another-generic-type><<generic-type>>, ... ) where <generic-type>: <type>, <generic-type>: <another-generic-type><<generic-type>>, ... {
-							// ...
-						}
+						// Classes:
+							class <class-name>< <generic-type>, ... >( arg: <generic-type>, genericArg: <another-generic-type><<generic-type>>, ... ) where <generic-type>: <type>, <generic-type>: <another-generic-type><<generic-type>>, ... {
+								// ...
+							}
+
+				// Type Projection:
+					// Covariant Type Projection: Allow for Types to be assigned to a Supertype Reference in the Invoking Code, but converts all Parameter Types involved in that Type to be 'Nothing'.
+
+					// Contravariant Type Projection: Allow for Types to be assigned to a Subtype Reference in the Invoking Code, but converts all Return Types involved in that Type to be 'Any?'.
 
 			Control-Flow:
 				// Iteration:
