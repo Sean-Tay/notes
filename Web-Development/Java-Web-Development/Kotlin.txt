@@ -10,8 +10,6 @@ Kotlin
 	Concepts:
 		Coroutines: Unit of Suspendable Concurrent Execution.
 
-		Type Projection: Taking and Reducing an existing Type to what is minimally needed, until it becomes possible to Subtype it.
-
 		JAR Files: Java Archive. Contains Libraries, Resources and Assets.
 		WAR Files: Web Application Archive. Contains the Web Application in a specific structure that can be deployed on any Web Container / Java Application Server.
 

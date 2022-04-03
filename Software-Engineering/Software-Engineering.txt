@@ -7,14 +7,15 @@ Application Development:
 		Type Variance: 				Describes the Degree of Interchangeability between two different Types of diferent Specificity.
 			Invariant: 				No Interchangeability between both Types.
 
-			Covariant: 				Looser (Super) -> Tighter (Sub) // Type-Narrowing
-				Tip: When the implementing Class is swapped with a More Specific Variant, the Return Type of its API can only move in the same Direction with respect to Specificity (i.e. Co Variance) to maintain compatability with the Invoking Entity.
+			Covariant: 				A Type T is Covariant if S <: P, then T<S> <: T<P>.
+				Tip: When the implementing Class is swapped with a More Specific Variant, the Return Type of its API can only move in the same Direction with respect to Specificity (i.e. Co Variance) to maintain compatability with the Invoking Entity (Return Type Narrowing).
 
-			Contravariant: 			Tighter (Sub) -> Looser (Super) // Type-Expansion
-				Tip: When the implementing Class is swapped with a More Specific Variant, the Parameter Type of its API can only move in the opposite Direction with respect to Specificity (i.e. Contra Variance) to maintain compatability with the Invoking Entity.
+			Contravariant: 			A Type T is Contravariant if S <: P, then T<S> >: T<P>.
+				Tip: When the implementing Class is swapped with a More Specific Variant, the Parameter Type of its API can only move in the opposite Direction with respect to Specificity (i.e. Contra Variance) to maintain compatability with the Invoking Entity (Parameter Type Expansion).
 
 			Bivariant: 				Full Interchangeability between both Types.
 
+		Type Projection: 			Taking and Reducing an existing Type to what is minimally needed, until it becomes possible to Subtype it.
 		Type Erasure:				Types meant for Compilation Checks are not preserved during Runtime Execution.
 
 		Unit Testing: 				These Tests focus on a small part / unit of the Codebase, but in a very detailed way (i.e. both correct and incorrect scenarios).
