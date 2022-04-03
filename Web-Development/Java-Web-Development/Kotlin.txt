@@ -391,7 +391,7 @@ Kotlin
 					fun (<arg>: <type>, ... ) = // ...
 
 			Generics:
-				// Invariant Types: Once a Type is inferred for <invariant-generic-type>, all other places where <invariant-generic-type> appears are assumed to be of that Type.
+				// Invariant Types: Once a Type is inferred for <invariant-generic-type>, all other places where <invariant-generic-type> appears must be of that Type.
 					// Functions:
 						fun < <invariant-generic-type>, ... > <function-name>( <arg>: <invariant-generic-type>, ... ): <invariant-generic-type> {
 							// ...
@@ -407,7 +407,7 @@ Kotlin
 				// Types modified by Projection:
 					// Star Type Projection: For when the Type does not actually matter. Variables of Star Types are Read-Only.
 
-					// Covariant Types: To denote that the Type can be assigned to a Supertype Reference.
+					// Covariant Types: Cannot be used in Parameter Types (i.e. only "out" Positions such as Return Types), but allows for Types to be assigned to a Supertype Reference. 
 						// Functions: 
 							fun < out <producer-generic-type>, ... > <producer-function>(): <producer-generic-type> {
 								// ...
@@ -426,7 +426,7 @@ Kotlin
 
 							val ref: <parameterised-producer-class><<super-type>> = parameterizedProducerClass
 
-					// Contravariant Types: To denote that the Type can be assigned to a Subtype Reference.
+					// Contravariant Types: Cannot be used in Return Types (i.e. only "in" Positions such as Parameter Types), but allows for Types to be given a Subtype Reference.
 						// Functions:
 							fun < in <consumer-generic-type>, ... > <consumer-function>( <arg>: <consumer-generic-type>, ... ) {
 								// ...
