@@ -141,34 +141,26 @@ Kotlin
 					}
 
 			Interfaces: Used to declare Public API for Implementing Constructs.
-				interface <interface-name> {
+				interface <interface-name>: <parent-interface>, ... {
 					fun <function-name>(<arg>: <type>, ... ): <return-type>
 					suspend <function-name>(<arg>: <type>, ... ): <return-type>
 
 					// ...
 				}
 
-				// Interface Implementation:
-				{class | object} <name>( ... ): <interface-name> {
-					// ... Usual Function Definitions ...
-
-					override fun <function-name> ( ... ) { ... }
-					override suspend fun <function-name> ( ... ) { ... }
-				}
-
 			Classes:
 				// Note: Classes can omit the Curly Braces if the Class has no Body.
 
 				// Data Class: Classes meant to describe Objects that just hold Data. Analogous to POJOs.
-				// Note: Cannot allow Overridance.
-				// Tip: Kotlin will automatically define a default 'equals', 'hashCode', 'copy' and 'toString' Utility Methods for the created Data Class if there are no explicit definitions for those Methods in the Class Body.
-				// Tip: Properties on a Data Class Instance can be Deconstructed via Spreading.
-				data class <data-class-name>( { val | var } <property>:<type> = <default-value>, ... ) {
-					// Note: Properties declared in the Body of the Data Class will not be considered during the invocation of the automatically generated Utility Methods mentioned above.
+					// Note: Cannot allow Overridance.
+					// Tip: Kotlin will automatically define a default 'equals', 'hashCode', 'copy' and 'toString' Utility Methods for the created Data Class if there are no explicit definitions for those Methods in the Class Body.
+					// Tip: Properties on a Data Class Instance can be Deconstructed via Spreading.
+					data class <data-class-name>( { val | var } <property>:<type> = <default-value>, ... ) {
+						// Note: Properties declared in the Body of the Data Class will not be considered during the invocation of the automatically generated Utility Methods mentioned above.
 
-					// ...
-				}
-					// Tip: For Instances of Immutable Data Classes, use the 'copy' Method to avoid having to copy every unchanged Property if the Instance is to be 'updated'.
+						// ...
+					}
+						// Tip: For Instances of Immutable Data Classes, use the 'copy' Method to avoid having to copy every unchanged Property if the Instance is to be 'updated'.
 
 				class <class-name>[ {public | private} @<annotation> constructor](
 					// Primary Constructor / Default Constructor
@@ -228,7 +220,10 @@ Kotlin
 
 				// Interface Implementation:
 					class <implementing-class-name> ( ... ): <interface>, ... {
-						
+						override fun <interface-function-name> ( ... ) { ... }
+						override suspend fun <interface-function-name> ( ... ) { ... }
+
+						// ...
 					}
 
 				// Inheritance:
@@ -459,9 +454,9 @@ Kotlin
 							}
 
 				// Type Projection:
-					// Covariant Type Projection: Allow for Types to be assigned to a Supertype Reference in the Invoking Code, but converts all Parameter Types involved in that Type to be 'Nothing'.
+					// Covariant Type Projection: Allow for Types to be assigned to a Supertype Reference in the Invoking Code via "out", but converts all Parameter Types involved in that Type to be 'Nothing'.
 
-					// Contravariant Type Projection: Allow for Types to be assigned to a Subtype Reference in the Invoking Code, but converts all Return Types involved in that Type to be 'Any?'.
+					// Contravariant Type Projection: Allow for Types to be assigned to a Subtype Reference in the Invoking Code via "in", but converts all Return Types involved in that Type to be 'Any?'.
 
 			Control-Flow:
 				// Iteration:
