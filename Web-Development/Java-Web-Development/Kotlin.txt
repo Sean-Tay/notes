@@ -452,9 +452,9 @@ Kotlin
 							}
 
 				// Type Projection:
-					// Covariant Type Projection: Allow for Types to be assigned to a Supertype Reference in the Invoking Code via "out", but converts all Parameter Types involved in that Type to be 'Nothing'.
+					// Covariant Type Projection: Allow for Types to be assigned to a Supertype Reference in the Invoking Code via "out", but converts all Parameter Types involved with the Generic Argument Type to be 'Nothing'.
 
-					// Contravariant Type Projection: Allow for Types to be assigned to a Subtype Reference in the Invoking Code via "in", but converts all Return Types involved in that Type to be 'Any?'.
+					// Contravariant Type Projection: Allow for Types to be assigned to a Subtype Reference in the Invoking Code via "in", but converts all Return Types involved with the Generic Argument Type to be 'Any?'.
 
 			Control-Flow:
 				// Iteration:
