@@ -19,7 +19,7 @@ Database
 		Record:					A collection of Attributes pertaining to some instance of an Entity.
 		Group:					A collection of Records.
 
-		Index: 					An additional Data Structure accompanying a Group that maps between a defined subset of each Record's Data, and Virtual Addresses of the Full Records on Disk.
+		Index: 					An additional Data Structure that maps between a defined subset of each Record's Data, and Virtual Addresses of the Full Records on Disk.
 			Types:
 				Sparse:			Contains a mapping only for every n Records in the Table to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
 				Dense:			Contains a mapping for every Record in the Table to the Disk Location.
@@ -29,7 +29,7 @@ Database
 		In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
 
 		Database Types:
-			Relational Database:
+			Relational Database: Consists of Tables storing Rows of Structured Data.
 				Pros:
 					ACID-strengthened Transactions:
 						Atomicity:		Transactions containing multiple Statements will either succeed as a whole, or not be processed at all.
@@ -37,10 +37,17 @@ Database
 						Isolation: 		Transactions executed concurrently will behave the same if the Transactions are executed sequentially.
 						Durability:		Transactions that have been commited will remain commited, even during System Failure (Power Outage / Crash).
 
+						Benefits diminish in Distributed Settings.
+
+					Relational Structure allows minimization of Data Duplication across Tables.
+
 				Cons:
-					Does not Scale well:
+					Scalability:
 						CAP Theorem suggests that Availability, Consistency and Partition Tolerance cannot be satisfied at the same time.
 						Row-Based Data Structure not optimal for Data Compression.
+
+						Challenging to Horizontally Partition due to JOINs.
+						Data may not always be stored in one Partition / Machine, and may require several Network Calls to fulfill.
 
 				Related Content:
 					SQL
@@ -52,12 +59,14 @@ Database
 			NoSQL: Anything that is not storing Data in a Structured Table Format:
 				Document Database:
 					Pros:
+						Performance:
+							Data Locality minimizes the distance of Disk Lookups, as the Document is usually stored in one place on Disk, and in one Machine.
+
 						Scalability:
-							Queries are handled as fast as possible.
-							Easier to Scale Horizontally without ACID Considerations.
+							Easier to Horizontally Partition without ACID Considerations.
 
 					Cons:
-						No ACID-based Reliability as a result of Speed and Simplicity.
+						Larger Network Calls as a result of sending over whole Documents with unneeded Information.
 
 					Related Content:
 
@@ -66,8 +75,9 @@ Database
 						DynamoDB:	Amazon's NoSQL Solution.
 						Firestorm
 
-				Graph Database:
+				Graph Database: Stores Data in a Graph (i.e. Vertices and Edges). Queries involve traversing the Graph.
 					Pros:
+						Good for storing Heterogenous and Homogenous Types of Data.
 
 					Cons:
 

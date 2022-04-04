@@ -10,12 +10,26 @@ System Design:
 		
 	
 	Concepts:
-		Continuous Availability: Full Availability 24/7.
-		High Availability:		Operational Performance for a higher than normal period.
-			Focus on eliminating Unscheduled Downtime due to Physical Hardware Failures.
-				Eliminate Single Points of Failure.
-				Reliable Crossover between Redundancies.
-				Failure Detection.
+		Reliable: 				Working in the face of Faults for both Software and Hardware.
+			Continuous Availability: Full Availability 24/7.
+			High Availability:	Operational Performance for a higher than normal period.
+				Focus on eliminating Unscheduled Downtime due to Physical Hardware Failures.
+					Eliminate Single Points of Failure.
+					Reliable Crossover between Redundancies.
+					Failure Detection.
+
+		Scalable: 				Working as the System faces increased Traffic, Usage, and Data.
+			Horizontal Scaling: Adding more Resources to meet demand (i.e. Quantity).
+			Vertical Scaling:	Upgrading existing Resources to be more capable (i.e. Quality).
+
+		Maintenable: 			Ease at which parts of the System can be modified / added / removed by others.
+
+		Response Time:			The time it takes for a Client to receive a Response from a submitted Request.
+		Latency:				The time in which a Pending Request is waiting to be handled by the System.
+			Tail Latency:		A metric which describes the percentage of Requests which would not exceed a specified Latency Amount.
+
+		Bandwidth:				The maximum number of Requests that the System can theoretically handle at a given time.
+		Throughput:				The number of Requests that the System can actually handle at a given time.
 
 		Service Oriented Architecture: Style of Software Design where Servcies are provided to other Components by Application-related Components, through a Communication Protocol over a Network.
 
@@ -28,6 +42,8 @@ System Design:
 			Global API Monitoring, Logging and Analytics
 	
 	Details:
+		Systems are Designed with the intent of being Reliable, Scalable and Maintenable.
+
 		Methodology:
 			1. Clarify the Problem:
 				Derivation of Concrete Details based on Estimation of Fuzzy Details:
@@ -62,8 +78,6 @@ System Design:
 								Storage:
 									Number of Bytes for Single Business Data Object.
 									Longevity of Data Stored.
-
-								Bandwidth:
 
 								Nemory: For Caching.
 
