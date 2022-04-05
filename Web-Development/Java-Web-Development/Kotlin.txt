@@ -384,61 +384,21 @@ Kotlin
 					fun (<arg>: <type>, ... ) = // ...
 
 			Generics:
-				// Invariant Types: Once a Type is inferred for <invariant-generic-type>, all other places where <invariant-generic-type> appears must be of that Type.
-					// Functions:
-						fun < <invariant-generic-type>, ... > <function-name>( <arg>: <invariant-generic-type>, ... ): <invariant-generic-type> {
-							// ...
-						}
-
-					// Classes:
-						class <parameterised--class>< <invariant-generic-type>, ... >( private val value: <invariant-generic-type>, ... ) {
-							fun get(arg: <invariant-generic-type>): <invariant-generic-type> {
-								return value
-							}
-						}
-
 				// Declaration Site Variance:
-					// Star Type Projection: For when the Type does not actually matter. Variables of Star Types are Read-Only.
-
-					// Covariant Types: Cannot be used in Parameter Types (i.e. only "out" Positions such as Return Types), but allows for Types to be assigned to a Supertype Reference in the Invoking Code.
-						// Functions: 
-							fun < out <producer-generic-type>, ... > <producer-function>(): <producer-generic-type> {
+					// Invariant Types: Generic Types with no specified Upper or Lower Bounds. Once such a Type is inferred for <invariant-generic-type>, all other places where <invariant-generic-type> appears must be of that Type.
+						// Functions:
+							fun < <invariant-generic-type>, ... > <function-name>( <arg>: <invariant-generic-type>, ... ): <invariant-generic-type> {
 								// ...
 							}
 
-							val <value>: <super-type> = <producer-function>()
-
 						// Classes:
-							class <parameterised-producer-class>< out <producer-generic-type>, ... >( private val value: <producer-generic-type>, private val genericValue: <another-generic-type><<producer-generic-type>>, ... ) {
-								fun get(): <producer-generic-type> {
+							class <parameterised-class>< <invariant-generic-type>, ... >( private val value: <invariant-generic-type>, ... ) {
+								fun get(arg: <invariant-generic-type>): <invariant-generic-type> {
 									return value
 								}
 							}
 
-							val parameterizedProducerClass = <parameterised-producer-class><<sub-type>>( ... )
-
-							val ref: <parameterised-producer-class><<super-type>> = parameterizedProducerClass
-
-					// Contravariant Types: Cannot be used in Return Types (i.e. only "in" Positions such as Parameter Types), but allows for Types to be given a Subtype Reference in the Invoking Code.
-						// Functions:
-							fun < in <consumer-generic-type>, ... > <consumer-function>( <arg>: <consumer-generic-type>, ... ) {
-								// ...
-							}
-
-						// Classes:
-							class <parameterised-consumer-class>< in <consumer-generic-type>, ... >( ... ) {
-								fun <function-name>(value: <consumer-generic-type>): ... {
-									// ...
-								}
-							}
-
-							val parameterizedConsumerClass = <parameterised-consumer-class><<super-type>>( ... )
-
-							val ref: <parameterised-consumer-class><<sub-type>> = parameterizedConsumerClass
-
-							// Note: Contravariant Argument Types are not supported when Overriding a Class Method to support Method Overloading, but Functions can be assigned as Class Properties as a workaround.
-
-					// Type Bounding:
+					// Type Bounding: Via the 'where' Keyword.
 						// Note: If a <generic-type> has multiple Bounds, that means that the Concrete Type passed in must fulfill all Bounds.
 
 						// Functions:
@@ -450,6 +410,35 @@ Kotlin
 							class <class-name>< <generic-type>, ... >( arg: <generic-type>, genericArg: <another-generic-type><<generic-type>>, ... ) where <generic-type>: <type>, <generic-type>: <another-generic-type><<generic-type>>, ... {
 								// ...
 							}
+
+						// Star Type Bounding: For when the Type does not actually matter. Variables of Star Types are Read-Only.
+
+					// Covariant Types: Cannot be used in Parameter Types (i.e. only "out" Positions such as Return Types), but allows for Types to be assigned to a Supertype Reference in the Invoking Code.
+						// Classes:
+							class <parameterised-producer-class>< out <covariant-generic-type>: <upper-bound-super-type>, ... >( private val value: <covariant-generic-type>, private val genericValue: <another-generic-type><<covariant-generic-type>>, ... ) {
+								fun <producing-function>(): <covariant-generic-type> {
+									return value
+								}
+							}
+
+							val parameterizedProducerClass = <parameterised-producer-class><<sub-type>>( ... )
+
+							// .<producing-function>() will return the <sub-type>, which can be cast to the <super-type>.
+							val ref: <parameterised-producer-class><<super-type>> = parameterizedProducerClass
+
+					// Contravariant Types: Cannot be used in Return Types (i.e. only "in" Positions such as Parameter Types), but allows for Types to be given a Subtype Reference in the Invoking Code.
+						// Classes:
+							// Note: Contravariant Argument Types are not supported when Overriding a Class Method to support Method Overloading, but Functions can be assigned as Class Properties as a workaround.
+							class <parameterised-consumer-class>< in <contravariant-generic-type>: <upper-bound-super-type>, ... >( ... ) {
+								fun <consuming-function>(value: <contravariant-generic-type>): ... {
+									// ...
+								}
+							}
+
+							val parameterizedConsumerClass = <parameterised-consumer-class><<super-type>>( ... )
+
+							// .<consuming-function>( ... ) will accept the <super-type>, so sending in a <sub-type> is still correct.
+							val ref: <parameterised-consumer-class><<sub-type>> = parameterizedConsumerClass
 
 				// Type Projection:
 					// Covariant Type Projection: Allow for Types to be assigned to a Supertype Reference in the Invoking Code via "out", but converts all Parameter Types involved with the Generic Argument Type to be 'Nothing'.
