@@ -423,7 +423,7 @@ Kotlin
 
 							val parameterizedProducerClass = <parameterised-producer-class><<sub-type>>( ... )
 
-							// .<producing-function>() will return the <sub-type>, which can be cast to the <super-type>.
+							// parameterizedProducerClass.<producing-function>() will return the <sub-type>, which can be cast to the <super-type> when done through ref.
 							val ref: <parameterised-producer-class><<super-type>> = parameterizedProducerClass
 
 					// Contravariant Types: Cannot be used in Return Types (i.e. only "in" Positions such as Parameter Types), but allows for Types to be given a Subtype Reference in the Invoking Code.
@@ -437,7 +437,7 @@ Kotlin
 
 							val parameterizedConsumerClass = <parameterised-consumer-class><<super-type>>( ... )
 
-							// .<consuming-function>( ... ) will accept the <super-type>, so sending in a <sub-type> is still correct.
+							// parameterizedConsumerClass.<consuming-function>( ... ) will accept the <super-type>, so sending in a <sub-type> is still correct when done through ref.
 							val ref: <parameterised-consumer-class><<sub-type>> = parameterizedConsumerClass
 
 				// Type Projection:
