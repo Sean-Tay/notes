@@ -17,18 +17,88 @@ Database
 
 		Attribute / Key / Field: Refers to a characteristic of some type of Entity.
 		Record:					A collection of Attributes pertaining to some instance of an Entity.
-		Group:					A collection of Records.
+		Collection:				A table of Records.
 
-		Index: 					An additional Data Structure that maps between a defined subset of each Record's Data, and Virtual Addresses of the Full Records on Disk.
-			Types:
-				Sparse:			Contains a mapping only for every n Records in the Table to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
-				Dense:			Contains a mapping for every Record in the Table to the Disk Location.
+		Index: 					An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record on Disk via a defined subset of the Record's Data.
+			Sparse Index:		Contains a mapping only for every n Records in the Collection to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
+			Dense Index:		Contains a mapping for every Record in the Collection to the Disk Location.
 
-			The optimization is more effective when Records are large => Less Records per Disk Partition => More Disk Accesses without an Index, which are Expensive.
+		Database Partitioning:
+			Horizontal Partitioning: Different Records into Separate Collections (e.g. Sharding).
+			Vertical Partitioning: Different Record Attributes into Separate Collections (e.g. Normalization or simple Record Splitting).
 
-		In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
+	Details:
+		Database Objectives:
+			Persistent Data Storage: Data should not be lost when the Database shuts down.
 
+			Fast Writes
+			Fast Reads
+				Data should be stored contiguously on Disk to minimize the amount of Disk Lookups required (known to be expensive as it involves mechanical movement of the Storage Disks at the Hardware level).
+
+				Optimization Techniques:
+					Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of the Collection without concern for Duplication. Lookups can be optimized by traversing from the end of the Collection.
+
+					Indexes: 	Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Storage Space required by the Collection.
+						For very large Collections, a Multi-Level Index may be used to avoid sequential Storage Block lookups in the original Index.
+
+						The Data within the Index is usually stored in sorted order, but the actual Records in the Collection on Disk may not be stored in sorted order.
+
+						The optimization is more effective when Records are large => Less Records per Disk Partition => More Disk Lookups without an Index.
+
+						Types:
+							Hashmaps: Index Keys map to Memory Addresses (Byte Offsets) in Disk.
+								Pros:
+									Compatable with the Append-Only method of adding new Records to the Collection.
+									Allows access to Records in Constant Time.
+
+								Cons: 
+									Entire Hashmap has to be In-Memory for it to be effective - useful for only small Datasets.
+									Not good for Range Queries, as Data within the Index is unsorted.
+
+							LSM Trees + Immutable SS Tables: 
+								Approach:
+									Full Records realized from Database Writes are first placed in an In-Memory Balanced Binary Search Tree, with the Key used in the BST being the Index Key(s).
+										To increase persistence, keep a Log on Database Writes that can be used to restore the In-Memory BBST after a Database Outage.
+
+									When Tree gets too large, a Sorted SS Table is generated via BST In-Order Traversal and is transferred to Disk.
+										The Tree gets emptied each time a SS Table is generated.
+
+									There can be duplicate Keys between multiple Tables (and the Tree itself) - simply prioritise looking for the Key in the Tree, followed by the youngest SS Table to the oldest.
+										Sparse Hashmaps with Memory Addresses + Binary Search on Table Keys can be additionally used to optimize lookups within an SS Table.
+										Bloom Filters can be additionally used to optimize lookups between SS Tables.
+
+										Tables can be combined in the same approach that Merge Sort uses to combine 2 Sorted Lists - Linear Time Background Operation.
+											Prioritise the Key-Value Pair that is in the younger SS Table over the older SS Table.
+
+								Pros:
+									Higher Write Throughput due to Records being placed In-Memory at first.
+									Uses the Append-Only method of adding new Records to the Collection.
+									Allows access to Records in Sub-Linear Time.
+									Good for Range Queries (that only use the Keys in the Index), as the Data in the Index is internally Sorted.
+
+								Cons:
+									Relatively Slow Reads for Keys that do not exist in the Collection.
+									Merging Process for SS Tables can take up Background Resources.
+
+							B Trees: Data is modelled such that it is a Tree, but on Disk.
+								Pros:
+									Higher Read Throughput - Sub-Linear Time Operation.
+									Good for Range Queries (that only use the Keys in the Index), as the Data in the Index is internally Sorted.
+
+								Cons:
+									Relatively Slow Writes, as it is being written to Disk vs. In-Memory.
+	
 		Database Types:
+			In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
+				Pros:
+
+
+				Cons:
+
+
+				Examples:
+
+
 			Relational Database: Consists of Tables storing Rows of Structured Data.
 				Pros:
 					ACID-strengthened Transactions:
@@ -98,13 +168,7 @@ Database
 
 			Data Warehouse
 
-		Database Partitioning:
-			Horizontal Partitioning: Different Records into Separate Groups (e.g. Sharding).
-			Vertical Partitioning: Different Record Attributes into Separate Groups (e.g. Normalization or simple Record Splitting).
 
-	Details:
-		
-	
 	Commands:
 		
 	
