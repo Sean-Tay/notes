@@ -137,29 +137,30 @@
 				3. If the Node has two Children, replace Node with Predecessor / Successor key, and delete Predecessor / Successor Node.
 					- Tip: Predecessor / Successor of a Node with 2 Children guaranteed to either only have zero or one Child.
 
-			- Balance Factor: height(Left Sub-Tree) - height(Right Sub-Tree)
+			- Balance Factor (of a Node): height(Left Sub-Tree) - height(Right Sub-Tree)
 				- A Metric for determining if a given [Sub-]Tree is adequately not-degenerate.
-				- If Balance Factor is < - 1 or > 1, then the [Sub-]Tree is not balanced, and at risk of becoming degenerate upon further operations.
+				- If Balance Factor is < - 1 or > 1, then the [Sub-]Tree is not balanced, and at risk of becoming degenerate with further operations.
 
-			- AVL Trees:
-				- Rebalancing: Rotations to prevent degenerate Trees.
-					- Types:
-						left_rotate(Node): Make Right Child Parent of Node, transfer Left Sub-Tree of Right Child to become Right Sub-Tree of Node.
-						right_rotate(Node): Make Left Child Parent of Node, transfer Right Sub-Tree of Left Child to become Left Sub-Tree of Node.
+			- Self-Balancing:
+				- AVL Trees:
+					- Rebalancing: Rotations to prevent degenerate Trees.
+						- Types:
+							left_rotate(Node): Make Right Child Parent of Node, transfer Left Sub-Tree of Right Child to become Right Sub-Tree of Node.
+							right_rotate(Node): Make Left Child Parent of Node, transfer Right Sub-Tree of Left Child to become Left Sub-Tree of Node.
 
-					- Upon Insertion / Deletion of a Node, traverse back up the Tree all the way to the Root.
-					- Upon encountering an unbalanced Ancestor Node (Balance Factor == 2 or == -2 at Node), execute one of the four cases:
-						1. Balance Factor 2: LEFT Ancestor Node's Child and LEFT Ancestor Ancestor's Node Child: right_rotate(Ancestor Node)
-						2. Balance Factor -2: RIGHT Ancestor Node's Child and RIGHT Ancestor Ancestor's Node Child: left_rotate(Ancestor Node)
-						
-						3. Balance Factor 2: LEFT Ancestor Node's Child and RIGHT Ancestor Ancestor Node's Child: left_rotate(LEFT Ancestor Node's Child), then Case 1: right_rotate(Ancestor Node)
-						4. Balance Factor -2: RIGHT Ancestor Node's Child and LEFT Ancestor Ancestor Node's Child: right_rotate(RIGHT Ancestor Node's Child), then Case 2: left_rotate(Ancestor Node)
+						- Upon Insertion / Deletion of a Node, traverse back up the Tree all the way to the Root.
+						- Upon encountering an unbalanced Ancestor Node (Balance Factor == 2 or == -2 at Node), execute one of the four cases:
+							1. Balance Factor 2: Ancestor has a LEFT Child, and Child has a LEFT Child: right_rotate(Ancestor)
+							2. Balance Factor -2: Ancestor has a RIGHT Child and Child has a RIGHT Child: left_rotate(Ancestor)
+							
+							3. Balance Factor 2: Ancestor has a LEFT Child and Child has a RIGHT Child: left_rotate(Child Node), then Case 1: right_rotate(Ancestor)
+							4. Balance Factor -2: Ancestor has a RIGHT Child and Child has a LEFT Child: right_rotate(Child Node), then Case 2: left_rotate(Ancestor)
 
-						- At the end of the operation, the Ancestor Node will have a Balance Factor of 0.
+							- At the end of the operation, the Ancestor Node will have a Balance Factor of 0.
 
-					- Pretty good Balancing Mechanism, but will result in more Rotations.
+						- Pretty good Balancing Mechanism, but will result in more Rotations.
 
-			- Red-Black Trees: A less balanced BST, but less Rotations. Good for frequent Insertions and Deletions.
+				- Red-Black Trees: A less balanced BST, but less Rotations. Good for frequent Insertions and Deletions.
 
 	UFDS: Union-Find Disjoint Set: A Data Structure which tracks the membership of a Set of Elements partitioned into smaller non-overlapping disjoint Sub-Sets.
 		- Time Complexities:
