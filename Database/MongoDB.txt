@@ -9,17 +9,17 @@ MongoDB:
 	
 	Concepts:
 		Non-Relational Database: Databases that store their Data in a Document-based Approach / Semi-Structured Manner. 
-			No Joins Required: Data pertaining to an Entity is stored together, making the average Query more performant than traditional Relational Databases.
+			No Joins Required: 	Data pertaining to an Entity is stored together, making the average Query more performant than traditional Relational Databases.
 			Flexible Structure: Because the Data is stored in a non-Tabular Format, Data of different Types can be stored together.
 
-		Document:				Flexible Data Structure that features field-Value Pairs. Analogous to a Record.
+		Document:				Flexible Data Structure that features Field-Value Pairs. Analogous to a Record.
 		Collection:				A grouping of Documents. Analogous to a Table from a Relational Database.
 
 		Index:					An additional Data Structure accompanying a Collection that speeds up Document Access during Queries.
-			Single Field Index: An Index which tracks Documents based on a single field.
+			Single Field Index: An Index which tracks Documents based on a single Field.
 			Compound Field Index: An Index which tracks Documents based on multiple Attributes.
 
-			Multikey Index:	An Index which accounts for Attributes with Array / Document Type Values.
+			Multikey Index:		An Index which accounts for Attributes with Array / Document Type Values.
 
 			Sparse Index:		An Index which only tracks Documents that have the Attributes involved in the Index.
 			Partial Index:		An Index which only tracks Documents that fulfill some Filter Expression.
