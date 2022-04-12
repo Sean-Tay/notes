@@ -31,8 +31,8 @@ Web Dev:
 
 		Web Application:		Generic Term for either a Web Site or Web Service.
 
-		Web Server:				A running Process that listens for incoming Requests for information over the Web and sends back Responses.
-		App Server:				Hosts and Exposes Business Logic and Processes.
+		Web Server:				A running Process on a Host Machine that is designed to just serve Static Content and Resources via HTTP. Requests for Dynamic Content gets sent to the App Server, although Plugins can be installed to generate Dynamic Content via Scripting Languages as well.
+		App Server:				Hosts and Exposes Business Logic and Processes. Additional Support for Application Level Services such as Connection Pooling, Object Pooling, etc. are defined here as well.
 
 		URL:					A String that specifies the location of a Resource / Site / Service on the Web. Consists of:
 			Protocol:			The Protocol used to specify the communication mode with the Server.
