@@ -219,6 +219,13 @@ Typescript:
 				// TypeScript correctly infers the Enum through the following:
 				type <enum> = <enum>[keyof <enum>];
 
+				// Note: Enums store Key-Value and Value-Key Mappings:
+					<enum-name>.<key> === <numeric-value>
+					<key> === <enum-name>[<numeric-value>]
+
+					const keys = Object.keys(<enum-name>).filter(key => isNaN(parseInt(key)))
+					const values = Object.values(<enum-name>).filter(key => !isNaN(parseInt(key)))
+
 			Type Alias:			Declare custom Types that can be reused in other Types or Interfaces.
 				type <type-alias> = <type> | ... ;
 
