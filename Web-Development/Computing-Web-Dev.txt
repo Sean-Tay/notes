@@ -108,6 +108,10 @@ Web Dev:
 		CMS:					Traditional Architectural Pattern for Web Projects. Involves the Server actively rendering any custom UI per API Request. 
 		JAMStack:				Modern Architectural Pattern for Web Projects. Involves Pre-Compilation of the Web Application into Static Assets which can then be deployed to CDNs for quick delivery to Clients.
 
+		Static-Site Generation: Similar to Client-Side Rendering where an Artifact is created during the Build Process, but the Site does not change between Users, and does not require the Client to additionally execute Code. This confers SEO advantages, as the Content does not need to be Rendered before it can be read.
+		Client-Side Rendering:	An Artifact is created during the Build Process, which is then sent to the Client at Run-Time. It requires the Client to execute Code within the Artifact to generate / Render the Site Content.
+		Server-Side Rendering:	What the Client gets is mandated by a running Server Side Process.
+
 		Above-the-Fold Content:	Content in the Web Application that would be initially in view in the Browser's Viewport.
 		Below-the-Fold Content:	Content in the Web Application that would be outside of the view in the Browser's Viewport.
 
@@ -135,7 +139,7 @@ Web Dev:
 						Scalability: The Static Assets are deployable on a CDN, which is optimized for delivery of media to a high number of Client Machines.
 						Maintenability: With the introduction of Web APIs, Cloud Technologies (with their own dedicated Maintainence Teams) can be easily leveraged on as well. This lessens the Maintenance Workload for the Web Application.
 
-			A Web Server is a running Process that listens for incoming Requests for information over the Web and sends back Responses.
+			A Web Server is a running Process that listens for incoming Requests for information over the Web, differentiating between Requests for Static Content, or Dynamic Content (such as REST Calls). Dynamic Requests are sent to the Application Server.
 
 			The Server-Side of a Web Application, sometimes called the Application Server, handles important tasks such as Authentication and Authorization.
 
