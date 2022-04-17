@@ -34,6 +34,15 @@ Web Dev:
 		Web Server:				A running Process on a Host Machine that is designed to just serve Static Content and Resources via HTTP. Requests for Dynamic Content gets sent to the App Server, although Plugins can be installed to generate Dynamic Content via Scripting Languages as well.
 		App Server:				Hosts and Exposes Business Logic and Processes. Additional Support for Application Level Services such as Connection Pooling, Object Pooling, etc. are defined here as well.
 
+		Static-Site Generation: Similar to Client-Side Rendering where an Artifact is created during the Build Process, but the Site does not change between Clients, and does not require the Client to additionally execute Code. This confers Performance and SEO advantages, as the Content does not need to be Rendered before it can be parsed.
+
+		Client-Side Rendering:	An Artifact is created during the Build Process, which is then sent to the Client at Run-Time (Client requests for HTML first, which contains the Links for other Resources). Although it requires the Client to execute Code within the Artifact to generate / Render the Site Content, it is faster overall than Server-Side Rendering as no further Requests are needed for generating Site Content. Good for SPAs, where only a single HTML Page is used to hold all Dynamically Generated Content.
+
+		Server-Side Rendering:	What the Client gets is mandated by a running Server Side Process.
+
+		CMS:					Traditional Architectural Pattern for Web Projects. Involves the Server actively rendering any custom UI per API Request. 
+		JAMStack:				Modern Architectural Pattern for Web Projects. Involves Pre-Compilation of the Web Application into Static Assets which can then be deployed to CDNs for quick delivery to Clients.
+
 		URL:					A String that specifies the location of a Resource / Site / Service on the Web. Consists of:
 			Protocol:			The Protocol used to specify the communication mode with the Server.
 			Host and Domain:	The Entity that the Server is running on, and the Administrative Space the Entity is in.
@@ -104,13 +113,6 @@ Web Dev:
 
 		Cache Invalidation:  	To force the Browser to discard their Local Copy of a Resource, and to Request it again from the Server.
 		Cache Eviction:			To remove some Local Copies and free up space for other Resources.
-
-		CMS:					Traditional Architectural Pattern for Web Projects. Involves the Server actively rendering any custom UI per API Request. 
-		JAMStack:				Modern Architectural Pattern for Web Projects. Involves Pre-Compilation of the Web Application into Static Assets which can then be deployed to CDNs for quick delivery to Clients.
-
-		Static-Site Generation: Similar to Client-Side Rendering where an Artifact is created during the Build Process, but the Site does not change between Users, and does not require the Client to additionally execute Code. This confers SEO advantages, as the Content does not need to be Rendered before it can be read.
-		Client-Side Rendering:	An Artifact is created during the Build Process, which is then sent to the Client at Run-Time. It requires the Client to execute Code within the Artifact to generate / Render the Site Content.
-		Server-Side Rendering:	What the Client gets is mandated by a running Server Side Process.
 
 		Above-the-Fold Content:	Content in the Web Application that would be initially in view in the Browser's Viewport.
 		Below-the-Fold Content:	Content in the Web Application that would be outside of the view in the Browser's Viewport.
