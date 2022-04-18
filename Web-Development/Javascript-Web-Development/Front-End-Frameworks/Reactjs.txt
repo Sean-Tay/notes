@@ -561,7 +561,7 @@ React.js
 						// Use only if infrequently updated Data / Functionality needs to be accessible at many different levels of the Component Tree.
 
 					// Comparison to Redux:
-						// Context can replace Redux if you're just avoiding passing down Props to many intermediate Components to a Deeply Nested one.
+						// React Contexts are more suited for holding Data that does not change often, as updates to the Data will by default cause re-Renders for every Child Component from the Consuming Component.
 
 						// Redux has many other Features, such as Middleware Integration, Time-Travel Debugging and the Redux Devtool Browser Extension.
 

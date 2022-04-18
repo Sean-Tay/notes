@@ -1,8 +1,8 @@
 Redux.js
 	Abbreviations:
-		MVC: 					Model-View-Controller.	
+		MVC: 					Model-View-Controller.
 	
-	Description: Centralized State and Logic Container. It mainly deals with the Model and View in MVC.
+	Description: 				Centralized State and Logic Container. It mainly deals with the Model and View in MVC.
 	
 	Resources:
 		
@@ -130,6 +130,9 @@ Redux.js
 
 		External Configuration:
 			With React:
+				React Contexts vs. Redux: Both store Globally Accessible Data, but their use-cases differ.
+					React Contexts are more suited for holding Data that does not change often, as updates to the Data will by default cause re-Renders for every Child Component from the Consuming Component.
+
 				Ensure that the Provider Component is rendered at the topmost level of the Web Application. This will enable any sub-Components wrapped with connect() to receive the appropriate State and Dispatchers in their Props.
 					<Provider store={createStore(combinedReducer)}>
 						<App />
