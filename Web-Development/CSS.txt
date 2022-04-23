@@ -194,11 +194,13 @@ CSS:
 							Parent Element cannot account for Element Size.
 
 						Interprets Top, Bottom, Left, and Right settings with respect to position derived from closest Ancestor Element with non-static positioning, or <body> </body> if there is none.
+						Absolute Content scrolls with the Page.
 						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 
 					fixed:
 						Removed from Document Flow.
 						Interprets Top, Bottom, Left, and Right settings with respect to the Browser Viewport.
+						Fixed Content does not scroll with the Page.
 						Creates a new Stacking Context (for descendants) when a z-index specification is set.
 
 					sticky:
