@@ -84,6 +84,19 @@ CSS:
 					// css here
 				}
 
+			/* Specify variables for reuse in other places (Inline or other CSS Files) */
+				/* Tip: The :root Pseudo-Class Selector can be used to define a scope for Globally-accessible Variables */
+				selector {
+					--<variable-name>: <value>;
+
+					...
+
+
+				}
+
+				/* Reference a Variable Value */
+				/* var(--<variable-name>) */
+
 			/* To introduce a Virtual "Replaced" Element before selector1 HTML Elements. */
 				selector1::before ... { content: '', ... }
 
