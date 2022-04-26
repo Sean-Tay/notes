@@ -79,29 +79,27 @@ CSS:
 			/* class */
 				.class {}
 			
+			/* Specify Custom Properties for reuse in other places (Inline or other CSS Content) */
+				/* Tip: The :root Pseudo-Class Selector can be used to define a scope for Globally-accessible Variables */
+				<css-dom-selector> {
+					--<variable-name>: <value>;
+
+					...
+				}
+
+				/* Reference a Variable Value (Inline or other CSS Content) */
+				/* <rule>: var(--<variable-name>) */
+
 			/* media conditional - apply css only if conditional is satisfied */
 				@media all and (conditional) {
 					// css here
 				}
 
-			/* Specify variables for reuse in other places (Inline or other CSS Files) */
-				/* Tip: The :root Pseudo-Class Selector can be used to define a scope for Globally-accessible Variables */
-				selector {
-					--<variable-name>: <value>;
+			/* To introduce a Virtual "Replaced" Element before <css-dom-selector> HTML Elements. */
+				<css-dom-selector>::before ... { content: '', ... }
 
-					...
-
-
-				}
-
-				/* Reference a Variable Value */
-				/* var(--<variable-name>) */
-
-			/* To introduce a Virtual "Replaced" Element before selector1 HTML Elements. */
-				selector1::before ... { content: '', ... }
-
-			/* To introduce a Virtual "Replaced" Element before selector1 HTML Elements. */
-				selector1::after ... { content: '', ... }
+			/* To introduce a Virtual "Replaced" Element before <css-dom-selector> HTML Elements. */
+				<css-dom-selector>::after ... { content: '', ... }
 
 		CSS Specificity:
 			The Higher a CSS Rule-Set's Specificity, the Greater its Priority.
