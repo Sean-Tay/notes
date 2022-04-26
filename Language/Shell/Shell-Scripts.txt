@@ -93,7 +93,7 @@ Linux / Unix:
 				-s				- Display only top-level Files and Directories.
 				-h				- Display number of Bytes in terms of the next smallest Unit of Measurement.
 			
-			df 					- Display free Disk Space.
+			df <path>			- Display free Disk Space.
 				-h				- Display number of Bytes in terms of the next smallest Unit of Measurement.
 
 			free				- Display Memory Occupancy Information.
