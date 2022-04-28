@@ -669,6 +669,7 @@ Kotlin
 						// Write
 							// Write Content piecewise into the File via a PrintWriter.
 							// Note: PrintWriter internally uses a BufferedWriter.
+							// Note: PrintWriter not officially declared as Thread-safe, but can assume it is.
 								<file-handle>.printWriter().use {
 									out -> 
 										// ... out.print(<content>) ...
