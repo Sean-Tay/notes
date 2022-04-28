@@ -20,6 +20,8 @@ SQL:
 			Indexes: An additional Data Structure accompanying a Table that speeds up Record Access during Queries.
 				B Tree implementation allows optimization of GROUP BY / HAVING / Min-Max Aggregate Queries.
 
+				Primary Keys automatically have Indexes created on them.
+
 				Queries should only utilize the Indexed Attribute(s) of an Index in the correct order in order to benefit from the Index.
 
 		Syntax:
