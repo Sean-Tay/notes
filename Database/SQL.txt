@@ -15,6 +15,10 @@ SQL:
 
 		Spooling: 				Data is temporarily held in volatile storage to be used for near-future operations. In SQL, this is the process of writing query results to a file.
 
+		Oracle:
+			User:				Typical Database User.
+			Schema:				Refers to the set of Objects owned by a User.
+
 	Details:
 		General:
 			Indexes: An additional Data Structure accompanying a Table that speeds up Record Access during Queries.
@@ -31,6 +35,8 @@ SQL:
 					NUMBER(<Total_Precision>, <Number_of_Decimal_Digits>): General Numerical Data Type.
 
 					CHAR(<Length>):	Fixed-length String. Better performance than VARCHAR.
+					VARCHAR(<Max_Length>): Variable-Length String - try NOT to use. Distinguishes between NULL and empty Strings.
+					VARCHAR2(<Max_Length>): Variable-Length String. Does NOT distinguish between NULL and empty Strings.
 
 					BOOLEAN({TRUE | FALSE}): Boolean Variables.
 
@@ -255,9 +261,6 @@ SQL:
 					PL/pgSQL 			- Procedural Language Extension that allows Applications to additionally indicate how the instruction should be done. 
 
 				Oracle SQLPlus Specials:
-					VARCHAR(<Max_Length>): Variable-Length String Internal Data Type - try NOT to use. Distinguishes between NULL and empty Strings.
-					VARCHAR2(<Max_Length>): Variable-Length String External Data Type. Does NOT distinguish between NULL and empty Strings.
-
 					SET LIN[ESIZE] <line_width> - Specify <line_width> as the maximum number of Characters within one Line. Maximum value is 32767.
 					SET WRAP {ON | OFF} - Specify if Lines exceeding <line_width> should wrap-around, or be truncated.
 
