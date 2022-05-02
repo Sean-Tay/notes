@@ -451,6 +451,15 @@
 			- If order of Elements are unimportant, Deletion need not be O(n):
 				- Swap the Element to be Deleted and the Last Element, then just pop it off.
 	
+	Linked Lists:
+		- Runner Technique: Use multiple Pointers of different Stride Lengths.
+
+	Bit Manipulation:
+		- XOR: ^
+			- Commutative and Associative
+			
+			- Can be used to find missing number in sequence of unique numbers via len ^ (num1 ^ num2 ^ ...)
+
 	String Manipulation:
 		- Regex.
 
