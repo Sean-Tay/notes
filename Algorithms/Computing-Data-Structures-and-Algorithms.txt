@@ -23,6 +23,8 @@
 				However, Linked List Nodes can also be accessed in O(1) Time if the context that is interested in the Node stores the Reference to the Node. If it is a Doubly Linked List, then Insertion and Deletion can actually be O(1) Time as well.
 
 	Queue: FIFO Data Structure.
+		- Implementation:
+			Linked List: Dequeue at Head, Enqueue at Tail.
 
 	Stack: LIFO Data Structure.
 
