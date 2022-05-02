@@ -1,4 +1,14 @@
 # Data Structures: Data organized in a specific way to support efficient Insertion, Searching / Updating, and Removal of Data in Memory. Contrast with DMBS for efficient storage in Disk.
+	Array:
+		- Time Complexities:
+			- Insertion: Amortized O(1):
+				Copying Elements during Array Expansion takes O(n) Time: sum(n/2 + n/4 + n/8 + ... + 1)
+					Final Capacity Increase: n/2 Elements to Copy
+					Previous Capacity Increase: n/4 Elements to Copy
+					Previous Capacity Increase: n/8 Elements to Copy
+					...
+					First Capacity Increase: 1 Element to Copy
+
 	Linked List: 
 		- Time Complexities:
 			- Search / Update: O(n)
