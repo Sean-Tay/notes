@@ -207,7 +207,10 @@
 				- Integer: 32 Bits = 32 Elements.
 			
 			- Utility Operations:
-				- Check ith Bit: x & (1 << (n - (i + 1)))
+				- Check ith Bit: 
+					x & (1 << (n - (i + 1)))
+					x / 2 ** i
+
 				- Activate ith Bit: x = x | (1 << (n - (i + 1)))
 				- Activate ith Bit to jth Bit inclusive: x = x | ((1 << (n - (i + 2)) - 1) & (1 << (n - (j + 1)))
 
@@ -416,8 +419,6 @@
 			- Valid Prefix.
 			- Autocomplete.
 
-	Bitmask
-
 # Algorithms
 	Analysis
 		- Bound Notation:
@@ -597,13 +598,12 @@
 	Divide and Conquer: Involves Problems that have discrete Sub-Problems.
 
 	Dynamic Programming: Involves Problems that have overlapping Sub-Problems.
-		1) Top-Down: Recursion / Memoize
+		1) Top-Down: Try to reach the Target from what we have.
 			- Avoids recomputing some Past States in overlapping Sub-Problems.
 			- Use Dictionaries for the Memoization?
 			
-		2) Bottom-Up: For Loops
+		2) Bottom-Up: Try to reach what we have from the Target.
 			- Avoids Recursion Overhead.
-			- Use Multidimensional Arrays for the Memoization?
 
 	Exhaustive Search
 
