@@ -685,87 +685,132 @@ Kotlin
 				// JSON Manipulation
 					// Relevant Packages:
 						com.fasterxml.jackson.* // Serialization / Deserialization Library for JSON Objects
+							// Relevant Types:
+								ObjectMapper
 
-					// Relevant Types:
-						ObjectMapper
+								JsonNode // Documentation: https://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/JsonNode.html
+									ContainerNode
+										ObjectNode
+										ArrayNode
 
-						JsonNode // Documentation: https://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/JsonNode.html
-							ContainerNode
-								ObjectNode
-								ArrayNode
+									ValueNode
+										TextNode
+										NumericNode
+										BooleanNode
+										NullNode
+										MissingNode
 
-							ValueNode
-								TextNode
-								NumericNode
-								BooleanNode
-								NullNode
-								MissingNode
+							// Helper to Serialize / Deserialize Classes into JSON / from JSON.
+							// Note: Costly to instantiate - use for multiple uses.
+							val mapper = ObjectMapper()
+								// Configure Serialization / Deserialization Behaviour
+									// mapper.configure( ... )
 
-					// Helper to Serialize / Deserialize Classes into JSON / from JSON.
-					// Note: Costly to instantiate - use for multiple uses.
-					val mapper = ObjectMapper()
-						// Configure Serialization / Deserialization Behaviour
-							// mapper.configure( ... )
+								// JSON String <-> Jackson JsonNode
+									// mapper.readTree(<json-string>)
 
-						// JSON String <-> Jackson JsonNode
-							// mapper.readTree(<json-string>)
+									// mapper.writeValue(<destination>, <jackson-node>)
 
-							// mapper.writeValue(<destination>, <jackson-node>)
+									// mapper.writeValueAsString(<node>)
 
-							// mapper.writeValueAsString(<node>)
+								// JSON String <-> Java Object
+									// mapper.readValue(<json-string>, <class>)
 
-						// JSON String <-> Java Object
-							// mapper.readValue(<json-string>, <class>)
+									// mapper.writeValue(<output-stream>, <class-instance>)
+									// mapper.writeValueAsString(<class-instance>)
 
-							// mapper.writeValue(<output-stream>, <class-instance>)
-							// mapper.writeValueAsString(<class-instance>)
+								// Java Object <-> Jackson JsonNode
+									// mapper.valueToTree(<java-object>)
 
-						// Java Object <-> Jackson JsonNode
-							// mapper.valueToTree(<java-object>)
+									// mapper.valueToTree(<jackson-node>, <class>)
 
-							// mapper.valueToTree(<jackson-node>, <class>)
+							// Node Creation
+								val node: JsonNode = mapper.createObjectNode()
 
-					// Node Creation
-						val node: JsonNode = mapper.createObjectNode()
+							// Detecting the Node Type
+								// node.isObjectNode
+								// node.isArray
+								// node.isValueNode
+									// node.isTextual
 
-					// Detecting the Node Type
-						// node.isObjectNode
-						// node.isArray
-						// node.isValueNode
-							// node.isTextual
+								// node.isMissingNode
 
-						// node.isMissingNode
+							// Get a Node Value
+								// get - returns null for Missing Nodes
+								val value = <object-node>.get("<key>")?.intValue()
+								
+								// Tip: Don't use toString(), as it'll add Quotes to all String Values which will mess up CSV Parsing. Best Practice: See JSON String <-> Jackson JsonNode Section above.
+								// Note: textValue will return null if the Value is NOT an actual Text Value (i.e. isTextual).
+								val value = <object-node>.get("<key>")?.textValue() 
 
-					// Get a Node Value
-						// get - returns null for Missing Nodes
-						val value = <object-node>.get("<key>")?.intValue()
-						
-						// Tip: Don't use toString(), as it'll add Quotes to all String Values which will mess up CSV Parsing. Best Practice: See JSON String <-> Jackson JsonNode Section above.
-						// Note: textValue will return null if the Value is NOT an actual Text Value (i.e. isTextual).
-						val value = <object-node>.get("<key>")?.textValue() 
+								// path - returns a Node for which isMissingNode() will return true
+								val node: JsonNode = <object-node>.path("<key>").path("<sub-key>")
+								// node.isMissingNode() === true
 
-						// path - returns a Node for which isMissingNode() will return true
-						val node: JsonNode = <object-node>.path("<key>").path("<sub-key>")
-						// node.isMissingNode() === true
+								// with - upserts a Node at "<key>" if it does not exist, and returns it
+								val node = <object-node>.with("<key>")
+								val node = <object-node>.withArray("<key>")
 
-						// with - upserts a Node at "<key>" if it does not exist, and returns it
-						val node = <object-node>.with("<key>")
-						val node = <object-node>.withArray("<key>")
+							// Set a Node Value
+								// put
+								val node = <object-node>.put("<key>", <primitive-value>)
 
-					// Set a Node Value
-						// put
-						val node = <object-node>.put("<key>", <primitive-value>)
+								// replace
+								val oldNode: JsonNode = <object-node>.replace("<key>", <json-node>)
 
-						// replace
-						val oldNode: JsonNode = <object-node>.replace("<key>", <json-node>)
+								// set
+								val node: ObjectNode = <object-node>.set("<key>", <json-node>)
 
-						// set
-						val node: ObjectNode = <object-node>.set("<key>", <json-node>)
+							// Removing a Node Value
+								// remove
+								val removedNode: JsonNode = <node>.remove("<key>")
+								val adjustedNode: JsonNode = <node>.remove(listOf("<key>", ...))
 
-					// Removing a Node Value
-						// remove
-						val removedNode: JsonNode = <node>.remove("<key>")
-						val adjustedNode: JsonNode = <node>.remove(listOf("<key>", ...))
+				// Client-Server Interactivity:
+					// Relevant Packages:
+						org.http4k.core.*
+						org.http4k.routing.* // Library for setting up Server Routes
+							// Relevant Types:
+								// Server
+									HTTPHandler // Data Type that specifies API Routes and their associated Handler Functions.
+									Request
+									Response
+
+							// Setting up the Server
+								fun <handler-function>( ... ): HTTPHandler {
+									return routes(
+										"<route>/{<path-parameter>}" bind Method.<http-method-type> { 
+											req ->
+												val pathParam = req.path("<path-parameter>")
+												val queryParam = req.query("<query-parameter>")
+
+												// ...
+
+												Response(Status.<status>)
+													.header(<header-field>, <header-value>)
+													.header()
+													// ...
+													.body("<value>")
+										},
+
+										"<route>" bind <another-handler-function>( ... ),
+									)
+								}
+
+								fun main() {
+									<handler-function>.asServer(<server>(<port>)).start()
+										// <server>
+											// SunHttp
+								}
+
+							// Setting up and using the Client
+								fun main() {
+									val client: HTTPHandler = <http-client>()
+
+									val request = Request(Method.<http-method-type>, "<url>")
+
+									val response = client(request)
+								}
 
 		Project Configuration:
 			// IntelliJ + Gradle + Maven
