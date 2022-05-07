@@ -27,6 +27,12 @@ Database
 			Horizontal Partitioning: Different Records into Separate Collections (e.g. Sharding).
 			Vertical Partitioning: Different Record Attributes into Separate Collections (e.g. Normalization or simple Record Splitting).
 
+		Replication:			Having Redundant Copies of the Data in a Database stored in multiple Machines so that if one fails, dependent Applications can still use the other Machines for Data Retrieval. Also helps to reduce operational load per Instance.
+		Replica:				A Machine within a Replicated Database.
+
+		Data Consistency: 		Degree of Consistency between Copies of Data within one or more Database Clusters (in different Data Centers). Usually seen as a tradeoff with Database Performance.
+		Consistency Model: 		Defines a contract in which Reads and Writes to Data will guarantee certain predictable behaviour in the Data. One or more can be implemented to achieve greater Consistency in exchange for decreasing Performance.
+
 	Details:
 		Database Objectives:
 			Persistent Data Storage: Data should not be lost when the Database shuts down.
@@ -155,8 +161,74 @@ Database
 									Good for Range Queries (that only use the Keys in the Index), as the Data in the Index is internally Sorted.
 
 								Cons:
-									Relatively Slow Writes, as it is being written to Disk vs. In-Memory.
+									Relatively Slow Writes, as multiple Disk Blocks are accessed after each Write to update the Index.
 	
+			High Availability:
+				Replication:
+					Consistency Models: In descending order of Operational Performance:
+						Eventual Consistency: Each Read on an Object is only guaranteed to return the result of applying a subset of Writes to that Object thus far (e.g. Writes 2 to 3, Writes 1 to 4, Writes 1 & 3 to 5) in the short term. This means that each Read has a chance to return a version of the Object that has never actually existed.
+
+						Consistent Prefix: Each Read on an Object is guaranteed to return the result of applying an ordered sequence of Writes on an Object thus far, starting from the first Write (e.g. Writes 1 to 3, Writes 1 to 2, Writes 1 to 5). This means that each Read will return a version of the Object that has actually existed at some point in time.
+
+						Session Consistency: Data Abnormalities should not occur for Reads and Writes during a limited period of time.
+							Monotonic Reads: Each Read in a sequence of Reads on an Object is guaranteed to return the result of applying at least the same subset of Writes on the Object thus far as the previous Read (e.g. Writes 3 to 4, Writes 3 to 4, Writes 1 & 3 to 4, Writes 1 to 5).
+							Read My Write: The result of all Writes to an Object done by a Client is guaranteed to be observable in the Client's subsequent Reads done on the same Object. Strong Consistency for the Client, Eventual Consistency for others.
+
+						Bounded Staleness: Each Read on an Object is guaranteed to give the result of applying at least x Writes to that Object thus far (e.g. at least Writes 1 to 3, if x = 3 => Writes 1 to 3 & 5).
+
+						Strong Consistency: A Read is guaranteed to return the result of applying all Writes on an Object thus far. Performance-intensive; depending on use case, it may be possible to use the weaker Consistency Models for the same effect. Note that this is technically Bounded Staleness with x = n.
+
+					Types:
+						Synchronous: Writes not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
+
+						Asynchronous: Writes considered successful when the Instance that was assigned the Write Transaction completes it. Faster Speed, but Clients may get stale / inconsistent Reads due to Eventual Consistency.
+							Server / Database should simply return the written Data back to the Client that triggered the Write upon Success, or Read only from Leaders for editable Data (Read My Write Consistency).
+							Each Client should only refer to one Instance for updates throughout the operation (Consistent-Prefix + Monotonic Reads Consistency), as different Replicas synchronize with a particular Write at different Speeds (Back-in-Time syndrome).
+							Writes with Casual Relationships should ideally happen on the same Disk Partition (Consistent Prefix Reads), otherwise they might not make sense when they are Read (different Read Speeds for different Disk Partitions).
+
+					Strategies:
+						Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower) in the Cluster.
+							Characteristics:
+								Leader sends list of updates to other Followers via a Replication Log.
+									Implementation:
+										SQL Statements (for Relational Databases): Not ideal as SQL Statements can be non-deterministic (e.g. reference Current Time, which can be different per Replica).
+										Internal Append-only Log: Describes which Bytes were changed. Not ideal as different Instances might have the affected Data in different Locations.
+										Logical Log: Describes which Data was modified and how. Better future-proofing if underlying Database Engine changes.
+
+								Adding a Follower: Initialize the Follower with a consistent snapshot of the Data in the Leader (associated with some position in the Replication Log), and then update to the latest State via the Replication Log.
+
+								Pros:
+									Single Source of Truth => no Conflicts to resolve.
+								
+								Cons:
+									All Writes going to a single Instance, so Write Throughput is lower.
+										Can consider Sharding, and having different Leaders for each subset of the Data.
+
+							Scenarios:
+								Follower Failure: On reboot, fetch all changes from the Leader, and implementing the changes starting from its last position in the Replication Log.
+
+								Leader Failure / Failover: Determine a new Leader based on some Consensus / most up-to-date Follower, and configure downstream Dependencies to send Writes to this new Leader + configure all other Follower to get the changes from the new Leader.
+									Problems:
+										Unreplicated / Partially Replicated Writes of old Leader to Followers.
+										Accidental Failovers from temporary Network Congestion.
+										Split Brain: Old Leader associates itself to still be a Leader upon recovery and accepts Writes, leading to an inconsistent Data State across the Cluster.
+
+						Multi-Leader: 
+							Characteristics:
+
+
+							Scenarios:
+
+
+						Leaderless: 
+							Characteristics:
+								
+
+							Scenarios:
+								
+
+
+
 		Database Types:
 			In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
 				Pros:
@@ -166,7 +238,6 @@ Database
 
 
 				Examples:
-
 
 			Relational Database: Consists of Tables storing Rows of Structured Data.
 				Pros:
