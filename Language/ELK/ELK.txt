@@ -1,0 +1,80 @@
+ELK
+	Abbreviations: 
+	
+	Description: Service for Searching Data.
+	
+	Resources:
+	
+	Concepts:
+		Query String Syntax: A "mini-language" that is used by the "query_string" Value  / "q" Query Parameter w.r.t the Search API.
+	
+	Details:
+		Query String Syntax:
+			_exists_:<field> // Search for <field> Values which are non-null.
+
+			<field>:<term> ... // Search for <field> Values which match any of the specified <term>s
+				// <term>
+					// Plain Text Values:
+						<value> // Without Quotes
+
+					// Phrase Values:
+						"<prefix> <suffix> ..." // Search for Values which exactly contains the specified Phrase Term
+
+					// Text Values with Wildcards:
+						// Note: Wildcards are incompatable with Fuzzy Searches.
+
+						<value>? // Search for Values which contain the specified <value> with a Single Character Wildcard
+						<value>* // Search for Values which contain the specified <value> with Zero or More Character Wildcards
+
+						// Note: Wildcards before <value> are extremely Memory Intensive.
+						*<value>* // Search for Values which contain the specified <value> as a substring
+
+					// Regex Values:
+						/<regex>/ // Search for Values that match the <regex> Term
+
+					// Range Values:
+						// Note: Inclusive and Exclusive Range Boundaries can be both used in a Single Range.
+						[<start> TO <end>] // Search for Values which fall within the Inclusive Range Boundaries
+						{<start> TO <end>} // Search for Values which fall within the Exclusive Range Boundaries
+
+						// Dates:
+							[<YYYY-MM-DD> TO <YYYY-MM-DD>]
+							{* TO <YYYY-MM-DD>} // All Dates before <YYYY-MM-DD>
+							{<YYYY-MM-DD> TO *} // All Dates after <YYYY-MM-DD>
+
+						><value> // Greater Than
+						>=<value> // Greather Than or Equal To
+						<=<value> // Lesser Than or Equal To
+						<<value> // Lesser Than
+
+				// Fuzzy Terms:
+					// Note: Wildcards are incompatable with Fuzzy Terms.
+					<term>~<fuzziness-number> // Search for Values that approximately match <term>
+						// For Values, differ by Insertion, Deletion or Substitution of <fuzziness-number> characters)
+
+				// Term Relevance:
+					<term>^<relevance-number> // Assign <term>s with different Weight
+						0 to 1 <relevance-number> // Less Relevance
+						> 1 <relevance-number> // More Relevance
+
+				// Boolean Term Operators:
+					-<term> // Results should exclude <term>
+					+<term> // Results should include <term>
+
+			<field>:(<term1> ... ) // Search for Values which match any of the specified Terms
+				// Note: If Boolean Term Operators are involved, then Results must conform to all Boolean Terms
+
+			// Query Boolean Logic
+				<query1> AND <query2> ...
+				<query1> OR <query2> ...
+				NOT <query> 
+
+				// Note: AND has higher precedence than OR
+				// Tip: Use Parenthesis to override default AND precedence
+				<query1> AND ( <query2> OR <query3> ... ) ...
+
+
+
+	Commands:
+		
+	
