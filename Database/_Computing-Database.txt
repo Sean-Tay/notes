@@ -17,7 +17,7 @@ Database
 
 		Attribute / Key / Field: Refers to a characteristic of some type of Entity.
 		Record:					A collection of Attributes pertaining to some instance of an Entity.
-		Collection:				A table of Records.
+		Collection:				A group of Records.
 
 		Index: 					An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record on Disk via a defined subset of the Record's Data.
 			Sparse Index:		Contains a mapping only for every n Records in the Collection to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
@@ -38,12 +38,12 @@ Database
 				Optimization Techniques:
 					Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of the Collection without concern for Duplication. Lookups can be optimized by traversing from the end of the Collection.
 
-					Indexes: 	Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Storage Space required by the Collection.
-						For very large Collections, a Multi-Level Index may be used to avoid sequential Storage Block lookups in the original Index.
+					Indexes: 	Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
+						Background:
+							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the actual Disk Block that stores the complete Record, because only the necessary subset of the Record's Data is stored in each Disk Block used by the Index (thus each Disk Block can store more Block Addresses).
+								The optimization is more effective when Records are large => Less Records per Disk Block => More Disk Block Lookups without an Index.
 
-						The Data within the Index is usually stored in sorted order, but the actual Records in the Collection on Disk may not be stored in sorted order.
-
-						The optimization is more effective when Records are large => Less Records per Disk Partition => More Disk Lookups without an Index.
+							The Data within the Index is usually stored in sorted order, but the actual Records in the Collection on Disk may not be stored in sorted order.
 
 						Types:
 							Hashmaps: Index Keys map to Memory Addresses (Byte Offsets) in Disk.
@@ -73,16 +73,85 @@ Database
 								Pros:
 									Higher Write Throughput due to Records being placed In-Memory at first.
 									Uses the Append-Only method of adding new Records to the Collection.
-									Allows access to Records in Sub-Linear Time.
 									Good for Range Queries (that only use the Keys in the Index), as the Data in the Index is internally Sorted.
 
 								Cons:
 									Relatively Slow Reads for Keys that do not exist in the Collection.
 									Merging Process for SS Tables can take up Background Resources.
 
-							B Trees: Data is modelled such that it is a Tree, but on Disk.
+							B Trees / B+ Trees: An extension of a Binary Search Tree - m-way Search Tree, but with constraints on how new Elements are inserted to prevent degenerate Trees.
+								Approach:
+									Each Node in the Tree is stored in one Disk Block.
+
+									In the Non-Leaf Nodes, Keys of the Records used in the Index are stored alongside the pointers to next Node / Disk Block.
+										For very large Collections, a Multi-Level Index may be used to avoid sequential Disk Block lookups in the original Index.
+											At Higher Levels, the Keys stored in a Node / Disk Block becomes more sparse:
+												Level 1: Keys 1 2 3, 4 5 6, 7 8 9, 10 11 12, 13 14 15, ...
+												Level 2: Keys 1 4 7, 10 13 16, ...
+												Level 3: Keys 1 10 19, ...
+
+									Complete Records are only stored at the Leaf Nodes.
+
+								Behaviour:
+									Time Complexities:
+										- Search / Update: O(logn)
+										- Insertion: O(logn)
+										- Deletion: O(logn)
+									
+									B-Tree Properties: 
+										- Each Node can now store up to m-1 Elements, and m references to Children Nodes (m Degree / Order).
+											- References to Child Nodes can be visualized as being stored 'between' the Elements.
+											- Element Order in each Node is important.
+										
+										- Self-Balancing Properties:
+											- All Non-Root Nodes with Children should have at least ceil(m/2) Child Nodes.
+												- A Child Node can only be created if this property is fulfilled for the given Non-Leaf Node.
+
+											- All Leaf Nodes should have at least ceil(m/2) - 1 Elements.
+
+											- All Leaf Nodes (Nodes with no Children) should be at the same Level.
+												- (Proactive) Insertion: Advantageous of not visiting a Node twice.
+													- Bottom-Up: Tree grows upwards ; actual Element Insertion should only occur at a Leaf Node.
+													- Traverse down from the Root Node to a Leaf Node.
+														- If a given Node during Traversal is full, split the Node into 2 Child Nodes, and take the median Element from the original Node and set it to a Parent Node.
+															- Left Bias: Resultant Left Child will have more Elements.
+															- Right Bias: Resultant Right Child will have more Elements.
+
+														- Continue Traversal from one of the Child Nodes.
+												
+												- (Proactive) Deletion: 
+													- Traverse down from the Root Node.
+														- If Element is in Non-Leaf Node:
+															- If the Child Node that precedes / succeeds the Element has at least ceil(m/2)-1 Elements:
+																- Obtain the Predecessor / Successor of the Element, depending on which Child Node has enough Elements.
+																- Replace Element with Predecessor / Successor Element.
+																- Delete Predecessor / Successor - guaranteed to be in Leaf Node.
+																
+															- Else: Both Child Nodes has less than ceil(m/2)-1 Elements:
+																- Merge Both Child Nodes together, set Element to be Median Key of Child Node.
+																- Traverse to new Child Node, and recursively delete Key from Child Node.
+
+																- Note: Parent may have less than ceil(m/2)-1 Elements as a result of this operation, but this will be resolved in subsequent Deletes.
+
+														- Else: Element is not in Current Non-Leaf Node.
+															- Determine next Child Node to traverse to.
+
+															- If Child Node has less than the minimum ceil(m/2)-1 Elements:
+																- If an immediate Sibling Node has at least ceil(m/2) Elements, execute a left or right Rotation on one of the neighbouring Parent Elements.
+																	- Send the neighbouring Parent Element down to the Child Node.
+																	- Set the Predecessor or Successor Element of the Sibling Node in the Parent Element's position.
+																- If both immediate Sibling Nodes have less than ceil(m/2) Elements, merge one of the Siblings together with the Child Node, with one the Parent Element becoming the Median Element of the Child Node.
+
+															- Continue Traversal.
+															- If Traversal has reached a Leaf Node, delete Element from Leaf Node if it exists.
+
+									B+ Trees Properties:
+										- Does not need to traverse the whole Tree for Sequential Access:
+											- All Non-Leaf Nodes have their Elements in the Leaf Nodes as well.
+											- All Leaf Nodes will be connected together like a Linked List from left to right.
+
 								Pros:
-									Higher Read Throughput - Sub-Linear Time Operation.
+									Higher Read Throughput - Sub-Linear Time Tree Traversal.
 									Good for Range Queries (that only use the Keys in the Index), as the Data in the Index is internally Sorted.
 
 								Cons:
