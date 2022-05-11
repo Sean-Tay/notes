@@ -88,6 +88,11 @@ Kotlin
 				...
 				""";
 
+				val multiline = """
+					<indented-content>
+					...
+				""".trimIndent();
+
 				// Templates:
 					// Simple: For just referencing Values / Variables
 					val i = <value>;
