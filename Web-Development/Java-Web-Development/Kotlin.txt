@@ -53,7 +53,11 @@ Kotlin
 			// Tip: Use Reflection to find out the Type of a Variable during Runtime:
 				println(<variable>!!::class.simpleName)
 				println(<variable>!!::class.qualifiedName)
-				
+			
+			// Package Declaration: Defines which Package the File belongs to.
+				// Note: Common Prefixes among the Files can be omitted from the Folder Structure (i.e. no need create such a deep nesting).
+				package <path>. ...
+
 			Constants:
 				val <runtime-constant-name>: <type> = <value>;
 
