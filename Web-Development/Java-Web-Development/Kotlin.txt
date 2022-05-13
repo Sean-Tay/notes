@@ -53,6 +53,9 @@ Kotlin
 			// Tip: Use Reflection to find out the Type of a Variable during Runtime:
 				println(<variable>!!::class.simpleName)
 				println(<variable>!!::class.qualifiedName)
+
+			// Tip: Get the underlying Java Class for a given Kotlin Class.
+				<kotlin-class>::class.java
 			
 			// Package Declaration: Defines which Package the File belongs to.
 				// Note: Common Prefixes among the Files can be omitted from the Folder Structure (i.e. no need create such a deep nesting).
@@ -719,7 +722,7 @@ Kotlin
 										NullNode
 										MissingNode
 
-							// Helper to Serialize / Deserialize Classes into JSON / from JSON.
+							// Helper to Serialize Class Instances to JSON Strings / Deserialize Class Instances from JSON Strings.
 							// Note: Costly to instantiate - use for multiple uses.
 							val mapper = ObjectMapper()
 								// Configure Serialization / Deserialization Behaviour
@@ -784,6 +787,26 @@ Kotlin
 								// remove
 								val removedNode: JsonNode = <node>.remove("<key>")
 								val adjustedNode: JsonNode = <node>.remove(listOf("<key>", ...))
+
+							// Converting from one type of Value to another type of Value (via Serializing the Source Class Instance to JSON String -> Deserializing from that JSON String into an Instance of the Target Class).
+								class <target-class> (
+									Create a Property that can be both Deserialized and Serialized.
+									@JsonProperty("<json-field>") val <json-field>:<type>? = null,
+
+									// Create a Property that can only be Deserialized.
+									@JsonProperty("<source-json-field>") @JsonIgnore val <non-serializable-property>:<type>? = null,
+
+									// ...
+								) {
+									// Create a Property that can only be Serialized.
+									@JsonGetter("<target-json-field>")
+									fun get<target-json-field>() {
+										return <property-value>
+									}
+								}
+
+								mapper.convertValue(<source-instance-object>, <target-class>)
+								
 
 				// Client-Server Interactivity:
 					// Relevant Packages:
