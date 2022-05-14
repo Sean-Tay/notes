@@ -188,7 +188,7 @@ Database
 							Writes with Casual Relationships should ideally happen on the same Disk Partition (Consistent Prefix Reads), otherwise they might not make sense when they are Read (different Read Speeds for different Disk Partitions).
 
 					Strategies:
-						Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower) in the Cluster.
+						Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower / Leader) in the Cluster.
 							Characteristics:
 								Leader sends list of updates to other Followers via a Replication Log.
 									Implementation:
@@ -214,12 +214,41 @@ Database
 										Accidental Failovers from temporary Network Congestion.
 										Split Brain: Old Leader associates itself to still be a Leader upon recovery and accepts Writes, leading to an inconsistent Data State across the Cluster.
 
-						Multi-Leader: 
+						Multi-Leader: Writes to several Leaders (possibly across Data Centers) - Leaders send each other Writes through some existing topology. Reads can come from any Replica (Follower / Leader) in the Cluster. 
 							Characteristics:
+								Leaders can send each other Writes via several Topologies:
+									Circular: A ring consisting of Leaders - each Leader passes Writes down to the next Leader after it in the ring. Not very Fault Tolerant.
+									Star: Akin to a starfish - every Leader is connected to some central Node. Single Point of Failure.
+									All-to-All (Fully Connected) - Each Leader is connected to every other Leader.
 
+									Chain Replication?
+
+								Pros:
+									A Leader in each Data Center makes it easier to manage globally available Services.
+									Write Throughput not limited by a single Replica.
+
+								Cons:
+									Write Conflicts possible between multiple Leaders (e.g. Write 2 coming before Write 1).
 
 							Scenarios:
+								Detecting Concurrent Writes: Writes are considered Concurrent if each Source of the Write did not know of the Write from the others (compare with Causal Writes), NOT about time at which the Writes took place (i.e. it's all about keeping track of what the Source sees before making the Write).
+									Version Vectors: Keep track of the number of Writes that each participant (Client / Replica) *thinks* all Replicas have made for every Object receiving Writes. 
+										Each Replica persists their view of the Version Vector, and passes it to the Client, which it then passes back to the Replica during a Write for tracking, and update the Version Vector before passing it back to the Client again.
 
+										Between two Version Vectors:
+											If all Elements of one Version Vector is equal or greater than all corresponding Elements of another Version Vector, then it means that the Write for the first Version Vector happened after the other (Writes have the Happen-Before Relationship).
+											If one Version Vector has Elements that are either smaller or greater than the corresponding Elements in the other Version Vector, then it means Concurrent Writes have occurred.
+
+										Version Vectors are merged when the Consistency Model is triggered by taking the maximum of each Element between each Version Vector tracked per Replica.
+
+								Conflict Resolution Strategies:
+									Conflict Avoidance: Have all Writes for an Object go to one Leader. Not good for flexibility in Configuration (e.g. during Leader failure, or Horizontal Scaling).
+
+									Last Write Wins: Each Write is given a Clock Timestamp, with the latest one being kept. Easy to implement, but Writes will be lost (important for use-cases requiring Version Histories) + possibility of Clock Skew between different Servers.
+
+									On Read: Store all conflicting Writes for an Object. During a Read for the Object, resolve them and store the resolved value of the Object.
+
+									On Write: Database relies on Application-defined Commutative (ordering doesn't matter) and Associative (which binary combinations don't matter after all are processed) Merging Logic to resolve Write Conflicts (Conflict-Free Replicated Data Types e.g. Distributed Counters, Decrementors, Distributed Sets, Ordered Lists).
 
 						Leaderless: 
 							Characteristics:
