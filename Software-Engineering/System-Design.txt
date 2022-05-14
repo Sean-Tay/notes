@@ -1,28 +1,27 @@
 System Design:
 	Abbreviations:
-		
+		CDN:					Content Delivery Network.
 	
 	Description: Problems designed to test your ability to keep progressing through scenarios with Limited Detail but Greater Flexibility.
-		Keep Probing after each Step?
-		Have to Dig Deep.
 	
 	Resources:
 		
 	
 	Concepts:
-		Reliable: 				Working in the face of Faults for both Software and Hardware.
+		Reliability: 			Working in the face of Faults for both Software and Hardware.
+			CAP Theorem: 		Describes the tradeoff between (Data) Consistency, Availability and Partitioning Tolerance for a Distributed System (choose 2 of 3). Usually either Consistency or Availability is compromised (in favour of Partitioning Tolerance).
+				Consistency:	Defines the degree at which replicated redundant copies of Data are the same between Nodes in a Distributed System. See Consistency Models in Database Notes.
+				Availability:	Observable via the ratio of handled Requests to dropped Requests.
+				Partitioning Tolerance: Enforces that the Distributed System can still operate even if parts of it are unreachable.
+
 			Continuous Availability: Full Availability 24/7.
 			High Availability:	Operational Performance for a higher than normal period.
-				Focus on eliminating Unscheduled Downtime due to Physical Hardware Failures.
-					Eliminate Single Points of Failure.
-					Reliable Crossover between Redundancies.
-					Failure Detection.
 
-		Scalable: 				Working as the System faces increased Traffic, Usage, and Data.
+		Scalability: 			Working as the System faces increased Traffic, Usage, and Data.
 			Horizontal Scaling: Adding more Resources to meet demand (i.e. Quantity).
 			Vertical Scaling:	Upgrading existing Resources to be more capable (i.e. Quality).
 
-		Maintenable: 			Ease at which parts of the System can be modified / added / removed by others.
+		Maintenability: 		Ease at which parts of the System can be modified / added / removed by others.
 
 		Response Time:			The time it takes for a Client to receive a Response from a submitted Request.
 		Latency:				The time in which a Pending Request is waiting to be handled by the System.
@@ -39,151 +38,55 @@ System Design:
 		Service Oriented Architecture: Style of Software Design where Servcies are provided to other Components by Application-related Components, through a Communication Protocol over a Network.
 
 		API Gateway:			An Interceptor for API / Microservice Requests that acts as a Single Entry Point to help implement Standardized Access across all APIs / Microservices.
-			Protocol Translation
-			Service Discovery
-			Authentication and Security Policy
-			Stabilization and Load Balancing
-			Cache Management
-			Global API Monitoring, Logging and Analytics
 	
 	Details:
+		Typical System Components grouped via Function:
+			Data Storage: See Database Notes.
+
+			Data Transport:
+				Message Queue: Enables Asynchronous Communication between two or more Components. A Messaging Broker typically manages the Queues and simplifies the connection of consuming Components via a Publisher / Subscriber Pattern.
+					Kafka
+					RabbitMQ
+					Azure Bus Service
+					AWS SQS
+					Google Cloud Pub/Sub
+
+				Load Balancer: A Reverse Proxy that distributes Network Traffic across different Nodes in a Distributed System.
+					Cloudflare
+					DigitalOcean
+					Azure Load Balancer
+					WS Load Balancer
+					Google Cloud
+
+				CDN: A Cache for all kinds of Static Content.
+					Fastly
+					Cloudflare CDN
+					Azure CDN
+					AWS CloudFront
+					Google CDN
+
+			Data Processing:
+				Custom Services: The Components in the System that executes Application-specific Logic.
+					Kafka Consumer
+
+					REST Server
+					Serverless Function
+
+					Spark Job
+
+			Data Presentation:
+				Desktop
+				Web
+				Mobile
+
 		Systems are Designed with the intent of being Reliable, Scalable and Maintenable.
-
-		Methodology:
-			1. Clarify the Problem:
-				Derivation of Concrete Details based on Estimation of Fuzzy Details:
-					Requirements:
-						Functional Requirements?
-							What is the App / Service supposed to do, and Scope.
-								Encryption of Data?
-
-								Geospatial Design?
-									Google S2 Library for Lat-Long Sphere Mapping.
-
-								Asynchronous Messaging Event-Driven Channel between User and Server?
-									Web Socket via NodeJS
-
-							Storage Requirements?
-								Cloud Distributed File Storage for Blob-Like Information: Generates a URL to the Resource.
-
-								Databases
-									Can use more than one Type if needed.
-
-						Non-Functional Requirements?
-							Estimation of Application Usage Metrics:
-								Traffic:
-									Peak Usage Scenarios for provided Service?
-										Per Second?
-										Per Minute?
-										Per Hour?
-
-									Ratio of Read to Writes.
-										80-20 Rule: 20% of Writes will lead to 80% of subsequent Reads.
-
-								Storage:
-									Number of Bytes for Single Business Data Object.
-									Longevity of Data Stored.
-
-								Nemory: For Caching.
-
-							Availability?
-								Uptime?
-									90% -> 36.5 Days Offline per Year
-									95% -> 18.25 Days Offline per Year
-									99% -> 3.65 Days Offline Per Year
-									99.9% -> 8.77 Hours Offline Per Year
-									99.99% -> 1 Hour Offline Per Year
-
-									Internal or External Usage?
-
-								Redundancy?
-
-								Server Health Monitoring?
-
-							Scalability?
-								Horizontal Scalability: How easy is it to add more Machines to each part of the System.
-									Load Balancing: Something that helps to distribute Traffic to other multiple identical Web Servers.
-										Server Software: Nginx
-
-										Layer 3: IP Load Balancing: Different IP Address per User IP Address.
-										Layer 4: DNS Load Balancing: A Technique which gives different IP Addresses of the different available Web Servers per Request.
-											Hash the IP Address of the Request?
-											
-											// BIND Protocol
-
-											// IP Address Caching on User Machine is a factor of Unequal Distribution for Workload.
-
-										URL Resource-Type Based Routing: Split the Requests based on Content Type, embedded via URL?
-											// Example: images.xxx.com ; gifs.xxx.com
-
-								Vertical Scalability: Improve the existing Machines by replacing sub-optimal Parts with better Performing ones.
-
-							Available Budget of Compute Resources?
-								Message Queue to prevent dropped Requests if Server is at Full Load?
-									Kafka: Publish Subscribe Nessage Queue Mechanism
-
-								Read-Write I/O Frequency
-									Database: 
-										Master (Read / Write) - Slave (Read)?
-											1 to 2 Seconds Delay, which may be okay depending on Data Consistency Requirements. If not, just immediately Read from the Master after the Write Operation.
-
-										Improve Read Performance by using Indexes on certain Table Columns.
-											Cons:
-												Larger Disk Space Requirement.
-												Slows down Write Operations.
-													// If Index is on Primary Key only, it should not affect.
-
-										In Memory Cache for even better performance?
-											Application to handle Reading from DB and storing it in Cache if Cache does not have requested Information?
-
-											Pre-Caching Service to compute Calculation Intensive Results -> Cache?
-
-										Partitioning for Write-Heavy Database?
-
-							Latency?
-								Global CDN - for Static Asset Files.
-									Saves Content to a Storage in a Local Area so that Users in that Area can all access from that Storage, which may be faster in terms of distance.
-
-								Peer-to-Peer Distribution between Local Data Centers?
-
-							Bandwidth? For Areas with Poor Internet Access?
-								1 Byte - 1 Character
-								Compression?
-
-								HTTP Polling vs WebSockets:
-									WebSockets allow for Server-side Changes to be Event Driven, meaning less Requests sent than HTTP Polling.
-										Requests contain Header Information and Cookie Information, which eats into the Bandwidth.
-
-							Security?
-								Secure Communication Protocols:
-									HTTPS
-									SFTP: Secure File Transfer Protocol
-
-								Web Application Firewall?
-
-							Analysis?
-								ELK
-								Splunk
-
-			2. Create API based on Functional Requirements:
-				Application API Considerations:
-					RESTful API / RPC
-					CRUD API
-
-				Database Design:
-					a. Start with a Conceptual Data Model. This describes at a High Level the sorts of Data required, and how they relate to each other. For example, what sort of Entities are required.
-
-					b. From the Conceptual Data Model, we can then start on the Logical Data Model. This involves Abstract Details like Tables, Columns, Primary Keys, but also further metadata that may be required of each Entity.
-						Note: A good Logical Data Model does not depend on any one Database Implementation.
-						Note: Any Relational Database can be used to implement the Design - the Design is free from Specific Implementation Details.
-
-					c. Once the Logical Data Model is finished, Physical Data Models can be created from the Logical Data Model, each of which deals with some of the DBMS-specific Implementation Details.
-							Example: Which Rows of the Table are stored in which Storage Device, Which Columns should be used as part of Indexes.
-
-		Case Studies:
-			Design a Coffee Ordering System
-
-			Design Twitter
+			Availability:
+				Uptime Standards:
+					90% -> 36.5 Days Offline per Year
+					95% -> 18.25 Days Offline per Year
+					99% -> 3.65 Days Offline Per Year
+					99.9% -> 8.77 Hours Offline Per Year
+					99.99% -> 1 Hour Offline Per Year
 	
 	Commands:
 		
