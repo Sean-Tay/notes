@@ -31,6 +31,11 @@ System Design:
 		Bandwidth:				The maximum number of Requests that the System can theoretically handle at a given time.
 		Throughput:				The number of Requests that the System can actually handle at a given time.
 
+		80-20 Rule: 			20% of Writes will lead to 80% of subsequent Reads.
+
+		Forward Proxy:			An intermediary that sits between a User and a Web Application, acting on behalf of the User.
+		Reverse Proxy: 			An intermediary that sits between a Web Application and a User, acting on behalf of the Web Application.
+
 		Service Oriented Architecture: Style of Software Design where Servcies are provided to other Components by Application-related Components, through a Communication Protocol over a Network.
 
 		API Gateway:			An Interceptor for API / Microservice Requests that acts as a Single Entry Point to help implement Standardized Access across all APIs / Microservices.
