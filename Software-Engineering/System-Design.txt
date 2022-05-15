@@ -80,6 +80,10 @@ System Design:
 				DNS: Translates a Human-Readable Domain Name into an IP Address.
 
 				CDN: A Cache for all kinds of Static Content.
+					Types:
+						Push CDN: Application is responsible for pushing updated content to the CDN and maintaining the URL used to access them. Works well when content is not updated frequently.
+						Pull CDN: CDN pulls content from Application when the first User initiates a Request for that content. A TTL can be ascribed to such content in order to save space on the CDN. Works well with Applications that have heavy traffic, as no additional traffic incurred from pushing content to CDN unnecessarily.
+
 					Examples:
 						Fastly
 						Cloudflare CDN
