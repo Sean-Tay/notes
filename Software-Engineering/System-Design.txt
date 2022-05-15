@@ -43,7 +43,7 @@ System Design:
 		Typical System Components grouped via Function:
 			Data Storage: See Database Notes.
 
-			Data Transport:
+			System Data Transport:
 				Message Queue: Enables Asynchronous Communication between two or more Components. A Messaging Broker typically manages the Queues and simplifies the connection of consuming Components via a Publisher / Subscriber Pattern.
 					Kafka
 					RabbitMQ
@@ -51,19 +51,10 @@ System Design:
 					AWS SQS
 					Google Cloud Pub/Sub
 
-				Load Balancer: A Reverse Proxy that distributes Network Traffic across different Nodes in a Distributed System.
-					Cloudflare
-					DigitalOcean
-					Azure Load Balancer
-					WS Load Balancer
-					Google Cloud
-
-				CDN: A Cache for all kinds of Static Content.
-					Fastly
-					Cloudflare CDN
-					Azure CDN
-					AWS CloudFront
-					Google CDN
+			Optimization:
+				(In-Memory) Cache: Simple Key-Value Object Store that is very quick on Read / Write operations.
+					Memcached
+					Redis
 
 			Data Processing:
 				Custom Services: The Components in the System that executes Application-specific Logic.
@@ -74,10 +65,22 @@ System Design:
 
 					Spark Job
 
-			Optimization:
-				(In-Memory) Cache: Simple Key-Value Object Store that is very quick on Read / Write operations.
-					Memcached
-					Redis
+			User-Facing Data Transport:
+				Load Balancer: A Reverse Proxy that distributes Network Traffic across different Nodes in a Distributed System.
+					Cloudflare
+					DigitalOcean
+					Azure Load Balancer
+					WS Load Balancer
+					Google Cloud
+
+				DNS: Translates a Human-Readable Domain Name into an IP Address.
+
+				CDN: A Cache for all kinds of Static Content.
+					Fastly
+					Cloudflare CDN
+					Azure CDN
+					AWS CloudFront
+					Google CDN
 
 			Data Presentation:
 				Desktop
