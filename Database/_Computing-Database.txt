@@ -167,13 +167,15 @@ Database
 			High Availability:
 				Replication:
 					Consistency Models: In descending order of Operational Performance:
-						Eventual Consistency: Each Read on an Object is only guaranteed to return the result of applying a subset of Writes to that Object thus far (e.g. Writes 2 to 3, Writes 1 to 4, Writes 1 & 3 to 5) in the short term. This means that each Read has a chance to return a version of the Object that has never actually existed.
+						Weak Consistency: Each Read on an Object is only guaranteed to return the result of applying a subset of Writes to that Object thus far (e.g. Writes 2 to 3, Writes 1 to 4, Writes 1 & 3 to 5). This means that each Read has a chance to return a version of the Object that has never actually existed.
+
+						Eventual Consistency: Weak Consistency in the short term, but will reach Strong Consistency in the long term.
 
 						Consistent Prefix: Each Read on an Object is guaranteed to return the result of applying an ordered sequence of Writes on an Object thus far, starting from the first Write (e.g. Writes 1 to 3, Writes 1 to 2, Writes 1 to 5). This means that each Read will return a version of the Object that has actually existed at some point in time.
 
 						Session Consistency: Data Abnormalities should not occur for Reads and Writes during a limited period of time.
 							Monotonic Reads: Each Read in a sequence of Reads on an Object is guaranteed to return the result of applying at least the same subset of Writes on the Object thus far as the previous Read (e.g. Writes 3 to 4, Writes 3 to 4, Writes 1 & 3 to 4, Writes 1 to 5).
-							Read My Write: The result of all Writes to an Object done by a Client is guaranteed to be observable in the Client's subsequent Reads done on the same Object. Strong Consistency for the Client, Eventual Consistency for others.
+							Read My Write: The result of all Writes to an Object done by a Client is guaranteed to be observable in the Client's subsequent Reads done on the same Object (i.e. Strong Consistency only guaranteed for the Client).
 
 						Bounded Staleness: Each Read on an Object is guaranteed to give the result of applying at least x Writes to that Object thus far (e.g. at least Writes 1 to 3, if x = 3 => Writes 1 to 3 & 5).
 
