@@ -9,8 +9,8 @@ System Design:
 	
 	Concepts:
 		Reliability: 			Working in the face of Faults for both Software and Hardware.
-			CAP Theorem: 		Describes the tradeoff between (Data) Consistency, Availability and Partitioning Tolerance for a Distributed System (choose 2 of 3). Usually either Consistency or Availability is compromised (in favour of Partitioning Tolerance).
-				Consistency:	Defines the degree at which replicated redundant copies of Data are the same between Nodes in a Distributed System. See Consistency Models in Database Notes.
+			CAP Theorem: 		Describes the tradeoff between (Data) Consistency, Availability and Partitioning Tolerance for a System (choose 2 of 3). Usually either Consistency or Availability is compromised (in favour of Partitioning Tolerance) for a Distributed System - a Centralized System need not have Partitioning Tolerance, so both Consistency and Availability is achievable.
+				Consistency:	Defines the degree at which replicated redundant copies of Data are the same between Nodes in a System. See Consistency Models in Database Notes.
 				Availability:	Observable via the ratio of handled Requests to dropped Requests.
 				Partitioning Tolerance: Enforces that the Distributed System can still operate even if parts of it are unreachable.
 
