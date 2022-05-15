@@ -80,6 +80,9 @@ System Design:
 						HAProxy
 
 				DNS: Translates a Human-Readable Domain Name into an IP Address.
+					Examples:
+						Cloudflare
+						Route 53
 
 				CDN: A Cache for all kinds of Static Content.
 					Types:
