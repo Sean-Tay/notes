@@ -53,7 +53,7 @@ System Design:
 						Google Cloud Pub/Sub
 
 			Optimization:
-				(In-Memory) Cache: Simple Key-Value Object Store that is very quick on Read / Write operations.
+				(In-Memory) Cache: Simple Key-Value Object Store that is very quick on Read / Write operations. Can be used for storing information about User Sessions.
 					Examples:
 						Memcached
 						Redis
@@ -77,6 +77,8 @@ System Design:
 						WS Load Balancer
 						Google Cloud
 
+						HAProxy
+
 				DNS: Translates a Human-Readable Domain Name into an IP Address.
 
 				CDN: A Cache for all kinds of Static Content.
@@ -90,6 +92,10 @@ System Design:
 						Azure CDN
 						AWS CloudFront
 						Google CDN
+
+				Web Server (Reverse Proxy): A running Process on a Host Machine that is designed to just serve Static Content and Resources via HTTP. Requests for Dynamic Content gets sent to the App Server, although Plugins can be installed to generate Dynamic Content via Scripting Languages as well.
+					Examples:
+						NGINX
 
 			Data Presentation:
 				Desktop
