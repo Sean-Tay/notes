@@ -85,13 +85,21 @@ System Design:
 				Mobile
 
 		Systems are Designed with the intent of being Reliable, Scalable and Maintenable.
-			Availability:
-				Uptime Standards:
-					90% -> 36.5 Days Offline per Year
-					95% -> 18.25 Days Offline per Year
-					99% -> 3.65 Days Offline Per Year
-					99.9% -> 8.77 Hours Offline Per Year
-					99.99% -> 1 Hour Offline Per Year
+			Reliable:
+				Availability:
+					Failover:
+						Active-Passive: Only one Node is actively handling Requests - the rest of the cloned Nodes are reserved for backup (either in Cold or Hot State). The Active Node is sending a regular heartbeat to the Passive Nodes - after a certain duration of not receiving a heartbeat one of the Passive Nodes takes over the Active Node's IP Address and role.
+
+						Active-Active: More than one Node is actively handling Requests. The DNS and Application Logic needs to know about all Active Nodes.
+
+					Replication: See Database Notes.
+
+					Uptime Standards:
+						90% -> 36.5 Days Offline per Year
+						95% -> 18.25 Days Offline per Year
+						99% -> 3.65 Days Offline Per Year
+						99.9% -> 8.77 Hours Offline Per Year
+						99.99% -> 1 Hour Offline Per Year
 	
 	Commands:
 		
