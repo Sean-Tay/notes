@@ -74,6 +74,11 @@ System Design:
 
 					Spark Job
 
+			Optimization:
+				(In-Memory) Cache: Simple Key-Value Object Store that is very quick on Read / Write operations.
+					Memcached
+					Redis
+
 			Data Presentation:
 				Desktop
 				Web
