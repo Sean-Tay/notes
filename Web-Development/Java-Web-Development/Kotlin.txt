@@ -794,7 +794,7 @@ Kotlin
 									@JsonProperty("<json-field>") val <json-field>:<type>? = null,
 
 									// Create a Property that can only be Deserialized.
-									@JsonProperty("<source-json-field>") @JsonIgnore val <non-serializable-property>:<type>? = null,
+									@JsonProperty("<source-json-field>") @JsonIgnore private val <non-serializable-property>:<type>? = null,
 
 									// ...
 								) {
