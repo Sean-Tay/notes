@@ -110,25 +110,28 @@ Kotlin
 
 			Collections:
 				// Lists
-					val mutableList = mutableListOf( <item>, ... )
-					val list = listOf( <item>, ... )
+					val mutableList: MutableList<<type>> = mutableListOf( <item>, ... )
+					val list: List<<type>> = listOf( <item>, ... )
 
 					mutableList.size
 
 					mutableList.add( <new-item> )
 
 				// Maps
-					val mutableMap = mutableMapOf(
+					val mutableMap: MutableMap<<key-type>, <value-type>> = mutableMapOf(
 						<key> to <value>,
 						// ...
 					)
-					val map = mapOf(
+					val map: Map<<key-type>, <value-type>> = mapOf(
 						<key> to <value>,
 						// ...
 					)
 
 					mutableMap.keys
 					mutableMap.values
+
+					mutableMap.getOrDefault( <key>, <value> )
+					mutableMap.putIfAbsent( <key>, <value> )
 
 					map.contains( <potential-key> )
 					map.get( <key> )
