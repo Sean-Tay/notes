@@ -762,34 +762,32 @@ Kotlin
 
 							// Get a Node Value
 								// get - returns null for Missing Nodes
-								val value = <object-node>.get("<key>")?.intValue()
-								
-								// Tip: Don't use toString(), as it'll add Quotes to all String Values which will mess up CSV Parsing. Best Practice: See JSON String <-> Jackson JsonNode Section above.
-								// Note: textValue will return null if the Value is NOT an actual Text Value (i.e. isTextual).
-								val value = <object-node>.get("<key>")?.textValue() 
+									val value = <object-node>.get("<key>")?.as<kotlin-built-in-type>()
+									// Note: textValue will return null if the Value is NOT an actual Text Value (i.e. isTextual).
+									val value = <object-node>.get("<key>")?.textValue()
 
-								// path - returns a Node for which isMissingNode() will return true
-								val node: JsonNode = <object-node>.path("<key>").path("<sub-key>")
-								// node.isMissingNode() === true
+								// path - returns a Node for which isMissingNode() will return true if no Node exists at that path.
+									val node: JsonNode = <object-node>.path("<key>").path("<sub-key>")
+									// node.isMissingNode() === true
 
 								// with - upserts a Node at "<key>" if it does not exist, and returns it
-								val node = <object-node>.with("<key>")
-								val node = <object-node>.withArray("<key>")
+									val node = <object-node>.with("<key>")
+									val node = <object-node>.withArray("<key>")
 
 							// Set a Node Value
 								// put
-								val node = <object-node>.put("<key>", <primitive-value>)
+									val node = <object-node>.put("<key>", <primitive-value>)
 
 								// replace
-								val oldNode: JsonNode = <object-node>.replace("<key>", <json-node>)
+									val oldNode: JsonNode = <object-node>.replace("<key>", <json-node>)
 
 								// set
-								val node: ObjectNode = <object-node>.set("<key>", <json-node>)
+									val node: ObjectNode = <object-node>.set("<key>", <json-node>)
 
 							// Removing a Node Value
 								// remove
-								val removedNode: JsonNode = <node>.remove("<key>")
-								val adjustedNode: JsonNode = <node>.remove(listOf("<key>", ...))
+									val removedNode: JsonNode = <node>.remove("<key>")
+									val adjustedNode: JsonNode = <node>.remove(listOf("<key>", ...))
 
 							// Converting from one type of Value to another type of Value (via Serializing the Source Class Instance to JSON String -> Deserializing from that JSON String into an Instance of the Target Class).
 								class <target-class> (
