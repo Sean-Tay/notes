@@ -28,7 +28,7 @@ Database
 			Horizontal Partitioning: Different Records into Separate Collections (e.g. Sharding).
 			Vertical Partitioning: Different Record Attributes into Separate Collections (e.g. Normalization or simple Record Splitting).
 
-		Replication:			Having Redundant Copies of the Data in a Database stored in multiple Machines so that if one fails, dependent Applications can still use the other Machines for Data Retrieval. Also helps to reduce operational load per Instance.
+		Replication:			Having Redundant Copies of the Data in a Database stored in multiple Machines so that if one fails, dependent Applications can still use the other Machines for Data Retrieval, achieving Reliability for the Distributed System. Also helps to reduce operational load per Instance.
 		Replica:				A Machine within a Replicated Database.
 
 		CAP Theorem: 			Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3). 
@@ -42,8 +42,8 @@ Database
 		Database Objectives:
 			Persistent Data Storage: Data should not be lost when the Database shuts down.
 
-			Fast Writes
-			Fast Reads
+			Available Writes
+			Available Reads
 				Data should be stored contiguously on Disk to minimize the amount of Disk Lookups required (known to be expensive as it involves mechanical movement of the Storage Disks at the Hardware level).
 
 				Optimization Techniques:
@@ -168,10 +168,11 @@ Database
 								Cons:
 									Relatively Slow Writes, as multiple Disk Blocks are accessed after each Write to update the Index.
 	
-			Replication:
 				CAP Theorem: Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3).
 					Configurations:
 						For a Distributed Database, Partition Tolerance is needed as Networks are unreliable, so either Consistency or Availability is compromised.
+							If Consistency is prioritised, that means the Database must for e.g. prevent Write Requests from succeeding until all Replicas can be reached again.
+							If Availability is prioritised, that means that the Data between Replicas can go out of sync during certain scenarios.
 
 						For a Centralized Database need not have Partitioning Tolerance, so both Consistency and Availability is achievable.
 
@@ -190,83 +191,84 @@ Database
 
 						Strong Consistency: A Read is guaranteed to return the result of applying all Writes on an Object thus far. Performance-intensive; depending on use case, it may be possible to use the weaker Consistency Models for the same effect. Note that this is technically Bounded Staleness with x = n.
 
-					Types:
-						Synchronous: Writes not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
+					Replication:
+						Types:
+							Synchronous: Writes not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
 
-						Asynchronous: Writes considered successful when the Instance that was assigned the Write Transaction completes it. Faster Speed, but Clients may get stale / inconsistent Reads due to Eventual Consistency.
-							Server / Database should simply return the written Data back to the Client that triggered the Write upon Success, or Read only from Leaders for editable Data (Read My Write Consistency).
-							Each Client should only refer to one Instance for updates throughout the operation (Consistent-Prefix + Monotonic Reads Consistency), as different Replicas synchronize with a particular Write at different Speeds (Back-in-Time syndrome).
-							Writes with Casual Relationships should ideally happen on the same Disk Partition (Consistent Prefix Reads), otherwise they might not make sense when they are Read (different Read Speeds for different Disk Partitions).
+							Asynchronous: Writes considered successful when the Instance that was assigned the Write Transaction completes it. Faster Speed, but Clients may get stale / inconsistent Reads due to Eventual Consistency.
+								Server / Database should simply return the written Data back to the Client that triggered the Write upon Success, or Read only from Leaders for editable Data (Read My Write Consistency).
+								Each Client should only refer to one Instance for updates throughout the operation (Consistent-Prefix + Monotonic Reads Consistency), as different Replicas synchronize with a particular Write at different Speeds (Back-in-Time syndrome).
+								Writes with Casual Relationships should ideally happen on the same Disk Partition (Consistent Prefix Reads), otherwise they might not make sense when they are Read (different Read Speeds for different Disk Partitions).
 
-				Strategies:
-					Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower / Leader) in the Cluster.
-						Characteristics:
-							Leader sends list of updates to other Followers via a Replication Log.
-								Implementation:
-									SQL Statements (for Relational Databases): Not ideal as SQL Statements can be non-deterministic (e.g. reference Current Time, which can be different per Replica).
-									Internal Append-only Log: Describes which Bytes were changed. Not ideal as different Instances might have the affected Data in different Locations.
-									Logical Log: Describes which Data was modified and how. Better future-proofing if underlying Database Engine changes.
+						Strategies:
+							Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower / Leader) in the Cluster.
+								Characteristics:
+									Leader sends list of updates to other Followers via a Replication Log.
+										Implementation:
+											SQL Statements (for Relational Databases): Not ideal as SQL Statements can be non-deterministic (e.g. reference Current Time, which can be different per Replica).
+											Internal Append-only Log: Describes which Bytes were changed. Not ideal as different Instances might have the affected Data in different Locations.
+											Logical Log: Describes which Data was modified and how. Better future-proofing if underlying Database Engine changes.
 
-							Adding a Follower: Initialize the Follower with a consistent snapshot of the Data in the Leader (associated with some position in the Replication Log), and then update to the latest State via the Replication Log.
+									Adding a Follower: Initialize the Follower with a consistent snapshot of the Data in the Leader (associated with some position in the Replication Log), and then update to the latest State via the Replication Log.
 
-							Pros:
-								Single Source of Truth => no Conflicts to resolve.
-							
-							Cons:
-								All Writes going to a single Instance, so Write Throughput is lower.
-									Can consider Sharding, and having different Leaders for each subset of the Data.
+									Pros:
+										Single Source of Truth => no Conflicts to resolve.
+									
+									Cons:
+										All Writes going to a single Instance, so Write Throughput is lower.
+											Can consider Sharding, and having different Leaders for each subset of the Data.
 
-						Scenarios:
-							Follower Failure: On reboot, fetch all changes from the Leader, and implementing the changes starting from its last position in the Replication Log.
+								Scenarios:
+									Follower Failure: On reboot, fetch all changes from the Leader, and implementing the changes starting from its last position in the Replication Log.
 
-							Leader Failure / Failover: Determine a new Leader based on some Consensus / most up-to-date Follower, and configure downstream Dependencies to send Writes to this new Leader + configure all other Follower to get the changes from the new Leader.
-								Problems:
-									Unreplicated / Partially Replicated Writes of old Leader to Followers.
-									Accidental Failovers from temporary Network Congestion.
-									Split Brain: Old Leader associates itself to still be a Leader upon recovery and accepts Writes, leading to an inconsistent Data State across the Cluster.
+									Leader Failure / Failover: Determine a new Leader based on some Consensus / most up-to-date Follower, and configure downstream Dependencies to send Writes to this new Leader + configure all other Follower to get the changes from the new Leader.
+										Problems:
+											Unreplicated / Partially Replicated Writes of old Leader to Followers.
+											Accidental Failovers from temporary Network Congestion.
+											Split Brain: Old Leader associates itself to still be a Leader upon recovery and accepts Writes, leading to an inconsistent Data State across the Cluster.
 
-					Multi-Leader: Writes to several Leaders (possibly across Data Centers) - Leaders send each other Writes through some existing topology. Reads can come from any Replica (Follower / Leader) in the Cluster. 
-						Characteristics:
-							Leaders can send each other Writes via several Topologies:
-								Circular: A ring consisting of Leaders - each Leader passes Writes down to the next Leader after it in the ring. Not very Fault Tolerant.
-								Star: Akin to a starfish - every Leader is connected to some central Node. Single Point of Failure.
-								All-to-All (Fully Connected) - Each Leader is connected to every other Leader.
+							Multi-Leader: Writes to several Leaders (possibly across Data Centers) - Leaders send each other Writes through some existing topology. Reads can come from any Replica (Follower / Leader) in the Cluster. 
+								Characteristics:
+									Leaders can send each other Writes via several Topologies:
+										Circular: A ring consisting of Leaders - each Leader passes Writes down to the next Leader after it in the ring. Not very Fault Tolerant.
+										Star: Akin to a starfish - every Leader is connected to some central Node. Single Point of Failure.
+										All-to-All (Fully Connected) - Each Leader is connected to every other Leader.
 
-								Chain Replication?
+										Chain Replication?
 
-							Pros:
-								A Leader in each Data Center makes it easier to manage globally available Services.
-								Write Throughput not limited by a single Replica.
+									Pros:
+										A Leader in each Data Center makes it easier to manage globally available Services.
+										Write Throughput not limited by a single Replica.
 
-							Cons:
-								Write Conflicts possible between multiple Leaders (e.g. Write 2 coming before Write 1).
+									Cons:
+										Write Conflicts possible between multiple Leaders (e.g. Write 2 coming before Write 1).
 
-						Scenarios:
-							Detecting Concurrent Writes: Writes are considered Concurrent if each Source of the Write did not know of the Write from the others (compare with Causal Writes), NOT about time at which the Writes took place (i.e. it's all about keeping track of what the Source sees before making the Write).
-								Version Vectors: Keep track of the number of Writes that each participant (Client / Replica) *thinks* all Replicas have made for every Object receiving Writes. 
-									Each Replica persists their view of the Version Vector, and passes it to the Client, which it then passes back to the Replica during a Write for tracking, and update the Version Vector before passing it back to the Client again.
+								Scenarios:
+									Detecting Concurrent Writes: Writes are considered Concurrent if each Source of the Write did not know of the Write from the others (compare with Causal Writes), NOT about time at which the Writes took place (i.e. it's all about keeping track of what the Source sees before making the Write).
+										Version Vectors: Keep track of the number of Writes that each participant (Client / Replica) *thinks* all Replicas have made for every Object receiving Writes. 
+											Each Replica persists their view of the Version Vector, and passes it to the Client, which it then passes back to the Replica during a Write for tracking, and update the Version Vector before passing it back to the Client again.
 
-									Between two Version Vectors:
-										If all Elements of one Version Vector is equal or greater than all corresponding Elements of another Version Vector, then it means that the Write for the first Version Vector happened after the other (Writes have the Happen-Before Relationship).
-										If one Version Vector has Elements that are either smaller or greater than the corresponding Elements in the other Version Vector, then it means Concurrent Writes have occurred.
+											Between two Version Vectors:
+												If all Elements of one Version Vector is equal or greater than all corresponding Elements of another Version Vector, then it means that the Write for the first Version Vector happened after the other (Writes have the Happen-Before Relationship).
+												If one Version Vector has Elements that are either smaller or greater than the corresponding Elements in the other Version Vector, then it means Concurrent Writes have occurred.
 
-									Version Vectors are merged when the Consistency Model is triggered by taking the maximum of each Element between each Version Vector tracked per Replica.
+											Version Vectors are merged when the Consistency Model is triggered by taking the maximum of each Element between each Version Vector tracked per Replica.
 
-							Conflict Resolution Strategies:
-								Conflict Avoidance: Have all Writes for an Object go to one Leader. Not good for flexibility in Configuration (e.g. during Leader failure, or Horizontal Scaling).
+									Conflict Resolution Strategies:
+										Conflict Avoidance: Have all Writes for an Object go to one Leader. Not good for flexibility in Configuration (e.g. during Leader failure, or Horizontal Scaling).
 
-								Last Write Wins: Each Write is given a Clock Timestamp, with the latest one being kept. Easy to implement, but Writes will be lost (important for use-cases requiring Version Histories) + possibility of Clock Skew between different Servers.
+										Last Write Wins: Each Write is given a Clock Timestamp, with the latest one being kept. Easy to implement, but Writes will be lost (important for use-cases requiring Version Histories) + possibility of Clock Skew between different Servers.
 
-								On Read: Store all conflicting Writes for an Object. During a Read for the Object, resolve them and store the resolved value of the Object.
+										On Read: Store all conflicting Writes for an Object. During a Read for the Object, resolve them and store the resolved value of the Object.
 
-								On Write: Database relies on Application-defined Commutative (ordering doesn't matter) and Associative (which binary combinations don't matter after all are processed) Merging Logic to resolve Write Conflicts (Conflict-Free Replicated Data Types e.g. Distributed Counters, Decrementors, Distributed Sets, Ordered Lists).
+										On Write: Database relies on Application-defined Commutative (ordering doesn't matter) and Associative (which binary combinations don't matter after all are processed) Merging Logic to resolve Write Conflicts (Conflict-Free Replicated Data Types e.g. Distributed Counters, Decrementors, Distributed Sets, Ordered Lists).
 
-					Leaderless: 
-						Characteristics:
-							
+							Leaderless: 
+								Characteristics:
+									
 
-						Scenarios:
-							
+								Scenarios:
+									
 
 
 
