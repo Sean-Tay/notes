@@ -227,7 +227,7 @@ Database
 											Accidental Failovers from temporary Network Congestion.
 											Split Brain: Old Leader associates itself to still be a Leader upon recovery and accepts Writes, leading to an inconsistent Data State across the Cluster.
 
-							Multi-Leader: Writes to several Leaders (possibly across Data Centers) - Leaders send each other Writes through some existing topology. Reads can come from any Replica (Follower / Leader) in the Cluster. 
+							Multi-Leader: Writes to one of many possible Leaders (possibly across Data Centers) - Leaders send each other Writes through some existing topology. Reads can come from any Replica (Follower / Leader) in the Cluster. 
 								Characteristics:
 									Leaders can send each other Writes via several Topologies:
 										Circular: A ring consisting of Leaders - each Leader passes Writes down to the next Leader after it in the ring. Not very Fault Tolerant.
@@ -241,7 +241,7 @@ Database
 										Write Throughput not limited by a single Replica.
 
 									Cons:
-										Write Conflicts possible between multiple Leaders (e.g. Write 2 coming before Write 1).
+										Write Conflicts possible between multiple Leaders.
 
 								Scenarios:
 									Detecting Concurrent Writes: Writes are considered Concurrent if each Source of the Write did not know of the Write from the others (compare with Causal Writes), NOT about time at which the Writes took place (i.e. it's all about keeping track of what the Source sees before making the Write).
@@ -263,14 +263,39 @@ Database
 
 										On Write: Database relies on Application-defined Commutative (ordering doesn't matter) and Associative (which binary combinations don't matter after all are processed) Merging Logic to resolve Write Conflicts (Conflict-Free Replicated Data Types e.g. Distributed Counters, Decrementors, Distributed Sets, Ordered Lists).
 
-							Leaderless: 
+							Leaderless: Writes to / Reads from all Replicas in parallel, and waits for a certain number of Replicas (i.e. Quorum) to return successfully before deeming operation a success.
 								Characteristics:
+									Quorum:
+										Let W be the number of Replicas that need to succeed for a Client to consider their Write to be successful.
+										Let R be the number of Replicas that need to succeed for a Client to consider their Read to be successful.
+										Let N be the total number of Replicas in the Cluster. Typically N should be an odd number.
+
+										Pseudo Strong Consistency Quorum: If W + R > N where N is the total number of Replicas, then at least one Replica will have the most updated Object.
+											Typically W = R = (N+1)/2, then each Read / Write can tolerate up to (N-1)/2 Replicas failing per Operation.
+
+											Imperfect:
+												Allows for inconsistent Data States (i.e. Client considers Write failed as w < W, but w Replicas now have a potentially unwanted Write).
+												Replica restoration after failure may take Data from another Replica that's more stale.
+												During Sloppy Quorums, the Pseudo Strong Consistency Property no longer holds.
+
+									Bookeeping Operations necessary in order to maintain Consistency between Replicas:
+										Read Repair: On a Read, update those Replicas that has outdated Data with the Object with the highest Version Number (Eventual Consistency).
+
+										Anti-Entropy: Background Process that occasionally looks at all Replicas to check for inconsistent versions for each Object's Version Number (Eventual Consistency / Bounded Staleness).
 									
+									Pros:
+										Works well with Cross Data Center configurations by having W be small enough such that all Writes can go to one Data Center.
+										Replication Strategy with the best flexibility for adjusting Consistency and Availabilty.
+
+									Cons:
+										Inconsistent Data still possible, even with a proper Quorum.
+										Write Conflicts possible between multiple Replicas.
+										Reads are slower + possibility of needing to do Read Repair.
 
 								Scenarios:
-									
+									Conflict Resolution: See Multi-Leader Replication Section.
 
-
+									Sloppy Quorums: Occurs when Replicas are temporarily added after the initial set of Replicas have all failed to handle further Writes - need to bring Written Data over to the initial set of Replicas once they have recovered (Hinted Handover).
 
 		Database Types:
 			In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
