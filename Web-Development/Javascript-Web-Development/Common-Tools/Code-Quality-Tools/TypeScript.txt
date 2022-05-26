@@ -26,149 +26,280 @@ Typescript:
 				// Note: The below notes mainly use Type Annotation to set the Typings of the variables.
 				// Compare this with Dynamic Typing, which can only perform Type-Checks during runtime.
 
-				const <variable>: <variable-type> = <value>;
+				// Entities:
+					const <variable>: <variable-type> = <value>;
 
-				// Primitive Types:
-					// any: For when the intended Type is unknown.
+					// Primitive Types:
+						// any: For when the intended Type is unknown.
 
-					// unknown: A type-safe counterpart to the any Type.
-						// Note: 'any' might still be more preferrable in certain cases:
-							// Inference of Generic Rest Parameters.
+						// unknown: A type-safe counterpart to the any Type.
+							// Note: 'any' might still be more preferrable in certain cases:
+								// Inference of Generic Rest Parameters.
 
-					// object: Represents all non-primitive Types.
-					// Object: Describes functionality common to all Javascript Objects.
+						// object: Represents all non-primitive Types.
+						// Object: Describes functionality common to all Javascript Objects.
 
-					// Function: Represents Function Types.
-					
-					// number: Represents a Numerical Value.
-					// bigint: Represents a Large Integer Value.
+						// Function: Represents Function Types.
+						
+						// number: Represents a Numerical Value.
+						// bigint: Represents a Large Integer Value.
 
-					// Literal Variables: To allow TypeScript to more accurately scope the Values in these Variables.
-					// const <literal-const> = <value>;
-					// let <literal-value> = <value> as const;
+						// Literal Variables: To allow TypeScript to more accurately scope the Values in these Variables.
+						// const <literal-const> = <value>;
+						// let <literal-value> = <value> as const;
 
-					// Template Type Literals: String Literal Permutation
-					type <type> = `${<type1>}-${<type2>}`;
+						// Template Type Literals: String Literal Permutation
+						type <type> = `${<type1>}-${<type2>}`;
 
-					// never: For when the value should never occur.
-						let <never-type-variable>: never;
+						// never: For when the value should never occur.
+							let <never-type-variable>: never;
 
-						(): never => {
-							// Functions with unreachable end-points should have a 'never' return value.
-							throw new Error();
-						}
+							(): never => {
+								// Functions with unreachable end-points should have a 'never' return value.
+								throw new Error();
+							}
 
-						// Can also be used to exclude undesirable Types from Type Unions:
-						type NonType<T, NT> = T extends NT ? never : T;
+							// Can also be used to exclude undesirable Types from Type Unions:
+							type NonType<T, NT> = T extends NT ? never : T;
 
-					// void: For when there should be no Type.
+						// void: For when there should be no Type.
 
-				// Arrays
-					let <array-variable>: <type>[] = <value-array>;
-					// OR
-					let <array-variable>: Array<<type>> = <value-array>; // Include one set of Angled Brackets.
+					// Arrays
+						let <array-variable>: <type>[] = <value-array>;
+						// OR
+						let <array-variable>: Array<<type>> = <value-array>; // Include one set of Angled Brackets.
 
-					const <nested-array-variable>: <type>[][] = [[]];
+						const <nested-array-variable>: <type>[][] = [[]];
 
-				// Tuples: For Arrays that hold different Types.
-					let <tuple-variable>: [<type>, ...] = [<value>, ...];
+					// Tuples: For Arrays that hold different Types.
+						let <tuple-variable>: [<type>, ...] = [<value>, ...];
 
-					// Labelled Tuple Types
-					type <labelled-tuple-type> = [<label>: <type>, ...];
+						// Labelled Tuple Types
+						type <labelled-tuple-type> = [<label>: <type>, ...];
 
-					// Note: TypeScript will assume declared Tuples are Arrays by default. A shorthand to let TypeScript know that the Array is a Tuple Type is through the 'const' keyword.
-					const <tuple-variable> =  [<value>, ...] as const;
+						// Note: TypeScript will assume declared Tuples are Arrays by default. A shorthand to let TypeScript know that the Array is a Tuple Type is through the 'const' keyword.
+						const <tuple-variable> =  [<value>, ...] as const;
 
-				// Functions
-					const <function> = ( arg:<arg-type>, ... ): <return-type> => {
-						// ...
-					};
+					// Record: To specify a Data Object Type (separate from Functions and Arrays, which are also Objects in Javascript).
+						type <keys-type> = 'key-a' | 'key-b' | ... | 'key-n';
+						let <record-type-variable>: Record<<keys-type>, <value-type>> = {};
 
-					// Function with Object Destructuring
-					const <function> = ( { <key-1> , ... }: { <key-1>: <value-type-1> , ... }) => {
-						// ... 
-					};
+						// Dictionary Map Types, where one set of Keys can be mapped to another set of Keys, may also be defined with Record:
+						type <keys-type-a> = 'key-a' | ... ;
+						type <keys-type-b> = 'key-b' | ... ;
 
-					// Function with Generics
-					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
-					const <function> = <<generic-type> extends <base-type> = <default-type>, ... > ( arg:<generic-type>, ... ): <generic-type> => {
-						// ...
-					};
+						type <map> = Record<<keys-type-a> , <keys-type-b>>; // Include one set of Angled Brackets.
 
-					// Asynchronous Function
-					const <async-function> = async (): Promise<<return-type>> => { // Include one set of Angled Brackets.
-						// ...
-					};
-
-					// Reference Function Return Type
-						type <function-return-type> = ReturnType<typeof <function>>; // Include one set of Angled Brackets.
-
-						type <async-function-return-type> = awaited ReturnType<typeof <function>> // Include one set of Angled Brackets.
-
-				// Classes
-					// Classes with Generics
-					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
-					// Note: Static Members cannot use Generics, as Generics only apply to the Instances of a Class.
-					class <class-name><generic-type> {
-						// ...
-					}
-
-					// Class Type:
-					type TClass = new (...args: any[]) => {};
-
-				// Intersection Types: Combines multiple Types into one.
-					// More specific Type or sub Type.
-					// Note: Intersected Interfaces === Union of Member Attributes
-					let <intersection-type-variable>: <type> & ... = <value>;
-
-				// Union Types: Designate one of the following Types.
-					// Less specific Type or super Type.
-					// Note: Unioned Interfaces === Intersection of Member Attributes
-					let <union-type-variable>: <type> | ... = <value>;
-
-					// Discriminatory Unions:
-					// Allows TypeScript to automatically infer individual Types from a Union Type when appropriate.
-						enum E {
-							ONE = 'one',
-							TWO = 'two'
-						}
-
-						interface I1 {
-							<common-literal-field>: E.ONE,
-
-							<I1-prop>: <type>,
+					// Classes
+						// Classes with Generics
+						// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
+						// Note: Static Members cannot use Generics, as Generics only apply to the Instances of a Class.
+						class <class-name><generic-type> {
 							// ...
 						}
 
-						interface I2 {
-							<common-literal-field>: E.TWO,
+						// Class Type:
+						type TClass = new (...args: any[]) => {};
 
-							<I2-prop>: <type>,
+					// Enums: To provide more friendly names to sets of Numeric Values.
+						enum <enum-name> { <key>: <numeric-value>, ... };
+						let <example-variable>: <enum-name> = <enum-name>.<key>; 
+
+						// TypeScript correctly infers the Enum through the following:
+						type <enum> = <enum>[keyof <enum>];
+
+						// Note: Enums store Key-Value and Value-Key Mappings:
+							<enum-name>.<key> === <numeric-value>
+							<key> === <enum-name>[<numeric-value>]
+
+							const keys = Object.keys(<enum-name>).filter(key => isNaN(parseInt(key)))
+							const values = Object.values(<enum-name>).filter(key => !isNaN(parseInt(key)))
+
+					// Functions
+						const <function> = ( arg:<arg-type>, ... ): <return-type> => {
 							// ...
-						}
-
-						type TDU = I1 | I2;
-
-						const example: TDU = {
-							<common-literal-field>: E.ONE,
-
-							// Typescript will automatically infer further I1 Props based on value set for the <common-literal-field>.
 						};
 
-				// Generic Types:
-					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
-					type <type-name><T extends <base-type> = <default-type>, ... > = ... ;
+						// Function with Object Destructuring
+						const <function> = ( { <key-1> , ... }: { <key-1>: <value-type-1> , ... }) => {
+							// ... 
+						};
 
-				// Recursive Types:
-					// Tip: Useful for letting a Type declare that it can be an Array / Object of itself.
-					type <type-name> = <type-name>[] | { [key: string]: <type-name> } | ... ;
+						// Function with Generics
+						// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
+						const <function> = <<generic-type> extends <base-type> = <default-type>, ... > ( arg:<generic-type>, ... ): <generic-type> => {
+							// ...
+						};
 
-				// Utility Types:
-					// Extract: To select for a subset of Types from a Union Type.
-						let <extract-type-variable>: Extract<<type>, <specified-type>> = ... ;
+						// Asynchronous Function
+						const <async-function> = async (): Promise<<return-type>> => { // Include one set of Angled Brackets.
+							// ...
+						};
 
-					// Exclude: To remove a subset of Types from a Union Type.
-						let <exclude-type-variable>: Exclude<<type>, <specified-type>> = ... ;
+						// Reference Function Return Type
+							type <function-return-type> = ReturnType<typeof <function>>; // Include one set of Angled Brackets.
+
+							type <async-function-return-type> = awaited ReturnType<typeof <function>> // Include one set of Angled Brackets.
+
+					// Interfaces: Defines an Object Type meant for representing API surfaces.
+						/** <interface-documentation> */
+						interface <interface-name> {
+							<property>: <type>;
+							<optional-property>?: <type>;
+							readonly <readonly-property>: <type>;
+
+							<function-property>: ( arg:<arg-type>, ... ) => <return-type>;
+
+							/** <text> */
+							<documented-property>: <type>;
+							
+							// Allows an Interface Property to reference another Property within the same Interface via F-bounded Polymorphism.
+							<dependent-property>: this['<property>'];
+
+							// ...
+						};
+
+						// Note: Redeclaration of an existing Interface will add onto it.
+						interface <interface-name> {
+							<more-properties>: <type>;
+
+							// ...
+						};
+
+						// Reference a Type of a Property from an Interface
+						// Note: Different from Pick - Pick creates another Interface - the resultant Type will still refer to an Object.
+							type <type-name> = <interface-name>['<property>']
+
+						// Extending an existing Interface
+							interface <extended-interface-name> extends <existing-interfce-name> {
+								<additional-property>: <type>;
+
+								// ...
+							};
+
+						// Generic Interface
+							// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
+							interface <generic-interface-name><<generic-type> extends <base-type> = <default-type>, ... > {
+								// ...
+							}
+
+						// Utility Type for converting an Interface into an Interface-Like Type:
+							export type InterfaceLikeType<T> = { [ K in keyof T ]: T[ K ] };
+
+						// Index Signature: For declaring Types of unknown Interface / Interface-Like Properties ahead of time.
+						// Note: Interfaces that are not Indexable are not compatible with Interfaces / Interface-Like Types that are. Use the IndexableLikeType Utility Type above to convert the non-Indexable Interface into an InterfaceLikeType.
+							interface <indexable-interface-name> {
+								// Mutable Indexes
+								[key: number]: <type>;
+								// OR
+								[key: string]: <type>;
+
+								// ...
+
+								<known-property>: <sub-type>;
+							}
+
+						// keyof: To specify for a Type that contains all accessible Interface / Interface-Like Properties.
+						// string | number | symbol
+							type <type-name> = keyof <interface>;
+
+						// Mapped Signature: For creating Interface / Interface-Like Types with specifc Properties at one go.
+							interface <mapped-interface><generic-type> {
+								[key in <union-literal-type>]: <type>;
+								[key in <enum>]: <type>;
+								[key in keyof <generic-type>]: <type>;
+
+								// '-' can be prefixed on 'readonly' or '?' properties to remove them from the resulting Mapped Type
+								// Mutable Type: -readonly [ key in ... ]: <type>;
+								// Concrete Type: [ key in ... ]-?: <type>; 
+
+								// Create new Properties from existing Properties via Template Literal Types
+								[key in ... as `${key}-<new-key>`]: <type>;
+
+								// Exclude Properties from new Type via Exclude / never
+								[key in ... as Exclude<key, '<excluded-key>'>]: <type>
+							}
+
+							// Mapped Lookup Signature: Pattern for detecting Record / Dictionary Value Type based on provided Key.
+							// Tip: [keyof T] transforms the Mapped Type into a Discriminatory Union of Mapped Type Properties.
+							export type <interface-like-type><T> = {
+								[K in keyof T]-?: {
+									key: K;
+
+									// <field>: T[K]
+								}
+							}[keyof T]
+
+				// Type Modifiers:
+					// Intersection Types: Combines multiple Types into one.
+						// More specific Type or sub Type.
+						// Note: Intersected Interfaces === Union of Member Attributes
+						let <intersection-type-variable>: <type> & ... = <value>;
+
+					// Union Types: Designate one of the following Types.
+						// Less specific Type or super Type.
+						// Note: Unioned Interfaces === Intersection of Member Attributes
+						let <union-type-variable>: <type> | ... = <value>;
+
+						// Discriminatory Unions:
+						// Allows TypeScript to automatically infer individual Types from a Union Type when appropriate.
+							enum E {
+								ONE = 'one',
+								TWO = 'two'
+							}
+
+							interface I1 {
+								<common-literal-field>: E.ONE,
+
+								<I1-prop>: <type>,
+								// ...
+							}
+
+							interface I2 {
+								<common-literal-field>: E.TWO,
+
+								<I2-prop>: <type>,
+								// ...
+							}
+
+							type TDU = I1 | I2;
+
+							const example: TDU = {
+								<common-literal-field>: E.ONE,
+
+								// Typescript will automatically infer further I1 Props based on value set for the <common-literal-field>.
+							};
+
+					// Generic Types:
+						// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
+						type <type-name><T extends <base-type> = <default-type>, ... > = ... ;
+
+					// Recursive Types:
+						// Tip: Useful for letting a Type declare that it can be an Array / Object of itself.
+						type <type-name> = <type-name>[] | { [key: string]: <type-name> } | ... ;
+
+					// Utility Types:
+						// Extract: To select for a subset of Types from a Union Type.
+							let <extract-type-variable>: Extract<<type>, <specified-type>> = ... ;
+
+						// Exclude: To remove a subset of Types from a Union Type.
+							let <exclude-type-variable>: Exclude<<type>, <specified-type>> = ... ;
+
+						// Partial: To allow partial fulfillment of an Object Type (set all Properties to allow for undefined values).
+							// Useful for Prop instantiation?
+							let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
+
+						// Required: To demand full fulfillment of an Object Type (set all Properties to not allow for undefined values).
+							let <required-type-variable>: Required<<type>> = {}; // Include one set of Angled Brackets.
+
+						// Pick: To specify a subset of Type Properties from another Object Type through a 'whitelist' approach.
+							let <pick-type-variable>: Pick<<type>, '<property>' | ... > = {};
+
+						// Omit: To specify a subset of Type Properties from another Object Type through a 'blacklist' approach.
+							let <omit-type-variable>: Omit<<type>, '<property>' | ... > = {};
+
+						// NonNullable: To remove null and undefined from a Object Type.
+							let <non-null-non-undefined-type-variable>: NonNullable<<type>> = {}; // Include one set of Angled Brackets.
 
 				// Type Guards: A Function that returns a boolean Value, letting TypeScript remove some possible Types during analysis of a Variable's Type when it is used.
 					// Tip: Use typeof or instanceof if needed.
@@ -212,150 +343,20 @@ Typescript:
 					// Non-Null Type Assertion Shorthand: Does not assure Runtime Safety unlike Optional Chaining.
 					<non-null-object>!.<property>
 
-			Enums: To provide more friendly names to sets of Numeric Values.
-				enum <enum-name> { <key>: <numeric-value>, ... };
-				let <example-variable>: <enum-name> = <enum-name>.<key>; 
-
-				// TypeScript correctly infers the Enum through the following:
-				type <enum> = <enum>[keyof <enum>];
-
-				// Note: Enums store Key-Value and Value-Key Mappings:
-					<enum-name>.<key> === <numeric-value>
-					<key> === <enum-name>[<numeric-value>]
-
-					const keys = Object.keys(<enum-name>).filter(key => isNaN(parseInt(key)))
-					const values = Object.values(<enum-name>).filter(key => !isNaN(parseInt(key)))
-
-			Type Alias:			Declare custom Types that can be reused in other Types or Interfaces.
-				type <type-alias> = <type> | ... ;
-
-				// ...
-
-				const <variable>: <type-alias> = <value>;
-
-				// Interface-like Types:
-				type <interface-like-type> = {
-					<key>: <value>,
-					// ...
-				}
-
-				type <extended-interface-like-type> = <interface-like-type> & ... ;
-
-			Interfaces:			Allows for explicit structure declaration of Values.
-				/** <interface-documentation> */
-				interface <interface-name> {
-					<property>: <type>;
-					<optional-property>?: <type>;
-					readonly <readonly-property>: <type>;
-
-					<function-property>: ( arg:<arg-type>, ... ) => <return-type>;
-
-					/** <text> */
-					<documented-property>: <type>;
-					
-					// Allows an Interface Property to reference another Property within the same Interface via F-bounded Polymorphism.
-					<dependent-property>: this['<property>'];
+				// Type Alias: Declare custom Types that can be reused in other Types or Interfaces.
+					type <type-alias> = <type> | ... ;
 
 					// ...
-				};
 
-				// Note: Redeclaration of an existing Interface will add onto it.
-				interface <interface-name> {
-					<more-properties>: <type>;
+					const <variable>: <type-alias> = <value>;
 
-					// ...
-				};
-
-				// Reference a Type of a Property from an Interface
-				// Note: Different from Pick - Pick creates another Interface - the resultant Type will still refer to an Object.
-					type <type-name> = <interface-name>['<property>']
-
-				// Extending an existing Interface
-					interface <extended-interface-name> extends <existing-interfce-name> {
-						<additional-property>: <type>;
-
-						// ...
-					};
-
-				// Generic Interface
-					// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
-					interface <generic-interface-name><<generic-type> extends <base-type> = <default-type>, ... > {
+					// Interface-like Types:
+					type <interface-like-type> = {
+						<key>: <value>,
 						// ...
 					}
 
-				// Utility Types:
-					// Partial: To allow partial fulfillment of a Type (set all Properties to allow for undefined values).
-						// Useful for Prop instantiation?
-						let <partial-type-variable>: Partial<<type>> = {}; // Include one set of Angled Brackets.
-
-					// Required: To demand full fulfillment of a Type (set all Properties to not allow for undefined values).
-						let <required-type-variable>: Required<<type>> = {}; // Include one set of Angled Brackets.
-
-					// Pick: To specify a subset of Type Properties from another Type through a 'whitelist' approach.
-						let <pick-type-variable>: Pick<<type>, '<property>' | ... > = {};
-
-					// Omit: To specify a subset of Type Properties from another Type through a 'blacklist' approach.
-						let <omit-type-variable>: Omit<<type>, '<property>' | ... > = {};
-
-					// Record: To specify a Data Object Type (separate from Functions and Arrays, which are also Objects in Javascript).
-						type <keys-type> = 'key-a' | 'key-b' | ... | 'key-n';
-						let <record-type-variable>: Record<<keys-type>, <value-type>> = {};
-
-						// Dictionary Map Types, where one set of Keys can be mapped to another set of Keys, may also be defined with Record:
-						type <keys-type-a> = 'key-a' | ... ;
-						type <keys-type-b> = 'key-b' | ... ;
-
-						type <map> = Record<<keys-type-a> , <keys-type-b>>; // Include one set of Angled Brackets.
-
-					// NonNullable: To remove null and undefined from a Type.
-						let <non-null-non-undefined-type-variable>: NonNullable<<type>> = {}; // Include one set of Angled Brackets.
-
-					// Utility Type for converting an Interface into an Interface-Like Type:
-						export type InterfaceLikeType<T> = { [ K in keyof T ]: T[ K ] };
-
-				// Index Signature: For declaring Types of unknown Interface / Interface-Like Properties ahead of time.
-				// Note: Interfaces that are not Indexable are not compatible with Interfaces / Interface-Like Types that are. Use the IndexableLikeType Utility Type above to convert the non-Indexable Interface into an InterfaceLikeType.
-					interface <indexable-interface-name> {
-						// Mutable Indexes
-						[key: number]: <type>;
-						// OR
-						[key: string]: <type>;
-
-						// ...
-
-						<known-property>: <sub-type>;
-					}
-
-				// keyof: To specify for a Type that contains all accessible Interface / Interface-Like Properties.
-				// string | number | symbol
-					type <type-name> = keyof <interface>;
-
-				// Mapped Signature: For creating Interface / Interface-Like Types with specifc Properties at one go.
-					interface <mapped-interface><generic-type> {
-						[key in <union-literal-type>]: <type>;
-						[key in <enum>]: <type>;
-						[key in keyof <generic-type>]: <type>;
-
-						// '-' can be prefixed on 'readonly' or '?' properties to remove them from the resulting Mapped Type
-						// Mutable Type: -readonly [ key in ... ]: <type>;
-						// Concrete Type: [ key in ... ]-?: <type>; 
-
-						// Create new Properties from existing Properties via Template Literal Types
-						[key in ... as `${key}-<new-key>`]: <type>;
-
-						// Exclude Properties from new Type via Exclude / never
-						[key in ... as Exclude<key, '<excluded-key>'>]: <type>
-					}
-
-					// Mapped Lookup Signature: Pattern for detecting Record / Dictionary Value Type based on provided Key.
-					// Tip: [keyof T] transforms the Mapped Type into a Discriminatory Union of Mapped Type Properties.
-					export type <interface-like-type><T> = {
-						[K in keyof T]-?: {
-							key: K;
-
-							// <field>: T[K]
-						}
-					}[keyof T]
+					type <extended-interface-like-type> = <interface-like-type> & ... ;
 
 			Modules
 			Namespaces
@@ -400,14 +401,6 @@ Typescript:
 					<constructor-type><T> = new () => T;
 
 		Typescript code will eventually be compiled down to Javascript code. This additional step serves as another point whereby problematic code can be caught.
-
-		Typescript Definitions:
-			If the original Javascript Library does not already have Typescript definitions, it may be possible to install the definitions via:
-				npm: 			npm install --save-dev '@types/<library>'
-				yarn: 			yarn add '@types/<library>'
-
-				The Typescript definitions are at: https://github.com/DefinitelyTyped/DefinitelyTyped
-
 		Typescript Compiler / Transpiler Configuration:
 			// Typescript will read in specified configuration parameters in a tsconfig.json File by default.
 
@@ -491,6 +484,13 @@ Typescript:
 						}
 
 		External Libraries:
+			Typescript Definitions:
+				If the original Javascript Library does not already have Typescript definitions, it may be possible to install the definitions via:
+					npm: 			npm install --save-dev '@types/<library>'
+					yarn: 			yarn add '@types/<library>'
+
+					The Typescript definitions are at: https://github.com/DefinitelyTyped/DefinitelyTyped
+
 			React:
 				// For Functions which accepts only one Generic Type, specify the Function as such:
 				// Note: The comma is neccessary to prevent unwanted JSX Syntax Inference.
