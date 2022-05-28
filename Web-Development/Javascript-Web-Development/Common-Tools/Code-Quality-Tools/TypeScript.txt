@@ -91,6 +91,41 @@ Typescript:
 						type <map> = Record<<keys-type-a> , <keys-type-b>>; // Include one set of Angled Brackets.
 
 					// Classes
+						// Note: Implemented Interfaces do not enforce the Typing of Member Attributes - they only serve to declare to Clients that the Class can be treated as the Interface Type.
+						// Note: Implemented Interfaces have their Member Attributes set to Public by default.
+						// Tip: Use Abstract Base Classes that implement the Interface to help declare Instances of Implementable Interfaces, or for Non-Public Member Attributes.
+							// Prefer Protected Members for Base Classes, so as to not force Child Classes to make inherited / overridable Members Public.
+						abstract <base-class-name> implements <interface> {
+							<protected | public> abstract <variable-name>: <variable-type>;
+
+							<protected | public> abstract <function-name>(): <return-type>;
+
+							// ...
+						}
+
+						// Concrete Class that implements <interface> through Inheritance of the Abstract Class above:
+						class <class-name> extends <base-class-name> {
+							// Readonly Class Variable
+							<private | protected | public | static> readonly <readonly-variable> = <value>;
+
+							// Parameter Properties
+							constructor(public <public-property>, private <private-property>, ... ) {
+								// ...
+							}
+
+							// Note: Getters and Setters for Class Variables must have the same Visibility.
+							// Tip: readonly Variable and dedicated Setter?
+
+							// ...
+
+							// Override Keyword - used to let TypeScript know that there should be a corresponding Method in the Parent Class; if not, issue a Compile Error
+							// Tip: Useful with the --noImplicitOverride Flag enabled in the Compiler Configuration.
+							override <function-name>() {
+								// super.<function-name>();
+								// ...
+							}
+						}
+
 						// Classes with Generics
 						// Note: If <generic-type> extends Union Types, it cannot be properly narrowed.
 						// Note: Static Members cannot use Generics, as Generics only apply to the Instances of a Class.
@@ -100,6 +135,12 @@ Typescript:
 
 						// Class Type:
 						type TClass = new (...args: any[]) => {};
+
+						// Constructor Signature
+						<constructor-type><T> = new () => T;
+
+						// Class Property
+						<class-name>['<property>']
 
 					// Enums: To provide more friendly names to sets of Numeric Values.
 						enum <enum-name> { <key>: <numeric-value>, ... };
@@ -360,45 +401,6 @@ Typescript:
 
 			Modules
 			Namespaces
-			OOP Support
-				// Classes
-					// Note: Implemented Interfaces do not enforce the Typing of Member Attributes - they only serve to declare to Clients that the Class can be treated as the Interface Type.
-					// Note: Implemented Interfaces have their Member Attributes set to Public by default.
-					// Tip: Use Abstract Base Classes that implement the Interface to help declare Instances of Implementable Interfaces, or for Non-Public Member Attributes.
-						// Prefer Protected Members for Base Classes, so as to not force Child Classes to make inherited / overridable Members Public.
-					abstract <base-class-name> implements <interface> {
-						<protected | public> abstract <variable-name>: <variable-type>;
-
-						<protected | public> abstract <function-name>(): <return-type>;
-
-						// ...
-					}
-
-					// Concrete Class that implements <interface> through Inheritance of the Abstract Class above:
-					class <class-name> extends <base-class-name> {
-						// Readonly Class Variable
-						<private | protected | public | static> readonly <readonly-variable> = <value>;
-
-						// Parameter Properties
-						constructor(public <public-property>, private <private-property>, ... ) {
-							// ...
-						}
-
-						// Note: Getters and Setters for Class Variables must have the same Visibility.
-						// Tip: readonly Variable and dedicated Setter?
-
-						// ...
-
-						// Override Keyword - used to let TypeScript know that there should be a corresponding Method in the Parent Class; if not, issue a Compile Error
-						// Tip: Useful with the --noImplicitOverride Flag enabled in the Compiler Configuration.
-						override <function-name>() {
-							// super.<function-name>();
-							// ...
-						}
-					}
-
-					// Constructor Signature
-					<constructor-type><T> = new () => T;
 
 		Typescript code will eventually be compiled down to Javascript code. This additional step serves as another point whereby problematic code can be caught.
 		Typescript Compiler / Transpiler Configuration:
