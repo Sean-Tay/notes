@@ -194,7 +194,7 @@ Database
 
 						Strong Consistency: A Read is guaranteed to return the result of applying all Writes on an Object thus far. Performance-intensive; depending on use case, it may be possible to use the weaker Consistency Models for the same effect. Note that this is technically Bounded Staleness with x = n.
 
-					Replication:
+					Replication: Primarily to ensure some degree of Data Availability and Partitioning Tolerance.
 						Types:
 							Synchronous: Writes not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
 
