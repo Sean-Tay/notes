@@ -20,9 +20,12 @@ Database
 		Collection:				A group of Records.
 
 		Forward Index:			A Data Structure that maps the Record to the Record's Content.
-		Inverted Index: 		An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record on Disk via a defined subset of the Record's Data.
-			Sparse Index:		Contains a mapping only for every n Records in the Collection to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
-			Dense Index:		Contains a mapping for every Record in the Collection to the Disk Location.
+		Inverted Index: 		An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record on Disk via a defined subset of the Record's Content.
+			Primary Index / Clustered Index: Each Index Entry is unique (1:1 relation to the Full Records) as it includes the Primary Key of the Records.
+			Secondary Index:	Index Entries do not include the Primary Key of the Records - each Index Entry may thus track more than one Record.
+
+		Sparse Index:			Contains a mapping only for every n Records in the Collection to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
+		Dense Index:			Contains a mapping for every Record in the Collection to the Disk Location.
 
 		Database Partitioning:
 			Horizontal Partitioning: Different Records into Separate Collections (e.g. Sharding).
