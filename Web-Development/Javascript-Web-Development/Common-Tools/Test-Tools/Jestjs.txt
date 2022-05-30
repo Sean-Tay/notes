@@ -232,7 +232,7 @@ Jest
 				)(	
 					// Jest can inject special values into the name of the Test Group to help differentiate between different Runs.
 					'<test-group-description>-%o',
-					(<value-1a>, ...) => {
+					(<value-a>, ...) => {
 						// expect ...
 					}
 				);

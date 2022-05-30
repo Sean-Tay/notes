@@ -27,15 +27,28 @@
 					// To get the closest Descendent DOM Nodes that fulfills a criteria, use <dom-node>.querySelectorAll(':scope > <dom-selector>')
 
 				// screen: Interface for obtaining Nodes from the DOM State. Re-exported by the Wrapper Packages.
-					// query* Functions will return the DOM Node or null if it can't be found.
-						// Tip: Use these only when asserting an DOM Node's existence.
+					// Query Types:
+						// query* - Functions will return the DOM Node or null if it can't be found.
+							// Tip: Use these only when asserting an DOM Node's existence.
 
-					// get* Functions will return the DOM Node or throw an Error (with the full DOM Structure in readable format) if it can't be found.
+						// get* - Functions will return the DOM Node or throw an Error (with the full DOM Structure in readable format) if it can't be found.
 
-					// findBy* Asynchronous Functions that will resolve with the DOM Node or reject if the default timeout of 10000ms is exceeded.
-						// Note: Useful to avoid the 'act' Error Output by waiting for a Component to finish loading when it calls an API on Mount.
-						// Note: Calls cannot be run concurrently via Promise.all.
-							// Tip: Just await each Call - it will immediately resolve if it can be found.
+						// find* - Asynchronous Functions that will resolve with the DOM Node or reject if the default timeout of 10000ms is exceeded.
+							// Note: Useful to avoid the 'act' Error Output by waiting for a Component to finish loading when it calls an API on Mount.
+							// Note: Calls cannot be run concurrently via Promise.all.
+								// Tip: Just await each Call - it will immediately resolve if it can be found.
+
+					// Query Methods
+						// *ByText - Search for Text Nodes with a particular <value>.
+							*byText(
+								<render-results> | <dom-node>,
+								<value>,
+								{
+									selector = "<dom-selector>", // Defaults to *
+									exact = false, // Defaults to true
+									// ...
+								}
+							)
 
 			@testing-library/jest-dom: Provides custom Jest Matchers for testing DOM State.
 				// expect( <dom-node> ).toBeInTheDocument(): Jest Matcher for checking if DOM Nodes are in the DOM State.
