@@ -28,11 +28,10 @@ Database
 		Dense Index:			Contains a mapping for every Record in the Collection to the Disk Location.
 
 		Database Partitioning:
-			Horizontal Partitioning: Different Records into Separate Collections (e.g. Sharding).
-			Vertical Partitioning: Different Record Attributes into Separate Collections (e.g. Normalization or simple Record Splitting).
+			Horizontal Partitioning: Splitting a Collection into smaller non-overlapping Partitions and storing them in separate Nodes (i.e. Sharding). Each Node may contain more than one Partition.
+			Vertical Partitioning: Different Record Attributes into Separate Collections (i.e. Normalization or simple Record Splitting).
 
-		Replication:			Having Redundant Copies of the Data in a Database stored in multiple Machines so that if one fails, dependent Applications can still use the other Machines for Data Retrieval, achieving Reliability for the Distributed System. Also helps to reduce operational load per Instance.
-		Replica:				A Machine within a Replicated Database.
+		Hotspot:				A Node in a Database Cluster that receives a higher amount of Traffic and Load compared to others due to sub-optimal Partitioning.
 
 		CAP Theorem: 			Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3). 
 			Consistency:		Degree at which Data is the same throughout the Database.
@@ -40,6 +39,9 @@ Database
 
 			Availability:		Whether or not every Request for Reading / Writing Data is successful.
 			Partitioning Tolerance: Enforces that the Database can still operate even if parts of it are unreachable in the Network.
+
+		Replication:			Having Redundant Copies of the Data in a Database stored in multiple Nodes so that if one fails, dependent Applications can still use the other Nodes for Data Retrieval, achieving Reliability for the Distributed System. Also helps to reduce operational load per Instance.
+		Replica:				A Node within a Replicated Database.
 
 	Details:
 		Database Objectives:
@@ -52,7 +54,7 @@ Database
 				Optimization Techniques:
 					Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of the Collection without concern for Duplication. Lookups can be optimized by traversing from the end of the Collection.
 
-					Indexes: 	Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
+					Indexes: Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
 						Background:
 							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the actual Disk Block that stores the complete Record, because only the necessary subset of the Record's Data is stored in each Disk Block used by the Index (thus each Disk Block can store more Block Addresses).
 								The optimization is more effective when Records are large => Less Records per Disk Block => More Disk Block Lookups without an Index.
@@ -171,6 +173,75 @@ Database
 								Cons:
 									Relatively Slow Writes, as multiple Disk Blocks are accessed after each Write to update the Index.
 	
+					Partitioning: Splitting up a large Collection into smaller non-overlapping Partitions such that each Partition can be stored and maintained in separate Nodes. Each Node can contain more than one Partition.
+						Partitioning is usually only considered when a Collection becomes too big to be stored in one Node, as it adds a lot of underlying complexity to the System.
+							Gossip Protocol (Database Nodes communicate between themselves)
+							Layer to track which parts of the Dataset is stored in which Partition / Node.
+
+						Often used alongside Replication (i.e. Nodes have separate Replica Sets).
+
+						Objectives:
+							Similarly sized Partitions (not necessarily equal in size as there might be certain Partitions that get more attention normally than others).
+							Overall Traffic distributed equally per Node.
+
+							Nodes become "Hotspots" if these are not met for any Node in the Partition Set.
+
+						Configurations:
+							Fixed Number of Partitions:
+								Too Low:
+									Each Partition will get too big, and Application can't scale.
+									Rebalancing will take a longer time.
+
+								Too High:
+									Larger Overhead on Disk for each Node w.r.t keeping track of all Ranges and Disk Locations for each Partition.
+
+							Fixed Number of Partitions per Node:
+								Each Node has a certain number of Partitions that grow proportionally to the Dataset.
+									Upon adding a new Node it will split existing Partitions from each Node, and take a piece of each split for itself.
+
+							Dynamic Partitioning: Some Databases are able to adjust Partitions automatically to reduce Hotspots as Data Access Patterns change over time.
+								Splitting and Merging of Partitions.
+
+						Methods:
+							Note: Don't use a Modulo on the number of Partitions to determine which Key goes into which Partition, as that can change in the future and will require Records to be reshuffled around Partitions / Nodes.
+
+							Ranges: Each Partition involves a Range which is a Contiguous Ordered Sequence of Values. Ranges can be of different sizes to avoid Hotspots.
+								Of Keys: Use Record Keys as they are to determine which Partition / Range they belong to (e.g. Alphabetical Ranges).
+									Pros:
+										Simple to understand.
+										Compatible with Range Queries.
+
+									Cons:
+										Need to actually ensure Ranges meet Objectives (e.g. Timestamp Ranges can lead to Hotspots).
+
+								Of Hashes of Keys: Hash Record Keys before determining which Partition / Range they belong to.
+									Pros:
+										Assuming a good Hash Function, Keys are evenly distributed.
+
+									Cons:
+										Not ideal for Range Queries.
+										Hotspots can still occur if a few Record Keys are always requested for.
+
+						Rebalancing: Should attempt to keep a majority of the Records in the same Node to avoid high Bandwidth costs.
+							During the process the old Node will take on the Reads and Writes for the Data involved in the migration to the new Node.
+
+						Compatability with other Database Mechanisms:
+							Secondary Indexes:
+								Local Indexes: Hold a Secondary Index that only tracks the Data on the Partition (i.e. each Partition holds all Index Entries, but each Index Entry only tracks the Records on the current Partition).
+									Pros:
+										Fast for Writing since all Writes are within the Partition.
+
+									Cons:
+										Slow on Read, as all Local Indexes in all Partitions need to be aggregated / processed to determine which Partition has the Record.
+
+								Global Indexes: Partition the Secondary Index as well (i.e. each Partition holds a subset of the Index Entries, but each Index Entry tracks all Records (regardless whether or not they are within the same Partition) in the Dataset that belong to that Index Entry).
+									Pros:
+										Fast for Read since all related Data for the Index Entry is stored in one Partition.
+
+									Cons:
+										Slow on Write, as Writes now potentially need to go to multiple Partitions (one for the Record, and one / two to update the Index Entry).
+										Consensus or Transaction Mechanism required in case Write to Record succeeds and Update to Index Entry (on a different Partition) fails.
+
 				CAP Theorem: Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3).
 					Configurations:
 						For a Distributed Database, Partition Tolerance is needed as Networks are unreliable, so either Consistency or Availability is compromised.
@@ -328,7 +399,7 @@ Database
 						Row-Based Data Structure not optimal for Data Compression.
 
 						Challenging to Horizontally Partition due to JOINs.
-						Data may not always be stored in one Partition / Machine, and may require several Network Calls to fulfill.
+						Data may not always be stored in one Partition / Node, and may require several Network Calls to fulfill.
 
 				Related Content:
 					SQL
@@ -341,7 +412,7 @@ Database
 				Document Database:
 					Pros:
 						Performance:
-							Data Locality minimizes the distance of Disk Lookups, as the Document is usually stored in one place on Disk, and in one Machine.
+							Data Locality minimizes the distance of Disk Lookups, as the Document is usually stored in one place on Disk, and in one Node.
 
 						Scalability:
 							Easier to Horizontally Partition without ACID Considerations.
