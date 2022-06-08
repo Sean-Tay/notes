@@ -770,6 +770,10 @@ Kotlin
 									val node: JsonNode = <object-node>.path("<key>").path("<sub-key>")
 									// node.isMissingNode() === true
 
+								// at - more convenient form of path
+									val node: JsonNode = <object-node>.at("/<key>/<sub-key>")
+									// node.isMissingNode() === true
+
 								// with - upserts a Node at "<key>" if it does not exist, and returns it
 									val node = <object-node>.with("<key>")
 									val node = <object-node>.withArray("<key>")
@@ -807,7 +811,6 @@ Kotlin
 								}
 
 								mapper.convertValue(<source-instance-object>, <target-class>)
-								
 
 				// Client-Server Interactivity:
 					// Relevant Packages:
