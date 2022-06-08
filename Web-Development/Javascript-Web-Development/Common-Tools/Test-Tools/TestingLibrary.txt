@@ -120,7 +120,7 @@
 
 						// result.current: The current Return Value from <custom-hook>.
 						// result.error: Any thrown Errors from the <custom-hook>.
-						// result.all: An Array of all results from the Testing thus far.
+						// result.all: An Array of the Return Values from <custom-hook> thus far, per Render. Each Element is either an instance of result.current or result.error.
 
 					// Tip: Render a Hook within some Context.
 					const wrapper = ({ children }) => <Context ... > { children } </Context>
@@ -130,6 +130,7 @@
 					await waitForValueToChange(async () => result.<{ current | error | all }>)
 
 					// Wait for Hook to trigger one re-Render.
+					// Note: If using this, can omit any act() calls before it.
 					await waitForNextUpdate()
 
 					// waitFor: Wait until some Assertion becomes true / Asynchronous Condition resolves.
