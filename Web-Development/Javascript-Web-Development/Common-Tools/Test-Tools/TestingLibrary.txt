@@ -101,7 +101,7 @@
 					// Note: Will throw an Error if the DOM Node does not already exist on the first check.
 					await waitForElementToBeRemoved(async () => <dom-node>)
 
-				// act: Wrapper Function to wrap any Code that would trigger a State Update.
+				// act: Wrapper Function to wrap any Code that would trigger a State Update. Will process all re-Renders as a result of that State Update.
 					act(() => { ... })
 					await act(async () => { ... })
 
@@ -124,15 +124,16 @@
 
 					// Tip: Render a Hook within some Context.
 					const wrapper = ({ children }) => <Context ... > { children } </Context>
-					const { result, waitForValueToChange, waitForNextUpdate,  waitFor } = renderHook(() => <custom-hook>( ... ), { wrapper })
+					const { result, waitFor, waitForValueToChange, waitForNextUpdate } = renderHook(() => <custom-hook>( ... ), { wrapper })
 
 					// Wait for result to update.
 					await waitForValueToChange(async () => result.<{ current | error | all }>)
 
-					// Wait for Hook to trigger one re-Render.
+					// Wait for Hook to trigger all re-Renders associated with prior State Updates.
 					// Note: If using this, can omit any act() calls before it.
 					await waitForNextUpdate()
 
+					// Note: Don't use the waitFor from @testing-library/react!
 					// waitFor: Wait until some Assertion becomes true / Asynchronous Condition resolves.
 						// Note: For Synchronous Conditions, waitFor will re-call the Callback on a set Interval (default: 50ms).
 						await waitFor(() => { <assert-fn>( ... ).toBe( ... ) })
@@ -141,7 +142,7 @@
 						await waitFor(async () => { <assert-fn>( await ... ).toBe( ... ) })
 						await waitFor(async () => <boolean-expression>)
 
-				// act: Wrapper Function to wrap any Code that would trigger a State Update.
+				// act: Wrapper Function to wrap any Code that would trigger a State Update. Will process all re-Renders as a result of that State Update.
 					act(() => { ... })
 					await act(async () => { ... })
 
