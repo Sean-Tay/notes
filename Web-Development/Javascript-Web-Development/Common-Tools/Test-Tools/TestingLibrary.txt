@@ -60,7 +60,11 @@
 				import userEvent from '@testing-library/user-event';
 
 				userEvent.click(<dom-node>)
-				userEvent.type(<dom-node>, <text>)
+
+				userEvent.type(<dom-node>, <input>)
+					// Special <input> (can be combined with regular input in the same line)
+						// {enter}
+						// {selectall}
 
 			@testing-library/react: Renders React Components into DOM Nodes.
 				// render: Render a React Component onto the DOM State.
@@ -85,9 +89,9 @@
 					renderResults.unmount()
 					cleanup()
 
-				// fireEvent: Alternative to @testing-library/user-event.
-				// Tip: Already wrapped with 'act'.
-				// Tip: Use @testing-library/user-event over this - the methods more closely resemble typical User Interactions than the ones in fireEvent.
+				// fireEvent: Use when doing programmatic interaction with the Component; otherwise go for @testing-library/user-event over this - the methods more closely resemble typical User Interactions.
+					// Tip: Already wrapped with 'act'.
+					fireEvent.<event-type>(<dom-element>, ... )
 
 				// waitFor: Wait until some Assertion becomes true / Asynchronous Condition resolves.
 					// Note: For Synchronous Conditions, waitFor will re-call the Callback on a set Interval (default: 50ms).
@@ -101,7 +105,7 @@
 					// Note: Will throw an Error if the DOM Node does not already exist on the first check.
 					await waitForElementToBeRemoved(async () => <dom-node>)
 
-				// act: Wrapper Function to wrap any Code that would trigger a State Update. Will process all re-Renders as a result of that State Update.
+				// act: Wrapper Function to wrap any Code that would trigger a State Update.
 					act(() => { ... })
 					await act(async () => { ... })
 
@@ -142,7 +146,7 @@
 						await waitFor(async () => { <assert-fn>( await ... ).toBe( ... ) })
 						await waitFor(async () => <boolean-expression>)
 
-				// act: Wrapper Function to wrap any Code that would trigger a State Update. Will process all re-Renders as a result of that State Update.
+				// act: Wrapper Function to wrap any Code that would trigger a State Update.
 					act(() => { ... })
 					await act(async () => { ... })
 
