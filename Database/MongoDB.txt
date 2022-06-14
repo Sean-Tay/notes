@@ -24,6 +24,8 @@ MongoDB:
 			Sparse Index:		An Index which only tracks Documents that have the Attributes involved in the Index.
 			Partial Index:		An Index which only tracks Documents that fulfill some Filter Expression.
 
+			Background Index:	An Index which is generated whilst the Collection is still accessible - by default, a Foreground Index will disable the whole Database. The Index however requires a much longer time to complete.
+
 		Aggregation Pipeline:	Equivalent to a Multi-Step Query that would allow for Grouping-Type Operations.
 		View:					In-Memory Read-Only Data Structure whose Contents are defined via an Aggregation Pipeline on Collections or other Views, and is generated only when a Query to that View has been made. Queries to a View are appended to the underlying Aggregation Pipeline that defines the View.
 
