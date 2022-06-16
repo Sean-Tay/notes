@@ -138,6 +138,8 @@ SQL:
 							PRIMARY KEY(<attribute_name>, ...)
 							-- OR
 							FOREIGN KEY(<attribute_name>, ...) REFERENCES <table>(<attribute_name>), ...
+
+							CHECK (<constraint>), ...
 						);
 
 						-- View <table> Properties.
