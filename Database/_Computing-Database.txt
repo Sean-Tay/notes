@@ -380,6 +380,8 @@ Database
 
 
 				Examples:
+					Redis
+					Memcache
 
 			Relational Database: Consists of Tables storing Rows of Structured Data.
 				Pros:
