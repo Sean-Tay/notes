@@ -839,6 +839,7 @@ Kotlin
 													.body("<value>")
 										},
 
+										// Note: You cannot have <path-parameter>s before the deepest Handler Function.
 										"<route>" bind <another-handler-function>( ... ),
 									)
 								}
