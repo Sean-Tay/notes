@@ -818,34 +818,82 @@ Kotlin
 						org.http4k.routing.* // Library for setting up Server Routes
 							// Relevant Types:
 								// Server
-									HTTPHandler // Data Type that specifies API Routes and their associated Handler Functions.
 									Request
 									Response
+									HttpHandler // (Request) -> Response
+
+									Filter // (HttpHandler) -> HttpHandler
+										.then(next: Filter): Filter
+										.then(next: HttpHandler): HttpHandler
 
 							// Setting up the Server
-								fun <handler-function>( ... ): HTTPHandler {
-									return routes(
-										"<route>/{<path-parameter>}" bind Method.<http-method-type> { 
-											req ->
-												val pathParam = req.path("<path-parameter>")
-												val queryParam = req.query("<query-parameter>")
-
+								// Middleware Definition
+									val filter: Filter = Filter {
+										// Tip: next is a HttpHandler
+										next -> {
+											req -> 
 												// ...
-
-												Response(Status.<status>)
-													.header(<header-field>, <header-value>)
-													.header()
-													// ...
-													.body("<value>")
-										},
-
-										// Note: You cannot have <path-parameter>s before the deepest Handler Function.
-										"<route>" bind <another-handler-function>( ... ),
-
-										// Fallback Route
-										Fallback bind <fallback-handler-function>( ... )
+												val res = next(req)
+												// ...
+												res
+										}
+									}.then(
+										// Another Filter
+										next -> {
+											req -> 
+												// ...
+										}
 									)
-								}
+
+								// Route Definition
+									fun <handler-function>( ... ): HttpHandler {
+										return routes(
+											// "<route>/{<path-parameter>}" bind Method.<http-method-type> to HttpHandler
+											"<route>/{<path-parameter>}" bind Method.<http-method-type> to { 
+												req ->
+													val pathParam = req.path("<path-parameter>")
+													val queryParam = req.query("<query-parameter>")
+
+													// ...
+
+													Response(Status.<status>)
+														.header(<header-field>, <header-value>)
+														.header()
+														// ...
+														.body("<value>")
+											},
+
+											// Note: You cannot have <path-parameter>s before the deepest Handler Function.
+											"<route>" bind <another-handler-function>( ... ),
+
+											// Filter-Augmented Route
+											"<route>" bind Method.<http-method-type> to <filter>.then {
+												req -> 
+													// ...
+											},
+
+											// Filter-Augmented Handler
+											"<route>" bind Method.<http-method-type> to <filter>.then(<handler-function>( ... )),
+
+											// Inline Nested Routing
+											// Tip - Useful to adjust Filters w.r.t some Path / Query Param
+											"<route>" bind Method.<http-method-type> to {
+												req ->
+													// ...
+
+													<filter>.then(
+														<filter>
+													). // ...
+													).then {
+														req ->
+															// ...
+													} (req)
+											}
+
+											// Fallback Route
+											Fallback bind <fallback-handler-function>( ... )
+										)
+									}
 
 								fun main() {
 									<handler-function>.asServer(<server>(<port>)).start()
