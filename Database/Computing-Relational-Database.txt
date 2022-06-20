@@ -32,6 +32,9 @@ Relational Database:
 
 		View:				Collection of Records resulting from the processing of some Query ; Result-Set.
 
+		Entity: 			A Table whose Records represent one subject type.
+		Relation: 			A Table whose Records track a type of connection between two or more Entities.
+
 		Index: 				An additional Data Structure accompanying a Table that speeds up Record Access during Queries.
 
 		Sharding:			Horizontal Database Partitioning / Split Table by Rows.
@@ -41,6 +44,8 @@ Relational Database:
 		
 		Transaction:		A Unit of Work done / Measure of Change performed within a DBMS.
 		ACID:				A set of desirable properties to apply to a Transaction when interacting with a Database.
+
+		Multiversion Concurrency Control: Generates a new version of an Object for each Write, and maintaining the last few relevant versions of the Object for Read Operations.
 
 		DDL:				Linguistic Mechanism for Defining (Create or Modify) the Data *Structures* within a Database.
 		DML:				Linguistic Mechanism for Manipulating (Modify, Delete, Insert and Update) Data within a Database.
@@ -53,14 +58,52 @@ Relational Database:
 		OLTP:				An approach to quickly serve Transaction Oriented Implementations (i.e. Sales Systems, ATM).
 	
 	Details:
-		Data Structure:
-			Entity: 		A Table whose Records represent one subject type.
-			Relation: 		A Table whose Records track a type of connection between two or more Entities.
-
-		ACID:
+		ACID:				A set of Properties for Operations on a Database to guarantee so as to avoid Erroneous Data.
 			Atomicity:		Transactions containing multiple Statements will either succeed as a whole, or not be processed at all.
-			Consistency:	Transactions can only bring the Database from one valid State to another, respecting Constraints, Cascades and Triggers within affected Data.
-			Isolation: 		Transactions executed concurrently will behave the same if the Transactions are executed sequentially.
+			Consistency:	Transactions can only bring the Database from one correct State to another, respecting Constraints, Cascades and Triggers within affected Data. This is related to Data Consistency from the CAP Theorem, but not exactly the same.
+
+			Isolation: 		Transactions executed concurrently will behave the same if the Transactions are executed sequentially, and order does not matter - each Transaction can assume that it is the only one running on the Database.
+				Strong-Isolation Strategies:
+					Actual Serial Execution: Implement all Queries on a Single Thread / Single CPU Core.
+						Preconditions:
+							In-Memory Database (as IO takes too long for Disk)
+							Stored Procedure (store Transaction ahead of time instead of sending over SQL Operations over Network, as that takes too long)
+							Transactions only affect one Partition (one CPU with Network Delay is very slow)
+
+						Pros:
+							Easy to implement.
+							Non-Analytics Transactions are usually short.
+
+						Cons:
+							Throughput limited to a single CPU Core.
+
+							Stored Procedures:
+								Need to know ahead of time the Query to execute.
+								Hard to Version Control.
+								May not be compatable with many popular Programming Languages used for the Backend.
+
+					Two Phase Locking: Widely used. Implement a Lock (Shared-Mode or Exclusive-Mode) on each Object in the Database. Multiple Transactions can concurrently Read an Object if they hold the Lock in Shared-Mode; Transactions can only Write if they hold the Lock in Exclusive-Mode, which can only happen if other Transactions do not have a hold on the Lock in Shared-Mode or Exclusive-Mode.
+						Scenarios:
+							Locks cannot be placed on Objects that do not exist - so Concurrency may ruin Isolation when a new Row is added to the Database after a prior Transaction has executed halfway.
+								Predicate Locks: Create a Lock on all Objects that satisfy a Query, even those that do not exist yet. However, this is rather Performance unfriendly.
+									Index-Range Locking: Use an Index (if available) to Lock all Objects within an Index Entry that matches the Query (even for those Objects that don't). Optimization over Predicate Lock.
+
+						Pros:
+							Compatable with Concurrent Transactions for Read.
+
+						Cons:
+							Slowdown for Transactions that may not actually have caused bugs due to Concurrency.
+							Frequent Deadlocks. The Database must detect when Deadlocks occur, and abort one or more Transactions to release the Deadlock, then retry the aborted Transactions.
+								Example: Multiple Transactions holding the Shared Lock for an Object, and these Transactions want to Write to the Object (Write-Write Conflict).
+
+					Serializable Snapshot Isolation: New. Falls under Multiversion Concurrency Control. All Reads taken from a Database Snapshot at the start of the Transaction, and the Transaction will only succeed if no Writes it has made conflicts with any of the Writes that have since occurred at the Snapshot.
+						Pros:
+							Faster than Two Phase Locking if not too many Concurrency Issues (i.e. Edge Cases).
+
+						Cons:
+							Slower than Two Phase Locking if too many Concurrency Issues.
+							Concurrency Bugs can still occur - it becomes the responsibility of the Application to design Transactions in such a way to avoid these (i.e. No Effect Writes during Reads to flag out Conflicts early).
+
 			Durability:		Transactions that have been commited will remain commited, even during System Failure (Power Outage / Crash).
 
 		OLTP:
