@@ -76,6 +76,7 @@ Relational Database:
 
 						Cons:
 							Throughput limited to a single CPU Core.
+								Does not work well with Distributed Scenarios due to requirement of Network Operations.
 
 							Stored Procedures:
 								Need to know ahead of time the Query to execute.
