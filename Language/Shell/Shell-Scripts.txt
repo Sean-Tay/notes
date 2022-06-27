@@ -126,7 +126,9 @@ Linux / Unix:
 				-R				- Apply ownership recursively to contents within directory <file>.
 
 			curl <url>			- Interact with an Application hosted on <url>
-				-u <username>:<password> - Declare Username / Password.
+				-u "<username>:<password>" - Declare Username / Password.
+				
+				-H "<http-request-header>:<value>" - Declare one Request Header. Can specify multiple in one Command.
 				
 				-o <file>		- Download content from <url> into a <file>.
 				-O				- Download content from <url> into a file, keeping the name as is in the <url>.
