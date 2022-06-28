@@ -1206,6 +1206,12 @@ Javascript
 			DOM Nodes:
 				var node = document.getElementsByClassName('<class-name>'); // No need the . prefix
 				var node = document.getElementById('idName'); // No need the # prefix
+
+				// Get the closest Ancestrial DOM Node that fulfills a criteria:
+					node.closest('<dom-selector>')
+
+				// Get the closest Descendent DOM Nodes that fulfills a criteria:
+					node.querySelectorAll(':scope > <dom-selector>')
 		
 			DOM Properties: Initialized from the values assigned to HTML Attributes. These can mutate during runtime, unlike HTML Attributes which only dictate the starting values of these Properties.
 				node.classList.add('<class-name>', ...); // Add Class to DOM Node. No need the . prefix.

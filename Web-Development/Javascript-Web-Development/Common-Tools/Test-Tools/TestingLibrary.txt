@@ -19,15 +19,8 @@
 
 					// Tip: data-testid can be changed to id for better compatibility with vanilla DOM Selector Mechanisms.
 
-				// Tip: Useful DOM Node Methods and Patterns: 
-					// To get the data-testid specified on a DOM Node, use <dom-node>.getAttribute('data-testid')
-
-					// To get the closest Ancestrial DOM Node that fulfills a criteria, use <dom-node>.closest('<dom-selector>')
-
-					// To get the closest Descendent DOM Nodes that fulfills a criteria, use <dom-node>.querySelectorAll(':scope > <dom-selector>')
-
-				// screen: Interface for obtaining Nodes from the DOM State. Re-exported by the Wrapper Packages.
-					// Query Types:
+				// screen: Interface for obtaining DOM Nodes from the DOM State. Re-exported by the Wrapper Packages.
+					// Query Method Types:
 						// query* - Functions will return the DOM Node or null if it can't be found.
 							// Tip: Use these only when asserting an DOM Node's existence.
 
@@ -49,6 +42,15 @@
 									// ...
 								}
 							)
+
+				// Tip: Useful DOM Node Method Patterns after using screen Query Methods:
+					// To get the data-testid specified on a DOM Node, use <dom-node>.getAttribute('data-testid')
+
+					// Get the closest Ancestrial DOM Node that fulfills a criteria:
+						node.closest('<dom-selector>')
+
+					// Get the closest Descendent DOM Nodes that fulfills a criteria:
+						node.querySelectorAll(':scope > <dom-selector>')
 
 			@testing-library/jest-dom: Provides custom Jest Matchers for testing DOM State.
 				// expect( <dom-node> ).toBeInTheDocument(): Jest Matcher for checking if DOM Nodes are in the DOM State.
@@ -77,6 +79,12 @@
 						container: <dom-node>, // document.body.appendChild(document.createElement('<html-element-type>'))
 					})
 
+					// Get DOM Node from renderResults
+						const <dom-node> = renderResults.baseElement
+
+					// Add usual Query Methods for DOM Nodes
+						within(<dom-node>)
+
 					// Preview DOM Tree Structure
 						// Entire DOM:
 						screen.debug(undefined, Infinity)
@@ -89,7 +97,7 @@
 					renderResults.unmount()
 					cleanup()
 
-				// fireEvent: Use when doing programmatic interaction with the Component; otherwise go for @testing-library/user-event over this - the methods more closely resemble typical User Interactions.
+				// fireEvent: Primarily used for invoking DOM Events; go for @testing-library/user-event to simulate actual User Interactions (which may involve one or more DOM Events).
 					// Tip: Already wrapped with 'act'.
 					fireEvent.<event-type>(<dom-element>, ... )
 
