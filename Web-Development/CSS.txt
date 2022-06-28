@@ -175,15 +175,15 @@ CSS:
 				transition: <css-prop> <transition-curve> <duration>, ... ;
 
 			Hiding an Element:
-				display: none 		- The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
+				display: none 		- The HTML DOM Element is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
 
-				content-visibility: hidden - The HTML DOM Node is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
+				content-visibility: hidden - The HTML DOM Element is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
 					Note: More performant than display: none, as it preserves Rendering State.
 
-				visibility: hidden 	- The HTML DOM Node is created. It is placed into the Document Flow, but an (empty) space is allocated in its place visually. It cannot receive Events.
+				visibility: hidden 	- The HTML DOM Element is created. It is placed into the Document Flow, but an (empty) space is allocated in its place visually. It cannot receive Events.
 					Note: Doesn't affect the visibility of child Elements.
 
-				opacity: 0			- The HTML DOM Node is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
+				opacity: 0			- The HTML DOM Element is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
 					user-select: none - Can be additionally specified to prevent Element from being selectable by User.
 					pointer-events: none - Can be additionally specified to prevent Element from receiving Mouse Events. Useful for transition Effects.
 

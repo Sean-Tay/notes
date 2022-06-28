@@ -158,31 +158,31 @@ Cypress
 									// setThrottle(<kbps>)
 							})
 
-				// DOM Nodes:
-					// Getting a DOM Node:
-					// (From the Root of the DOM Tree) / From a DOM Node as the Starting Point:
-						const <node> = cy
-							.contains("<text>")	// Get the deepest DOM Node containing the supplied <text>.
-								// Note: Only the first matched Node will be returned.
+				// DOM Elements:
+					// Getting a DOM Element:
+					// (From the Root of the DOM Tree) / From a DOM Element as the Starting Point:
+						const <element> = cy
+							.contains("<text>")	// Get the deepest DOM Element containing the supplied <text>.
+								// Note: Only the first matched Element will be returned.
 
-								// If any of the following is present higher in the DOM Tree than the would be deepest DOM Node, the higher DOM Node will be returned instead.
+								// If any of the following is present higher in the DOM Tree than the would be deepest DOM Element, the higher DOM Element will be returned instead.
 									input[type='default']
 									button
 									a
 									label
 								
-							.contains("<dom-selector>", "<text>") // Get the (highest?) DOM Node that matches the <dom-selector> and contains the <text> within.
+							.contains("<dom-selector>", "<text>") // Get the (highest?) DOM Element that matches the <dom-selector> and contains the <text> within.
 
-							.get("<dom-selector>") // Get DOM Nodes that match the supplied <dom-selector>.
+							.get("<dom-selector>") // Get DOM Elements that match the supplied <dom-selector>.
 
 					// Actions:
-						// Tip: If the <node> only becomes enabled after a loading / processing operation, it may be better for stability to add a check that the <node> is not disabled before actually triggering the <action>. This will give more room for page processing instability, as Cypress will retry a failing check several times until the timeout is hit.
-						<node>.<action>()
-							<node>.click({
+						// Tip: If the <element> only becomes enabled after a loading / processing operation, it may be better for stability to add a check that the <element> is not disabled before actually triggering the <action>. This will give more room for page processing instability, as Cypress will retry a failing check several times until the timeout is hit.
+						<element>.<action>()
+							<element>.click({
 								force: true, // Click through Visually Blocking Elements
 							})
 								
-							<node>.type('<input>')
+							<element>.type('<input>')
 
 				// Allows work on the <subject> yielded from the Previous Command:
 					<cy-command>.then((<subject>) => {

@@ -17,7 +17,7 @@ React.js
 		Quick Start: https://youtu.be/sBws8MSXN7A
 	
 	Concepts:
-		React Element:				Lightweight, Immutable, Stateless, Functionless, Nestable, plain JS Object that describes what should be shown on screen - a Virtual DOM Node or Sub-Tree. It is implicitly produced when inline JSX is compiled down to React.createElement() calls during Rendering.
+		React Element:				Lightweight, Immutable, Stateless, Functionless, Nestable, plain JS Object that describes what should be shown on screen - a Virtual DOM Element or Sub-Tree. It is implicitly produced when inline JSX is compiled down to React.createElement() calls during Rendering.
 		Virtual DOM: 				A Lightweight Reflection of the Actual DOM (i.e. CSS Layout recalculation, etc.), which can be seen as being represented by a Tree of React Elements.
 		Actual DOM:					The state in the Browser that keeps track of exactly how the Webpage should display and behave.
 
@@ -392,7 +392,7 @@ React.js
 
 					// Side-Effects
 						// Similar Behaviour to componentDidMount, componentDidUpdate and componentDidUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from Painting the display.
-						// Note: If Effect will change DOM Node appearance between the time the Component Renders and the Browser Paints, use useLayoutEffect instead to avoid a UI Flicker.
+						// Note: If Effect will change DOM Element appearance between the time the Component Renders and the Browser Paints, use useLayoutEffect instead to avoid a UI Flicker.
 						React.useEffect(
 							() => {
 								// ... 
@@ -413,7 +413,7 @@ React.js
 						);
 
 						// Same functionality as with useEffect, except that it DOES block the Browser from Painting until the execution is over.
-						// Note: Useful for doing DOM Mutations, or triggering another Render before the Browser Paints the accumulated Node Tree changes.
+						// Note: Useful for doing DOM Mutations, or triggering another Render before the Browser Paints the accumulated DOM Tree changes.
 						// Tip: Use these to update Refs.
 						React.useLayoutEffect(
 							() => {
@@ -460,11 +460,11 @@ React.js
 							[ <variable>, ... ]
 						);
 
-					// DOM Node Reference
+					// DOM Element Reference
 						// Note: Unaffected by "display: none".
-						const nodeRef = React.useRef();
-						// ... <div ref={{nodeRef}}> </div> ...
-						// ... nodeRef.current ...
+						const elementRef = React.useRef();
+						// ... <div ref={{elementRef}}> </div> ...
+						// ... elementRef.current ...
 
 					// Generate Unique String IDs that match between both Server and Client (SSR)
 					// Note: React >= v18 only

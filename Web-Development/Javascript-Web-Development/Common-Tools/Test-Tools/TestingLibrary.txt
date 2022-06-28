@@ -9,32 +9,32 @@
 		data-testid: 			Convention: Custom Element Property that allows for quick test-only lookups via queryById. Can be stripped away during Compilation via babel-plugin-react-remove-properties.
 	
 	Details:
-		Function: UI Component Framework Representation -> DOM Nodes -> Test on DOM Nodes
+		Function: UI Component Framework Representation -> DOM Elements -> Test on DOM Elements
 
 		Packages:
-			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Nodes.
+			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Elements.
 				// Tip: During Test Setup, we can change what the Testing Library treats as a data-testid attribute:
 					import { configure } from '@testing-library/dom'
 					configure({ testIdAttribute: '<id>' })
 
 					// Tip: data-testid can be changed to id for better compatibility with vanilla DOM Selector Mechanisms.
 
-				// screen: Interface for obtaining DOM Nodes from the DOM State. Re-exported by the Wrapper Packages.
+				// screen: Interface for obtaining DOM Elements from the DOM State. Re-exported by the Wrapper Packages.
 					// Query Method Types:
-						// query* - Functions will return the DOM Node or null if it can't be found.
-							// Tip: Use these only when asserting an DOM Node's existence.
+						// query* - Functions will return the DOM Element or null if it can't be found.
+							// Tip: Use these only when asserting an DOM Element's existence.
 
-						// get* - Functions will return the DOM Node or throw an Error (with the full DOM Structure in readable format) if it can't be found.
+						// get* - Functions will return the DOM Element or throw an Error (with the full DOM Structure in readable format) if it can't be found.
 
-						// find* - Asynchronous Functions that will resolve with the DOM Node or reject if the default timeout of 10000ms is exceeded.
+						// find* - Asynchronous Functions that will resolve with the DOM Element or reject if the default timeout of 10000ms is exceeded.
 							// Note: Useful to avoid the 'act' Error Output by waiting for a Component to finish loading when it calls an API on Mount.
 							// Note: Calls cannot be run concurrently via Promise.all.
 								// Tip: Just await each Call - it will immediately resolve if it can be found.
 
 					// Query Methods
-						// *ByText - Search for Text Nodes with a particular <value>.
+						// *ByText - Search for Text Elements with a particular <value>.
 							*byText(
-								<render-results> | <dom-node>,
+								<render-results> | <dom-element>,
 								<value>,
 								{
 									selector = "<dom-selector>", // Defaults to *
@@ -43,47 +43,47 @@
 								}
 							)
 
-				// Tip: Useful DOM Node Method Patterns after using screen Query Methods:
-					// To get the data-testid specified on a DOM Node, use <dom-node>.getAttribute('data-testid')
+				// Tip: Useful DOM Element Method Patterns after using screen Query Methods:
+					// To get the data-testid specified on a DOM Element, use <dom-element>.getAttribute('data-testid')
 
-					// Get the closest Ancestrial DOM Node that fulfills a criteria:
-						node.closest('<dom-selector>')
+					// Get the closest Ancestrial DOM Element that fulfills a criteria:
+						element.closest('<dom-selector>')
 
-					// Get the closest Descendent DOM Nodes that fulfills a criteria:
-						node.querySelectorAll(':scope > <dom-selector>')
+					// Get the closest Descendent DOM Elements that fulfills a criteria:
+						element.querySelectorAll(':scope > <dom-selector>')
 
 			@testing-library/jest-dom: Provides custom Jest Matchers for testing DOM State.
-				// expect( <dom-node> ).toBeInTheDocument(): Jest Matcher for checking if DOM Nodes are in the DOM State.
-				// expect( <dom-node> ).toBeDisabled(): Jest Matcher to check if an DOM Node is correctly disabled.
+				// expect( <dom-element> ).toBeInTheDocument(): Jest Matcher for checking if DOM Elements are in the DOM State.
+				// expect( <dom-element> ).toBeDisabled(): Jest Matcher to check if an DOM Element is correctly disabled.
 
-				// expect( <dom-node> ).toHaveTextContent( '<text-content>' ): Jest Matcher to check if the DOM Node has the specified <text-content> anywhere within.
+				// expect( <dom-element> ).toHaveTextContent( '<text-content>' ): Jest Matcher to check if the DOM Element has the specified <text-content> anywhere within.
 
 			@testing-library/user-event: Provides Utility Methods to simulate User Events.
 				import userEvent from '@testing-library/user-event';
 
-				userEvent.click(<dom-node>)
+				userEvent.click(<dom-element>)
 
-				userEvent.type(<dom-node>, <input>)
+				userEvent.type(<dom-element>, <input>)
 					// Special <input> (can be combined with regular input in the same line)
 						// {enter}
 						// {selectall}
 
-			@testing-library/react: Renders React Components into DOM Nodes.
+			@testing-library/react: Renders React Components into DOM Elements.
 				// render: Render a React Component onto the DOM State.
-				// Tip: 'renderResults' have the same Methods as 'screen', except there is no need to specify the DOM Node to start the search from.
+				// Tip: 'renderResults' have the same Methods as 'screen', except there is no need to specify the DOM Element to start the search from.
 				// Tip: Already wrapped with 'act'.
 				// Note: If calling 'render' multiple times within the same Test, be sure to invoke 'cleanup' or 'unmount' before each subsequent 'render' Call to remove the rendered results from the DOM State.
 					const renderResults = render(<element />, {
-						// Specify a DOM Node to append the <element /> to.
+						// Specify a DOM Element to append the <element /> to.
 						// Defaults to document.body.
-						container: <dom-node>, // document.body.appendChild(document.createElement('<html-element-type>'))
+						container: <dom-element>, // document.body.appendChild(document.createElement('<dom-element-type>'))
 					})
 
-					// Get DOM Node from renderResults
-						const <dom-node> = renderResults.baseElement
+					// Get DOM Element from renderResults
+						const <dom-element> = renderResults.baseElement
 
-					// Add usual Query Methods for DOM Nodes
-						within(<dom-node>)
+					// Add usual Query Methods for DOM Elements
+						within(<dom-element>)
 
 					// Preview DOM Tree Structure
 						// Entire DOM:
@@ -109,9 +109,9 @@
 					await waitFor(async () => { <assert-fn>( await ... ).toBe( ... ) })
 					await waitFor(async () => <boolean-expression>)
 
-				// waitForElementToBeRemoved: Will resolve once the specified DOM Node has been removed - it will check each time there is a mutation to the DOM State.
-					// Note: Will throw an Error if the DOM Node does not already exist on the first check.
-					await waitForElementToBeRemoved(async () => <dom-node>)
+				// waitForElementToBeRemoved: Will resolve once the specified DOM Element has been removed - it will check each time there is a mutation to the DOM State.
+					// Note: Will throw an Error if the DOM Element does not already exist on the first check.
+					await waitForElementToBeRemoved(async () => <dom-element>)
 
 				// act: Wrapper Function to wrap any Code that would trigger a State Update.
 					act(() => { ... })

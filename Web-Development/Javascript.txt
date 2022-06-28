@@ -1203,65 +1203,65 @@ Javascript
 				HTTPS to avoid MitM Attacks.
 
 		Document Object Model: An in-memory (mutable) tree representation of the HTML Page after it is read by the Browser.
-			DOM Nodes:
-				var node = document.getElementsByClassName('<class-name>'); // No need the . prefix
-				var node = document.getElementById('idName'); // No need the # prefix
+			DOM Elements:
+				var element = document.getElementsByClassName('<class-name>'); // No need the . prefix
+				var element = document.getElementById('idName'); // No need the # prefix
 
-				// Get the closest Ancestrial DOM Node that fulfills a criteria:
-					node.closest('<dom-selector>')
+				// Get the closest Ancestrial DOM Element that fulfills a criteria:
+					element.closest('<dom-selector>')
 
-				// Get the closest Descendent DOM Nodes that fulfills a criteria:
-					node.querySelectorAll(':scope > <dom-selector>')
+				// Get the closest Descendent DOM Elements that fulfills a criteria:
+					element.querySelectorAll(':scope > <dom-selector>')
 		
 			DOM Properties: Initialized from the values assigned to HTML Attributes. These can mutate during runtime, unlike HTML Attributes which only dictate the starting values of these Properties.
-				node.classList.add('<class-name>', ...); // Add Class to DOM Node. No need the . prefix.
-				node.classList.remove("<class-name>", ...); // Remove Class from DOM Node. No need the . prefix.
+				element.classList.add('<class-name>', ...); // Add Class to DOM Element. No need the . prefix.
+				element.classList.remove("<class-name>", ...); // Remove Class from DOM Element. No need the . prefix.
 
-				node.style; 		// references the Inline Style set specifically on the DOM Node.
-					node.style = `<value>`; // Must be string.
+				element.style; 		// references the Inline Style set specifically on the DOM Element.
+					element.style = `<value>`; // Must be string.
 
-				window.getComputedStyle(node); // references the Style from the DOM Node.
+				window.getComputedStyle(element); // references the Style from the DOM Element.
 
-				node.innerText; 	// references the text content between opening and closing HTML tags 
-				node.innerHTML; 	// references the HTML content between opening and closing HTML tags
+				element.innerText; 	// references the text content between opening and closing HTML tags 
+				element.innerHTML; 	// references the HTML content between opening and closing HTML tags
 			
 			DOM Events:	
 				// Event Bubbling: 	Event propagtes from Child to Parent.
 				// Event Capturing: Event travels back from Parent to Child.
 
 				// Note: Event Listeners send in Event Objects when invoked:
-					eventObject.target.value // target is the DOM Node that triggered the Event
-					eventObject.currentTarget.value // currentTarget is the DOM Node that the Event Listener is attached to
+					eventObject.target.value // target is the DOM Element that triggered the Event
+					eventObject.currentTarget.value // currentTarget is the DOM Element that the Event Listener is attached to
 
 				// Tip: For optimization, implement Event Delegation by creating the Event Listener on the Parent rather than attaching specific Event Listeners on all Child Objects. If the Event can Bubble, this should work.
 
 				Add Event Listener:
-					node.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
+					element.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
 						// <eventType>: http://www.w3schools.com/jsref/dom_obj_event.asp
 						// event: the Object containing details about the Event that triggered the listener
 							// event.preventDefault(): prevent the default handling of this event (implemented by the User Agent)  from being executed
-							// event.stopPropagation(): stop parent DOM Node from also receiving the event
+							// event.stopPropagation(): stop parent DOM Element from also receiving the event
 						// useCapture: false to specify function should fire during bubbling, true to specify the function should fire during capturing
 
-						// node.eventType = functionID; // Legacy shortcut
+						// element.eventType = functionID; // Legacy shortcut
 				
 				Remove Event Listener:
-					node.removeEventListener("eventType", functionID); // Doesn't seem to be able to remove anonymous functions
-					node.eventType = null; // Legacy shortcut
+					element.removeEventListener("eventType", functionID); // Doesn't seem to be able to remove anonymous functions
+					element.eventType = null; // Legacy shortcut
 				
 			Shadow DOM: An encapsulated DOM Tree which can be attached to any part of the regular DOM Tree, whilst still maintaining the encapsulation.
 				Code within the Shadow DOM cannot affect the regular DOM Tree.
 
-				Shadow Host: The regular DOM Tree Node to which a Shadow DOM Tree will be attached to.
+				Shadow Host: The regular DOM Element to which a Shadow DOM Tree will be attached to.
 				Shadow Boundary: The boundary by which a Shadow DOM Tree and the regular DOM Tree are separated by. It does not contain the Shadow Host.
-				Shadow Root: The root node of a Shadow DOM Tree.
+				Shadow Root: The root Element of a Shadow DOM Tree.
 
 				// Creating a Shadow DOM Tree, and attaching it onto a Shadow Host.
 				let shadowDOMTree = element.attachShadow({
 					mode: {'open' | 'close'} // Allow if outside JS can access the Shadow DOM Tree.
 				});
 
-		Resize Observer: To do something when there are Size Changes detected in one or more Observed DOM Nodes.
+		Resize Observer: To do something when there are Size Changes detected in one or more Observed DOM Elements.
 			const observer = new ResizeObserver(
 				// Callback that executes whenever a Resize of the Observed Targets are detected.
 				entries => {
