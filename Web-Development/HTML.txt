@@ -129,45 +129,64 @@ HTML:
 				</form>
 
 		DOM Selectors:
-			<!-- To select for HTML Elements are either selector1 OR selector2. -->
+			<!-- To select for DOM Elements are either selector1 OR selector2. -->
 			selector1,selector2 ...
 
-			<!-- To select for HTML Elements that satisfy both selector1 AND selector2. -->
+			<!-- To select for DOM Elements that satisfy both selector1 AND selector2. -->
 			selector1selector2 ...
 
-			<!-- To select an immediate selector2 HTML Element that follows after a sibling selector1 HTML Element. -->
+			<!-- To select an immediate selector2 DOM Element that follows after a sibling selector1 DOM Element. -->
 			selector1+selector2 ...
 
-			<!-- To select any selector2 HTML Element that follows after a sibling selector1 HTML Element. -->
+			<!-- To select any selector2 DOM Element that follows after a sibling selector1 DOM Element. -->
 			selector1~selector2 ...
 
-			<!-- To select only direct selector2 HTML Elements contained within a selector1 HTML Element. -->
+			<!-- To select only direct selector2 DOM Elements contained within a selector1 DOM Element. -->
 			selector1>selector2 ...
 
-			<!-- To select all selector2 HTML Elements contained within a selector1 HTML Element. -->
+			<!-- To select all selector2 DOM Elements contained within a selector1 DOM Element. -->
 			selector1 selector2 ...
 
-			<!-- To select selector1 HTML Elements with a specific attribute. -->
-			<!-- Tip: selector1 is not necessary. -->
-			selector1[<attribute>="<value>"] ...
+			<!-- Attribute Selectors -->
+				<!-- Tip: selector1 is not necessary. -->
 
-			<!-- To select for HTML Elements, but only under a certain condition. -->
+				<!-- To select selector1 DOM Elements with a specific attribute. -->
+				selector1[<attribute>] ...
+
+				<!-- To select selector1 DOM Elements with a specific attribute and value for that attribute. -->
+				selector1[<attribute>="<value>"] ...
+
+				<!-- To select selector1 DOM Elements with a specific attribute whose value is a whitespaced-separated list of values, one of which is exactly <value>. -->
+				<!-- Tip: Useful for class specifications -->
+				selector1[<attribute>~="<value>"] ...
+
+				<!-- To select selector1 DOM Elements with a specific attribute whose value contains at least one occurance of <value>. -->
+				<!-- Tip: Useful for inline styles -->
+				selector1[<attribute>*="<value>"] ...
+
+				<!-- To select selector1 DOM Elements with a specific attribute whose value starts / ends / starts and ends with <value>. -->
+				selector1[<attribute>^="<value>"][<attribute>$="<value>"] ...
+
+				<!-- Enable Case-Insensitivity during matching -->
+				selector1[<attribute> ... i]
+
+			<!-- To select for DOM Elements, but only under a certain condition. -->
 			selector1:pseudo-class ...
-				<!-- To select for the Last Child of selector1 HTML Element. -->
+				<!-- To select for the Last Child of selector1 DOM Element. -->
 				selector1:last-child ...
 
-				<!-- To select for the Last Type of selector1 HTML Element among siblings. -->
+				<!-- To select for the Last Type of selector1 DOM Element among siblings. -->
 				selector1:last-of-type ...
 
-			<!-- To style certain parts of selected HTML Elements. -->
+			<!-- To style certain parts of selected DOM Elements. -->
 			selector1::pseudo-element ...
-				<!-- To select for the first letter within selector1 HTML Elements. -->
+				<!-- To select for the first letter within selector1 DOM Elements. -->
 				selector1::first-letter ...
 
-				<!-- To select for all Content in the first line within selector1 HTML Elements. -->
+				<!-- To select for all Content in the first line within selector1 DOM Elements. -->
 				selector1::first-line ...
 
-				<!-- To select for List Markers of selector1 HTML Elements. -->
+				<!-- To select for List Markers of selector1 DOM Elements. -->
 				selector1::marker ...
 
 
