@@ -83,6 +83,7 @@
 						const <dom-element> = renderResults.baseElement
 
 					// Add usual Query Methods for DOM Elements
+					// Tip: Don't always assume the Query Methods are needed - it is not possible to turn it back to the <dom-element> given what is returned from 'within'.
 						within(<dom-element>)
 
 					// Preview DOM Tree Structure
