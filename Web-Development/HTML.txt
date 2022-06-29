@@ -10,6 +10,9 @@ HTML:
 	Concepts:
 		HTML Flushing:			Instead of sending the entire HTML Document to the Browser at once, the critical part of the HTML Document that contains Above-the-Fold Content can be sent first via a smaller but faster Network Response, and secondary HTML containing Below-the-Fold Content can be deferred to later Network Responses.
 			Modern Browsers are able to "build up" the HTML Document that arrives with subsequent Network Reponses.
+
+		DOM Node: 				A Node within the DOM Tree.
+		DOM Element:			A subset of DOM Nodes; only those that can be specified with a HTML Tag (within the html DOM Node).
 	
 	Details:
 		General HTML Structure:
