@@ -450,6 +450,7 @@ React.js
 						);
 						
 						// Used to define Functions within Functional Components that won't be unneccessarily recreated per Re-Render.
+						// Note: Beware of invoking Functions that return Functions here (e.g. lodash debounce), as the invocation of the Function Factory is triggered per Re-Render regardless of what is specified in the Dependency List (only invocation of the final Callback is controlled). Use useMemo for this scenario instead.
 						React.useCallback(
 							(<arg-1>, ...) => {
 								// ...
