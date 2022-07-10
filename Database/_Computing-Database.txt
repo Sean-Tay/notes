@@ -383,72 +383,104 @@ Database
 					Redis
 					Memcache
 
-			Relational Database: Consists of Tables storing Rows of Structured Data.
-				Pros:
-					ACID-strengthened Transactions:
-						Atomicity:		Transactions containing multiple Statements will either succeed as a whole, or not be processed at all.
-						Consistency:	Transactions can only bring the Database from one valid State to another, respecting Constraints, Cascades and Triggers within affected Data.
-						Isolation: 		Transactions executed concurrently will behave the same if the Transactions are executed sequentially.
-						Durability:		Transactions that have been commited will remain commited, even during System Failure (Power Outage / Crash).
+			Relational Database: 
+				Characteristics:
+					Consists of Tables storing Rows of Structured Data, with Rows on one Table having a Relation to Rows in another if both share common Key(s).
+					Reduction of Data Duplication via Normalization and JOINing.
+					Each Table has one Schema, which eases Data Encoding.
 
-						Benefits diminish in Distributed Settings.
+					All Reads and Writes go to Disk.
+
+					Uses B-Trees for their Indexes.
+
+					Hide Concurrency Bugs and Failures via Transactions.
+					2-Phase Locking for supporting Transaction Concurrency.
+
+				Pros:
+					ACID-strengthened Transactions.
 
 					Relational Structure allows minimization of Data Duplication across Tables.
 
 				Cons:
-					Scalability:
-						CAP Theorem suggests that Availability, Consistency and Partition Tolerance cannot be satisfied at the same time.
-						Row-Based Data Structure not optimal for Data Compression.
+					Set Schema does not allow Data to flexibly adapt to changing Application needs easily.
 
-						Challenging to Horizontally Partition due to JOINs.
-						Data may not always be stored in one Partition / Node, and may require several Network Calls to fulfill.
+					Scalability:
+						Challenging to Horizontally Partition since RDBMS has to ensure that all parts of the (Distributed) Transaction succeed or fail as a whole, which can involve multiple Nodes and even more Network Calls.
+							JOINs would require aggregation across Nodes.
+							Distributed Transactions required for Writes.
+
+						B-Trees are slow.
+						2-Phase Locking is slow.
+
+					Row-Based Data Structure not optimal for Data Compression.
+
+					Generally limited to Single-Leader Replication.
 
 				Related Content:
 					SQL
 					NewSQL:		Seeks to combine the strengths of Relational Databases with the strengths of Document Databases.
 
 				Examples:
+					MySQL
+					PostgresSQL
+
+					NewSQL:
+						VoltDB
+						Google Spanner
+
 					PrestoDB:	Facebook's Distributed SQL Query Engine.
 
-			NoSQL: Anything that is not storing Data in a Structured Table Format:
-				Document Database:
-					Pros:
-						Performance:
-							Data Locality minimizes the distance of Disk Lookups, as the Document is usually stored in one place on Disk, and in one Node.
+			Non-Relational Database: Anything that is not storing Data in a Structured Table Format:
+				Types:
+					Document Database:
+						Pros:
+							Documents are self-containing; they group relevant Data together.
+								Performance: Improved Data Locality due to self-containing nature of Documents, which results in more efficient Sequential Disk Lookups.
+								Scalability: Easier to Horizontally Partition due to self-containing nature of Documents.
 
-						Scalability:
-							Easier to Horizontally Partition without ACID Considerations.
+						Cons:
+							Data Duplication.
 
-					Cons:
-						Larger Network Calls as a result of sending over whole Documents with unneeded Information.
+							Not suited for scenarios where there are many Relations between Data, since Documents are supposed to be self-containing.
 
-					Related Content:
+							Larger Network Calls as a result of sending over whole Documents with unneeded Information.
 
-					Examples:
-						MongoDB
-						DynamoDB:	Amazon's NoSQL Solution.
-						Firestorm
+						Related Content:
 
-				Graph Database: Stores Data in a Graph (i.e. Vertices and Edges). Queries involve traversing the Graph.
-					Pros:
-						Good for storing Heterogenous and Homogenous Types of Data.
+						Examples:
+							MongoDB
+							DynamoDB:	Amazon's NoSQL Solution.
+							Firestorm
 
-					Cons:
+					Graph Database: Stores Data in a Graph (i.e. Vertices and Edges). Queries involve traversing the Graph.
+						Pros:
+							Does well for Data with many-to-many Relationships.
 
-					Related Content:
+						Cons:
 
-					Examples:
-						Cassandra
+						Related Content:
 
-				Key-Value Database:
-					Pros:
+						Examples:
+							Cassandra
 
-					Cons:
+					Key-Value Database:
+						Pros:
 
-					Related Content:
+						Cons:
 
-					Examples:
-						Redis: In-Memory based Database with Disk Persistence that is often used as a Caching Layer on top of other RDBMSes.
+						Related Content:
+
+						Examples:
+							Redis: In-Memory based Database with Disk Persistence that is often used as a Caching Layer on top of other RDBMSes.
+
+					Wide-Column Database:
+						Pros:
+						
+						Cons:
+
+						Related Content:
+
+						Examples:
 
 			Data Warehouse
 
