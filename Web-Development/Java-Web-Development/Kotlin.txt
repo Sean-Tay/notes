@@ -406,7 +406,7 @@ Kotlin
 					}
 
 				// Anonymous Function: 
-					fun (<arg>: <type>, ... ) = // ...
+					fun (<arg>: <type>, ... ): <return-type> = // ...
 
 			Generics:
 				// Declaration Site Variance:
@@ -499,6 +499,25 @@ Kotlin
 					
 					// Single Line:
 					if (<boolean-expression>) ? <true-expression> : <false-expression>;
+
+				// Scoping Functions: Useful for embedding logic within Call Chains.
+					// let: Useful for executing logic only if the calling <result> is not null.
+						<result>?.let {
+							// it === <result>
+						}
+
+					// apply / also: 
+						<result>.apply {
+							// this === <result>
+						}
+
+						<result>.also {
+							// it === <result>
+						}
+
+					// takeIf / takeUnless:
+						<result>.takeIf { <lambda-conditional> }?. // ...
+						<result>.takeUnless { <lambda-conditional> }?. // ...
 
 				// Switch-Case:
 					// Note: when is an Expression, meaning it can return Values once evaluated.
