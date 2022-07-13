@@ -1,56 +1,84 @@
 Data Warehouse
 	Abbreviations:
-		DBMS:				DataBase Management System.
+		DBMS:					DataBase Management System.
 
-		OLAP: 				OnLine Analytics Processing.
+		OLAP: 					OnLine Analytics Processing.
 	
-	Description:
-		A Database that focuses on the efficient analysis of Historical or Commutative Data gathered from different Data Sources.
+	Description: 				A Secondary Database that stores computed Data from Production Database(s) in a way that is more efficient for long running Queries that deal with Historical or Commutative Analysis.
 	
 	Resources:
 		https://www.guru99.com/data-warehousing.html
 		https://youtu.be/q77B-G8CA24
 	
 	Concepts:
-		Fact:				A Measurable Quantity representing something about the managed Entity or System. Calculations can be made on these for additional insight.
-		Dimension: 			A Descriptive Item describing the 'Who', 'What', 'When' or 'Where' of a Fact.
+		OLAP: 					An approach to quickly serve Analytics Oriented Implementations (i.e. Business Intelligence Applications).
 
-		Record: 			Collection of related values pertaining to some Facts or Dimension.
-		Table: 				Collection of Records with the same defined Facts or Dimension.
+		ETL Process:			The Process that handles Extraction, Transformation and Loading of Data from the Production Database(s) to the Data Warehouse. Usually a Batch Job.
 
-		OLAP: 				An approach to quickly serve Analytics Oriented Implementations (i.e. Business Intelligence Applications).
-		OLAP Hypercube:		Refers to the Multi-Dimensional 'Cube-like' Data Structure involved in OLAP.
+		Fact:					A Measurable Quantity representing something about the managed Entity or System. Calculations can be made on these for additional insight.
+		Dimension: 				An item that serves to provide additional information (e.g. Who, What, When, Where, Why ... ) a Fact.
 
-		Data Mart:			A subsidiary of a Data Warehouse to cater to a certain group of Users / Business Aspect.
+		Materialized Views: 	Involves Precomputed Results of common Queries so that they do not have to be constantly rerun.
+		Data Cube:				Multi-Dimensional Precomputed Materialized View. Not related to the Dimensions of Facts.
+
+		Data Mart:				A subsidiary of a Data Warehouse to cater to a certain group of Users / Business Aspect.
 	
 	Details:
-		Data Warehouses focus on efficiently serving complex, Multi-Dimensional Queries as part of OLAP.
+		Data Warehouses focus on efficiently serving Analytical Queries as part of OLAP.
+			Rationale:
+				The Analytical Queries involved for this Secondary Database are large and complex, usually involving Full Table Scans. If these were executed directly on the Production Database(s), it would cripple the performance for the Production Application, which is why a Secondary Database is needed.
+
+				Moreover, Production Databases typically store their Data in a "Row"-Based Format. However, the Analytical Queries involved usually deal with Data Aggregation. As such, Data Warehouses store their Data in a "Column"-Based Format for more efficiency.
+
 			Characteristics:
-				Subject-Oriented: Each Data Warehouse consolidates Data relating to some theme.
-				Integrated: The Data, potentially from multiple sources, must be integrated and transformed into a consistent format.
-				Time-Variant: The Primary Keys of Data stored within should implicitly or explicitly contain an element of Time, as it is Historical or Commutative Data.
-				Non-Volatile: Data is Read Only.
-				
-				Un-Normalized: Data is not Normalized so as to allow for faster Querying (i.e less and simpler Table Joins). 
-					However, this also results in Data Redundancy within the Table Records.
+				Data:
+					Subject-Oriented: Each Data Warehouse consolidates Data relating to some theme.
+					Integrated: The Data, potentially from multiple sources, must be integrated and transformed into a consistent format (via an ETL Process).
+					Time-Variant: The Primary Keys of Data stored within should implicitly or explicitly contain an element of Time, as it is Historical or Commutative Data.
+					Non-Volatile: Once Written, Data is Read Only.
 
-		OLAP Cube:
-			Table Types:
-				Fact Table: Records in these contain Measurable Data on collection of Facts, as well as references to related Dimension Tables.
-				Dimension Table: A companion to the Fact Table, Records in these contain Descriptive Data on the Facts in the Records that they are linked to.
+					Compression: Bitwise Run-Length Encoding can be used to compress Data, which can help with Caching Purposes. Bitwise Operations can then be used to do AND / OR Operations.
 
-			Schema Types:
-				Star Schema
-				Snowflake Schema: The Normalized Form of a Star Schema. Hierarchies are further separated into other Tables.
-				Galaxy Schema
+				Structure:
+					Un-Normalized: Data is not Normalized so as to allow for faster Querying (i.e less and simpler Table Joins). 
+						However, this also results in Data Duplication within the Table Records.
+
+					Column-Based: Unlike Row-Based Databases which store Data in the same Row together on Disk for Data Locality, Column-Based Databases store Data in the same Column together on Disk instead, as the Analytical Queries involved usually deal with Data Aggregation, which are Column-Based Operations.
+						All Columns must be stored in the same sorted order. If there needs to be more than one order, a Replica of the Data Warehouse can be used.
+
+						LSM Trees are used to buffer Writes, as it'll be costly to insert Items into an already sorted File on Disk.
+
+					Table Types:
+						Fact Table: Records in these contain Measurable Data on collection of Facts, as well as references to related Dimension Tables. May potentially contain up to 100s of Columns.
+						Dimension Table: A companion to the Fact Table, Records in these contain Descriptive Data on the Facts in the Records that they are linked to.
+
+					Schema Types:
+						Star Schema: Each Record of a central Fact Table contains many Foreign Keys, of which link to a Record in one or more Dimension Tables.
+
+						Snowflake Schema: The Normalized Form of a Star Schema, Dimension Tables additionally reference Sub-Dimension Tables with their own Foreign Keys.
+
+						Galaxy Schema
+
+				Materialized Views: Database precomputes common Queries so that they do not have to be constantly rerun.
+					Cons:
+						Writes are slower, as these Views must be updated.
+							However, as Writes are typically done via long-running ETL Processes anyway, the reduction of speed is still acceptable.
+
+					Data Cube: Multi-Dimensional Precomputed Materialized View. Not related to the Dimensions of Facts.
+						Example: A Table whose Cells contain the amount received from sales for a given Product on a given Day. A Data Cube would contain results for the aggregation on every:
+							Row: Amount received from sales on each Day.
+							Columns: Amount received from sales of each Product thus far.
 
 		Operation Types:
-			Roll-Up:	The consolidation of Data through the reduction of Dimensions / climbing up the Concept Hierarchy.
-			Drilldown:	The refinement of Data through the increment of Dimensions / climbing down the Concept Hierarchy.
+			Roll-Up:			The consolidation of Data through the reduction of Dimensions / climbing up the Concept Hierarchy.
+
+			Drilldown:			The refinement of Data through the increment of Dimensions / climbing down the Concept Hierarchy.
+
 			Slice and Dice: 
-				Slice: 	Extract Data Sets from the OLAP Cube.
-				Dice:	Viewing the Data Sets from different Dimensions.
-			Pivot: Rotate.
+				Slice: 			Extract Data Sets from the OLAP Cube.
+				Dice:			Viewing the Data Sets from different Dimensions.
+
+			Pivot: 				Rotate.
 	
 	Commands:
 		

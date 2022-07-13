@@ -420,6 +420,8 @@ Database
 					SQL
 					NewSQL:		Seeks to combine the strengths of Relational Databases with the strengths of Document Databases.
 
+					Data Warehouse: A Secondary Database that stores computed Data from a Production Database in a way that is more efficient for long running Analytical Queries.
+
 				Examples:
 					MySQL
 					PostgresSQL
@@ -481,9 +483,6 @@ Database
 						Related Content:
 
 						Examples:
-
-			Data Warehouse
-
 
 	Commands:
 		
