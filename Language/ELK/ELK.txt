@@ -1,14 +1,93 @@
 ELK
 	Abbreviations: 
+		DSL: Domain Specific Language
 	
 	Description: Service for Searching Data.
 	
 	Resources:
 	
 	Concepts:
-		Query String Syntax: A "mini-language" that is used by the "query_string" Value  / "q" Query Parameter w.r.t the Search API.
+		Query DSL: The JSON-based language that ELK uses to define Queries.
+			Query Context: Query Clauses run under this Context will decide how well Documents match, and their order in the final results.
+			Filter Context: Query Clauses run under this Context will decide if the Document should even appear in the final results.
+
+		Query String: A String with Lucene-based Syntax that is used by the "q" Query Parameter / "query_string" JSON Value within the Query DSL. Offers only a subset of the Query DSL's functionality.
 	
 	Details:
+		Note: <field> below refers to Field Paths Specifications.
+
+		Search API:
+			Kibana Console:
+				<http-request-method> /<index-name>/ ... /_search
+				{
+					"query": <query-dsl-object>,
+
+					// Specify the maximum number of Documents that will be returned (default 10, max 10000).
+					"size": <number>,
+					"track_total_hits": <number>,
+
+					// Specify the <field>s that will be returned from each Document that fulfills the Query.
+					"fields": [ "<field>", ... ], // Uses the original Document and Indexes to reference <field> Values. Can only return Primitive / "Leaf" Values.
+					"_source": <{boolean | field-path-with-wildcard | field-array}>, // Uses the original Document to reference <field> Values. If set to false, the full Document will not be returned (default true).
+				}
+
+		Query DSL:
+			{
+				"query": {
+					// Matches for Documents based on Boolean Combinations of other <query>s.
+					"bool": {
+						// Query Context
+							"must": [ { <query>, ... }, ... ], // AND Behaviour.
+							"should": [ { <query>, ... }, ... ], // Varying OR Behaviour possible with "minimum_should_match" specification.
+
+						// Filter Context
+							"filter": {
+								"script": {
+									"script": """
+										// Should return a Boolean on whether a given Document is included in the Results:
+										// <boolean-expression> <boolean-operator> ...
+
+										// <boolean-expression>:
+											// Check if <field> exists on Document:
+											doc['<field>'].size() != 0
+
+											// Reference <field> Value:
+											doc['<field>'].value
+
+										// <boolean-operator>:
+											&&
+											||
+									"""
+								},
+
+								// OR
+
+								<query>,
+
+								// ... 
+							},
+
+							"must_not": { <query>, ... },
+
+						// Options
+							"minimum_should_match": <number> // Specifies the minimum number of should Clauses that the Document must match.
+					},
+
+					// Matches for Documents via a simpler but less capable Mechanism - see Query String Syntax Section below.
+					"query_string": <query-string>
+				}
+			}
+			
+			// <query>
+				// <term-level>: More for checking if a <field> has a particular <value>.
+					"term": {
+						"<field>": <value>
+					}
+
+					"terms": {
+						"<field>": [<value>, ... ]
+					}
+
 		Query String Syntax:
 			_exists_:<field> // Search for <field> Values which are non-null.
 
@@ -72,8 +151,6 @@ ELK
 				// Note: AND has higher precedence than OR
 				// Tip: Use Parenthesis to override default AND precedence
 				<query1> AND ( <query2> OR <query3> ... ) ...
-
-
 
 	Commands:
 		
