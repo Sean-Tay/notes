@@ -75,7 +75,7 @@ Relational Database:
 			Atomicity:		Transactions containing multiple Operations will either succeed as a whole, or not be processed at all.
 			Consistency:	Transactions can only bring the Database from one correct State to another, respecting Constraints, Cascades and Triggers within affected Data. This is related to Data Consistency from the CAP Theorem, but not exactly the same.
 
-			Isolation: 		The degree by which Transactions on a Database can assume that they would be unaffected by other concurrently executing Transactions, definable with the types of phenomena that can be observed during Reads.
+			Isolation: 		The degree by which Transactions on a Database can assume that they would be unaffected by other concurrently executing Transactions, definable with the types of phenomena that can be observed during overlapping Transactions. The highest degree mandates that the end results of each Transaction can only be one of several, all of which arise from completely non-overlapping Transactions.
 				Concurrency Bugs:
 					Dirty Operations: Incorrect behaviour stemming from uncommitted Data.
 						Writes: A Transaction overwrites committed Data from another concurrently executed Transaction (started later and completed earlier) with uncommitted Data. Uncommitted Data should be able to be subsequently rolled back, but the first Transaction will not be able to roll back without removing the committed Data. Solvable via Transaction-Level Exclusive-Mode Record Locks w.r.t Write Operations.
@@ -116,7 +116,7 @@ Relational Database:
 
 					Repeatable Reads: The Transaction attempts to obtain Transaction-Level Record Locks.
 						Features:
-							Prevents all Concurrency Bugs except Phantoms.
+							Prevents all Concurrency Bugs except Phantoms and Write Skews.
 
 					Serializable Snapshot Isolation: New. Snapshot Isolation, but track for cases where non Serializable Execution could occur, and abort one of the participating Transactions (e.g. track all Reads for a Record, and abort all tracked Reads when a Write is made to the Record).
 						Features:
@@ -125,7 +125,7 @@ Relational Database:
 							Faster than traditional Two Phase Locking.
 							Consumes more resources than Locking-based approaches.
 
-					Two Phase Locking: Widely used - all necessary Locks are acquired / are upgraded for a Transaction (Growth Phase) before Locks are released / are downgraded (Shrink Phase, which usually occurs when a Transaction completes / is rolled back).
+					Serializable / Two Phase Locking: Widely used - all necessary Locks are acquired / are upgraded for a Transaction (Growth Phase) before Locks are released / are downgraded (Shrink Phase, which usually occurs when a Transaction completes / is rolled back).
 						Features:
 							Prevents all Concurrency Bugs, but frequent Deadlocks and unnecessary slowdown for Transactions that may not have actually caused Concurrency Bugs - the Database must detect when Deadlocks occur, and abort one or more Transactions to release the Deadlock, then retry the aborted Transactions.
 								Example: Multiple Transactions holding the Shared Lock for an Object, and these Transactions want to Write to the Object (Write-Write Conflict).
