@@ -245,21 +245,47 @@ Jest
 					import * as Dependencies from '<target-dependency>';
 
 					// Use jest.fn to entirely replace the <dependency>'s implementation with a Stub.
-					const dependencyStub = jest.fn(<new-function>)
+					const <dependency-stub> = jest.fn(<new-function>)
 
 					// Use jest.spyOn to allow modification of the <dependency>'s implementation.
-					const dependencyStub = jest.spyOn(Dependencies, '<dependency>');
+					const <dependency-stub> = jest.spyOn(Dependencies, '<dependency>');
 
 					// Within a Test, invoke the Jest Stub Methods to define a controlled implementation of the Target's Function Dependency.
+
+				// Mocking Global Timer JavaScript Functions:
+					// ...
+
+					jest.useFakeTimers(<config>)
+
+					// Reset any Fake Timers that are still in scope:
+					jest.useFakeTimers(<config>)
+
+					// ...
+
+					// Executes Tasks created by setTimeout and setInterval, until no more Tasks are in the Execution Queue that would be executed within the specified Time Frame.
+					jest.advanceTimersByTime(<milliseconds>)
+
+					// Executes Tasks created by setTimeout and setInterval that's currently in the Execution Queue.
+					jest.runOnlyPendingTimers()
+
+					// Executes Tasks created by setTimeout and setInterval, until no more Tasks are in the Execution Queue.
+					jest.runAllTimers()
+
+					// Clear all Timers.
+					jest.clearAllTimers()
+
+					// ...
+
+					jest.useRealTimers()
 
 				// Mocking Global JavaScript Functions
 					// ...
 
 					// Global Scope
-					const globalDependencyStub = jest.spyOn(this, '<dependency>');
+					const <global-dependency-stub> = jest.spyOn(this, '<dependency>');
 
 					// NodeJS
-					const globalDependencyStub = jest.spyOn(global, '<dependency>');
+					const <global-dependency-stub> = jest.spyOn(global, '<dependency>');
 
 					// ...
 
@@ -333,6 +359,8 @@ Jest
 
 			Jest Stub Methods:	For defining the behaviour of a Stub, to simulate a Target's Functional Dependency:
 				// Tip: These are chainable with each other, as these return the Jest Stub itself at the end of execution.
+
+				const <stub> = jest.fn()
 
 				// For Synchronous Functions:
 					// If the Target's Functional Dependency is called only once in the Target:
