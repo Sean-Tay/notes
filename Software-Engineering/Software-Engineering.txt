@@ -1,6 +1,12 @@
-Application Development:
+Software Engineering:
 	Concepts:
 		Language Server Protocol: 	The Protocol used for communication between IDEs and a Language Server to provide advanced Developer Features such as Autocompletion or Reference Navigation.
+		
+		Constructs:
+			Polyglot:				A single Entity which is designed to express the same functionality across usage of multiple Programming Languages at the same time.
+			Shims:					Emulation of API for Legacy Environments that would not have them implemented / repair incorrect implementations of the API in Problematic Environments.
+			Stub:					Dummy implementation of some part of a Program / Software / System, usually used in scenarios where the full functionality of the Program / Software / System is not strictly required.
+			Mixins:					Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
 
 		Idempotency:				Property of Operations that allow them to be applied multiple times without changing the end result beyond the initial application.
 
@@ -17,6 +23,10 @@ Application Development:
 
 		Type Projection: 			Taking and Reducing an existing Type to what is minimally needed, until it becomes possible to Subtype it.
 		Type Erasure:				Types meant for Compilation Checks are not preserved during Runtime Execution.
+
+		Metaprogramming:			The practice of making Programs that makes other Programs.
+			Introspection:			Finding out the structure and semantics of the Code that makes up the Program.
+			Reflection:				Finding out and adjusting the structure and semantics of the of the Code that makes up the Program.
 
 		Unit Testing: 				These Tests focus on a small part / unit of the Codebase, but in a very detailed way (i.e. both correct and incorrect scenarios).
 		Integration Testing: 		These Tests focus on the integration of Modules within a part of the Tech Stack (i.e. Backend or Frontend, in isolation).
@@ -71,29 +81,25 @@ Application Development:
 		
 		Inversion of Control:		Rather than having the Application determine when the Framework Functionality is used, the flow is reversed, and the Framework will trigger specified Application Functionality. It helps with Dependency Injection.
 			Analogy: Hollywood Principle - Don't Call Us, We'll Call You.
-		
+
 		DRY:						Don't Repeat Yourself. Avoid Code Duplication whenever possible.
 		WET:						Write Everything Twice. Avoid Over Abstraction, which can be more harmful than Code Duplication. 
 		AHA:						Avoid Hasty Abstractions. Wait until a piece of Code has been Duplicated several times before looking into Abstraction to get a better sense of what the potential use-case for that piece of Code is.
 
-	Constructs:
-		Polyglot:					A single Entity which is designed to express the same functionality across usage of multiple Programming Languages at the same time.
+		Patterns:
+			Creation:
+				Singleton:			A Class designed to only have one Instance, typically via a Private Constructor. Has to be Thread-Safe, and good to be Lazily Initialized.
+				
+				Factory:			A Method used to create different Sub-Class Instances.
+				Static Factory:		Static Methods on Classes, designed to produce Instances of those Classes (e.g. Int.valueOf("5")). Idiomatic "Named" Constructors + generally accepted that these throw Exceptions vs regular Constructors + ability to return Instances of Sub-Classes.
+				Abstract Factory:	A Method used to create different Class Instances, usually for functionality that requires one or more Classes.
 
-		Shims:						Emulation of API for Legacy Environments that would not have them implemented / repair incorrect implementations of the API in Problematic Environments.
-		
-		Stub:						Dummy implementation of some part of a Program / Software / System, usually used in scenarios where the full functionality of the Program / Software / System is not strictly required.
+				Builder:			Construction of a complex Class Instance one step at a time.
 
-		Mixins:						Classes with implemented Methods meant for reuse amongst other Classes, forgoing direct Inheritance to acquire said functionality.
+				Prototype:			Allows adaptability of code in the face of changing requirements.
 
-	Metaprogramming:				The practice of making Programs that makes other Programs.
-		Introspection:				Finding out the structure and semantics of the Code that makes up the Program.
-		Reflection:					Finding out and adjusting the structure and semantics of the of the Code that makes up the Program.
+			Structure:
+				Decorator:			Used to tack on different functionality to Class Instances. Extension of the Prototype Design Pattern.
 
-Systems:
-	Configuration Management:		Process of establishing and ensuring a System's Function throughout its lifespan.
+				Adapter: 			Conversion between different Interfaces.
 
-	Containerization:				Bundling an Application, related Binaries and Libaries into some Self-Contained Package for execution.
-
-	Container Orchestration: 		Schedules and Manages Container Deployment.
-
-	Software Agent:					A Program that acts on behalf of a User / another Program.

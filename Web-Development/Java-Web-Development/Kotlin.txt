@@ -507,6 +507,7 @@ Kotlin
 						}
 
 					// apply / also: 
+						// Tip: Can be used for the Builder Design Pattern.
 						<result>.apply {
 							// this === <result>
 						}
