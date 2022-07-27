@@ -227,49 +227,49 @@ Typescript:
 						// Utility Type for converting an Interface into an Interface-Like Type:
 							export type InterfaceLikeType<T> = { [ K in keyof T ]: T[ K ] };
 
-						// Index Signature: For declaring Types of unknown Interface / Interface-Like Properties ahead of time.
-						// Note: Interfaces that are not Indexable are not compatible with Interfaces / Interface-Like Types that are. Use the IndexableLikeType Utility Type above to convert the non-Indexable Interface into an InterfaceLikeType.
-							interface <indexable-interface-name> {
-								// Mutable Indexes
-								[key: number]: <type>;
-								// OR
-								[key: string]: <type>;
-
-								// ...
-
-								<known-property>: <sub-type>;
-							}
-
 						// keyof: To specify for a Type that contains all accessible Interface / Interface-Like Properties.
 						// string | number | symbol
 							type <type-name> = keyof <interface>;
 
-						// Mapped Signature: For creating Interface / Interface-Like Types with specifc Properties at one go.
-							interface <mapped-interface><generic-type> {
-								[key in <union-literal-type>]: <type>;
-								[key in <enum>]: <type>;
-								[key in keyof <generic-type>]: <type>;
+					// Index Signature: For declaring Types of unknown Interface / Interface-Like Properties ahead of time.
+					// Note: Interfaces that are not Indexable are not compatible with Interfaces / Interface-Like Types that are. Use the IndexableLikeType Utility Type above to convert the non-Indexable Interface into an InterfaceLikeType.
+						interface <indexable-interface-name> {
+							// Mutable Indexes
+							[key: number]: <type>;
+							// OR
+							[key: string]: <type>;
 
-								// '-' can be prefixed on 'readonly' or '?' properties to remove them from the resulting Mapped Type
-								// Mutable Type: -readonly [ key in ... ]: <type>;
-								// Concrete Type: [ key in ... ]-?: <type>; 
+							// ...
 
-								// Create new Properties from existing Properties via Template Literal Types
-								[key in ... as `${key}-<new-key>`]: <type>;
+							<known-property>: <sub-type>;
+						}
 
-								// Exclude Properties from new Type via Exclude / never
-								[key in ... as Exclude<key, '<excluded-key>'>]: <type>
+					// Mapped Signature: For creating Interface / Interface-Like Types with specifc Properties at one go.
+						interface <mapped-interface><generic-type> {
+							[key in <union-literal-type>]: <type>;
+							[key in <enum>]: <type>;
+							[key in keyof <generic-type>]: <type>;
+
+							// '-' can be prefixed on 'readonly' or '?' properties to remove them from the resulting Mapped Type
+							// Mutable Type: -readonly [ key in ... ]: <type>;
+							// Concrete Type: [ key in ... ]-?: <type>; 
+
+							// Create new Properties from existing Properties via Template Literal Types
+							[key in ... as `${key}-<new-key>`]: <type>;
+
+							// Exclude Properties from new Type via Exclude / never
+							[key in ... as Exclude<key, '<excluded-key>'>]: <type>
+						}
+
+						// Mapped Lookup Signature: Pattern for detecting Record / Dictionary Value Type based on provided Key.
+						// Tip: [keyof T] transforms the Mapped Type into a Discriminatory Union of Mapped Type Properties.
+						export type <interface-like-type><T> = {
+							[K in keyof T]-?: {
+								key: K;
+
+								// <field>: T[K]
 							}
-
-							// Mapped Lookup Signature: Pattern for detecting Record / Dictionary Value Type based on provided Key.
-							// Tip: [keyof T] transforms the Mapped Type into a Discriminatory Union of Mapped Type Properties.
-							export type <interface-like-type><T> = {
-								[K in keyof T]-?: {
-									key: K;
-
-									// <field>: T[K]
-								}
-							}[keyof T]
+						}[keyof T]
 
 				// Type Modifiers:
 					// Intersection Types: Combines multiple Types into one.
