@@ -8,6 +8,8 @@ Node.js:
 		Front-End Node Project Template Creator: https://createapp.dev/
 	
 	Concepts:
+		package.json: 			Specifies the configuration for the Build Tool of a Node Project.
+
 		Node Package:			A File or Directory that is described by a package.json.
 		Node Module: 			A File or Directory located within the node_modules Directory of a Node Project which has some JS execution entry-point available, allowing Node to load it.
 
@@ -219,7 +221,7 @@ Node.js:
 			node --prof "file.js" 										# Run a .js file under Node with profiling, storing the profiling in a .txt file.
 			node --prof-process "isolate-0xnnnnnnnnnnnn-v8.log" (where n is a digit) # Process the text file produced from profiling.
 			
-			package.json - Specifies the configuration of a Node Project.
+			package.json
 				{
 					"scripts": { 										// Specify action(s) to be run upon certain Node Project lifecycle events.
 						// Tip: May want to use npm-run-all to execute npm commands in parallel.
@@ -238,7 +240,7 @@ Node.js:
 					"types": "<typing-file-path>",						// Indicates Typing Information for this Node Project. Useful for Library Packages.
 				}
 
-			npm - A package manager for a Node Project. Skip to yarn if possible.
+			npm - A Build Tool / Package Manager for a Node Project. Skip to yarn if possible.
 				npm config set @<scope>:registry <registry-url>			# Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
 
 				npm install -g node 									# Update Node.
