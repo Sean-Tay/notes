@@ -1,6 +1,5 @@
 ELK
 	Abbreviations: 
-		DSL: Domain Specific Language
 	
 	Description: Service for Searching Data.
 	

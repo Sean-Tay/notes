@@ -6,6 +6,8 @@ General Computing Notes:
 
 		OS:						Operating System.
 
+		DSL: 					Domain Specific Language
+
 	Concepts:
 		Database:				An organized, structured set of Data within a Computer, accessible in different ways.
 		
