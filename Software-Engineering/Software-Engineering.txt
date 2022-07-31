@@ -90,13 +90,13 @@ Software Engineering:
 			Creation:
 				Singleton:			A Class designed to only have one Instance, typically via a Private Constructor. Has to be Thread-Safe, and good to be Lazily Initialized.
 				
-				Factory:			A Method used to create different Sub-Class Instances.
+				Factory:			A Method used to create different Sub-Class Instances with a consistent Parameter List,
 				Static Factory:		Static Methods on Classes, designed to produce Instances of those Classes (e.g. Int.valueOf("5")). Idiomatic "Named" Constructors + generally accepted that these throw Exceptions vs regular Constructors + ability to return Instances of Sub-Classes.
-				Abstract Factory:	A Method used to create different Class Instances, usually for functionality that requires one or more Classes.
+				Abstract Factory:	A Method used to create different Class Instances with a consistent Parameter List, usually for functionality that requires one or more Classes.
 
 				Builder:			Construction of a complex Class Instance one step at a time.
 
-				Prototype:			Allows adaptability of code in the face of changing requirements.
+				Prototype:			Allows adaptability of code in the face of changing requirements via Instance Cloning. Helpful to avoid unnecessary sub-Classing and Inheritance.
 
 			Structure:
 				Decorator:			Used to tack on different functionality to Class Instances. Extension of the Prototype Design Pattern.
