@@ -429,6 +429,7 @@ Database
 					NewSQL:
 						VoltDB
 						Google Spanner
+							All Servers have an attached GPS Clock, which provides correct measurement of Event order.
 
 					PrestoDB:	Facebook's Distributed SQL Query Engine.
 
@@ -464,6 +465,7 @@ Database
 
 						Examples:
 							Cassandra
+								Uses Timestamps to measure ordering of Events; recommends keeping Servers updated with NTP as much as possible.
 
 					Key-Value Database:
 						Pros:

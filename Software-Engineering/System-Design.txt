@@ -117,6 +117,13 @@ System Design:
 					99.9% -> 8.77 Hours Offline Per Year
 					99.99% -> 1 Hour Offline Per Year
 	
+		Measuring and Coordinating Time in Distributed Systems:
+			Network Time Protocol: Mechanism occasionally used by Machines to synchronize their internal clocks.
+
+			Monotonic Clock: Only used to measure Time Deltas - specific value of the Clock means nothing.
+
+			Lamport Timestamps: Logical Timestamps used to measure relative ordering of Events.
+
 	Commands:
 		
 	
