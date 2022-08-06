@@ -1,0 +1,54 @@
+Gradle
+	Abbreviations:
+	
+	Description: Configurable Build Automation Tool for Software Projects (usually Java oriented, as it requires the JVM to run). Built with Kotlin and Groovy.
+	
+	Resources:
+	
+	Concepts:
+		build.gradle: Build Configuration File based on the older Groovy DSL.
+		build.gradle.kts: Build Configuration File based on the Kotlin DSL.
+
+		Project: The Project that a Gradle Build manages.
+		Task: An atomic piece of work that needs to be executed in order for Gradle to build a Project.
+	
+	Details:
+		// build.gradle.kts
+			dependencies {
+				// Used during both Compile Time and Run Time, and is exported to Consumers.
+				api("<dependency-package-url>")
+
+				// Used during both Compile Time and Run Time, but is not exported to Consumers.
+				implementation("<dependency-package-url>")
+
+				compileTimeOnly("<dependency-package-url>")
+
+				runTimeOnly("<dependency-package-url>")
+
+				testImplementation("<dependency-package-url>")
+			}
+
+			plugins {
+				kotlin("<plugin-package-url>") version "<sem-version>"
+
+				// OR
+
+				id "<plugin-package-url>" version "<sem-version>"
+			}
+
+			tasks {
+				<task-name> {
+					// ...
+				}
+			}
+
+	Commands:
+		// Initialize a Gradle Project in the current directory:
+		gradle init
+
+		// Build using the build.gradle File in the current directory:
+		gradlew build
+
+		// Execute a Task defined within the build.gradle in the current directory:
+		gradlew -q <task-name>
+	

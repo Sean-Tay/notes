@@ -17,6 +17,26 @@ Spring / Springboot:
 	
 	Details:
 		Spring / Springboot may seem bloated and heavyweight, but that is because it provides a superb set of Industrial Strength Solutions suited for Heavy Enterprise Applications.
+
+		Kotlin:
+			Gradle Configuration:
+				// dependencies
+					kotlin-stdlib-jdk8: Java 8 Variant of the Kotlin Standard Library.
+					kotlin-reflect: Kotlin Reflection Library.
+					jackson-module-kotlin: Adds support for the Serialization / Deserialization of Kotlin Classes.
+
+				// plugins
+					plugin.spring: Automatically opens Classes and Methods annotated / meta-annotated with Spring Annotations in Java (making them extendable).
+
+				// tasks
+					tasks.withType<KotlinCompile> {
+						kotlinOptions {
+							// Add Compiler Arguments
+							freeCompilerArgs = listOf(
+								"-Xjsr305=strict", // Enable Null-Safety for the Spring Framework (via its JSR305 Annotations)
+							)
+						}
+					}
 	
 	Commands:
 		
