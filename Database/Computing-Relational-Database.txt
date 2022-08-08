@@ -46,7 +46,10 @@ Relational Database:
 		Operation:			A Statement within a Transaction.
 		ACID:				A set of desirable properties to apply to a Transaction when interacting with a Database.
 
-		Serialization Anormaly: The Database State that is the result of successfully commiting a group of Transactions is inconsistent with any of all possible Database States arising from all possible orderings of running those Transactions one at a time (e.g. State arising from effects of other partially completed Transactions).
+		Serializability: When the history of Operations being executed concurrently for one or more Objects is the same as one where the Operations are executed sequentially (i.e. no interleaving of Operations).
+			Serialization Anomaly: The final Database State that is the result of successfully commiting a group of Transactions is inconsistent with any of all possible Database States arising from all possible orderings of running those Transactions sequentially.
+
+			Strict Serializability: A combination of both Linearizability and Serializability. When the history of Operations being executed concurrently for one or more Objects is the same as one where the Operations are executed sequentially, and in the submitted order (i.e. no interleaving of Operations + correct order of Operations).
 
 		Record-Level Lock: 	A Lock that lasts for as long as the interaction of one Record.
 		Operation-Level Lock: A Lock that lasts for as long as one Operation within a Transaction.

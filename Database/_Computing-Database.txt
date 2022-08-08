@@ -33,9 +33,11 @@ Database
 
 		Hotspot:				A Node in a Database Cluster that receives a higher amount of Traffic and Load compared to others due to sub-optimal Partitioning.
 
-		CAP Theorem: 			Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3). 
+		CAP Theorem: 			Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3).
 			Consistency:		Degree at which Data is the same throughout the Database.
 				Consistency Model: Defines a contract in implementation to guarantee certain properties of Reads / Writes to Data in a Database. One or more can be implemented to achieve greater Consistency.
+				
+				Linearizability: An Operation (or a set of Operations) on a Object is seen as Linearizable when they can be considered completely executed and processed within an instantaneous point in time (with respect to other Operations).
 
 			Availability:		Whether or not every Request for Reading / Writing Data is successful.
 			Partitioning Tolerance: Enforces that the Database can still operate even if parts of it are unreachable in the Network.
@@ -259,11 +261,21 @@ Database
 
 						Session Consistency: Data Abnormalities should not occur for Reads and Writes during a limited period of time.
 							Monotonic Reads: Each Read in a sequence of Reads on an Object is guaranteed to return the result of applying at least the same subset of Writes on the Object thus far as the previous Read (e.g. Writes 3 to 4, Writes 3 to 4, Writes 1 & 3 to 4, Writes 1 to 5).
+
 							Read My Write: The result of all Writes to an Object done by a Client is guaranteed to be observable in the Client's subsequent Reads done on the same Object (i.e. Strong Consistency only guaranteed for the Client).
 
 						Bounded Staleness: Each Read on an Object is guaranteed to give the result of applying at least x Writes to that Object thus far (e.g. at least Writes 1 to 3, if x = 3 => Writes 1 to 3 & 5).
 
 						Strong Consistency: A Read is guaranteed to return the result of applying all Writes on an Object thus far. Performance-intensive; depending on use case, it may be possible to use the weaker Consistency Models for the same effect. Note that this is technically Bounded Staleness with x = n.
+							Linearizability: Once a Write is committed to an Object, all further Reads on that Object should observe the effect of the Write (i.e. it appears that only a single copy of the Object exists). In the context of a Distributed Database, this means that the Write must also be propagated in such a manner where it can be considered to have occurred instantaneously across all Nodes.
+								Total Ordering: Every Operation that has been done to produce the current version of a stored Object on a Database should have a "happens-before" relationship with another Operation (no Operations should be observed to have executed concurrently, as is the case with Partial Ordering), such that the group of Operations must have some expressible order. In the context of Distributed Databases implementing Strong Consistency, the ordering must be the same across all Replicas.
+									Lamport Timestamp: A Tuple containing a Counter and some ID of the Node that the Object is stored in.
+										Each time a Process attempts to access the Object in a Node of a Distributed Database in some Operation, the Process must update the value of the Counter within the Lamport Timestamp in the Node to the maximum of what the Process has seen thus far, plus 1, as well as track this new value itself for later interactions with the Object.
+
+										The Operation Order can be retroactively traced by sorting the Timestamps associated with each Operation by the Counter. If two Timestamps have the same Counter, it means the two Operations executed without knowledge of the other, and an arbitrary tiebreaker based on the ID should be used to order the Timestamps.
+
+									Total Order Broadcast: A Protocol to ensure that every Replica in the Replica Set receives all Operations in the same order.
+										The Operation Order can be traced in real-time.
 
 					Replication: Primarily to ensure some degree of Data Availability and Partitioning Tolerance.
 						Types:

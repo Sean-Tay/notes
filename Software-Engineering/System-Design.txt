@@ -120,10 +120,7 @@ System Design:
 		Synchronization in Distributed Systems:
 			Time:
 				Network Time Protocol: Mechanism occasionally used by Machines to synchronize their internal clocks.
-
 				Monotonic Clock: Only used to measure Time Deltas - specific value of the Clock means nothing.
-
-				Lamport Timestamps: Logical Timestamps used to measure relative ordering of Events.
 			
 			Consensus:
 				Fencing Token: Token with a monotonically increasing value used in Consensus-based Distributed Scenarios to ensure correct behaviour even when parts of it have been paused / are unreliable. Entities obtain a Token from a Token Service, and will only be successful in performing the operation on another Entity if the other Entity has not seen a Token with a higher value before.
