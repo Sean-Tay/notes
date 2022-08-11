@@ -30,6 +30,9 @@ ELK
 					"_source": <{boolean | field-path-with-wildcard | field-array}>, // Uses the original Document to reference <field> Values. If set to false, the full Document will not be returned (default true).
 				}
 
+				// Get Index Configuration
+				<http-request-method> /<index-name>/ ... /_mapping
+
 		Query DSL:
 			{
 				"query": {
