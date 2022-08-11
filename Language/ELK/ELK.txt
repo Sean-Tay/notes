@@ -13,10 +13,12 @@ ELK
 		Query String: A String with Lucene-based Syntax that is used by the "q" Query Parameter / "query_string" JSON Value within the Query DSL. Offers only a subset of the Query DSL's functionality.
 	
 	Details:
-		Note: <field> below refers to Field Paths Specifications.
+		Note: <field> below refers to Field Paths Specifications:
+			<field>.<sub-field>. ...
 
 		Search API:
 			Kibana Console:
+				// Search
 				<http-request-method> /<index-name>/ ... /_search
 				{
 					"query": <query-dsl-object>,
@@ -43,31 +45,39 @@ ELK
 							"should": [ { <query>, ... }, ... ], // Varying OR Behaviour possible with "minimum_should_match" specification.
 
 						// Filter Context
-							"filter": {
-								"script": {
-									"script": """
-										// Should return a Boolean on whether a given Document is included in the Results:
-										// <boolean-expression> <boolean-operator> ...
+							"filter": [
+								{
+									"script": {
+										"script": """
+											// Should return a Boolean on whether a given Document is included in the Results:
+											// <boolean-expression> <boolean-operator> ...
 
-										// <boolean-expression>:
-											// Check if <field> exists on Document:
-											doc['<field>'].size() != 0
+											// <boolean-expression>:
+												// Tip: Cannot query <list-field>s directly; instead try querying on a <element-field> that would be present on all Elements in the List as a proxy to query on the <list-field>:
+													// Example: Get all Documents whose <list-field> has more than one Element:
+														doc['<list-field>.<element-field>'].size() > 1
 
-											// Reference <field> Value:
-											doc['<field>'].value
+												// Check if <field> exists on Document:
+												doc['<field>'].size() != 0
 
-										// <boolean-operator>:
-											&&
-											||
-									"""
+												// Reference <field> Value:
+												doc['<field>'].value
+
+											// <boolean-operator>:
+												&&
+												||
+										"""
+									},
+
+									// OR
+
+									<query>,
+
+									// ... 
 								},
 
-								// OR
-
-								<query>,
-
-								// ... 
-							},
+								// ...
+							],
 
 							"must_not": { <query>, ... },
 
