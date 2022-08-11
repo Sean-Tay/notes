@@ -6,6 +6,8 @@ ELK
 	Resources:
 	
 	Concepts:
+		Nested Field: A List Field whose Object Elements have been flattened by taking the original Document and cloning it for each Element in the List, such that each clone only contains a single Element in its List Field.
+
 		Query DSL: The JSON-based language that ELK uses to define Queries.
 			Query Context: Query Clauses run under this Context will decide how well Documents match, and their order in the final results.
 			Filter Context: Query Clauses run under this Context will decide if the Document should even appear in the final results.
@@ -84,6 +86,17 @@ ELK
 						// Options
 							"minimum_should_match": <number> // Specifies the minimum number of should Clauses that the Document must match.
 					},
+
+					// For querying Nested Type Fields (i.e. List Fields with the correct typing in the Index Configuration). This itself can be nested.
+					"nested": {
+						"path": "<nested-field>",
+						"query": {
+							// Note: Absolute Paths must still be specified for the <field>s within.
+							// Example: <nested-field>. ... .<field>
+
+							// ...
+						}
+					}
 
 					// Matches for Documents via a simpler but less capable Mechanism - see Query String Syntax Section below.
 					"query_string": <query-string>
