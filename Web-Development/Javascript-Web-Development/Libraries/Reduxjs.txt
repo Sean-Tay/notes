@@ -94,7 +94,8 @@ Redux.js
 				// The Action can be serialized, logged or stored and later replayed.
 				store.dispatch(<action>);
 
-				const state = store.getState() - Gets a copy of the entire App's State, tracked within the Store.
+				// Gets a copy of the entire App's State, tracked within the Store.
+				const state = store.getState()
 			
 		Component Connection:
 			Redux < v7.10:
