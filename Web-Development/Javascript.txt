@@ -1225,29 +1225,39 @@ Javascript
 				element.innerText; 	// references the text content between opening and closing HTML tags 
 				element.innerHTML; 	// references the HTML content between opening and closing HTML tags
 			
-			DOM Events:	
-				// Event Bubbling: 	Event propagtes from Child to Parent.
-				// Event Capturing: Event travels back from Parent to Child.
+			DOM Events:
+				// Event Capturing: Event travels from Document Root to trigger DOM Element. Happens before Event Bubbling.
+				// Event Bubbling: Event goes back from trigger DOM Element to Document Root.
 
-				// Note: Event Listeners send in Event Objects when invoked:
-					eventObject.target.value // target is the DOM Element that triggered the Event
-					eventObject.currentTarget.value // currentTarget is the DOM Element that the Event Listener is attached to
+				// Event Handler: Function to handle Events assigned as a property on the DOM Element itself.
+				// Event Listener: Function to listen for Events added as an Event Observer on the DOM Element. More than one can be created, and thus are preferred over Event Handlers.
 
-				// Tip: For optimization, implement Event Delegation by creating the Event Listener on the Parent rather than attaching specific Event Listeners on all Child Objects. If the Event can Bubble, this should work.
+				// Add Event Listener:
+					function <event-listener>(event) {
+						// event.stopPropagation() // Stop further propagation of the DOM Event (applicable to both the Event Capturing and Event Bubbling Phases)
 
-				Add Event Listener:
-					element.addEventListener("<eventType>", function(event) { //... }, useCapture); // Anonymous function is Event Handling Function
-						// <eventType>: http://www.w3schools.com/jsref/dom_obj_event.asp
-						// event: the Object containing details about the Event that triggered the listener
-							// event.preventDefault(): prevent the default handling of this event (implemented by the User Agent)  from being executed
-							// event.stopPropagation(): stop parent DOM Element from also receiving the event
-						// useCapture: false to specify function should fire during bubbling, true to specify the function should fire during capturing
+						// event.target.value // target is the DOM Element that triggered the Event
+						// event.currentTarget.value // currentTarget is the DOM Element that the Event Listener is attached to
 
-						// element.eventType = functionID; // Legacy shortcut
-				
-				Remove Event Listener:
-					element.removeEventListener("eventType", functionID); // Doesn't seem to be able to remove anonymous functions
-					element.eventType = null; // Legacy shortcut
+						// event.preventDefault() // Prevent the default User Agent Event Handler for this Event from being executed
+
+						// ...
+					}
+
+					<dom-element>.addEventListener(
+						"<eventType>", 
+						<event-listener>, 
+						{
+							capture, // Specify if the Event Listener should activate during the Event Capturing xor Event Bubbling Phase (default)
+							once // Specify if the Event Listener should be removed once it activates
+						}
+					);
+
+				// Remove Event Listener:
+					<dom-element>.removeEventListener(
+						"<eventType>",
+						<event-listener> // Note: Cannot remove Anonymous Functions
+					); 
 				
 			Shadow DOM: An encapsulated DOM Tree which can be attached to any part of the regular DOM Tree, whilst still maintaining the encapsulation.
 				Code within the Shadow DOM cannot affect the regular DOM Tree.
