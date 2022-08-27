@@ -43,6 +43,9 @@ Relational Database:
 		Database: 			Collection of Tables.
 		
 		Transaction:		A Unit of Work done / Measure of Change performed within a DBMS.
+		Heterogenous Transaction: Transactions implemented using the generic XA API that would work for all Databases and setups.
+		Internal Transaction: Transactions implemented using the specific Database Software's API that would be able to leverage on stronger characteristics of the Database being used.
+
 		Operation:			A Statement within a Transaction.
 		ACID:				A set of desirable properties to apply to a Transaction when interacting with a Database.
 
