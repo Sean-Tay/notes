@@ -53,6 +53,145 @@ Database
 			Available Reads
 				Data should be stored contiguously on Disk to minimize the amount of Disk Lookups required (known to be expensive as it involves mechanical movement of the Storage Disks at the Hardware level).
 
+				CAP Theorem: Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3).
+					Configurations:
+						For a Distributed Database, Partition Tolerance is needed as Networks are unreliable, so either Consistency or Availability is compromised.
+							If Consistency is prioritised, that means the Database must for e.g. prevent Write Requests from succeeding until all Replicas can be reached again.
+							If Availability is prioritised, that means that the Data between Replicas can go out of sync during certain scenarios.
+
+						For a Centralized Database need not have Partitioning Tolerance, so both Consistency and Availability is achievable.
+
+					Consistency Models: In ascending order of resultant Consistency / descending order of resultant Availability:
+						Weak Consistency: Each Read on an Object is only guaranteed to return the result of applying a subset of Writes to that Object thus far (e.g. Writes 2 to 3, Writes 1 to 4, Writes 1 & 3 to 5). This means that each Read has a chance to return a version of the Object that has never actually existed.
+
+						Eventual Consistency: Weak Consistency in the short term, but will reach Strong Consistency in the long term.
+
+						Consistent Prefix: Each Read on an Object is guaranteed to return the result of applying an ordered sequence of Writes on an Object thus far, starting from the first Write (e.g. Writes 1 to 3, Writes 1 to 2, Writes 1 to 5). This means that each Read will return a version of the Object that has actually existed at some point in time.
+
+						Session Consistency: Data Abnormalities should not occur for Reads and Writes during a limited period of time.
+							Monotonic Reads: Each Read in a sequence of Reads on an Object is guaranteed to return the result of applying at least the same subset of Writes on the Object thus far as the previous Read (e.g. Writes 3 to 4, Writes 3 to 4, Writes 1 & 3 to 4, Writes 1 to 5).
+
+							Read My Write: The result of all Writes to an Object done by a Client is guaranteed to be observable in the Client's subsequent Reads done on the same Object (i.e. Strong Consistency only guaranteed for the Client).
+
+						Bounded Staleness: Each Read on an Object is guaranteed to give the result of applying at least x Writes to that Object thus far (e.g. at least Writes 1 to 3, if x = 3 => Writes 1 to 3 & 5).
+
+						Strong Consistency: A Read is guaranteed to return the result of applying all Writes on an Object thus far. Performance-intensive; depending on use case, it may be possible to use the weaker Consistency Models for the same effect. Note that this is technically Bounded Staleness with x = n.
+							Linearizability: Once a Write is committed to an Object, all further Reads on that Object should observe the effect of the Write (i.e. it appears that only a single copy of the Object exists). In the context of a Distributed Database, this means that the Write must also be propagated in such a manner where it can be considered to have occurred instantaneously across all Nodes.
+								Total Ordering: Every Operation that has been done to produce the current version of a stored Object on a Database should have a "happens-before" relationship with another Operation (no Operations should be observed to have executed concurrently, as is the case with Partial Ordering), such that the group of Operations must have some expressible order. In the context of Distributed Databases implementing Strong Consistency, the ordering must be the same across all Replicas.
+									Lamport Timestamp: A Tuple containing a Counter and some ID of the Node that the Object is stored in.
+										Each time a Process attempts to access the Object in a Node of a Distributed Database in some Operation, the Process must update the value of the Counter within the Lamport Timestamp in the Node to the maximum of what the Process has seen thus far, plus 1, as well as track this new value itself for later interactions with the Object.
+
+										The Operation Order can be retroactively traced by sorting the Timestamps associated with each Operation by the Counter. If two Timestamps have the same Counter, it means the two Operations executed without knowledge of the other, and an arbitrary tiebreaker based on the ID should be used to order the Timestamps.
+
+									Total Order Broadcast: A Protocol to ensure that every Replica in the Replica Set receives all Operations in the same order.
+										The Operation Order can be traced in real-time.
+
+					Replication: Primarily to ensure some degree of Data Availability and Partitioning Tolerance.
+						Types:
+							Synchronous: Writes not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
+
+							Asynchronous: Writes considered successful when the Instance that was assigned the Write Transaction completes it. Faster Speed, but Clients may get stale / inconsistent Reads due to Eventual Consistency.
+								Server / Database should simply return the written Data back to the Client that triggered the Write upon Success, or Read only from Leaders for editable Data (Read My Write Consistency).
+								Each Client should only refer to one Instance for updates throughout the operation (Consistent-Prefix + Monotonic Reads Consistency), as different Replicas synchronize with a particular Write at different Speeds (Back-in-Time syndrome).
+								Writes with Casual Relationships should ideally happen on the same Disk Partition (Consistent Prefix Reads), otherwise they might not make sense when they are Read (different Read Speeds for different Disk Partitions).
+
+						Strategies:
+							Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower / Leader) in the Cluster.
+								Characteristics:
+									Leader sends list of updates to other Followers via a Replication Log.
+										Implementation:
+											SQL Statements (for Relational Databases): Not ideal as SQL Statements can be non-deterministic (e.g. reference Current Time, which can be different per Replica).
+											Internal Append-only Log: Describes which Bytes were changed. Not ideal as different Instances might have the affected Data in different Locations.
+											Logical Log: Describes which Data was modified and how. Better future-proofing if underlying Database Engine changes.
+
+									Adding a Follower: Initialize the Follower with a consistent snapshot of the Data in the Leader (associated with some position in the Replication Log), and then update to the latest State via the Replication Log.
+
+									Pros:
+										Single Source of Truth => no Conflicts to resolve.
+									
+									Cons:
+										All Writes going to a single Instance, so Write Throughput is lower.
+											Can consider Sharding, and having different Leaders for each subset of the Data.
+
+								Scenarios:
+									Follower Failure: On reboot, fetch all changes from the Leader, and implementing the changes starting from its last position in the Replication Log.
+
+									Leader Failure / Failover: Determine a new Leader based on some Consensus / most up-to-date Follower, and configure downstream Dependencies to send Writes to this new Leader + configure all other Follower to get the changes from the new Leader.
+										Problems:
+											Unreplicated / Partially Replicated Writes of old Leader to Followers.
+											Accidental Failovers from temporary Network Congestion.
+											Split Brain: Old Leader associates itself to still be a Leader upon recovery and accepts Writes, leading to an inconsistent Data State across the Cluster.
+
+							Multi-Leader: Writes to one of many possible Leaders (possibly across Data Centers) - Leaders send each other Writes through some existing topology. Reads can come from any Replica (Follower / Leader) in the Cluster. 
+								Characteristics:
+									Leaders can send each other Writes via several Topologies:
+										Circular: A ring consisting of Leaders - each Leader passes Writes down to the next Leader after it in the ring. Not very Fault Tolerant.
+										Star: Akin to a starfish - every Leader is connected to some central Node. Single Point of Failure.
+										All-to-All (Fully Connected) - Each Leader is connected to every other Leader.
+
+										Chain Replication?
+
+									Pros:
+										A Leader in each Data Center makes it easier to manage globally available Services.
+										Write Throughput not limited by a single Replica.
+
+									Cons:
+										Write Conflicts possible between multiple Leaders.
+
+								Scenarios:
+									Detecting Concurrent Writes: Writes are considered Concurrent if each Source of the Write did not know of the Write from the others (compare with Causal Writes), NOT about time at which the Writes took place (i.e. it's all about keeping track of what the Source sees before making the Write).
+										Version Vectors: Keep track of the number of Writes that each participant (Client / Replica) *thinks* all Replicas have made for every Object receiving Writes. 
+											Each Replica persists their view of the Version Vector, and passes it to the Client, which it then passes back to the Replica during a Write for tracking, and update the Version Vector before passing it back to the Client again.
+
+											Between two Version Vectors:
+												If all Elements of one Version Vector is equal or greater than all corresponding Elements of another Version Vector, then it means that the Write for the first Version Vector happened after the other (Writes have the Happen-Before Relationship).
+												If one Version Vector has Elements that are either smaller or greater than the corresponding Elements in the other Version Vector, then it means Concurrent Writes have occurred.
+
+											Version Vectors are merged when the Consistency Model is triggered by taking the maximum of each Element between each Version Vector tracked per Replica.
+
+									Conflict Resolution Strategies:
+										Conflict Avoidance: Have all Writes for an Object go to one Leader. Not good for flexibility in Configuration (e.g. during Leader failure, or Horizontal Scaling).
+
+										Last Write Wins: Each Write is given a Clock Timestamp, with the latest one being kept. Easy to implement, but Writes will be lost (important for use-cases requiring Version Histories) + possibility of Clock Skew between different Servers.
+
+										On Read: Store all conflicting Writes for an Object. During a Read for the Object, resolve them and store the resolved value of the Object.
+
+										On Write: Database relies on Application-defined Commutative (ordering doesn't matter) and Associative (which binary combinations don't matter after all are processed) Merging Logic to resolve Write Conflicts (Conflict-Free Replicated Data Types e.g. Distributed Counters, Decrementors, Distributed Sets, Ordered Lists).
+
+							Leaderless: Writes to / Reads from all Replicas in parallel, and waits for a certain number of Replicas (i.e. Quorum) to return successfully before deeming operation a success.
+								Characteristics:
+									Quorum:
+										Let W be the number of Replicas that need to succeed for a Client to consider their Write to be successful.
+										Let R be the number of Replicas that need to succeed for a Client to consider their Read to be successful.
+										Let N be the total number of Replicas in the Cluster. Typically N should be an odd number.
+
+										Pseudo Strong Consistency Quorum: If W + R > N where N is the total number of Replicas, then at least one Replica will have the most updated Object.
+											Typically W = R = (N+1)/2, then each Read / Write can tolerate up to (N-1)/2 Replicas failing per Operation.
+
+											Imperfect:
+												Allows for inconsistent Data States (i.e. Client considers Write failed as w < W, but w Replicas now have a potentially unwanted Write).
+												Replica restoration after failure may take Data from another Replica that's more stale.
+												During Sloppy Quorums, the Pseudo Strong Consistency Property no longer holds.
+
+									Bookeeping Operations necessary in order to maintain Consistency between Replicas:
+										Read Repair: On a Read, update those Replicas that has outdated Data with the Object with the highest Version Number (Eventual Consistency).
+
+										Anti-Entropy: Background Process that occasionally looks at all Replicas to check for inconsistent versions for each Object's Version Number (Eventual Consistency / Bounded Staleness).
+									
+									Pros:
+										Works well with Cross Data Center configurations by having W be small enough such that all Writes can go to one Data Center.
+										Replication Strategy with the best flexibility for adjusting Consistency and Availabilty.
+
+									Cons:
+										Inconsistent Data still possible, even with a proper Quorum.
+										Write Conflicts possible between multiple Replicas.
+										Reads are slower + possibility of needing to do Read Repair.
+
+								Scenarios:
+									Conflict Resolution: See Multi-Leader Replication Section.
+
+									Sloppy Quorums: Occurs when Replicas are temporarily added after the initial set of Replicas have all failed to handle further Writes - need to bring Written Data over to the initial set of Replicas once they have recovered (Hinted Handover).
+
 				Optimization Techniques:
 					Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of the Collection without concern for Duplication. Lookups can be optimized by traversing from the end of the Collection.
 
@@ -243,145 +382,6 @@ Database
 									Cons:
 										Slow on Write, as Writes now potentially need to go to multiple Partitions (one for the Record, and one / two to update the Index Entry).
 										Consensus or Transaction Mechanism required in case Write to Record succeeds and Update to Index Entry (on a different Partition) fails.
-
-				CAP Theorem: Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3).
-					Configurations:
-						For a Distributed Database, Partition Tolerance is needed as Networks are unreliable, so either Consistency or Availability is compromised.
-							If Consistency is prioritised, that means the Database must for e.g. prevent Write Requests from succeeding until all Replicas can be reached again.
-							If Availability is prioritised, that means that the Data between Replicas can go out of sync during certain scenarios.
-
-						For a Centralized Database need not have Partitioning Tolerance, so both Consistency and Availability is achievable.
-
-					Consistency Models: In ascending order of resultant Consistency / descending order of resultant Availability:
-						Weak Consistency: Each Read on an Object is only guaranteed to return the result of applying a subset of Writes to that Object thus far (e.g. Writes 2 to 3, Writes 1 to 4, Writes 1 & 3 to 5). This means that each Read has a chance to return a version of the Object that has never actually existed.
-
-						Eventual Consistency: Weak Consistency in the short term, but will reach Strong Consistency in the long term.
-
-						Consistent Prefix: Each Read on an Object is guaranteed to return the result of applying an ordered sequence of Writes on an Object thus far, starting from the first Write (e.g. Writes 1 to 3, Writes 1 to 2, Writes 1 to 5). This means that each Read will return a version of the Object that has actually existed at some point in time.
-
-						Session Consistency: Data Abnormalities should not occur for Reads and Writes during a limited period of time.
-							Monotonic Reads: Each Read in a sequence of Reads on an Object is guaranteed to return the result of applying at least the same subset of Writes on the Object thus far as the previous Read (e.g. Writes 3 to 4, Writes 3 to 4, Writes 1 & 3 to 4, Writes 1 to 5).
-
-							Read My Write: The result of all Writes to an Object done by a Client is guaranteed to be observable in the Client's subsequent Reads done on the same Object (i.e. Strong Consistency only guaranteed for the Client).
-
-						Bounded Staleness: Each Read on an Object is guaranteed to give the result of applying at least x Writes to that Object thus far (e.g. at least Writes 1 to 3, if x = 3 => Writes 1 to 3 & 5).
-
-						Strong Consistency: A Read is guaranteed to return the result of applying all Writes on an Object thus far. Performance-intensive; depending on use case, it may be possible to use the weaker Consistency Models for the same effect. Note that this is technically Bounded Staleness with x = n.
-							Linearizability: Once a Write is committed to an Object, all further Reads on that Object should observe the effect of the Write (i.e. it appears that only a single copy of the Object exists). In the context of a Distributed Database, this means that the Write must also be propagated in such a manner where it can be considered to have occurred instantaneously across all Nodes.
-								Total Ordering: Every Operation that has been done to produce the current version of a stored Object on a Database should have a "happens-before" relationship with another Operation (no Operations should be observed to have executed concurrently, as is the case with Partial Ordering), such that the group of Operations must have some expressible order. In the context of Distributed Databases implementing Strong Consistency, the ordering must be the same across all Replicas.
-									Lamport Timestamp: A Tuple containing a Counter and some ID of the Node that the Object is stored in.
-										Each time a Process attempts to access the Object in a Node of a Distributed Database in some Operation, the Process must update the value of the Counter within the Lamport Timestamp in the Node to the maximum of what the Process has seen thus far, plus 1, as well as track this new value itself for later interactions with the Object.
-
-										The Operation Order can be retroactively traced by sorting the Timestamps associated with each Operation by the Counter. If two Timestamps have the same Counter, it means the two Operations executed without knowledge of the other, and an arbitrary tiebreaker based on the ID should be used to order the Timestamps.
-
-									Total Order Broadcast: A Protocol to ensure that every Replica in the Replica Set receives all Operations in the same order.
-										The Operation Order can be traced in real-time.
-
-					Replication: Primarily to ensure some degree of Data Availability and Partitioning Tolerance.
-						Types:
-							Synchronous: Writes not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
-
-							Asynchronous: Writes considered successful when the Instance that was assigned the Write Transaction completes it. Faster Speed, but Clients may get stale / inconsistent Reads due to Eventual Consistency.
-								Server / Database should simply return the written Data back to the Client that triggered the Write upon Success, or Read only from Leaders for editable Data (Read My Write Consistency).
-								Each Client should only refer to one Instance for updates throughout the operation (Consistent-Prefix + Monotonic Reads Consistency), as different Replicas synchronize with a particular Write at different Speeds (Back-in-Time syndrome).
-								Writes with Casual Relationships should ideally happen on the same Disk Partition (Consistent Prefix Reads), otherwise they might not make sense when they are Read (different Read Speeds for different Disk Partitions).
-
-						Strategies:
-							Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower / Leader) in the Cluster.
-								Characteristics:
-									Leader sends list of updates to other Followers via a Replication Log.
-										Implementation:
-											SQL Statements (for Relational Databases): Not ideal as SQL Statements can be non-deterministic (e.g. reference Current Time, which can be different per Replica).
-											Internal Append-only Log: Describes which Bytes were changed. Not ideal as different Instances might have the affected Data in different Locations.
-											Logical Log: Describes which Data was modified and how. Better future-proofing if underlying Database Engine changes.
-
-									Adding a Follower: Initialize the Follower with a consistent snapshot of the Data in the Leader (associated with some position in the Replication Log), and then update to the latest State via the Replication Log.
-
-									Pros:
-										Single Source of Truth => no Conflicts to resolve.
-									
-									Cons:
-										All Writes going to a single Instance, so Write Throughput is lower.
-											Can consider Sharding, and having different Leaders for each subset of the Data.
-
-								Scenarios:
-									Follower Failure: On reboot, fetch all changes from the Leader, and implementing the changes starting from its last position in the Replication Log.
-
-									Leader Failure / Failover: Determine a new Leader based on some Consensus / most up-to-date Follower, and configure downstream Dependencies to send Writes to this new Leader + configure all other Follower to get the changes from the new Leader.
-										Problems:
-											Unreplicated / Partially Replicated Writes of old Leader to Followers.
-											Accidental Failovers from temporary Network Congestion.
-											Split Brain: Old Leader associates itself to still be a Leader upon recovery and accepts Writes, leading to an inconsistent Data State across the Cluster.
-
-							Multi-Leader: Writes to one of many possible Leaders (possibly across Data Centers) - Leaders send each other Writes through some existing topology. Reads can come from any Replica (Follower / Leader) in the Cluster. 
-								Characteristics:
-									Leaders can send each other Writes via several Topologies:
-										Circular: A ring consisting of Leaders - each Leader passes Writes down to the next Leader after it in the ring. Not very Fault Tolerant.
-										Star: Akin to a starfish - every Leader is connected to some central Node. Single Point of Failure.
-										All-to-All (Fully Connected) - Each Leader is connected to every other Leader.
-
-										Chain Replication?
-
-									Pros:
-										A Leader in each Data Center makes it easier to manage globally available Services.
-										Write Throughput not limited by a single Replica.
-
-									Cons:
-										Write Conflicts possible between multiple Leaders.
-
-								Scenarios:
-									Detecting Concurrent Writes: Writes are considered Concurrent if each Source of the Write did not know of the Write from the others (compare with Causal Writes), NOT about time at which the Writes took place (i.e. it's all about keeping track of what the Source sees before making the Write).
-										Version Vectors: Keep track of the number of Writes that each participant (Client / Replica) *thinks* all Replicas have made for every Object receiving Writes. 
-											Each Replica persists their view of the Version Vector, and passes it to the Client, which it then passes back to the Replica during a Write for tracking, and update the Version Vector before passing it back to the Client again.
-
-											Between two Version Vectors:
-												If all Elements of one Version Vector is equal or greater than all corresponding Elements of another Version Vector, then it means that the Write for the first Version Vector happened after the other (Writes have the Happen-Before Relationship).
-												If one Version Vector has Elements that are either smaller or greater than the corresponding Elements in the other Version Vector, then it means Concurrent Writes have occurred.
-
-											Version Vectors are merged when the Consistency Model is triggered by taking the maximum of each Element between each Version Vector tracked per Replica.
-
-									Conflict Resolution Strategies:
-										Conflict Avoidance: Have all Writes for an Object go to one Leader. Not good for flexibility in Configuration (e.g. during Leader failure, or Horizontal Scaling).
-
-										Last Write Wins: Each Write is given a Clock Timestamp, with the latest one being kept. Easy to implement, but Writes will be lost (important for use-cases requiring Version Histories) + possibility of Clock Skew between different Servers.
-
-										On Read: Store all conflicting Writes for an Object. During a Read for the Object, resolve them and store the resolved value of the Object.
-
-										On Write: Database relies on Application-defined Commutative (ordering doesn't matter) and Associative (which binary combinations don't matter after all are processed) Merging Logic to resolve Write Conflicts (Conflict-Free Replicated Data Types e.g. Distributed Counters, Decrementors, Distributed Sets, Ordered Lists).
-
-							Leaderless: Writes to / Reads from all Replicas in parallel, and waits for a certain number of Replicas (i.e. Quorum) to return successfully before deeming operation a success.
-								Characteristics:
-									Quorum:
-										Let W be the number of Replicas that need to succeed for a Client to consider their Write to be successful.
-										Let R be the number of Replicas that need to succeed for a Client to consider their Read to be successful.
-										Let N be the total number of Replicas in the Cluster. Typically N should be an odd number.
-
-										Pseudo Strong Consistency Quorum: If W + R > N where N is the total number of Replicas, then at least one Replica will have the most updated Object.
-											Typically W = R = (N+1)/2, then each Read / Write can tolerate up to (N-1)/2 Replicas failing per Operation.
-
-											Imperfect:
-												Allows for inconsistent Data States (i.e. Client considers Write failed as w < W, but w Replicas now have a potentially unwanted Write).
-												Replica restoration after failure may take Data from another Replica that's more stale.
-												During Sloppy Quorums, the Pseudo Strong Consistency Property no longer holds.
-
-									Bookeeping Operations necessary in order to maintain Consistency between Replicas:
-										Read Repair: On a Read, update those Replicas that has outdated Data with the Object with the highest Version Number (Eventual Consistency).
-
-										Anti-Entropy: Background Process that occasionally looks at all Replicas to check for inconsistent versions for each Object's Version Number (Eventual Consistency / Bounded Staleness).
-									
-									Pros:
-										Works well with Cross Data Center configurations by having W be small enough such that all Writes can go to one Data Center.
-										Replication Strategy with the best flexibility for adjusting Consistency and Availabilty.
-
-									Cons:
-										Inconsistent Data still possible, even with a proper Quorum.
-										Write Conflicts possible between multiple Replicas.
-										Reads are slower + possibility of needing to do Read Repair.
-
-								Scenarios:
-									Conflict Resolution: See Multi-Leader Replication Section.
-
-									Sloppy Quorums: Occurs when Replicas are temporarily added after the initial set of Replicas have all failed to handle further Writes - need to bring Written Data over to the initial set of Replicas once they have recovered (Hinted Handover).
 
 		Database Types:
 			In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
