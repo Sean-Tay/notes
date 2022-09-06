@@ -91,10 +91,10 @@ ELK
 					"nested": {
 						"path": "<nested-field>",
 						"query": {
+							// query Object as defined above
+
 							// Note: Absolute Paths must still be specified for the <field>s within.
 							// Example: <nested-field>. ... .<field>
-
-							// ...
 						}
 					}
 
