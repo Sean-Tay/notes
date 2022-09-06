@@ -61,6 +61,44 @@ Database
 
 						For a Centralized Database need not have Partitioning Tolerance, so both Consistency and Availability is achievable.
 
+					Consensus:
+						Two-Phase Commit: Protocol that allows for Atomic Commits (i.e. Operations within a Transaction either all succeed or fail on all involved Nodes).
+							Setup:
+								A Coordinator Process / Node is required.
+								Every Transaction should have a monotonically increasing Transaction ID.
+
+							Phases:
+								Request Phase:
+									The Coordinator sends a Query to Commit Message once all Nodes have received their set of Operations.
+									The Nodes executes the Operations up to the Commit Point.
+										They additionally update their Undo and Redo Logs, in case one of their siblings cannot continue.
+
+									The Nodes replies to the Coordinator an "Ack" or "Abort" Message, depending on successful or failed execution of the Operations respectively.
+
+								Commit Phase:
+									Success: 
+										Once the Coordinator receives "Ack" from all Nodes involved in the Transaction, it will send a "Commit" Message to the Nodes.
+										The Nodes will then Commit the changes from the executed Operation, and release all Locks and Resources held during the Transaction.
+										The Nodes will then send an "Ack" back to the Coordinator, which will then mark the Transaction as completed once it has received the response from all Nodes.
+
+									Failure:
+										Once the Coordinator receives an "Abort" from any of the Nodes involved in the Transaction, it will send an "Abort" Message to the Nodes.
+										The Nodes will then undo the Transaction using the Undo Log, and release all Locks and Resources held during the Transaction.
+										The Nodes will then send an "Ack" back to the Coordinator, which will then mark the Transaction as aborted once it has received the response from all Nodes.
+
+							Pros:
+								Allows for Atomic Commits.
+								Simple Consensus Mechanism.
+
+							Cons:
+								Not Fault Tolerant as the Coordinator is a Single Point of Failure.
+									Alleviated by allowing for Relicated Coordinators, though depending on configuration this may slow down performance.
+
+								If both the Coordinator and a Node fails, it will not be possible to determine if the Commit Phase was initiated with what state, as the Node that failed could have received the Commit Phase Message.
+									Alleviated by using Three-Phase Commit, which introduces an additional Prepare-to-Commit Phase.
+								
+								Blocking: Further Operations cannot proceed until the Coordinator / all Nodes have succeeded in executing their Operations.
+
 					Consistency Models: In ascending order of resultant Consistency / descending order of resultant Availability:
 						Weak Consistency: Each Read on an Object is only guaranteed to return the result of applying a subset of Writes to that Object thus far (e.g. Writes 2 to 3, Writes 1 to 4, Writes 1 & 3 to 5). This means that each Read has a chance to return a version of the Object that has never actually existed.
 
