@@ -69,6 +69,8 @@ Database
 		Replication:			Having Redundant Copies of the Data in a Database stored in multiple Nodes so that if one fails, dependent Applications can still use the other Nodes for Data Retrieval, achieving Reliability for the Distributed System. Also helps to reduce operational load per Instance.
 		Replica:				A Node within a Replicated Database.
 
+		Quorum:					A majority of Nodes that agree on something (requires total number of Nodes to be odd). It is impossible for two different Quorums to disagree on something, as the Quorums would have overlapping Nodes by definition.
+
 	Details:
 		ACID:					A set of Properties for Operations on a Database to guarantee so as to avoid Erroneous Data.
 			Atomicity:			Transactions containing multiple Operations will either succeed as a whole, or not be processed at all.
@@ -302,7 +304,7 @@ Database
 
 										On Write: Database relies on Application-defined Commutative (ordering doesn't matter) and Associative (which binary combinations don't matter after all are processed) Merging Logic to resolve Write Conflicts (Conflict-Free Replicated Data Types e.g. Distributed Counters, Decrementors, Distributed Sets, Ordered Lists).
 
-							Leaderless: Writes to / Reads from all Replicas in parallel, and waits for a certain number of Replicas (i.e. Quorum) to return successfully before deeming operation a success.
+							Leaderless: Writes to / Reads from all Replicas in parallel, and waits for a certain number of Replicas to return successfully (i.e. Quorum) before deeming operation a success.
 								Characteristics:
 									Quorum:
 										Let W be the number of Replicas that need to succeed for a Client to consider their Write to be successful.
