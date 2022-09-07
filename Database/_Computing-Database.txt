@@ -169,44 +169,6 @@ Database
 
 						For a Centralized Database need not have Partitioning Tolerance, so both Consistency and Availability is achievable.
 
-					Consensus:
-						Two-Phase Commit: Protocol that allows for Atomic Commits (i.e. Operations within a Transaction either all succeed or fail on all involved Nodes).
-							Setup:
-								A Coordinator Process / Node is required.
-								Every Transaction should have a monotonically increasing Transaction ID.
-
-							Phases:
-								Request Phase:
-									The Coordinator sends a Query to Commit Message once all Nodes have received their set of Operations.
-									The Nodes executes the Operations up to the Commit Point.
-										They additionally update their Undo and Redo Logs, in case one of their siblings cannot continue.
-
-									The Nodes replies to the Coordinator an "Ack" or "Abort" Message, depending on successful or failed execution of the Operations respectively.
-
-								Commit Phase:
-									Success: 
-										Once the Coordinator receives "Ack" from all Nodes involved in the Transaction, it will send a "Commit" Message to the Nodes.
-										The Nodes will then Commit the changes from the executed Operation, and release all Locks and Resources held during the Transaction.
-										The Nodes will then send an "Ack" back to the Coordinator, which will then mark the Transaction as completed once it has received the response from all Nodes.
-
-									Failure:
-										Once the Coordinator receives an "Abort" from any of the Nodes involved in the Transaction, it will send an "Abort" Message to the Nodes.
-										The Nodes will then undo the Transaction using the Undo Log, and release all Locks and Resources held during the Transaction.
-										The Nodes will then send an "Ack" back to the Coordinator, which will then mark the Transaction as aborted once it has received the response from all Nodes.
-
-							Pros:
-								Allows for Atomic Commits.
-								Simple Consensus Mechanism.
-
-							Cons:
-								Not Fault Tolerant as the Coordinator is a Single Point of Failure.
-									Alleviated by allowing for Relicated Coordinators, though depending on configuration this may slow down performance.
-
-								If both the Coordinator and a Node fails, it will not be possible to determine if the Commit Phase was initiated with what state, as the Node that failed could have received the Commit Phase Message.
-									Alleviated by using Three-Phase Commit, which introduces an additional Prepare-to-Commit Phase.
-								
-								Blocking: Further Operations cannot proceed until the Coordinator / all Nodes have succeeded in executing their Operations.
-
 					Replication: Primarily to ensure some degree of Data Availability and Partitioning Tolerance.
 						Consistency Models: In ascending order of resultant Consistency / descending order of resultant Availability:
 							Weak Consistency: Each Read on an Object is only guaranteed to return the result of applying a subset of Writes to that Object thus far (e.g. Writes 2 to 3, Writes 1 to 4, Writes 1 & 3 to 5). This means that each Read has a chance to return a version of the Object that has never actually existed.
@@ -528,6 +490,96 @@ Database
 									Cons:
 										Slow on Write, as Writes now potentially need to go to multiple Partitions (one for the Record, and one / two to update the Index Entry).
 										Consensus or Transaction Mechanism required in case Write to Record succeeds and Update to Index Entry (on a different Partition) fails.
+
+				Consensus:
+					Two-Phase Commit: Consensus Protocol that allows for Atomic Commits (i.e. Operations within a Transaction either all succeed or fail on all involved Nodes).
+						Setup:
+							A Coordinator Process / Node is required.
+							Every Transaction should have a monotonically increasing Transaction ID.
+
+						Phases:
+							Request Phase:
+								The Coordinator sends a Query to Commit Message once all Nodes have received their set of Operations.
+								The Nodes executes the Operations up to the Commit Point.
+									They additionally update their Undo and Redo Logs, in case one of their siblings cannot continue.
+
+								The Nodes replies to the Coordinator an "Ack" or "Abort" Message, depending on successful or failed execution of the Operations respectively.
+
+							Commit Phase:
+								Success: 
+									Once the Coordinator receives "Ack" from all Nodes involved in the Transaction, it will send a "Commit" Message to the Nodes.
+									The Nodes will then Commit the changes from the executed Operation, and release all Locks and Resources held during the Transaction.
+									The Nodes will then send an "Ack" back to the Coordinator, which will then mark the Transaction as completed once it has received the response from all Nodes.
+
+								Failure:
+									Once the Coordinator receives an "Abort" from any of the Nodes involved in the Transaction, it will send an "Abort" Message to the Nodes.
+									The Nodes will then undo the Transaction using the Undo Log, and release all Locks and Resources held during the Transaction.
+									The Nodes will then send an "Ack" back to the Coordinator, which will then mark the Transaction as aborted once it has received the response from all Nodes.
+
+						Pros:
+							Allows for Atomic Commits.
+							Simple Consensus Mechanism.
+
+						Cons:
+							Not Fault Tolerant as the Coordinator is a Single Point of Failure.
+								Alleviated by allowing for Relicated Coordinators, though depending on configuration this may slow down performance.
+
+							If both the Coordinator and a Node fails, it will not be possible to determine if the Commit Phase was initiated with what state, as the Node that failed could have received the Commit Phase Message.
+								Alleviated by using Three-Phase Commit, which introduces an additional Prepare-to-Commit Phase.
+							
+							Blocking: Further Operations cannot proceed until the Coordinator / all Nodes have succeeded in executing their Operations.
+
+					Raft: Consensus Protocol that has Fault Tolerance. Used in Single Leader Replication to automatically elect a new Leader during Failover and build Replication Logs (achieving Total Order Broadcast).
+						Setup:
+							Each Replica maintains a Term (Fencing Token).
+							Each Replica maintains its own Log of Database Operations performed (a.k.a Replication Log), and each Operation is associated with a Term.
+							
+						Behaviour:
+							When multiple Operations are sent to the Leader:
+								The Leader executes the first Operation but does not commit it, instead propagating the Operation to its Followers first.
+								The Followers execute the first Operation but do not commit it, responding back to the Leader upon success.
+									If there is a conflicting Operation in the Follower's Log, the Operation that exists in the majority of the Replicas takes precedence (even if the conflicting Operation was legitimate when the Follower was previously a Leader).
+
+								The Leader waits to receive successful responses from a Quorum, and proceeds to commit the first Operation.
+								The Leader then sends the commit request to its Followers, making them commit the first Operation.
+
+								The entire process repeats for each subsequent Operation.
+
+							Any Replica can be upgraded to Leader status.
+								The Leader must track the Prefix and Suffix for each Follower:
+									The Prefix include the Operations that the Follower has successfully received.
+									The Suffix include the Operations that it has sent to the Follower, but has not been successfully received.
+
+								The Leader must send a periodic Heartbeat Message to its Followers to maintain its Leader status.
+									The Heartbeat Message also acts as an update to its Followers on new / unreceived Operations, which includes the Suffix as well as the Term of the last Message in the Prefix.
+										If the Follower's Term of the last Message in the Prefix matches the one in the Heartbeat Message, the update will be successful. Else, the Leader will have to correct the Prefix and Suffix it is tracking for that Follower, or become a Follower itself if the Follower has a higher Term.
+
+							The moment any Replica receives a Message from another Replica that has a higher Term, the former must become a Follower and update its own Term to match.
+
+							System Start / Replica Start / Failover:
+								All Replicas start as a Follower, with a random Election Timeout.
+									This is to minimize the chance of having more than one Follower trigger an Election, making it impossible for a Quorum to be achieved.
+									A random Election Timeout is also redetermined by each Follower after each Heartbeat received from the current Leader.
+
+								If no Heartbeat is received by the time the Election Timeout expires for a Follower, it will elect itself to be a Candidate, increase its Term by 1, and send Election Requests to the rest of the Followers whilst voting for itself.
+									Scenarios:
+										If a Replica has already cast a vote for the new Candidate this Term (either for itself as a Candidate, or another Candidate), it will not vote for other Candidates.
+
+										If a Replica receives an Election Request from a Candidate with a higher Term, in addition to becoming a Follower and updating its own Term to match:
+											If the Election Request comes from a Candidate with a more updated Log, the Follower will cast the vote for the Candidate.
+
+										Else it will not vote for the Candidate that sent the Election Request.
+
+									Outcomes:
+										If a Quorum is reached in its Favour, it will immediately send the next Heartbeat Message to all other Followers, self-declaring that it is the new Leader.
+
+										If a Quorum is not reached in its Favour, it will remain as a Candidate till it either receives a Heartbeat Message from a new Leader or its Election Timeout expires, afterwhich it will attempt to re-elect itself as a Candidate and increment its Term by 1, repeating the process at the point of the Election Timeout.
+
+						Pros:
+							Fault Tolerant.
+
+						Cons:
+							Not usable for achieving Consensus in Multi-Leader / Partitioned Setups; strictly for Single Leader Replication.
 
 		Database Types:
 			In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
