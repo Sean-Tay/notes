@@ -45,14 +45,19 @@ Kotlin
 				// Suspendable Function Type:
 					suspend (<arg>: <arg-type>, ...) -> <return-type>
 
-			// Runtime Type Checking:
-				// Note: Boolean Expression.
-				<value> is <type>
-				<value> !is <type>
+				// Utilities:
+					// Runtime Type Checking:
+						// Note: Boolean Expression.
+						<value> is <type>
+						<value> !is <type>
 
-			// Tip: Use Reflection to find out the Type of a Variable during Runtime:
-				println(<variable>!!::class.simpleName)
-				println(<variable>!!::class.qualifiedName)
+					// Runtime Type Casting:
+						<value> as <type> // Unsafe - will throw Exception upon failure
+						<value> as? <type> // Silent - will return null upon failure
+
+					// Tip: Use Reflection to find out the Type of a Variable during Runtime:
+						println(<variable>!!::class.simpleName)
+						println(<variable>!!::class.qualifiedName)
 
 			// Tip: Get the underlying Java Class for a given Kotlin Class.
 				<kotlin-class>::class.java
