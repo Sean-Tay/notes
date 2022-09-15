@@ -537,7 +537,7 @@ Database
 						Normal Behaviour:
 							Each Replica is either in a Follower, Candidate or Leader State:
 								Follower:
-									A Replica that awaits to receive updates in the form of Heartbeat Messages from a Leader.
+									A Replica that awaits to receive compatible updates in the form of Heartbeat Messages from a Leader.
 
 									All Replicas are Followers upon startup.
 
@@ -559,21 +559,22 @@ Database
 										Outcomes:
 											If a Quorum is reached in its Favour, it will immediately send the next Heartbeat Message to all other Followers, self-declaring that it is the new Leader.
 
-											If a Quorum is not reached in its Favour, it will remain as a Candidate till it either receives a Heartbeat Message from a new Leader or its Election Timeout expires, afterwhich it will re-elect itself as a Candidate and increment its Term by 1, repeating the process at the point of the Election Timeout.
+											If a Quorum is not reached in its Favour, it will remain as a Candidate till it either receives a Heartbeat Message from a new Leader or its Election Timeout expires, afterwhich it will re-elect itself as a Candidate, repeating the Election Process.
 
 								Leader:
 									A Candidate upgrades itself to a Leader once it has received votes in its favour from a Quorum of the other Replicas.
-									There can be only one Leader for a given Term.
 
-									The Leader must attempt to track the Prefix and Suffix for each Follower.
+									The Leader must attempt to track the Prefix and Suffix for each Follower:
+										Prefix: An estimate on the Operations that the Follower has successfully received.
+										Suffix: An estimate on the Operations that the Leader has sent to the Follower, but has not been successfully received.
 
 									A Leader would propagate updates to its Followers one at a time, even if there are multiple in its queue:
 										The Heartbeat Message from the Leader containing the update has the following information:
 											The current Term of the Leader.
 
-											The index and Term of the last Operation in the Prefix of the Follower, which is an estimate on the Operations that the Follower has successfully received.
+											The index and Term of the last Operation in the Prefix of the Follower.
 										
-											The first Operation in the Suffix of the Follower, which is an estimate on the Operations that the Leader has sent to the Follower, but has not been successfully received.
+											The first Operation in the Suffix of the Follower. 
 
 											The estimated number of Commits that the Follower has made.
 
@@ -593,6 +594,9 @@ Database
 							
 						Special Scenarios:
 							There can be more than one Candidate during an Election.
+							A Leader will become a Follower if another Follower that did not manage to receive Heartbeat Messages becomes a Candidate and increments its Term.
+
+							If the Replica Set suffered a Network Partition such that the Replica Set was split into two groups and the existing Leader is in a group that is smaller than the other, then there will eventually be two Leaders. However, the old Leader won't be able to commit Operations because it won't have access to a Quorum.
 
 						Pros:
 							Fault Tolerant.
