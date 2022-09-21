@@ -105,8 +105,8 @@ Typescript:
 
 						// Concrete Class that implements <interface> through Inheritance of the Abstract Class above:
 						class <class-name> extends <base-class-name> {
-							// Readonly Class Variable
-							<private | protected | public | static> readonly <readonly-variable> = <value>;
+							<private | protected | public | static> [readonly] <readonly-variable> = <value>;
+							<private | protected | public | static> <function-name>( ... ) { ... };
 
 							// Parameter Properties
 							constructor(public <public-property>, private <private-property>, ... ) {
