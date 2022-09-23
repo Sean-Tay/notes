@@ -43,7 +43,7 @@
 								}
 							)
 
-				// Tip: Useful DOM Element Method Patterns after using screen Query Methods:
+				// Useful DOM Element Method Patterns:
 					// To get the data-testid specified on a DOM Element, use <dom-element>.getAttribute('data-testid')
 
 					// Get the closest Ancestrial DOM Element that fulfills a criteria:
@@ -117,6 +117,15 @@
 				// act: Wrapper Function to wrap any Code that would trigger a State Update.
 					act(() => { ... })
 					await act(async () => { ... })
+
+				// Useful Test Patterns:
+					// To ensure a DOM Element stays found:
+					// Note: Default Timeout is 4 seconds.
+					await expect(waitFor(() => expect(<dom-element>).not.toBeInTheDocument())).rejects.toThrow()
+
+					// To ensure a DOM Element stays unfound:
+					// Note: Default Timeout is 4 seconds.
+					await expect(waitFor(() => expect(<dom-element>).toBeInTheDocument())).rejects.toThrow()
 
 			@testing-library/react-hooks: Creates a simple Test Harness for React Hooks, avoiding the need to create unnecessary Function Components in tests.
 				// The package will auto-detect which Renderer is available to use for the Test Harness.
