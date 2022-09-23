@@ -419,7 +419,11 @@ Jest
 
 				// Errors
 					expect(<function>()).toThrow(<error>)
-					expect(<async-function>()).rejects.toThrow(<error>)
+
+					// Promise Rejection
+					// Note: Can increase execution time of Tests if many are used - Default Timeout is 4 seconds.
+					await expect(<async-function>()).rejects.toThrow()
+					await expect(<async-function>()).rejects.toThrow(<error>)
 
 				// Snapshot Testing
 					expect(<target>).toMatchSnapshot(<optional-property-matcher-for-objects>, '<optional-hint>')
