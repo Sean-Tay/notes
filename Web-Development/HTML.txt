@@ -164,8 +164,9 @@ HTML:
 				selector1[<attribute>~="<value>"] ...
 
 				<!-- To select selector1 DOM Elements with a specific attribute whose value contains at least one occurance of <value>. -->
-				<!-- Tip: Useful for inline styles -->
 				selector1[<attribute>*="<value>"] ...
+					<!-- Tip: Useful for inline styles -->
+					selector1[style*="<css-rule>: <value>"]
 
 				<!-- To select selector1 DOM Elements with a specific attribute whose value starts / ends / starts and ends with <value>. -->
 				selector1[<attribute>^="<value>"][<attribute>$="<value>"] ...
