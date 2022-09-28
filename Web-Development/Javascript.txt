@@ -957,6 +957,19 @@ Javascript
 					export { <module-item> [as <export-name>], ... } from '<module>';
 					export { default [as <export-name>] } from '<module>';
 
+	Event Loop Behaviour:
+		JavaScript is primarily a Single-Threaded Environment. As such, the Execution Thread collects and accumulates tasks to execute, known as Events, in a Queue Data Structure. Whenever the Execution Thread is free, it will take one of the queued Events (starting from the oldest), and process them.
+			If the Event takes too long to execute, the Thread will not be able to update the DOM.
+
+		Event Types:
+			Macro: Usual form of an Event.
+				setTimeout with 0 delay can be used to arbitrarily split the execution of a large / long-running Event, allowing the Thread to switch to other Events halfway if needed.
+					Note: There is always a small delay (about 4ms) for setTimeout calls to start executing.
+
+			Micro: All Micro Events are executed immediately after the currently executing Macro Event finishes, even before DOM updates, DOM events, and other Macro Events.
+				Promises schedule Micro Events in their .then / .catch / .finally Handlers.
+				queueMicrotask(() => { ... })
+
 	Utilities:
 		JSDoc Annotations: /** ... */
 			@internal			- Denotes that the following piece of Code is meant for internal use only.
