@@ -13,6 +13,11 @@
 
 		Packages:
 			@testing-library/dom: Lightweight Solution for testing Web Pages by providing Utilities for querying and interacting with DOM Elements.
+				// Note: jest does not automatically reset the DOM between Unit Tests in each File. This may cause errors in Tests rendering Components that exist outside of the "usual DOM Tree", unless it is reset manually after each Unit Test:
+					afterEach(() => {
+						document.getElementsByTagName('html')[0].innerHTML = ''
+					})
+
 				// Tip: During Test Setup, we can change what the Testing Library treats as a data-testid attribute:
 					import { configure } from '@testing-library/dom'
 					configure({ testIdAttribute: '<id>' })
