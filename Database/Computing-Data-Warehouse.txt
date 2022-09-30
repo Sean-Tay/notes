@@ -26,9 +26,13 @@ Data Warehouse
 	Details:
 		Data Warehouses focus on efficiently serving Analytical Queries as part of OLAP.
 			Rationale:
-				The Analytical Queries involved for this Secondary Database are large and complex, usually involving Full Table Scans. If these were executed directly on the Production Database(s), it would cripple the performance for the Production Application, which is why a Secondary Database is needed.
+				Queries:
+					The Analytical Queries involved for this Secondary Database are large and complex, usually involving Full Table Scans. If these were executed directly on the Production Database(s), it would cripple the performance for the Production Application, which is why a Secondary Database is needed.
 
-				Moreover, Production Databases typically store their Data in a "Row"-Based Format. However, the Analytical Queries involved usually deal with Data Aggregation. As such, Data Warehouses store their Data in a "Column"-Based Format for more efficiency.
+					Results tend to be larger than regular Queries, and as such are streamed (i.e. "online").
+
+				Row vs Column Data Schemas:
+					Production Databases typically store their Data in a "Row"-Based Format. However, the Analytical Queries involved usually deal with Data Aggregation. As such, Data Warehouses store their Data in a "Column"-Based Format for more efficiency.
 
 			Characteristics:
 				Data:
