@@ -1,0 +1,22 @@
+Apache Spark
+	Abbreviations:
+		
+	
+	Description:
+		Open Source unified Analytics Engine that has large scale Data Processing capabilities.
+	
+	Resources:
+	
+	Concepts:
+		
+	
+	Details:
+		Overview: Chain together some Deterministic / Pure Functions together called Operators; able to avoid unnecessary Mappers.
+			Cons:
+				Less Fault Tolerant than MapReduce as intermediate results not always written to Disk.
+					Recompute based on most recent computations that still survive.
+					Occasional Checkpoint mechanism.
+	
+	Commands:
+		
+	

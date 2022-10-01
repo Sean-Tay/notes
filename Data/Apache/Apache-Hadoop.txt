@@ -1,0 +1,49 @@
+Apache Hadoop
+	Abbreviations:
+		DFS:					Distributed File System.
+	
+	Description: 
+		A collection of Open Source Utilities to facilitate usage of Distributed Computing to solve problems involving massive amounts of Data and Computation.
+	
+	Resources:
+	
+	Concepts:
+
+	
+	Details:
+		Overview:
+			MapReduce: Parallel Processing on a large group of Input Files independently, which returns Output Files that can be passed to other MapReduce Jobs.
+				General Flow:
+					1. Input Files are taken in by the Mapper Nodes, and each produce Key-Value pairs via the defined Map Task.
+
+					2. These Key-Value pairs are then sorted locally before being re-written to different Partition Files in accordance to the Hashed Values of the Keys.
+						The Key-Value pairs with the same Keys get written to the same Partition File.
+						Sorted Order is maintained.
+
+					3. Each Partition File is then sent to a Reducer Node, which will then merge the received Partition Files from the various Mapper Nodes.
+						Since the Key-Value Pairs are sorted within each Partition File, Partition Files can be merged with something akin to the Merging Algorithm in Merge Sort.
+
+						The end result should be a list of Key-Value Pairs. Values might not be of the same "type" because they can come from different Map Tasks.
+
+					4. The Reducer Node will next proceed with the Reducer Task on all the Values associated with one Key at a time, producing Output Files.
+						No need to keep sorted Data Structure of Keys in Memory; Keys already stored in Sorted Order in merged Partition File.
+
+				Handling Joins:
+					Sort-Merge / Reduce Side-Join: For the same Key, the Reducer incorporates Values from one incoming Partition File with another, within the same Row of the Output File.
+
+					Broadcast-Hash: Load a Hashmap of Key to Values to be joined into the Memory of Mapper Nodes; Values will be incorporated during the Map Task. Only works if the Hashmap is small enough.
+
+					Partitioned-Hash: Load a subset of the Hashmap of Key to Values to be joined into the Memory of the Mapper Nodes; Values will be incorporated during the Map Task. Only works when two Datasets are partitioned in the same way - the Hashmap is generated from the smaller partition of the two.
+
+				Pros:
+					Design tolerates frequent faults and failures from initial use-case; only requires restart of a failed Jobs.
+
+				Cons:
+					No optimization between multiple MapReduce Jobs:
+						Sorting of Key-Value Pairs redone even if previous result was from a MapReduce.
+						The next MapReduce Job cannot be started when any part of the previous MapReduce Job is still running.
+						Intermediate Results needlessly written to Disk.
+
+	Commands:
+		
+	
