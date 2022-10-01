@@ -45,6 +45,12 @@ MongoDB:
 					// Next 6 Numbers represent a unique ID for the machine that generated this Document.
 					// Next 4 Numbers represent a unique ID for the process in the machine that generated this Document.
 					// Last 6 Numbers represent an incrementing sequence for each Document entered.
+
+		Indexes:
+			Indexes in MongoDB are managed via WiredTiger, which uses B-Trees maintained primarily In Memory, occasionally being written to Disk for persistance. 
+				There is an optional implementation to use LSM Trees / SS Tables, which are friendlier to Write-oriented workloads.
+
+				TokuMX is a variant of MongoDB that uses Fractal B-Trees, which work faster on Insertion Operations.
 	
 	Commands:
 		MongoDB Shell: JavaScript / Nodejs REPL Environment:

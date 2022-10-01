@@ -310,6 +310,12 @@ Database
 
 							The Data within the Index is usually stored in sorted order, but the actual Records in the Collection on Disk may not be stored in sorted order.
 
+						Operations: For a given Key k (i.e. Fields) to return Value(s) v (i.e. Full Record location on Disk):
+							insert(k, v)
+							delete(k)
+							[v1, v2, ... ] = query(k)
+							[v1, v2, ... ] = range(k1, k2)
+
 						Types:
 							Hashmaps: Index Keys map to Memory Addresses (Byte Offsets) in Disk.
 								Pros:
@@ -320,7 +326,7 @@ Database
 									Entire Hashmap has to be In-Memory for it to be effective - useful for only small Datasets.
 									Not good for Range Queries, as Data within the Index is unsorted.
 
-							LSM Trees + Immutable SS Tables: 
+							Log Structured Merge Trees + Immutable SS Tables: 
 								Approach:
 									Full Records realized from Database Writes are first placed in an In-Memory Balanced Binary Search Tree, with the Key used in the BST being the Index Key(s).
 										To increase persistence, keep a Log on Database Writes that can be used to restore the In-Memory BBST after a Database Outage.
@@ -410,6 +416,8 @@ Database
 															- Continue Traversal.
 															- If Traversal has reached a Leaf Node, delete Element from Leaf Node if it exists.
 
+										- A subset of the Tree can be stored in Cache, allowing for faster Query access.
+
 									B+ Trees Properties:
 										- Does not need to traverse the whole Tree for Sequential Access:
 											- All Non-Leaf Nodes have their Elements in the Leaf Nodes as well.
@@ -422,6 +430,34 @@ Database
 								Cons:
 									Relatively Slow Writes, as multiple Disk Blocks are accessed after each Write to update the Index.
 	
+							B-Epsilon / Fractal Tree Index: An extension of B Trees.
+								Behaviour:
+									- Each Non-Leaf Node now has a large buffer that accumulate Writes.
+										- The buffer is part of the Disk Block that the Node resides in, and implemented as a BBST or something that allows faster searches.
+											- Each Write is linked to a Timestamp as well to maintain correct Operation Order.
+
+										- The Root Node receives the Writes first.
+											- Deletions are "negative" Writes implemented with Tombstone Messages.
+
+									- When a Node's buffer is full, it will flush some of the accumulated Writes down to its Child Nodes.
+										- More than one Write is transferred from Parent Node to Child Node at a time, which saves on expensive Disk Block accesses.
+											- Compared to regular B-Trees where Writes would each individually require 2 Disk Block accesses vs transferring all Writes at one go (using Memory as an intermediary).
+
+											- Writes are only flushed if the Child has enough pending Writes to offset the cost of re-writing the Parent and Child Nodes.
+
+										- If all Writes are to go to the same Leaf Node, optimizations should be made to immediately flush the Writes (and any other in the Path) directly to the Leaf Node, instead of adding and removing the Writes from each intermediate Node from the Root to the Leaf.
+
+									- A Write is fully processed when it reaches a Leaf Node.
+
+								Pros:
+									Higher Write Throughput compared to B-Trees.
+										Asymptotically same Read Performance, but is actually up to 2x more Disk Block Accesses.
+
+										Batching Writes allow for Larger Nodes (multiples of Disk Block size) vs. regular B Tree Nodes, in terms of Write Cost.
+
+								Cons:
+									Equivalent performance to B-Trees when checking for unique Index Keys.
+
 					Partitioning: Splitting up a large Collection into smaller non-overlapping Partitions such that each Partition can be stored and maintained in separate Nodes. Each Node can contain more than one Partition.
 						Partitioning is usually only considered when a Collection becomes too big to be stored in one Node, as it adds a lot of underlying complexity to the System.
 							Gossip Protocol (Database Nodes communicate between themselves)
