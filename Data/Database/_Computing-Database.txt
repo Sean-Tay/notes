@@ -305,10 +305,12 @@ Database
 
 					Indexes: Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
 						Background:
-							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the actual Disk Block that stores the complete Record, because only the necessary subset of the Record's Data is stored in each Disk Block used by the Index (thus each Disk Block can store more Block Addresses).
-								The optimization is more effective when Records are large => Less Records per Disk Block => More Disk Block Lookups without an Index.
+							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the desired Record, especially with larger Collections.
+								Index Entries are stored in some sorted order; more efficient Searches can be used that only work on sorted Data.
 
-							The Data within the Index is usually stored in sorted order, but the actual Records in the Collection on Disk may not be stored in sorted order.
+						Approach:
+							A Primary Index is created for each Collection. For each Record, a Primary Key is used / generated via a UUID, and is added to the Primary Index such that the Primary Key is linked to the complete Record on Disk.
+							Any other Indexes created will link the Fields used in the Index to the Primary Key(s), which is then used alongside the Primary Index to find the complete Record(s).
 
 						Operations: For a given Key k (i.e. Fields) to return Value(s) v (i.e. Full Record location on Disk):
 							insert(k, v)
@@ -361,7 +363,7 @@ Database
 												Level 2: Keys 1 4 7, 10 13 16, ...
 												Level 3: Keys 1 10 19, ...
 
-									Complete Records are only stored at the Leaf Nodes.
+									Complete Records are only stored at the Leaf Nodes of the Primary Index; the Leaf Nodes of other Indexes map the Key Fields to the Primary Key(s), which can be used with the Primary Index to get the complete Record(s).
 
 								Behaviour:
 									Time Complexities:
@@ -431,16 +433,16 @@ Database
 									Relatively Slow Writes, as multiple Disk Blocks are accessed after each Write to update the Index.
 	
 							B-Epsilon / Fractal Tree Index: An extension of B Trees.
-								Behaviour:
+								Approach:
 									- Each Non-Leaf Node now has a large buffer that accumulate Writes.
-										- The buffer is part of the Disk Block that the Node resides in, and implemented as a BBST or something that allows faster searches.
+										- The buffer is part of the Disk Block that the Node resides in.
 											- Each Write is linked to a Timestamp as well to maintain correct Operation Order.
 
 										- The Root Node receives the Writes first.
 											- Deletions are "negative" Writes implemented with Tombstone Messages.
 
 									- When a Node's buffer is full, it will flush some of the accumulated Writes down to its Child Nodes.
-										- More than one Write is transferred from Parent Node to Child Node at a time, which saves on expensive Disk Block accesses.
+										- Transfer of accumulated Writes are batched, which saves on repeated Disk Block accesses for each Write (from Root Node to Parent Node).
 											- Compared to regular B-Trees where Writes would each individually require 2 Disk Block accesses vs transferring all Writes at one go (using Memory as an intermediary).
 
 											- Writes are only flushed if the Child has enough pending Writes to offset the cost of re-writing the Parent and Child Nodes.
@@ -449,13 +451,16 @@ Database
 
 									- A Write is fully processed when it reaches a Leaf Node.
 
-								Pros:
-									Higher Write Throughput compared to B-Trees.
-										Asymptotically same Read Performance, but is actually up to 2x more Disk Block Accesses.
+									- Fractal Tree differences:
+										- Node Buffers are also Indexed themselves.
 
-										Batching Writes allow for Larger Nodes (multiples of Disk Block size) vs. regular B Tree Nodes, in terms of Write Cost.
+								Pros:
+									Higher Write Throughput compared to B-Trees - batching Writes allow for Larger Nodes (multiples of Disk Block size) vs. regular B Tree Nodes, in terms of Write Cost.
+
+									Better Performance on Upsert Operations than B Trees.
 
 								Cons:
+									Asymptotically same Read Performance, but is actually up to 2x more Disk Block Accesses.
 									Equivalent performance to B-Trees when checking for unique Index Keys.
 
 					Partitioning: Splitting up a large Collection into smaller non-overlapping Partitions such that each Partition can be stored and maintained in separate Nodes. Each Node can contain more than one Partition.
