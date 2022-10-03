@@ -48,7 +48,7 @@ MongoDB:
 
 		Indexes:
 			Indexes in MongoDB are managed via WiredTiger, which uses B-Trees maintained primarily In Memory, occasionally being written to Disk for persistance. 
-				There is an optional implementation to use LSM Trees / SS Tables, which are friendlier to Write-oriented workloads.
+				There is an optional implementation to use LSM Trees, which are friendlier to Write-oriented workloads.
 
 				TokuMX is a variant of MongoDB that uses Fractal B-Trees, which work faster on Insertion Operations.
 	
@@ -73,7 +73,7 @@ MongoDB:
 				]
 			)
 
-			db.<collection-name>.drop() // Drop <collection-name> from a Database. 
+			db.<collection-name>.drop() // Drop <collection-name> from a Database, as well as attached Indexes.
 
 			db.<collection-name>.getIndexes() // View all Indexes for <collection-name>.
 
