@@ -453,9 +453,12 @@ Database
 
 									- Fractal Tree differences:
 										- Node Buffers are also Indexed themselves.
+										- Compatibility with ACID Transactions.
+										- Cleaner Threads that occasionally flush buffers when Database is idle.
 
 								Pros:
 									Higher Write Throughput compared to B-Trees - batching Writes allow for Larger Nodes (multiples of Disk Block size) vs. regular B Tree Nodes, in terms of Write Cost.
+										Larger Nodes allows for more effective Compression vs. Smaller Nodes in regular B Trees.
 
 									Better Performance on Upsert Operations than B Trees.
 
