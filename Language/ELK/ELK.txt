@@ -165,7 +165,7 @@ ELK
 						-<term> // Results should exclude <term>
 						+<term> // Results should include <term>
 
-			<field>:(<term1> ... ) // Search for Values which match any of the specified Terms
+			<field>:(<term1> OR ... ) // Search for Values which match any of the specified Terms
 				// Note: If Boolean Term Operators are involved, then Results must conform to all Boolean Terms
 
 			// Query Boolean Logic
