@@ -176,6 +176,14 @@ HTML:
 
 			<!-- To select for DOM Elements, but only under a certain condition. -->
 			selector1:pseudo-class ...
+				<!-- To select for selector1 DOM Elements that do not fulfill the Selectors specified. -->
+				<!-- Tip: selector1 is not necessary. -->
+				selector1:not( ... )
+
+				<!-- To select for selector1 DOM Elements that has DOM Elements within which fulfill the Selectors specified. -->
+				<!-- Note: Cannot nest Pseudo Elements or further :has Pseudo Classes within -->
+				selector1:has( ... )
+
 				<!-- To select for the Last Child of selector1 DOM Element. -->
 				selector1:last-child ...
 
