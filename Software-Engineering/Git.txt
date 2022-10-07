@@ -188,7 +188,9 @@ Git:
 		git commit --amend -m "<commit-message>" - Change the message of the most recent Commit. Note: Staged Changes will be included in this commit.
 
 		git rebase -i <earliest-hash-of-commit-to-amend>~1 - Technique to change one or more Commits prior to the most recent Commit of the checked out Local Branch.
-			Amending: Change the operation to be performed on each row corresponding to the Commits to be amended from 'pick' to 'e'.
+		git rebase -i HEAD~<number-of-commits-in-branch> - Technique to adjust Commits in checked out Local Branch.
+			Amending: Change the operation to be performed on the row from 'pick' to 'e'.
+			Rewording: Change the operation to be performed on the row from 'pick' to 'r'.
 
 			Sorting:
 				dd to Cut a Line.
@@ -196,6 +198,10 @@ Git:
 					j to Move Down a Line.
 					p to Paste a Line below the current Line.
 					P to Paste a Line above the current Line.
+
+			Squashing: Change the operation to be performed on the row from 'pick' to 's'.
+
+			Deleting: Just remove the Line of the Commit from the List.
 
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 			--soft 				- Keep accumulated changes from <number-of-commits> in the Local Staging List.
