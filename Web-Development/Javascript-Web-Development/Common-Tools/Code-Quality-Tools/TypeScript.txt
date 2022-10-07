@@ -552,6 +552,11 @@ Typescript:
 					React.FormEvent<<html-form-element-tag-name>>: To specify for the React-Augmented Event Object of a Form Element. Keep only one set of Angled Brackets.
 					React.FormEventHandler<<html-form-element-tag-name>>: To specify for a JS Event Handler Function for a Form Element. Keep only one set of Angled Brackets.
 
+			ReactRouter:
+				// Useful Types:
+					History
+					RouteChildrenProps: The object containing the match, location and history Objects sent in to Components specified within a Route.
+
 	Commands:
 		tsc --init				# Generates a Boilerplate TypeScript Configuration File, with Comments as Explanation for each Config Object Field.
 
