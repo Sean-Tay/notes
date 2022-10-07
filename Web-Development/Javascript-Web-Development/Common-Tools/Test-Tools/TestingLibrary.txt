@@ -6,7 +6,7 @@
 	Resources:
 	
 	Concepts:
-		data-testid: 			Convention: Custom Element Property that allows for quick test-only lookups via queryById. Can be stripped away during Compilation via babel-plugin-react-remove-properties.
+		data-testid: 			Convention: Custom Element Property that allows for quick test-only lookups via *ById. Can be stripped away during Compilation via babel-plugin-react-remove-properties. Cannot be specified on React.Fragments.
 	
 	Details:
 		Function: UI Component Framework Representation -> DOM Elements -> Test on DOM Elements
