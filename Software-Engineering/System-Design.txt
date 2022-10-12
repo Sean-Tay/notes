@@ -44,7 +44,24 @@ System Design:
 						Hadoop: Tailored towards eventual Data Processing of the Data in the Files stored.
 
 			System Data Transport:
-				Message Queue: Enables Asynchronous Communication between two or more Components. A Messaging Broker typically manages the Queues and simplifies the connection of consuming Components via a Publisher / Subscriber Pattern.
+				Message Queue: Enables Asynchronous Communication between two or more Components.
+					Behaviour:
+						Messages produced by Producer Nodes, consumed by at least one Consumer Node.
+
+						A Messaging Broker is a Database specialized for Streaming, typically managing the various Queues.
+							Messages can either be consumed and deleted, or consumed and kept.
+							Messages can either be sent to all Subscribers, or sent to Subscribers in a Round-Robin fashion (i.e. Load Balancing).
+
+						Even if the Messages are kept in the Queue, results can still be out-of-order, since Consumers consume Messages at different speeds.
+							There is a way to enforce order, but incurs a performance penalty.
+
+						Queues should keep track of the Message Index, and only consider a Message consumed when Consumers send an acknowledgement.
+
+					Types:
+						In-Memory: Higher Throughput.
+						Log-Based: Persistent Append-Only Log; can be Partitioned and Replicated to improve number of Consumers and Fault Tolerance.
+							One Consumer per Partition to maintain Message Order per Partition.
+
 					Examples:
 						Kafka
 						RabbitMQ
@@ -74,9 +91,12 @@ System Design:
 					Scenarios:
 						Sorting
 
-				Streaming: Online; Unbounded Data - not all Data available at once.
+				Streaming: Online; Unbounded Data - not all Data available at once. Usually leverages Messaging Queues to manage Data Flow.
 					Scenarios:
-						Maintaining top N Items according to some metric.
+						Logging Metrics.
+						Change Data Capture - Streaming a Database's Write-Ahead Log to update other Components that maintain derived Data (i.e. Caches) to keep them up-to-date whenever a Database Write happens.
+						Event Sourcing - Purpose same as Change Data Capture, but Database-agnostic; stream User-defined Events rather than Database Writes.
+							Maintaining top N Items according to some metric.
 
 			User-Facing Data Transport:
 				Load Balancer: A Reverse Proxy that distributes Network Traffic across different Cluster Nodes in a Distributed System.
