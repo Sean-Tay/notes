@@ -303,6 +303,16 @@ Kotlin
 					// Note: No 'new' Keyword.
 					val instance = <class-name>();
 
+			Enums:
+				// Note: Kotlin Enums are instances of the Enum Class, so the usual Class Syntax and Features may also apply.
+				enum class <enum-name>[ (val <value-arg>: <value-arg-type>) ] {
+					<key>[ (<value-arg>) ],
+					// ...
+				}
+
+				// Getting the corresponding <enum-name> Instance for a given <value>:
+					<enum-name>.valueOf(<value>)
+
 			Operators:
 				// Structural Equality Comparator: 
 					// Check if two Values are equivalent: ==
