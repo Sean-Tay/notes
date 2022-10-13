@@ -324,12 +324,12 @@ Kotlin
 					// ... Class Members ...
 				}
 
-				// Note: If the String representation of the <key> requires spaces, it might be better to set and use the <value> of the Enum as the String representation of the <key> instead.
-				// Getting the <key> as a String for a given <enum-name> Instance:
+				// Note: If the String representation of the <key> requires spaces, it might be better to set and use the <value> of the Enum as the desired String representation of the <key> instead.
+				// Getting the <key> as a String for a given <enum-name> instance:
 					<enum-name>.<key>.name()
 
-				// Getting the corresponding <enum-name> Instance for a given <value>:
-					<enum-name>.valueOf(<value>)
+				// Getting the corresponding <enum-name> instance for a <key> in String form:
+					<enum-name>.valueOf(<key>)
 
 			Operators:
 				// Structural Equality Comparator: 
