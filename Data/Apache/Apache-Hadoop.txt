@@ -28,7 +28,7 @@ Apache Hadoop
 					4. The Reducer Node will next proceed with the Reducer Task on all the Values associated with one Key at a time, producing Output Files.
 						No need to keep sorted Data Structure of Keys in Memory; Keys already stored in Sorted Order in merged Partition File.
 
-				Handling Joins:
+				Handling Joins: For when Data has associations to one another.
 					Sort-Merge / Reduce Side-Join: For the same Key, the Reducer incorporates Values from one incoming Partition File with another, within the same Row of the Output File.
 
 					Broadcast-Hash: Load a Hashmap of Key to Values to be joined into the Memory of Mapper Nodes; Values will be incorporated during the Map Task. Only works if the Hashmap is small enough.

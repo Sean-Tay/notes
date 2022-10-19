@@ -52,14 +52,20 @@ System Design:
 							Messages can either be consumed and deleted, or consumed and kept.
 							Messages can either be sent to all Subscribers, or sent to Subscribers in a Round-Robin fashion (i.e. Load Balancing).
 
-						Even if the Messages are kept in the Queue, results can still be out-of-order, since Consumers consume Messages at different speeds.
-							There is a way to enforce order, but incurs a performance penalty.
+						Even if the Messages are kept in the Queue, Messages may still be processed out-of-order:
+							Consumers consume Messages at different speeds.
+							Varying Network Speeds to different Consumers.
+							Messages are not all equal.
 
 						Queues should keep track of the Message Index, and only consider a Message consumed when Consumers send an acknowledgement.
 
+						Fault Tolerance: Involves ensuring Messages are processed only exactly once.
+							At least once: Occasionally checkpoint Stream State to Disk to restart from most recent checkpoint on crash.
+							At most once: Idempotent Operations via UUID; Atomic Transactions via Two-Phase Commit.
+
 					Types:
-						In-Memory: Higher Throughput.
-						Log-Based: Persistent Append-Only Log; can be Partitioned and Replicated to improve number of Consumers and Fault Tolerance.
+						In-Memory: Higher Throughput - better for larger Messages as Memory is faster than Disk; Messages are deleted once Consumer acknowledges the Message.
+						Log-Based (Disk): Persistent Append-Only Log; can be Partitioned and Replicated to improve number of Consumers and Fault Tolerance.
 							One Consumer per Partition to maintain Message Order per Partition.
 
 					Examples:
@@ -93,10 +99,25 @@ System Design:
 
 				Streaming: Online; Unbounded Data - not all Data available at once. Usually leverages Messaging Queues to manage Data Flow.
 					Scenarios:
-						Logging Metrics.
+						Logging Metrics: Usually involves aggregation of Events into fixed Time Intervals.
+							Challenges: 
+								Which time do we use to determine when the Event is active?
+								If an Event was created within a Time Interval and is processed by the System outside of the Time Interval, do we retrospectively add it into the gathered data for the Time Interval?
+
+							Time Interval Types:
+								Tumbling Windows: Distinct Intervals of Fixed Length.
+								Hopping Windows: Overlapping Intervals of Fixed Length.
+								Sliding Windows: "Moving" Interval of Fixed Length; old Events are removed from the Interval when it "moves".
+
 						Change Data Capture - Streaming a Database's Write-Ahead Log to update other Components that maintain derived Data (i.e. Caches) to keep them up-to-date whenever a Database Write happens.
 						Event Sourcing - Purpose same as Change Data Capture, but Database-agnostic; stream User-defined Events rather than Database Writes.
-							Maintaining top N Items according to some metric.
+
+						Maintaining top N Items according to some metric.
+
+					Handling Joins: For when Messages have associations to one another; usually involves keeping some local Stream-specific State.
+						Stream-Stream Joins: Joining two different Events within a Stream (i.e. Search Event + Search Result Click Event); uses an Index to temporarily store / track Events of one type, so that when the other type of Event comes in, the Index can be used to retrieve the first Event for joining.
+						Stream-Table Joins: Enriching Events with Data in a Table of a Database; uses a local copy of the Table which is kept up to date by Change Data Capture. 
+						Table-Table Joins: Enriching Events with Data in more than one Table of a Database; uses a local copy of the results from the Database Query required via Change Data Capture.
 
 			User-Facing Data Transport:
 				Load Balancer: A Reverse Proxy that distributes Network Traffic across different Cluster Nodes in a Distributed System.
