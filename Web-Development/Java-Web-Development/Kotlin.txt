@@ -963,6 +963,123 @@ Kotlin
 									val response = client(request)
 								}
 
+				// Testing
+					// mockk
+						// Relevant Packages:
+							io.mockk.*
+								// Argument Matchers:
+									any()
+									eq(<value>) // Default if no wrapping Argument Matcher is specified for the <value> in the Function Call Mock.
+									more(<value>)
+									less(<value>)
+									or(<arg-matcher>, ...)
+
+								// Test Structure:
+									class TestClass {
+										// Generating Mocks of Dependencies:
+											// Note: If unmocked Functions are called on this <dependency>, an Exception will be thrown.
+											val <dependency> = mockk<<class-name>>() ( ... )
+
+											// Note: If unmocked Functions are called on this <dependency>, no Exceptions will be thrown.
+											val <relaxed-dependency> = mockk<<class-name>>(relaxed = true) ( ... )
+
+											// Spies
+											val <spy> = spyk(<class>( ... ))
+
+										// Reset a Mocked <dependency>:
+											<dependency>.clear()
+
+										// Revert a <dependency> back to pre-Mock state:
+											<dependency>.unmock()
+
+										@Test
+										fun `<test-description>`() {
+											// Assertions:
+												assertEquals(<expected-value>, <value>)
+
+											// Mocking a Class Dependency:
+												// Mocking the results of a <dependency>'s <function> called with specific <arg>s:
+													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } returns <value> [ andThen <nextValue> ... ]
+													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } throws RuntimeException( ... )
+
+													// To customize the results of a <function> based on <arg> Value:
+														every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } answers { 
+															// ... arg<<arg-type>>(<arg-index-position>) ...
+														}
+
+													// For a <function> that has the Unit Return Type:
+														every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } just Runs
+
+												// Mocking the results of a <dependency>'s <function> called with specific <arg>s, whilst Capturing the <arg-value>s sent:
+													val argSlot = slot<<arg-type>>() // Per Call
+													val argList = mutableList<<arg-type>>() // For every Call in the Test
+													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } returns <value>
+
+											// Substituting a <spy>'s Functionality:
+												every { <spy>.<function>(any(), ... ) } answers {
+													// ... arg<<arg-type>>(<arg-index-position>) ...
+												}
+
+											// ... <system-under-test>(<dependency>, ...) ...
+
+											// Verifying the behaviour of a <dependency>:
+												// Verify that a <dependency>'s <function> was called with specific <arg>s:
+													verify([exactly=<num-times>]) {
+														<dependency>.<function>(<arg> = <arg-matcher>, ... )
+													}
+												
+												// Verify that all <dependency>'s <function>s were not called:
+													verify {
+														<dependency> wasNot Called
+													}
+
+												// Verify that the <function>s called in specified <dependency>s are the only ones that were called:
+													verifyAll {
+														<dependency>.<function>(<arg> = <arg-matcher>, ... )
+														// ...
+													} 
+
+												// Verify that a <dependency>'s <function>s were called in some strict order:
+													verifySequence {
+														<dependency>.<function>(<arg> = <arg-matcher>, ... )
+														// ...
+													}
+
+												// Verify that a <dependency>'s <function>s were called in some order (not necessarily one after the other):
+													verifyOrder {
+														<dependency>.<function>(<arg> = <arg-matcher>, ... )
+														// ...
+													}
+										}
+									}
+
+					// JUnit 5 + Jupiter
+						class TestClass {
+							// Basic Test
+								@Test
+								fun `<test-description>`() {
+									// ...
+								}
+
+							// Parameterized Test
+								companion object {
+									@JvmStatic
+									fun <static-arg-provider-function>(): Stream<Arguments> {
+										// Tip: Each Stream Element corresponds to one run of the Test:
+										return Stream.of(
+											Arguments.of( <arg>, ... ),
+											// ...
+										)
+									}
+								}
+
+								@ParameterizedTest
+								@MethodSource("<static-arg-provider-function")
+								fun `<test-description>`( <arg>, ... ) {
+									// ...
+								}
+						}
+
 		Project Configuration:
 			// IntelliJ + Gradle + Maven
 				// build.gradle
@@ -987,6 +1104,13 @@ Kotlin
 					// ...
 
 					// Main Script Config Section 
+
+					dependencies {
+						// ...
+
+						// To use mockk for Testing:
+						testImplementation("io.mockk:mockk:${mockkVersion}")
+					}
 
 					// ...
 
