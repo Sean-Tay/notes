@@ -998,6 +998,8 @@ Kotlin
 												assertEquals(<expected-value>, <value>)
 
 											// Mocking a Class Dependency:
+												// Note: Can re-declare same Mock to override prior Mock behaviour.
+
 												// Mocking the results of a <dependency>'s <function> called with specific <arg>s:
 													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } returns <value> [ andThen <nextValue> ... ]
 													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } throws RuntimeException( ... )
