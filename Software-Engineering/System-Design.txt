@@ -181,6 +181,30 @@ System Design:
 			Consensus:
 				Fencing Token: Token with a monotonically increasing value used in Consensus-based Distributed Scenarios to ensure correct behaviour even when parts of it have been paused / are unreliable. Entities obtain a Token from a Token Service, and will only be successful in performing the operation on another Entity if the other Entity has not seen a Token with a higher value before.
 
+		Load Balancing in Distributed Systems: 
+			Constriants:
+				Minimal Disruption: Must ensure that the majority of Items which already have a Node in the System to go to are not unnecessarily reshuffled when Nodes are added to / removed from the System, reducing potential Network Congestion.
+
+			Techniques:
+				Consistent Hashing: A Technique used to facilitate Load Distribution within a Distributed System (Cluster).
+					Approach:
+						Given the Range of a Hash Function (Output Range), distribute Node IDs uniformly along the Range (to avoid Hotspots).
+							The position / hash of each Node ID must be tracked to the Node ID itself for faster lookup (i.e. Hashmap of Node ID hashes to Node IDs).
+								Variations of the Node IDs can be used for multiple insertions.
+
+							The Output Range does not need to be completely filled, leave space for more Nodes to be added later.
+
+						For a given Item, subject the Item's Key to the Hash Function to get the corresponding Hash Value.
+						Given the Hash Value, go in one direction (must be same throughout runs) along the Output Range until a Node ID is reached. The Node that corresponds to that Node ID will be the one to handle the Item.
+
+				Rendezvous Hashing / Highest Random Weight Hashing: A simpler and more general version of Consistent Hashing. Allows for multiple Clients to send an Item to a specific Node in the System each time.
+					Approach:
+						All Clients need to agree on the same Hash Function. The Hash Function maps a pair containing an Item's Key and a Node ID to a given score.
+							Nodes with higher capabilities can have their Node IDs be assigned slots multiple times in the Hash Function, or use the Skeleton variant for non-integer multiples.
+
+						For a given Item, subject the Item's Key to multiple calls of the Hash Function, each call corresponding to a possible Node to send the Item to. The Node whose call has the highest score is the one that will take the Item.
+							If the Node is deemed to have failed, pick the next highest.
+
 	Commands:
 		
 	

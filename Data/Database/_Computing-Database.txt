@@ -496,8 +496,6 @@ Database
 								Splitting and Merging of Partitions.
 
 						Methods:
-							Note: Don't use a Modulo on the number of Partitions to determine which Key goes into which Partition, as that can change in the future and will require Records to be reshuffled around Partitions / Nodes.
-
 							Ranges: Each Partition involves a Range which is a Contiguous Ordered Sequence of Values. Ranges can be of different sizes to avoid Hotspots.
 								Of Keys: Use Record Keys as they are to determine which Partition / Range they belong to (e.g. Alphabetical Ranges).
 									Pros:
@@ -516,6 +514,8 @@ Database
 										Hotspots can still occur if a few Record Keys are always requested for.
 
 						Rebalancing: Should attempt to keep a majority of the Records in the same Node to avoid high Bandwidth costs.
+							Use Consistent or Rendezvous Hashing to ensure minimal Record disruption whenever a Partition is added or removed.
+
 							During the process the old Node will take on the Reads and Writes for the Data involved in the migration to the new Node.
 
 						Compatability with other Database Mechanisms:
