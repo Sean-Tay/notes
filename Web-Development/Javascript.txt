@@ -44,6 +44,10 @@ Javascript
 			console.table(<collection>);						// Prints Tabular Output for Arrays or Objects.
 			console.trace();									// Prints out current Stack Trace for where this was Executed at.
 
+			console.time('<label>');							// Start an Internal Timer with the <label>.
+			console.timeLog('<label>');							// Print out the amount of time passed from the first 'time' call.
+			console.timeEnd('<label>');							// Stop the Internal Timer with the <label>, and print out the amount of time passed from the first 'time' call.
+
 			Comments // /* */
 
 			if (condition1) {
