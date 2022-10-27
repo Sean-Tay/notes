@@ -1025,6 +1025,8 @@ Kotlin
 											// ... <system-under-test>(<dependency>, ...) ...
 
 											// Verifying the behaviour of a <dependency>:
+												// Note: every and verify can be used on the same <function>.
+
 												// Verify that a <dependency>'s <function> was called with specific <arg>s:
 													verify([exactly=<num-times>]) {
 														<dependency>.<function>(<arg> = <arg-matcher>, ... )
