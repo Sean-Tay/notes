@@ -398,6 +398,7 @@ React.js
 					// Side-Effects
 						// Similar Behaviour to componentDidMount, componentDidUpdate and componentDidUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from Painting the display.
 						// Note: If Effect will change DOM Element appearance between the time the Component Renders and the Browser Paints, use useLayoutEffect instead to avoid a UI Flicker.
+						// Note: Avoid overuse of Effects - don't update local State within an Effect, prefer Event Handlers that update State.
 						React.useEffect(
 							() => {
 								// ... 
