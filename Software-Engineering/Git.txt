@@ -150,6 +150,10 @@ Git:
 
 			.					- <file> specification to add all new, modified or deleted files.
 
+		git rm <file> ...		- Specify <file>s to be removed within the Local Branch.
+			-r					- Allows for contents within a directory to be recursely removed.
+			-n					- Preview removals.
+
 		git checkout -- . 		- Reset all files not in the Local Staging List in the current Directory.
 
 		git reset -- <file> ... - Specify <file>s to be removed from the Local Staging List.
