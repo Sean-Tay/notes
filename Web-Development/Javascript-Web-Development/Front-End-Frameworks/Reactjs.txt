@@ -398,7 +398,6 @@ React.js
 					// Side-Effects
 						// Similar Behaviour to componentDidMount, componentDidUpdate and componentDidUnmount combined - the submitted Function executes after each Render (when Props or State changes), without blocking the Browser from Painting the display.
 						// Note: If Effect will change DOM Element appearance between the time the Component Renders and the Browser Paints, use useLayoutEffect instead to avoid a UI Flicker.
-						// Note: Avoid overuse of Effects - don't update local State within an Effect, prefer Event Handlers that update State.
 						React.useEffect(
 							() => {
 								// ... 
@@ -538,9 +537,7 @@ React.js
 
 						3. Leverage on Custom Hooks to improve Readability and Extensibility.
 							Especially for useEffect - use Custom Hooks to provide better self-describing names to Effects for easier Readability.
-						
-						4. Prefer useCallback for situations where setting Component State is involved, and external Pure Functions where it is not.
-							For controlled execution of Callbacks after asynchronous setStates, utilize useEffect and special State Sentinel Values, of which the Callbacks will trigger only when those Sentinel Values change.
+								Do not overuse useEffect - avoid setting State within an Effect as that will trigger another re-Render after the DOM has been updated and the Browser has painted the display, requiring a repeat of the process.
 
 					return (
 						<>
