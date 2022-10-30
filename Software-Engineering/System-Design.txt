@@ -178,8 +178,35 @@ System Design:
 				Network Time Protocol: Mechanism occasionally used by Machines to synchronize their internal clocks.
 				Monotonic Clock: Only used to measure Time Deltas - specific value of the Clock means nothing.
 			
-			Consensus:
+			Consensus: Agreement on something between multiple Nodes.
 				Fencing Token: Token with a monotonically increasing value used in Consensus-based Distributed Scenarios to ensure correct behaviour even when parts of it have been paused / are unreliable. Entities obtain a Token from a Token Service, and will only be successful in performing the operation on another Entity if the other Entity has not seen a Token with a higher value before.
+
+			Communication: To distribute information within the Cluster as quickly as possible.
+				Gossip / Epidemic Protocols: Pass information directly from Node to Node (i.e. like an infection spread) instead of using one centralized Coordination Service.
+					Approach:
+						From a starting Node, pick a few neighbouring Nodes randomly to broadcast a Message.
+							Each Message should contain a Timestamp to ensure most up-to-date information.
+							Only broadcast when a Message has not been received before to prevent Broadcast Storms.
+
+						Repeat this until all Nodes have received the Message.
+					
+					Scenarios:
+						Determining Node state:
+							Nodes that are receiving heavy load.
+
+							Nodes that are Active and which have Failed.
+								Each Node maintains a Map between the Node ID and the most recent Message received from that Node.
+								If the last Message from a given Node (across all Nodes) was a while ago, the System can assume that that Node has Failed, and stop sending work to it.
+							
+						Aggregation of certain System-wide Metrics.
+
+					Pros:
+						Low Overhead compared to other solutions.
+						Useful for communication in large Clusters due to speedy exponential rate of dissemination.
+
+					Cons:
+						Eventual Consistency.
+						Out-of-Order Messages (can be solved with Message Timestamps).
 
 		Load Balancing in Distributed Systems: 
 			Constriants:
