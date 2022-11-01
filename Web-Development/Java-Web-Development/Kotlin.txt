@@ -1078,6 +1078,12 @@ Kotlin
 								}
 
 								@ParameterizedTest
+								@EnumSource(<enum>::class, names = ["<enum-name>", ...])
+								fun `<test-description>`(<arg>) {
+									// ...
+								}
+
+								@ParameterizedTest
 								@MethodSource("<static-arg-provider-function")
 								fun `<test-description>`( <arg>, ... ) {
 									// ...
