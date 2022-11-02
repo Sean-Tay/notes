@@ -224,13 +224,32 @@ System Design:
 						For a given Item, subject the Item's Key to the Hash Function to get the corresponding Hash Value.
 						Given the Hash Value, go in one direction (must be same throughout runs) along the Output Range until a Node ID is reached. The Node that corresponds to that Node ID will be the one to handle the Item.
 
+					Pros:
+						Maintains lookup speed, even when number of Nodes change.
+
+					Cons:
+						Less emphasis on equal Load Distribution.
+
 				Rendezvous Hashing / Highest Random Weight Hashing: A simpler and more general version of Consistent Hashing. Allows for multiple Clients to send an Item to a specific Node in the System each time.
 					Approach:
-						All Clients need to agree on the same Hash Function. The Hash Function maps a pair containing an Item's Key and a Node ID to a given score.
-							Nodes with higher capabilities can have their Node IDs be assigned slots multiple times in the Hash Function, or use the Skeleton variant for non-integer multiples.
+						All Clients need to agree on the same Hash Function - the aim is to have each Item's Key generate a randomly-arranged list of Nodes (that is same across Clients), from which a preferred Node can be chosen for that Item.
+							Concatenate the Node ID with the Item Key, and subject that value to the Hash Function. Repeat this for each Node, then sort a list of Node IDs in the same order as how the list of hashed values would be sorted.
+								The list is specifc to each Item since the Item's Key was used as part of the value that was hashed.
 
-						For a given Item, subject the Item's Key to multiple calls of the Hash Function, each call corresponding to a possible Node to send the Item to. The Node whose call has the highest score is the one that will take the Item.
-							If the Node is deemed to have failed, pick the next highest.
+							The preferred Node for each Item would be the first in the list of Node IDs that were sorted according to their hashed values.
+								Item Redundancy can be implemented by storing the Item in the first k Nodes in the List.
+									If the Node is deemed to have failed, pick the next in order.
+
+							Can be easily adapted to allow for weight-adjusted Nodes (to reflect Nodes of different capabilities).
+
+					Pros:
+						More emphasis on equal Load Distribution:
+							Avoids Cascading Failure by distributing load of failed Node to other Nodes equally (every Item's list of Nodes are different, given a sufficiently good Hash Function).
+
+						Skeleton variant of Rendezvous Hashing has similar performance to Consistent Hashing.
+
+					Cons:
+						Slower lookup performance compared to Consistent Hashing, since need to run Hash Function on every Node.
 
 	Commands:
 		
