@@ -132,6 +132,7 @@ Javascript
 			var isSomeCondition = arr.some(
 				// Returns a boolean representing if any Elements in the Array satisfy the condition in the given Function.
 				// Note: If the Array is Empty, this always returns false.
+				// Note: It will not check Elements beyond the first Element that fails the check.
 				function(element) {
 					// return true if the Element fulfills a condition, false otherwise.
 				}
@@ -140,6 +141,7 @@ Javascript
 			var isEveryCondition = arr.every(
 				// Returns a boolean representing if all Elements in the Array satisfy the condition in the given Function.
 				// Note: If the Array is Empty, this always returns true.
+				// Note: It will not check Elements beyond the first Element that fails the check.
 				function(element) {
 					// return true if the Element fulfills a condition, false otherwise.
 				}
