@@ -513,16 +513,20 @@ Typescript:
 				// Useful Types:
 					React.ComponentPropsWithoutRef<'<html-element-tag-type>'>: For default attributes available to Components / native HTML DOM Elements. The Quotes are required.
 
-					React.FC<<component-props>>: To specify the Type for a Functional Component. Keep only one set of Angled Brackets.
+					React.FC<<component-props>>: To specify the Type for a Function Component. Keep only one set of Angled Brackets.
 						// Alias for React.FunctionComponent.
-						// Note: Do not explicitly specify if forwarding Refs; let Typescript infer this.
 						
 						// Note: Has several downsides:
 							// Declaring a Component with this Type will implicitly make the Component accept Children, which may not be wanted.
 							// Does not preserve Generic-ness for Generic Components.
 
+					React.ForwardRefRenderFunction<<imperative-handle-interface>, <component-props>>: To specify the Type for a Function Component with an Interface for Imperative Methods (exposed via useImperativeHandle). Will need to wrap the Function Component with React.forwardRef later.
+						// To extract the ref Type for useRef: React.ElementRef<typeof <forward-ref-render-function>>
+
+					React.ForwardRefExoticComponent<<component-props-with-ref>>: The result after React.forwardRef is called upon a Function Component with the React.ForwardRefRenderFunction Type. Prefer React.ForwardRefRenderFunction when defining Function Components that have the prop and ref parameters.
+
 					React.Component<<component-props>>: Represents a Component Instance.
-					React.ComponentType<<component-props>>: To specify the Type for either a Functional or Class Component.
+					React.ComponentType<<component-props>>: To specify the Type for either a Function or Class Component.
 						// React.FunctionComponent<P> | React.ComponentClass<P>
 						// Specify 'any' for the type of <component-props> for the least restrictions.
 

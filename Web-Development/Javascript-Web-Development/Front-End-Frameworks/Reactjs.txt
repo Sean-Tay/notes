@@ -466,11 +466,24 @@ React.js
 							[ <variable>, ... ]
 						);
 
-					// DOM Element Reference
-						// Note: Unaffected by "display: none".
-						const elementRef = React.useRef();
-						// ... <div ref={{elementRef}}> </div> ...
-						// ... elementRef.current ...
+					// Element Refs
+						// useRef
+							// Note: Unaffected by "display: none".
+							const elementRef = React.useRef();
+							// ... <div ref={elementRef}> </div> ...
+							// ... elementRef.current ...
+
+						// callbackRefs
+							const elementRef = {
+								node: null
+							};
+
+							// ...
+
+							const setRef = (element) => { elementRef.node = element }
+
+							// ... <div ref={setRef}> </div> ...
+							// ... elementRef.node ...
 
 					// Imperative Handle for Parent Component
 						// Tip: Try to avoid.
