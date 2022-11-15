@@ -171,6 +171,8 @@ Typescript:
 						const <function> = <<generic-type> extends <base-type> = <default-type>, ... > ( arg:<generic-type>, ... ): <generic-type> => {
 							// ...
 						};
+							// Instantiation Expressions: To more conveniently create specific versions of Generic Functions.
+							const <scoped-function> = <function><<generic-type>, ...>
 
 						// Asynchronous Function
 						const <async-function> = async (): Promise<<return-type>> => { // Include one set of Angled Brackets.
