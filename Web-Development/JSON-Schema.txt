@@ -46,8 +46,10 @@ JSON Schema
 						"exclusiveMaximum": <number>,
 
 					string
+						"enum": [ <enum-value>, ... ]
 
 					array
+						items: <sub-Schema>,
 						minItems: <number>,
 						maxItems: <number>,
 						uniqueItems: true,
