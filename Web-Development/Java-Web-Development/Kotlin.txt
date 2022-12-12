@@ -26,9 +26,14 @@ Kotlin
 					Character
 					String
 
-					Double
-					Float
-					Int
+					Number
+						Double 		// 15-16 Decimal Places
+						Float 		// 6-7 Decimal Places
+
+						Byte		// -ve 2^7 to +ve 2^7 - 1
+						Short		// -ve 2^15 to +ve 2^15 - 1
+						Int			// -ve 2^31 to +ve 2^31 - 1
+						Long		// -ve 2^63 to +ve 2^63 - 1
 
 					Boolean
 
