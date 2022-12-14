@@ -89,7 +89,7 @@ Git:
 			Tip: If there are pending changes prior to the merge, *do a Commit for those changes first ; do NOT use stash*. In the event the merge is done wrongly, there will be a Commit containing all prior work to revert to.
 
 			--abort				- If Merge Conflicts will occur, this will revert the Merge. If there are prior Local Working Copy changes, those will be lost.
-			--continue			- If Merge Conflicts will occur, this will allow for retrying the Merge after the edits are made. 
+			--continue			- If Merge Conflicts will occur, this will allow for retrying the Merge after the edits are made and added to the Local Staging List (via git add).
 
 			--no-commit			- Prevent the automatic Commit behaviour of the Merge operation, allowing for edits to be made before actually making the Commit.
 			
