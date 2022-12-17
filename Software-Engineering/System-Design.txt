@@ -69,7 +69,12 @@ System Design:
 							One Consumer per Partition to maintain Message Order per Partition.
 
 					Examples:
-						Kafka
+						Memory:
+							Redis
+
+						Log-Based:
+							Kafka
+
 						RabbitMQ
 						Azure Bus Service
 						AWS SQS
