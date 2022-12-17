@@ -43,6 +43,9 @@ System Design:
 					Examples:
 						Hadoop: Tailored towards eventual Data Processing of the Data in the Files stored.
 
+				Full-Text Search Indexes / Services: Allows searching of Data via Keyword or other ways.
+					Examples: Elasticsearch.
+
 			System Data Transport:
 				Message Queue: Enables Asynchronous Communication between two or more Components.
 					Behaviour:
