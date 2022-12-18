@@ -165,7 +165,22 @@ System Design:
 				Mobile
 
 		Systems are Designed with the intent of being Reliable, Scalable and Maintenable.
-			Reliable:
+			Reliable: The System should be resilient to recoverable Faults to avoid total failure.
+				Characteristics:
+					Tolerating Hardware Faults - usually these affect only a single / few Node(s) in a Distributed System at a time as they are random and independent.
+						Hot Swappable Computer Parts in a Active-Passive Failover setup.
+
+					Tolerating Software Faults - usually these affect many Node(s) in a Distributed System.
+						Restarting failed processes automatically.
+
+					Tolerating Human Error.
+						Good designs that make it easy to do the right thing, and hard to do the wrong thing.
+						End-User oriented Sandbox Environments.
+						Automated Testing to ensure corner cases are covered.
+
+					The System operates as expected with normal levels of Traffic.
+						Application Telemetry Monitoring.
+
 				Strategies:
 					Failover:
 						Active-Passive: Only one Node is actively handling Requests - the rest of the cloned Nodes are reserved for backup (either in Cold or Hot State). The Active Node is sending a regular heartbeat to the Passive Nodes - after a certain duration of not receiving a heartbeat one of the Passive Nodes takes over the Active Node's IP Address and role.
