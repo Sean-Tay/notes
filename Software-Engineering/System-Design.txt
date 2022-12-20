@@ -174,7 +174,7 @@ System Design:
 						Restarting failed processes automatically.
 
 					Tolerating Human Error.
-						Good designs that make it easy to do the right thing, and hard to do the wrong thing.
+						Good Designs that make it easy to do the right thing, and hard to do the wrong thing.
 						End-User oriented Sandbox Environments.
 						Automated Testing to ensure corner cases are covered.
 
@@ -188,14 +188,44 @@ System Design:
 						Active-Active: More than one Node is actively handling Requests. The DNS and Application Logic needs to know about all Active Nodes.
 
 					Replication: See Database Notes.
+	
+			Scalability: As the System grows, there should be reasonable ways of dealing with the corresponding growth in demand.
+				Characteristics:
+					Capacity to handle increasing Data and Traffic Volume.
 
-				(Availability) Uptime Standards:
+				Load Parameters: The main metrics that the System deals with (e.g. Requests / Second to various API). These help to define starting points for further discussion.
+					Percentiles and Distribution are used for Load Parameters instead of a hard number.
+
+				Service Level Objective Standards: To define the expected amount of Traffic the Service should be able to handle.
+					x% -> x% of Requests met in a timely manner.
+						Tail Latency: The Requests above the xth Percentile. As more Requests are made (either in Sequence or Parallel), the Request Times of these start to dominate the other x% of Requests, assuming a large differential in the Request Times between the two types.
+
+						Head of Line Blocking: Complicated Requests (which take a long time to compute) eventually start to accumulate and clog up available Server Resources, causing delays in all subsequent Requests.
+
+				Service Level Agreement Standards: To define the amount of uptime a User can expect from the Service:
 					90% -> 36.5 Days Offline per Year
 					95% -> 18.25 Days Offline per Year
 					99% -> 3.65 Days Offline Per Year
 					99.9% -> 8.77 Hours Offline Per Year
 					99.99% -> 1 Hour Offline Per Year
-	
+
+			Maintainability: Over time, many different people will be working on the System - they should all be working on it productively.
+				Motivation: The majority of costs associated is from Maintenance, and not the initial implementation.
+
+				Characteristics:
+					Operability: Making it easy for the Operations Team to keep the System running.
+						Making Routine Tasks easier by providing visibility into the Runtime Behaviour via effective System Monitoring.
+						Providing support for Automation (e.g. Self-Healing) and integration with other Tools.
+						Expected Default / Predictable Behaviour.
+
+					Simplicity: When Complexity makes things hard, budgets and schedules are overrun because additional time is needed.
+						Accidental Complexity: Complexity not directly related to what the System is supposed to solve.
+
+						Abstractions help to reduce Complexity.
+
+					Evolvability: Making changes easily.
+						Agile / TDD / Refactoring for Software.
+
 		Synchronization in Distributed Systems:
 			Time:
 				Network Time Protocol: Mechanism occasionally used by Machines to synchronize their internal clocks.
