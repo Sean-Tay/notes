@@ -398,6 +398,7 @@ Jest
 					expect(<target-number>).toBeNaN()
 
 				// Strings
+					expect(<target-string>).toContain(<sub-string>) Check if a given string value contains a given <sub-string>.
 					expect(<target-string>).toMatch({<string> | <reg-exp>})	Check if a given string value matches for a given <string> or <reg-exp>.
 
 				// Arrays
