@@ -247,6 +247,44 @@ React-Router:
 						);
 					}
 
+		Testing:
+			// Tip: Render a Router and Route alongside the Components that are being tested to allow them to receive the Route Props.
+			// Tip: Inject Custom History and track it during the Test via createMemoryHistory().
+				import { createMemoryHistory } from 'history';
+
+				// Note: <current-path> is the Path with values for the Params.
+				const history = createMemoryHistory({ initialEntries: ['<current-path>'] });
+
+				<test-renderer>(
+					<Router history={history}>
+						// Note: <route-path> is the Path that defines the available Params for the Component.
+						<Route path={'<route-path>'} component={<Component>}/>
+					</Router>
+				)
+
+			// OR
+
+			// Tip: Stub Route Props directly into the Component.
+				const routeProps = {
+					history: [],
+					location: {
+						pathname: '<url-path>',
+						search: '?<query-param>=<value>& ... '
+					},
+					match: {
+						params: {
+							'<path-param>': <value>,
+							// ...
+						}
+					}
+				}
+
+				// ...
+
+				<test-renderer>(
+					<Component {...routeProps} />
+				)
+
 	Commands:
 		
 	
