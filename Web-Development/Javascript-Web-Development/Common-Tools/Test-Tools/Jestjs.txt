@@ -237,25 +237,6 @@ Jest
 					}
 				);
 
-				// Mocking a Target's Function Dependency.
-					// Tip: This can also be used to mock Global Dependencies, however it requires that each Global Dependency is abstracted.
-					// Example: const windowAssign = (url) => window.location.assign(url)
-
-					import { <target> } from '<target>';
-
-					// Import the Module which houses the Target's Function Dependency into the Test File.
-					// Note: Import as Object.
-					import * as <dependencies> from '<target-dependency>';
-
-					// Use jest.fn to entirely replace the <dependency>'s implementation with a Stub.
-					const <dependency-stub> = jest.fn(<new-function>)
-
-					// Use jest.spyOn to allow modification of the <dependency>'s implementation.
-					const <dependency-stub> = jest.spyOn(<dependencies>, '<dependency>');
-
-					// Within a Test, invoke the Jest Stub Methods to define a controlled implementation of the Target's Function Dependency.
-					// Tip: Do a <dependency-stub>.mockReset() before each Test.
-
 				// Mocking Global Timer JavaScript Functions:
 					// ...
 
@@ -281,6 +262,22 @@ Jest
 					// ...
 
 					jest.useRealTimers()
+
+				// Mocking a Target's Function Dependency.
+					// Tip: This can also be used to mock Global Dependencies, however it requires that each Global Dependency is abstracted.
+					// Example: const windowAssign = (url) => window.location.assign(url)
+
+					import { <target> } from '<target>';
+
+					// Import the Module which houses the Target's Function Dependency into the Test File.
+					// Note: Import as Object.
+					import * as <dependencies> from '<target-dependency>';
+
+					// Use jest.spyOn to allow modification of the <dependency>'s implementation.
+					const <dependency-stub> = jest.spyOn(<dependencies>, '<dependency>');
+
+					// Within a Test, invoke the Jest Stub Methods to define a controlled implementation of the Target's Function Dependency.
+					// Tip: Do a <dependency-stub>.mockReset() before each Test.
 
 				// Mocking a Target's Module Dependency.
 					import { <target> } from '<target>';
