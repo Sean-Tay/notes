@@ -27,23 +27,24 @@ React.js
 		State:						Information maintained by a React Component Instance which it itself can change.
 		Props: 						Information received by a React Component Instance from other React Component Instances which it should NOT change directly.
 
-		Rendering: 					The process by which React recalculates the Virtual DOM Tree of React Elements from involved React Component Instances.
-			React <= v17:			Synchronous Rendering only.
-			React >= v18: 			Concurrent Rendering is supported.
-
+		Render: 					The process by which React recalculates the Virtual DOM of React Elements due to changes from Component Instance Prop or State via the `render()` Method.
 			The changes that drive Rendering are Batched before Rendering occurs as a form of optimization.
 				React <= v17:		Only Batch Synchronous State Updates within Browser Event Handlers.
 				React >= v18:		Automatic Batching: Batch all State Updates where possible.
 
-		Reconciliation:				The (interruptable) process of finding out the actual changes required to update the Application.
-			For React Web, this makes use of the Virtual DOM Tree of React Elements, and is driven by [re-]Rendering.
-				React Fiber: 		Data Structures that track additional metadata created from each React Element, which aids in the Reconciliation process.
+		Reconciliation:				The (interruptable) process of finding out the minimal number of actual changes required to update the Application's UI.
+			For React Web, this is done via comparison of the current and new Virtual DOM of React Elements that accounts for State changes.
 
-		Commit:						The (non-interruptable) process of applying the actual changes determined by Reconciliation to the Actual DOM.
+			React <= v16:			Stack Reconciler. Synchronous, so all Reconciliation Work had to be completed at one go.
+			React >= v16:			Fiber: Priority Queue-like Reconciler that Reconciliation Work to be broken up into smaller Tasks (called fibers) that can be executed Asynchronously over multiple Frames, allowing for Incremental Rendering and Better Performance overall.
+
+		Commit / Rendering:			The (non-interruptable) process of applying the actual changes determined by Reconciliation to the Actual DOM.
+			React <= v17:			Synchronous Rendering only.
+			React >= v18: 			Concurrent Rendering is supported.
 
 		Mounting:					Phase in the Component Lifecycle in which a Component Instance is going to be Painted for the first time.
 		Updating: 					Phase in the Component Lifecycle in which a Mounted Component Instance is updating due to changes in Props or State.
-		Unmounting: 				Phase in the Component Lifecycle in which a Mounted Component Instance is being removed from the Actual DOM Tree. 
+		Unmounting: 				Phase in the Component Lifecycle in which a Mounted Component Instance is being removed from the Actual DOM Tree.
 
 		Uncontrolled Component:		A React Component Instance that maintains its own internal State.
 		Controlled Component:		A React Component Instance that does not maintain internal State.
