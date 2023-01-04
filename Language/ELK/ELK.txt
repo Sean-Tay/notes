@@ -23,11 +23,101 @@ ELK
 				// Search
 				<http-request-method> /<index-name>/ ... /_search
 				{
-					"query": <query-dsl-object>,
+					// Query DSL
+					"query": <query>
+						// <query>
+						{
+							// Term Level: More for checking if a <field> has a particular <value>.
+								// Exists - Check if a <field> has a non-null Value, or is a non-empty Array.
+								"exists": {
+									"field": "<field>"
+								}
+
+								"term": {
+									"<field>": <value>
+								}
+
+								"terms": {
+									"<field>": [<value>, ... ]
+								}
+
+								// Range - Can also be used for Date <field>s.
+								"range": {
+									"<field>": {
+										"gte": <lower-bound-value>
+										"lte": <upper-bound-value>,
+									}
+								}
+
+							// Compound:
+								// Matches for Documents based on Boolean Combinations of other <query>s.
+								"bool": {
+									// Query Context
+										"must": [ { <query>, ... }, ... ], // AND Behaviour.
+										"should": [ { <query>, ... }, ... ], // Varying OR Behaviour possible with "minimum_should_match" specification.
+
+									// Filter Context
+										"filter": [
+											{
+												"script": {
+													"script": """
+														// Should return a Boolean on whether a given Document is included in the Results:
+														// <boolean-expression> <boolean-operator> ...
+															// <boolean-expression>:
+																// Tip: Cannot query <list-field>s directly; instead try querying on a <element-field> that would be present on all Elements in the List as a proxy to query on the <list-field>:
+																	// Example: Get all Documents whose <list-field> has more than one Element:
+																		doc['<list-field>.<element-field>'].size() > 1
+
+																// Check if <field> exists on Document:
+																doc['<field>'].size() != 0
+
+																// Reference <field> Value:
+																doc['<field>'].value
+
+															// <boolean-operator>:
+																&&
+																||
+													"""
+												},
+
+												// OR
+
+												<query>,
+
+												// ... 
+											},
+
+											// ...
+										],
+
+										"must_not": { <query>, ... },
+
+									// Options
+										"minimum_should_match": <number> // Specifies the minimum number of should Clauses that the Document must match.
+								},
+
+							// Joining:
+								// For querying Nested Type Fields (i.e. List Fields with the correct typing in the Index Configuration). This itself can be nested.
+								"nested": {
+									"path": "<nested-field>",
+									"query": {
+										// <query> Object as defined above
+
+										// Note: Absolute Paths must still be specified for the <field>s within.
+										// Example: <nested-field>. ... .<field>
+									}
+								}
+
+							// Full-Text Queries:
+								// Matches for Documents via a simpler but less capable Mechanism - see Query String Syntax Section below.
+								"query_string": {
+									"query": <query-string>
+								}
+						}
 
 					// Specify the maximum number of Documents that will be returned (default 10, max 10000).
-					"size": <number>,
-					"track_total_hits": <number>,
+					"size": <number>, // Does not affect hits.total.value.
+					"track_total_hits": <boolean>,
 
 					// Specify the <field>s that will be returned from each Document that fulfills the Query.
 					"fields": [ "<field>", ... ], // Uses the original Document and Indexes to reference <field> Values. Can only return Primitive / "Leaf" Values.
@@ -36,82 +126,7 @@ ELK
 
 				// Get Index Configuration
 				<http-request-method> /<index-name>/ ... /_mapping
-
-		Query DSL:
-			{
-				"query": {
-					// Matches for Documents based on Boolean Combinations of other <query>s.
-					"bool": {
-						// Query Context
-							"must": [ { <query>, ... }, ... ], // AND Behaviour.
-							"should": [ { <query>, ... }, ... ], // Varying OR Behaviour possible with "minimum_should_match" specification.
-
-						// Filter Context
-							"filter": [
-								{
-									"script": {
-										"script": """
-											// Should return a Boolean on whether a given Document is included in the Results:
-											// <boolean-expression> <boolean-operator> ...
-
-											// <boolean-expression>:
-												// Tip: Cannot query <list-field>s directly; instead try querying on a <element-field> that would be present on all Elements in the List as a proxy to query on the <list-field>:
-													// Example: Get all Documents whose <list-field> has more than one Element:
-														doc['<list-field>.<element-field>'].size() > 1
-
-												// Check if <field> exists on Document:
-												doc['<field>'].size() != 0
-
-												// Reference <field> Value:
-												doc['<field>'].value
-
-											// <boolean-operator>:
-												&&
-												||
-										"""
-									},
-
-									// OR
-
-									<query>,
-
-									// ... 
-								},
-
-								// ...
-							],
-
-							"must_not": { <query>, ... },
-
-						// Options
-							"minimum_should_match": <number> // Specifies the minimum number of should Clauses that the Document must match.
-					},
-
-					// For querying Nested Type Fields (i.e. List Fields with the correct typing in the Index Configuration). This itself can be nested.
-					"nested": {
-						"path": "<nested-field>",
-						"query": {
-							// query Object as defined above
-
-							// Note: Absolute Paths must still be specified for the <field>s within.
-							// Example: <nested-field>. ... .<field>
-						}
-					}
-
-					// Matches for Documents via a simpler but less capable Mechanism - see Query String Syntax Section below.
-					"query_string": <query-string>
-				}
 			}
-			
-			// <query>
-				// <term-level>: More for checking if a <field> has a particular <value>.
-					"term": {
-						"<field>": <value>
-					}
-
-					"terms": {
-						"<field>": [<value>, ... ]
-					}
 
 		Query String Syntax:
 			_exists_:<field> // Search for <field> Values which are non-null.
