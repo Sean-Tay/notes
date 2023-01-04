@@ -301,8 +301,6 @@ Database
 									Sloppy Quorums: Occurs when Replicas are temporarily added after the initial set of Replicas have all failed to handle further Writes - need to bring Written Data over to the initial set of Replicas once they have recovered (Hinted Handover).
 
 				Optimization Techniques:
-					Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of the Collection without concern for Duplication. Lookups can be optimized by traversing from the end of the Collection.
-
 					Indexes: Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
 						Background:
 							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the desired Record, especially with larger Collections.
@@ -650,10 +648,12 @@ Database
 
 							Blocking: Further Operations cannot be committed until the oldest uncommitted Operation succeeds in being committed.
 
-		Database Types:
-			In-Memory Database: 	A Database which stores Data in Main Memory, which is much faster than Disk Storage as I/O is skipped. Suitable for Operations in which Response Time is critical.
-				Pros:
+		Storage Engines:
+			Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of Storage Files without concern for Duplication.
+				Each Record can be stored as a line in the Storage File, alongside the Record's Primary Key.
+					Lookups are done by traversing from the end of the File / newest Segment, taking the first instance of a Record that has the Primary Key desired.
 
+				Whenever a File gets too big, it should have its older parts split off into immutable Segments. Multiple Segments can be compacted and merged together (i.e. take only the latest entry for each unique Primary Key) via a background process, as Segments are never modified (new entries are always appended).
 
 				Cons:
 
