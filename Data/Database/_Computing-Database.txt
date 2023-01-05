@@ -160,6 +160,45 @@ Database
 			Available Writes
 			Available Reads
 				Data should be stored contiguously on Disk to minimize the amount of Disk Lookups required (known to be expensive as it involves mechanical movement of the Storage Disks at the Hardware level).
+					Storage Engines: Responsible for the Storage and Retriebal of Data in a Database.
+						Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of Storage Files.
+							Approach:
+								Each Record can be stored as a line in the Storage File, alongside the Record's Primary Key.
+									Lookups are done by traversing from the end of the File / newest Segment, taking the first instance of a Record that has the Primary Key desired.
+										If a Tombstone was encountered instead, the Record should be considered as deleted.
+
+								Whenever a File gets too big, it should be frozen into a Segment, while a new File should be used for new Writes. Multiple Segments can be compacted and merged together (i.e. take only the latest entry for each unique Primary Key) via a background process, as Segments are never modified once formed (new entries are always appended).
+									If the latest entry is a Tombstone, skip putting the Key into the new Segment.
+
+								Each Segment can have its own Index for quicker retrieval.
+
+							Pros:
+								Simple and Performant way of storing Records on Disk.
+
+							Cons:
+								During compacting and merging, all Record Keys in the involved Segments must be kept In Memory.
+								Cannot handle Range Queries.
+								The Index for each Segment needs to track every Record.
+
+						LSM: An improvement over simple Append-Only Storage Engines - generate Segments of Records stored in sorted order of their Keys via LSM Tree Indexes.
+							Approach:
+								Full Records realized from Database Writes are first placed in an In-Memory Balanced Binary Search Tree, with the Key used in the BST being the Record's Primary Key / Index Keys.
+									For persistence, keep a Log on Database Writes that can be used to restore the In-Memory BBST after a Database Outage.
+
+								When Tree gets too large, a Sorted SS Table / Segment is generated via BST In-Order Traversal and is transferred to Disk.
+									The Tree gets emptied each time a SS Table is generated.
+
+								Tables can be combined in the same approach that Merge Sort uses to combine 2 Sorted Lists - Linear Time Background Operation.
+									Prioritise the Key-Value Pair that is in the younger SS Table over the older SS Table.
+
+							Pros:
+								Performant way of storing Records on Disk.
+
+								Compacting and merging no longer requires all Record Keys in involved Segnents to be kept in Memory, since Segments are now sorted and the Merge Sort Merging Algorithm can be used.
+								Good for Range Queries (that use the Keys), as the Keys are stored in sorted order.
+
+								Each Segment can now use a Sparse Index instead of a full Index, as Records within each Segment are now sorted.
+									Bloom Filters can be additionally employed to check the existence of a given Key amongst all Segments, saving unnecessary Segment lookups.
 
 				CAP Theorem: Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3).
 					Configurations:
@@ -301,15 +340,6 @@ Database
 									Sloppy Quorums: Occurs when Replicas are temporarily added after the initial set of Replicas have all failed to handle further Writes - need to bring Written Data over to the initial set of Replicas once they have recovered (Hinted Handover).
 
 				Optimization Techniques:
-					Storage Engines:
-						Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of Storage Files without concern for Duplication.
-							Each Record can be stored as a line in the Storage File, alongside the Record's Primary Key.
-								Lookups are done by traversing from the end of the File / newest Segment, taking the first instance of a Record that has the Primary Key desired.
-									If a Tombstone was encountered instead, the Record should be considered as deleted.
-
-							Whenever a File gets too big, it should have its older parts split off into immutable Segments. Multiple Segments can be compacted and merged together (i.e. take only the latest entry for each unique Primary Key) via a background process, as Segments are never modified once formed (new entries are always appended).
-								If the latest entry is a Tombstone, skip putting the Key into the new Segment.
-
 					Indexes: Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
 						Background:
 							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the desired Record, especially with larger Collections.
@@ -326,38 +356,13 @@ Database
 							[v1, v2, ... ] = range(k1, k2)
 
 						Types:
-							Hashmaps: Index Keys map to Memory Addresses (Byte Offsets) in Disk.
+							Hashmaps:
 								Pros:
-									Compatable with the Append-Only method of adding new Records to the Collection.
 									Allows access to Records in Constant Time.
 
 								Cons: 
 									Entire Hashmap has to be In-Memory for it to be effective - useful for only small Datasets.
 									Not good for Range Queries, as Data within the Index is unsorted.
-
-							Log Structured Merge Trees + Immutable SS Tables: 
-								Approach:
-									Full Records realized from Database Writes are first placed in an In-Memory Balanced Binary Search Tree, with the Key used in the BST being the Index Key(s).
-										To increase persistence, keep a Log on Database Writes that can be used to restore the In-Memory BBST after a Database Outage.
-
-									When Tree gets too large, a Sorted SS Table is generated via BST In-Order Traversal and is transferred to Disk.
-										The Tree gets emptied each time a SS Table is generated.
-
-									There can be duplicate Keys between multiple Tables (and the Tree itself) - simply prioritise looking for the Key in the Tree, followed by the youngest SS Table to the oldest.
-										Sparse Hashmaps with Memory Addresses + Binary Search on Table Keys can be additionally used to optimize lookups within an SS Table.
-										Bloom Filters can be additionally used to optimize lookups between SS Tables.
-
-										Tables can be combined in the same approach that Merge Sort uses to combine 2 Sorted Lists - Linear Time Background Operation.
-											Prioritise the Key-Value Pair that is in the younger SS Table over the older SS Table.
-
-								Pros:
-									Higher Write Throughput due to Records being placed In-Memory at first.
-									Uses the Append-Only method of adding new Records to the Collection.
-									Good for Range Queries (that only use the Keys in the Index), as the Data in the Index is internally Sorted.
-
-								Cons:
-									Relatively Slow Reads for Keys that do not exist in the Collection.
-									Merging Process for SS Tables can take up Background Resources.
 
 							B Trees / B+ Trees: An extension of a Binary Search Tree - m-way Search Tree, but with constraints on how new Elements are inserted to prevent degenerate Trees.
 								Approach:
