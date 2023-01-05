@@ -653,7 +653,7 @@ Database
 				Each Record can be stored as a line in the Storage File, alongside the Record's Primary Key.
 					Lookups are done by traversing from the end of the File / newest Segment, taking the first instance of a Record that has the Primary Key desired.
 
-				Whenever a File gets too big, it should have its older parts split off into immutable Segments. Multiple Segments can be compacted and merged together (i.e. take only the latest entry for each unique Primary Key) via a background process, as Segments are never modified (new entries are always appended).
+				Whenever a File gets too big, it should have its older parts split off into immutable Segments. Multiple Segments can be compacted and merged together (i.e. take only the latest entry for each unique Primary Key) via a background process, as Segments are never modified once formed (new entries are always appended).
 
 				Cons:
 
