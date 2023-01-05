@@ -24,11 +24,12 @@ ELK
 				<http-request-method> /<index-name>/ ... /_search
 				{
 					// Query DSL
-					"query": <query>
+					"query": <query>,
 						// <query>
 						{
 							// Term Level: More for checking if a <field> has a particular <value>.
 								// Exists - Check if a <field> has a non-null Value, or is a non-empty Array.
+								// Note: Don't use this to check for the existance of Nested Objects; use the ignore_unmapped flag in the Nested Query instead.
 								"exists": {
 									"field": "<field>"
 								}
@@ -105,7 +106,10 @@ ELK
 
 										// Note: Absolute Paths must still be specified for the <field>s within.
 										// Example: <nested-field>. ... .<field>
-									}
+									},
+
+									// Prevent ELK from throwing an Error if the Document Mapping for the <nested-field> does not exist / is not nested.
+									"ignore_unmapped": true
 								}
 
 							// Full-Text Queries:
