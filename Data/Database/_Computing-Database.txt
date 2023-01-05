@@ -301,6 +301,15 @@ Database
 									Sloppy Quorums: Occurs when Replicas are temporarily added after the initial set of Replicas have all failed to handle further Writes - need to bring Written Data over to the initial set of Replicas once they have recovered (Hinted Handover).
 
 				Optimization Techniques:
+					Storage Engines:
+						Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of Storage Files without concern for Duplication.
+							Each Record can be stored as a line in the Storage File, alongside the Record's Primary Key.
+								Lookups are done by traversing from the end of the File / newest Segment, taking the first instance of a Record that has the Primary Key desired.
+									If a Tombstone was encountered instead, the Record should be considered as deleted.
+
+							Whenever a File gets too big, it should have its older parts split off into immutable Segments. Multiple Segments can be compacted and merged together (i.e. take only the latest entry for each unique Primary Key) via a background process, as Segments are never modified once formed (new entries are always appended).
+								If the latest entry is a Tombstone, skip putting the Key into the new Segment.
+
 					Indexes: Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
 						Background:
 							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the desired Record, especially with larger Collections.
@@ -648,52 +657,28 @@ Database
 
 							Blocking: Further Operations cannot be committed until the oldest uncommitted Operation succeeds in being committed.
 
-		Storage Engines:
-			Append-Only: New Records / Updated-versions of Past Records are simply appended to the end of Storage Files without concern for Duplication.
-				Each Record can be stored as a line in the Storage File, alongside the Record's Primary Key.
-					Lookups are done by traversing from the end of the File / newest Segment, taking the first instance of a Record that has the Primary Key desired.
-
-				Whenever a File gets too big, it should have its older parts split off into immutable Segments. Multiple Segments can be compacted and merged together (i.e. take only the latest entry for each unique Primary Key) via a background process, as Segments are never modified once formed (new entries are always appended).
-
-				Cons:
-
-
-				Examples:
-					Redis
-					Memcache
-
-			Relational Database: 
+		Data Models:
+			Relational: Models Data in terms of Tables containing Rows of Structured Data, with Rows in one Table having a Relation to Rows in another if both share common Key(s).
 				Characteristics:
-					Consists of Tables storing Rows of Structured Data, with Rows on one Table having a Relation to Rows in another if both share common Key(s).
 					Reduction of Data Duplication via Normalization and JOINing.
+
+					Each Record stores its Values contiguously on Disk.
 					Each Table has one Schema, which eases Data Encoding.
 
-					All Reads and Writes go to Disk.
-
-					Uses B-Trees for their Indexes.
-
-					Hide Concurrency Bugs and Failures via Transactions.
-					2-Phase Locking for supporting Transaction Concurrency.
-
 				Pros:
-					ACID-strengthened Transactions.
-
-					Relational Structure allows minimization of Data Duplication across Tables.
+					Row-Based Storage Strategy optimal for querying many Columns at once per Record (unless Vertically Partitioned).
+					Relational Structure allows minimization of Data Duplication across Tables (Many-to-One Relationships).
 
 				Cons:
-					Set Schema does not allow Data to flexibly adapt to changing Application needs easily.
+					Row-Based Storage Strategy not optimal for Data Compression.
+					Row-Based Storage Strategy not ideal for Aggregate Queries (alleviated if Aggregate Query performed on an Indexed Attribute).
 
 					Scalability:
-						Challenging to Horizontally Partition since RDBMS has to ensure that all parts of the (Distributed) Transaction succeed or fail as a whole, which can involve multiple Nodes and even more Network Calls.
-							JOINs would require aggregation across Nodes.
+						Challenging to Partition since (Distributed) Transactions have to ensure that they succeed or fail as a whole, which can involve multiple Nodes and even more Network Calls.
+							JOINs / Row Splitting would require aggregation across Nodes.
 							Distributed Transactions required for Writes.
 
-						B-Trees are slow.
-						2-Phase Locking is slow.
-
-					Row-Based Data Structure not optimal for Data Compression.
-
-					Generally limited to Single-Leader Replication.
+					Strict Schema does not allow Data to flexibly adapt to changing Application needs quickly.
 
 				Related Content:
 					SQL
@@ -712,58 +697,78 @@ Database
 
 					PrestoDB:	Facebook's Distributed SQL Query Engine.
 
-			Non-Relational Database: Anything that is not storing Data in a Structured Table Format:
+			Non-Relational: Anything that allows storage and retrieval of Data via other means besides the Strict Tabular Relations used in SQL Databases.
 				Types:
-					Document Database:
+					Document: Models Data as Trees of Key-Value Pair Objects.
+						Characteristics:
+							Documents are / supposed to be self-containing; they group relevant Data together (One-to-Many Relationship).
+								Storage Locality: Documents are stored as a single continuous string with a particular encoding (i.e. JSON, XML).
+								Operations are guaranteed to be Atomic on single Documents.
+
 						Pros:
-							Documents are self-containing; they group relevant Data together.
-								Performance: Improved Data Locality due to self-containing nature of Documents, which results in more efficient Sequential Disk Lookups.
-								Scalability: Easier to Horizontally Partition due to self-containing nature of Documents.
+							Schema not required; Data can evolve more flexibly.
+							Scalability: Easier to Horizontally Partition due to self-containing nature of Documents.
 
 						Cons:
-							Data Duplication.
+							Design can lead to Data Duplication (Many-to-One Relationship).
 
 							Not suited for scenarios where there are many Relations between Data, since Documents are supposed to be self-containing.
 
-							Larger Network Calls as a result of sending over whole Documents with unneeded Information.
-
-						Related Content:
+							Storage Locality is only useful in cases where large parts of the Document are loaded / modified at a time - usually the entire Document needs to be loaded / recreated per Edit.
 
 						Examples:
 							MongoDB
+							CouchDB
+							Rethink DB: Supports Joins in its Query Language.
 							DynamoDB:	Amazon's NoSQL Solution.
 							Firestorm
 
-					Graph Database: Stores Data in a Graph (i.e. Vertices and Edges). Queries involve traversing the Graph.
+					Graph: Models Data in a Graph (i.e. Vertices and Edges, or Triples (e.g. Subject, Predicate, Value / Subject)).
+						Characteristics:
+							Vertices need not conform to any one Schema, allowing for Relationships between different Entities.
+							Does well for Data with Many-to-Many Relationships.
+
 						Pros:
-							Does well for Data with many-to-many Relationships.
+
 
 						Cons:
 
-						Related Content:
 
 						Examples:
-							Cassandra
-								Uses Timestamps to measure ordering of Events; recommends keeping Servers updated with NTP as much as possible.
 
-					Key-Value Database:
+
+					Key-Value Database: Uses a Map-capable / Associative Array Data Structure to map an Item's Key to the Item itself. Suited for storing / caching simple Items.
+						Characteristics:
+							The Item's Key may be automatically generated whenever an Item is saved to the Database.
+
 						Pros:
+							As every Item has no strict Schema to adhere to, memory can be saved by not having to track "placeholders" for Fields which would not be in use for some Items, vs. Relational Databases.
+
+							Databsase can be Partitioned with Consistent Hashing.
 
 						Cons:
-
-						Related Content:
+							
 
 						Examples:
 							Redis: In-Memory based Database with Disk Persistence that is often used as a Caching Layer on top of other RDBMSes.
+							Project Voldemort
+							Riak
+					
+					Wide-Column Database: Stores Data arranged into Columns rather than Rows.
+						Characteristics:
+							Each Disk Block stores the Values for one Attribute within multiple Records.
 
-					Wide-Column Database:
 						Pros:
+							Column-Based Storage Strategy optimal for performing Aggregate Queries.
 						
 						Cons:
+							Column-Based Storage Strategy incurs Heavy Performance Cost when accessing multiple Attributes for a given Record.
 
-						Related Content:
+							Limited Indexing.
 
 						Examples:
+							Apache Cassandra: Implementation with emphasis on Scalability and Fault Tolerance.
+								Uses Timestamps to measure ordering of Events; recommends keeping Servers updated with NTP as much as possible.
 
 	Commands:
 		
