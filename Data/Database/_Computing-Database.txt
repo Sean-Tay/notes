@@ -19,6 +19,27 @@ Database
 		Record:					A collection of Attributes pertaining to some instance of an Entity.
 		Collection:				A group of Records.
 
+		Write-Ahead Log: 		An Append-Only File that tracks Database Writes, usually updated before the actual Write itself happens as a way to ensure Persistence.
+
+		Indexes:				Improves speed of Queries, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
+			Primary Index: 		Each Index Entry is unique (1:1 relation to the Full Records) as it includes the Primary Key of the Records.
+			Secondary Index:	Index Entries do not include the Primary Key of the Records - each Index Entry may thus track more than one Record.
+
+			Sparse Index:		Contains a mapping only for every n Records in the Collection. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
+			Dense Index:		Contains a mapping for every Record in the Collection.
+
+			Clustered Index: 	Each Index Entry stores the full Record.
+			Covering Index: 	A partial Clustered Index; stores only a subset of the complete Record.
+
+			Concatenating Index: An Index which concatenates the Keys inolved in the Index together, so that it need only use one Key. It is not able to handle Queries that does not at least use the first Key in the concatenation.
+			Multi-Dimensional Index: An Index that is able to handle multiple Keys without needing to concatenate them together into one Key.
+				Geospatial Index: An Index which specializes in handling queries associated with Global Coordinates.
+
+			Fuzzy Index:		An Index which is able to handle Approximate Searches (i.e. Queries that don't use the exact Key Value as it was stored).
+
+			Forward Index:		A Data Structure that maps the Record to the Record's Content.
+			Inverted Index: 	An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record via a defined subset of the Record's Content.
+
 		Transaction:			A Unit of Work done / Measure of Change performed within a DBMS.
 		Heterogenous Transaction: Transactions implemented using the generic XA API that would work for all Databases and setups.
 		Internal Transaction: 	Transactions implemented using the specific Database Software's API that would be able to leverage on stronger characteristics of the Database being used.
@@ -41,30 +62,7 @@ Database
 		Record Lock: 			A Lock on a Record.
 		Predicate Lock:			A Lock on a potential range of Records.
 
-		Write-Ahead Log: 		An Append-Only File that tracks Database Writes, usually updated before the actual Write itself happens as a way to ensure Persistence.
-
 		Multiversion Concurrency Control: Generates a new version of an Object for each Write, and maintaining the last few relevant versions of the Object for Read Operations.
-
-		Forward Index:			A Data Structure that maps the Record to the Record's Content.
-		Inverted Index: 		An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record via a defined subset of the Record's Content.
-			Primary Index: 		Each Index Entry is unique (1:1 relation to the Full Records) as it includes the Primary Key of the Records.
-			Secondary Index:	Index Entries do not include the Primary Key of the Records - each Index Entry may thus track more than one Record.
-
-		Sparse Index:			Contains a mapping only for every n Records in the Collection to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
-		Dense Index:			Contains a mapping for every Record in the Collection to the Disk Location.
-
-		Concatenating Index: 	An Index which concatenates the Keys inolved in the Index together, so that it need only use one Key. It is not able to handle Queries that does not at least use the first Key in the concatenation.
-		Multi-Dimensional Index: An Index that is able to handle multiple Keys without needing to concatenate them together into one Key.
-			Geospatial Index: 	An Index which specializes in handling queries associated with Global Coordinates.
-
-		Clustered Index: Each Index Entry stores the full Record.
-		Covering Index: A partial Clustered Index; stores only a subset of the complete Record.
-
-		Database Partitioning:
-			Horizontal Partitioning: Splitting a Collection into smaller non-overlapping Partitions and storing them in separate Nodes (i.e. Sharding). Each Node may contain more than one Partition.
-			Vertical Partitioning: Different Record Attributes into Separate Collections (i.e. Normalization or simple Record Splitting).
-
-		Hotspot:				A Node in a Database Cluster that receives a higher amount of Traffic and Load compared to others due to sub-optimal Partitioning.
 
 		CAP Theorem: 			Describes the tradeoff between Data Consistency, Data Availability and Partitioning Tolerance for a Database (choose 2 of 3).
 			Consistency:		Degree at which Data is the same throughout the Database.
@@ -79,6 +77,12 @@ Database
 		Replica:				A Node within a Replicated Database.
 
 		Quorum:					A majority of Nodes that agree on something (requires total number of Nodes to be odd). It is impossible for two different Quorums to disagree on something, as the Quorums would have overlapping Nodes by definition.
+
+		Database Partitioning:
+			Horizontal Partitioning: Splitting a Collection into smaller non-overlapping Partitions and storing them in separate Nodes (i.e. Sharding). Each Node may contain more than one Partition.
+			Vertical Partitioning: Different Record Attributes into Separate Collections (i.e. Normalization or simple Record Splitting).
+
+			Hotspot:			A Node in a Database Cluster that receives a higher amount of Traffic and Load compared to others due to sub-optimal Partitioning.
 
 	Details:
 		ACID:					A set of Properties for Operations on a Database to guarantee so as to avoid Erroneous Data.
@@ -349,7 +353,7 @@ Database
 									Sloppy Quorums: Occurs when Replicas are temporarily added after the initial set of Replicas have all failed to handle further Writes - need to bring Written Data over to the initial set of Replicas once they have recovered (Hinted Handover).
 
 				Optimization Techniques:
-					Indexes: Improves speed of Lookups, but imposes additional operations during Insertions / Deletions, and adds to the Disk Space required by the Collection.
+					Indexes:
 						Background:
 							The benefit of the Index is that it is able to reduce the number of Disk Block accesses maximally required to find the desired Record, especially with larger Collections.
 								Index Entries are stored in some sorted order; more efficient Searches can be used that only work on sorted Data.
