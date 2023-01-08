@@ -47,7 +47,9 @@ Database
 
 		Forward Index:			A Data Structure that maps the Record to the Record's Content.
 		Inverted Index: 		An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record on Disk via a defined subset of the Record's Content.
-			Primary Index / Clustered Index: Each Index Entry is unique (1:1 relation to the Full Records) as it includes the Primary Key of the Records.
+			Primary Index: 		Each Index Entry is unique (1:1 relation to the Full Records) as it includes the Primary Key of the Records.
+				Clustered Index: Each Index Entry stores the full Record.
+
 			Secondary Index:	Index Entries do not include the Primary Key of the Records - each Index Entry may thus track more than one Record.
 
 		Sparse Index:			Contains a mapping only for every n Records in the Collection to the Disk Location. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
@@ -348,10 +350,10 @@ Database
 								Index Entries are stored in some sorted order; more efficient Searches can be used that only work on sorted Data.
 
 						Approach:
-							A Primary Index is created for each Collection. For each Record, a Primary Key is used / generated via a UUID, and is added to the Primary Index such that the Primary Key is linked to the complete Record on Disk.
+							A Primary Index is created for each Collection. For each Record, a Primary Key is used / generated via a UUID, and is added to the Primary Index such that the Primary Key is linked to the complete Record.
 							Any other Indexes created will link the Fields used in the Index to the Primary Key(s), which is then used alongside the Primary Index to find the complete Record(s).
 
-						Operations: For a given Key k (i.e. Fields) to return Value(s) v (i.e. Full Record location on Disk):
+						Operations: For a given Key k (i.e. Fields) to return Value(s) v (i.e. Full Record / Location on Disk):
 							insert(k, v)
 							delete(k)
 							[v1, v2, ... ] = query(k)
