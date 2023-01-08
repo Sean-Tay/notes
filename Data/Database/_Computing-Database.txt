@@ -41,6 +41,8 @@ Database
 		Record Lock: 			A Lock on a Record.
 		Predicate Lock:			A Lock on a potential range of Records.
 
+		Write-Ahead Log: 		An Append-Only File that tracks Database Writes, usually updated before the actual Write itself happens as a way to ensure Persistence.
+
 		Multiversion Concurrency Control: Generates a new version of an Object for each Write, and maintaining the last few relevant versions of the Object for Read Operations.
 
 		Forward Index:			A Data Structure that maps the Record to the Record's Content.
@@ -183,7 +185,7 @@ Database
 						LSM: An improvement over simple Append-Only Storage Engines - generate Segments of Records stored in sorted order of their Keys via LSM Tree Indexes.
 							Approach:
 								Full Records realized from Database Writes are first placed in an In-Memory Balanced Binary Search Tree, with the Key used in the BST being the Record's Primary Key / Index Keys.
-									For persistence, keep a Log on Database Writes that can be used to restore the In-Memory BBST after a Database Outage.
+									For persistence, maintain a Write-Ahead Log that can be used to restore the In-Memory BBST after a Database Outage.
 
 								When Tree gets too large, a Sorted SS Table / Segment is generated via BST In-Order Traversal and is transferred to Disk.
 									The Tree gets emptied each time a SS Table is generated.
