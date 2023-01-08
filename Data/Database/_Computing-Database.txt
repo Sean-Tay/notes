@@ -49,6 +49,7 @@ Database
 		Inverted Index: 		An additional Data Structure (separate from the Collection) that allows for quick access of a Full Record on Disk via a defined subset of the Record's Content.
 			Primary Index: 		Each Index Entry is unique (1:1 relation to the Full Records) as it includes the Primary Key of the Records.
 				Clustered Index: Each Index Entry stores the full Record.
+				Covering Index: A partial Clustered Index; stores only a subset of the complete Record.
 
 			Secondary Index:	Index Entries do not include the Primary Key of the Records - each Index Entry may thus track more than one Record.
 
