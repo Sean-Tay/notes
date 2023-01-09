@@ -99,7 +99,7 @@ Redux.js
 			
 		Component Connection:
 			Redux < v7.10:
-				const <redux-component> = connect(mapStateToProps, mapDispatchToProps) (<react-component>)
+				const <redux-component> = connect(mapStateToProps, mapDispatchToProps, mergeProps) (<react-component>)
 					Returns a modified variant of the <react-component> sent into the connect Higher-Order Function.
 						mapStateToProps - A Pure Function returning an Object describing State Slices to be passed as props into the <react-component>, that will be executed upon the production of a new State.
 							// Typically dissects the overall State to smaller parts that the <react-component> can use, but can also handle State reshape functionality.
@@ -112,13 +112,32 @@ Redux.js
 								}
 							)
 
-						mapDispatchToProps - An Object describing Redux Store Dispatch Functions to be passed as props into the <react-component>.
+						mapDispatchToProps - A Function / Object describing Redux Store Dispatch Functions to be passed as props into the <react-component>.
+							// Note: If this is set to null, the <react-component> will receive the Redux dispatch Function by default.
 							// Typically allows the React Component to dispatch Actions to update the Store.
 							// The <action-creators> will internally be bound to the Redux dispatch function within the connect Function.
 							const mapDispatchToProps = {
 								<action-creator-key-1>: <action-creator>,
 								// ...
 							};
+
+							// OR
+							const mapDispatchToProps = (dispatch, [<component-props>]) => (
+								{
+									<action-creator-key-1>: <action-creator>,
+									// ...
+								}
+							)
+
+						mergeProps - A Function to specify what props should <react-component> ultimately receive.
+							// Note: Useful for passing on State Variables to Dispatch Functions.
+							// Note: If this is set to null, the <react-component> will receive { ...<component-props>, ...<state-props>, ...<dispatch-props> } by default.
+							const mergeProps = (<state-props>, <dispatch-props>, <component-props> ) => (
+								{
+									<prop-key-1>: <value>,
+									// ...
+								}
+							)
 
 		Implementation Flow:
 			0) Understand what the Component does, and what sort of State it might potentially need.
