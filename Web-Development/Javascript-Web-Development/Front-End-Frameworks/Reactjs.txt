@@ -437,7 +437,7 @@ React.js
 						// Tip: The Computed Value can be a React Element too.
 							// Note: If the wrapped Child Component internally Re-Renders, this method cannot stop it, as the corresponding render call does not occur within this, or an Ancestor, Component.
 						// Tip: Consider using useRef for defining 'initial values', rather than useMemo.
-						React.useMemo(
+						const <memo-ref> = React.useMemo(
 							() => {
 								// ...
 
@@ -455,9 +455,10 @@ React.js
 							[ <variable>,  ... ]
 						);
 						
-						// Used to define Functions within Functional Components that won't be unneccessarily recreated per Re-Render.
-						// Note: Beware of invoking Functions that return Functions here (e.g. lodash debounce), as the invocation of the Function Factory is triggered per Re-Render regardless of what is specified in the Dependency List (only invocation of the final Callback is controlled). Use useMemo for this scenario instead.
-						React.useCallback(
+						// Used to define Functions within Functional Components whose recreation per Re-Render won't unneccessarily cause Re-Renders in Consumers.
+						// Note: The Function still gets recreated per Re-Render, but the <callback-ref> will not be updated and retain the reference to the old Function if none of the Dependencies changed.
+						// Tip: To prevent the recreation of the Function entirely, use useMemo instead.
+						const <callback-ref> = React.useCallback(
 							(<arg-1>, ...) => {
 								// ...
 
