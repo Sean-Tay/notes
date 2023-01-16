@@ -27,18 +27,18 @@ React.js
 		State:						Information maintained by a React Component Instance which it itself can change.
 		Props: 						Information received by a React Component Instance from other React Component Instances which it should NOT change directly.
 
-		Render: 					The process by which React recalculates the Virtual DOM of React Elements due to changes from Component Instance Prop or State via the `render()` Method.
+		Render: 					The function that describes to React how the UI (and the Virtual DOM Tree) should appear, given State and Props.
 			The changes that drive Rendering are Batched before Rendering occurs as a form of optimization.
 				React <= v17:		Only Batch Synchronous State Updates within Browser Event Handlers.
 				React >= v18:		Automatic Batching: Batch all State Updates where possible.
 
-		Reconciliation:				The (interruptable) process of finding out the minimal number of actual changes required to update the Application's UI.
-			For React Web, this is done via comparison of the current and new Virtual DOM of React Elements that accounts for State changes.
+		Reconciliation:				The process of finding out the minimal number of actual changes required to update the Application's UI.
+			For React Web, this is done via comparison of the current and new Virtual DOM, as well as the Actual DOM, to determine the changes necessary for the Actual DOM to match the new Virtual DOM.
 
 			React <= v16:			Stack Reconciler. Synchronous, so all Reconciliation Work had to be completed at one go.
 			React >= v16:			Fiber: Priority Queue-like Reconciler that Reconciliation Work to be broken up into smaller Tasks (called fibers) that can be executed Asynchronously over multiple Frames, allowing for Incremental Rendering and Better Performance overall.
 
-		Commit / Rendering:			The (non-interruptable) process of applying the actual changes determined by Reconciliation to the Actual DOM.
+		Commit / Rendering:			The process of applying the actual changes determined by Reconciliation to the Actual DOM.
 			React <= v17:			Synchronous Rendering only.
 			React >= v18: 			Concurrent Rendering is supported.
 
