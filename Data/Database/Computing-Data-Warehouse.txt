@@ -87,7 +87,20 @@ Data Warehouse
 				Dice:			Viewing the Data Sets from different Dimensions.
 
 			Pivot: 				Rotate.
-	
+
+		Examples:
+			OLTP + OLAP:
+				Microsoft SQL Server
+				SAP HANA
+
+			OLAP:
+				Amazon Redshift (Hosted ParAccel)
+
+				SQL on Hadoop:
+					Apache Hive
+					Spark SQL
+					Facebook Presto
+
 	Commands:
 		
 	
