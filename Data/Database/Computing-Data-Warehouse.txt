@@ -15,8 +15,8 @@ Data Warehouse
 
 		ETL Process:			The Process that handles Extraction, Transformation and Loading of Data from the Production Database(s) to the Data Warehouse. Usually a Batch Job.
 
-		Fact:					A Measurable Quantity representing something about the managed Entity or System. Calculations can be made on these for additional insight.
-		Dimension: 				An item that serves to provide additional information (e.g. Who, What, When, Where, Why ... ) a Fact.
+		Fact:					Usually involves Events that happened at a particular time.
+		Dimension: 				An item that serves to provide additional information (e.g. Who, What, When, Where, Why ... ) of a Fact.
 
 		Materialized Views: 	Involves Precomputed Results of common Queries so that they do not have to be constantly rerun.
 		Data Cube:				Multi-Dimensional Precomputed Materialized View. Not related to the Dimensions of Facts.
@@ -45,19 +45,36 @@ Data Warehouse
 					Time-Variant: The Primary Keys of Data stored within should implicitly or explicitly contain an element of Time, as it is Historical or Commutative Data.
 					Non-Volatile: Once Written, Data is Read Only.
 
-					Compression: Bitwise Run-Length Encoding can be used to compress Data, which can help with Caching Purposes. Bitwise Operations can then be used to do AND / OR Operations.
-
 				Structure:
 					Un-Normalized: Data is not Normalized so as to allow for faster Querying (i.e less and simpler Table Joins). 
 						However, this also results in Data Duplication within the Table Records.
 
-					Column-Based: Unlike Row-Based Databases which store Data in the same Row together on Disk for Data Locality, Column-Based Databases store Data in the same Column together on Disk instead, as the Analytical Queries involved usually deal with Data Aggregation, which are Column-Based Operations.
-						All Columns must be stored in the same sorted order. If there needs to be more than one order, a Replica of the Data Warehouse can be used.
+					Column-Based: Unlike Row-Based Databases which store Data in the same Row together on Disk for Data Locality, Column-Based Databases store Data in the same Column together on Disk instead.
+						Analytical Queries usually deal with:
+							Data Aggregation, which are Column-Based Operations.
+							Only a few parts of each Record is used per Query (i.e. if Row-Based Storage was used, the full Record would be loaded into Memory regardless of which parts were actually used).
 
-						LSM Trees are used to buffer Writes, as it'll be costly to insert Items into an already sorted File on Disk.
+						All Columns must assume the same order, otherwise the Data in each Rows would be mismatched. If there needs to be more than one order, a Replica of the Data Warehouse can be used.
+							However, a few Columns can have priority, such that Rows are stored in order w.r.t those few Columns.
+								An approach is used similar to LSM Trees to buffer Writes, such that Rows are stored in order.
+
+								Compression on these Columns will be optimized as a result.
+
+						Compression: Bitwise Run-Length Encoding can be used to efficiently store and retrieve Data.
+							For a given Column, each distinct value should have a number that represents the Rows that do not have and have the distinct value in the associated Attribute, in alternating order:
+								product_sk: 69, 69, 69, 69, 74, 31, 31, 31, 31, 29, 31, 31, 31, 31, 68. 69, 69
+
+								product_sk=29; 91 (9 Zeroes, 1 One, Rest Zeroes)
+								product_sk=31; 5414 (5 Zeroes, 4 Ones, 1 Zero, 4 Ones, Rest Zeroes)
+								// ...
+
+							Bitwise Operations can then be used to do AND / OR Operations.
+
+							Compressing the Data in this manner allows it to be able to more easily fit in Caches and Memory, resulting in faster performance.
+								Vectorized Processing.
 
 					Table Types:
-						Fact Table: Records in these contain Measurable Data on collection of Facts, as well as references to related Dimension Tables. May potentially contain up to 100s of Columns.
+						Fact Table: Records in these contain Measurable Data on collection of Events, as well as references to related Dimension Tables via Foreign Keys. May potentially contain up to 100s of Columns.
 						Dimension Table: A companion to the Fact Table, Records in these contain Descriptive Data on the Facts in the Records that they are linked to.
 
 					Schema Types:
