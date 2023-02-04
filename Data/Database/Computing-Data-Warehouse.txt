@@ -84,7 +84,7 @@ Data Warehouse
 
 						Galaxy Schema
 
-				Materialized Views: Database precomputes common Queries so that they do not have to be constantly rerun.
+				Materialized Views: Database precomputes common Aggregate Queries on Fact Attributes across Dimensions so that they do not have to be constantly rerun.
 					Cons:
 						Writes are slower, as these Views must be updated.
 							However, as Writes are typically done via long-running ETL Processes anyway, the reduction of speed is still acceptable.
