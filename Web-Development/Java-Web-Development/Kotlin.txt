@@ -621,6 +621,8 @@ Kotlin
 								// async 		Starts a new Coroutine that is used to compute some Result, represented by an instance of Deferred. Note: Will NOT cause the Application to crash upon encountering an unhandled Exception.
 								// await 		Wait for the completion of the created Coroutine, and realize the Result of the Deferred Instance.
 
+								// awaitAll		Waits for the successful completion of a Collection of Coroutines.
+
 							// Suspendable Function: Pausable Function; Analogous to an Asynchronous Function in JavaScript.
 							// Note: Only can be used in other Suspendable Functions / Coroutines.
 								suspend fun <suspendable-function-name>() {
