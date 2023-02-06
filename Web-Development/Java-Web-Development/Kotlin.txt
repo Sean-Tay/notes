@@ -626,9 +626,10 @@ Kotlin
 							// Suspendable Function: Pausable Function; Analogous to an Asynchronous Function in JavaScript.
 							// Note: Only can be used in other Suspendable Functions / Coroutines.
 								suspend fun <suspendable-function-name>() {
-									// Concurrent Code ...
+									// <coroutine-scope> { ... <coroutine-builder-function> { ... } ... }
 
 									// Note: Calling another Suspendable Function will defer execution of this Function.
+									<another-suspendable-function-name>()
 
 									// ...
 								}
