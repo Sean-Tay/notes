@@ -304,6 +304,51 @@ System Design:
 					Cons:
 						Slower lookup performance compared to Consistent Hashing, since need to run Hash Function on every Node.
 
+		Data Encoding / Decoding Schemes: Important to translate Data from a format optimized for Memory to other Mediums (i.e. Disk, Network Protocols).
+			Schemaless:
+				Types:
+					JSON / XML / CSV:
+						Pros:
+							Relatively common Protocols to exchange Data between different interfaces.
+							Usually Human Readable.
+
+						Cons:
+							XML: Cannot distinguish between Strings and Numbers.
+							JSON: Cannot distinguish between Numbers and Floats.
+							CSV: Inconsistent behaviour when Strings have commas in their content.
+
+							No native support for Binary Strings (but Base-64 encoded Strings can be used as a workaround).
+							Usually less efficient than other more specialized Encoding Schemes.
+
+					BSON / WBXML:
+						Pros:
+							Binary-Encoded variants of JSON / XML, which is faster to process by Machines.
+							May support Data Types not supported by JSON / XML.
+
+			Schema-Oriented:
+				Characteristics:
+					Encoded Data can feature a special flag that denotes which version of the Schema was used to Encode it, so that a compatable version of the Schema can then be retrieved and used to subsequently Decode it.
+
+				Types:
+					Protobuf / Apache Thrift:
+						Pros:
+							Better at reducing Data size compared to JSON / XML / CSV.
+								Field Names are omitted; instead Field References are used that map to the Field Definition in an accompanying Schema (either hardcoded in the Application Code, or if the Schema's size is insignificant compared to the overall payload).
+
+						Cons:
+							Schemas are needed to help translate the Data.
+							Not Human Readable.
+
+					Apache Avro:
+						Pros:
+							Better at reducing Data size compared to JSON / XML / CSV / Protobuf / Apache Thrift.
+								Only Field Values are in the Serialized Result; interpretation relies on a given Schema and the correct corresponding order of Field Values.
+
+							Dynamically generate Schemas.
+
+						Cons:
+							Not Human Readable.
+
 	Commands:
 		
 	
