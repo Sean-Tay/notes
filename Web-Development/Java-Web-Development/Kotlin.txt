@@ -93,6 +93,11 @@ Kotlin
 					.map <lambda>
 					.reduce <lambda>
 
+				// range for loops
+				for (i in <range>) {
+					// ...
+				}
+
 			Variables:
 				var <variable-name>: <type> = <value>;
 
