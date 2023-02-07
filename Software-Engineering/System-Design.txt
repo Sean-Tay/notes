@@ -330,7 +330,12 @@ System Design:
 					Encoded Data can feature a special flag that denotes which version of the Schema was used to Encode it, so that a compatable version of the Schema can then be retrieved and used to subsequently Decode it.
 
 				Types:
-					Protobuf / Apache Thrift:
+					Apache Thrift / Protobuf:
+						Characteristics:
+							Thrift - Binary: 1 Byte Type Info, 2 Bytes Field Reference
+							Thrift - Compact: 4 Bits Field Reference, 4 Bits Type Info
+							Protobuf: 5 Bits Field Reference, 3 Bits Type Info
+
 						Pros:
 							Better at reducing Data size compared to JSON / XML / CSV.
 								Field Names are omitted; instead Field References are used that map to the Field Definition in an accompanying Schema (either hardcoded in the Application Code, or if the Schema's size is insignificant compared to the overall payload).
@@ -340,11 +345,13 @@ System Design:
 							Not Human Readable.
 
 					Apache Avro:
+						Characteristics: 1 Byte for Field Information
+
 						Pros:
 							Better at reducing Data size compared to JSON / XML / CSV / Protobuf / Apache Thrift.
 								Only Field Values are in the Serialized Result; interpretation relies on a given Schema and the correct corresponding order of Field Values.
 
-							Dynamically generate Schemas.
+							Friendlier to Dynamically Generated Schemas.
 
 						Cons:
 							Not Human Readable.
