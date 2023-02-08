@@ -193,7 +193,20 @@ Kotlin
 					}
 						// Tip: For Instances of Immutable Data Classes, use the 'copy' Method to avoid having to copy every unchanged Property if the Instance is to be 'updated'.
 
-				
+				// Annotation Class:
+					// @<meta-annotation>
+					// ...
+					annotation class <annotation-class>( ... )
+						// @<meta-annotation>s
+							// @Target - Specifies which Code Elements the Annotation Class can be used on via AnnotationTarget Enum
+							// @Retention - Specifies whether the Annotation should be stored alongside a .class File and whether it should be visible for Reflection.
+							// @Repeatable - Specifies if the Code Element can have multiple Instances of the Annotation Class attached to it.
+
+					// ...
+
+					// Processing:
+						<target-class>::class
+
 				class <class-name>[{ public | internal | private } @<annotation> constructor](
 					// Primary Constructor / Default Constructor
 					// Note: Preceding 'constructor' Keyword needed if the Constructor has Visibility Modifiers or Annotations
