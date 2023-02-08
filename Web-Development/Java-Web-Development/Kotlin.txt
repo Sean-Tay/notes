@@ -210,7 +210,9 @@ Kotlin
 					// ...
 
 					// Processing:
-						<target-class>::class.<code-element>.annotations
+						<target-class>::class.<code-element>.annotations: List<Annotation>
+							// <Annotation>
+								// .annotationClass - Gets the Kotlin Class via Reflection.
 
 				class <class-name>[{ public | internal | private } @<annotation> constructor](
 					// Primary Constructor / Default Constructor
