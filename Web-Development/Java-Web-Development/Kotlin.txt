@@ -190,7 +190,8 @@ Kotlin
 					}
 						// Tip: For Instances of Immutable Data Classes, use the 'copy' Method to avoid having to copy every unchanged Property if the Instance is to be 'updated'.
 
-				class <class-name>[ { public | private } @<annotation> constructor](
+				
+				class <class-name>[{ public | internal | private } @<annotation> constructor](
 					// Primary Constructor / Default Constructor
 					// Note: Preceding 'constructor' Keyword needed if the Constructor has Visibility Modifiers or Annotations
 					
@@ -200,17 +201,17 @@ Kotlin
 
 					// Instance Properties
 					// Note: Creates a new Property on the Class.
-					{ val | var } <property>:<type> = <default-value>, ...
+					{ public | internal | private } { val | var } <property>:<type> = <default-value>, ...
 				) {
 					// ...
 
 					// Declaring additional Class Properties / Initialize:
 					var <property>:<type> = ... ;
-						<{ private | public }> get() = {
+						<{ private | internal | public }> get() = {
 							// 'field' keyword to reference <property>
 							// 'this' to reference Class Instance
 						}
-						<{ private | public }> set() = {
+						<{ private | internal | public }> set() = {
 							// 'field' keyword to reference <property>
 							// 'this' to reference Class Instance
 
