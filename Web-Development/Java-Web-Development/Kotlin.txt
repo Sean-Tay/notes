@@ -60,12 +60,17 @@ Kotlin
 						<value> as <type> // Unsafe - will throw Exception upon failure
 						<value> as? <type> // Silent - will return null upon failure
 
-					// Tip: Use Reflection to find out the Type of a Variable during Runtime:
-						println(<variable>!!::class.simpleName)
-						println(<variable>!!::class.qualifiedName)
+					// Reflection:
+						// Note: Reflection has a heavy Performance Penalty.
+						// Tip: Use Reflection to find out the Type of a Variable during Runtime:
+							println(<variable>!!::class.simpleName)
+							println(<variable>!!::class.qualifiedName)
 
-					// Class Type:
-						val kClass: KClass<<kotlin-class>> = <kotlin-class>::class
+						// Function Type:
+							val kFunction: KFunction<<kotlin-function>>
+
+						// Class Type:
+							val kClass: KClass<<kotlin-class>> = <kotlin-class>::class
 			
 			// Tip: Get the underlying Java Class from a given Kotlin Class
 				<kotlin-class>::class.java 
@@ -205,7 +210,7 @@ Kotlin
 					// ...
 
 					// Processing:
-						<target-class>::class
+						<target-class>::class.<code-element>.annotations
 
 				class <class-name>[{ public | internal | private } @<annotation> constructor](
 					// Primary Constructor / Default Constructor
