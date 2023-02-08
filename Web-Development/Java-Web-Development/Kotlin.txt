@@ -64,9 +64,12 @@ Kotlin
 						println(<variable>!!::class.simpleName)
 						println(<variable>!!::class.qualifiedName)
 
-			// Tip: Get the underlying Java Class for a given Kotlin Class.
-				<kotlin-class>::class.java
+					// Class Type:
+						val kClass: KClass<<kotlin-class>> = <kotlin-class>::class
 			
+			// Tip: Get the underlying Java Class from a given Kotlin Class
+				<kotlin-class>::class.java 
+					
 			// Package Declaration: Defines which Package the File belongs to.
 				// Note: Common Prefixes among the Files can be omitted from the Folder Structure (i.e. no need create such a deep nesting).
 				package <path>. ...
