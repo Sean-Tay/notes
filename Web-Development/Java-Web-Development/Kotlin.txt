@@ -1103,6 +1103,27 @@ Kotlin
 								}
 
 							// Parameterized Test
+								@ParameterizedTest
+								@EnumSource(<enum>::class, names = ["<enum-name>", ...])
+								fun `<test-description>`(<arg>) {
+									// ...
+								}
+
+								@ParameterizedTest
+								@CsvSource(
+									value = [
+										"<arg1>, ... ",
+										"<arg1>, ... ",
+
+										// Example with Null Values - do not put in any value for the Argument content between commas.
+										"",
+										",, ... ",
+									]
+								)
+								fun `<test-description>`(<arg1>, ...) {
+									// ...
+								}
+
 								companion object {
 									@JvmStatic
 									fun <static-arg-provider-function>(): Stream<Arguments> {
@@ -1112,12 +1133,6 @@ Kotlin
 											// ...
 										)
 									}
-								}
-
-								@ParameterizedTest
-								@EnumSource(<enum>::class, names = ["<enum-name>", ...])
-								fun `<test-description>`(<arg>) {
-									// ...
 								}
 
 								@ParameterizedTest
