@@ -788,6 +788,33 @@ Database
 							Apache Cassandra: Implementation with emphasis on Scalability and Fault Tolerance.
 								Uses Timestamps to measure ordering of Events; recommends keeping Servers updated with NTP as much as possible.
 
+					Time-Series Database: Specialized for storing, querying and indexing Data generated at fixed intervals, or at discrete points in time.
+						Characteristics:
+							Prioritises Write (Create) Performance - LSM Trees for Primary Index.
+
+							Schemaless - New Events can change formats seamlessly without having to update Older Events.
+
+							Stores Data in such a way that Data of the same Type is stored together, allowing for optimal Data Compression.
+
+						Examples:
+							InfluxDB: Typically paired with Grafana for System Monitoring.
+
+					Streaming Database: Specialized for processing continuous streams of Data in real-time.
+						Characteristics:
+							Prioritises real-time processing of incoming Data (e.g. windowing, filtering, joining).
+
+						Examples:
+							Apache Kafka: Message-Queue.
+								Confluent Platform: Built on top of Apache Kafka to provide additional features.
+
+							Apache Flink
+
+							Redis Streams: Data Structure in Redis that allows for the storage and processing of real-time Data Streams.
+
+							Amazon Kinesis
+							Google Cloud Pub/Sub
+							Azure Stream Analytics
+
 	Commands:
 		
 	
