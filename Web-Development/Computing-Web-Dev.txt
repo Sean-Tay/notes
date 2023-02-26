@@ -153,13 +153,8 @@ Web Dev:
 		Architectural Considerations:
 			Web Service Secrets: Do not store Secrets (i.e. API Keys) in things which are sent to Users. Instead, make your FE request related information from the BE, and try to control usage from BE.
 
-			REST: An Architectural Style to facilitate cleaner communication and interaction between Systems via the Web.
-				Background:
-					The core problem is that in the past, it was only necessary to facilitate communication between a small group of Machines in the Business' Local Network to operate. However, it has become increasingly necessary to talk to Machines outside of the Business Network (i.e. other Businesses, etc).
-
-					When HTTP was designed, it was with the intention to allow for communication between Machines anywhere in the world.
-
-				Exposition:
+			REST: An Communication Implementation suited for Public APIs.
+				Details:
 					The idea is to represent Concepts / Resources / Nouns as URLs. Any other related Concepts / Resources / Nouns are also stored as URLs. Machines can then use HTTP with the URLs to reach other Machines elsewhere and perform operations on the Concepts / Resources / Nouns.
 						Example:
 							http://MyRestaurant:8080/Orders/Order?OrderNumber=asdf (POST: {Tacos object})
@@ -185,8 +180,7 @@ Web Dev:
 					The structure of the information in the Application has been mapped directly onto a structure of HTTP URLs, using only standard HTTP operations that allow for HTTP body content.
 
 				Pros:
-					No additional Special Handler required on Client and Server, since HTTP is widely supported. This makes it suitable for external APIs.
-						Standardized HTTP Operations help in making consistent API.
+					No additional Special Handler required on Client and Server - HTTP is a widely accepted standard.
 
 					Loose Coupling between the Client and the Server in terms of the API Contract, as the URLs are an additional layer of abstraction.
 
@@ -196,16 +190,15 @@ Web Dev:
 							Cacheability.
 
 				Cons:
-					Requires in-depth HTTP knowledge.
-					Less Performant with a complex underlying Protocol Layer to get through.
+					Usually used with JSON / XML, which is less performant than some custom Data Encoding / Decoding Scheme.
 			
-			RPC: A Mechanism that models Communication between two Processes as straightforward Procedure / Function Calls to exchange Data.
+			RPC: Models communication between two Processes as straightforward Procedure / Function Calls to exchange Data.
 				Background:
 					RPC formed the basis for SOAP, which used XML Schema and WSDL to indicate what the Data should contain, and where it should go.
 
 					RMI is closely related to RPC, but uses Object-Oriented control to execute. This is prevalent in Java.
 
-				Exposition:
+				Details:
 					An RPC Mechanism usually defines a Network Protocol, some Format for exchanging Messages, a portable way of serializing and deserializing Data and specific Programming Language support (like Code Generators).
 
 					It typically involves generating some Function Stubs on the Client Process that makes the Function Call appear local, but behind the stub is logic to marshall the Request and send it to the Server Process.
@@ -214,20 +207,13 @@ Web Dev:
 					RPC's Function Calls are more akin to Verbs representing Operations to perform on Resources. This differs from REST, in which each URL represents a Concept / Noun / Resource.
 
 				Pros:
-					Does not require in-depth HTTP knowledge to implement (e.g. every HTTP Request would either be a GET or POST Request).
-					Performant without any complex underlying Protocol Layer to get through.
+					Usually implemented with more performant Data Encoding / Decoding Schemes (e.g. Apache Thrift, Protobuf, Avro).
 
 				Cons:
 					Special, non-standard Handler required on both Client and Server, which makes RPC more suitable for internal APIs.
 						High Coupling between the Client and Server in terms of the API Contract.
 						
 					Client would need to know how to entirely handle the Response given by the Server.
-
-				The modern gRPC framework provides additional features:
-					Protobuff vs JSON: Protobuff is a more performant alternative to the JSON format.
-					Client-Initiated Duplex Streaming Capability vs Request-Response: As a result of leveraging on HTTP 2.0.
-					Strong-Typing vs Serialization for Payload Data.
-					In-Built Load Balancing.
 
 			SPA: An Application Style that controls Application Routing through Client Side JavaScript.
 				Background:

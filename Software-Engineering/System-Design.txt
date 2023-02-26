@@ -225,6 +225,7 @@ System Design:
 
 					Evolvability: Making changes easily.
 						Agile / TDD / Refactoring for Software.
+						Rolling Upgrades for Systems (which allow for different versions of a Process to potentially interact with the same Data).
 
 		Synchronization in Distributed Systems:
 			Time:
