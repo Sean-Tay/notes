@@ -141,9 +141,12 @@ ELK
 						<value> // Without Quotes
 
 					// Phrase Values:
+						// Note: Wildcards cannot be used with Phrase Values (Double Quoted Values).
+
 						"<prefix> <suffix> ..." // Search for Values which exactly contains the specified Phrase Term
 
 					// Text Values with Wildcards:
+						// Note: Wildcards cannot be used with Phrase Values (Double Quoted Values).
 						// Note: Wildcards are incompatable with Fuzzy Searches.
 
 						<value>? // Search for Values which contain the specified <value> with a Single Character Wildcard
