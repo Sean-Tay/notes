@@ -736,7 +736,7 @@ Database
 
 						Examples:
 							MongoDB
-							CouchDB
+							CouchDB: Capable of Multi-Leader Replication vs. MongoDB.
 							Rethink DB: Supports Joins in its Query Language.
 							DynamoDB:	Amazon's NoSQL Solution.
 							Firestorm
