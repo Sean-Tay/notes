@@ -1109,6 +1109,8 @@ Kotlin
 
 							// Parameterized Test
 								@ParameterizedTest
+								@EnumSource(<enum>::class) 
+								// OR
 								@EnumSource(<enum>::class, names = ["<enum-name>", ...])
 								fun `<test-description>`(<arg>) {
 									// ...
@@ -1123,9 +1125,12 @@ Kotlin
 										// Example with Null Values - do not put in any value for the Argument content between commas.
 										"",
 										",, ... ",
+
+										// Tip: Use .split() on Quoted String Values to pass in Array <arg>s.
+										"<arg1>,'<arg2a>;<arg2b>; ...' ..."
 									]
 								)
-								fun `<test-description>`(<arg1>, ...) {
+								fun `<test-description>`(<arg1>, <arg2>: String, ...) {
 									// ...
 								}
 
