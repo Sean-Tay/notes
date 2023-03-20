@@ -20,6 +20,12 @@ ESLint:
 			eslint-config-prettier // Turns off Style-Oriented ESLint Rules that may conflict with Prettier.
 
 			eslint-plugin-react // For React specific Linting Rules.
+			
+			eslint-plugin-vitest / If using the vitest Framework.
+				eslint-plugin-vitest-globals
+
+			// > v8.21
+			globals // For obtaining Globals to use in the Flat Configuration.
 
 		Configuration: 
 			// .eslintignore
@@ -33,100 +39,168 @@ ESLint:
 				<directory>/**
 
 			// .eslintrc.js: A Javascript, JSON or YAML File.
-			{
-				// Prevent ESLint from looking further up the File Directory Hierarchy when searching for the ESLint Config File for each Input File.
-				// Tip: Disable to allow Cross-Project consistency.
-				root: true,
+				{
+					// Prevent ESLint from looking further up the File Directory Hierarchy when searching for the ESLint Config File for each Input File.
+					// Tip: Disable to allow Cross-Project consistency.
+					root: true,
 
-				// Prevent ESLint from checking certain Source Files.
-				// Tip: Add this Config File to the ignorePatterns.
-				ignorePatterns: [ "<file-pattern>", ... ],
+					// Prevent ESLint from checking certain Source Files.
+					// Tip: Add this Config File to the ignorePatterns.
+					ignorePatterns: [ "<file-pattern>", ... ],
 
-				// Configure the Parser that ESLint uses. 
-				parser: "<parser-node-package-name>", 
-					// babel-eslint
-					// @typescript-eslint/parser
+					// Configure the Parser that ESLint uses. 
+					parser: "<parser-node-package-name>", 
+						// babel-eslint
+						// @typescript-eslint/parser
 
-				// Configure how ESLint reads the Source Files.
-				parserOptions: {
-					ecmaVersion: "<version>",
-					sourceType: "script" | "module" // (ECMA Modules)
-					ecmaFeatures: {
-						jsx: true // For React.
+					// Configure how ESLint reads the Source Files.
+					parserOptions: {
+						ecmaVersion: "<version>",
+						sourceType: "script" | "module" // (ECMA Modules)
+						ecmaFeatures: {
+							jsx: true // For React.
+						},
+
+						// Note: If what @typescript-eslint can access is larger than what Typescript can access, all inaccessible Files w.r.t Typescript will have ESLint Errors.
+						// Tip: ESLint expects one tsconfig.json for entire Codebase, including Tests. Create a separate tsconfig.eslint.json that extends off the original tsconfig.json if the original is only meant for just the Source Code.
+						project: "<path-to-tsconfig.json>" // For using Rules that require Type Information.
 					},
 
-					// Note: If what @typescript-eslint can access is larger than what Typescript can access, all inaccessible Files w.r.t Typescript will have ESLint Errors.
-					// Tip: ESLint expects one tsconfig.json for entire Codebase, including Tests. Create a separate tsconfig.eslint.json that extends off the original tsconfig.json if the original is only meant for just the Source Code.
-					project: "<path-to-tsconfig.json>" // For using Rules that require Type Information.
-				},
+					// Specify Third-Party Extensions that contain implementation for additional Rules that ESLint can be configured to check for.
+					plugins: [
+						// @typescript-eslint,
+						// prettier,
 
-				// Presets that describes the Environment the Scripts are going to execute in. Specifies Globals that will be allowed.
-				env: {
-					"browser": true,
-					"node": true,
-					"es6": true,
-					"jest": true
-				},
+						// vitest,
 
-				// Specify legitimate Globals, so that Rules do not perceive their usage as incorrect (e.g. ES6 Set). 
-				globals: {
-					"<var>": "off" | "readonly" | "writable",
-					// ...
-				},
+						// ...
+					],
 
-				// Specify Third-Party Extensions that contain implementation for additional Rules that ESLint can be configured to check for.
-				plugins: [
-					// @typescript-eslint,
-					// prettier
-					// ...
-				],
+					// Extend from existing Groups of Rules / Presets.
+					// Note: The order is important in determining which Presets override others.
+					extends: [
+						/*
+							Format:
+								"<vendor>:<plugin-name>/<config-name>"
+									"eslint:<plugin-name>" // For ESLint Extensions. Omittable.
+									"plugin:<plugin-name>" // For Third-Party Extensions.
 
-				// Extend from existing Groups of Rules / Presets.
-				// Note: The order is important in determining which Presets override others.
-				extends: [
-					/*
-						Format:
-							"<vendor>:<plugin-name>/<config-name>"
-								"eslint:<plugin-name>" // For ESLint Extensions. Omittable.
-								"plugin:<plugin-name>" // For Third-Party Extensions.
+							Extension Examples:
+								"eslint:recommended",
+								"plugin:@typescript-eslint/recommended",
+								"plugin:@typescript-eslint/recommended-requiring-type-checking",
+								"plugin:react/recommended",
 
-						Extension Examples:
-							"eslint:recommended",
-							"plugin:@typescript-eslint/recommended",
-							"plugin:@typescript-eslint/recommended-requiring-type-checking",
-							"plugin:react/recommended",
+								// Prettier Overrides:
+								"prettier",
 
-							// Prettier Overrides:
-							"prettier",
-							"prettier/babel",
-							"prettier/@typescript-eslint",
-							"prettier/react",
-					*/
-					"<preset-name>",
-					// ...
-				],
+								// Note: The below are not needed as of eslint-config-prettier > v8.
+								"prettier/babel",
+								"prettier/@typescript-eslint",
+								"prettier/react",
 
-				// Override Preset Rules:
-				rules: {
-					/*
-						General Rule Format:
-							<rule>: "<error-level>"
-							// OR
-							<rule>: [
-								"<error-level>",
-								{
-									// ...
-								}
-							]
+								// vitest
+								"plugin:vitest/recommended",
+								"plugin:vitest-globals/recommended"
+						*/
+						"<preset-name>",
+						// ...
+					],
 
-							// <error-level> = "off" | "warn" | "error"
+					// Override Preset Rules:
+					rules: {
+						/*
+							General Rule Format:
+								<rule>: "<error-level>"
+								// OR
+								<rule>: [
+									"<error-level>",
+									{
+										// ...
+									}
+								]
 
-						Example Rules:
-							"prettier/prettier": ["warn"], // Trigger ESLint to warn when Code violates Prettier Code Style Rules. Requires the eslint-plugin-prettier Configuration.
-					*/
-					// ...
+								// <error-level> = "off" | "warn" | "error"
+
+							Example Rules:
+								"prettier/prettier": ["warn"], // Trigger ESLint to warn when Code violates Prettier Code Style Rules. Requires the eslint-plugin-prettier Configuration.
+						*/
+						// ...
+					}
+
+					// Presets that describes the Environment the Scripts are going to execute in. Specifies Globals that will be allowed.
+					env: {
+						"browser": true,
+						"node": true,
+						"es6": true,
+
+						"jest": true,
+						// OR 
+						"vitest-globals/env": true
+					},
+
+					// Specify legitimate Globals, so that Rules do not perceive their usage as incorrect (e.g. ES6 Set). 
+					globals: {
+						"<var>": "off" | "readonly" | "writable",
+						// ...
+					},
 				}
-			}
+
+			// > v8.21
+			// eslint.config.js
+				import <config> from "<config>"
+				import <parser> from "<parser>"
+				import <plugin> from "eslint-plugin-<plugin>"
+				import globals from "globals"
+
+				export default [
+					<config>,
+					// Note: Bottom-most Configuration Object has the priority if a File falls into the jurisdiction of 2 or more Configuration Objects.
+					{
+						...<config>,
+
+						files: ["<glob-file-path>", ...],
+						ignores: ["<glob-file-path>", ...],
+
+						languageOptions: {
+							// sourceType: "module",
+							// ecmaVersion: 6,
+
+							parser: <parser>,
+							parserOptions: {
+								// ...
+							},
+
+							globals: {
+								...globals.browser,
+							}
+						},
+
+						plugins: {
+							<plugin>
+						},
+						rules: {
+							/*
+								General Rule Format:
+									<plugin>/<rule>: "<error-level>"
+									// OR
+									<plugin>/<rule>: [
+										"<error-level>",
+										{
+											// ...
+										}
+									]
+
+									// <error-level> = "off" | "warn" | "error"
+
+								Example Rules:
+									"prettier/prettier": ["warn"], // Trigger ESLint to warn when Code violates Prettier Code Style Rules. Requires the eslint-plugin-prettier Configuration.
+							*/
+							//...
+						}
+					},
+					// ...
+				]
 
 			// Editor Integration:
 				// VSCode:

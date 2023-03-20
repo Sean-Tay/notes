@@ -1,0 +1,144 @@
+Vitejs
+	Abbreviations:
+		HMR: 					Hot Module Replacement.
+	
+	Description: A Module Bundler akin to Webpack, but more performant and wieldy.
+	
+	Resources:
+	
+	Concepts:
+		
+	
+	Details:
+		Characteristics:
+			Vite:
+				Uses esbuild for the Transpilation and Minification, and Rollup for Bundling.
+
+				Note: Detects CSS Module Files following the '*.modules.css' Pattern.
+					import classes from './index.css';
+					// Set the class attribute of DOM Elements to be styled from Keys in the imported 'classes' Object.
+					// The imported Object is a Mapping between the <css-dom-selector>'s Original Name and the Dynamically Generated Names.
+
+				Note: Activates PostCSS based on the detection of a PostCSS Config File (i.e. 'postcss.config.js').
+
+			Vitest:
+				Originally designed for Vue Projects, it can replace Jest (and Babel) for faster execution and a friendlier Developer Experience.
+
+				Note: Detects Test Files following the '*.test.{j|t}sx?' Pattern.
+
+		Configuration Template: Vite will use 'vite.config.ts' if it exists in the Project Root. Vitest will use 'vitest.config.ts' if available, else fallback to 'vite.config.ts'.
+			// Base:
+				/// <reference types="vitest" />
+				import { defineConfig, loadEnv } from 'vite'
+
+				export default defineConfig({
+					// ...
+				})
+
+				// OR
+
+				export default defineConfig([async] ({ command, mode, ssrBuild }) => {
+					// command - npm run vite <command>
+
+					// mode
+						// 'development'
+						// 'production'
+
+					// Load Env Variables passed in as arguments when running npm Commands.
+					const env = process.env
+
+					// Load Env Variables defined in .env File
+					const env = loadEnv(mode, process.cwd, '')
+
+					return {
+						root: "<path-to-index.html>",
+
+						// Define Global Constant Replacements
+						// Tip: Declare Types of <global-constant> inside 'vite-env.d.ts'.
+						define: {
+							"<global-constant>": <value>
+						}
+
+						server: {
+							// Enable the requesting of resources from Local Server to other Servers.
+							proxy: {
+								// <request-path>: (Path + Query).
+								// <true-origin-path>: Actual Origin to prepend to the <request-path>.
+
+								'/<request-path>': '<true-origin-path>',
+
+								// OR
+
+								'/<request-path>': {
+									target: '<true-origin-path>',
+									changeOrigin: true, // For Resources on different Domains / Ports
+									secure: true | false, // Depends on HTTP Protocol / BE Logic used
+
+									rewrite: (path) => path.replace('/^\/<request-path>/', '<new-path>')
+
+									ws: true, // For proxying WebSockets
+								}
+							}
+						}
+
+						// vitest Configuration
+						test: {
+							// ...
+						}
+
+						// ...
+					}
+				})
+
+			// React + react-testing-library:
+				import react from '@vitejs/plugin-react'
+
+				export default defineConfig({
+					plugins: [react()],
+
+					test: {
+						globals: true,
+						environment: 'jsdom',
+						setupFiles: '<setupTestFile>.js',
+					}
+				})
+				
+				// ...
+
+				// <setupTestFile>.js
+					import { expect, afterEach } from 'vitest'
+					import { cleanup } from '@testing-library/react'
+					import matchers from @testing-library/jest-dom/matchers'
+
+					expect.extend(matchers)
+
+					afterEach(() => cleanup())
+
+	Commands:
+		npm install vite -g # Installing vite Globally is only necessary if 
+		npm create vite <project-name> --template <template>
+			// <template>s
+				vanilla
+				vanilla-ts
+
+				vue
+				vue-ts
+
+				react
+				react-ts
+				react-swc // Uses React SWC instead of Babel
+				react-swc-ts // Uses React SWC instead of Babel
+
+				preact
+				preact-ts
+
+		npm install
+
+		npm run vite [{dev | serve}] # Starts a Local Web Server with HMR.
+		npm run vite build		# Builds the Project, and outputs the Build Artifact to ./dist.
+		npm run vite preview	# Starts a Local Web Server that serves the Build Artifact produced by the Build Step.
+
+		npm run vitest run 		# Run Tests via vitest once.
+		npm run vitest run --coverage # Run Tests via vitest once, and generate a Coverage Report.
+		npm run vitest			# Run Tests via vitest with Watch Mode.
+		

@@ -223,6 +223,7 @@ Node.js:
 			
 			package.json
 				{
+					"type": { "module" | "commonjs" }					// Specify if the Project uses CommonJS or ES Modules. Defaults to CommonJS.
 					"scripts": { 										// Specify action(s) to be run upon certain Node Project lifecycle events.
 						// Tip: May want to use npm-run-all to execute npm commands in parallel.
 						"build": "<command1> && <command2> ... "		// Specify commands(s) to be executed when 'npm run build' is executed.
@@ -241,7 +242,8 @@ Node.js:
 				}
 
 			npm - A Build Tool / Package Manager for a Node Project. Skip to yarn if possible.
-				npm config set @<scope>:registry <registry-url>			# Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
+				npm config set @<scope>:registry <registry-url>			# Globally set npm to reference another Node Registry when referencing Scoped Node Dependencies.
+					// Config File for Local Project: .npmrc
 
 				npm install -g node 									# Update Node.
 				npm install -g npm stable								# Update npm.
@@ -280,7 +282,8 @@ Node.js:
 				npm publish "<file-path>"								# Publish a Node Dependency rooted at <file-path> to a Node Registry.
 			
 			yarn - A better version of npm. Avoid installing with npm - install separately.
-				yarn config set registry <registry-url>					# Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
+				yarn config set registry <registry-url>					# Globally set yarn to reference another Node Registry when referencing Scoped Node Dependencies.
+					// Config File for Local Project: .yarnrc
 
 				yarn init												# Initialize a new Node Project.
 
