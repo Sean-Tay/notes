@@ -232,6 +232,28 @@ Node.js:
 					"dependencies": { // ... // },						// Specifies the Node Dependencies that the Node Project depends on to run correctly.
 					"devDependencies": { // ... // },					// Specifies the Node Dependencies that the Node Project uses during development. This is more important for Node Projects that get deployed "as-is" without things like Project Bundlers. Specifying them here would exclude these Packages from being deployed together with the Node Project.
 
+					// Override Package Versions for Transitive Dependencies:
+						// Note: "<source>" here either refers to the Package Version or the Full URL to where the Package is hosted.
+
+						// npm > v8.3
+						"overrides": {
+							"<target-package>": "<source>",
+
+							"<target-package>": {
+								"<sub-package>": "<source>",
+
+								// ...
+							}
+						}
+
+						// yarn
+						"resolutions": {
+							"<target-package>": "<source>",
+
+							// Tip: Can use ** here for glob Package Paths.
+							"<target-package>/<target-sub-package>/ ... ": "<source>",
+						}
+
 					// Minimum Node / NPM Version requires 'engine-strict=true' within a .npmrc File in the same Directory as package.json.
 					"engines": {
 						"npm": ">=<version>"							// Specifies minimum version of NPM to use when installing the Node Project's Dependencies.
