@@ -23,6 +23,15 @@ Vitejs
 
 			Vitest:
 				Originally designed for Vue Projects, it can replace Jest (and Babel) for faster execution and a friendlier Developer Experience.
+					// Differences:
+						// For Concurrent Unit Tests, the 'expect' attached to the Test Context must be used:
+							describe.concurrent(
+								'Concurrent Test Suite',
+								() => {
+									it('Test 1', ({ expect }) => { // ... })
+									// ...
+								}
+							)
 
 				Note: Detects Test Files following the '*.test.{j|t}sx?' Pattern.
 
@@ -141,4 +150,6 @@ Vitejs
 		npm run vitest run 		# Run Tests via vitest once.
 		npm run vitest run --coverage # Run Tests via vitest once, and generate a Coverage Report.
 		npm run vitest			# Run Tests via vitest with Watch Mode.
+			--no-threads		# Don't run Tests in Parallel.
+			--no-isolate		# Trades correctness for Run Performance.
 		

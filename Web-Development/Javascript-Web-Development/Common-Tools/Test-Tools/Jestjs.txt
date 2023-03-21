@@ -169,7 +169,6 @@ Jest
 						);
 
 						// Asynchronous Unit Test Definition:
-						// Note: To run Asynchronous Test concurrently, use 'test.concurrent' instead. However, 'test.concurrent' has many pending bugs.
 						test(
 							'<async-test-description>',
 							// Use a Callback to indicate to Jest that this Unit Test has finished executing.
@@ -217,6 +216,15 @@ Jest
 							// Note: The Test will fail if it exceeds this.
 							<milliseconds>
 						);
+
+						// Concurrent Unit Test Definition:
+						// Note: Concurrency is only between the Unit Tests defined with the 'concurrent' Callback (i.e. it does not apply to the Unit Tests above).
+						test.concurrent(
+							'<concurrent-test-description>',
+							async () => {
+								// ...
+							}
+						)
 
 						// ...
 					}
