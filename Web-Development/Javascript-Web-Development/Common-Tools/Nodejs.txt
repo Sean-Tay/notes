@@ -308,6 +308,7 @@ Node.js:
 					// Config File for Local Project: .yarnrc
 
 				yarn init												# Initialize a new Node Project.
+					-2 													# Initialize a new Node Project with yarn 2. Better expected behaviour (e.g. installs Peer Dependencies by default).
 
 				yarn install											# Add all Node Dependencies specified within a package.json locally to the current Node Project.
 

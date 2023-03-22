@@ -68,6 +68,8 @@ Vitejs
 							"<global-constant>": <value>
 						}
 
+						appType: 'mpa', // Disables the historyApiFallback that is used to support SPA Routing for the Dev Server.
+
 						server: {
 							// Enable the requesting of resources from Local Server to other Servers.
 							proxy: {
@@ -144,8 +146,8 @@ Vitejs
 		npm install
 
 		npm run vite [{dev | serve}] # Starts a Local Web Server with HMR.
-		npm run vite build		# Builds the Project, and outputs the Build Artifact to ./dist.
-		npm run vite preview	# Starts a Local Web Server that serves the Build Artifact produced by the Build Step.
+		npm run vite build		# Builds the Project, and outputs the Build Artifacts to ./dist.
+		npm run vite preview	# Starts a Local Web Server that serves the Build Artifacts produced by the Build Step.
 
 		npm run vitest run 		# Run Tests via vitest once.
 		npm run vitest run --coverage # Run Tests via vitest once, and generate a Coverage Report.
