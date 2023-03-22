@@ -33,6 +33,11 @@ Vitejs
 								}
 							)
 
+						// Mocking: vi Object
+							import { vi } from 'vitest'
+
+							// vi.fn( ... )
+
 				Note: Detects Test Files following the '*.test.{j|t}sx?' Pattern.
 
 		Configuration Template: Vite will use 'vite.config.ts' if it exists in the Project Root. Vitest will use 'vitest.config.ts' if available, else fallback to 'vite.config.ts'.
@@ -117,13 +122,17 @@ Vitejs
 				// ...
 
 				// <setupTestFile>.js
-					import { expect, afterEach } from 'vitest'
+					import { expect, afterEach, vi } from 'vitest'
 					import { cleanup } from '@testing-library/react'
 					import matchers from @testing-library/jest-dom/matchers'
 
 					expect.extend(matchers)
 
-					afterEach(() => cleanup())
+					afterEach(() => {
+						vi.useRealTimers()
+						vi.clearAllMocks()
+						cleanup()
+					})
 
 	Commands:
 		npm install vite -g # Installing vite Globally is only necessary if 
