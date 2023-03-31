@@ -189,6 +189,7 @@ ELK
 
 			<field>:(<term1> OR ... ) // Search for Values which match any of the specified Terms
 				// Note: If Boolean Term Operators are involved, then Results must conform to all Boolean Terms
+				// Note: For Array Fields, if at least one of the Element matches a Boolean Term, the whole thing will be included / excluded.
 
 			// Query Boolean Logic
 				<query1> AND <query2> ...
