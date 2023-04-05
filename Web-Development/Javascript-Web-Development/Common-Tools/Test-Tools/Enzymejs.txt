@@ -79,7 +79,9 @@ Enzyme:
 				wrapper.unmount();
 
 			// Common API
-				wrapper.find('<dom-selector>');			Obtain all Wrapped Nodes in the Render Tree of the Wrapped Node that matches the specified <dom-selector>.
+				wrapper.find(<component>);
+				wrapper.find('<enzyme-selector>'); // Obtain all Wrapped Nodes in the Render Tree of the Wrapped Node that matches the specified <enzyme-selector>.
+					// Note: '<enzyme-selector>' can be a DOM Selector or a React Component's Display Name.
 					// Note: Returns a ReactWrapper.
 
 				wrapper.contains(<rendered-sub-component>); Determines if the Render Tree of the Wrapped Node contains the <rendered-sub-component>, as well as the Children.
