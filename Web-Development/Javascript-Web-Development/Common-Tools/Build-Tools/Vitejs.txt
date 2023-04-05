@@ -99,6 +99,13 @@ Vitejs
 
 						// vitest Configuration
 						test: {
+							// Defines how the Coverage Report should be generated.
+							// Note: Only activated if the --coverage Flag is given when vitest runs.
+							coverage: {
+								provider: '<provider>',
+								reporter: ['<coverage-report-format>']
+							}
+
 							// ...
 						}
 
@@ -159,7 +166,7 @@ Vitejs
 		npm run vite preview	# Starts a Local Web Server that serves the Build Artifacts produced by the Build Step.
 
 		npm run vitest run 		# Run Tests via vitest once.
-		npm run vitest run --coverage # Run Tests via vitest once, and generate a Coverage Report.
+		npm run vitest run --reporter=junit --outputFile=junit.xml --coverage # Run Tests via vitest once, and generate a jUnit Test and Coverage Report.
 		npm run vitest			# Run Tests via vitest with Watch Mode.
 			--no-threads		# Don't run Tests in Parallel.
 			--no-isolate		# Trades correctness for Run Performance.
