@@ -101,12 +101,34 @@ GitLab:
 						- <tag-value>
 						# ...
 
+					# Describe "Whitelist" / "Blacklist" type Conditions in which the Job will be added to the Pipeline and run:
+					only/except:
+						# Refs:
+							- <branch-name>
+
+						# CI/CD Variables:
+							- $<variable> == <value>
+
+						# ...
+
 					# Specify when should Jobs be executed, ignoring which Stage it belongs to:
 					# Note: If needs: [], the Job will immediately execute.
 					# Note: Default Limit on Array Size: 50.
 					needs: [ <job-name>, ... ]
 						# In case the Job was triggered from another Pipeline:
 						pipeline: <absolute-gitlab-path>
+
+					# Describe the Conditions in which the Job will be run:
+					rules:
+						# ...
+						# when: manual
+
+					# Cross-Project Specifics:
+						# Trigger a Pipeline in another Downstream Project:
+						trigger:
+							project: <absolute-gitlab-path>
+							branch: <branch-name>
+							strategy: depend # Mirror the Status of this Job based on the outcome of the triggered Downstream Pipeline
 
 					# Define the Environment / Docker Image that the Job will be executed in:
 					image: <image-name> # Latest Tag
@@ -121,28 +143,6 @@ GitLab:
 					# Note: These cannot be prefilled when the Pipeline is triggered manually.
 					variables:
 						# ...
-
-					# Describe "Whitelist" / "Blacklist" type Conditions in which the Job will be added to the Pipeline and run:
-					only/except:
-						# Refs:
-							- <branch-name>
-
-						# CI/CD Variables:
-							- $<variable> == <value>
-
-						# ...
-
-					# Describe the Conditions in which the Job will be run:
-					rules:
-						# ...
-						# when: manual
-
-					# Cross-Project Specifics:
-						# Trigger a Pipeline in another Downstream Project:
-						trigger:
-							project: <absolute-gitlab-path>
-							branch: <branch-name>
-							strategy: depend # Mirror the Status of this Job based on the outcome of the triggered Downstream Pipeline
 
 					# Job Scripts: The Runner will combine the Scripts below and send it into the Image Container's Shell stdin.
 						# Commands to run before the Job is executed:
