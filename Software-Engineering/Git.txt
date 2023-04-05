@@ -207,6 +207,10 @@ Git:
 
 			Deleting: Just remove the Line of the Commit from the List.
 
+		git reflog				- Show a list of when Branches and other references were updated in the Local Repository.
+		git reset --hard "HEAD@{<number-of-moves>}" - Revert Local Branch to the point before the Branch Ref was updated.
+			Tip: Useful for undoing a botched rebase.
+
 		git reset HEAD~<number-of-commits> - Revert Local Branch by <number-of-commits>.
 			--soft 				- Keep accumulated changes from <number-of-commits> in the Local Staging List.
 			--hard				- Discard accumulated changes from <number-of-commits>.
