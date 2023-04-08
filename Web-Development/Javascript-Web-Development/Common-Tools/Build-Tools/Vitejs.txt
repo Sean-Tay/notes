@@ -14,12 +14,23 @@ Vitejs
 			Vite:
 				Uses esbuild for the Transpilation and Minification, and Rollup for Bundling.
 
-				Note: Detects CSS Module Files following the '*.modules.css' Pattern.
+				Environment Variables are loaded from '.env.[<mode>].[local]' Files located at the Root of the Project. Files with '<mode>' in their name will take precedence.
+					// .env
+						// Note: Vite will only take into account <key>s that have the 'VITE_' prefix.
+						VITE_<key>=<value>
+						VITE_<other-key>=<value>$VITE_<key>
+
+					// Reference Environment Variables:
+						// Tip: Declare Types inside 'vite-env.d.ts'.
+
+						const <env-variable> = import.meta.env.VITE_<key>
+
+				Detects CSS Module Files following the '*.modules.css' Pattern.
 					import classes from './index.css';
 					// Set the class attribute of DOM Elements to be styled from Keys in the imported 'classes' Object.
 					// The imported Object is a Mapping between the <css-dom-selector>'s Original Name and the Dynamically Generated Names.
 
-				Note: Activates PostCSS based on the detection of a PostCSS Config File (i.e. 'postcss.config.js').
+				Activates PostCSS based on the detection of a PostCSS Config File (i.e. 'postcss.config.js').
 
 			Vitest:
 				Originally designed for Vue Projects, it can replace Jest (and Babel) for faster execution and a friendlier Developer Experience.
@@ -38,12 +49,14 @@ Vitejs
 
 							// vi.fn( ... )
 
-				Note: Detects Test Files following the '*.test.{j|t}sx?' Pattern.
+				Detects Test Files following the '*.test.{j|t}sx?' Pattern.
+
+				If using a Test Reporter, ensure Test Names are unique (especially for it.each / describe.each) as some CICD Solutions will just pick the first Unit Test all Unit Tests have the same name.
 
 		Configuration Template: Vite will use 'vite.config.ts' if it exists in the Project Root. Vitest will use 'vitest.config.ts' if available, else fallback to 'vite.config.ts'.
 			// Base:
 				/// <reference types="vitest" />
-				import { defineConfig, loadEnv } from 'vite'
+				import { defineConfig } from 'vite'
 
 				export default defineConfig({
 					// ...
@@ -57,12 +70,6 @@ Vitejs
 					// mode
 						// 'development'
 						// 'production'
-
-					// Load Env Variables passed in as arguments when running npm Commands.
-					const env = process.env
-
-					// Load Env Variables defined in .env File
-					const env = loadEnv(mode, process.cwd, '')
 
 					return {
 						root: "<path-to-index.html>",
