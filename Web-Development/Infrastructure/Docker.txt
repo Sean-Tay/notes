@@ -10,36 +10,6 @@ Docker
 	Concepts: See 'Software Engineering' Notes on Containerization.
 	
 	Details:
-		Components:
-			Daemon:					Used to run the Docker Engine.
-				OS Specifics:
-					Linux:			Runs natively.
-					Windows / OSX: 	Runs a 'boot2docker' Docker Host (acts as a Linux VM).
-
-				The Docker Daemon hosts Running Containers.
-
-			Image:					A Template that tracks the Base Image, Metadata and Settings, the Application, and its related dependencies (Binaries and Libraries).
-
-			Dockerfile:				Automates Image Construction.
-			
-			Registry:				Publicly or Privately for created Images.
-
-			Container:				Created from Images.
-				Operations:
-					Start
-					Stop
-					Move
-					Delete
-
-		Workflow:
-			1. Pull Base Image from the Docker Registry that most closely resembles desired Tech Stack.
-
-			2. Run the Base Image to generate a Container.
-			3. Install additional Tech Stack, Application, etc. inside the Container.
-			4. Commit that Container, which will create a new Image.
-
-			5. Create a Dockerfile, which automates the building process for the Image (above steps).
-
 		Exposition:
 			An Application Image is first constructed from a Base Image, the Application and its related Binaries and Libraries.
 		
@@ -63,7 +33,74 @@ Docker
 			If Application Components are themselves Containerized (as part of Micro Services), then even more good benefits occur in:
 				Deployment: 		Easier to control, since only parts of the Application are being deployed at any one time.
 				Flexibility: 		Different parts of the Application can use differing Tech Stacks to acheive API functionality.
-	
+
+		Components:
+			Daemon:				Used to run the Docker Engine.
+				OS Specifics:
+					Linux:		Runs natively.
+					Windows / OSX: Runs a 'boot2docker' Docker Host (acts as a Linux VM).
+
+				The Docker Daemon hosts Running Containers.
+
+			Image:				A Template that tracks the Base Image, Metadata and Settings, the Application, and its related dependencies (Binaries and Libraries).
+
+			Dockerfile:			Automates Image Construction.
+			
+			Registry:			Publicly or Privately for created Images.
+
+			Container:			Created from Images.
+				Operations:
+					Start
+					Stop
+					Move
+					Delete
+
+		Workflow:
+			1. Pull Base Image from the Docker Registry that most closely resembles desired Tech Stack.
+
+			// Manual
+			2. Run the Base Image to generate a Container.
+			3. Install additional Tech Stack, Application, etc. inside the Container.
+			4. Commit that Container, which will create a new Image.
+
+			// Config File
+			5. Create a Dockerfile, which automates the building process for the Image (above steps):
+				# Dockerfile must begin with a FROM Instruction, which specifies the Base Image being used.
+				FROM <image-path>
+
+				# Define Arguments that can be set during the Command to build the Image:
+				ARG <key>
+				ARG <key>=<default-value>
+
+				# Sets the Working Directory for any COPY, ADD, ENTRYPOINT, RUN, CMD Instructions that follow.
+				WORKDIR <path-within-image>
+
+				# Copy Files into the Container's File System.
+				COPY <source-path-relative-to-Dockerfile> <destination-path-within-image>
+				# Copy Files from a URL into the Container's File System.
+				# Tip: Consider using RUN with Shell Commands (i.e. wget or curl) to further control the behaviour.
+				ADD <source-url-path> <destination-path-within-image>
+
+				# Execute Shell Commands in a new layer on top of the current Container, and Commit the results.
+				RUN ["<command>", ...]
+
+				# Command to run when Container is started:
+				CMD ["<command>", ...]
+
+		Other Tools:
+			kaniko				Alternative Tool used to construct Images from a Dockerfile. Does not require the Docker Daemon (or any other special privileges).
+
 	Commands:
-		CLI: 						Used to interact with the Docker Daemon.
+		docker: 				Used to interact with the Docker Daemon.
+			# Specify Build Context (Directory w.r.t where the Build takes place)
+			--context <path>
+
+			# Specify the location of the Dockerfile to be used for preparing the Container and building the Image.
+			--dockerfile <path-to-Dockerfile>
+
+			# Specify Arguments to be used within the Dockerfile.
+			--build-arg <key>=<value> --build-arg <key>=<value> ...
+
+			# Specify where the built Image should be sent to.
+			--destination <url> --destination <url> ...
 	
