@@ -942,6 +942,9 @@ Kotlin
 
 								// Route Definition
 									fun <handler-function>( ... ): HttpHandler {
+										val staticHandler = static(ResourceLoader.Directory("./public"))
+										val redirectToStaticHandler = { request -> staticHandler(request.uri(Uri.of("<fallback-route>"))) }
+
 										return routes(
 											// "<route>/{<path-parameter>}" bind Method.<http-method-type> to HttpHandler
 											"<route>/{<path-parameter>}" bind Method.<http-method-type> to { 
@@ -984,6 +987,12 @@ Kotlin
 															// ...
 													} (req)
 											}
+
+											// Serving Static Content
+											// Tip - Should be specified close to the bottom of the Routing Configuration.
+											"<route>" bind staticHandler,
+											// History API Fallback for SPA UIs
+											"/{_:.*}" bind redirectToStaticHandler,
 
 											// Fallback Route
 											Fallback bind <fallback-handler-function>( ... )
