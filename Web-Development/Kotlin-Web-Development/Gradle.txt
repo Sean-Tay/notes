@@ -1,19 +1,30 @@
 Gradle
 	Abbreviations:
 	
-	Description: Configurable Build Automation Tool for Software Projects (usually Java oriented, as it requires the JVM to run). Built with Kotlin and Groovy.
+	Description: Configurable Automation Tool for Software Projects (usually Java oriented, as it requires the JVM to run). Built with Kotlin and Groovy.
 	
 	Resources:
 	
 	Concepts:
-		build.gradle: Build Configuration File based on the older Groovy DSL.
-		build.gradle.kts: Build Configuration File based on the Kotlin DSL.
+		build.gradle: Configuration File based on the older Groovy DSL.
+		build.gradle.kts: Configuration File based on the Kotlin DSL.
 
-		Project: The Project that a Gradle Build manages.
-		Task: An atomic piece of work that needs to be executed in order for Gradle to build a Project.
+		Project: The Project that Gradle manages.
+
+		Plugin: An extension used to add functionality to the Build Tool.
+		Dependency: An extension used to add functionality to the Application itself.
+		Task: An atomic piece of work to be executed by Gradle.
 	
 	Details:
 		// build.gradle.kts
+			plugins {
+				kotlin("<plugin-package-url>") version "<sem-version>"
+
+				// OR
+
+				id "<plugin-package-url>" version "<sem-version>"
+			}
+
 			dependencies {
 				// Used during both Compile Time and Run Time, and is exported to Consumers.
 				api("<dependency-package-url>")
@@ -28,14 +39,6 @@ Gradle
 				testImplementation("<dependency-package-url>")
 			}
 
-			plugins {
-				kotlin("<plugin-package-url>") version "<sem-version>"
-
-				// OR
-
-				id "<plugin-package-url>" version "<sem-version>"
-			}
-
 			tasks {
 				<task-name> {
 					// ...
@@ -45,6 +48,8 @@ Gradle
 	Commands:
 		// Initialize a Gradle Project in the current directory:
 		gradle init
+			--type java-application
+			--type kotlin-application
 
 		// Build using the build.gradle File in the current directory:
 		gradlew build
