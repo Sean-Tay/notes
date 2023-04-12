@@ -6,24 +6,78 @@ Gradle
 	Resources:
 	
 	Concepts:
-		build.gradle: Configuration File based on the older Groovy DSL.
-		build.gradle.kts: Configuration File based on the Kotlin DSL.
-
 		Project: The Project that Gradle manages.
+
+		Gradle Wrapper: A Tool that allows Gradle to be run without having to install Gradle on the System before invoking Gradle. Primarily used to make the version of Gradle consistent between Project Users.
+
+		gradle-wrapper.properties: Configuration File for the Gradle Wrapper.
+		gradlew / gradlew.bat: Script used to prepare the workspace for running Gradle. This includes downloading Gradle based on the configuration defined in gradle-wrapper.properties, and setting JAVA_HOME, among other things.
+
+		gradle.properties: Configuration for Gradle itself. Can be used to define Variables that can be retrieved within settings.gradle and build.gradle.
+
+		settings.gradle: Script that is executed before 'build.gradle'. Used to configure Settings that apply to all Sub-Projects in the Gradle Build.
+		settings.gradle.kts: Same as above, but based on the Kotlin DSL.
+
+		build.gradle: Script that contains the Build Logic for the current Project, based on the older Groovy DSL.
+		build.gradle.kts: Same as above, but based on the Kotlin DSL.
 
 		Plugin: An extension used to add functionality to the Build Tool.
 		Dependency: An extension used to add functionality to the Application itself.
 		Task: An atomic piece of work to be executed by Gradle.
 	
 	Details:
+		// gradle-wrappper.properties
+			// Syntax: <key>=<value>
+
+			// Specify from which Repository should the Gradle Binary be downloaded from.
+			distributionUrl=<url>
+			// Specify where should the Gradle Binary be downloaded to.
+			zipStorePath=<path>
+			// Specify where the Gradle Binary should be installed to. Even though it defaults to wrapper/dist, it appears that it ultimately ends up in the .gradle Folder.
+			distributionPath=<path>
+
+		// gradle.properties
+			// Syntax: <key>=<value>
+			<gradle-settings-variable>=<value>
+
+		// settings.gradle.kts
+			val <gradle-settings-variable>: String by project
+
+			// Specify Configuration that would be common to all 'plugins' Blocks within all Sub-Project build.gradles.
+			pluginManagement {
+				// Define Repositories to retrieve Sub-Project Plugins from.
+				repositories {
+					maven {
+						url = uri("<artifactory-path>")
+						isAllowInsecureProtocol = true
+					}
+					// ...
+				}
+			}
+
 		// build.gradle.kts
+			// Specify the Group or Organization that it belongs to.
+			// Note: Don't include the Project in the <reverse-domain-name>.
+			group "<reverse-domain-name>"
+
 			plugins {
 				kotlin("<plugin-package-url>") version "<sem-version>"
 
 				// OR
 
-				id "<plugin-package-url>" version "<sem-version>"
+				id("<plugin-package-url>") version "<sem-version>"
 			}
+
+			// Define Repositories to retrieve Project Dependencies from.
+			repositories {
+				maven {
+					url = uri("<artifactory-path>")
+					isAllowInsecureProtocol = true
+				},
+				// ...
+			}
+
+			val <gradle-settings-variable>: String by project
 
 			dependencies {
 				// Used during both Compile Time and Run Time, and is exported to Consumers.
@@ -50,6 +104,9 @@ Gradle
 		gradle init
 			--type java-application
 			--type kotlin-application
+
+			// Specifies that settings.gradle and build.gradle should be in Kotlin (i.e. .kts Files).
+			--dsl kotlin
 
 		// Build using the build.gradle File in the current directory:
 		gradlew build
