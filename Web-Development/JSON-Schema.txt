@@ -22,6 +22,14 @@ JSON Schema
 				// References another available Schema given its URI.
 				"$ref": "<uri>",
 
+				// References a list of Schemas, given their URIs:
+				"allOf": [
+					{
+						"$ref": "<uri>",
+					},
+					// ...
+				],
+
 				// Desribes the purpose of the Schema.
 				// Tip: Non-Constraining Annotations.
 				"title": "<schema-name>",
@@ -31,6 +39,12 @@ JSON Schema
 				// Note: Only applies to the Current Level. Properties and Child Schemas should have their own Type Specifications.
 				"type": "<type>",
 					// Nullable Type: "type": [ "<type>", null ]
+
+				// Specify if extra Properties present on the JSON but not defined in the current Schema is allowed or not:
+				"additionalProperties": <boolean>,
+
+				// Specify if extra Properties present on the JSON but not defined in the current + Child Schemas is allowed or not:
+				"unevaluatedProperties": <boolean>,
 
 				// Types and associated Unique Keywords:
 					object
