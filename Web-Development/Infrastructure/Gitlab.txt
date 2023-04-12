@@ -164,6 +164,7 @@ GitLab:
 
 					# Define Build Artifacts (usually generated from Job Scripts).
 					artifacts:
+						# Note: The Folder Structure of the resulting .zip File is relative to the Repo Root as well. For example, if a UI Build is generated at ./ui/dist and the path is specified as such below, then the .zip File would also contain ./ui/dist.
 						paths:
 							- <path-from-repo-root>
 
