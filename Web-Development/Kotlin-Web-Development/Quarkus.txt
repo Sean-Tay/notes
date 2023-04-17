@@ -1,0 +1,116 @@
+Quarkus
+	Abbreviations:
+		META-INF: Meta Information.
+	
+	Description: Java Stack for creating Applications tailored to run on a OpenJDK HotSpot (Java) or GraalVM (Native) Container within a Kubernetes (Container-Based) Environment.
+	
+	Resources: 
+	
+	Concepts:
+		OpenJDK Hotspot: High Performance VM for running Java Applications.
+		GraalVM: High Performance VM for running Applications written in different languages.
+
+		META-INF: Directory that traditionally contains Meta-Information about the jar File being generated.
+		META-INF.resources: Directory that would contain Static Assets to be served when the Quarkus Application is running.
+
+		uber-jar: Contains all the Dependencies needed to run the Application within.
+	
+	Details:
+		Typical Template Project Structure:
+			// <module>
+				// build
+
+				// gradle
+					// wrapper
+						// graddle-wrapper.jar
+						// graddle-wrapper.properties
+
+				// src
+					// main
+						// docker
+
+						// kotlin
+
+						// resources
+							// META-INF.resources
+								// index.html
+
+							// application.properties
+								
+
+					// native-test
+						// kotlin
+
+					// test
+						// kotlin
+
+					// gradle.properties
+					// settings.gradle.kts
+					// build.gradle.kts
+					// gradlew
+					// gradlew.bat
+	
+		Configuration:
+			// Profiles: Designate which set of Configuration Variables should be used during Runtime:
+				// Set the quarkus.profile Configuration Property:
+					// gradlew ... "-Dquarkus.profile=<value>"
+			
+				// Standard Profiles:
+					dev: quarkusDev
+					test: When Running Tests
+					prod: When there is no Active Profile
+
+			// In Decreasing Order of Priority:
+				// System Properties:
+					// gradlew ... "-D<key>.<subKey> ... <subKey>=<value>"
+
+				// Environment Properties:
+					// export <key>_<subKey> ... <subKey>=<value>; gradlew ...
+
+				// .env File:
+					// _<profile>_<key>_<subKey> ... <subKey>=<value>
+
+				// application.properties / application-<profile>.properties:
+					// <key>.<subKey> ... <subKey>=<value>
+					// <key>.<subKey> ... <subKey>=${ ... }
+
+					// <key>.<arrayKey>=<value>,<value>, ...
+					// <key>.<arrayKey>[0]=<value>
+					// <key>.<arrayKey>[1]=<value>
+					// ...
+
+					// %<profile>.<key>.<subKey> ... <subKey>=<value>
+
+		Dependencies:
+			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Plugin for integrating a Web UI with a Quarkus Server.
+
+		Syntax:
+			// Getting Configuration Properties via MicroProfile Config Annotations:
+				@ConfigProperty(
+					name = "<key>.<subkey> ... <subkey>",
+
+					// If defaultValue is not set, the Annotation will throw a Runtime Exception.
+					defaultValue = <value>
+				) val <runtime-constant-name>: <type>
+
+	Commands:
+		# Quarkus CLI
+			quarkus create
+
+		# Gradle Wrapper
+			# Start a Local Development Server with Hot Reload capabilities for the Quarkus Application.
+			gradlew quarkusDev
+
+			# Clear the Build Directory. Useful to run just before a Build.
+			gradlew clean
+
+			# Compile and Build the Quarkus Application into a .jar File.
+			gradlew build
+
+			# Compile and Build the Quarkus Application into an uber-jar File.
+			gradlew build "-Dquarkus.package.type=uber-jar"
+
+		# Java
+			# Run the built jar with a defined Configuration Profile:
+			java -Dquarkus.profile=<profile> -jar <name>.jar
+
