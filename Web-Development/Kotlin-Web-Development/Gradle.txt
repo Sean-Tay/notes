@@ -55,6 +55,10 @@ Gradle
 				}
 			}
 
+			// Specify the name of the Project.
+			// Note: Controls the name of the Build Artifact generated.
+			rootProject.name = "<name>"
+
 		// build.gradle.kts
 			// Specify the Group or Organization that it belongs to.
 			// Note: Don't include the Project in the <reverse-domain-name>.
