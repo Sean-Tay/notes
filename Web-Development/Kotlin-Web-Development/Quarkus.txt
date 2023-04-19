@@ -81,8 +81,13 @@ Quarkus
 
 					// %<profile>.<key>.<subKey> ... <subKey>=<value>
 
-		Dependencies:
-			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Plugin for integrating a Web UI with a Quarkus Server.
+		Non-Default Dependencies:
+			io.quarkus:quarkus-smallrye-health: Dependency that adds Liveness and Readiness Endpoints for a Quarkus Application.
+				/q/health/started: If the Application has started.
+				/q/health/live: If the Application is up and running.
+				/q/health/ready: If the Application is ready to serve Requests.
+
+			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Dependency for integrating a Web UI with a Quarkus Server.
 
 		Syntax:
 			// Getting Configuration Properties via MicroProfile Config Annotations:
