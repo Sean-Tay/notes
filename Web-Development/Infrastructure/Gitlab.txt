@@ -120,6 +120,11 @@ GitLab:
 						# In case the Job was triggered from another Pipeline:
 						pipeline: <absolute-gitlab-path>
 
+						# OR
+
+						- job: <job-name>
+						  artifacts: <boolean>
+
 					# Describe the Conditions in which the Job will be run:
 					rules:
 						# ...
@@ -169,6 +174,7 @@ GitLab:
 							- <path-from-repo-root>
 
 						# Specify Build Artifacts created from Testing.
+						# Note: Always uploaded, but if there is a need to browse and view the Report Files, specify 'paths' in addition to 'reports'.
 						reports:
 							<reporter-type>: "<path-from-repo-root>"
 
