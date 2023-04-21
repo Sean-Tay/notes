@@ -507,6 +507,8 @@ Linux / Unix:
 						<line_num>	- Succeeding Command to only execute on the line with the line number <line_num>.
 						<line_num1>,<line_num2> - Succeeding Command to only execute on lines with the line numbers within the range <line_num1> to <line_num2> inclusive.
 						/<search_pattern>/ - Succeeding Command to only execute on lines with the <search_pattern> in their content.
+							\( ... \) - Capturing Group. Can be referenced within a <command>.
+
 						$ 		- Alias for last line in Stream.
 
 						! 		- Negation Operator. Succeeds the above to negate the scope.
@@ -514,6 +516,7 @@ Linux / Unix:
 					<command>	- Specify Operation to be done on each line in scope.
 						Regex Patterns - https://www.gnu.org/software/sed/manual/html_node/Regular-Expressions.html
 						Note that the / delimiter for <command>s can be replaced by any other punctuation character.
+							\#	- Reference the #th Capturing Group from the <search_pattern> defined in the prior <address>.
 
 						:<label_id>		- Create a Label for execution flow branching purposes.
 
