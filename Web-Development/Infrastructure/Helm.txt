@@ -1,0 +1,55 @@
+Helm
+	Abbreviations:
+	
+	Description: Package Manager for Kubernetes that simplifies the deployment and management of Application Images on Kubernetes Clusters.
+	
+	Resources:
+	
+	Concepts:
+		Release: An Application Image / Container to be deployed onto a Kubernetes Cluster.
+		Chart: A Helm Package that contains information sufficient to perform the Release onto a Kubernetes Cluster.
+	
+		Template: A YAML File that will be used to produce a Kubernetes Manifest using Go.
+
+	Details:
+		Chart Folder Structure:
+			Chart.yaml
+				apiVersion: v<version-number>
+				name: <release-name>
+				version: <release-version-number>
+
+			# A File which contains pre-defined Values to use for the Release.
+			values.yaml
+				<key>: <value>
+
+				# These can be referenced via {{ .Values.<key> }} within other Templates.
+
+			templates
+				# Common Format:
+					# apiVersion: v<version-number>
+					# kind: <resource-type>
+
+				secret.yaml
+
+				# Define Configuration Data for a Kubernetes Application.
+				# The ConfigMap Resource will be loaded as a Volume on the Application Container, which can then be accessed by the Application in the form of Environment Variables, CLI Arguments, or Application-specific Config Files.
+				config-map.yaml 
+					data:
+						<key>: <value>
+						<key>: {{ .Values.<key> }}
+
+				service.yaml
+
+				deployment.yaml
+
+				route.yaml
+	
+	Commands:
+		# Install / Upgrade a Chart.
+		helm install <release-name> <chart-folder-path>
+		helm upgrade <release-name> <chart-folder-path>
+			--install			# Install a new Release if it does not exist, or Upgrade an existing Release if it does.
+	
+			-f <chart-folder-path>/<values-file> # Specify a File containing pre-defined Values to use for the Release.
+			--set <key>=<value> # Define more Values before the Command executes.
+				# Note: The values here can be referenced via {{ .Values.<key> }} within other Templates.

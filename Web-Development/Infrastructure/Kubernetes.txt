@@ -1,11 +1,15 @@
 Kubernetes:
 	Abbreviations: 
 	
-	Description: A Platform for running many Containers on Production.
+	Description: A Platform for running many Containers on the Cloud.
 	
 	Resources: 
 	
 	Concepts: 
+		Release: An Application Image / Container to be deployed onto a Kubernetes Cluster.
+
+		Manifest: A YAML File that describes the desired state of a Resource.
+		Resource: An Object that describes a desired state for the Release.
 
 	Details:
 		Components:
@@ -35,6 +39,7 @@ Kubernetes:
 					A degree of isolation from each other.
 
 		Other Tools:
+			Helm: 				Package Manager for Kubernetes that simplifies the deployment and management of Application Images on Kubernetes Clusters.
 			OpenShift:			Container Application Platform that extends Kubernetes to provide Enterprise-level Features and Security.
 	
 	Commands:
