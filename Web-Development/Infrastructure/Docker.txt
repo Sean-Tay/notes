@@ -89,6 +89,13 @@ Docker
 
 		Other Tools:
 			kaniko				Alternative Tool used to construct Images from a Dockerfile. Does not require the Docker Daemon (or any other special privileges).
+				Folders:
+					/kaniko
+						.docker	Contains instructions to Kaniko when building the Docker Image.
+							config.json Stores the Registry Credentials that will be used in publishing the build Docker Image.
+
+						ssl		
+							certs Contains SSL / TLS Certificates for communication with external processes.
 
 	Commands:
 		docker: 				Used to interact with the Docker Daemon.
