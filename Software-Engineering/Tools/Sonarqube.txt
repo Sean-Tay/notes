@@ -1,0 +1,46 @@
+Sonarqube
+	Abbreviations: 
+	
+	Description: Open Source Tool that can be integrated into CICD Pipelines for Continuous Code Quality inspection.
+	
+	Resources: 
+	
+	Concepts:
+		Quality Gate: A configurable set of conditions that Code must meet in order for Sonarqube to deem it acceptable for release.
+	
+	Details:
+		Project Configuration is done via specification of a 'sonar-project.properties' File at the Project's Root.
+			sonar.host.url=<cloud-host-url>
+			sonar.projectKey=<cloud-project-key>
+
+			# Specify that the Sonarqube Driver should wait for the Quality Gate Status from Sonarqube to be returned from the Sonarqube Host before continuing.
+			sonar.qualitygate.wait=<boolean>
+
+			# Define Folders that house Unit Tests.
+			# Note: Does not accept Glob File Patterns.
+			sonar.tests=<relative-folder-path>, ...
+
+			# Define Unit Test Files.
+			# Note: Accepts Glob File Patterns.
+			sonar.test.inclusions=<relative-file-path>, ...
+
+			# Define Folders that house Application Source Code.
+			# Note: Does not accept Glob File Patterns.
+			# Tip: Automatically excludes the Unit Test Files specified via 'sonar.test.inclusions'.
+			sonar.sources=<relative-folder-path>, ...
+
+			# Kotlin Test and Coverage Report Specification
+			sonar.junit.reportPaths=<relative-folder-path>, ...
+			sonar.coverage.jacoco.xmlReportPaths=<relative-file-path>, ...
+
+			# Javascript / Typescript Test and Coverage Report Specification
+			# Note: The Test Report needs to use Sonarqube's own XML Format.
+			# Note: The <relative-file-path>s here must match the File Paths specified via 'sonar.test.inclusions', otherwise their results wil be ignored by Sonarqube.
+			sonar.testExecutionReportPaths=<relative-file-path>, ...
+			# Tip: The <relative-file-path>s for the lcov Coverage Report need not match the File Paths specified via 'sonar.test.inclusions'.
+			sonar.javascript.lcov.reportPaths=<relative-file-path>/lcov.info, ...
+	
+	Commands:
+		sonar-scanner
+			-X # Specify Info and Debug Level Log Output.
+	
