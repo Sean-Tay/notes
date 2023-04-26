@@ -19,6 +19,8 @@ Web Dev:
 		SPA:					Single Page Application.
 
 		HTTPS:					HyperText Transfer Protocol Secure.
+		HSTS:					HTTP Strict Transport Policy.
+
 		CSP:					Content Security Policy.
 		CORS:					Cross Origin Resource Sharing.
 		CSRF:					Cross Site Request Forgery.
@@ -237,7 +239,7 @@ Web Dev:
 					// Client-Request Headers:
 						Authorization: <type> <base-64 username:password string>
 
-				// HTTPS Only:
+				// HSTS: HTTPS Only
 				// Tip: Should be supplemented with automatic redirects to HTTPS connections if a Client attempts to load a URL with the regular HTTP protocol.
 					// Server Response Headers:
 						Strict-Transport-Security:
