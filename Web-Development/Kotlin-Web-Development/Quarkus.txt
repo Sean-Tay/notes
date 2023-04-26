@@ -81,6 +81,11 @@ Quarkus
 
 					// %<profile>.<key>.<subKey> ... <subKey>=<value>
 
+					// Set Application to use SSL / HTTPs when communicating with Users.
+					// Note: Port will change to 8443 if used.
+					quarkus.http.ssl.certificate.key-store-file
+					quarkus.http.ssl.certificate.key-store-password
+
 		Non-Default Dependencies:
 			io.quarkus:quarkus-smallrye-health: Dependency that adds Liveness and Readiness Endpoints for a Quarkus Application.
 				/q/health/started: If the Application has started.
