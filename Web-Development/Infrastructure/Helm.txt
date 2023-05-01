@@ -11,6 +11,8 @@ Helm
 	
 		Template: A YAML File that will be used to produce a Kubernetes Manifest using Go.
 
+		Argo: An Openshift-related Continuous Delivery Tool that detects changes made to Helm Charts in the Repo and redeploys the Kubernetes Application automatically.
+
 	Details:
 		Chart Folder Structure:
 			Chart.yaml
@@ -26,23 +28,59 @@ Helm
 
 			templates
 				# Common Format:
-					# apiVersion: v<version-number>
-					# kind: <resource-type>
+					apiVersion: v<version-number>
+					kind: <resource-type>
 
+					metadata:
+						# Note: This has to be unique amongst all Resources within the Project.
+						name: <unique-identifier>
+
+				# Define sensitive Configuration Data for a Kubernetes Application, stored in an Encrypted Format on volatile Storage.
 				secret.yaml
+					type: <secret-type>
+					data:
+						<key>: <value>
+						<key>: {{ .Values.<key> }}
 
-				# Define Configuration Data for a Kubernetes Application.
+				# Define non-sensitive Configuration Data for a Kubernetes Application, stored in a Base-64 Encoding.
 				# The ConfigMap Resource will be loaded as a Volume on the Application Container, which can then be accessed by the Application in the form of Environment Variables, CLI Arguments, or Application-specific Config Files.
 				config-map.yaml 
 					data:
 						<key>: <value>
 						<key>: {{ .Values.<key> }}
 
+				# Defines a Logical Set of Pods that would be accessed under a single IP and Port.
 				service.yaml
+					spec:
+						selector:
+							app: <application-name>
 
+						type: ClusterIP
+						ports:
+							- name: web
+							  port: <application-web-port>
+							  protocol: TCP
+							  targetPort: <port>
+
+				# Defines how an Application is to be deployed and maintained.
 				deployment.yaml
+					
 
+				# Define Configuration to expose a Kubernetes Application on a Public URL.
+				# Note: Openshift-specific Resource.
 				route.yaml
+					apiVersion: route.openshift.io/v<version-number>
+					kind: Route
+					spec:
+						host: <url-for-application>
+						port:
+							targetPort: web
+						tls:
+							termination: passthrough
+						to:
+							kind: Service
+							name: <service-name>
+							weight: 100
 	
 	Commands:
 		# Install / Upgrade a Chart.
