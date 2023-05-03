@@ -53,7 +53,7 @@ Quarkus
 		Configuration:
 			// Profiles: Designate which set of Configuration Variables should be used during Runtime:
 				// Set the quarkus.profile Configuration Property:
-					// gradlew ... "-Dquarkus.profile=<value>"
+					// gradlew quarkusDev "-Dquarkus.profile=<value>"
 			
 				// Standard Profiles:
 					dev: quarkusDev
@@ -78,6 +78,9 @@ Quarkus
 					// <key>.<arrayKey>[0]=<value>
 					// <key>.<arrayKey>[1]=<value>
 					// ...
+
+					// Set Quarkus to search w.r.t the Classpath (includes the root of the jar File it gets bundled into):
+					// <filpath-property>=classpath:<filepath-value>
 
 					// %<profile>.<key>.<subKey> ... <subKey>=<value>
 
@@ -123,4 +126,7 @@ Quarkus
 		# Java
 			# Run the built jar with a defined Configuration Profile:
 			java -Dquarkus.profile=<profile> -jar <name>.jar
+
+			# Preview jar Directory Structure and Files
+			jar tf <name>.jar
 
