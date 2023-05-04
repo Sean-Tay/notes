@@ -84,16 +84,173 @@ Quarkus
 
 					// %<profile>.<key>.<subKey> ... <subKey>=<value>
 
-					// Set Application to use SSL / HTTPs when communicating with Users.
-					// Note: Port will change to 8443 if used.
-					quarkus.http.ssl.certificate.key-store-file
-					quarkus.http.ssl.certificate.key-store-password
-
 		Non-Default Dependencies:
 			io.quarkus:quarkus-smallrye-health: Dependency that adds Liveness and Readiness Endpoints for a Quarkus Application.
 				/q/health/started: If the Application has started.
 				/q/health/live: If the Application is up and running.
 				/q/health/ready: If the Application is ready to serve Requests.
+
+			io.quarkus:quarkus-rest-client: Dependency that adds support for querying other Services via HTTP(S).
+			io.quarkus:quarkus-rest-client-jackson: Dependency that adds jackson Processing Support for the above.
+				// application.properties
+					// Set the Rest Client that is registered under "<config-key>" to use Mutual TLS when communicating to other Service.
+					quarkus.rest-client."<config-key>".key-store
+					quarkus.rest-client."<config-key>".key-store-password
+
+					// Set the Rest Client that is registered under "<config-key>" to query this URL to communicate with the other Service.
+					quarkus.rest-client."<config-key>".url
+
+				// Example Client:
+					// Note: Use javax.* Annotations here as they can accommodate for different JAX-RS implementations.
+					// Note: Use org.eclipse.microprofile.rest.* Annotations here.
+
+					// Specify that the Client is to be a Singleton, managed by the CDI Container throughout the lifecycle of the Application.
+					@ApplicationScoped
+					@RegisterRestClient(configKey = "<config-key>")
+					interface <client-name> {
+						// Specify an external Service Endpoint that is callable by the Application.
+						@<uppercase-http-verb>
+						@Path("/<value>/{<path-param>}/...")
+						@Produces(MediaType.<media-type>)
+						fun <fun-name>(
+							// Tip: The arguments defined in a Client's Function allow our Application to augment the HTTP Request made to the external Service when calling this Function.
+							@PathParam("<path-param>") <path-param-variable>: <path-param-type>,
+							@QueryParam("<query-param>") <query-param-variable>: <query-param-type>,
+
+							// Set HTTP Request Headers when the Request is made to the external Service.
+							@HeaderParam("<http-header>") <http-header-variable>: <http-header-variable-type>,
+
+							// ...
+
+							payload: JsonNode
+						): <service-return-type>
+
+						// ...
+					}
+
+			io.quarkus:quarkus-resteasy: Dependency that adds support for exposing RESTful APIs.
+			io.quarkus:quarkus-resteasy-jackson: Dependency that adds jackson Processing Support for the above.
+				// application.properties
+					// Set Application to use SSL / HTTPs when communicating with Clients.
+					// Note: Port will change to 8443 if used.
+					quarkus.http.ssl.certificate.key-store-file
+					quarkus.http.ssl.certificate.key-store-password
+
+				// Example Resource:
+					// Note: Use javax.* Annotations here as they can accommodate for different JAX-RS implementations.
+					// Note: Use org.eclipse.microprofile.rest.* Annotations here.
+
+					private const val RESOURCE_PATH = "/<value>"
+					val RESOURCE_PATH_REGEX = "$RESOURCE_PATH/.*".toRegex()
+
+					// Interceptor: Use an Interceptor to intercept a Request before it reaches a Resource Endpoint, or a Response before it gets sent back to the User-Agent.
+					// Note: The Interceptor is active for all incoming Requests. Filter on the Request Path to ensure no overlapping Interceptor Functionality.
+						// Register the Interceptor with the JAX-RS Runtime.
+						@Provider
+						class <interceptor-name>: ContainerRequestFilter, ContainerResponseFilter {
+							@Inject
+							@RestClient
+							lateinit val <service-name>: <client-name>
+
+							// Request Interceptor: Intercept Requests before they are passed to the Resource Endpoint.
+							override fun filter(requestContext: ContainerRequestContext?) {
+								if (
+									requestContext?.uriInfo?.path?.matches(RESOURCE_PATH_REGEX)
+								) {
+									// Cookie Upsert Example
+										// Get Cookie Value
+										val <cookie-value> = requestContext?.cookies?.get("<cookie-key>")
+
+										if (<cookie-value> == null || <cookie-value>.value.isNullOrEmpty()) {
+											// Create a new Cookie on the fly
+											val newCookie = NewCookie(
+												"<cookie-key>",
+												<cookie-value>,
+												<cookie-applicability-path>,
+												<cookie-applicability-domain>,
+												<comment>,
+												<max-age>,
+												<secure>
+											)
+
+											// Add to the Request Header so that Resource Endpoints will receive the Cookie Value
+											requestContext?.headers?.add(HttpHeaders.COOKIE, newCookie.toString())
+
+											// Store the new Cookie on the Request, to be used in the later Response Interceptor
+											requestContext?.setProperty("<cookie-key>", newCookie)
+										}
+									
+									// Call a Service via the Client defined for it:
+									// <service-name>.<fun-name>( ... )
+
+									// ...
+								}
+
+								// ...
+							}
+
+							// Response Interceptor: Intercept Responses before they are passed to the User-Agent.
+							override fun filter(requestContext: ContainerRequestContext, responseContext: ContainterResponseContext) {
+								if (
+									requestContext?.uriInfo?.path?.matches(RESOURCE_PATH_REGEX)
+								) {
+									// Cookie Upsert Example
+										// Retrieve the Cookie created in the Request Interceptor
+										val newCookie = requestContext?.getProperty("<cookie-key>")
+
+										if (newCookie != null) {
+											requestContext?.headers?.add(HttpHeaders.SET_COOKIE, newCookie.toString())
+										}
+
+									// Call a Service via the Client defined for it:
+									// <service-name>.<fun-name>( ... )
+
+									// ...
+								}
+
+								// ...
+							}
+						}
+
+					// Resource:
+						@Path(RESOURCE_PATH)
+						class <resource-name> {
+							@Inject
+							@RestClient
+							lateinit val <service-name>: <client-name>
+
+							@<uppercase-http-verb>
+							@Path("/<value>/{<path-param>}/...")
+							@Produces(MediaType.<media-type>)
+							fun <fun-name>(
+								// Tip: The arguments defined in a Resource's Function allow the Framework to feed in the associated values in the Client's Request to our Function to be read.
+								@PathParam("<path-param>") <path-param-variable>: <path-param-type>,
+								@QueryParam("<query-param>") <query-param-variable>: <query-param-type>,
+
+								// Receive HTTP Request Headers when the Request is marshalled here.
+								@HeaderParam("<http-header>") <http-header-variable>: <http-header-variable-type>,
+
+								// Read Cookies attached to the HTTP Request by the User-Agent.
+								@CookieParam("<cookie-key>") <cookie-value-variable>: <cookie-value-type>,
+
+								// ...
+
+								payload: JsonNode
+							): Response {
+								// ...
+
+								return Response
+									.ok(
+										<response-body>,
+										MediaType.<media-type>
+									)
+									// if needed
+									.cookie(
+										<cookie>
+									)
+									.build()
+							}
+						}
 
 			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Dependency for integrating a Web UI with a Quarkus Server.
 
