@@ -87,19 +87,7 @@ Web Dev:
 		SOAP:					Messaging definition for the interaction between Web Services.
 		WSDL:					XML File that describes the Web Service it details (Methods, Arguments, Return Types, etc.).
 
-		Cookie:					A Key-Value Pair Data Structure used to store persistent Session State on the Browser when using Stateless HTTP, set via 'set-cookie' HTTP Response Headers. Each Field Attribute consists of:
-			Name:				Field Key.
-			Value: 				Field Value.
-
-			Domain:				Determines which Domain can access the associated Field.
-			Path:				Determines which part of the Web Application is allowed to access the associated Field.
-			Expires / Max Age: 	Determines validity lifespan of the associated Field.
-			Size:				Number of characters for associated Field Name and Value.
-
-			// Security-Related Fields:
-			HTTP / HttpOnly:	Prevents Client-Side manipulation of the Cookie via JS and other vectors - the Cookie is only used for Server-Side meta-session activity.
-			Secure:				Only transmit the assosicated Field over HTTPS.
-			SameSite:			Prevents the Response of a Request from being read in another Domain.
+		Cookie:					A Key-Value Pair Data Structure used to store persistent Session State on the Browser when using Stateless HTTP, set via 'Set-Cookie' HTTP Response Headers.
 
 		CSP: 					A backwards-compatable HTTP Response mechanism that allows a Web Application to specify the acceptable types and sources of Resources that can be used by the Client for the Web Application's Resource currently loaded. This allows increased flexibility from the default Same-Origin only policy whilst still preventing the Web Application from inadvertedly loading malicious Resources from a Third-Party, and is helpful in mitigating Injection Attacks, particularly XSS.
 			The Web Application defends against being compromised by its own activity.
@@ -310,7 +298,7 @@ Web Dev:
 
 								// Tip: Omit this if it should not be exposed.
 					
-			Cookie Configuration: See the Security-Related Fields section of the Cookie concept above for more exposition on each Field listed below.
+			Cookie Configuration: When the Cookie is given to the User-Agent with a "Set-Cookie" HTTP Response Header, the following <option>s can be specified to determine the accessibility of the Cookie:
 				HttpOnly
 				Secure
 				SameSite
@@ -335,6 +323,24 @@ Web Dev:
 						s-max-age=<seconds> // Determines the duration in which a stored Local Copy by Shared Caches is considered Fresh, and can be refered to correctly.
 					
 			Revving: An approach to change the name (and hence, the URI) of the Resource, each time it is changed. This helps with correct Cache Invalidation of the Resource itself, as well as other Resources that use it (so that Stale Local Copies are not used together with Fresh Local Copies).
+
+		Cookies:
+			HTTP Headers:
+				// Client Request Headers:
+					Cookie: <key>=<value>; ... // Specify the Header for attaching Cookie Values to a Request.
+
+				// Server Response Headers:
+					Set-Cookie: <cookie-name>=<cookie-value>; <option>=<value>; ...
+						<option>
+							Domain:				Determines which Domain can access the associated Field.
+							Path:				Determines which part of the Web Application is allowed to access the associated Field.
+							Expires / Max-Age: 	Determines validity lifespan of the associated Field.
+							Size:				Number of characters for associated Field Name and Value.
+
+							// Security-Related Fields:
+							HTTP / HttpOnly:	Prevents Client-Side manipulation of the Cookie via JS and other vectors - the Cookie is only used for Server-Side meta-session activity.
+							Secure:				Only transmit the assosicated Field over HTTPS.
+							SameSite:			Prevents the Response of a Request from being read in another Domain.
 			
 		Debugging Tips:
 			If the Network Request is stuck on Pending, it might mean that there is an infinite loop in the UI Layer.
