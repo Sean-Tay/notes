@@ -155,7 +155,7 @@ Web Dev:
 		Architectural Considerations:
 			Web Service Secrets: Do not store Secrets (i.e. API Keys) in things which are sent to Users. Instead, make your FE request related information from the BE, and try to control usage from BE.
 
-			REST: An Communication Implementation suited for Public APIs.
+			REST: An approach suited for traditional Public APIs.
 				Details:
 					The idea is to represent Concepts / Resources / Nouns as URLs. Any other related Concepts / Resources / Nouns are also stored as URLs. Machines can then use HTTP with the URLs to reach other Machines elsewhere and perform operations on the Concepts / Resources / Nouns.
 						Example:
@@ -216,6 +216,14 @@ Web Dev:
 						High Coupling between the Client and Server in terms of the API Contract.
 						
 					Client would need to know how to entirely handle the Response given by the Server.
+
+			Reactive, Event-Driven: An approach that caters to Real-Time or Highly-Interactive Applications.
+				Details:
+					Primarily uses Asynchronous / Event-Driven programming techniques to cater to large volumes of Requests.
+						The key is to respond to and trigger Events.
+
+				Pros:
+					Able to cater to large volumes of Requests.
 
 			SPA: An Application Style that controls Application Routing through Client Side JavaScript.
 				Background:
