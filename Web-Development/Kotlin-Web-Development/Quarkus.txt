@@ -265,6 +265,11 @@ Quarkus
 							}
 						}
 
+			io.quarkus:quarkus-junit5-mockito
+			io.mockk::mockk:1.13.4
+
+			io.rest-assured:rest-assured
+
 			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Dependency for integrating a Web UI with a Quarkus Server.
 
 		Syntax:
@@ -275,6 +280,17 @@ Quarkus
 					// If defaultValue is not set, the Annotation will throw a Runtime Exception.
 					defaultValue = <value>
 				) val <runtime-constant-name>: <type>
+
+			// Quarkus Tests
+				@QuarkusTest
+				class <test-suite> {
+					@Test
+					fun `<test-name>`() {
+
+					}
+
+					// ...
+				}
 
 	Commands:
 		# Quarkus CLI
