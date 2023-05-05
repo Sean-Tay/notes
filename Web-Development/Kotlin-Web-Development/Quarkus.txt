@@ -167,7 +167,11 @@ Quarkus
 						@<interceptor-binder-name>
 						// Register the Interceptor with the JAX-RS Runtime.
 						@Provider
-						class <interceptor-name>: ContainerRequestFilter, ContainerResponseFilter {
+						class <interceptor-name>(
+							@RestClient val <service-name>: <client-name>,
+							// ...
+						): ContainerRequestFilter, ContainerResponseFilter {
+							// Alternative to setting the Rest Client in the Constructor:
 							@Inject
 							@RestClient
 							lateinit val <service-name>: <client-name>
@@ -227,7 +231,11 @@ Quarkus
 					// Resource:
 						@<interceptor-binder-name>
 						@Path(RESOURCE_PATH)
-						class <resource-name> {
+						class <resource-name>(
+							@RestClient val <service-name>: <client-name>,
+							// ...
+						) {
+							// Alternative to setting the Rest Client in the Constructor:
 							@Inject
 							@RestClient
 							lateinit val <service-name>: <client-name>
@@ -265,10 +273,60 @@ Quarkus
 							}
 						}
 
-			io.quarkus:quarkus-junit5-mockito
-			io.mockk::mockk:1.13.4
+			io.quarkus:quarkus-junit5-mockito: Dependency that allows for Mocking during Testing.
+			org.mockito.kotlin:mockito-kotlin:4.1.0
+			io.rest-assured:rest-assured: Dependency that faciliates Testing of RESTful Web Services.
+				// Example Test Class:
+					@QuarkusTest
+					class <test-suite> {
+						// Stub Client that is typically injected via @Inject in the Class to be tested.
+						// Note: Not compatible if the Clients are passed in via Class Constructor Arguments.
+						// Note: Only works with @ApplicationScoped Clients.
+						@InjectMock
+						@RestClient
+						lateinit var <service-name>: <client-name>
 
-			io.rest-assured:rest-assured
+						@Test
+						fun `<test-name>`() {
+							// Stub Client Call:
+							Mockito.`when`(<service-name>.<method-name>(eq(<arg>), anyOrNull(), ...)).thenReturn(
+								// Tip: Use Jackson ObjectMapper.valueToTree to convert mapOf() values to JsonNode.
+								<stub-value>
+							)
+
+							// ...
+
+							// Assert via RestAssured
+							given()
+								// Section to configure Test Request
+									// Check that Header is set:
+									.header(<http-header>, <http-header-value>)
+
+									// Check that Header is not set:
+									.header(<http-header>, Matchers.nullValue())
+
+
+									// Assert Request Body Content:
+									.contentType(MediaType.<content-type>)
+									.body(
+										// Tip: Use Jackson ObjectMapper.writeValueAsString to convert mapOf() values to JSON Content.
+										// ...
+									)
+
+								.`when`().<http-verb>("<path>")
+								// Section to configure Expected Response
+									// Assert Response has particular Status Code:
+									.statusCode(<value>)
+
+									// Assert Response Body Content:
+									.body(
+										// Tip: Use Jackson ObjectMapper.writeValueAsString to convert mapOf() values to JSON Content.
+										`is`("<text-value>`)
+									)
+						}
+					}
+
+			io.mockk:mockk:1.13.4
 
 			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Dependency for integrating a Web UI with a Quarkus Server.
 
