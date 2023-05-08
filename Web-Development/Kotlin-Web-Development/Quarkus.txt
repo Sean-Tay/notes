@@ -87,8 +87,32 @@ Quarkus
 		Non-Default Dependencies:
 			io.quarkus:quarkus-smallrye-health: Dependency that adds Liveness and Readiness Endpoints for a Quarkus Application.
 				/q/health/started: If the Application has started.
-				/q/health/live: If the Application is up and running.
+
+				/q/health/live: If the Application is up and running; if this returns false the Application would be restarted by the Cloud Platform.
+
 				/q/health/ready: If the Application is ready to serve Requests.
+					// Example Readiness Check:
+						// If using the quarkus-rest-client Dependency, define a Function to get the Health of the external Service on the Client Class.
+						@ApplicationScoped
+						@Readiness
+						class <custom-healthcheck>: HealthCheck {
+							@Inject
+							@RestClient
+							lateinit var <service-name>: <client-name>
+
+							override fun call(): HealthCheckResponse {
+								val healthCheckResponseBuilder = HealthCheckResponse.named("<service-name>")
+
+								try {
+									val response = <service-name>.<get-health-function>()
+									healthCheckResponseBuilder.up().withData("success", response)
+								} catch (e: Exception) {
+									healthCheckResponseBuilder.down().withData("error", e.stackTraceToString())
+								}
+
+								return healthCheckResponseBuilder.build()
+							}
+						}
 
 			io.quarkus:quarkus-rest-client: Dependency that adds support for querying other Services via HTTP(S).
 			io.quarkus:quarkus-rest-client-jackson: Dependency that adds jackson Processing Support for the above.
