@@ -153,6 +153,16 @@ CSS:
 				Content: Element Children.
 
 		CSS Rules and Values:
+			Box Model: Determine whether width and height includes Element Borders and Padding.
+				html {
+					box-sizing: <box-sizing-type>;
+				}
+				*,
+				*::before,
+				*::after {
+					box-sizing: inherit;
+				}
+
 			CSS Containment:
 				contain: Specify how the associated Content can be processed separately from other Content on the Page for Performance Improvements.
 					size:
