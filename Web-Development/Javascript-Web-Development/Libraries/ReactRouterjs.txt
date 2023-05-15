@@ -41,205 +41,399 @@ React-Router:
 					<App />
 				</HashRouter>
 
-			Switch and Route: The Components that implement the Routing Logic.
-				import { Switch, Route } from 'react-router-dom';
+		API Interaction:
+			// location Object represents where the User is within the Application.
+				// location.pathname === '/<path>'
 
-				// Switches contain Routes, and Routes contain Application Elements.
-				// Tip: Application Elements may contain more nested Switches and Routes.
+				// State from the previous Route / to the next Route.
+				// location.state === {
+				// 	<key> : <value>
+				// }
 
-				const App = () => {
-					return (
-						<>
-							// Application Elements
-								// ...
+				// Access Query Params:
+					useEffect(
+						() => {
+							const searchParams = new URLSearchParams(location.search);
 
-							// Router Elements
-								// Renders if it at least partially matches the Path.
-								<Route path="/<route-path>">
-									<AppPage />
-								</Route>
+							const value = searchParams.get('<key>');
 
-								// Renders only if the Path completely matches.
-								<Route exact path="/<route-path>">
-									<AppPage />
-								</Route>
+							// ...
+						}, [location]
+					);
 
-								// Renders *only* the first Route that has a fulfilled Path, or null if there are no matches.
-								<Switch>
-									<Route path="/<route-path-1>">
-										// ...
+		// < v6:
+			Components:
+				Switch and Route: The Components that implement the Routing Logic.
+					import { Switch, Route } from 'react-router-dom';
+
+					// Switches contain Routes, and Routes contain Application Elements.
+					// Tip: Application Elements may contain more nested Switches and Routes.
+
+					const App = () => {
+						return (
+							<>
+								// Application Elements
+									// ...
+
+								// Router Elements
+									// Renders if it at least partially matches the Path.
+									<Route path="/<route-path>">
+										<AppPage />
 									</Route>
 
-									// ...
-								</Switch>
-						</>
-					);
-				}
+									// Renders only if the Path completely matches.
+									<Route exact path="/<route-path>">
+										<AppPage />
+									</Route>
 
-				// Example of a Protected Route:
-				const ProtectedRoute = ({children, ...rest}) => (
-					<Route
-						{ ...rest }
-						render={
-							({ location }) =>
-							isAuthenticated ? 
-								(children) : 
-								(
-									<Redirect
-										to={{
-											pathname: "/login",
-											state: { from: location }
-										}}
-									/>
-								)
-							)
-						}
-					/>
-				)
+									// Renders *only* the first Route that has a fulfilled Path, or null if there are no matches.
+									<Switch>
+										<Route path="/<route-path-1>">
+											// ...
+										</Route>
 
-			Link, NavLink, and Redirect: Components that change the Path and triggers the Routing Behaviour.
-				import { Link, NavLink, Redirect } from 'react-router-dom';
-
-				// The 'to' props of the Components below can accept an Object.
-				const locationTypeObj = {
-					pathname: '/<route-path>',
-					search: '?key=value& ...', // String Representation of the Query part of the URL.
-					hash: '#<text>', // Hash to put into the URL.
-					state: {
-						// Persistent State to pass to the Route upon rendering it.
-						// <key>: <value>
-						// ...
-					}
-				};
-
-				// Compiles down to an <a> element that switches the current Path to "/<route-path>", or to the configuration specified in the <location-type-obj>.
-				<Link to={"/<route-path>" | <location-type-obj>}> 
-					// Link Item Component
-				</Link>
-
-				// Like a Link Element, but also styles itself according to specified CSS when the Path matches.
-				<NavLink to={"/<route-path>" | <location-type-obj>} activeClassName="<css-class>" activeStyle={<style-object>}> 
-					// Link Item Component
-				</NavLink>
-
-				// Changes the current Path to "/<route-path>", or to the configuration specified in the <location-type-obj>, upon rendering.
-				<Redirect to={"/<route-path>" | <location-type-obj>} />
-
-				// A <Redirect> Component is more useful within a <Switch> Component, or as part of a Protected Route (see example in the Route Section):
-				<Switch>
-					<Redirect exact from="/<switch-base-path>" to={"/<destination-route-path>" | <location-type-obj>} />
-				</Switch>
-
-			Prompt: Component that prevents automatic Routing Behaviour when Rendered. Useful for Forms.
-
-		API Interaction:
-			// API Description:
-				const someComponent = ({match, location, history}) => {
-					// match Object contains information about how a Route matched a given URL.
-						// match.isExact
-						// match.url 		// Matched portion of the URL.
-						// match.path 		// The path pattern used to match.
-
-						// match.params 	// Object with Key-Value Pairs referencing Path Params.
-							useEffect(
-								() => {
-									if (match?.params?.<param-name>) {
 										// ...
-									}
-								}, [match]
-							);
-
-					// location Object represents where the User is within the Component.
-						// Note: Prefer location over history.location due to immutability.
-
-						// location.pathname === '/<path>'
-
-						// State from the previous Route / to the next Route.
-						// location.state === {
-						// 	<key> : <value>
-						// }
-
-						// Access Query Params:
-							useEffect(
-								() => {
-									const searchParams = new URLSearchParams(location.search);
-
-									const value = searchParams.get('<key>');
-
-									// ...
-								}, [location]
-							);
-
-					// history Object acts as an interface for the History API.
-						useEffect(
-							() => history.listen(
-								// Establish a Listener for Route changes when Component initally mounts.
-								// Note: Does not fire when Component initially mounts; use an Effect that listens on location.pathname if that is needed.
-								// history.listen will destroy the Listener when the Component unmounts.
-								(location, action) => {
-									// Obtain current <path>.
-									// location.pathname
-
-									// ...
-								}
-							), []
+									</Switch>
+							</>
 						);
+					}
 
-						// Programmatically change Route, or State involved with Route.
-							// history.replace(<path>, [<state>]); // Redirect Client, but replace the topmost item in the Client's History Stack.
-							// history.push(<path>, [<state>]); // Redirect Client, but add it to the Client's History Stack.
+					// Example of a Protected Route:
+					const ProtectedRoute = ({children, ...rest}) => (
+						<Route
+							{ ...rest }
+							render={
+								({ location }) =>
+								isAuthenticated ? 
+									(children) : 
+									(
+										<Redirect
+											to={{
+												pathname: "/login",
+												state: { from: location }
+											}}
+										/>
+									)
+							}
+						/>
+					)
 
-					// ...
-				};
+				Link, NavLink, and Redirect: Components that change the Path and triggers the Routing Behaviour.
+					import { Link, NavLink, Redirect } from 'react-router-dom';
 
-			// The API is usable via the following mechanisms:
-				// HOC:
-					import { withRouter } from 'react-router';
-
-					const AppPage = withRouter(
-						{ match, location, history }) => {
+					// The 'to' props of the Components below can accept an Object.
+					const locationTypeObj = {
+						pathname: '/<route-path>',
+						search: '?key=value& ...', // String Representation of the Query part of the URL.
+						hash: '#<text>', // Hash to put into the URL.
+						state: {
+							// Persistent State to pass to the Route upon rendering it.
+							// <key>: <value>
 							// ...
 						}
-					);
+					};
 
-				// Route:
-					const AppPage = ({match, location, history}) => {
+					// Compiles down to an <a> element that switches the current Path to "/<route-path>", or to the configuration specified in the <location-type-obj>.
+					<Link to={"/<route-path>" | <location-type-obj>}> 
+						// Link Item Component
+					</Link>
+
+					// Like a Link Element, but also styles itself according to specified CSS when the Path matches.
+					<NavLink to={"/<route-path>" | <location-type-obj>} activeClassName="<css-class>" activeStyle={<style-object>}> 
+						// Link Item Component
+					</NavLink>
+
+					// Redirection: Changes the current Path to "/<route-path>", or to the configuration specified in the <location-type-obj>, upon rendering.
+						<Redirect to={"/<route-path>" | <location-type-obj>} />
+
+						// A <Redirect> Component is more useful within a <Switch> Component, or as part of a Protected Route (see example in the Route Section):
+						<Switch>
+							<Redirect exact from="/<switch-base-path>" to={"/<destination-route-path>" | <location-type-obj>} />
+						</Switch>
+
+				Prompt: Component that prevents automatic Routing Behaviour when Rendered. Useful for Forms.
+
+			API Interaction:
+				// API Description:
+					const someComponent = ({ match, location, history }) => {
+						// match Object contains information about how a Route matched a given URL.
+							// match.isExact
+							// match.url 		// Matched portion of the URL.
+							// match.path 		// The path pattern used to match.
+
+							// match.params 	// Object with Key-Value Pairs referencing Path Params.
+								useEffect(
+									() => {
+										if (match?.params?.<param-name>) {
+											// ...
+										}
+									}, [match]
+								);
+
+						// history Object acts as an interface for the History API.
+							useEffect(
+								() => history.listen(
+									// Establish a Listener for Route changes when Component initally mounts.
+									// Note: Does not fire when Component initially mounts; use an Effect that listens on location.pathname if that is needed.
+									// history.listen will destroy the Listener when the Component unmounts.
+									(location, action) => {
+										// Obtain current <path>.
+										// location.pathname
+
+										// ...
+									}
+								), []
+							);
+
+							// Programmatically change Route, or State involved with Route.
+								// history.replace(<path>, [<state>]); // Redirect Client, but replace the topmost item in the Client's History Stack.
+								// history.push(<path>, [<state>]); // Redirect Client, but add it to the Client's History Stack.
+
 						// ...
 					};
 
-					// ...
+				// The API is usable via the following mechanisms:
+					// HOC:
+						import { withRouter } from 'react-router';
 
-					<Route>
-						<AppPage>
-					<Route>
-
-					// OR
-
-					<Route 
-						render={
-							({match, location, history}) => {
+						const AppPage = withRouter(
+							{ match, location, history }) => {
 								// ...
-								
-								return <AppPage>;
+							}
+						);
+
+					// Route:
+						const AppPage = ({ match, location, history }) => {
+							// ...
+						};
+
+						// ...
+
+						<Route>
+							<AppPage>
+						<Route>
+
+						// OR
+
+						<Route 
+							render={
+								({ match, location, history }) => {
+									// ...
+									
+									return <AppPage>;
+								}
+							}
+						/>
+
+					// API React Hooks
+						import { 
+							useHistory,
+							useLocation,
+							useParams,
+							useRouteMatch
+						} from 'react-router';
+
+						// useRouteMatch:
+							// useRouteMatch is useful to avoid rendering the Route component.
+							// Note: The Component should be rendered outside of the Switch Component.
+							const AppPage = () => {		
+								let match = useRouteMatch({
+									path: '<path>',
+									strict: true,
+									sensitive: true
+								});
+
+								return match && (
+									// ...
+								);
+							}
+
+			Testing:
+				// Tip: Render a Router and Route alongside the Components that are being tested to allow them to receive the Route Props.
+				// Tip: Inject Custom History and track it during the Test via createMemoryHistory().
+					import { createMemoryHistory } from 'history';
+
+					// Note: <current-path> is the Path with values for the Params.
+					const history = createMemoryHistory({ initialEntries: ['<current-path>'] });
+
+					<test-renderer>(
+						<Router history={history}>
+							// Note: <route-path> is the Path that defines the available Params for the Component.
+							<Route path={'<route-path>'} component={<Component>}/>
+						</Router>
+					)
+
+				// OR
+
+				// Tip: Stub Route Props directly into the Component.
+					const routeProps = {
+						history: [],
+						location: {
+							pathname: '<url-path>',
+							search: '?<query-param>=<value>& ... '
+						},
+						match: {
+							params: {
+								'<path-param>': <value>,
+								// ...
 							}
 						}
-					/>
+					}
 
-				// API React Hooks
-					import { 
-						useHistory,
-						useLocation,
-						useParams,
-						useRouteMatch
-					} from 'react-router';
+					// ...
 
-					const AppPage = () => {		
-						// useRouteMatch is useful to avoid rendering the Route component.
-						// Note: The Component should be rendered outside of the Switch Component.
+					<test-renderer>(
+						<Component {...routeProps} />
+					)
+
+		// >= v6:
+			Components:
+				Routes, Route, and Outlet:
+					import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+
+					const App = () => {
+						return (
+							<BrowserRouter>
+								// Note: Route definition order does not matter with the new Routes Component.
+								<Routes>
+									// Renders if it at least partially matches the Path.
+									<Route path="<route-path>/*" element={<AppPage />} />
+
+									// Renders only if the Path completely matches the Path.
+									<Route path="<route-path>" element={<AppPage />} />
+
+									// Nested Routes
+									// Note: Child Routes within are relative to the Parent Route's Path.
+									// Note: No need * at the <parent-route-path>.
+									<Route path="<parent-route-path>" element={<AppPage />}>
+										<Route path="<child-route-path>" element={<ChildPage />}>
+									</Route>
+								</Routes>
+							</BrowserRouter>
+						)
+					}
+
+					// ...
+
+					const AppPage = () => {
+						return (
+							<div>
+								// ...
+
+								// Specify where Child Routes should be rendered to:
+								<Outlet />
+
+								// Note: Nested Routes may be specified here instead, bypassing the need for <Outlet />
+								<Routes>
+									<Route path="<child-route-path>" element={<ChildPage />}>
+								</Routes>
+							</div>
+						)
+					}
+
+				Link: Components that change the Path and triggers the Routing Behavior.
+					// Switches the current Path to "/<route-path>".
+					// Note: <route-path> is prefixed with a "/".
+					<Link to="/<route-path>" />
+
+					// Pass in State which can be referenced via location.state:
+					<Link to="/<route-path>" state={{ <key>: <value>, ... }}/>
+
+					// When rendered within a Nested Context:
+						<Route path="<parent-route-path>" element={<AppPage />}>
+							<Route path="<child-route-path>" element={<ChildPage />} />
+							<Route path="<child-route-path>/*" element={<AllChildPage />} />
+						</Route>
+
+						// ...
+
+						const AppPage = () => {
+							return (
+								<div>
+									// Switches the current Path to "/<parent-route-path>/<child-route-path>" if rendered within a Parent Route:
+									<Link to="<child-route-path>" />
+								</div>
+							)
+						}
+
+						// ...
+
+						const ChildPage = () => {
+							return (
+								<div>
+									// Switches the current Path to "/<parent-route-path>":
+									<Link to=".." />
+								</div>
+							)
+						}
+
+						// ...
+
+						const AllChildPage = () => {
+							return (
+								<div>
+									// Switches the current Path to "/<parent-route-path>":
+									// Note: The * would cause AllChildPage to be picked up by deep Nested Routes, but .. will discard parts of the URL that are matched by *.
+									<Link to=".." />
+								</div>
+							)
+						}
+
+			API Interaction:
+				import {
+					useLocation,
+					useParams,
+					useNavigate,
+					useMatch,
+				} from "react-router"
+
+				// useParams: Get Path Params from current Route.
+					const App = () => (
+						<BrowserRouter>
+							<Routes>
+								<Route path="/:<path-param>" element={<AppPage />} />
+							</Routes>
+						</BrowserRouter>
+					)
+
+					// ...
+
+					const AppPage = () => {
+						let { <path-param> } = useParams()
+
+						// ...
+					}
+
+				// useNavigate:
+					// Note: Replaces useHistory in < v6.
+					const AppPage = () => {
+						let navigate = useNavigate();
+
+						const handleClick = () => {
+							// Direct Client to /<path>.
+							navigate("/<path>")
+
+							// Direct Client to the nth Path before the current Path, w.r.t the Client's History Stack.
+							navigate(-<n>)
+
+							// Direct Client to the nth Path after the current Path, w.r.t the Client's History Stack.
+							navigate(<n>)
+
+							// Redirect Client to /<path>.
+							navigate("/<path>", { replace: true })
+						}
+
+						// ...
+					}
+
+				// useMatch
+					// useMatch is useful to avoid rendering the Route component.
+					// Note: Replaces useRouteMatch from < v6.
+					const AppPage = () => {
 						let match = useRouteMatch({
-							path: '<path>',
-							strict: true,
-							sensitive: true
+							path: '<path>'
+							end: true, // Whether the <path> should match strictly.
+							caseSensitive: true // Whether <path>s with different casing should match.
 						});
 
 						return match && (
@@ -247,42 +441,15 @@ React-Router:
 						);
 					}
 
-		Testing:
-			// Tip: Render a Router and Route alongside the Components that are being tested to allow them to receive the Route Props.
-			// Tip: Inject Custom History and track it during the Test via createMemoryHistory().
-				import { createMemoryHistory } from 'history';
-
-				// Note: <current-path> is the Path with values for the Params.
-				const history = createMemoryHistory({ initialEntries: ['<current-path>'] });
+			Testing:
+				import { MemoryRouter, Routes, Route } from "react-router-dom"
 
 				<test-renderer>(
-					<Router history={history}>
-						// Note: <route-path> is the Path that defines the available Params for the Component.
-						<Route path={'<route-path>'} component={<Component>}/>
-					</Router>
-				)
-
-			// OR
-
-			// Tip: Stub Route Props directly into the Component.
-				const routeProps = {
-					history: [],
-					location: {
-						pathname: '<url-path>',
-						search: '?<query-param>=<value>& ... '
-					},
-					match: {
-						params: {
-							'<path-param>': <value>,
+					<MemoryRouter initialEntries={[ "<initial-path>", ... ]} />
+						<Routes>
 							// ...
-						}
-					}
-				}
-
-				// ...
-
-				<test-renderer>(
-					<Component {...routeProps} />
+						</Routes>
+					</MemoryRouter>
 				)
 
 	Commands:
