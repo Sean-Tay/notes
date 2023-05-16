@@ -118,8 +118,23 @@ Quarkus
 			io.quarkus:quarkus-rest-client-jackson: Dependency that adds jackson Processing Support for the above.
 				// application.properties
 					// Set the Rest Client that is registered under "<config-key>" to use Mutual TLS when communicating to other Service.
-					quarkus.rest-client."<config-key>".key-store
-					quarkus.rest-client."<config-key>".key-store-password
+						// Key Store Properties: Determines Cert to submit to other Service for verification.
+							quarkus.rest-client."<config-key>".key-store
+							quarkus.rest-client."<config-key>".key-store-password
+
+						// Trust Store Properties: Determines Cert used to verify Cert received from other Service.
+							quarkus.rest-client."<config-key>".trust-store
+							quarkus.rest-client."<config-key>".trust-store-password
+							// OR
+							// Note: This will affect all Rest Clients.
+							quarkus.tls.trust-all=true
+
+						// Hostname Verifier Properties
+							quarkus.rest-client."<config-key>".hostname-verifier=<class-name>
+							// OR
+							quarkus.rest-client."<config-key>".hostname-verifier=io.quarkus.restclient.NoopHostnameVerifier
+							// OR
+							quarkus.rest-client."<config-key>".verify-host=false
 
 					// Set the Rest Client that is registered under "<config-key>" to query this URL to communicate with the other Service.
 					quarkus.rest-client."<config-key>".url
