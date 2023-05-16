@@ -144,13 +144,13 @@ Quarkus
 					// Note: Use org.eclipse.microprofile.rest.* Annotations here.
 
 					// Interceptor: Use a Client Interceptor to intercept a Request before it is sent to the external Service Endpoint, and a Response before it is returned to our Application.
-						// Declare a custom Interceptor NameBinding Annotation to enforce that an Interceptor should only be used on Clients / Client Methods annotated with @<interceptor-binder-name>.
+						// Declare a custom Interceptor NameBinding Annotation to enforce that an Interceptor should only be used on Clients / Client Methods annotated with @<interceptor-name-binding>.
 						// Note: Without this, the Interceptor would by default act on all Clients in the Application.
 						@NameBinding
 						@Retention(AnnotationRetention.RUNTIME)
-						annotation class <interceptor-binder-name>
+						annotation class <interceptor-name-binding>
 
-						@<interceptor-binder-name>
+						@<interceptor-name-binding>
 						class <interceptor-name>: ClientRequestFilter, ClientResponseFilter {
 							// ...
 						}
@@ -159,7 +159,7 @@ Quarkus
 						// Specify that the Client is to be a Singleton, managed by the CDI Container throughout the lifecycle of the Application.
 						@ApplicationScoped
 						@RegisterRestClient(configKey = "<config-key>")
-						@<interceptor-binder-name>
+						@<interceptor-name-binding>
 						interface <client-name> {
 							// Specify an external Service Endpoint that is callable by the Application.
 							@<uppercase-http-verb>
@@ -181,6 +181,11 @@ Quarkus
 							// ...
 						}
 
+			io.quarkus:quarkus-rest-client-reactive: Reactive variant of quarkus-rest-client.
+			io.quarkus:quarkus-rest-client-reactive-jackson: Reactive variant of quarkus-rest-client-jackson.
+				// Differences v.s. non-Reactive variants:
+					// Setting the url for Rest Clients is necessary during Testing (just set it to a dummy value in the Test Configuration Profile).
+
 			io.quarkus:quarkus-resteasy: Dependency that adds support for exposing RESTful APIs.
 			io.quarkus:quarkus-resteasy-jackson: Dependency that adds jackson Processing Support for the above.
 				// application.properties
@@ -197,23 +202,23 @@ Quarkus
 					val RESOURCE_PATH_REGEX = "$RESOURCE_PATH/.*".toRegex()
 
 					// Interceptor: Use an Interceptor to intercept a Request before it reaches a Resource Endpoint, or a Response before it gets sent back to the User-Agent.
-						// Declare a custom Interceptor NameBinding Annotation to enforce that an Interceptor should only be used on Resources / Resource Methods annotated with @<interceptor-binder-name>.
+						// Declare a custom Interceptor NameBinding Annotation to enforce that an Interceptor should only be used on Resources / Resource Methods annotated with @<interceptor-name-binding>.
 						// Note: Without this, the Interceptor would by default act on all Resources in the Application.
 						@NameBinding
 						@Retention(AnnotationRetention.RUNTIME)
-						annotation class <interceptor-binder-name>
+						annotation class <interceptor-name-binding>
 
-						@<interceptor-binder-name>
+						@<interceptor-name-binding>
 						// Register the Interceptor with the JAX-RS Runtime.
 						@Provider
 						class <interceptor-name>(
-							@RestClient val <service-name>: <client-name>,
+							@RestClient var <service-name>: <client-name>,
 							// ...
 						): ContainerRequestFilter, ContainerResponseFilter {
 							// Alternative to setting the Rest Client in the Constructor:
 							@Inject
 							@RestClient
-							lateinit val <service-name>: <client-name>
+							lateinit var <service-name>: <client-name>
 
 							// Request Interceptor: Intercept Requests before they are passed to the Resource Endpoint.
 							override fun filter(requestContext: ContainerRequestContext?) {
@@ -268,16 +273,16 @@ Quarkus
 						}
 
 					// Resource:
-						@<interceptor-binder-name>
+						@<interceptor-name-binding>
 						@Path(RESOURCE_PATH)
 						class <resource-name>(
-							@RestClient val <service-name>: <client-name>,
+							@RestClient var <service-name>: <client-name>,
 							// ...
 						) {
 							// Alternative to setting the Rest Client in the Constructor:
 							@Inject
 							@RestClient
-							lateinit val <service-name>: <client-name>
+							lateinit var <service-name>: <client-name>
 
 							@<uppercase-http-verb>
 							@Path("/<value>/{<path-param>}/...")
@@ -312,7 +317,88 @@ Quarkus
 							}
 						}
 
-			io.quarkus:quarkus-junit5-mockito: Dependency that allows for Mocking during Testing.
+			io.quarkus:quarkus-resteasy-reactive: Reactive variant of quarkus-resteasy.
+			io.quarkus:quarkus-resteasy-reactive-jackson: Reactive variant of quarkus-resteasy-jackson.
+				// Differences v.s. non-Reactive variants:
+					// Interceptors: Use @ServerRequestFilter and @ServerResponseFilter Annotations instead of implementing ContainerRequestFilter and ContainerResponseFilter.
+						// ...
+
+						// Note: Need @ApplicationScoped Annotation here.
+						@ApplicationScoped
+						// Register the Interceptor with the JAX-RS Runtime.
+						@Provider
+						class <interceptor-name>(
+							@RestClient var <service-name>: <client-name>,
+							// ...
+						) {
+							// Note: No need for @Inject.
+							// Alternative to setting the Rest Client in the Constructor:
+							@RestClient
+							lateinit var <service-name>: <client-name>
+
+							// Request Interceptor: Intercept Requests before they are passed to the Resource Endpoint.
+							// Note: Parameter List can be populated with more Arguments than just requestContext; check Documentation for details.
+							@<interceptor-name-binding>
+							@ServerRequestFilter
+							fun filterRequest(requestContext: ContainerRequestContext?) {
+								// ...
+							}
+
+							// Response Interceptor: Intercept Responses before they are passed to the User-Agent.
+							// Note: Parameter List can be populated with more Arguments than just requestContext and responseContext; check Documentation for details.
+							@<interceptor-name-binding>
+							@ServerResponseFilter
+							fun filterResponse(requestContext: ContainerRequestContext, responseContext: ContainterResponseContext) {
+								// ...
+							}
+						}
+
+					// Resources: Different Annotations used in Endpoint Function Params.
+						// ...
+
+						// Note: Need @ApplicationScoped Annotation here.
+						@ApplicationScoped
+						@<interceptor-name-binding>
+						@Path(RESOURCE_PATH)
+						class <resource-name>(
+							@RestClient var <service-name>: <client-name>,
+							// ...
+						) {
+							@Inject
+							lateinit var requestContext: ContainerRequestContext
+
+							// Note: No need for @Inject.
+							// Alternative to setting the Rest Client in the Constructor:
+							@RestClient
+							lateinit var <service-name>: <client-name>
+
+							@<uppercase-http-verb>
+							@Path("/<value>/{<path-param>}/...")
+							@Produces(MediaType.<media-type>)
+							fun <fun-name>(
+								// Tip: The arguments defined in a Resource's Function allow the Framework to feed in the associated values in the Client's Request to our Function to be read.
+								@RestPath("<path-param>") <path-param-variable>: <path-param-type>,
+								@RestQuery("<query-param>") <query-param-variable>: <query-param-type>,
+
+								// Receive HTTP Request Headers when the Request is marshalled here.
+								@RestHeader("<http-header>") <http-header-variable>: <http-header-variable-type>,
+
+								// Read Cookies attached to the HTTP Request by the User-Agent.
+								// Note: Doesn't seem to account for HTTP Headers added in ContainerRequestFilters; attach the Cookie to a property on the ContainerRequestContext and inject it into the Resource instead.
+								@RestCookie("<cookie-key>") <cookie-value-variable>: <cookie-value-type>,
+
+								// ...
+
+								payload: JsonNode
+							): Response {
+								// ... requestContext ...
+
+								// ...
+							}
+						}
+
+			io.quarkus.quarkus-junit5: JUnit Testing Framework.
+			io.quarkus:quarkus-junit5-mockito: Dependency that allows for Mocking during Testing via JUnit.
 			org.mockito.kotlin:mockito-kotlin:4.1.0
 			io.rest-assured:rest-assured: Dependency that faciliates Testing of RESTful Web Services.
 				// Example Test Class:
@@ -368,6 +454,7 @@ Quarkus
 			io.mockk:mockk:1.13.4
 
 			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Dependency for integrating a Web UI with a Quarkus Server.
+				// Note: SPA Routing incompatible with non-Reactive quarkus-rest-client and quarkus-resteasy Dependencies; use quarkus-rest-client-reactive and quarkus-resteasy-reactive instead.
 
 		Syntax:
 			// Getting Configuration Properties via MicroProfile Config Annotations:
