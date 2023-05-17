@@ -1,21 +1,44 @@
 Quarkus
 	Abbreviations:
 		META-INF: Meta Information.
+
+		CDI: Contexts and Dependendency Injection.
 	
 	Description: Java Stack for creating Applications tailored to run on a OpenJDK HotSpot (Java) or GraalVM (Native) Container within a Kubernetes (Container-Based) Environment.
 	
 	Resources: 
 	
 	Concepts:
-		OpenJDK Hotspot: High Performance VM for running Java Applications.
-		GraalVM: High Performance VM for running Applications written in different languages.
+		Bean: An Object managed by the Quarkus Container that can be injected into other Components as part of Dependency Injection.
+			Scope: An Annotation that denotes the lifespan of the Bean, and the degree by which it is shareable between Components.
+
+		Quarkus Container: The entity in Quarkus responsible for providing a Runtime Environment for the Application, and managing its lifecycle and its Components - creating and destroying Beans as needed.
+
+		CDI: Java EE-related API that provides a framework for managing the dependencies between Components in an Application. It faciliates Dependency Injection via Annotations (e.g. @Inject), and is responsible for instructing the Quarkus Container on when to create and destroy a Bean Instance based on its Scope.
+			Injection Point: The location at which a Bean Instance is to be injected into a Class (typically denoted via the @Inject Annotation).
+				Qualifiers: Additional Specification for a Bean and Injection Point to allow for more precise matching in the case where there's multiple existing Beans of the same Type.
+
+			Interceptors: Components that allow for the addition of behaviour before or after the invocation of a Bean's Method or Lifecycle Event.
+
+			Decorators: Allows extension of existing Beans without modification of the Bean's Code.
 
 		META-INF: Directory that traditionally contains Meta-Information about the jar File being generated.
 		META-INF.resources: Directory that would contain Static Assets to be served when the Quarkus Application is running.
 
 		uber-jar: Contains all the Dependencies needed to run the Application within.
+
+		OpenJDK Hotspot: High Performance VM for running Java Applications.
+		GraalVM: High Performance VM for running Applications written in different languages.
 	
 	Details:
+		Application Lifecycle:
+			The Quarkus Container starts up the Application and initializes all Components, including Beans.
+
+			CDI manages the Dependencies used within Components, injecting the Beans Instances into Injection Points where needed.
+				Injection of a Bean into an Injection Point can only be done when the Bean's Type and Qualifier matches the one at the Injection Point; if there are none, an UnsatisfiedResolutionException is thrown; if there are multiple, an AmbiguousResolutionException is thrown.
+
+			Depending on the Scope of the Bean Instance, it is either preserved or maintained once the Component is done with the Bean Instance to save on Memory.
+
 		Typical Template Project Structure:
 			// <module>
 				// build
@@ -83,6 +106,164 @@ Quarkus
 					// <filpath-property>=classpath:<filepath-value>
 
 					// %<profile>.<key>.<subKey> ... <subKey>=<value>
+
+		Syntax:
+			// Basic Class Bean:
+				@<scope-annotation>
+				class <bean-name> {
+					@Inject
+					lateinit var <injected-bean>: <bean-type>
+
+					// ...
+				}
+
+				<scope-annotation>
+					@ApplicationScoped: A Single Bean Instance is lazily created for the duration of the Application and shared amongst all Injection Points. Creation occurs whenever a method of the Bean is invoked.
+					@Singleton: A Single Bean Instance is eagerly created for the duration of the Application and shared amongst all Injection Points. Note: These cannot be mocked by QuarkusMock during Testing.
+					@Dependent: A Bean Instance is created for each Injection Point separately; no sharing occurs between Injection Points. It lasts as long as the owning Bean Instance lasts.
+					@RequestScoped: A Bean Instance is created for the current Request.
+
+			// Class Bean with Constructor Injection:
+				@<scope-annotation>
+				class <bean-name> @Inject constructor (
+					private val <injectable-bean-variable>: <injectable-bean-type>
+					// ...
+				) {
+					// ...
+				}
+
+			// Class Bean with Initializer Methods:
+				@<scope-annotation>
+				class <bean-name> {
+					lateinit var <bean-ref>: <bean-type>
+
+					@Inject
+					fun <initializer-name>( <bean>: <bean-type>, ... ) {
+						<bean-ref> = <bean>
+						// ...
+					}
+
+					// ...
+				}
+
+			// Qualifiers:
+				@Qualifier
+				@Retention(RUNTIME)
+				@Target({METHOD, FIELD, PARAMETER, TYPE})
+				annotation class <qualifier-name>
+
+				// Qualified Bean: Can only be used at Injection Points with the same Qualifier.
+					@<qualifier-name>
+					@<scope-annotation>
+					class <bean-name> {
+						// ...
+					}
+
+				// ... 
+
+				// Usage:
+					@<scope-annotation>
+					class <another-bean-name> {
+						@<qualifier-name>
+						@Inject
+						lateinit var <bean-ref>: <bean-name>
+
+						// ...
+					}
+
+			// Interceptors:
+				@InterceptorBinding
+				@Retention(AnnotationRetention.RUNTIME)
+				@Target({TYPE, METHOD, CONSTRUCTOR}) 
+				[@Inherited]
+				annotation class <interceptor-name>
+
+				// Implementation:
+					@<interceptor-name>
+					// Note: <number> denotes the order in which the Interceptor will run w.r.t the chain. Lower = Higher Priority.
+					@Priority(<number>)
+					@Interceptor
+					class <interceptor-class-name> {
+						@Inject
+						lateinit var <depedency>: <type>
+
+						// ...
+
+						// Denotes a method that imposes on the Target's Method Invocation.
+						@AroundInvoke
+						fun <interceptor-method-name>(context: InvocationContext): Object {
+							// Logic before next Interceptor / Target Invocation
+
+							val ret = context.proceed()
+
+							// Logic after next Interceptor / Target Invocation
+
+							return ret
+						}
+					}
+
+				// Usage:
+					@<interceptor-name>
+					@<scope-annotation>
+					class <bean-name> {
+						fun <method-name>() {
+							// Will trigger <interceptor-method-name> when <method-name> is invoked.
+						}
+					}
+
+			// Decorators:
+				interface <interface-bean-name> {
+					fun <bean-method>( ... )
+				}
+
+				// Note: <number> denotes the order in which the Decorator will run w.r.t the chain. Lower = Higher Priority.
+				@Priority(<number>)
+				@Decorator
+				class <decorated-bean-name>: <interface-bean-name> {
+					@Inject
+					lateinit var <dependency>: <type>
+
+					@Inject
+					@Any
+					@Delegate
+					private val <delegate-bean>: <interface-bean-name>
+
+					override fun <bean-method>( ... ) {
+						<delegate-bean>.<bean-method>( ... )
+						
+						// ...
+					}
+				}
+
+			// Events: Enables Communication between two or more Beans.
+				class <event-name> ( ... ) {
+					// ...
+				}
+
+				@<scope-annotation>
+				class <bean-name> {
+					@Inject
+					lateinit var <event-driver>: Event<<event-name>>
+
+					fun <method-name>() {
+						// ...
+
+						<event-driver>.fire(<event-name>( ... ))
+
+						// ...
+					}
+				}
+				
+				// ...
+
+				@<scope-annotation>
+				class <observing-bean-name> {
+					fun <observing-method-name>(
+						@Observes <event-ref>: <event-name>
+					) {
+						// Executes when <method-name> fires the <event-name> Event.
+					}
+				}
 
 		Non-Default Dependencies:
 			io.quarkus:quarkus-smallrye-health: Dependency that adds Liveness and Readiness Endpoints for a Quarkus Application.
@@ -156,7 +337,6 @@ Quarkus
 						}
 
 					// Client
-						// Specify that the Client is to be a Singleton, managed by the CDI Container throughout the lifecycle of the Application.
 						@ApplicationScoped
 						@RegisterRestClient(configKey = "<config-key>")
 						@<interceptor-name-binding>
@@ -323,7 +503,6 @@ Quarkus
 					// Interceptors: Use @ServerRequestFilter and @ServerResponseFilter Annotations instead of implementing ContainerRequestFilter and ContainerResponseFilter.
 						// ...
 
-						// Note: Need @ApplicationScoped Annotation here.
 						@ApplicationScoped
 						// Register the Interceptor with the JAX-RS Runtime.
 						@Provider
@@ -356,7 +535,6 @@ Quarkus
 					// Resources: Different Annotations used in Endpoint Function Params.
 						// ...
 
-						// Note: Need @ApplicationScoped Annotation here.
 						@ApplicationScoped
 						@<interceptor-name-binding>
 						@Path(RESOURCE_PATH)
