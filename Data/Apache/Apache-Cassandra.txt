@@ -1,0 +1,16 @@
+Apache Cassandra:
+	Abbreviations:
+	
+	Description: Open Source Distributed Wide Column Database.
+	
+	Resources:
+	
+	Concepts:
+		
+	
+	Details:
+		
+	
+	Commands:
+		
+	

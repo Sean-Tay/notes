@@ -602,11 +602,8 @@ Quarkus
 							// Assert via RestAssured
 							given()
 								// Section to configure Test Request
-									// Check that Header is set:
+									// Set <http-header> to a <http-header-value>:
 									.header(<http-header>, <http-header-value>)
-
-									// Check that Header is not set:
-									.header(<http-header>, Matchers.nullValue())
 
 
 									// Assert Request Body Content:
@@ -620,6 +617,12 @@ Quarkus
 								// Section to configure Expected Response
 									// Assert Response has particular Status Code:
 									.statusCode(<value>)
+
+									// Check that <http-header> is set to a <http-header-value>:
+									.header(<http-header>, <http-header-value>)
+
+									// Check that <http-header> is not set:
+									.header(<http-header>, Matchers.nullValue())
 
 									// Assert Response Body Content:
 									.body(
