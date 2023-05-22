@@ -295,6 +295,12 @@ CSS:
 								/* Determine how space between multiple 'lines' of the Main Axis is distributed along the Cross Axis. */
 								align-content: <'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-evenly'>
 
+								/* Determine spacing between multiple 'lines' of the Main Axis along the Cross Axis. */
+								row-gap: <number>;
+
+								/* Determine spacing between multiple 'lines' of the Main Axis along the Cross Axis. */
+								column-gap: <number>;
+
 							/* Children-Defined Rules */
 								/* Determine Child's order of appearance w.r.t Main Axis. */
 								order: <number>;
