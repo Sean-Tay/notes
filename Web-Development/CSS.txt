@@ -359,7 +359,7 @@ CSS:
 
 					// ...
 
-					overflow-y: scroll;
+					overflow-y: auto;
 
 			Font Configuration:
 				text-size-adjust: none; // Ensures that the Browser doesn't automatically inflate Text that is too small, making font-size specifications the Single Source of Truth.
