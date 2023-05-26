@@ -359,7 +359,11 @@ CSS:
 
 					// ...
 
-					overflow-y: auto;
+					overflow-y: { scroll | overlay | auto };
+						// scroll: 	Permanently shows the Scrollbar, even if content is not scrollable.
+						// auto: 	Shows the Scrollbar only when necessary, but shifts content.
+						// overlay: Shows the Scrollbar only when necessary, but on top of content.
+							// overlay might be deprecated. Use scrollbar-gutter: stable both-edges as an alternative.
 
 			Font Configuration:
 				text-size-adjust: none; // Ensures that the Browser doesn't automatically inflate Text that is too small, making font-size specifications the Single Source of Truth.
