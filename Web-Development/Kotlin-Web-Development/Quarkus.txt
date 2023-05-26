@@ -111,6 +111,7 @@ Quarkus
 			// Basic Class Bean:
 				@<scope-annotation>
 				class <bean-name> {
+					// Note: Try to avoid injection into a Private Variable as this will require CDI to use Reflection internally, resulting in less performance.
 					@Inject
 					lateinit var <injected-bean>: <bean-type>
 
@@ -376,6 +377,7 @@ Quarkus
 
 				// Example Resource:
 					// Note: Use javax.* Annotations here as they can accommodate for different JAX-RS implementations.
+						// Note: Switch to jakarta.* Annotations for Quarkus 3.0 and above.
 					// Note: Use org.eclipse.microprofile.rest.* Annotations here.
 
 					private const val RESOURCE_PATH = "/<value>"
@@ -562,7 +564,6 @@ Quarkus
 								@RestHeader("<http-header>") <http-header-variable>: <http-header-variable-type>,
 
 								// Read Cookies attached to the HTTP Request by the User-Agent.
-								// Note: Doesn't seem to account for HTTP Headers added in ContainerRequestFilters; attach the Cookie to a property on the ContainerRequestContext and inject it into the Resource instead.
 								@RestCookie("<cookie-key>") <cookie-value-variable>: <cookie-value-type>,
 
 								// ...
