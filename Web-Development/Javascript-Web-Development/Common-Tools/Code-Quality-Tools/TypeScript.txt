@@ -502,9 +502,6 @@ Typescript:
 						// ...
 					}
 
-				// The Type for the children argument passed in via Component Props should be specified as React.ReactNode.
-				// children?: React.ReactNode
-
 				// Forwarding Refs
 				const component = React.forwardRef<<html-element-tag-type>, <component-prop-type>>(
 					(props, ref) => { 
@@ -513,6 +510,7 @@ Typescript:
 				);
 
 				// Useful Types:
+					React.PropsWithChildren<<component-props>>: To specify the Type for Component Props with Children. Keep only one set of Angled Brackets.
 					React.ComponentPropsWithoutRef<'<html-element-tag-type>'>: For default attributes available to Components / native HTML DOM Elements. The Quotes are required.
 
 					React.FC<<component-props>>: To specify the Type for a Function Component. Keep only one set of Angled Brackets.
