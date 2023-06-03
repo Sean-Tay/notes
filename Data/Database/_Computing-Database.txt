@@ -248,21 +248,29 @@ Database
 											The Operation Order can be traced in real-time.
 
 						Types:
-							Synchronous: Writes not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
+							Synchronous: Writes are not considered successful until all Instances in the Cluster completes the Write Transaction. Strong Consistency, but slower Speed.
+								If one Instance is not reachable, the Write will be delayed until it is reachable again.
 
-							Asynchronous: Writes considered successful when the Instance that was assigned the Write Transaction completes it. Faster Speed, but Clients may get stale / inconsistent Reads due to Eventual Consistency.
+							Asynchronous: Writes are considered successful when the Instance that was assigned the Write Transaction completes it. Faster Speed, but Clients may get stale / inconsistent Reads due to Eventual Consistency.
 								Server / Database should simply return the written Data back to the Client that triggered the Write upon Success, or Read only from Leaders for editable Data (Read My Write Consistency).
 								Each Client should only refer to one Instance for updates throughout the operation (Consistent-Prefix + Monotonic Reads Consistency), as different Replicas synchronize with a particular Write at different Speeds (Back-in-Time syndrome).
 								Writes with Casual Relationships should ideally happen on the same Disk Partition (Consistent Prefix Reads), otherwise they might not make sense when they are Read (different Read Speeds for different Disk Partitions).
+
+							Semi-Synchronous: Writes are considered successful only after updates are propagated to at least one other Replica via Synchronous Replication - this offers a good balance between Speed and Consistency.
+
+							Chain-Replication
+
+						Replication Log:
+							Implementation:
+								SQL Statements (for Relational Databases): Not ideal as SQL Statements can be non-deterministic (e.g. reference Current Time, which can be different per Replica).
+								Write-Ahead Log Shipping: Describes which Bytes were changed. Not ideal as different Instances might have the affected Data in different Locations, and Rolling Upgrades (running different Database Engine versions amongst Replicas in the same Cluster) might not be possible.
+								Logical Log: Describes which Data was modified and how. Better future-proofing if underlying Database Engine changes.
+								Trigger-based Application Handling: Handle the Replciation at the Application Layer and not via the Database Engine. This can be done via Triggers, which execute supplied Application Code whenever a Write Operation is executed by the Database Engine. However, this typically incurs large overheads.
 
 						Strategies:
 							Single-Leader: All Writes to one Leader. Reads can come from any Replica (Follower / Leader) in the Cluster.
 								Characteristics:
 									Leader sends list of updates to other Followers via a Replication Log.
-										Implementation:
-											SQL Statements (for Relational Databases): Not ideal as SQL Statements can be non-deterministic (e.g. reference Current Time, which can be different per Replica).
-											Internal Append-only Log: Describes which Bytes were changed. Not ideal as different Instances might have the affected Data in different Locations.
-											Logical Log: Describes which Data was modified and how. Better future-proofing if underlying Database Engine changes.
 
 									Adding a Follower: Initialize the Follower with a consistent snapshot of the Data in the Leader (associated with some position in the Replication Log), and then update to the latest State via the Replication Log.
 
