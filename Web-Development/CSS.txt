@@ -181,10 +181,7 @@ CSS:
 
 				contain-intrinsic-size: <size>; // Denote the natural size of the Element, if under the effects of the Size CSS Containment.
 
-			Transition Effects:
-				transition: <css-prop> <transition-curve> <duration>, ... ;
-
-			Hiding an Element:
+			Element Visibility:
 				display: none 		- The HTML DOM Element is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
 
 				content-visibility: hidden - The HTML DOM Element is created. It is not placed into the Document Flow, and other neighbouring Elements will take its place.
@@ -196,6 +193,9 @@ CSS:
 				opacity: 0			- The HTML DOM Element is created. It is placed into the Document Flow, and is invisible. It can still receive Events.
 					user-select: none - Can be additionally specified to prevent Element from being selectable by User.
 					pointer-events: none - Can be additionally specified to prevent Element from receiving Mouse Events. Useful for transition Effects.
+
+			Transition Effects:
+				transition: <css-prop> <transition-curve> <duration>, ... ;
 
 			Arrangement:
 				position: Specify how the Element is to interpret its Positional Specifications.
@@ -327,66 +327,80 @@ CSS:
 									/* Note: On Safari, setting height: 100% will not cause the Child to fill remaining vertical space correctly in a nested Flex context (2 or more Levels). Specify height: 0 and flex-grow: 1 instead. */
 									/* Note: On Safari, set flex-shrink: 0 to ensure Child does not shrink beyond the minimum Height in a nested column-direction Flex context (2 or more Levels). */
 
-			Alternative to Element Borders:
-				// Note: Cannot support Rounded Corners.
-				// Note: Cannot support Borders only on individual sides.
-				outline: <thickness> <line-style> <color>;
+			Recipes:
+				Centering w.r.t Parent Dimensions:
+					// Useful for Loading Indicators.
 
-				box-shadow: inset <x-offset> <y-offset> <blur> <color>;
+					Parent:
+						position: relative;
 
-			Optimal Vertical Scroll Setup:
-				// Child Stretches, whilst accounting for Parent Padding.
+					Child:
+						position: absolute;
+						top: 50%;
+						left: 50%;
 
-				Parent:
-					height: 100%; // Ensure body has 100vh set.
-					
-					// If in a Flex Context:
-						flex-grow: 1;
+						transform: translate(-50%, -50%);
 
-						height: 0;
+				Alternative to Element Borders:
+					// Note: Cannot support Rounded Corners.
+					// Note: Cannot support Borders only on individual sides.
+					outline: <thickness> <line-style> <color>;
+
+					box-shadow: inset <x-offset> <y-offset> <blur> <color>;
+
+				Optimal Vertical Scroll Setup:
+					// Child Stretches, whilst accounting for Parent Padding.
+
+					Parent:
+						height: 100%; // Ensure body has 100vh set.
+						
+						// If in a Flex Context:
+							flex-grow: 1;
+
+							height: 0;
+							min-height: 0;
+
+						display: flex;
+						flex-direction: column;
+						justify-content: stretch;
+
+					Child:
 						min-height: 0;
+						height: 100%;
 
-					display: flex;
-					flex-direction: column;
-					justify-content: stretch;
+						display: flex;
+						flex-direction: column;
 
-				Child:
-					min-height: 0;
-					height: 100%;
+						// ...
 
-					display: flex;
-					flex-direction: column;
+						overflow-y: { scroll | overlay | auto };
+							// scroll: 	Permanently shows the Scrollbar, even if content is not scrollable.
+							// auto: 	Shows the Scrollbar only when necessary, but shifts content.
+							// overlay: Shows the Scrollbar only when necessary, but on top of content.
+								// overlay might be deprecated. Use scrollbar-gutter: stable both-edges as an alternative.
 
-					// ...
+				Font Configuration:
+					text-size-adjust: none; // Ensures that the Browser doesn't automatically inflate Text that is too small, making font-size specifications the Single Source of Truth.
 
-					overflow-y: { scroll | overlay | auto };
-						// scroll: 	Permanently shows the Scrollbar, even if content is not scrollable.
-						// auto: 	Shows the Scrollbar only when necessary, but shifts content.
-						// overlay: Shows the Scrollbar only when necessary, but on top of content.
-							// overlay might be deprecated. Use scrollbar-gutter: stable both-edges as an alternative.
+				Optimal Text Ellipsis Setup:
+					// Single-Line:
+						// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
+							min-width: auto;
 
-			Font Configuration:
-				text-size-adjust: none; // Ensures that the Browser doesn't automatically inflate Text that is too small, making font-size specifications the Single Source of Truth.
+						display: block;
+						width: calc(100%); // The Element must have a fixed width, but the calc method can derive a hard px value.
+						overflow-x: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
 
-			Optimal Text Ellipsis Setup:
-				// Single-Line:
-					// Note: Children should not have a Flex Parent, otherwise they will be configured to not shrink past their content.
-						min-width: auto;
-
-					display: block;
-					width: calc(100%); // The Element must have a fixed width, but the calc method can derive a hard px value.
-					overflow-x: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-					padding-right: <value>; // In case the Ellipsis is not appearing soon enough.
-
-				// Multiple-Lines:
-					// Note: This should be directly applied to the containing Block Level Element.
-					    display: -webkit-box;
-						-webkit-box-orient: vertical;
-					    width: <value>;
-    					overflow: hidden;
-    					-webkit-line-clamp: <number>; // Number of Lines to truncate at.
+					// Multiple-Lines:
+						// Note: This should be directly applied to the containing Block Level Element.
+							display: -webkit-box;
+							-webkit-box-orient: vertical;
+							width: <value>;
+							overflow: hidden;
+							-webkit-line-clamp: <number>; // Number of Lines to truncate at.
 
 		Notable Packages:
 			Node:
