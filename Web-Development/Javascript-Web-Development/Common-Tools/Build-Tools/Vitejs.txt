@@ -143,11 +143,22 @@ Vitejs
 					test: {
 						globals: true,
 						environment: 'jsdom',
+						globalSetup: '<globalSetupFile>.js',
 						setupFiles: '<setupTestFile>.js',
 					}
 				})
 				
 				// ...
+				
+				// <globalSetupFile>.js
+					export const setup = () => {
+						// Fix JS Date Timezone here so that Unit Tests involving Date Parsing is consistent across locations.
+						process.env.TZ = "Asia/Singapore"
+
+						// OR
+
+						process.env.TZ = "Etc/UTC"
+					}
 
 				// <setupTestFile>.js
 					import { expect, afterEach, vi } from 'vitest'
@@ -155,6 +166,10 @@ Vitejs
 					import matchers from @testing-library/jest-dom/matchers'
 
 					expect.extend(matchers)
+
+					before(() => {
+						// Fix DateTime Library Timezone so that Unit Tests involving Date Parsing is consistent across locations.
+					})
 
 					afterEach(() => {
 						vi.useRealTimers()
