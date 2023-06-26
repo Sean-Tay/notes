@@ -796,6 +796,8 @@ Database
 							Apache Cassandra: Implementation with emphasis on Scalability and Fault Tolerance.
 								Uses Timestamps to measure ordering of Events; recommends keeping Servers updated with NTP as much as possible.
 
+							ScyllaDB: Faster, Sharded Alternative to Apache Cassandra.
+
 					Time-Series Database: Specialized for storing, querying and indexing Data generated at fixed intervals, or at discrete points in time.
 						Characteristics:
 							Prioritises Write (Create) Performance - LSM Trees for Primary Index.
