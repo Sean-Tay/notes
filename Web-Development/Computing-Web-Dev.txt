@@ -45,7 +45,8 @@ Web Dev:
 		CMS:					Traditional Architectural Pattern for Web Projects. Involves the Server actively rendering any custom UI per API Request. 
 		JAMStack:				Modern Architectural Pattern for Web Projects. Involves Pre-Compilation of the Web Application into Static Assets which can then be deployed to CDNs for quick delivery to Clients.
 
-		URL:					A String that specifies the location of a Resource / Site / Service on the Web. Consists of:
+		URI: 					A String that specifies the location of a Resource / Site / Service.
+		URL:					A Web-specific URI. Consists of:
 			Protocol:			The Protocol used to specify the communication mode with the Server.
 			Host and Domain:	The Entity that the Server is running on, and the Administrative Space the Entity is in.
 			Port:				The Network Port used to interact with the Server Process that is running on the Host.
