@@ -305,7 +305,7 @@ Webpack.js
 					// Enable the requesting of resources from Webpack Dev Server to other Servers.
 					proxy: {
 						// <request-path>: (Path + Query).
-						// <true-origin-path>: Actual Origin to prepend to the <request-path>.
+						// <true-origin-url>: (Protocol + Host + Domain + Port + Path + Query)
 
 						'<request-path>': '<true-origin-path>',
 						'<request-path>': {

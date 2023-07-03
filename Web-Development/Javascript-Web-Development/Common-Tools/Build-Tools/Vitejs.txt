@@ -86,22 +86,35 @@ Vitejs
 							// Enable the requesting of resources from Local Server to other Servers.
 							proxy: {
 								// <request-path>: (Path + Query).
-								// <true-origin-path>: Actual Origin to prepend to the <request-path>.
+								// <true-origin-url>: (Protocol + Host + Domain + Port + Path + Query)
 
 								'/<request-path>': '<true-origin-path>',
-
-								// OR
-
 								'/<request-path>': {
 									target: '<true-origin-path>',
 									changeOrigin: true, // For Resources on different Domains / Ports
 									secure: true | false, // Depends on HTTP Protocol / BE Logic used
 
-									rewrite: (path) => path.replace('/^\/<request-path>/', '<new-path>')
+									rewrite: (path) => path.replace(/^\/<request-path>/, '<true-origin-url>/<request-path>')
+									// ...
+							},
+						}
 
-									ws: true, // For proxying WebSockets
-								}
-							}
+						// Preview Options when using Vite to preview Production Build.
+						preview: {
+							// Enable the requesting of resources from Local Preview Server to other Servers.
+							proxy: {
+								// <request-path>: (Path + Query).
+								// <true-origin-url>: (Protocol + Host + Domain + Port + Path + Query)
+
+								'/<request-path>': '<true-origin-path>',
+								'/<request-path>': {
+									target: '<true-origin-path>',
+									changeOrigin: true, // For Resources on different Domains / Ports
+									secure: true | false, // Depends on HTTP Protocol / BE Logic used
+
+									rewrite: (path) => path.replace(/^\/<request-path>/, '<true-origin-url>/<request-path>')
+									// ...
+							},
 						}
 
 						// vitest Configuration
