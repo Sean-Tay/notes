@@ -34,6 +34,9 @@ Vitejs
 
 			Vitest:
 				Originally designed for Vue Projects, it can replace Jest (and Babel) for faster execution and a friendlier Developer Experience.
+					// Compatibility Issues:
+						userEvent.click in react-testing-library does not work with vi.useFakeTimers(). See: https://github.com/testing-library/react-testing-library/issues/1197
+
 					// Differences:
 						// For Concurrent Unit Tests, the 'expect' attached to the Test Context must be used:
 							describe.concurrent(
