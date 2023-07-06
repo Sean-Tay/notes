@@ -47,7 +47,19 @@ Vitejs
 						// Mocking: vi Object
 							import { vi } from 'vitest'
 
-							// vi.fn( ... )
+							// Functions:
+								// vi.fn( ... )
+
+							// Module Dependencies:
+								// Note: <path> can be relative w.r.t current File.
+								import { <dependency> } from '<path>'
+
+								vi.mock('<path>', () => ({
+									<dependency>: vi.fn()
+								}))
+
+								// ...
+								// expect(<dependency>).toHaveBeenCalled()
 
 				Detects Test Files following the '*.test.{j|t}sx?' Pattern.
 
