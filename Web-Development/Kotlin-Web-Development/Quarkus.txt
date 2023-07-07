@@ -678,6 +678,7 @@ Quarkus
 		# Java
 			# Run the built jar with a defined Configuration Profile:
 			java -Dquarkus.profile=<profile> -jar <name>.jar
+				java -D<quarkus-application-property>=<value> ... -jar <name>.jar
 
 			# Preview jar Directory Structure and Files
 			jar tf <name>.jar
