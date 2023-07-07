@@ -501,6 +501,12 @@ Quarkus
 
 			io.quarkus:quarkus-resteasy-reactive: Reactive variant of quarkus-resteasy.
 			io.quarkus:quarkus-resteasy-reactive-jackson: Reactive variant of quarkus-resteasy-jackson.
+				// application.properties
+					// Enable Logging for Requests and Responses:
+					quarkus.rest-client.logging.scope=request-response
+					quarkus.rest-client.logging.body-limit=50 // Default: 100
+					quarkus.log.category."org.jboss.restwasy.reactive.client.logging".level=DEBUG
+
 				// Differences v.s. non-Reactive variants:
 					// Interceptors: Use @ServerRequestFilter and @ServerResponseFilter Annotations instead of implementing ContainerRequestFilter and ContainerResponseFilter.
 						// ...
