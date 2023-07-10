@@ -126,6 +126,11 @@ Linux / Unix:
 				-R				- Apply ownership recursively to contents within directory <file>.
 
 			curl <url>			- Interact with an Application hosted on <url>
+				--insecure 		- Ignore TLS for Services hosted on https.
+				--http1.1 		- Use HTTP 1.1 for the Request.
+				--http2			- Use HTTP 2 for the Request.
+				--head			- See the first line of the initial Response (i.e. Response Header) only.
+
 				-u "<username>:<password>" - Declare Username / Password.
 				
 				-H "<http-request-header>:<value>" - Declare one Request Header. Can specify multiple in one Command.

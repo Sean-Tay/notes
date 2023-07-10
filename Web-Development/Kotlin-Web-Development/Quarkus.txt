@@ -109,6 +109,7 @@ Quarkus
 
 					// http
 						// Set Quarkus to use http 2 or not:
+						// Tip: Use curl to check if a Service supports HTTP 2.
 						quarkus.http.http2=false // default true
 
 		Syntax:
