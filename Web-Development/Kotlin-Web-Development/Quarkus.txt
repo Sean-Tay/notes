@@ -107,6 +107,10 @@ Quarkus
 
 					// %<profile>.<key>.<subKey> ... <subKey>=<value>
 
+					// http
+						// Set Quarkus to use http 2 or not:
+						quarkus.http.http2=false // default true
+
 		Syntax:
 			// Basic Class Bean:
 				@<scope-annotation>
