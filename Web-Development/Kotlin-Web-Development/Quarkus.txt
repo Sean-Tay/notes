@@ -513,6 +513,30 @@ Quarkus
 			io.quarkus:quarkus-resteasy-reactive: Reactive variant of quarkus-resteasy.
 			io.quarkus:quarkus-resteasy-reactive-jackson: Reactive variant of quarkus-resteasy-jackson.
 				// Differences v.s. non-Reactive variants:
+					// Exception Mappers: Use @ServerExceptionMapper Annotations.
+						class GlobalExceptionMapper {
+							@ServerExceptionMapper
+							fun mapException(e: WebApplicationException): Response? {
+								return e.response
+							}
+
+							// ... other @ServerExceptionMapper(s) here handling different types of Exceptions ...
+						}
+
+						// OR
+
+						class <resource-name>(
+							// ... 
+						) {
+							// 
+							@ServiceExceptionMapper
+							fun mapException(e: WebApplicationException): Response? {
+								return e.response
+							}
+
+							// ... other @ServerExceptionMapper(s) here handling different types of Exceptions ...
+						}
+
 					// Interceptors: Use @ServerRequestFilter and @ServerResponseFilter Annotations instead of implementing ContainerRequestFilter and ContainerResponseFilter.
 						// ...
 
