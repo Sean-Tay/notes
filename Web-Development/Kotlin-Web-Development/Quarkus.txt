@@ -635,6 +635,7 @@ Quarkus
 
 									// Check that <http-header> is not set:
 									.header(<http-header>, Matchers.nullValue())
+									.header(<http-header>, `is`(nullValue()))
 
 									// Assert Response Body Content:
 									.body(
