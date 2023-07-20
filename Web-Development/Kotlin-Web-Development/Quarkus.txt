@@ -686,6 +686,59 @@ Quarkus
 			io.quarkiverse.quinoa:quarkus-quinoa:1.2.9: Dependency for integrating a Web UI with a Quarkus Server.
 				// Note: SPA Routing incompatible with non-Reactive quarkus-rest-client and quarkus-resteasy Dependencies; use quarkus-rest-client-reactive and quarkus-resteasy-reactive instead.
 
+			io.quarkus:quarkus-vertx: Utility used to build Reactive Applications on the JVM.
+				// Note: Can be used in tandem with rest-client-reactive, but the Client's Methods have to return a Reactive Type (i.e. Uni, Multi)
+					import io.ext.vertx.web.*
+
+					class RouterInitializer(
+						// ...
+					) {
+						@Inject
+						@RestClient
+						lateinit var <service-name>: <client-name>
+
+						fun init(
+							@Observes router: Router
+						) {
+							// Tip: <order> determines the order in which multiple Handlers will be executed in, if they are all attached in the same manner.
+							// Note: Runtime Ordering (normal functions) takes precedence over Deployment Ordering (functions annotated with @BuildStep).
+
+							// Capture all Requests with a given Handler:
+							router.route()[.order(<order>)].hander {
+								// Query via rest-client-reactive
+								// Note: <method-name> has to return a Reactive Type (i.e. Uni, Multi).
+								// Tip: Uni is analogous to Javascript's Promise.
+								<service-name>.<method-name>( ... ).subscribe().with(
+									{
+										item -> 
+											// ...
+									},
+									{
+										failure ->
+											// ...
+									}
+								)
+
+								// Prematurely terminate the execution, and return a Response to the Client.
+								it.response()
+									.setStatusCode( ... )
+									.putHeader( ..., ... )
+									.end()
+
+								// Pass execution over to the next RoutingHandler.
+								// Tip: The Request and Response can be edited before passing execution over.
+								it.next()
+							}
+
+							// OR
+
+							// Capture all Requests of a certain <http-verb> Request Type and for a given <url> with a given Handler:
+							router[.<http-verb>()].route(["<url>"])[.order(<order>)].handler {
+								// ...
+							}
+						}
+					}
+
 		Syntax:
 			// Getting Configuration Properties via MicroProfile Config Annotations:
 				@ConfigProperty(
