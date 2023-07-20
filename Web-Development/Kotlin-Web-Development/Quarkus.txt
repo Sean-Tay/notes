@@ -301,7 +301,7 @@ Quarkus
 							}
 						}
 
-			io.quarkus:quarkus-rest-client: Dependency that adds support for querying other Services via HTTP(S).
+			io.quarkus:quarkus-rest-client: Dependency that adds support for querying other Services via Java's HTTP Client or Apache HttpClient.
 			io.quarkus:quarkus-rest-client-jackson: Dependency that adds jackson Processing Support for the above.
 				// application.properties
 					// Set the Rest Client that is registered under "<config-key>" to use Mutual TLS when communicating to other Service.
@@ -367,7 +367,7 @@ Quarkus
 							// ...
 						}
 
-			io.quarkus:quarkus-rest-client-reactive: Reactive variant of quarkus-rest-client.
+			io.quarkus:quarkus-rest-client-reactive: Reactive variant of quarkus-rest-client implemented via Eclipse Vert.x's Web Client.
 			io.quarkus:quarkus-rest-client-reactive-jackson: Reactive variant of quarkus-rest-client-jackson.
 				// application.properties
 					// Enable Logging for Client Requests and Responses:
@@ -378,7 +378,7 @@ Quarkus
 				// Differences v.s. non-Reactive variants:
 					// Setting the url for Rest Clients is necessary during Testing (just set it to a dummy value in the Test Configuration Profile).
 
-			io.quarkus:quarkus-resteasy: Dependency that adds support for exposing RESTful APIs.
+			io.quarkus:quarkus-resteasy: Dependency that adds support for exposing RESTful APIs via Servlet Containers such as Apache Tomcat and Jetty.
 			io.quarkus:quarkus-resteasy-jackson: Dependency that adds jackson Processing Support for the above.
 				// application.properties
 					// Set Application to use SSL / HTTPs when communicating with Clients.
@@ -510,7 +510,7 @@ Quarkus
 							}
 						}
 
-			io.quarkus:quarkus-resteasy-reactive: Reactive variant of quarkus-resteasy.
+			io.quarkus:quarkus-resteasy-reactive: Reactive variant of quarkus-resteasy implemented via Eclipse Vert.x.
 			io.quarkus:quarkus-resteasy-reactive-jackson: Reactive variant of quarkus-resteasy-jackson.
 				// Differences v.s. non-Reactive variants:
 					// Exception Mappers: Use @ServerExceptionMapper Annotations.
