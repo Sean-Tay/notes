@@ -688,6 +688,7 @@ Quarkus
 
 			io.quarkus:quarkus-vertx: Utility used to build Reactive Applications on the JVM.
 				// Note: Can be used in tandem with rest-client-reactive, but the Client's Methods have to return a Reactive Type (i.e. Uni, Multi)
+					import io.vertx.core.json.JsonObject
 					import io.ext.vertx.web.*
 
 					class RouterInitializer(
@@ -719,11 +720,17 @@ Quarkus
 									}
 								)
 
+								// Create a JsonObject
+								val jsonObject = JsonObject()
+								jsonObject.put("<key>", "<value>")
+
 								// Prematurely terminate the execution, and return a Response to the Client.
 								it.response()
 									.setStatusCode( ... )
 									.putHeader( ..., ... )
-									.end()
+									.end(jsonObject.encode())
+
+								// OR
 
 								// Pass execution over to the next RoutingHandler.
 								// Tip: The Request and Response can be edited before passing execution over.
