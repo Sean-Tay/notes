@@ -627,6 +627,16 @@ Quarkus
 			io.quarkus:quarkus-junit5-mockito: Dependency that allows for Mocking during Testing via JUnit.
 			org.mockito.kotlin:mockito-kotlin:4.1.0
 			io.rest-assured:rest-assured: Dependency that faciliates Testing of RESTful Web Services.
+				// Exmaple Test Profile Override:
+					class <test-profile-override>: QuarkusTestProfile {
+						override fun getConfigOverrides: MutableMap<String, String> {
+							return mutableMapOf(
+								"<key>" to "<value>",
+								// ...
+							)
+						}
+					}
+
 				// Example Test Class:
 					@QuarkusTest
 					class <test-suite> {
