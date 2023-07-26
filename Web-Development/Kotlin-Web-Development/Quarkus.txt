@@ -728,6 +728,7 @@ Quarkus
 								it.response()
 									.setStatusCode( ... )
 									.putHeader( ..., ... )
+									.addCookie( Cookie.cookie(<cookie>, <value>) )
 									.end(jsonObject.encode())
 
 								// OR
