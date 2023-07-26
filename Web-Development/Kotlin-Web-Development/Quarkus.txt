@@ -691,6 +691,11 @@ Quarkus
 										// Tip: Use Jackson ObjectMapper.writeValueAsString to convert mapOf() values to JSON Content.
 										`is`("<text-value>`)
 									)
+
+							// ...
+
+							// Verify that a Client Method was called in a particular manner:
+							Mockito.verify(<service-name>).<method-name>( ... )
 						}
 					}
 
