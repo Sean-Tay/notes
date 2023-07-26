@@ -659,6 +659,9 @@ Quarkus
 
 							// Assert via RestAssured
 							given()
+								// Allow RestAssured to test Redirect Responses
+									.redirects().follow(false)
+
 								// Section to configure Test Request
 									// Set <http-header> to a <http-header-value>:
 									.header(<http-header>, <http-header-value>)
