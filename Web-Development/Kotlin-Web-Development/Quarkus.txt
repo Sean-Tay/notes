@@ -637,9 +637,26 @@ Quarkus
 						}
 					}
 
-				// Example Test Class:
+				// Example Test Class and Suite:
+					class <test-class> {
+						@Inject
+						lateinit var <dependency>: <dependency-type>
+
+						@Inject
+						lateinit var <service-name>: <client-name>
+						
+						// ... 
+
+						// <dependency>.<method>
+					}
+
 					@QuarkusTest
 					class <test-suite> {
+						// Stub Class Instance / Bean Dependency that is used into Class being tested.
+						// Note: The Class being tested must use the @Inject javax Annotation to retrieve the Dependency within its implementation.
+						@InjectMock
+						lateinit var <dependency>: <dependency-type>
+
 						// Stub Client that is typically injected via @Inject in the Class to be tested.
 						// Note: Not compatible if the Clients are passed in via Class Constructor Arguments.
 						// Note: Only works with @ApplicationScoped Clients.
@@ -694,8 +711,11 @@ Quarkus
 
 							// ...
 
-							// Verify that a Client Method was called in a particular manner:
-							Mockito.verify(<service-name>).<method-name>( ... )
+							// Verify that a Mocked Dependency was called in a particular manner via Mockito Matchers:
+							Mockito.verify(<dependency>).<method-name>( any(),  ... )
+
+							// Verify that a Client Method was called in a particular manner via Mockito Matchers:
+							Mockito.verify(<service-name>).<method-name>( any(), ... )
 						}
 					}
 
