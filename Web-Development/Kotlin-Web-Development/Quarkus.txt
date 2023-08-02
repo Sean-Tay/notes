@@ -716,6 +716,10 @@ Quarkus
 
 							// Verify that a Client Method was called in a particular manner via Mockito Matchers:
 							Mockito.verify(<service-name>).<method-name>( any(), ... )
+								// Custom Mockito Matcher:
+									argThat { it -> 
+										<boolean> // True to specify that it matches, False otherwise
+									}
 						}
 					}
 
