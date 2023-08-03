@@ -654,6 +654,7 @@ Quarkus
 					class <test-suite> {
 						// Stub Class Instance / Bean Dependency that is used into Class being tested.
 						// Note: The Class being tested must use the @Inject javax Annotation to retrieve the Dependency within its implementation.
+						// Note: This will mock all Methods of the <dependency>. If Partial Mocking is needed, use @InjectSpy instead.
 						@InjectMock
 						lateinit var <dependency>: <dependency-type>
 
