@@ -1030,7 +1030,10 @@ Kotlin
 
 										// Tip: Use .split() on Quoted String Values to pass in Array <arg>s.
 										"<arg1>,'<arg2a>;<arg2b>; ...' ..."
-									]
+									],
+
+									delimiter = '<char>', // OR
+									delimiterString = "<char>",
 								)
 								fun `<test-description>`(<arg1>, <arg2>: String, ...) {
 									// ...
