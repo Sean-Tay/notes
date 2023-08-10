@@ -611,16 +611,26 @@ Quarkus
 							}
 
 							// Sending Files to User Agent from External Service:
-							@<uppercase-http-verb>
-							@Path("/<value>/{<path-param>}/...")
-							fun <fun-name>(
-								...
-							): Response {
-								val serviceRes = <service-name>.<get-file>( ... ); // returns RestResponse<ByteArray>
-								// Further manipulate the Response here
-								val res = Response.fromResponse(serviceRes.toResponse).header( ... ).build()
-								return res
-							}
+								@<uppercase-http-verb>
+								@Path("/<value>/{<path-param>}/...")
+								fun <fun-name>(
+									...
+								): Response {
+									val serviceRes = <service-name>.<get-file>( ... ); // returns RestResponse<ByteArray>
+									// Further manipulate the Response here
+									val res = Response.fromResponse(serviceRes.toResponse).header( ... ).build()
+									return res
+								}
+
+								// OR
+
+								// Note: This approach does not work for custom MIME Types.
+								@<uppercase-http-verb>
+								@Path("/<value>/{<path-param>}/...")
+								@Produces(MediaType.<mime-type>)
+								fun <fun-name>(
+									...
+								): Multi<ByteArray> = <service-name>.<get-file>( ... ); // returns Multi<ByteArray>
 						}
 
 			io.quarkus.quarkus-junit5: JUnit Testing Framework.
