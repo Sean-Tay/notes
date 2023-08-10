@@ -38,7 +38,7 @@ JSON Schema
 				// Specify the Type of Data the Schema is describing.
 				// Note: Only applies to the Current Level. Properties and Child Schemas should have their own Type Specifications.
 				"type": "<type>",
-					// Nullable Type: "type": [ "<type>", null ]
+					// Nullable Type: "type": [ "<type>", "null" ]
 
 				// Specify if extra Properties present on the JSON but not defined in the current Schema is allowed or not:
 				"additionalProperties": <boolean>,
