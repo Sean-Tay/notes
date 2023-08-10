@@ -103,16 +103,6 @@ GitLab:
 						- <tag-value>
 						# ...
 
-					# Describe "Whitelist" / "Blacklist" type Conditions in which the Job will be added to the Pipeline and run:
-					only/except:
-						# Refs:
-							- <branch-name>
-
-						# CI/CD Variables:
-							- $<variable> == <value>
-
-						# ...
-
 					# Specify when should Jobs be executed, ignoring which Stage it belongs to:
 					# Note: If needs: [], the Job will immediately execute.
 					# Note: Default Limit on Array Size: 50.
@@ -125,7 +115,22 @@ GitLab:
 						- job: <job-name>
 						  artifacts: <boolean>
 
+					# Describe "Whitelist" / "Blacklist" type Conditions in which the Job will be added to the Pipeline and run:
+					# Note: Cannot exist when rules is specified.
+					only/except:
+						# Refs:
+							- <branch-name>
+
+						# CI/CD Variables:
+							- $<variable> == <value>
+
+						# ...
+
+					# OR
+
 					# Describe the Conditions in which the Job will be run:
+					# Note: Cannot exist when only/except are specified.
+					# Note: If no rules match the Job will not execute.
 					rules:
 						# ...
 						# when: manual
