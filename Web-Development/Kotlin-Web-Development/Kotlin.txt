@@ -1005,6 +1005,7 @@ Kotlin
 						class TestClass {
 							// Basic Test
 								@Test
+								@Timeout(<seconds>)
 								fun `<test-description>`() {
 									// ...
 								}
