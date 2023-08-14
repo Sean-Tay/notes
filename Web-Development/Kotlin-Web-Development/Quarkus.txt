@@ -301,6 +301,25 @@ Quarkus
 							}
 						}
 
+			io.quarkus:quarkus-mutiny: Dependency that contains Reactive Data Types. Automatically included with rest-client-reactive and resteasy-reactive.
+				// Uni Data Type
+				// Tip: Uni is analogous to Javascript's Promise.
+					// Creating a Uni:
+						Uni.createFrom().item(<value>)
+
+					// Resolving a Uni
+						// Tip: Uni is analogous to Javascript's Promise.
+						<uni>.subscribe().with(
+							{
+								item -> 
+									// ...
+							},
+							{
+								failure ->
+									// ...
+							}
+						)
+
 			io.quarkus:quarkus-rest-client: Dependency that adds support for querying other Services via Java's HTTP Client or Apache HttpClient.
 			io.quarkus:quarkus-rest-client-jackson: Dependency that adds jackson Processing Support for the above.
 				// application.properties
