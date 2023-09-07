@@ -670,9 +670,14 @@ Kotlin
 
 								// ...
 
+								// Summary
 								fun main() {
+									// Creates a Coroutine Scope
 									runBlocking {
-										val handle = launch { <suspendable-function-name>() }
+										// Creates a Coroutine that executes the Suspendable Function
+										val handle = launch { 
+											<suspendable-function-name>() 
+										}
 										
 										// ...
 
