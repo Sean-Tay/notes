@@ -652,12 +652,12 @@ Kotlin
 								// launch 		Starts a new Coroutine.
 								// join 		Wait for the completion of the created Coroutine.
 
-								// async 		Starts a new Coroutine that is used to compute some Result, represented by an instance of Deferred. Note: Will NOT cause the Application to crash upon encountering an unhandled Exception.
-								// await 		Wait for the completion of the created Coroutine, and realize the Result of the Deferred Instance.
+								// async 		Starts a new Coroutine that would return some Result, represented by an instance of Deferred. Note: Will NOT cause the Application to crash upon encountering an unhandled Exception.
+								// await 		Wait for the completion of the created Coroutine, and realize the Result of the Deferred Instance returned by async.
 
-								// awaitAll		Waits for the successful completion of a Collection of Coroutines.
+								// awaitAll		Waits for the successful completion of a Collection of Deferred Instances.
 
-							// Suspendable Function: Pausable Function; Analogous to an Asynchronous Function in JavaScript.
+							// Suspendable Function: Pausable Function; would be invoked and executed by a Coroutine during creation.
 							// Note: Only can be used in other Suspendable Functions / Coroutines.
 								suspend fun <suspendable-function-name>() {
 									// <coroutine-scope> { ... <coroutine-builder-function> { ... } ... }
@@ -670,7 +670,35 @@ Kotlin
 
 								// ...
 
-								// Summary
+							// Channels: Mechanism by which Coroutines can communicate with one another. Producer-Consumer Model.
+								fun main() {
+									runBlocking {
+										val channel = Channel<<type>>(<capacity>);
+
+										val producer = launch { 
+											channel.send( ... )
+
+											// ...
+
+											channel.close();
+										}
+
+										val consumer = launch {
+											// ...
+
+											while(!channel.isClosedForReceive) {
+												val value = channel.receive()
+
+												// ...
+											}
+										}
+
+										producer.join()
+										consumer.join()
+									}
+								}
+
+							// Simple Summary
 								fun main() {
 									// Creates a Coroutine Scope
 									runBlocking {
