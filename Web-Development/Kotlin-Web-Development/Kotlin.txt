@@ -636,9 +636,9 @@ Kotlin
 
 							// CoroutineScope: Defines an environment for which Coroutines can be created in. Can be seen as a "Grouping" of Coroutines.
 								// Constructor Functions:
-									// runBlocking: A Normal Function that when executed, instantiates a local CoroutineScope and blocks current execution from continuing beyond it, and *additionally locks down the execution to the code within the created scope*. Can be used as a bridge between non-Suspendable Code and Suspendable Code.
+									// runBlocking: A Normal Function that when executed, instantiates a local CoroutineScope and blocks current execution from continuing beyond it (i.e. *additionally locks down the execution to the code within the created scope*, until all execution within it is completed). Can be used as a bridge between non-Suspendable Code and Suspendable Code.
 
-									// coroutineScope: A Suspendable Function that when executed, instantiates a local CoroutineScope and blocks current execution from continuing beyond it, but *does not additionally lock down the execution to the code within the created scope*, and releases the calling Thread to perform other execution.
+									// coroutineScope: A Suspendable Function that when executed, instantiates a local CoroutineScope and suspends current execution from continuing beyond it (i.e. *does not additionally lock down the execution to the code within the created scope*, and releases the calling Thread to perform other execution, until all execution within it is completed).
 
 								// GlobalScope: A Globally Accessible CoroutineScope, usually meant for Top-Level Coroutines operating throughout the Application lifetime.
 
@@ -651,10 +651,10 @@ Kotlin
 							// Coroutine Builder Functions: Only usable from / within a CoroutineScope. Will inherit parent CoroutineScope and modify it.
 								// launch 		Starts a new Coroutine.
 								// join 		Wait for the completion of the created Coroutine.
+								// joinAll		Waits for the successful completion of a Collection of Coroutines (via their Handles, which launch returns).
 
 								// async 		Starts a new Coroutine that would return some Result, represented by an instance of Deferred. Note: Will NOT cause the Application to crash upon encountering an unhandled Exception.
 								// await 		Wait for the completion of the created Coroutine, and realize the Result of the Deferred Instance returned by async.
-
 								// awaitAll		Waits for the successful completion of a Collection of Deferred Instances.
 
 							// Suspendable Function: Pausable Function; would be invoked and executed by a Coroutine during creation.
