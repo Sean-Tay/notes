@@ -114,6 +114,7 @@ ELK
 
 							// Full-Text Queries:
 								// Matches for Documents via a simpler but less capable Mechanism - see Query String Syntax Section below.
+								// Note: By default, query_string has a 1024 Character Limit.
 								"query_string": {
 									"query": <query-string>
 								}
@@ -133,6 +134,8 @@ ELK
 			}
 
 		Query String Syntax:
+			// Note: Be aware of URL Character Limit.
+
 			_exists_:<field> // Search for <field> Values which are non-null.
 
 			<field>:<term> ... // Search for <field> Values which match any of the specified <term>s
