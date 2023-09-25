@@ -847,11 +847,12 @@ Kotlin
 										ArrayNode
 
 									ValueNode
+										NullNode // Defines a Field explicitly set to null.
+										MissingNode // Defines a Field that's missing.
+
 										TextNode
 										NumericNode
 										BooleanNode
-										NullNode
-										MissingNode
 
 							// Helper to Serialize Class Instances to JSON Strings / Deserialize Class Instances from JSON Strings.
 							// Note: Costly to instantiate - use for multiple uses.
@@ -881,12 +882,13 @@ Kotlin
 								val node: JsonNode = mapper.createObjectNode()
 
 							// Detecting the Node Type
+								// node.isNull
+								// node.isMissingNode
+
 								// node.isObjectNode
 								// node.isArray
 								// node.isValueNode
 									// node.isTextual
-
-								// node.isMissingNode
 
 							// Get a Node Value
 								// get - returns null for Missing Nodes
