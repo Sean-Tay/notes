@@ -119,6 +119,7 @@ GitLab:
 					# Note: Cannot exist when rules is specified.
 					only/except:
 						# Refs:
+							# Hack: Replace 'master' or 'main' with current <branch-name> to test changes to pipeline.
 							- <branch-name>
 
 						# CI/CD Variables:
