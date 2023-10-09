@@ -171,6 +171,8 @@ ELK
 							{* TO <YYYY-MM-DD>} // All Dates before <YYYY-MM-DD>
 							{<YYYY-MM-DD> TO *} // All Dates after <YYYY-MM-DD>
 
+							// Alternatively "<YYYY-MM-DD>T<HH-MM-SS.MS>"
+
 						><value> // Greater Than
 						>=<value> // Greather Than or Equal To
 						<=<value> // Lesser Than or Equal To
