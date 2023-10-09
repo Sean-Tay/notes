@@ -873,6 +873,9 @@ Kotlin
 									// mapper.writeValue(<output-stream>, <class-instance>)
 									// mapper.writeValueAsString(<class-instance>)
 
+								// List of JSON String -> Java Object
+									// mapper.readerForListOf(<class>).readValue(<array-of-json-string>)
+
 								// Java Object <-> Jackson JsonNode
 									// mapper.valueToTree(<java-object>)
 
