@@ -523,11 +523,12 @@ React.js
 
 									// Interruptable State Updates
 									startTransition(() => {
+										// Note: Only State Updates should be done here.
 										// ... setState() ...
 									})
 								}
 
-							// Create a version of some State-based Value that does not synchronize with the original version until urgent State Updates are completed
+							// Create a version of some State-based Value that does not update until urgent State Updates are completed
 							// Tip: For when the State and its updates are handled outside the current Component:
 								const deferredValue = useDeferredValue(<value>)
 
