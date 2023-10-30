@@ -53,6 +53,10 @@ Software Engineering:
 
 			Polymorphism: 			The provision of a single Symbol / Interface to represent Entities of different types.
 				Note: The behaviour of the more specific Entity overrides whatever behaviour it may have Inherited from the less specific Entity, even if it is referenced as a less specific Entity.
+				
+				Examples:
+					Compile-Time	Method Overloading
+					Run-Time		Object Implementation / Inheritance + Method Overriding
 
 			Delegation:				Allows an Object to fulfill a part of its API via a second Dependency Object. Functionality is handled by the Delegate, but with the context of the Object using it.
 		
