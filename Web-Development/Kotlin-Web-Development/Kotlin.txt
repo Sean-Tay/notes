@@ -796,12 +796,14 @@ Kotlin
 
 					// Point in Time via Timezone Specification (Continent/Region) (replaces java.util.GregorianCalendar & javax.xml.datatype.XMLGregorianCalendar)
 					ZonedDateTime
+						.parse(<string>, DateTimeFormatter.ofPattern(<string-format>)) // Create a ZonedDateTime Instance from a Timestamp String
 
 					// Date and Time Representation
 					// Note: Cannot represent Point in Time because it lacks Timezone
 					LocalTime // Replaces java.sql.Time
 					LocalDate // Replaces java.sql.Date
 					LocalDateTime
+						.parse(<string>, DateTimeFormatter.ofPattern(<string-format>)) // Create a LocalTime / LocalDate / LocalDateTime Instance from a Timestamp String
 
 				// IO:
 					// Files:
