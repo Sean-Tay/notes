@@ -1165,4 +1165,7 @@ Kotlin
 			# Run generated JAR File in Java:
 			java -jar <jar-name>.jar
 				java -D<java-application-property>=<value> ... -jar <jar-name>.jar
+
+			# Check Running Java Process Heap Usage:
+			jhsdb jmap --heap --pid <pid>
 	
