@@ -12,6 +12,10 @@ Helm
 		Template: A YAML File that will be used to produce a Kubernetes Manifest using Go.
 
 		Argo: An Openshift-related Continuous Delivery Tool that detects changes made to Helm Charts in the Repo and redeploys the Kubernetes Application automatically.
+			Requested: Defines how much of a Compute Resource a Container should be provided with optimally. 
+				If the Container is underutilizing its Compute Resources, those may be lent to other Containers temporarily until the Container needs it. 
+				If a Container is using a Compute Resource above its Requested Specification, it then borrows spare Compute Resources from other Containers in the Cluster.
+			Limit: Defines the intended maximum of a Compute Resource a Container can use. If it surpasses this, Openshift may restart the Container to prevent consumption of too much Compute Resources.
 
 	Details:
 		Chart Folder Structure:
