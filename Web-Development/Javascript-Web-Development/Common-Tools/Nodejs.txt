@@ -312,6 +312,8 @@ Node.js:
 
 				yarn install											# Add all Node Dependencies specified within a package.json locally to the current Node Project.
 
+				yarn list --pattern <dependency>						# Check version of a Node Dependency (as well as its Dependencies).
+
 				yarn add <dependency>[@<{ version | tag }>]				# Add a Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
 					--dev												# Add a development-level Node Dependency, optionally of a specific version or tag, to the local Node Project, and adds it into the Node Project's package.json.
 
