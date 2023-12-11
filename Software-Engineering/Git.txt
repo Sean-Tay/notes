@@ -243,6 +243,8 @@ Git:
 		git push <repo-url-alias> -- tags - Push all locally changed Tags to the Remote Repository.
 
 		git log					- See information about past Commits, with the first Commit being the most recent.
+			--oneline			- See summarized version of each past Commit.
+
 		git log --all --decorate --oneline --graph - Observe Commit history of the current Local Repository as a graph.
 		
 		git bisect				- Utility that uses a Binary Search Algorithm to find a specific Commit.
