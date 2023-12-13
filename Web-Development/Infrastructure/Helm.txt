@@ -25,6 +25,7 @@ Helm
 				version: <release-version-number>
 
 			# A File which contains pre-defined Values to use for the Release.
+			# Note: Variables can also be introduced from outside this File (i.e. Command Line --set, see CLI Section below)
 			values.yaml
 				<key>: <value>
 
@@ -68,7 +69,25 @@ Helm
 
 				# Defines how an Application is to be deployed and maintained.
 				deployment.yaml
-					
+					spec:
+						containers:
+							- name: <name>
+							  image: <path-on-image-repository>
+							  imagePullPolicy: Always
+							  env:
+							  	# Define source for App Environment Variables here:
+								# For Plaintext Values
+								- name: <env-variable-name>
+								  value: {{ .Values.<key> }}
+								
+								# OR
+								
+								# For Sensitive Values
+								- name: <sensitive-env-variable-name>
+								  valueFrom:
+									secretKeyRef:
+									  name: <secret-metadata-name>
+									  key: <secret-data-key>
 
 				# Define Configuration to expose a Kubernetes Application on a Public URL.
 				# Note: Openshift-specific Resource.
