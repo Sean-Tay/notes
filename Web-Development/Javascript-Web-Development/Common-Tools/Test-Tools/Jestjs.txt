@@ -470,6 +470,10 @@ Jest
 									}
 								);
 
+								// Check if a POST Request was sent with a particular Body:
+								const postBody = JSON.parse(moxios.requests.mostRecent().config.data)
+								expect(postBody).toBe({ ... })
+
 								// ...
 							}
 						);
