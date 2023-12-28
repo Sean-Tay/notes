@@ -225,6 +225,10 @@ Linux / Unix:
 				-print0			- Use Null Characters as the Delimiter instead. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes. Should be placed after other Flags to avoid Errors.
 
 				-mtime	<n>		- Check for Files that are older than <n>*24 hours.
+
+				# Tip: Both -newermt and ! - newermt can be used in the same Command.
+				-newermt <YYYY-MM-DD> - Check for Files modified after <YYYY-MM-DD>.
+				! -newermt <YYYY-MM-DD> - Check for Files modified before <YYYY-MM-DD>.
 			
 			touch <file>		- Create <file> or edit <file> metadata.
 				-a 				- accessed
