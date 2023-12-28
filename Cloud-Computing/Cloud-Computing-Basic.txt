@@ -1,0 +1,84 @@
+Cloud Computing:
+	Abbreviations:
+		IaaS:					Infrastructure as a Service
+		PaaS:					Platform as a Service
+		SaaS:					Software as a Service
+
+		MLaaS:					Machine Learning as a Service
+		DBaaS:					Database as a Service
+		FaaS:					Functions as a Service
+
+		BPaaS:					Business Processes as a Service
+		CaaS:					Communication as a Service
+	
+	Description: 				The delivery of Compute Resources and Services over the Internet to offer faster innovation, flexible resources and economies of scale.
+	
+	Concepts:
+		Traditional Computing: 	On-Premise Computing. Consists of Computer Hardware, Operating System, and Applications.
+		
+		Pillars of Cloud Computing:
+			Virtualization:		Decoupling of a Logical Server from a Physical Server.
+			Hypervisor:			Allows multiple OS-es to share the same Host, and manage the resource allocation to virtual OS-es.
+
+		Cloud Service Models:
+			IaaS: Virtual Hardware that replaces On-Premise Compute Resources. Example: AWS, Microsoft Azure, Google Cloud.
+				Compute:		Provides Computing Resources on demand.
+				Block Storage: 	Provides Blocks for storing data.
+				Network:		Provides Networking Capabilities.
+
+			PaaS / Cloudware: Adds features to IaaS. Includes Operating Systems, Software Development Tools and Runtime Services. Example: RedHat Openshift.
+				Object Storage:	Provides resources for how Objects are stored.
+				Identity:		Provides a Layer for dealing with User Authentication.
+				Runtime:		Provides a Runtime Environment for Applications to run on.
+					Provisioning and Deployment Capabilities
+					Load Balancing and Autoscaling
+				
+				Queue:			Used for Batch and Message Processing.
+
+			SaaS: Software Licensing and Delivery Model. Applications are subscribed to on a monthly or yearly basis, and accessed over the Internet. Example: GitLab, Netflix.
+		
+		Cloud Deployment Models:
+			Public Cloud:		Whatever the Client wants, the Client gets.
+			Private Cloud:		On-Premise Cloud, achieved via Virtualization Software.
+			Hybrid Cloud:		Combines Public and Private Cloud.
+			Community Cloud:	Organizations with common interests.
+
+		Shared Responsibility Model: Both the Cloud Provider and the Application are responsible for the integrity of the Application.
+
+	Details:
+		Intro:
+			Disadvantage of Traditional Computing: Pace of keeping up with innovation becomes overwhelming.
+				High Costs of maintaining and acquiring Compute Resources.
+					Every few years Computer Hardware, Operating System and Applications become obsolete, and requires upgrading.
+		
+			Advantage of Cloud Computing:
+				Lower Upfront Costs.
+					Rent Computing Resources only when they are used.
+					Reduced IT Staff and Admin costs.
+
+				Enterprise-level Data Protection.
+
+		Characteristics of Cloud Computing:
+			Resource Pooling: All Resources provided by the Cloud Provider are seen as one large pool, to be divided amongst all Clients using them.
+			Rapid Elasticity: Fast Allocation of Resources as Client's needs change.
+				Scalability
+
+			Self-Service: Automatically access any Resource at any time.
+				Availability
+		
+		Shared Responsibility Model:
+			Application:
+				Configuration of the OS, Network and Firewall.
+				Securing and Maintaining its own Data.
+				Controlling how the Cloud Provider's Resources are used.
+				
+			Cloud Provider:
+				Compute Resources
+					Storage
+					Network
+			
+				Availability
+					Regions
+					Edge Locations
+		
+
