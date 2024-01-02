@@ -112,13 +112,14 @@ Security:
 					The successor to SSL v2.0.
 
 					TLS Handshake:
-						For a Server to support TLS, they must first register their Public Key with a known Certificate Authority, which will create a Leaf Certificate (and one or more Intermediate Certificates) containing the Server's Hashed Public Key. The Certificate Authority must be well-known enough such that it has its corresponding Public Key  pre-installed on the Client's System.
+						Server-Side:
+							For a Server to support TLS, they must first register their Public Key with a known Certificate Authority, which will create a Leaf Certificate (and one or more Intermediate Certificates) containing the Encrypted Hash of the Server's Public Key (i.e. the Certificate Authority's Digital Signature, created via the Certificate Authority's Private Key). The Certificate Authority must be well-known enough such that it has its corresponding Public Key pre-installed on the Client's System.
 
-						When a Client initiates a connection to the Server via HTTPS from the Browser, the Server sends the Digital Certificates, as well as its own Public Key, to the Client upon first contact as part of the Handshake. The Client would then use the indicated pre-installed Certificate Authority's Public Key to Decrypt the (Intermediate Certificates, chaining up to the) Leaf Certificate and obtain the Hashed Server's Public Key within. The Hashed Server's Public Key is then used to check the Server's Public Key that was sent.
+							When a Client initiates a connection to the Server via HTTPS from the Browser, the Server sends the Digital Certificates it received from the Certificate Authority, as well as its own Public Key, to the Client upon first contact as part of the Handshake. The Client would then use the indicated pre-installed Certificate Authority's Public Key to Decrypt the (Intermediate Certificates, chaining up to the) Leaf Certificate and obtain the Hashed Server's Public Key within. The Hashed Server's Public Key is then compared with the Server's Public Key that was sent.
 
-						If the Server's Public Key cannot be verified (eventually) via a pre-installed Public Key, the Browser would warn the User.
-						
-						Once the sent Server's Public Key is verified, it is then used to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.
+							If the Server's Public Key cannot be verified (eventually) via a pre-installed Public Key, the Browser would warn the User.
+							
+							Once the sent Server's Public Key is verified, it is then used to Encrypt information meant for the Server only. Usually this is only for agreeing on some mechanism for Symmetric Cryptography used in further communication between the two, as Asymmetric Cryptography is less performant.
 
 				HTTPS: Cryptographic Application Layer Protocol used for communication.
 					It's just HTTP piggybacking on SSL / TLS for a secure channel of communication.
