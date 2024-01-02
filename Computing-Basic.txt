@@ -26,6 +26,8 @@ General Computing Notes:
 		Port:					Signifies a Logical Entryway ('Delivery Box') in a Device.
 		Socket:					Endpoint of a Connection defined by a Network Protocol + IP Address + Port Number.
 
+		Network:				A group of Entities that communicate.
+
 		Multiplexer:			Mechanism for routing multiple inputs into a single channel, based on additional selector inputs.
 
 		Main Memory:			Volatile but Highly Accessible Memory. RAM.
