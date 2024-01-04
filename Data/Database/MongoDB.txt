@@ -149,12 +149,56 @@ MongoDB:
 							"<field>": <value>,
 
 							"<field>": {
-								"$<operator>": <value>
+								"$<operator>": <value>,
+
+								"$<operator>": "$<field>", // Reference Field Value
 							},
 
 							// ...
 						}
 					},
+
+					// Match only specific Documents that fulfil the Filter.
+					{
+						"$match": {
+							"<field>": <value>,
+
+							// ...
+						}
+					},
+
+					// Output only specific Fields in each Document.
+					{
+						"$project": {
+							"<field>": 1, // Include
+
+							// ...
+						}
+					},
+
+					// Sort Documents according to specified Fields (top to bottom priority).
+					// Note: Has Memory Limit.
+					{
+						"$sort": {
+							"<field>": 1, // Ascending
+							"<field>": -1, // Descending
+
+							// ...
+						}
+					},
+
+
+					// Aggregate Documents together with the same Field Values.
+					// Note: Order of Records received by this operation is important (will only group together consecutive Records with the same ID).
+					{
+						"$group": {
+							"_id": <unique-key>,
+							"<field>": {
+								"$<accumulation-operator>": "$<field>"
+							}
+						}
+					},
+
 					// ...
 				]
 			)
