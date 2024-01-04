@@ -117,6 +117,10 @@ MongoDB:
 									// Date: ISODate("YYYY-MM-DDT00:00:00.000Z")
 
 								"$size": <length>, // To Select for Documents whose value under the <field> is an Array containing <length> Elements.
+
+								// Implicit $and
+									"$operator": <value>,
+									"$operator": <value>,
 							}
 							
 							// OR
