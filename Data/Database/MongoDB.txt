@@ -98,6 +98,7 @@ MongoDB:
 			
 			// Select Documents under <collection-name> which satisfy the <query>'s Criteria.
 			const results = db.<collection-name>.find(<query>, <projection>)
+			const distinctResults = db.<collection-name>.distinct(<field>, <query>)
 				// Operators: https://docs.mongodb.com/manual/reference/operator/
 					<query>
 						{
@@ -178,6 +179,9 @@ MongoDB:
 			Operations:
 				// Get a Collection
 				val collection = db.getCollection("<collection-name>")
+
+				// Distinct
+				val distinctResults = collection.distinct(<field>, <query>, <kClass>::class.java)
 
 			Example Document for CRUD Operations:
 				val <operation> = Document(mapOf(
