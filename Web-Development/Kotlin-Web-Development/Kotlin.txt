@@ -796,6 +796,8 @@ Kotlin
 
 					// Point in Time via Timezone Specification (Continent/Region) (replaces java.util.GregorianCalendar & javax.xml.datatype.XMLGregorianCalendar)
 					ZonedDateTime
+						.of(<LocalDateTime>, <zone-id>)
+						
 						.parse(<string>, DateTimeFormatter.ofPattern(<string-format>)) // Create a ZonedDateTime Instance from a Timestamp String
 
 					// Date and Time Representation
@@ -803,6 +805,8 @@ Kotlin
 					LocalTime // Replaces java.sql.Time
 					LocalDate // Replaces java.sql.Date
 					LocalDateTime
+						.of(<year>,<month>,<day>,<hour>,<minute>,<second>)
+
 						.parse(<string>, DateTimeFormatter.ofPattern(<string-format>)) // Create a LocalTime / LocalDate / LocalDateTime Instance from a Timestamp String
 
 				// IO:
