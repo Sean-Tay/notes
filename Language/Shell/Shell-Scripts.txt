@@ -499,6 +499,8 @@ Linux / Unix:
 				tail <input>	- Extract the last part of <input>.
 					-<number>	- Specify number of lines to display.
 
+					-n +<number> - Skip the first <number> lines.
+
 				echo "<output>"	- Output <output> to output stream.
 					-n			- Disable automatic newline after execution.
 					-e			- Enable interpretation of backslashes in <output>.
