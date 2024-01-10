@@ -105,6 +105,14 @@ Gradle
 				<task-name> {
 					// ...
 				}
+
+				// Setup Tests with JUnit
+				tasks.withType(Test) {
+					useJUnitPlatform()
+					testLogging {
+						events "passed", "skipped", "failed"
+					}
+				}
 			}
 
 	Commands:

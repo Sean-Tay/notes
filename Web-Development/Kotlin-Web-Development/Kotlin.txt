@@ -1147,6 +1147,20 @@ Kotlin
 
 					// ...
 
+					tasks {
+						<task-name> {
+							// ...
+						}
+
+						// Setup Tests with JUnit
+						tasks.withType(Test) {
+							useJUnitPlatform()
+							testLogging {
+								events "passed", "skipped", "failed"
+							}
+						}
+					}
+
 		Compilation: Kotlin will convert <name>.kt Kotlin Files into <name>Kt Class Files when it detects during Compilation some Top-Level Functions inside.
 
 	Commands:
