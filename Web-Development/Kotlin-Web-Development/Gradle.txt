@@ -59,6 +59,10 @@ Gradle
 			// Note: Controls the name of the Build Artifact generated.
 			rootProject.name = "<name>"
 
+			// Include Sub-Projects
+			// Note: Each Sub-Project should have its own build.gradle.
+			include '<module-name>'
+
 		// build.gradle.kts
 			// Specify the Group or Organization that it belongs to.
 			// Note: Don't include the Project in the <reverse-domain-name>.
@@ -111,6 +115,16 @@ Gradle
 
 			// Specifies that settings.gradle and build.gradle should be in Kotlin (i.e. .kts Files).
 			--dsl kotlin
+
+		// General gradlew Syntax - execute Tasks:
+			// Note: Executes <task>s for all Sub-Modules.
+			gradlew <task> ...
+
+			// Execute <task>s only for Root Module.
+			gradlew :<task> ...
+		
+			// Execute <task>s in specific Sub-Modules.
+			gradlew :<module>:<task>
 
 		// Build using the build.gradle File in the current directory:
 		gradlew build
