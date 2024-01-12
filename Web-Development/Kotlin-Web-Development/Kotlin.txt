@@ -1151,14 +1151,18 @@ Kotlin
 
 					// ...
 
-					tasks {
-						<task-name> {
-							// ...
-						}
-
+					allprojects / subprojects {
 						// Setup Tests with JUnit
 						tasks.withType(Test) {
 							useJUnitPlatform()
+							
+							// OR
+
+							useJUnitPlatform {
+								include '<path>'
+								exclude '<path>'
+							}
+
 							testLogging {
 								events "passed", "skipped", "failed"
 							}
