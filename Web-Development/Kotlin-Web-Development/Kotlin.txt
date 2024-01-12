@@ -976,6 +976,10 @@ Kotlin
 
 										// Reset a Mocked <dependency>:
 											<dependency>.clear()
+											
+											// OR
+
+											clearMocks(<dependency>)
 
 										// Revert a <dependency> back to pre-Mock state:
 											<dependency>.unmock()
