@@ -761,7 +761,8 @@ Kotlin
 								latch.await()
 
 				// Date:
-					// Point in Time via UTC (replaces java.util.Date & java.util.Timestamp)
+					// Point in Time via UTC (replaces java.util.Date & java.util.Timestamp with java.time.Instant)
+					// Tip: Use .toInstant() to convert from java.util.Date to java.time.Instant.
 					Instant
 						// Quick way to get an Instance of Instant:
 						val <instant> = Instant.now()
@@ -795,13 +796,15 @@ Kotlin
 					OffsetDateTime
 
 					// Point in Time via Timezone Specification (Continent/Region) (replaces java.util.GregorianCalendar & javax.xml.datatype.XMLGregorianCalendar)
+					// Tip: Use .atZone(<zone-id-enum>) to convert from java.time.Instant to java.time.ZonedDateTime.
 					ZonedDateTime
-						.of(<LocalDateTime>, <zone-id>)
+						.of(<LocalDateTime>, <zone-id-enum>)
 						
 						.parse(<string>, DateTimeFormatter.ofPattern(<string-format>)) // Create a ZonedDateTime Instance from a Timestamp String
 
 					// Date and Time Representation
 					// Note: Cannot represent Point in Time because it lacks Timezone
+					// Tip: Use .toLocalDate() or .toLocalDateTime() to convert from java.time.ZonedDateTime to java.time.LocalDate or java.time.LocalDateTime.
 					LocalTime // Replaces java.sql.Time
 					LocalDate // Replaces java.sql.Date
 					LocalDateTime
