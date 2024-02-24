@@ -1,5 +1,7 @@
 Web Dev:
 	Abbreviations:
+		RDP:					Remote Desktop Protocol.
+
 		HTTP:					HyperText Transfer Protocol.
 
 		URI: 					Universal Resource Identifier.

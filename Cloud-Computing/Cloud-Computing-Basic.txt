@@ -80,5 +80,12 @@ Cloud Computing:
 				Availability
 					Regions
 					Edge Locations
+
+		Accessing Cloud Resources:
+			Through a Web Browser and a Web Protocol, such as HTTPS
+			RDP - Remote Desktop Protocol for connecting to Virtual Windows Instances
+			SSH - RDP equivalent for connecting to Virtual Linux Instances
+			VPN - A Private Connection over a Public Network
+			Direct Connect - A Physical Connection to the Cloud Provider's Network
 		
 
