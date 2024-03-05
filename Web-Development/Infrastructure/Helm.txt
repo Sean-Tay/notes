@@ -44,8 +44,8 @@ Helm
 				secret.yaml
 					type: <secret-type>
 					data:
-						<key>: <value>
-						<key>: {{ .Values.<key> }}
+						<secret-data-key>: <value>
+						<secret-data-key>: {{ .Values.<key> }}
 
 				# Define non-sensitive Configuration Data for a Kubernetes Application, stored in a Base-64 Encoding.
 				# The ConfigMap Resource will be loaded as a Volume on the Application Container, which can then be accessed by the Application in the form of Environment Variables, CLI Arguments, or Application-specific Config Files.
