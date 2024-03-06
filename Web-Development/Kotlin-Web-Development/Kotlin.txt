@@ -974,6 +974,11 @@ Kotlin
 											// Note: If unmocked Functions are called on this <dependency>, no Exceptions will be thrown.
 											val <relaxed-dependency> = mockk<<class-name>>(relaxed = true) ( ... )
 
+											// OR
+
+											// Ensuring every <dependency> Instance created is a Mock:
+											mockkConstructor(<class>)
+
 											// Spies
 											val <spy> = spyk(<class>( ... ))
 
@@ -983,6 +988,9 @@ Kotlin
 											// OR
 
 											clearMocks(<dependency>)
+
+											// OR
+											unmockkConstructor(<class-name>)
 
 										// Revert a <dependency> back to pre-Mock state:
 											<dependency>.unmock()
@@ -996,6 +1004,10 @@ Kotlin
 												// Note: Can re-declare same Mock to override prior Mock behaviour.
 
 												// Mocking the results of a <dependency>'s <function> called with specific <arg>s:
+													// Note: Use anyConstructed / constructedWith in case the Mock was created via mockkConstructor:
+													every { anyConstructed<<class-name>>().<function>( ... ) } ...
+													every { constructedWith<<class-name>>( <matcher>, ... ).<function>( ... ) } ...
+
 													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } returns <value> [ andThen <nextValue> ... ]
 													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } throws RuntimeException( ... )
 
@@ -1021,6 +1033,10 @@ Kotlin
 
 											// Verifying the behaviour of a <dependency>:
 												// Note: every and verify can be used on the same <function>.
+
+												// Note: Use anyConstructed / constructedWith in case the Mock was created via mockkConstructor:
+												verify { anyConstructed<<class-name>>().<function>( ... ) } ...
+												verify { constructedWith<<class-name>>( <matcher>, ... ).<function>( ... ) } ...
 
 												// Verify that a <dependency>'s <function> was called with specific <arg>s:
 													verify([exactly=<num-times>]) {
