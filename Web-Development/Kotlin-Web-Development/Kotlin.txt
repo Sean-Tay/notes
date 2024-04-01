@@ -66,14 +66,26 @@ Kotlin
 							println(<variable>!!::class.simpleName)
 							println(<variable>!!::class.qualifiedName)
 
-						// Function Type:
+						// Function Reference:
 							val kFunction: KFunction<<kotlin-function>>
 
-						// Class Type:
+						// Class Reference:
 							val kClass: KClass<<kotlin-class>> = <kotlin-class>::class
-			
-			// Tip: Get the underlying Java Class from a given Kotlin Class
-				<kotlin-class>::class.java 
+
+							// Tip: Get the underlying Java Class from a given Kotlin Class
+								<kotlin-class>::class.java 
+
+							// Tip: Get the Kotlin Class that corresponds to a Java Class
+								<java-class>.javaClass.kotlin
+
+						// Class Property Reference:
+							// Note: The number after 'KProperty' represents the number of Parameters accepted.
+							val kProperty: KProperty0<<property-value-type>> = <kotlin-class>::<property>
+
+							// Example: Type Narrowing of a Nullable Class Property
+							fun <N: Any> <name>(<arg-name>: KProperty<*: N?>): N {
+								// ...
+							}
 					
 			// Package Declaration: Defines which Package the File belongs to.
 				// Note: Common Prefixes among the Files can be omitted from the Folder Structure (i.e. no need create such a deep nesting).
@@ -386,9 +398,6 @@ Kotlin
 
 					val ( <property>, ... ) = <data-class-instance>
 
-				// Reflection Operator:
-					::
-
 			Functions: First-Class Citizens. Higher-Order Functions possible.
 				// Note: Functions with Block Body (Curly Braces) must explicitly define their <return-type>.
 				// Note: <function-name> can be a String Template as well.
@@ -503,7 +512,7 @@ Kotlin
 								// ...
 							}
 
-						// Star Type Bounding: For when the Type does not actually matter. Variables of Star Types are Read-Only.
+						// Star Type Bounding: For when the Type does not actually matter (not the same as bounding by Any). Variables of Star Types are Read-Only.
 
 					// Covariant Types: Cannot be used in Parameter Types (i.e. only "out" Positions such as Return Types), but allows for Types to be assigned to a Supertype Reference in the Invoking Code.
 						// Classes:
@@ -1152,6 +1161,9 @@ Kotlin
 
 					dependencies {
 						// ...
+
+						// To enable Kotlin Reflection
+						implementation(kotlin("reflect"))
 
 						// To use mockk for Testing:
 						testImplementation("io.mockk:mockk:${mockkVersion}")
