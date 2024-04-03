@@ -551,6 +551,15 @@ React.js
 								() => <store-get-state-method>()[.<sub-state>]
 							)
 
+					// React >= v19+:
+						// Load a Resource Asynchronously:
+						// Tip: This integrates with React.lazy and React.Suspense.
+						// Note: This is a special Hook which can be used within loops and if-statements.
+							import { use } from 'react';
+
+							const resourceLoadedViaPromise = use(<promise>)
+							const contextLoaded = use(<context>)
+
 					// Tips:
 						1. Be aware that by defining Constant Values with Complex Computation outside of Components, the amount of work done during an App's first load will be increased, delaying the time at which First Paint occurs.
 
