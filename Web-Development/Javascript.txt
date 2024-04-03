@@ -925,17 +925,12 @@ Javascript
 
 					import * as <all-module-item-object> from '<module-source>';
 
-				// Asynchronous / Dynamic Module Loading:
-					// Promises
-						import('<module-source>').then(
-							(<item>) => {
-								// ...
-							}
-						);
-
-					// Fetch API:
-						// Tip: Only suitable in Browsers?
-						const <item> = fetch('<module-source>');
+				// Dynamic Imports
+					import(<path>).then((module) => {
+						// module.default
+						// module.<item>
+						// ...
+					})
 
 			// Export
 				// Synchronous
