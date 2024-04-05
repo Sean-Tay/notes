@@ -179,12 +179,12 @@ Git:
 
 			list 				- Option to view all Stashes.
 
-			show stash@{<index>} - Option to show differences between Stash contents and Commit contents for which the Stash was created.
+			show "stash@{<index>}" - Option to show differences between Stash contents and Commit contents for which the Stash was created.
 			apply				- Option to apply Stash onto current Local Working Copy.
-			pop stash@{<index>}	- Option to apply Stash onto current Local Working Copy, and to delete the Stash ; pop as in push and pop.
-			branch <branch> stash@{<index>} - Pop the Stash onto a Local Branch rooted at the Commit at which the Stash was created.
+			pop "stash@{<index>}"	- Option to apply Stash onto current Local Working Copy, and to delete the Stash ; pop as in push and pop.
+			branch <branch> "stash@{<index>}" - Pop the Stash onto a Local Branch rooted at the Commit at which the Stash was created.
 
-			drop stash@{<index>} - Option to delete a specified Stash.
+			drop "stash@{<index>}" - Option to delete a specified Stash.
 			clear				- Option to delete all Stashes.
 
 		git commit -m "<commit-message>" - Commit the changes of the <file>s in the Local Staging List to the Local Branch.
