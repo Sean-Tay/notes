@@ -284,6 +284,10 @@ Jest
 					// Use jest.spyOn to allow modification of the <dependency>'s implementation.
 					const <dependency-stub> = jest.spyOn(<dependencies>, '<dependency>');
 
+					// Note: spyOn will execute the original implementation.
+					// To override the original implementation:
+					<dependency-stub>.mockImplementation(<function-mock>)
+
 					// Within a Test, invoke the Jest Stub Methods to define a controlled implementation of the Target's Function Dependency.
 					// Tip: Do a <dependency-stub>.mockClear() to clear Test Information stored in the Mock.
 					// Tip: Do a <dependency-stub>.mockReset() before each Test to invalidate the current Mock, ensuring that Mocks don't bleed between Tests (will need to manually recreate the Mock in each subsequent Test).
