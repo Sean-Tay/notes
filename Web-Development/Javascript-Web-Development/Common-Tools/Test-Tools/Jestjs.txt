@@ -49,6 +49,7 @@ Jest
 				"rootDir": "<project-root-directory>",
 
 				// Subject matched Test Files to Parsers first before running them.
+				// Note: Jest can only parse Javascript by default.
 				"transform": { 
 					"<file-name-regex>": "<parser>",
 					"^.+\\.(ts|tsx)$": "ts-jest"
@@ -63,6 +64,7 @@ Jest
 				],
 
 				// A map between Dependency Regexes and Mock Module Paths.
+				// Tip: Useful in allowing Jest to correctly parse import Statements leading to non JavaScript Resources.
 				// Note: Regexes and Paths are checked in sequence until one matches.
 				// Note: '<rootDir>' is a Jest defined String-Token - use with the Angled Brackets.
 				"moduleNameMapper": {
