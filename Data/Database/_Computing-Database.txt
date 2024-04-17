@@ -825,6 +825,11 @@ Database
 							Google Cloud Pub/Sub
 							Azure Stream Analytics
 
+		Other Characteristics:
+			In Memory Database: Databases that keep their Data completely in RAM.
+				These may still write Data to Disk Asynchronously for Weak-Durability Concerns (e.g. Append-Only Log), they are still considered In-Memory because the Data that they are meant to serve is still primarily from RAM.
+				The performance advantage of In Memory Databases over traditional Disk Databases comes from avoiding the need to serialize the Data to a format compatible for a Disk Write, not from being able to avoid Disk Reads.
+
 	Commands:
 		
 	
