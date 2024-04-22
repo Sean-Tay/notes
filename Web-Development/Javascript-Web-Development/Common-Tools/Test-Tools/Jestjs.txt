@@ -171,6 +171,7 @@ Jest
 						);
 
 						// Asynchronous Unit Test Definition:
+						// Note: Jest has known instability with async Functions that don't have any await calls: https://stackoverflow.com/questions/55038813/cannot-log-after-tests-are-done-in-jestjs
 						test(
 							'<async-test-description>',
 							// Use a Callback to indicate to Jest that this Unit Test has finished executing.
