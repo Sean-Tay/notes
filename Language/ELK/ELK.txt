@@ -73,6 +73,7 @@ ELK
 																doc['<field>'].size() != 0
 
 																// Reference <field> Value:
+																// Note: Does not work on text and annotated_text Fields.
 																doc['<field>'].value
 
 															// <boolean-operator>:
