@@ -42,6 +42,8 @@ Git:
 				--global		- Per User.
 				--system		- System-Wide.
 
+			--list --show-origin - Show location of Git Config File.
+
 			--get <variable>	- Check Git Config Variable.
 
 			--global http."https://code.example.com/".sslVerify false - Disable SSL Cert Check for "code.example.com" domain.
