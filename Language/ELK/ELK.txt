@@ -28,7 +28,7 @@ ELK
 						// <query>
 						{
 							// Term Level: More for checking if a <field> has a particular <value>.
-								// Exists - Check if a <field> has a non-null Value, or is a non-empty Array.
+								// Exists - Check if a <field> has a non-null Value, or is a non-empty (String) Array.
 								// Note: Don't use this to check for the existance of Nested Objects; use the ignore_unmapped flag in the Nested Query instead.
 								"exists": {
 									"field": "<field>"
@@ -58,39 +58,37 @@ ELK
 										"should": [ { <query>, ... }, ... ], // Varying OR Behaviour possible with "minimum_should_match" specification.
 
 									// Filter Context
-										"filter": [
-											{
-												"script": {
-													"script": """
-														// Should return a Boolean on whether a given Document is included in the Results:
-														// <boolean-expression> <boolean-operator> ...
-															// <boolean-expression>:
-																// Tip: Cannot query <list-field>s directly; instead try querying on a <element-field> that would be present on all Elements in the List as a proxy to query on the <list-field>:
-																	// Example: Get all Documents whose <list-field> has more than one Element:
-																		doc['<list-field>.<element-field>'].size() > 1
+										"filter": {
+											"script": {
+												"script": """
+													// Should return a Boolean on whether a given Document is included in the Results:
+													// <boolean-expression> <boolean-operator> ...
+														// <boolean-expression>:
+															// Tip: Cannot query <list-field>s directly; instead try querying on a <element-field> that would be present on all Elements in the List as a proxy to query on the <list-field>:
+																// Example: Get all Documents whose <list-field> has more than one Element:
+																	doc['<list-field>.<element-field>'].size() > 1
 
-																// Check if <field> exists on Document:
-																doc['<field>'].size() != 0
+															// Check if <field> exists on Document:
+															doc['<field>'].size() != 0
 
-																// Reference <field> Value:
-																// Note: Does not work on text and annotated_text Fields.
-																doc['<field>'].value
+															// Reference <field> Value:
+															// Note: Does not work on text and annotated_text Fields.
+															doc['<field>'].value
 
-															// <boolean-operator>:
-																&&
-																||
-													"""
-												},
-
-												// OR
-
-												<query>,
-
-												// ... 
+														// <boolean-operator>:
+															&&
+															||
+												"""
 											},
 
-											// ...
-										],
+											// OR
+
+											<query>,
+
+											// ... 
+										},
+
+										// ...
 
 										"must_not": { <query>, ... },
 
