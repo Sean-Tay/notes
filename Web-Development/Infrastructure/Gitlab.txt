@@ -43,6 +43,7 @@ GitLab:
 
 				# Define custom prefilled Variables to be used within the Pipeline:
 				variables:
+					# Note: Boolean Values should be quoted as a String.
 					<key>: <value>
 
 					# OR
