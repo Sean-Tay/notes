@@ -389,14 +389,14 @@ React.js
 						// The key difference between useState and useReducer is that for useReducer the State can be altered in a controlled manner as opposed to simply using the <state-var-setter-function>.
 						// It is also more suited for managing State Objects that have multiple sub-values.
 						const [ <state-var>, <dispatch-function> ] = React.useReducer( 
-							(state, action) => {
+							(<current-state>, action) => {
 								// Reducer Function - A Pure Function that combines two or more Arguments and returns the combination.
 
 								// Based on action's Properties, a new State based on the passed in state should be returned.
 									// Switch on action.type
 									// action.payload
 								return {
-									...state,
+									...<current-state>,
 									// ...
 								};
 							}, 
