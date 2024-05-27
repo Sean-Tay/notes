@@ -40,7 +40,7 @@ SQL:
 
 					BOOLEAN({TRUE | FALSE}): Boolean Variables.
 
-					LOB:		arge Object that specializes in storing unstructured data of up to 128TB.
+					LOB:		Large Object that specializes in storing unstructured data of up to 128TB.
 						- BLOB: Binary Large Object.
 						- CLOB: Character Large Object.
 						- NCLOB: Native Character Large Object.
