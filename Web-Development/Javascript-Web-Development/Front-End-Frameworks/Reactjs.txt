@@ -436,6 +436,8 @@ React.js
 						);
 
 					// Optimizations - Avoid using as a guarantee to prevent Re-Renders.
+						// Note: Not as needed when React Forget Compiler is in play.
+
 						// Note: The Dependency Array for Optimization Hooks is of a different nature than the ones used for Side-Effect Hooks. If the submitted Function may directly or indirectly reference any Component's State (it's own or from Ancestor Components' passed in as Props), the references should be placed in the Dependency List.
 
 						// Caches a Computed Value, and avoids recalculation per re-Render if none of its specified Dependencies change. Only one Value is stored at a time (i.e. the last Computed Value).
@@ -552,6 +554,8 @@ React.js
 							)
 
 					// React >= v19+:
+						// React Forget Compiler: Not as much need to explicitly specify React.Memo, useCallback and useMemo.
+
 						// Load a Resource Asynchronously:
 						// Tip: This integrates with React.lazy and React.Suspense.
 						// Note: This is a special Hook which can be used within loops and if-statements.
