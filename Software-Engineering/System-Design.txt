@@ -196,19 +196,6 @@ System Design:
 				Load Parameters: The main metrics that the System deals with (e.g. Requests / Second to various API). These help to define starting points for further discussion.
 					Percentiles and Distribution are used for Load Parameters instead of a hard number.
 
-				Service Level Objective Standards: To define the expected amount of Traffic the Service should be able to handle.
-					x% -> x% of Requests met in a timely manner.
-						Tail Latency: The Requests above the xth Percentile. As more Requests are made (either in Sequence or Parallel), the Request Times of these start to dominate the other x% of Requests, assuming a large differential in the Request Times between the two types.
-
-						Head of Line Blocking: Complicated Requests (which take a long time to compute) eventually start to accumulate and clog up available Server Resources, causing delays in all subsequent Requests.
-
-				Service Level Agreement Standards: To define the amount of uptime a User can expect from the Service:
-					90% -> 36.5 Days Offline per Year
-					95% -> 18.25 Days Offline per Year
-					99% -> 3.65 Days Offline Per Year
-					99.9% -> 8.77 Hours Offline Per Year
-					99.99% -> 1 Hour Offline Per Year
-
 			Maintainability: Over time, many different people will be working on the System - they should all be working on it productively.
 				Motivation: The majority of costs associated is from Maintenance, and not the initial implementation.
 
@@ -226,6 +213,27 @@ System Design:
 					Evolvability: Making changes easily.
 						Agile / TDD / Refactoring for Software.
 						Rolling Upgrades for Systems (which allow for different versions of a Process to potentially interact with the same Data).
+
+			Metrics:
+				Service Level Agreement: An agreement between the Service and Client where the Product / Service to be delivered is defined, alongside measurable metrics which approve the effectiveness of the deliverable.
+					Service Level Objectives: Built on one or more SLIs, for over a period of time.
+						Service Level Indicators: Measure an aspect of the Reliability of a Service; an analogue for User Happiness.
+							Availability: x% Uptime per <period>:
+								Year:
+									90% -> 36.5 Days Offline per Year
+									95% -> 18.25 Days Offline per Year
+									99% -> 3.65 Days Offline Per Year
+									99.9% -> 8.77 Hours Offline Per Year
+									99.99% -> 1 Hour Offline Per Year
+
+							Latency: x% -> x% of Requests met in a timely manner.
+								Tail Latency: The Requests above the xth Percentile. As more Requests are made (either in Sequence or Parallel), the Request Times of these start to dominate the other x% of Requests, assuming a large differential in the Request Times between the two types.
+
+								Head of Line Blocking: Complicated Requests (which take a long time to compute) eventually start to accumulate and clog up available Server Resources, causing delays in all subsequent Requests.
+				
+				Error Budget: Defines the acceptable amount of Error that can accumulate over a period of time.
+					The budget is calculated over a period of rolling time.
+					The budget is consumed by Service Downtime, or Release Activities done by Development / Operations Teams.
 
 		Synchronization in Distributed Systems:
 			Time:
