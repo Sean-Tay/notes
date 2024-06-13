@@ -26,8 +26,11 @@ Web Dev:
 		CSP:					Content Security Policy.
 		CORS:					Cross Origin Resource Sharing.
 		CSRF:					Cross Site Request Forgery.
+		SSRF:					Server Site Request Forgery.
 
 		CMS:					Content-Management System.
+
+		OWASP:					Open Worldwide Application Security Project.
 	
 	Concepts:
 		Web Site:				A Service hosted on the Web - meant for Humans.
@@ -227,10 +230,75 @@ Web Dev:
 			Micro-Frontend: An Application Style that allows for the consolidation of separate SPAs into Frontend Resource. Can be seen as a "Single-SPA" approach.
 
 		Web Security:
-			OWASP:
+			OWASP: Top 10 Critical Risks:
+				Broken Access Control: Access Control mechanisms enforce policies that prevent Users from acting outside of their intended permissions.
+					It is only effective when implemented Server-Side / Serverless API.
+					Implement these mechanisms once, and reuse them throughout the Application.
+
+					Disable Web Directory Listing and ensure that any File Metadata (i.e. .git) or backups are not present in the Web Roots.
+					Model Access Controls should enforce Record Ownership, rather than allowing multiple Users be able to CRUD any Record.
+
+				Cryptographic Failures:
+					Don't store sensitive and protected data unneccessarily.
+					Ensure that sensitive and protected data at rest are encrypted via a proper Cryptographic Algorithm.
+					Utilize TLS with Perfect Forward Secrecy (FPS) Ciphers for sensitive and protected data in transit.
+
+				Injection: When untrusted data is sent to an interpreter as part of a command or query, the data can trick the interpreter into executing false, malicious but valid commands to damage the integrity of the data already stored, or access privileged information that the attacker is not supposed to have.
+					Utilize Static Source (SAST) and Dynamic Application (DAST) Tools in the CI/CD Pipeline to automatically identify flaws before deployment to production.
+
+				Insecure Design: Lack of Business Risk profiling for the Software being developed, leading to the failure to determine what level of Security in the Software's Design is needed.
+					Example: Allowing Users to login based on a Security Question; this is not a good proof of identity since more than one person may know the answer.
+
+					The whole premise of Secure Design is to identify potential Security Risks early in the Development Lifecycle.
+
+					Consult with AppSec Professionals to help evaluate and design Security and Privacy Controls.
+					Utilize Threat Modelling, and write Unit / Integration Tests to validate that all critical flows are resistant to the Threat Model.
+
+				Security Misconfiguration: Any system that fails to include a concerted, repeatable Application Security Configuration Process is at high risk.
+					Secure Installation should include a repeatable Security Hardening process that makes it fast and easy to deploy to another Environment that is properly locked down.
+					Development, QA and Production Environments should be configured identically, with different credentials used in each Environment.
+					Implement an automated process to verify the effectiveness of the configurations and settings of all Environments.
+
+				Vulnerable and Outdated Components:
+					Attackers use Automated Tools to help find unpatched or misconfigured Systems.
+
+					Use a Patch-Management Process to remove unused Dependencies, Features, Components, Files and Documentation.
+					Continuously inventory the versions of both Client-Side and Server-Side Components and their Dependencies.
+					Ensure that there is an ongoing plan for monitoring, triaging, and applying updates or Configuration Changes for the lifetime of the Application.
+
+					Deploy a Virtual Patch that defends against the identified issue, in the event that updating Dependencies is not feasible.
+				
+				Identification and Authentication Failures:
+					Ensure that User Credential Registration, Recovery and API Pathways are hardened against Account Enumeration attacks by using the same messages for all outcomes.
+
+					Implement Multi-Factor Authentication, Account Lockout, and CAPTCHA to prevent automated Credential Stuffing, Brute Force and Stolen Credential Reuse Attacks.
+					For access to internal resources such as Code, consider enforcing the use of a VPN to enable access. VPNs add another layer of encryption to communications.
+
+				Software and Data Integrity Failures: Relates to Code and Infrastructure that does not protect against Integrity Violations.
+					Example: Reliance on Plugins, Libraries or Modules from an Unsecured Source; Insecure CI/CD Pipeline.
+
+					Ensure Dependencies come from Trusted Repositories.
+					Use Digital Signatures to verify that the Dependency has not been altered.
+					Use reliable Software Supply Chain Security Tool to validate that Components do not contain known vulnerabilities.
+					Ensure a Review Process is in place for Code / Configuration changes.
+
+				Security Logging and Monitoring Failures:
+					Without sufficient Monitoring and Logging Processes, Breaches will go undetected; which will allow Attackers to gain unauthorized access to systems for long periods of time.
+
+					Ensure all login, Access Control failures, and Server-Side Input Validation failures are logged with sufficient User Context to identify suspicious or malicious Users, and that these are held for a sufficient time to allow delayed Forensics Analysis. These Logs should be generated in a format that can be consumed by centralized Log Management Solutions.
+
+					Ensure high-value transactions have an audit trail with integrity controls to prevent tampering or deletion.
+
 				CSRF:
-					Example: Email with HTML Content is received and read by a User that is currently logged on to <some-important-site>.
+					Example: Email with HTML Content is received and read by a User that is currently logged on to <some-important-site> (hijacks the current User Session on <some-important-site>).
 						<img src="https://<bank-site>/api/transfer?recipient=<malicious-id>&amount=1000" />
+
+				SSRF:
+					Occurs whenever a Server fetches an external Resource without first validating the User-supplied URL. It allows the Attacker to trick the Application into sending a crafted Request to another protected Application, which may go through as the Application is trusted by the protected Application (i.e. attack by proxy).
+
+					Network-Layer Protection: Segment Resource access functionality into separate networks, and enforce "deny-by-default" Firewall Policies and Network Access Control Rules to block all but essential Network Traffic.
+
+					Application-Layer Protection: Sanitize and Validate all Client-supplied Input Data, enforce a URL Schema, Port and Destination Whitelist, and disable HTTP Redirections.
 
 			HTTP Headers:
 				// Sending Credentials over to the Server:
