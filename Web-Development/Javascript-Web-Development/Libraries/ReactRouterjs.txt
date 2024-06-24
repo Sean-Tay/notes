@@ -43,6 +43,7 @@ React-Router:
 
 		API Interaction:
 			// location Object represents where the User is within the Application.
+			// Note: For Query Params.
 				// location.pathname === '/<path>'
 
 				// State from the previous Route / to the next Route.
@@ -157,6 +158,7 @@ React-Router:
 				// API Description:
 					const someComponent = ({ match, location, history }) => {
 						// match Object contains information about how a Route matched a given URL.
+						// Note: For Path Params.
 							// match.isExact
 							// match.url 		// Matched portion of the URL.
 							// match.path 		// The path pattern used to match.
@@ -232,6 +234,8 @@ React-Router:
 							useParams,
 							useRouteMatch
 						} from 'react-router';
+
+						// useParams: Get Path Params from match Object.
 
 						// useRouteMatch:
 							// useRouteMatch is useful to avoid rendering the Route component.
