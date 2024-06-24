@@ -179,6 +179,9 @@ Typescript:
 							// ...
 						};
 
+						// Reference Function Parameters:
+							type <function-parameters-array> = Parameters<typeof <function>>;
+
 						// Reference Function Return Type
 							type <function-return-type> = ReturnType<typeof <function>>; // Include one set of Angled Brackets.
 
