@@ -102,6 +102,7 @@
 
 					// ...
 
+					// To update props midway through:
 					renderResults.rerender(<element />)
 
 					renderResults.unmount()
