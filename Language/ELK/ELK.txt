@@ -54,8 +54,9 @@ ELK
 								// Matches for Documents based on Boolean Combinations of other <query>s.
 								"bool": {
 									// Query Context
-										"must": [ { <query>, ... }, ... ], // AND Behaviour.
-										"should": [ { <query>, ... }, ... ], // Varying OR Behaviour possible with "minimum_should_match" specification.
+										"must_not": [ <query>,  ... ], // NOT AND Behaviour.
+										"must": [ <query>, ... ], // AND Behaviour.
+										"should": [ <query>, ... ], // Varying OR Behaviour possible with "minimum_should_match" specification.
 
 									// Filter Context
 										"filter": {
