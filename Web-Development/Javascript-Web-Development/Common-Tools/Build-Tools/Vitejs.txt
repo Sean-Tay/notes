@@ -134,6 +134,11 @@ Vitejs
 
 						// vitest Configuration
 						test: {
+							// Specify a different tsConfig.json for Tests
+							typecheck: {
+								tsconfig: '<tsconfig>.json',
+							},
+
 							// Defines if a Unit Test Report should be generated.
 							reporters: [
 								'<test-reporter>',
@@ -152,8 +157,9 @@ Vitejs
 									'<coverage-reporter>',
 										// cobertura for GitLab CICD
 										// lcov for Sonarqube Coverage
-								]
-							}
+								],
+								reportsDirectory: '<directory-path>',
+							},
 
 							// ...
 						}
@@ -191,7 +197,7 @@ Vitejs
 				// <setupTestFile>.js
 					import { expect, afterEach, vi } from 'vitest'
 					import { cleanup } from '@testing-library/react'
-					import matchers from @testing-library/jest-dom/matchers'
+					import matchers from '@testing-library/jest-dom/matchers'
 
 					expect.extend(matchers)
 
