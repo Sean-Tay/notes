@@ -327,7 +327,27 @@ Node.js:
 				yarn global remove <dependency>							# Remove a globally installed Dependency.
 
 				yarn [run] <command> [<arg>, ...]						# Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
+
+			pnpm - Superior version to npn and possibly yarn.
+				pnpm init 												# Initialize a new Node Project.
+
+				pnpm install											# Add all Node Dependency specified within a package.json locally to the current Node Project.
+
+				pnpm add <dependency>[@<version>] 						# Add a Node Dependency locally to the current Node Project, with an optional specified <version>.
+				pnpm add <url>											# Add a Node Dependency hosted at <url> locally to the current Node Project.
+				pnpm remove <dependency>								# Remove a Node Dependency from the current Node Project.
+					-D													# devDependencies
+					-O													# optionalDependencies
+					-P													# dependencies
+					-g													# Global
+
+				pnpm update <dependency>								# Update a Node Dependency to the latest version (before a major version change), respecting specified semver ranges in package.json.
+				pnpm update <dependency>@<version>						# Update a Node Dependency to the specific <version>, respecting specified semver ranges in package.json.
 			
+				pnpm list 												# View all first-level installed Node Dependencies in the current Node Project.
+
+				pnpm <command> [-- <arg>, ...]							# Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
+
 			Bash Script to check for Local Deprecated Dependencies for Node Project:
 				jq -r '.dependencies,.devDependencies|keys[]' package.json | while read line; do \
 					printf "$line: "
