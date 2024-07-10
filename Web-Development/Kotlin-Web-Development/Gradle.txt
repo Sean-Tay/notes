@@ -38,10 +38,11 @@ Gradle
 
 		// gradle.properties
 			// Syntax: <key>=<value>
-			<gradle-settings-variable>=<value>
+			<gradle-variable>=<value>
 
 		// settings.gradle.kts
-			val <gradle-settings-variable>: String by project
+			// Reference <gradle-variable> from a gradle.properties File:
+			val <gradle-variable>: String by project
 
 			// Specify Configuration that would be common to all 'plugins' Blocks within all Sub-Project build.gradles.
 			pluginManagement {
@@ -85,20 +86,21 @@ Gradle
 				// ...
 			}
 
-			val <gradle-settings-variable>: String by project
+			// Reference <gradle-variable> from a gradle.properties File:
+			val <gradle-variable>: String by project // or use findProperty("<gradle-variable>") in the places that it is used
 
 			dependencies {
 				// Used during both Compile Time and Run Time, and is exported to Consumers.
 				api("<dependency-package-url>")
 
 				// Used during both Compile Time and Run Time, but is not exported to Consumers.
-				implementation("<dependency-package-url>")
+				implementation("<dependency-package-url>:${<gradle-variable>}")
 
-				compileTimeOnly("<dependency-package-url>")
+				compileTimeOnly("<dependency-package-url>:${<gradle-variable>}")
 
-				runTimeOnly("<dependency-package-url>")
+				runTimeOnly("<dependency-package-url>:${<gradle-variable>}")
 
-				testImplementation("<dependency-package-url>")
+				testImplementation("<dependency-package-url>:${<gradle-variable>}")
 			}
 
 			task <task-name>( ... ) {
