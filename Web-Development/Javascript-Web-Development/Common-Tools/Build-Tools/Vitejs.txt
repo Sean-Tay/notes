@@ -100,16 +100,16 @@ Vitejs
 						server: {
 							// Enable the requesting of resources from Local Server to other Servers.
 							proxy: {
-								// <request-path>: (Path + Query).
-								// <true-origin-url>: (Protocol + Host + Domain + Port + Path + Query)
+								// <request-path>: (Path).
+								// <true-origin>: (Protocol + Host + Domain + Port)
 
-								'/<request-path>': '<true-origin-path>',
+								'/<request-path>': '<true-origin>',
 								'/<request-path>': {
-									target: '<true-origin-path>',
+									target: '<true-origin>',
 									changeOrigin: true, // For Resources on different Domains / Ports
 									secure: true | false, // Depends on HTTP Protocol / BE Logic used
 
-									rewrite: (path) => path.replace(/^\/<request-path>/, '<true-origin-url>/<request-path>')
+									rewrite: (path) => path.replace(/^\/<request-path>/, '<true-origin>/<request-path>')
 									// ...
 							},
 						}
@@ -118,16 +118,16 @@ Vitejs
 						preview: {
 							// Enable the requesting of resources from Local Preview Server to other Servers.
 							proxy: {
-								// <request-path>: (Path + Query).
-								// <true-origin-url>: (Protocol + Host + Domain + Port + Path + Query)
+								// <request-path>: (Path).
+								// <true-origin>: (Protocol + Host + Domain + Port)
 
-								'/<request-path>': '<true-origin-path>',
+								'/<request-path>': '<true-origin>',
 								'/<request-path>': {
-									target: '<true-origin-path>',
+									target: '<true-origin>',
 									changeOrigin: true, // For Resources on different Domains / Ports
 									secure: true | false, // Depends on HTTP Protocol / BE Logic used
 
-									rewrite: (path) => path.replace(/^\/<request-path>/, '<true-origin-url>/<request-path>')
+									rewrite: (path) => path.replace(/^\/<request-path>/, '<true-origin>/<request-path>')
 									// ...
 							},
 						}
