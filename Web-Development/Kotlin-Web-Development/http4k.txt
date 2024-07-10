@@ -16,6 +16,7 @@ http4k
 						Request
 						Response
 						HttpHandler // (Request) -> Response
+						RoutingHttpHandler
 
 						Filter // (HttpHandler) -> HttpHandler
 							.then(next: Filter): Filter
@@ -41,7 +42,7 @@ http4k
 				)
 
 			// Route Definition
-				fun <handler-function>( ... ): HttpHandler {
+				fun <handler-function>( ... ): RoutingHttpHandler {
 					val staticHandler = static(ResourceLoader.Directory("./public"))
 					val redirectToStaticHandler = { request -> staticHandler(request.uri(Uri.of("<fallback-route>"))) }
 
@@ -62,6 +63,7 @@ http4k
 						},
 
 						// Note: You cannot have <path-parameter>s before the deepest Handler Function.
+						// Note: The Handler Function must specify a RoutingHttpHandler, NOT HttpHandler, otherwise the nested paths will NOT register.
 						"<route>" bind <another-handler-function>( ... ),
 
 						// Filter-Augmented Route
