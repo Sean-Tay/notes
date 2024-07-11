@@ -91,10 +91,15 @@ http4k
 						}
 
 						// Serving Static Content
-						// Tip - Should be specified close to the bottom of the Routing Configuration.
-						"<route>" bind staticHandler,
-						// History API Fallback for SPA UIs
-						"/{_:.*}" bind redirectToStaticHandler,
+							// Convenience Method for creating a Static Handler. Assumes content is in main/resources/public.
+							singlePageApp()
+
+							// OR
+
+							// Tip - Should be specified close to the bottom of the Routing Configuration.
+							"<route>" bind staticHandler,
+							// History API Fallback for SPA UIs
+							"/{_:.*}" bind redirectToStaticHandler,
 
 						// Fallback Route
 						Fallback bind <fallback-handler-function>( ... )
