@@ -119,9 +119,51 @@ Gradle
 				testImplementation("<dependency-package-url>:${<gradle-variable>}")
 			}
 
-			task <task-name>( ... ) {
+			// Create a new Task
+			tasks.register<<task-type>>("<task-name>") {
+				doFirst | doLast {
+					// Code specified here (i.e. Actions) is executed in the Execution Phase.
+
+					// ...
+				}
+				
+				// Code specified here (i.e. Task Configuration) is executed in the Configuration Phase.
+
+				// ...
+
+				// cwd
+				setWorkingDir("<relative-path>")
+			}
+
+			// Modify an Existing Task (i.e. from a Plugin)
+			// Tip: Usually register is used to configure a Task, whilst named is used to define the Actions for a Task via doFirst or doLast
+			tasks.named("<task-name>") {
 				// ...
 			}
+
+			// Specify that executing <task-name> will trigger <parent-task-name> first
+			tasks.findByName("<task-name>").dependsOn("<parent-task-name>")
+
+			// Example: Exec Task
+			tasks.register<Exec>("<task-name>") {
+				// Execute CLI Command
+				// Note: If the original command has spaces, delimit it via ','
+				commandLine("<command>","<sub-command>", ... )
+			}
+
+			// Example: Copy Task
+			// Tip: Sync can be used instead of Copy with the exact same syntax; Sync will clear the Target Directory first before copying.
+			tasks.register<Copy | Sync>("<task-name>") {
+				from("<path>")
+				into("<path>")
+				include("<file-glob-pattern>")
+			}
+
+			// Tip: Example Tasks can be made to run during the Configuration Phase:
+				// Example: Copy Task
+				copy {
+					// ...
+				}
 
 			allprojects / subprojects {
 				// Setup Tests with JUnit
