@@ -79,7 +79,9 @@ Gradle
 				id("<plugin-package-url>") version "<sem-version>"
 
 				// Useful Plugins
-				id("com.github.node-gradle.node") version "<latest-version"	// run npm / yarn / pnpm via Gradle; ensure that node packages installed are for the same OS Environment as where gradle is run.
+				id("com.github.node-gradle.node") version "<latest-version>"	// run npm / yarn / pnpm via Gradle; ensure that node packages installed are for the same OS Environment as where gradle is run.
+
+				id("com.github.johnrengelman.shadow") version "<latest-version>"	// For generating uberJars with the shadowJar Gradle Command
 			}
 
 			// Define Repositories to retrieve Project Dependencies from.
