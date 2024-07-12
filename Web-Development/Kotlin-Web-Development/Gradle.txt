@@ -25,6 +25,7 @@ Gradle
 		Plugin: An extension used to add functionality to the Build Tool.
 		Dependency: An extension used to add functionality to the Application itself.
 		Task: An atomic piece of work to be executed by Gradle.
+		Action: Steps within a Task.
 	
 	Details:
 		// gradle-wrappper.properties
@@ -93,6 +94,7 @@ Gradle
 			// Reference <gradle-variable> from a gradle.properties File:
 			val <gradle-variable>: String by project // or use findProperty("<gradle-variable>") in the places that it is used
 
+			// Version Catalogue
 			dependencies {
 				// Used during both Compile Time and Run Time, and is exported to Consumers.
 				api("<dependency-package-url>")
