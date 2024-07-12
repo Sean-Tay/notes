@@ -4,6 +4,7 @@ Gradle
 	Description: Configurable Automation Tool for Software Projects (usually Java oriented, as it requires the JVM to run). Built with Kotlin and Groovy.
 	
 	Resources:
+		Gradle Tutorial: https://docs.gradle.org/current/userguide/part1_gradle_init.html
 	
 	Concepts:
 		Project: The Project that Gradle manages.
