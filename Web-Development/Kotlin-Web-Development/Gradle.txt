@@ -26,6 +26,10 @@ Gradle
 		Dependency: An extension used to add functionality to the Application itself.
 		Task: An atomic piece of work to be executed by Gradle.
 		Action: Steps within a Task.
+
+		Initialization Phase: The first phase; Mainly reads the settings.gradle.kts File to determine Projects and sub-Projects.
+		Configuration Phase: The second phase; Parses the build.gradle.kts File for each Project / sub-Project, and creates a Task DAG.
+		Execution Phase: The third phase; Schedules and executes selected Tasks.
 	
 	Details:
 		// gradle-wrappper.properties
@@ -43,6 +47,8 @@ Gradle
 			<gradle-variable>=<value>
 
 		// settings.gradle.kts
+			// Code specified here is executed during the Initialization Phase.
+
 			// Reference <gradle-variable> from a gradle.properties File:
 			val <gradle-variable>: String by project
 
@@ -67,6 +73,8 @@ Gradle
 			include '<module-name>'
 
 		// build.gradle.kts
+			// Code specified here is executed in the Evaluation Phase.
+
 			// Specify the Group or Organization that it belongs to.
 			// Note: Don't include the Project in the <reverse-domain-name>.
 			group "<reverse-domain-name>"
