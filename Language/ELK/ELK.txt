@@ -6,6 +6,9 @@ ELK
 	Resources:
 	
 	Concepts:
+		Filebeat: Lightweight streaming utility to send Files over to Logstash or Elasticsearch.
+		Logstash: Heavyweight utility that transforms ingested Data into different Formats.
+
 		Nested Field: A List Field whose Object Elements have been flattened by taking the original Document and cloning it for each Element in the List, such that each clone only contains a single Element in its List Field.
 
 		Query DSL: The JSON-based language that ELK uses to define Queries.
