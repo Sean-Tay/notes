@@ -134,8 +134,13 @@ GitLab:
 					# Note: Cannot exist when only/except are specified.
 					# Note: If no rules match the Job will not execute.
 					rules:
+						# - if: '$CI_COMMIT_BRANCH == "master"'
+						# 	changes:
+						# 		- "<path>"
+						# 		- ...
+						# 	when: on_success
+
 						# ...
-						# when: manual
 
 					# Cross-Project Specifics:
 						# Trigger a Pipeline in another Downstream Project:
