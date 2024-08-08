@@ -963,6 +963,37 @@ Kotlin
 
 								mapper.convertValue(<source-instance-object>, <target-class>)
 
+				// Configuration:
+					// Relevant Packages:
+						com.natpryce.konfig.*
+							// Relevant Types
+								Key // Entity that identifies a named, typed property. Associated with a PropertyType in the context of a PropertyGroup.
+								PropertyType // Lambda (inbuilt or otherwise) that represents a way to parse the read string value from the Configuration.
+
+								PropertyGroup // Entity representing a "subset" of an actual Configuration, or one or more Keys and associated PropertyTypes.
+
+								Configuration // Entity wrapping a set of Environment Variables and their Values.
+									// Override <second> Configuration with <first> Configuration.
+									<first> overriding <second>
+
+									// Retrieve value from Configuration:
+									<config>[<property-group>. ... .<key>]
+
+							// Relevant Methods
+								// Getting a Configuration Instance
+									EnvironmentVariables() // Get Configuration based on the Process.
+									ConfigurationProperties.systemProperties() // Get Configuration based on System Defaults.
+									ConfigurationProperties.fromResource("<relative-path-from-resources-folder>") // Get Configuration stored in a File located within a resources Folder.
+
+								// PropertyGroup
+									PropertyGroup() // Returns a base PropertyGroup that an Object Class can inherit from.
+										object <group>>: PropertyGroup() {
+											object <sub-group>: PropertyGroup() {
+												// ...
+												val <key> by <property-type>
+											}
+										}
+
 				// Testing
 					// mockk
 						// Relevant Packages:
