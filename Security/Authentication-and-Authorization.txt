@@ -1,10 +1,12 @@
-Authentication and OAuth (Copied from CodeAcademy)
+Authentication and OAuth (referenced from CodeAcademy)
 	Introduction:
-		Authentication is the process used by applications to determine and confirm identities of users. It ensures that the correct content is shown to users. More importantly, it ensures that incorrect content is secured and unavailable to unauthorized users.
+		Authentication is the process used by applications to determine and confirm identities of users.
+			// This does NOT involve OAuth.
+			// This is the main use-case for OIDC, which is built on top of OAuth v2.0.
 
-		Authorization controls which users have access to which resources and actions.
-
-		In this article, we’ll discuss a few of the common design patterns for these interactions. You’ll need to have some basic understanding of HTTP requests, since these methods all use HTTP requests to exchange information.
+		Authorization controls whether an application is authorized to access a user's resources / perform actions on behalf of users.
+			// This is what OAuth is meant for. OIDC encompasses this as well, as it was built on top of OAuth v2.0.
+			// This is different from application-specific logic to check if a user can access perform application-specific actions; the Authorization above involves the ability to access protected resources hosted by a 3rd party that implements / provides OAuth for the application to link up with.
 
 	Password Authentication:
 		The most common implementation of authentication requires a user to input their username or email and a password. 
@@ -98,5 +100,38 @@ Authentication and OAuth (Copied from CodeAcademy)
 
 			This flow allows applications to use OAuth APIs without fear of potentially exposing long-term access to a user or application’s information.
 
-	Conclusion:
-		OAuth provides powerful access to a diverse set of sites and information. By using it correctly, you can reduce sign-up friction and enrich user experience in your applications.
+	OIDC:
+		Initial Request:
+			The user attempts to access your application.
+
+		Authorization Request:
+			Your application redirects the user to the OIDC provider (e.g., Google, Auth0).
+			This request includes both OIDC (for authentication) and OAuth (for authorization) parameters.
+			You specify the scopes you need, which might include both identity information and access to specific resources. // OAuth 2.0 does not have this
+
+		Authentication and Consent:
+			The user authenticates with the OIDC provider.
+			They're asked to consent to share their identity information and grant the requested permissions.
+
+		Authorization Code Return:
+			The OIDC provider redirects back to your application with an authorization code.
+
+		Token Exchange:
+			Your application exchanges the authorization code for tokens.
+				You receive:
+					a) An ID Token (for authentication) // OAuth 2.0 does not have this
+					b) An Access Token (for authorization)
+					c) Optionally, a Refresh Token
+
+		ID Token Validation:
+			You validate and decode the ID Token to get the user's identity information.
+
+		Access Token Usage:
+			You can use the Access Token to make requests to the OAuth-protected resources (e.g., Google APIs) on behalf of the user.
+
+		Application Logic:
+			Use the identity information from the ID Token to look up or determine the user's roles/permissions in your application.
+			Use the Access Token when you need to access external resources on behalf of the user.
+
+		Token Refresh:
+			When the Access Token expires, use the Refresh Token to obtain a new one without requiring the user to re-authenticate.
