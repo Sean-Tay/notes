@@ -1,0 +1,217 @@
+OAuth:
+	Abbreviations:
+		JWT:					JSON Web Token.
+
+		PKCE:					Proof Key for Code Exchange.
+		OIDC:					OpenID Connect.
+	
+	Description:				Industry-standard protocol for Authorization.
+
+	Resources:					https://oauth.net/2/
+
+	Concepts:
+		Provider / Service:		The Service proving the API and securing it via OAuth.
+		Consumer / Application:	The Application accessing the Service's API via OAuth.
+
+		Authentication: 		The process used by an Application to determine and confirm identities of Users.
+		Authorization: 			Controls whether an Application is allowed to access a User's Resources / perform Actions on a Service, on behalf of the User. This is different from the process of determining what level of access a User has on the Application.
+
+		First-Party Client:		When an Application's Resource (not User's Resource hosted on the Provider) is secured behind OAuth provided by a Provider - the Application is the First-Party Client.
+
+		(OAuth 2) Grant:		Determines how the OAuth Authorization Token is accessed.
+		(OAuth 2) Scope:		Determines what the OAuth Authorization Token can subsequently access.
+	
+	Details:
+		History - Pre OAuth:
+			Password Authentication: Requires a User to input their Username / Email and Password.
+				Uses the Authorization HTTP Header to send the info from Client to Server.
+
+				The Service checks the supplied Credentials to determine if they are correct. If so, the User is logged in.
+					In addition, the Server will respond with an Authentication Token for the Client to include in subsequent HTTP Requests. 
+					
+					This is stored on the User Agent, preventing the need for Users to have to repeat the Authentication Procedure with each Request.
+
+					This Authentication Token will expire after some time, as determined by the Server, so as to avoid leaking the Authentication Token and allowing a Malicious Entity to impersonate the User on the Application.
+
+			API Keys: Mechanism by which a Service allows an Application to use its Resources / perform Actions.
+				Services may expose APIs to allow other Applications to access their information.
+					Spotify API provides Endpoints for almost all of its functionality. This allows other Applications to fetch data from e.g. the Spotify Music Catalogue and manage a User's playlist and saved music.
+
+				Since these external Applications could potentially overwhelm a Service and also access User Information, they need to be secured. The most basic mechanism to achieve such an aim is the API Key.
+					API Providers usually provide a Developer Portal where Developers can register their Application and generate a corresponding API Key, which is unique to the Application.
+
+					When the Application makes a Request to the Service, this API Key must be included. The Service can then verfiy that the Application is allowed access and provide the correct Response, based on the registered Permission Level of the Application.
+
+					The Service can then track the type and frequency of Requests that the Service is making. This can then be used to throttle Requests made by a Application to the pre-determined SLA. This prevents Malicious Applications from spamming the Service's Endpoint or abusing User Data, since the Service can just block the Application's assigned API Key to prevent further use by the Malicious Application.
+	
+		OAuth (2007 - Twitter): Standardized Protocol to assist Providers in providing functionality via their APIs to Consumers in a secure way.
+			Typical Implementations of API Key Mechanisms are usually limited in the following ways:
+				API Keys don't conveniently allow a User on the Service to block an Application from accessing their Data - they would need to do so in advance on the Service before the Application sends the Request.
+
+				API Keys are long-lived, which presents a security risk if it is leaked.
+
+				Intended ways to use API Keys is different across Services, which would degrade UX.
+
+				// The following are weaker reasons, because Services can simply design their APIs to overcome these limitations.
+					Services would require a complex permission system to allow finer-grained control over the usage of their API for each Application with an API Key.
+
+					API Keys commingle Authentication and Authorization, when they should be separate concerns.
+
+			OAuth was designed to overcome the above limitations in a standardized way:
+				OAuth provides a more dynamic, on-demand consent process - Users are prompted at the time an Application requests for access to their data on the Service.
+					Users can also decide the level of access the Application gets, as they are prompted each time it happens.
+					Owing to the dynamic, on-demand consent process, each OAuth Token supplied to the Application can have shorter lifespans, increasing security.
+
+				OAuth is an Open Standard, which helps make the Authorization process consistent across different Services.
+
+				OAuth focuses on Authorization, and OIDC (later on) is built on top of OAuth to add Authentication. This separates concerns.
+
+				Other Benefits:
+					OAuth was designed in a way to avoid the need for the User to pass sensitive Credentials to the Application that is requesting access to the Service (which may have been needed if only API Keys were used and the Application needed consent from the User to allow the Service to provide their information).
+
+			Implementation Details:
+				Applications using OAuth will first ask the User to select which Service they would like to use for Credentials (e.g. Login with Google, Facebook, etc.)
+
+				After selecting the Service, the User will be redirected to the Service to login. This login confirms the User's Identity, and typically provides the User with a list of permissions the originating Application is attempting to gain from the Service.
+
+				If the User confirms that they allow this access, the Service redirects the User back to the originating Application, alongside a Token. This Token is saved by the originating Application, and sent with subsequent Requests to the Service API to prove that the User has granted access to the Application, and retrieve the appropriate User Data (without it the API will reject the Request).
+
+				When a User returns to the Application, the Token is retrieved and the User will not have to Authenticate again on the Service (unless the Token has expired).
+
+		OAuth 2 (2012): A complete rewrite of OAuth.
+			OAuth 2 improves upon OAuth in the following ways:
+				OAuth 2 introduces multiple flows (Grants) for Authorizing Consumers.
+					Even with the multiple flows, these are all fulfilled with 2 standardized Endpoints - /authorize and /token.
+
+				OAuth 2 introduces Scopes, to necessitate Consumers to specify what they need with greater granularity and control.
+				
+				OAuth 2 introduces a mechanism for refreshing the Token, which encourages shorter lifespans (OAuth allowed for Tokens to have year-long lifespans).
+
+				OAuth required a complex signature creation for each Request, OAuth 2 just relies on TLS.
+
+			Implementation Details:
+				Instead of an API Key, a Consumer receives a client_id and an optional client_secret when registering with the Provider. These should be supplied when making a Request to the Provider Authorization / Token Endpoints.
+					If there is no client_secret, Consumers may specify an empty string, in which case the client_secret Query Param will be omitted from the /authorize Request.
+
+				/authorize and /token:
+					GET /authorize: 302 Found
+						Query Params:
+							client_id
+							scope (specifies what Resources the Application is trying to access)
+
+							Authorization Code Grant:
+								client_secret
+								redirect_uri (usually set to the Application's Callback Endpoint)
+							
+								code_challenge (only for PKCE-enhanced OAuth 2; ensures only the original Service can exchange the authorization code given to it for Tokens)
+								code_challenge_method (only for PKCE-enhanced OAuth 2; ensures only the original Service can exchange the authorization code given to it for Tokens)
+
+								state Query Parameter (CSRF-token generated by Application Server)
+
+							Implicit Grant:
+								redirect_uri (usually set to the Application's Callback Page)
+
+						Returns:
+							Authorization Code Grant:
+								code Query Parameter (supposed to be Short-Lived; prevents direct exposure of the access_token in the Browser)
+								state Query Parameter (CSRF-token generated by Application Server)
+
+							Implicit Grant:
+								access_token Fragment Parameter
+
+					POST /token: 200 OK
+						Params:
+							Authorization Code and Client Credentials Grant:
+								client_id
+								client_secret
+
+								code_verifier (only for PKCE-enhanced OAuth 2; ensures only the original Service can exchange the authorization code given to it for Tokens)
+
+						Returns in the POST Body:
+							Authorization Code and Client Credentials Grant:
+								access_token is what allows the Consuming Application to access the other Provider API that is able to provide the business functionality the consuming Application needs from the Provider.
+
+								refresh_token is provided as a way to get new access_tokens (which will invalidate prior access_tokens associated with it) without the need for the User to be present. This allows the Application to repeatedly get new Access Tokens while the User is offline (e.g. for Batch Jobs).
+
+				Authorization Code Grant: User-delegated Application access to a Service's Resources. Scopes are User-centric.
+					This flow is one of the most common implementations of OAuth 2.
+
+					Flow:
+						The User initiates an action that requires access to User Resources protected by the Provider - the Application's Server Endpoint called redirects the User to the Provider's /authorise API if the User does not supply an access_token.
+							The Application needs to persist the original Endpoint being accessed by the User; this can be stored via a Cookie / Server-side Storage.
+						
+						The User's Browser then calls the Provider's /authorize API, with the Query Params that are generated by the Application.
+							The User Authenticates themselves on the Provider, and verifies the Consumer / Application requesting access and permissions. After this, the Provider redirects the User back to the Application's Callback Endpoint with an authorization code.
+							
+						The User's Browser calls the Application's Callback Endpoint with the authorization code.
+							The requesting Application takes this authorization code and submits it to the Provider's /token Endpoint, gaining the access_token and refresh_token.
+								This needs to be persisted as well; this can be stored via a Cookie / Server-side Storage.
+
+							Subsequently, the Application redirects the User back to the original Endpoint being accessed by the User (i.e. retrieved from the Cookie earlier).
+
+						The User's Browser then calls the original Application Endpoint in Step 1, now with the access_token.
+							The Application can then query the Provider's other API with the access_token to perform Business Logic.
+								Any result from Provider GET APIs may be cached in a simple Key-Value Store, with the key being the access_token.
+
+					PKCE:
+						Generate a random string for the code_verifier.
+						Use a Secure Hashing Method to get the code_challenge from the code_verifier.
+
+						When calling the /authorize Endpoint, provide the code_challenge and the code_challenge_method (e.g. S256) as part of the Call's Query Params.
+							The Provider needs to persist this value, along with the authorization_code returned.
+
+						When calling the /token Endpoint, provide the code_verifier as part of the Call's Request Body.
+							The Provider checks that the code_verifier, when hashed with the method specified by the code_challenge_method, should yield the same value as the code_challenge persisted earlier in the /authorize Call.
+
+				Client Credentials Grant: Server-Server Communication. Scopes are Application-centric; more about an Application's available access to a Service's Resources.
+					Sometimes an Application will not need access to a User's Data but may require the added security and consistency of the OAuth 2 specification. As a result, the Application's User does not participate in this flow.
+
+					Flow:
+						The Application calls the Provider's /token API, providing its Client Credentials (i.e. client_id and client_secret).
+
+						The Provider validates the Client Credentials, and returns the access_token and refresh_token upon success.
+
+						The Application can then use the access_token to access Resources protected by the Provider.
+
+				(Legacy) Implicit Grant: Similar to the Authorization Code Grant, but without the need for a separate Token Exchange Step.
+					This is generally used for Applications without Server-side capabilities, as we cannot securely send the Application's client_secret to the User.
+
+					Flow:
+						The User loads a Protected Application Page / initiates an Action on a Page that requires access to Resources protected by the Provider - the Application redirects the User to the Provider's /authorize API if it does not supply a valid access_token.
+							The Application needs to persist the original Page being accessed by the User; this can be stored via Session Storage.
+
+						The User's Browser calls the Provider's /authorize API, with the Query Params generated by the Application.
+							The User Authenticates themselves on the Provider, and verifies the Consumer / Application requesting access and permissions. However, instead of an authorization code, the Provider just redirects the User back to the Application's Callback Page with the access_token, embedded as the URL's Fragment.
+								Fragments are used here as they are typically not sent by Browsers to the Servers hosting the static UI Files, so the access_token remains completely on the Browser. Additionally, these are not saved as part of the URL when the User bookmarks the Page.
+								
+								However, Fragments are vulnerable to malicious Browser Extensions. Additionally, malicious CDNs can inject JavaScript into the static UI Bundle to expose the Fragments, but this can be avoided via Sub-Resource Integrity checks.
+
+								As a result of the numerous Security Concerns above, the industry is moving away from Implicit Grant OAuth 2 flows.
+
+						The User's Browser loads the Application's Callback Page.
+							The Application's Callback Page saves the access_token in the User's Browser's Local Storage, and redirects the User back to the original Page in Step 1.
+						
+						The Application Page can then use the access_token to access Resources protected by the Provider.
+
+		OIDC (2014): Builds on top of OAuth 2's Authorization Code Flow to provide Authentication functionality.
+			Implementation Details:
+				Introduces a nonce Param for /authorize Calls to prevent Replay Attacks.
+					The Service generates a nonce for the session and sends it with the /authorize Call to the Provider.
+					The Service checks if the nonce received as part of the id_token from the /token Call to the Provider matches the one it sent to the /authorize Call in this session.
+						This prevents replaying of past id_tokens from Malicious Entities back to the Service, as the nonce in the replayed id_token will not match the one the Service sent to the current /authorize Call.
+							This prevents the Malicious Entity from impersonating as the User in the Authentication Process.
+
+						Even if the replayed id_token contained the correct nonce for this session, it would be invalidated as the Service has already seen it before (i.e. assuming the malicious id_token was re-sent to the Service after the first instance).
+
+				Introduces standardized scopes for the /authorize Call:
+					openid
+					profile
+					email
+
+				Returns an id_token JWT during the /token Call containing User Information.
+					Typically in the format of <header>.<payload>.<signature>. Split the JWT String via the dot delimiters.
+						Base-64 decrypt the <payload>.
+						The <signature> can be verified with a call to the Provider's .well-known / jwks.json Endpoint.
+
+				Introduces a User Info Endpoint that returns additional User Information.
+					/userinfo (supply the usual access_token).
