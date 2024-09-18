@@ -264,6 +264,7 @@ Kotlin
 					// Note: If there is a non-default Primary Constructor, the Secondary Constructor will have to delegate to it.
 					// Note: Therefore, code from Primary Constructors, Property Initializers and Initialization Blocks are executed before Secondary Constructors.
 					// Tip: Prefer Default Values in the Primary Constructor as opposed to Secondary Constructors.
+					// Tip: If some logic is needed before the delegation, consider using the Alternative Secondary Constructor in the companion object below.
 					constructor(
 						// Note: Specifying 'val' or 'var' here for Parameter Properties will not be correct for those already specified in the Primary Constructor.
 						... 
@@ -281,6 +282,11 @@ Kotlin
 						// Mark the following Method as a Static Method for the JVM
 						@JvmStatic
 						fun <function-name>( ... ) { ... }
+
+						// Alternative Secondary Constructor:
+						operator fun invoke( ... ): <class-name> {
+							return <class-name>( ... )
+						}
 					}
 
 					// Accessing Companion Objects within Classes:
