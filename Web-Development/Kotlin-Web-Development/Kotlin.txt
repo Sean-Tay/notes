@@ -1059,6 +1059,11 @@ Kotlin
 															// ... arg<<arg-type>>(<arg-index-position>) ...
 														}
 
+														// Partial Mocking - To return the result of the original Function:
+														every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } answers { 
+															callOriginal()
+														}
+
 													// For a <function> that has the Unit Return Type:
 														every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } just Runs
 
