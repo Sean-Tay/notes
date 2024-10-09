@@ -140,7 +140,9 @@ Linux / Unix:
 							-pass env:<env-variable> - Specify the Environment Variable which contains the Password for the Certificate File. The "env:" Prefix is required.
 
 			curl <url>			- Interact with an Application hosted on <url>
-				--insecure 		- Ignore TLS for Services hosted on https.
+				--cert <cert-name>.pem:<cert-password> - Specify Cert to use for Mutual TLS Server-side Verification.
+				--insecure 		- Ignore Mutual TLS Client-side Verification for Services hosted on https.
+
 				--http1.1 		- Use HTTP 1.1 for the Request.
 				--http2			- Use HTTP 2 for the Request.
 				--head			- See the first line of the initial Response (i.e. Response Header) only.
