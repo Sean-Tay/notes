@@ -125,10 +125,18 @@ Linux / Unix:
 				Note: If <command> is not defined a Persistent Connection is created and subsequent CLI Commands to the Terminal will be executed on the <target-host> instead.
 					exit		- Logout of <target-host>.
 
-			openssl <command> <command-opts> - Utility to check and verify Certificates.
+			openssl <command> <command-opts>
 				Note: Precede the Command with winpty if using Git Bash for this.
 
 				<command>
+					x509		- For .crt Files.
+						<command-opts>
+							-in <file>.crt
+							-out <file>.pem
+							-outform PEM
+
+							-hash	- Additionally display the Hash that can be used as the Output File's name (suffixed with a .0) when considering usage of -CAPath / curl's --capath.
+
 					pkcs12		- For .pfx Files.
 						<command-opts>
 							-in <file>.pfx - Specify Certificate File to verify.
@@ -138,6 +146,16 @@ Linux / Unix:
 
 							-passin
 							-pass env:<env-variable> - Specify the Environment Variable which contains the Password for the Certificate File. The "env:" Prefix is required.
+
+					s_client	- To analyze Client-Server Communications.
+						<command-opts>
+							-proxy <proxy-host>:<port> # If needed
+							-connect <host>:<port>
+
+							-cert <cert>.pem - Specify PEM Cert File.
+							-pass pass:<plaintext-password> - Specify Plaintext Password for the Certificate File. The "pass:" Prefix is required.
+
+							-CApath <path> - Specify Directory that contains CA Certs that can be used to validate the Server's Cert presented. Names of the CA Cert should be their hashes (obtainable via openssl x509 -hash), suffixed with a .0 .
 
 			curl <url>			- Interact with an Application hosted on <url>
 				--cert <cert-name>.pem:<cert-password> - Specify Cert to use for Mutual TLS Server-side Verification.
