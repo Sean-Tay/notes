@@ -37,6 +37,13 @@ Gradle
 		Execution Phase: The third phase; Schedules and executes selected Tasks.
 	
 	Details:
+		Differences between Gradle and Maven:
+			Maven serves as an alternative to Gradle in terms of a Build Tool:
+				Maven utilizes a Project-Object-Model specified in an XML File (pom.xml) to describe Project Structure, Dependencies and Build Process.
+
+			Maven has also introduced a standardized way to distribute and share Java Libraries and Plugins.
+				Other tools, including Gradle, can connect with Maven Repositories to download Project Dependencies.
+
 		// gradle-wrappper.properties
 			// Syntax: <key>=<value>
 
