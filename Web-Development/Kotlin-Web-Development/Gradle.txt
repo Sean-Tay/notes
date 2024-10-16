@@ -102,6 +102,8 @@ Gradle
 				id("com.github.node-gradle.node") version "<latest-version>"	// run npm / yarn / pnpm via Gradle; ensure that node packages installed are for the same OS Environment as where gradle is run.
 
 				id("com.github.johnrengelman.shadow") version "<latest-version>"	// For generating uberJars with the shadowJar Gradle Command
+
+				id("maven-publish")
 			}
 
 			// Define Repositories to retrieve Project Dependencies from.
@@ -109,6 +111,11 @@ Gradle
 				maven {
 					url = uri("<artifactory-path>")
 					isAllowInsecureProtocol = true
+
+					credentials {
+						username = System.getenv("<env-variable>") // Do not expose Plaintext here
+						password = System.getenv("<env-variable>") // Do not expose Plaintext here
+					}
 				},
 				// ...
 			}
@@ -193,6 +200,22 @@ Gradle
 
 					testLogging {
 						events "passed", "skipped", "failed"
+					}
+				}
+
+				// Setup Publishing Routines
+				publishing {
+					repositories {
+						// ...
+					}
+
+					publications {
+						create<MavenPublication>("Maven") {
+							groupId = "<group-name>"
+							artifactId = "<artifact-name>"
+							version = "<version>" // Optional - if left out it will default to the Gradle Project Version
+							from(components["java"])
+						}
 					}
 				}
 			}
