@@ -1,5 +1,6 @@
 Gradle
 	Abbreviations:
+		GAV: Group + Artifact + Version Maven Coordinates.
 	
 	Description: Configurable Automation Tool for Software Projects (usually Java oriented, as it requires the JVM to run). Built with Kotlin and Groovy.
 	
@@ -107,20 +108,22 @@ Gradle
 
 			// Reference <gradle-variable> from a gradle.properties File:
 			val <gradle-variable>: String by project // or use findProperty("<gradle-variable>") in the places that it is used
+				// Usage
+				// "${<gradle-variable>}"
 
 			// Version Catalogue
 			dependencies {
 				// Used during both Compile Time and Run Time, and is exported to Consumers.
-				api("<dependency-package-url>")
+				api("<gav-maven-coordinates>")
 
 				// Used during both Compile Time and Run Time, but is not exported to Consumers.
-				implementation("<dependency-package-url>:${<gradle-variable>}")
+				implementation("<gav-maven-coordinates>")
 
-				compileTimeOnly("<dependency-package-url>:${<gradle-variable>}")
+				compileTimeOnly("<gav-maven-coordinates>")
 
-				runTimeOnly("<dependency-package-url>:${<gradle-variable>}")
+				runTimeOnly("<gav-maven-coordinates>")
 
-				testImplementation("<dependency-package-url>:${<gradle-variable>}")
+				testImplementation("<gav-maven-coordinates>")
 			}
 
 			// Create a new Task
