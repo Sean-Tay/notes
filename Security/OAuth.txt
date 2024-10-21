@@ -197,6 +197,10 @@ OAuth:
 						
 						The Application Page can then use the access_token to access Resources protected by the Provider.
 
+				// TODO: Client Assertion Grant
+					Impersonation
+					Delegation
+
 		OIDC (2014): Builds on top of OAuth 2's Authorization Code Flow to provide Authentication functionality.
 			Implementation Details:
 				Introduces a nonce Param for /authorize Calls to prevent Replay Attacks.

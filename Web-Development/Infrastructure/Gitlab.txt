@@ -116,6 +116,11 @@ GitLab:
 						- job: <job-name>
 						  artifacts: <boolean>
 
+					# Specify specific Artifacts that this Job needs from prior Jobs
+					# Note: All Artifacts generated from prior Jobs are available to this Job by default.
+					# Note: To specify that the Job should take no Artifacts, use dependencies: [].
+					dependencies: [ "<artifact-path>", ... ]
+
 					# Describe "Whitelist" / "Blacklist" type Conditions in which the Job will be added to the Pipeline and run:
 					# Note: Cannot exist when rules is specified.
 					only/except:
