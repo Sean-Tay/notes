@@ -10,8 +10,10 @@ Sonarqube
 	
 	Details:
 		Project Configuration is done via specification of a 'sonar-project.properties' File at the Project's Root.
-			sonar.host.url=<cloud-host-url>
-			sonar.projectKey=<cloud-project-key>
+			sonar.host.url=<sonar-instance-host-url>
+			sonar.token=<sonar-instance-authentication-key>
+
+			sonar.projectKey=<sonar-instance-project-key>
 
 			# Specify that the Sonarqube Driver should wait for the Quality Gate Status from Sonarqube to be returned from the Sonarqube Host before continuing.
 			sonar.qualitygate.wait=<boolean>
