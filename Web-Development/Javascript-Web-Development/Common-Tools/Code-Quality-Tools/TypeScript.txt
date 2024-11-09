@@ -91,6 +91,29 @@ Typescript:
 						type <map> = Record<<keys-type-a> , <keys-type-b>>; // Include one set of Angled Brackets.
 
 					// Classes
+						// Typescript-specific Class Features 
+						class <class-name> {
+							// Auto-Accessors: Shorthand for defining Private Class Properties with getters and setters.
+								accessor <property>: <type> = <initial-property-value>; 
+									// Decompiles to:
+										#<property>_accessor_storage = <initial-property-value>; 
+										get <property>() { return this.#<property>_accessor_storage };
+										set <property>(arg) { this.#<property>_accessor_storage = arg };
+
+								// Note: The below is not yet supported in regular Javascript & Typescript:
+									accessor <property>: <type> { get; set; } = <initial-property-value>
+
+									// Examples:
+										accessor #<private-property>: <type> { get; set; } = <initial-property-value>
+										accessor <protected-property>: <type> { get; #set; } = <initial-property-value>
+										accessor <immutable-property>: <type> { get; } = <initial-property-value>
+
+									// Custom Getters and Setters
+									accessor <property>: <type> { get() { // ... }; set(<value>) { // ... } }
+
+							// ...
+						}
+
 						// Note: Implemented Interfaces do not enforce the Typing of Member Attributes - they only serve to declare to Clients that the Class can be treated as the Interface Type.
 						// Note: Implemented Interfaces have their Member Attributes set to Public by default.
 						// Tip: Use Abstract Base Classes that implement the Interface to help declare Instances of Implementable Interfaces, or for Non-Public Member Attributes.
