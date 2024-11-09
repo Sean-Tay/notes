@@ -379,7 +379,11 @@ Typescript:
 					// export const assertIsType: <explicit-call-signature> = () => { // ... };
 					export const assertIsType: (arg: <type>): asserts arg is <stricter-type> = () => { // ... };
 
-				// Type Assertion
+				// Type Satisfaction: Checks if <value> fulfils a certain <type> without coercing the Type of <value> to be <type>.
+					// Note: If the <type> is not satisfied, a Compile Error will be thrown.
+					<value> satisfies <type>
+
+				// Type Assertion: Forces Typescript to interpret the Type of <value> to be <type>.
 					<value> as <type>
 					// OR
 					<<type>><value> // Include one set of Angled Brackets.
