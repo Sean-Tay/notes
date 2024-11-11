@@ -1,6 +1,9 @@
 Javascript
-	Hoisting:												Javascript Interpretation would store Variable and Function Declarations (NOT Initializations) in Memory first, before any Execution begins.
-		This is how Variables and Functions can be used within Code before they have been Defined.
+	Concepts:
+		Hoisting:											Javascript Interpretation would store Variable and Function Declarations (NOT Initializations) in Memory first, before any Execution begins.
+			This is how Variables and Functions can be used within Code before they have been Defined.
+
+		Barrel Files:										Files that solely re-export Library Code within their Folder so that Consumers can treat the whole Folder as a single package.
 	
 	Scopes:
 		const 												block {} scope, unchangeable once declared, not redeclarable
