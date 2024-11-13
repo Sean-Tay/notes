@@ -87,6 +87,52 @@ Jest
 				// Specifies to Jest the number of Failed Tests to tolerate, exceeding which to terminate the Test Run.
 				"bail": <number>, 
 
+
+				// Defines if a Unit Test Report should be generated.
+				"reporters": [
+					// jest-junit for GitLab CICD
+					// @casualbot/jest-sonar-reporter for Sonarqube Unit Test Report
+					'<test-reporter>',
+
+					// OR
+
+					[
+						'<test-reporter>',
+						{
+							// Options Object
+						}
+					],
+
+					// ...
+				],
+
+				// Specify Coverage Provider that will perform the Code Coverage Analysis
+				"coverageProvider": "<coverage-provider>",
+
+				// Defines how the Coverage Report should be generated.
+				// Note: Only activated if the --coverage Flag is given when jest runs.
+				"coverageReporters": [
+					// cobertura for GitLab CICD
+					// lcov for Sonarqube Coverage
+					"<coverage-reporter>",
+
+					// OR
+
+					[
+						"<coverage-reporter>",
+						{
+							// Istanbul Reporters Options Object
+							file: "<output-file-name>",
+
+							// Note: Will affect paths specified in the Test Coverage Reports.
+							// Tip: Specify to Repo Root, not package.json, to ensure compatibility with Code Scanners.
+							projectRoot: "<relative-path-to-project-root>",
+						}
+					],
+
+					// ...
+				],
+
 				// ...
 			}
 
@@ -498,6 +544,9 @@ Jest
 		jest --init				# Generate a basic Jest Config File.
 
 		jest					# Runs Jest Tests.
+			--cicd				# Runs Jest Tests optimized for CICD Execution.
+			--coverage			# Generate Test Coverage Reports as defined in Jest Config.
+
 		jest --watchAll 		# Runs Jest Tests whenever there is a change in Code.
 
 		jest -u					# Update UI Component Snapshots that fail their Tests.

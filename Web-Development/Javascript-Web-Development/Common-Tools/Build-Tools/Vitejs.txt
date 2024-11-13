@@ -141,9 +141,20 @@ Vitejs
 
 							// Defines if a Unit Test Report should be generated.
 							reporters: [
+								// junit for GitLab CICD (no additional Dependency needed)
+								// vitest-sonar-reporter for Sonarqube Unit Test Report
 								'<test-reporter>',
-									// junit for GitLab CICD (no additional Dependency needed)
-									// vitest-sonar-reporter for Sonarqube Unit Test Report
+
+								// OR
+
+								[
+									'<test-reporter>',
+									{
+										// Options Object
+									}
+								],
+
+								// ...
 							],
 							outputFile: {
 								'<test-reporter>': <file-name>
@@ -152,11 +163,25 @@ Vitejs
 							// Defines how the Coverage Report should be generated.
 							// Note: Only activated if the --coverage Flag is given when vitest runs.
 							coverage: {
-								provider: '<provider>',
+								provider: '<coverage-provider>',
 								reporter: [
+									// cobertura for GitLab CICD
+									// lcov for Sonarqube Coverage
 									'<coverage-reporter>',
-										// cobertura for GitLab CICD
-										// lcov for Sonarqube Coverage
+
+									// OR
+
+									[
+										"<coverage-reporter>",
+										{
+											// Istanbul Reporters Options Object
+											file: "<output-file-name>",
+
+											// Note: Will affect paths specified in the Test Coverage Reports.
+											// Tip: Specify to Repo Root, not package.json, to ensure compatibility with Code Scanners.
+											projectRoot: "<relative-path-to-project-root>",
+										}
+									],
 								],
 								reportsDirectory: '<directory-path>',
 							},
