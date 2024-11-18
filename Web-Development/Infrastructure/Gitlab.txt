@@ -140,13 +140,24 @@ GitLab:
 					# Describe the Conditions in which the Job will be run:
 					# Note: Cannot exist when only/except are specified.
 					# Note: Rules are evaluated when the Pipeline is created.
-					# Note: Rules are evaluated in order of specification, until a match is found (OR-based).
+					# Note: Rules are evaluated in order of specification, until a match is found (OR-based). If none are found, the Job will not be added to the Pipeline.
 					rules:
 						# - if: $CI_COMMIT_BRANCH == "master"
 						# 	changes:
 						# 		- "<path>"
 						# 		- ...
 						# 	when: on_success
+
+						# Inheriting Rules from Hidden Jobs:
+						# 	.hidden-job:
+						# 		- if: <condition> # Note: These are not defined within the Hidden Job's Rule Block.
+						#		  when: never
+						# 		- ...
+						#
+						#	inheriting-job:
+						# 		rules: 
+						# 			- !reference [.hidden-job]
+						# 			- ...
 
 						# if
 							# Execute a Job if <condition> evaluates to true
