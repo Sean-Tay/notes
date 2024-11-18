@@ -139,13 +139,30 @@ GitLab:
 
 					# Describe the Conditions in which the Job will be run:
 					# Note: Cannot exist when only/except are specified.
-					# Note: If no rules match the Job will not execute.
+					# Note: Rules are evaluated when the Pipeline is created.
+					# Note: Rules are evaluated in order of specification, until a match is found (OR-based).
 					rules:
-						# - if: '$CI_COMMIT_BRANCH == "master"'
+						# - if: $CI_COMMIT_BRANCH == "master"
 						# 	changes:
 						# 		- "<path>"
 						# 		- ...
 						# 	when: on_success
+
+						# if
+							# Execute a Job if <condition> evaluates to true
+							# - if: <condition>
+
+							# Prevent a Job from running if <condition> evaluates to true
+							# Tip: Probably the best approach when declaring reusable Rules in Hidden Jobs.
+							# - if: <condition>
+							# 	when: never
+
+							# Note: If <condition> evaluates to false, Gitlab will evaluate the next Rule, if any.
+							# Tip: Better to use if + when: never to prevent accidental evaluation of subsequent Rules
+
+						# when
+							# Prevent further Rules from being considered if evaluation reaches this Rule
+							# - when: never
 
 						# ...
 
