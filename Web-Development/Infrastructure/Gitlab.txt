@@ -60,9 +60,11 @@ GitLab:
 						"$CI_COMMIT_REF_SLUG"
 
 						"$CI_PIPELINE_SOURCE"
-							"push"
-							"merge_request_event"
-							"schedule"
+							"web"	# Pipeline triggered from GitLab UI
+
+							"push"	# Pipeline triggered from a Git Push
+							"merge_request_event" # Pipeline triggered from a Merge Request
+							"schedule" # Pipeline created from a schedule.
 
 				workflow:
 					# Describe Rules to control the conditions in which the Pipeline will be created and run:
