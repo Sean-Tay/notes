@@ -48,6 +48,8 @@ Git:
 
 			--global http."https://code.example.com/".sslVerify false - Disable SSL Cert Check for "code.example.com" domain.
 
+			--global credential.helper store - Store Username / Password that is entered (in Plaintext) upon next interaction with the Remote.
+
 		git init <directory>	- Create a Local Repository in the current *empty* Local Directory.
 		git clone <repo-url>	- Copies a Remote Repository into the current *empty* Local Directory; creates Local Branches that track each available Remote Branch, before checking out the Local Branch that tracks the active Remote Branch of the Remote Repository.
 			-o <repo-url-alias> - Specify a custom Local Alias to reference the Remote Repository URL (default is origin).
