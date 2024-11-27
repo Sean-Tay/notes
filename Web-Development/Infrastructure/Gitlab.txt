@@ -36,8 +36,10 @@ GitLab:
 				# Import Content from other .gitlab-ci.yml Files.
 				include:
 					- project: <gitlab-project-url-from-group-root>
-					  file: <file-path-relative-to-above>
 					  ref: <branch>
+					  file: 
+						- <file-path-relative-to-above>
+						- # ...
 					
 					# ...
 
