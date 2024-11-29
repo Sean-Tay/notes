@@ -35,6 +35,17 @@ Sonarqube
 			# Note: Accepts Glob File Patterns.
 			sonar.exclusions=<relative-file-path>, ...
 
+			# Java
+				# Java Compiled Class File Specification - required for Sonarqube to analyze Java Files.
+				# Note: Does not accept Glob File Patterns.
+				sonar.java.binaries=<relative-folder-path>, ... # Usually build/classes/java/main
+				sonar.java.test.binaries=<relative-folder-path>, ... # Usually build/classes/java/test
+
+				# Java JAR File Specification
+				# Note: Accepts Glob File Patterns.
+				sonar.java.libraries=<relative-file-path>
+				sonar.java.test.libarries=<relative-file-path>
+
 			# Kotlin Test and Coverage Report Specification
 			sonar.junit.reportPaths=<relative-folder-path>, ...
 			sonar.coverage.jacoco.xmlReportPaths=<relative-file-path>, ...
