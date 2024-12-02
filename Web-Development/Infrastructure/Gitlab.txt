@@ -97,6 +97,7 @@ GitLab:
 				# Define a Job:
 				<job-name>:
 					# Define another Job to base off from:
+					# Note: When extending from another Job, any Lists defined in <job-name> will override the corresponding List defined in .<hidden-job-name> / <job-name>. Use !reference within the Child's List to define where to feed in the List declared in the Parent Job.
 					extends: <job-name>
 					extends: .<hidden-job-name>
 
