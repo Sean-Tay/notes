@@ -206,6 +206,7 @@ Gradle
 				}
 
 				// Setup Jacoco Coverage Report
+				// Note: Relies on Test Execution Data (i.e. build/jacoco/*.exec Files).
 				tasks.jacocoTestReport {
 					reports {
 						xml.required = true
