@@ -110,4 +110,17 @@ Docker
 
 			# Specify where the built Image should be sent to.
 			--destination <url> --destination <url> ...
+
+			# Pull an Image from a Repository.
+			pull <repository-url>
+
+			# Run the Image.
+			run <image>
+				-it # Run the Command via an Interactive Terminal.
+				-d	# Run the Command in the Background and print Container ID.
+
+				--name <alias> # Assign an alias for the Image.
+
+			# Stop a Running Image.
+			stop <image>
 	

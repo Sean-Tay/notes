@@ -1,0 +1,235 @@
+Screeps:
+	Abbreviations: 
+	
+	Description: RTS Game involving programmable minions.
+	
+	Resources: 
+
+	Concepts:
+		Game Tick: Conceptually similar to a 'turn' that a Player has within the game.
+
+		Memory: Object which persists through multiple Game Ticks. Data within is serialized / deserialized between each Game Tick.
+
+		Console: In-Game Console allows for quick testing of code.
+		Scripts: Persistent pieces of code that run even when the Player is offline.
+			Main Module: This specifies the Player's code that will run during a Game Tick. Note that whatever computations / commands done here is with respect to the current Game Tick.
+			Module: Generally refers to packaged helper code to be used within the Main Module.
+				Role Module: Defines a Creep's behaviour. Usually exposes a 'run' Method with the caller as the sole Parameter.
+
+		Room: Reference to the space In-Game Units are in.
+		Room Object: Represents an In-Game Unit within a Room.
+
+		Room Terrain: Represents a Tile Type within a Room.
+			TERRAIN_MASK_WALL: Represents an impassable feature.
+			TERRAIN_MASK_SWAMP: Represents difficult terrain.
+			TERRAIN_MASK_LAVA: Represents damaging terrain.
+
+		Room Controller: 
+
+		Structure: Generic Type that represents an In-Game Building.
+		Spawn: Structure that can produce Creeps.
+
+		Creep: Unit with a Name and up to 50 Body Parts. Most Creeps have a lifespan of 1500 Game Ticks.
+		Body Part: Part of a Spawn that gives it various skills. Each of these incur an Energy Cost on the Creep, and can be systematically destroyed as the Creep takes damage.
+			WORK: 			Allows the Creep to harvest Resources, build Structures, repair and upgrade Controllers.
+			CARRY: 			Allows the Creep to store and transfer Resources.
+			MOVE: 			Allows the Creep to move.
+			ATTACK: 		Allows the Creep to attack other Entities.
+			RANGED_ATTACK: 	Allows the Creep to attack other Entities at range.
+			HEAL: 			Allows the Creep to heal other Creeps.
+			TOUGH: 			Increases the Creep's Maximum Hit Points.
+			CLAIM: 			Allows the Creep to claim a Room Controller.
+
+		Directions: 8 Cardinal Directions.
+			TOP
+			TOP_RIGHT
+			RIGHT
+			BOTTOM_RIGHT
+			BOTTOM
+			BOTTOM_LEFT
+			LEFT
+			TOP_LEFT
+
+		Resources:
+			RESOURCE_ENERGY: Starts to dissipate if left on the ground.
+			RESOURCE_MINERAL
+			
+
+	Details:
+		Javascript API:
+			Game
+				Properties:
+					spawns['<spawn-name>'] // Map that contains references to Spawns, with their names being the key.
+					creeps['<creep-name>'] // Map that contains references to Creeps, with their names being the key.
+
+				Methods:
+					const object = Game.getObjectById('<id>') // Returns a reference to the specified Game Object, or null if it is no longer active.
+
+			Room
+				Properties:
+
+				Methods:
+					const roomObjects = <room>.find( // Returns an Array of RoomObjects which match the specified Parameters.
+						<type>,
+							// Types
+								FIND_CONSTRUCTION_SITES
+
+								FIND_MY_STRUCTURES
+								FIND_HOSTILE_STRUCTURES
+
+								FIND_MY_SPAWNS
+								FIND_HOSTILE_SPAWNS
+
+								FIND_MY_CREEPS
+								FIND_HOSTILE_CREEPS
+
+								FIND_MY_POWER_CREEPS
+								FIND_HOSTILE_POWER_CREEPS
+
+								FIND_DROPPED_RESOURCES
+								FIND_SOURCES_ACTIVE
+								FIND_MINERALS
+								FIND_NUKES
+								FIND_TOMESTONES
+								FIND_RUINS
+						{
+							// Options Object
+							filter: (object) => <boolean>
+						}
+					)
+
+					const roomObjects = <room>.lookAtArea( // Similar to <room>.find, except filters the results to within a specified area.
+						<top-boundary>,
+						<left-boundary>,
+						<bottom-boundary>,
+						<right-boundary>,
+						<as-array-boolean>,
+					)
+					const roomObjects = <room>.lookForAtArea( // Similar to <room>.find, except filters the results to within a specified area.
+						<type>,
+							// Types
+								LOOK_STRUCTURES
+								LOOK_TERRAIN
+								LOOK_RUINS
+								LOOK_CREEPS
+								LOOK_POWER_CREEPS
+
+								LOOK_TOMBSTONES
+
+								LOOK_RESOURCES
+								LOOK_SOURCES
+								LOOK_ENERGY
+								LOOK_MINERALS
+								LOOK_DEPOSITS
+
+								LOOK_CONSTRUCTION_SITES
+								LOOK_NUKES
+
+						<top-boundary>,
+						<left-boundary>,
+						<bottom-boundary>,
+						<right-boundary>,
+						<as-array-boolean>,
+					)
+
+					const path = <room>.findPath( // Returns an Array of Objects representing coordinates that make up a path via the Jump Point Search Algorithm.
+						<from-position>,
+						<to-position>,
+						{
+							// Options Object
+						}
+					)
+
+					const roomTerrain = <room>.getTerrain().get(<x>, <y>) // Returns a Room Terrain enum representing the type of Terrain at <x>, <y>.
+
+			Spawn: Of type RoomObject.
+				Properties:
+
+
+				Methods:
+					<spawn>.spawnCreep( // Returns a non-zero value if not successful.
+						<body-parts-array>, // Defines the Body Parts which the spawned Creep will have.
+							// Note: The order in which Body Parts are specified does matter, in terms of calculating cost to spawn the Creep, and the Body Parts which gets destroyed first when the Creep takes enough damage.
+
+						'<creep-name>',
+						
+						{
+							// Options Object
+							dryRun: <boolean> // If true, simply checks whether it is possible to spawn a Creep with the given parameters.
+
+							energyStructures: [<energy-producing-spawn>, ... ] // Specifies the Spawns to draw Energy from when creating the Creep. The order of specification matters in determining which Spawn will be used first.
+
+							directions: [<direction>, ... ] // Specifies where the Creep will move to upon spawning.
+						}
+					)
+
+			Creep: Of type RoomObject.
+				Properties:
+					spawning // Boolean that indicates if the Creep is still in the middle of being spawned.
+
+					hits // Defines the Creep's current Hit Points.
+					hitsMax // Defines the Creep's maximum Hit Points.
+
+					my // Boolean that indicates if the Creep belongs to current Player.
+					name // <creep-name>
+					owner.username // Defines the name of the Player that owns the Creep.
+
+					body // Array of Objects representing the status of each Body Part the Creep has.
+						boost
+						type
+						hits
+
+					pos
+						x // Defines the Creep's x coordinate in the current Game Tick.
+						y // Defines the Creep's y coordinate in the current Game Tick.
+
+						findClosestByRange( ... ) // Same parameters as Room.find. Returns the closest RoomObject from the Creep.
+						findInRange(  Returns an Array of all RoomObjects within a specified <range> from the Creep.
+							{<type> | <objects>},
+							<range>,
+							{
+								// Options Object
+							}
+						)
+
+						findPathTo( <x>, <y>, { // Options Object } ) // Returns an Array of Objects representing coordinates that make up a path to the position.
+						findPathTo( <room-object>, { // Options Object } ) // Returns an Array of Objects representing coordinates that make up a path to the <room-object>'s position.
+
+					room // Reference to the current Room the Creep is in.
+
+					fatigue // Defines the Creep's Exhaustion. If this is > 0, the Creep cannot move.
+
+					ticksToLive // Defines the remaining number of Game Ticks that the Creep can live for.
+
+					store // Object that represents the Creep's current inventory.
+						getUsedCapacity() // Returns the Creep's current used inventory capacity.
+						getFreeCapacity() // Returns the Creep's current inventory capacity.
+						getCapacity() // Returns the Creep's inventory capacity.
+
+				Methods:
+					move(<direction>)
+					moveTo(<room-object>)
+
+					// Note: With the exception of ranged Methods, all require the <room-object> to be adjacent to the Creep. Returns ERR_NOT_IN_RANGE if too far.
+					attack(<room-object>)
+					attackController(<room-object>)
+					heal(<room-object>)
+					rangedAttack(<room-object>)
+					rangedHeal(<room-object>)
+
+					harvest(<room-object>)
+					transfer(<room-object>, <resource-type>)
+					pickup(<room-object>)
+					build(<room-object>)
+					dismantle(<room-object>)
+					claimController(<room-object>)
+
+		Useful Patterns:
+			// When not in Range:
+				if (<creep>.<action>(<room-object>) == ERR_NOT_IN_RANGE) {
+					<creep>.moveTo(<room-object>)
+				}
+
+	Commands:
+		
+	
