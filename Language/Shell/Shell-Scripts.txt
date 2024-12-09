@@ -345,7 +345,7 @@ Linux / Unix:
 
 				# Variable Dereferencing
 				# Note: Invalid references will fail silently!
-				"${<variable>}"	- Reference value stored in specified <variable>.
+				"${<variable>:-<default>}" - Reference value stored in specified <variable>, with <default> being substituted in if <variable> is undefined (note the "-").
 				"${<array>[<index>]}" - Reference value stored in <array> variable at <index>.
 				
 				# System Variables: Uppercase Convention.
