@@ -14,6 +14,8 @@ Gradle
 	Concepts:
 		Project: The Project that Gradle manages.
 
+		Composite Build: A Project which utilizes local copies of built Libraries for some of its Dependencies.
+
 		Gradle Wrapper: A Tool that allows Gradle to be run without having to install Gradle on the System before invoking Gradle. Primarily used to make the version of Gradle consistent between Project Users.
 
 		gradle-wrapper.properties: Configuration File for the Gradle Wrapper.
@@ -251,6 +253,10 @@ Gradle
 
 		// Build using the build.gradle File in the current directory:
 		gradlew build
+
+		// Build using a Composite Build:
+		// Note: To do this in IntelliJ, right click on the consuming Project in the Gradle Panel, and select the Composite Build Configuration option. From there, click on the build.gradle of the providing Project.
+		gradlew --include-build <path-to-project-library>/build.gradle
 
 		// Execute a Task defined within the build.gradle in the current directory:
 		gradlew -q <task-name>
