@@ -188,6 +188,7 @@ Ansible:
 
 			Host / Inventory File:
 				# Tip: All Hosts specified here can be referenced by the 'all' Group.
+				# Tip: If the Playbook is just to run a local Script, use the 'local' Group.
 
 				# Specify a Group which can then be referenced by other parts in the Ansible Project.
 				[<host-group>]
@@ -271,6 +272,7 @@ Ansible:
 							- <file>.yml
 
 						# Define Roles to execute for this Play
+						# The Executor will run the main.yml within the tasks Folder of each Role specified here by default.
 						roles:
 							- role: <role-name>
 							# ...
@@ -291,8 +293,12 @@ Ansible:
 
 						# - name: <task-name>
 						# 	# Include Tasks defined in other Files (not Playbooks):
-						#   import_tasks: <file-path> # Static Preprocessing: Variables do not apply to this Statement, only to Imported Tasks
-						#   include_tasks: <file-path> # Dynamic Processing: Variables apply to this Statement, as well as to Imported Tasks
+						#	import_tasks: <file-path> # Static Preprocessing: Variables do not apply to this Statement, only to Imported Tasks
+						#	include_tasks: <file-path> # Dynamic Processing: Variables apply to this Statement, as well as to Imported Tasks
+						#
+						# 	# Include other Roles
+						#	ansible.builtin.include_roles:
+						#		name: <role-name>
 						#
 						#	# Will only execute on Hosts for which this Boolean Expression returns "true":
 						#	# Note: Not necessary to put Curly Braces when referencing a Variable here.
