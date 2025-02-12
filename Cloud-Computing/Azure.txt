@@ -2,6 +2,8 @@ Azure
 	Abbreviations:
 		AD:					Active Directory.
 		ARM:				Azure Resource Manager.
+
+		SAS:				Shared Access Signature.
 	
 	Description:
 	
@@ -10,17 +12,21 @@ Azure
 	Concepts:
 		Serivce Principal:	Azure AD account whose metadata (i.e. Client ID, Secret) is managed by Users and not Azure. This Account can be used anywhere outside of Azure.
 		Managed Identity:	A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
-			System Assigned: Tied to the lifecycle of an Azure Resource.
+			System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
 			User Assigned: 	Independent lifecycle, can be shared across Azure Resources.
 
 		Resource Group:		A logical container to contain Azure Resources.
 
 		Event Hub:			Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
+			Requests:		Number of API Requests made.
+			Messages:		Number of API Requests that put actual Events into the Event Hub.
+
 		Event Grid:			Router for generated Events; usually to 'Push' Events from their Source to an Event Hub or a Webhook. Note: Has to be in the same Resource Group as the Event Source.
+			System Topic: 	Designation for Events produced by other Azure Services.
 
 		Storage:			Provides Blob Storage capability.
-			Storage Account: Contains one or more Storage Containers.
-			Storage Container: Contains one or more Blob Files.
+			Storage Account: Contains one or more Storage Containers. In the Kotlin SDK, this is referenced via BlobServiceClientBuilder.
+			Storage Container: Contains one or more Blob Files. In the Kotlin SDK, this is referenced via BlobContainerClientBuilder, whilst individual Blobs are referenced via BlobClientBuilder.
 
 		ARM Template:		Specifies configuration of specific Azure Resources.
 	
