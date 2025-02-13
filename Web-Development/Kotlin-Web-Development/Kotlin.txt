@@ -993,6 +993,7 @@ Kotlin
 									EnvironmentVariables() // Get Configuration based on the Process.
 									ConfigurationProperties.systemProperties() // Get Configuration based on System Defaults.
 									ConfigurationProperties.fromResource("<relative-path-from-resources-folder>") // Get Configuration stored in a File located within a resources Folder.
+										// Note: When importing a Library, the Library's resources Folder will get merged in with the Project's resources Folder, with priority going to the Project in case of conflicting contents.
 
 								// PropertyGroup
 									PropertyGroup() // Returns a base PropertyGroup that an Object Class can inherit from.
