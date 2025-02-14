@@ -105,7 +105,6 @@ GitLab:
 					stage: <stage-name>
 
 					# Define that the Job is to be triggered manually:
-					# Note: Different from rules:when:manual, which refers to the Job only being added if the Pipeline is triggered manually.
 					when: manual
 
 					# Run this Job with a Runner that has all the Tags defined here:
@@ -144,9 +143,9 @@ GitLab:
 
 					# OR
 
-					# Describe the Conditions in which the Job will be added to the Pipeline:
+					# Describe the Conditions in which the Job will be added to the Pipeline and when it will be executed:
 					# Note: Cannot exist when only/except are specified.
-					# Note: Rules are evaluated when the Pipeline is created.
+					# Note: Rules are evaluated when the Pipeline is created to determine which Jobs are added to the Pipeline, with the associated when clause of the Rule that it matched to. But if when: never is present for a Rule, the Job will not even be added to the Pipeline even if the Rule is matched (because there's no point to add the Job and then never execute it).
 					# Note: Rules are evaluated in order of specification, until a match is found (OR-based). If none are found, the Job will not be added to the Pipeline.
 					rules:
 						# - if: $CI_COMMIT_BRANCH == "master"
