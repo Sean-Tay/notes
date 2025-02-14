@@ -120,32 +120,39 @@ Web Dev:
 
 	Details:
 		Summary of Full-Stack:
-			The Front-End of a Web Site or Application consists of the HTML, CSS, JavaScript, and Static Assets sent to a Client, like a Web Browser.
-				Traditionally done in Monolithic CMS.
-					Characteristics:
-						Database, Content and Frontend Templating were all handled by the same System.
-						Additional Strain on Servers to generate HTML Content in each User Request.
+			From Application Development to Deployment:
+				Frontend:
+					NodeJS
+					Webpack / Vite
+					ESLint + Prettier
+					Jest / React-Testing-Library
 
-				Nowadays done in a JAMStack-like Manner.
-					Characteristics:
-						JavaScript: (Any) Language which allows control over what content and experience the User sees.
-						APIs: Interaction with any publicly accessible Web API, not just ones specific for the Web Application (this is more from the naturally changing landscape rather than from JAMStack itself).
-						Markup: Web Project pre-compiled into Static Assets.
-					
-					Benefits:
-						Performance / Separation of Concerns: Compared to the traditional CMS, Servers now need not handle the UI workload - that is now offloaded to Clients.
-						Portability: No Infra Lock-In; since the end result is just Static HTML / CSS / JavaScript, any service with delivery capabilities can be used to host this Web Application.
-						Scalability: The Static Assets are deployable on a CDN, which is optimized for delivery of media to a high number of Client Machines.
-						Maintenability: With the introduction of Web APIs, Cloud Technologies (with their own dedicated Maintainence Teams) can be easily leveraged on as well. This lessens the Maintenance Workload for the Web Application.
+					HTML
+					CSS / Less / Sass
+					Javascript + Typescript
+					React
+				
+				Backend:
+					Gradle / Maven
 
-			A Web Server is a running Process that listens for incoming Requests for information over the Web, differentiating between Requests for Static Content, or Dynamic Content (such as REST Calls). Dynamic Requests are sent to the Application Server.
+					Kotlin + JUnit
+					http4k
 
-			The Server-Side of a Web Application, sometimes called the Application Server, handles important tasks such as Authentication and Authorization.
+					Third-Party Services:
+						Mongo
+						Elasticsearch
+						Kafka
 
-			The Back-End of a Web Application often has a Web API which is a way of interacting with an Application’s Data through Requests and Responses.
-				Creating, Reading, Updating and Deleting Data is a large part of a Web Application’s Back-End. Operational Processes record Data to Databases via Transactions, and may be accessed from Databases or Data Warehouses.
+				Git
+					Gitlab
 
-			Together the technologies used to build the Front-End and Back-End of a Web Application are known as the Stack, and many different Languages and Frameworks can be used to build a robust Back-End.
+				CICD
+					Gitlab
+					Sonarqube
+					Gradle / Maven
+					Docker / Kaniko
+
+					Kubernetes / Openshift + Helm / Azure Kubernetes Services
 
 		Architectural Considerations:
 			Web Service Secrets: Do not store Secrets (i.e. API Keys) in things which are sent to Users. Instead, make your FE request related information from the BE, and try to control usage from BE.
