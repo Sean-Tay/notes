@@ -105,6 +105,7 @@ GitLab:
 					stage: <stage-name>
 
 					# Define that the Job is to be triggered manually:
+					# Note: If the Job has a Rules clause, then the when behaviour of the Rule that matches will override this specification.
 					when: manual
 
 					# Run this Job with a Runner that has all the Tags defined here:
