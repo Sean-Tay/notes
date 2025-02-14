@@ -2,7 +2,7 @@ Docker
 	Abbreviations:
 		
 	
-	Description: Container and Container Orchestration Tool
+	Description: Containerization Tool
 	
 	Resources:
 		
