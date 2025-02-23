@@ -552,19 +552,22 @@ Database
 							During the process the old Node will take on the Reads and Writes for the Data involved in the migration to the new Node.
 
 						Compatability with other Database Mechanisms:
-							Secondary Indexes:
-								Local Indexes: Hold a Secondary Index that only tracks the Data on the Partition (i.e. each Partition holds all Index Entries, but each Index Entry only tracks the Records on the current Partition).
+							Secondary Indexes: In both cases, the Secondary Index is to be split across Partitions, in the same way that the Collection is to be split across Partitions. The distinction is regarding what the Partition Key for the Secondary Index should be (i.e. the Partition Key for the Index can be different than the Index Key, e.g. an Index created on the 'Country' Field in a Table to speed up queries relating to 'Country', but the Table's chosen Partition Key is 'UserID'), and whether or not the Secondary Index is housed in the same Partitions as the Collection or is housed in a set of Partitions separate from the Collection's Partitions.
+								Local Indexes: Set the Secondary Index to be split between Partitions according to the same Partition Key as the Collection it is tracking. This means that the Secondary Index within each Partition will only track Record Keys within the Partition.
 									Pros:
-										Fast for Writing since all Writes are within the Partition.
+										Fast for Writes since all Writes are within the Partition.
 
 									Cons:
-										Slow on Read, as all Local Indexes in all Partitions need to be aggregated / processed to determine which Partition has the Record.
+										Slower on Reads involving the Index Key, as all Local Indexes in all Partitions need to be aggregated / processed to fully determine which Partition(s) has the Record.
 
-								Global Indexes: Partition the Secondary Index as well (i.e. each Partition holds a subset of the Index Entries, but each Index Entry tracks all Records (regardless whether or not they are within the same Partition) in the Dataset that belong to that Index Entry).
+										Must be created when the original Table is created (only applicable for DynamoDB where the Partition Size is fixed; adding a Secondary Index later will necessitate rebalancing which DynamoDB avoids).
+
+								Global Indexes: Set the Secondary Index to be split according to a different Partition Key (i.e. the Index Key that it was created on) from the Collection it is tracking.
 									Pros:
-										Fast for Read since all related Data for the Index Entry is stored in one Partition.
+										Faster for Reads involving the Index Key since all related Data for the Index Entry is stored in one Partition.
 
 									Cons:
+										Separate Partitions from the Collection's original Partitions required.
 										Slow on Write, as Writes now potentially need to go to multiple Partitions (one for the Record, and one / two to update the Index Entry).
 										Consensus or Transaction Mechanism required in case Write to Record succeeds and Update to Index Entry (on a different Partition) fails.
 
