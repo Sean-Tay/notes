@@ -107,3 +107,5 @@ Software Engineering:
 
 				Adapter: 			Conversion between different Interfaces.
 
+			Repository:				Used to control how shared State can be interacted with via provision of Data Access Objects.
+
