@@ -27,6 +27,9 @@ Azure
 		Storage:			Provides Blob Storage capability.
 			Storage Account: Contains one or more Storage Containers. In the Kotlin SDK, this is referenced via BlobServiceClientBuilder.
 			Storage Container: Contains one or more Blob Files. In the Kotlin SDK, this is referenced via BlobContainerClientBuilder, whilst individual Blobs are referenced via BlobClientBuilder.
+				Block Blob:	A collection of one or more data Blocks. Default Blob Type.
+				Page Blob: 	A collection of 512-Byte Pages optimized for random read and write operations.
+				Append Blob: Similar to a Block Blob, except Blocks can only be appended to the Blob. Each Block is also much smaller than the Blocks in a Block Blob.
 
 		ARM Template:		Specifies configuration of specific Azure Resources.
 	
