@@ -43,7 +43,7 @@ Cloud Computing:
 			Hybrid Cloud:		Combines Public and Private Cloud.
 			Community Cloud:	Organizations with common interests.
 
-		Shared Responsibility Model: Both the Cloud Provider and the Application are responsible for the integrity of the Application.
+		Shared Responsibility Model: Both the Cloud Provider and the Application are responsible for the integrity of the Application. IaaS puts more responsibility on the Consumer, whilst SaaS shifts the responsibility to the Cloud Provider. PaaS is a middle ground.
 
 	Details:
 		Intro:
@@ -68,14 +68,22 @@ Cloud Computing:
 		
 		Shared Responsibility Model:
 			Application:
-				Configuration of the OS, Network and Firewall.
 				Securing and Maintaining its own Data.
 				Controlling how the Cloud Provider's Resources are used.
-				
+				Accounts and Identities of the People, Devices and Services within your organization.
+			
+			Application / Cloud Provider: Depending on Service Model (i.e. IaaS / PaaS / SaaS)
+				Operating System
+				Network Controls
+				Applications
+				Identity
+				Infrastructure
+
 			Cloud Provider:
 				Compute Resources
-					Storage
-					Network
+					Physical Storage
+					Physical Network
+					Physical Hosts
 			
 				Availability
 					Regions
