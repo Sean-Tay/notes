@@ -37,13 +37,14 @@ Cloud Computing:
 
 			SaaS: Software Licensing and Delivery Model. Applications are subscribed to on a monthly or yearly basis, and accessed over the Internet. Example: GitLab, Netflix.
 		
-		Cloud Deployment Models:
-			Public Cloud:		Whatever the Client wants, the Client gets.
-			Private Cloud:		On-Premise Cloud, achieved via Virtualization Software.
-			Hybrid Cloud:		Combines Public and Private Cloud.
-			Community Cloud:	Organizations with common interests.
-
 		Shared Responsibility Model: Both the Cloud Provider and the Application are responsible for the integrity of the Application. IaaS puts more responsibility on the Consumer, whilst SaaS shifts the responsibility to the Cloud Provider. PaaS is a middle ground.
+
+		Cloud Deployment Models:
+			Public Cloud:		Built, controlled and maintained by a Third-Party Cloud Provider - anyone who wants to purchase Cloud Services and Resources can use them.
+			Private Cloud:		Cloud reserved for use by a single Entity, typically hosted on an dedicated Datacenter for the Company, and managed by the Company's IT Department.
+			Hybrid Cloud:		Combines Public and Private Cloud for certain use-cases (e.g. quick scaling via Public Cloud to meet a temporary surge in demand).
+			Community Cloud:	Organizations with common interests.
+			Multi-Cloud:		A Cloud which combines features from several Cloud Providers.
 
 	Details:
 		Intro:

@@ -10,6 +10,9 @@ Azure
 	Resources:
 	
 	Concepts:
+		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models.
+		Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
+
 		Serivce Principal:	Azure AD account whose metadata (i.e. Client ID, Secret) is managed by Users and not Azure. This Account can be used anywhere outside of Azure.
 		Managed Identity:	A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
 			System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
