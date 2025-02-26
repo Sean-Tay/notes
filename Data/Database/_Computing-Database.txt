@@ -499,6 +499,21 @@ Database
 									Asymptotically same Read Performance, but is actually up to 2x more Disk Block Accesses.
 									Equivalent performance to B-Trees when checking for unique Index Keys.
 
+							Geospatial:
+								Approach:
+									Point-Region Quad Tree; the Key of each Point is of variable length, depending on how "deep" it is within the Tree.
+										Keys are Binary, with 2 Bits appended per "level".
+											00 - Top Left
+											01 - Top Right
+											10 - Bottom Left
+											11 - Bottom Right
+
+										When a Node is full, the contents of the Node should be redistributed to 4 Child Nodes.
+											When a Node is full is determined by the Application.
+											Keys of Child Nodes should have the Keys of their Parent Nodes prefixed to theirs.
+												Example: 010010
+													Point is located in the Bottom Left of the Top Left of the Top Right Region.
+
 					Partitioning: Splitting up a large Collection into smaller non-overlapping Partitions such that each Partition can be stored and maintained in separate Nodes. Each Node can contain more than one Partition.
 						Partitioning is usually only considered when a Collection becomes too big to be stored in one Node, as it adds a lot of underlying complexity to the System.
 							Gossip Protocol (Database Nodes communicate between themselves)
