@@ -1071,13 +1071,21 @@ Kotlin
 															callOriginal()
 														}
 
+														// Mocking the results of a <dependency>'s <function> called with specific <arg>s, whilst Capturing the <arg-value>s sent:
+														val argSlot = slot<<arg-type>>() // Per Call
+														val argList = mutableList<<arg-type>>() // For every Call in the Test
+														every { <dependency>.<function>(<arg> = capture(argSlot), ... ) } 
+															returns <value>( ... , argSlot.captured , ...)
+
+															// OR
+
+															answers {
+																val original = callOriginal()
+																original( ... , argSlot.captured , ... )
+															}
+
 													// For a <function> that has the Unit Return Type:
 														every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } just Runs
-
-												// Mocking the results of a <dependency>'s <function> called with specific <arg>s, whilst Capturing the <arg-value>s sent:
-													val argSlot = slot<<arg-type>>() // Per Call
-													val argList = mutableList<<arg-type>>() // For every Call in the Test
-													every { <dependency>.<function>(<arg> = <arg-matcher>, ... ) } returns <value>
 
 											// Substituting a <spy>'s Functionality:
 												every { <spy>.<function>(any(), ... ) } answers {
