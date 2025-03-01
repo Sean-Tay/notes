@@ -767,16 +767,55 @@ Kotlin
 
 									// ...
 
-						// Semaphores:
-							// CountDownLatch - simple Counting Semaphore:
-								val latch = CountDownLatch(<starting-number>)
+						// Parallel Execution:
+							// Executor Service: Interface that specifies methods to manage the execution of one or more Asynchronous Tasks.
+								val executorService = ThreadPoolExecutor(
+									<number-of-core-threads-to-allocate>,
+									<maximum-number-of-threads-to-grow-to>,
+									<keep-alive-time>, // Threads will be shutdown when unused beyond this period, and started again when needed.
+									LinkedBlockingQueue<Runnable>(),
+									handler = <handler> // Submitted Tasks may be rejected with an Exception, this will allow handling of when that happens.
+								)
+
+								val taskHandle: Future<*> = executorService.submit<*> {
+									// ...
+								}
+
+								// OR
+
+								executorService.execute {
+									// ...
+								}
 
 								// ...
 
-								latch.countDown()
+								val taskResult = taskHandle.get() // Blocks until Task is done
+								// OR
+								val taskResult = taskHandle.get(<number>, TIMEUNIT.<unit>) // Blocks until Task is done, or the Timeout specified is reached.
 
-								// Only resume Execution once the Countdown Semaphore reaches 0.
-								latch.await()
+								// ...
+
+								executorService.shutdown() // Allows pending Tasks to be executed before the Threads are released.
+
+							// Control Flow:
+								// Semaphores:
+									// CountDownLatch - simple Counting Semaphore:
+										val latch = CountDownLatch(<starting-number>)
+
+										// ...
+
+										latch.countDown()
+
+										// Only resume Execution once the Countdown Semaphore reaches 0.
+										latch.await()
+
+								// Synchronized: Ensures only one Thread executes a particular Code Block at a time
+								// Tip: Useful to update shared State.
+									fun synchronousExecution() {
+										synchronized {
+											// ...
+										}
+									}
 
 				// Date:
 					// Point in Time via UTC (replaces java.util.Date & java.util.Timestamp with java.time.Instant)
