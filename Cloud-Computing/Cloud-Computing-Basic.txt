@@ -56,23 +56,52 @@ Cloud Computing:
 					Every few years Computer Hardware, Operating System and Applications become obsolete, and requires upgrading.
 		
 			Advantage of Cloud Computing:
-				Lower Upfront Costs.
-					Rent Computing Resources only when they are used.
-					Reduced IT Staff and Admin costs.
+				Consumption-Based Model: OpEx - pay-as-you-use.
+					No upfront costs.
+						Reduced IT and Admin Staff costs.
+
+					No wasted resources - pay as much as used, stop paying when not needed.
 
 				Enterprise-level Data Protection.
 
-		Characteristics of Cloud Computing:
-			Resource Pooling: All Resources provided by the Cloud Provider are seen as one large pool, to be divided amongst all Clients using them.
-			Rapid Elasticity: Fast Allocation of Resources as Client's needs change.
-				Scalability
+		Benefits of Cloud Computing:
+			Resource Pooling: 	All Resources provided by the Cloud Provider are seen as one large pool, to be divided amongst all Clients using them.
+			
+			Scalability: 	Specifically Auto-Scaling.
+				Rapid Elasticity: 	Fast Allocation of Resources as Client's needs change.
 
-			Self-Service: Automatically access any Resource at any time.
+			Reliability
 				Availability
+					Load Balancing
+
+			Predictability:
+				Performance Predictability: Focuses on predicting the Resources needed to deliver. Scalability (Auto-Scaling) and Availability contribute to this.
+
+				Cost Predictability: Focuses on predicting or forecasting the cost spent on Cloud Resources.
+					Pricing Calculator to gauge / estimate costs.
+					Monitor Resources to ensure they are being used in the most efficient way.
+					Utilize Data Analytics to find patterns and trends in demand to better plan for Resource Deployments.
 		
-			Consumption-Based Model: OpEx - pay-as-you-use.
-				No upfront costs.
-				No wasted resources - pay when needed, stop paying when not needed.
+			Security:
+				Governance
+					Software patches and updates can be automatically applied.
+
+				Compliance
+					Cloud Auditing aims to flag out any Resource that does not comply with Corporate Standards.
+
+				Resiliancy against DoS Attacks.
+
+			Manageability:
+				Management of the Cloud: Encompasses aspects of the entire Cloud Environment.
+					Optimizing Resource Allocation and Managing Costs
+					Setting Security Standards
+					Ensuring Compliance across the Cloud Environment
+
+				Management in the Cloud: Focused on individual Applications or Processes running within the Cloud Environment.
+					Applications can manage their Resources via:
+						Via Web Portal
+						Via CLI
+						Via APIs
 
 		Shared Responsibility Model:
 			Application:

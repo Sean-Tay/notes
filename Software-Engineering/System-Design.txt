@@ -165,7 +165,11 @@ System Design:
 				Mobile
 
 		Systems are Designed with the intent of being Reliable, Scalable and Maintenable.
-			Reliable: The System should be resilient to recoverable Faults to avoid total failure.
+			Reliable: The System should be resilient to Faults to avoid total failure, and be able to recover to a working State should it do.
+				Key Highlights:
+					Resiliancy
+					Recoverability
+
 				Characteristics:
 					Tolerating Hardware Faults - usually these affect only a single / few Node(s) in a Distributed System at a time as they are random and independent.
 						Hot Swappable Computer Parts in a Active-Passive Failover setup.
@@ -189,9 +193,13 @@ System Design:
 
 					Replication: See Database Notes.
 	
-			Scalability: As the System grows, there should be reasonable ways of dealing with the corresponding growth in demand.
+			Scalability: As the System grows / downscales, there should be reasonable ways of dealing with the corresponding growth / reduction in demand.
+				Factors:
+					Auto-Scaling: There should be some means to automatically allocate / de-allocate System Resources to meet demand accurately.
+					Load Balancing: A mechanism to redirect and rebalance demand away from "hot" areas to "cooler" areas.
+
 				Characteristics:
-					Capacity to handle increasing Data and Traffic Volume.
+					Capacity to accurately meet Data and Traffic Volume without a loss in System Performance / overpaying for System Resources when it isn't needed.
 
 				Load Parameters: The main metrics that the System deals with (e.g. Requests / Second to various API). These help to define starting points for further discussion.
 					Percentiles and Distribution are used for Load Parameters instead of a hard number.
