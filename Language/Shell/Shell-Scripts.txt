@@ -213,6 +213,7 @@ Linux / Unix:
 			xargs <command>		- Reads in stdin and converts the content into arguments for the succeeding <command>.
 				# Tip: <command> can be: sh -c ' <command-1>; <command-2>; ... ' to allow execution of multiple Commands. -I's <placeholder> works as is.
 				# Note: -r0 -n1 ; the Order is important.
+				# Example: ... | xargs -r0 -n1 -I <placeholder> sudo apt remove <placeholder>
 
 				-r 				- Prevent execution if stdin is empty.
 				-0				- Input Items are terminated by a Null Character vs a Whitespace. Useful for avoiding unexpected behaviour with Filenames that contain Whitespaces / Quotes.
@@ -220,6 +221,9 @@ Linux / Unix:
 				-n<number> 		- Limit the number of arguments 
 
 				-I <placeholder> - Allows usage of stdin at specific parts inside <command> via <placeholder>. Note: Don't reference via $<placeholder>.
+					# Common Symbols include {} and %.
+				
+				-P <maxprocs>	- Specifies number of parallel executions that should be done via Threading.
 
 			ps					- Get snapshot of User's current processes.
 				-e 				- Get snapshot of all processes.
