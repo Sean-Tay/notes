@@ -104,27 +104,37 @@ Cloud Computing:
 						Via APIs
 
 		Shared Responsibility Model:
-			Application:
-				Securing and Maintaining its own Data.
-				Controlling how the Cloud Provider's Resources are used.
-				Accounts and Identities of the People, Devices and Services within your organization.
-			
-			Application / Cloud Provider: Depending on Service Model (i.e. IaaS / PaaS / SaaS)
-				Operating System
-				Network Controls
-				Applications
-				Identity
-				Infrastructure
+			Responsibility Share:
+				Consumer:
+					Securing and Maintaining its own Data.
+					Controlling how the Cloud Provider's Resources are used.
+					Accounts and Identities of the People, Devices and Services within your organization.
+				
+				Consumer / Cloud Provider: Depending on Service Model (i.e. IaaS / PaaS / SaaS)
+					Operating System: IaaS; controlled by Consumer. PaaS & SaaS; controlled by Cloud Provider.
+					Database / Storage Configuration: IaaS; controlled by Consumer. PaaS & SaaS; controlled by Cloud Provider.
+					Network Configuration: IaaS; controlled by Consumer. PaaS; shared control between both. SaaS; controlled by Cloud Provider.
+					Applications: IaaS; controlled by Consumer. PaaS; shared control between both. SaaS; controlled by Cloud Provider.
+					Identity and Directory Infrastructure: IaaS; controlled by Consumer. PaaS & SaaS; shared control between both.
 
-			Cloud Provider:
-				Compute Resources
-					Physical Storage
-					Physical Network
-					Physical Hosts
-			
-				Availability
-					Regions
-					Edge Locations
+				Cloud Provider:
+					Compute Resources
+						Physical Storage
+						Network Connectivity
+						Physical Hosts
+				
+					Availability
+						Regions
+						Edge Locations
+
+			Use-Case Examples:
+				IaaS:
+					Lift-and-Shift: From On-Prem to Cloud
+					Testing and Development
+
+				PaaS:
+					Development Framework: Cloud Provider includes Software Components that Developers can use to leverage on Cloud Features such as Scalability and High Availability.
+					Analytics or Business Intelligence: Cloud Provider includes Tools that would be useful for analysing Business Insights.
 
 		Accessing Cloud Resources:
 			Through a Web Browser and a Web Protocol, such as HTTPS
