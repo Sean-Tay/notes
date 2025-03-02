@@ -1,5 +1,7 @@
 Azure
 	Abbreviations:
+		TCO:				Total Cost of Ownership.
+
 		AD:					Active Directory.
 		ARM:				Azure Resource Manager.
 
@@ -10,6 +12,10 @@ Azure
 	Resources:
 	
 	Concepts:
+		TCO Calculator: 	Compare the cost of hosting your Service / System in Azure vs. On-Prem.
+		Pricing Calculator: Estimate the cost of using various Azure Resources with different features / levels of Azure support.
+		Azure Advisor:		Utility to assist in detecting underutilized Resources and ways to optimize Services, in Real-Time.
+
 		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models.
 		Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
 
@@ -44,6 +50,24 @@ Azure
 				Support responsible development and operations.
 				Accomplish its purpose within acceptable timeframes.
 				Deliver a sufficient return on investment.
+
+		Cost of Azure Services:
+			Tools:
+				TCO Calculator
+				Pricing Calculator
+				Azure Advisor
+				Spending Limits: Specify thresholds to avoid OpEx overruns.
+
+			Factors:
+				Resource Type
+				Consumption: Pay-as-you-go or Reserved "Contract" Pricing.
+				Maintenance
+				Geography: Cost of Labor, Power, Taxes vary per Region.
+				Network Traffic: Inbound Data Transfers to Azure Datacenters are free, whereas Outbound Data Transfers from Azure Datacenters are priced based on Billing Zones.
+				Subscription Type
+				Azure Marketplace: Allows purchasing of Azure-based Solutions and Services from Third-Party Vendors - additional costs incurred from leveraging on the Third Party's skills and expertise for their Solution.
+
+				Licensing
 
 		ARM Template Syntax: https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax
 			<name>.params.json: File that defines arguments to be passed into the deploy.json.
