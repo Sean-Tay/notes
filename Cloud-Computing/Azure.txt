@@ -37,6 +37,14 @@ Azure
 		ARM Template:		Specifies configuration of specific Azure Resources.
 	
 	Details:
+		Azure Well-Architected Framework: 
+			For a given System, it should:
+				Be Resilient, Available, and Recoverable.
+				Be as Secure as needed.
+				Support responsible development and operations.
+				Accomplish its purpose within acceptable timeframes.
+				Deliver a sufficient return on investment.
+
 		ARM Template Syntax: https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax
 			<name>.params.json: File that defines arguments to be passed into the deploy.json.
 				{
