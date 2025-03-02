@@ -10,6 +10,9 @@ Cloud Computing:
 
 		BPaaS:					Business Processes as a Service
 		CaaS:					Communication as a Service
+
+		CapEx:					Capital Expenditure
+		OpEx: 					Operating Expenditure
 	
 	Description: 				The delivery of Compute Resources and Services over the Internet to offer faster innovation, flexible resources and economies of scale.
 	
@@ -67,6 +70,10 @@ Cloud Computing:
 			Self-Service: Automatically access any Resource at any time.
 				Availability
 		
+			Consumption-Based Model: OpEx - pay-as-you-use.
+				No upfront costs.
+				No wasted resources - pay when needed, stop paying when not needed.
+
 		Shared Responsibility Model:
 			Application:
 				Securing and Maintaining its own Data.
