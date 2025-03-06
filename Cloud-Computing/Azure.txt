@@ -16,8 +16,11 @@ Azure
 		Pricing Calculator: Estimate the cost of using various Azure Resources with different features / levels of Azure support.
 		Azure Advisor:		Utility to assist in detecting underutilized Resources and ways to optimize Services, in Real-Time.
 
+		Availability Zone: 	Unique Physical Location within a single Azure Region.
+
 		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models.
-		Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
+
+		Management Groups:	A logical container to contain multiple Azure Subscriptions.
 
 		Serivce Principal:	Azure AD account whose metadata (i.e. Client ID, Secret) is managed by Users and not Azure. This Account can be used anywhere outside of Azure.
 		Managed Identity:	A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
@@ -26,19 +29,26 @@ Azure
 
 		Resource Group:		A logical container to contain Azure Resources.
 
-		Event Hub:			Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
+		Azure VMWare:		IaaS-scoped Cloud VM Solution.
+		Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
+			Azure Containers: Virtual Disk Solution for Azure VMWare.
+
+			Azure Auto-Scale: Horizontal Scaling (w.r.t VMs) for hosted Applications running on VMs.
+
+		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
 			Messages:		Number of API Requests that put actual Events into the Event Hub.
 
-		Event Grid:			Router for generated Events; usually to 'Push' Events from their Source to an Event Hub or a Webhook. Note: Has to be in the same Resource Group as the Event Source.
+		Azure Event Grid:	Router for generated Events; usually to 'Push' Events from their Source to an Event Hub or a Webhook. Note: Has to be in the same Resource Group as the Event Source.
 			System Topic: 	Designation for Events produced by other Azure Services.
 
-		Storage:			Provides Blob Storage capability.
+		Azure Blob Storage:	Provides persistent Data Storage capability.
 			Storage Account: Contains one or more Storage Containers. In the Kotlin SDK, this is referenced via BlobServiceClientBuilder.
 			Storage Container: Contains one or more Blob Files. In the Kotlin SDK, this is referenced via BlobContainerClientBuilder, whilst individual Blobs are referenced via BlobClientBuilder.
 				Block Blob:	A collection of one or more data Blocks. Default Blob Type.
 				Page Blob: 	A collection of 512-Byte Pages optimized for random read and write operations.
 				Append Blob: Similar to a Block Blob, except Blocks can only be appended to the Blob. Each Block is also much smaller than the Blocks in a Block Blob.
+		Azure Files:		Provides synchronization between On-Prem Storage and Blob Storage.
 
 		ARM Template:		Specifies configuration of specific Azure Resources.
 	

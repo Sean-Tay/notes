@@ -46,8 +46,10 @@ Cloud Computing:
 			Public Cloud:		Built, controlled and maintained by a Third-Party Cloud Provider - anyone who wants to purchase Cloud Services and Resources can use them.
 			Private Cloud:		Cloud reserved for use by a single Entity, typically hosted on an dedicated Datacenter for the Company, and managed by the Company's IT Department.
 			Hybrid Cloud:		Combines Public and Private Cloud for certain use-cases (e.g. quick scaling via Public Cloud to meet a temporary surge in demand).
+
 			Community Cloud:	Organizations with common interests.
 			Multi-Cloud:		A Cloud which combines features from several Cloud Providers.
+			Government Cloud:	A Cloud dedicated for Government usage with the highest Security Offerings.
 
 	Details:
 		Intro:
