@@ -103,6 +103,12 @@ Cloud Computing:
 						Via CLI
 						Via APIs
 
+		Cloud Service Models:
+			IaaS vs PaaS vs SaaS:
+				SaaS: Fully complete Application / System.
+				PaaS: "Parts" of a System that require no VM-specific configuration (i.e. no need log in to VM and configure things).
+				IaaS: VM with no OS within / OS within but requires configuration (i.e. need to log in to VM and configure things).
+
 		Shared Responsibility Model:
 			Responsibility Share:
 				Consumer:
