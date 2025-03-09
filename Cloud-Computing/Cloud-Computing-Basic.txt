@@ -67,10 +67,8 @@ Cloud Computing:
 				Enterprise-level Data Protection.
 
 		Benefits of Cloud Computing:
-			Resource Pooling: 	All Resources provided by the Cloud Provider are seen as one large pool, to be divided amongst all Clients using them.
-			
-			Scalability: 	Specifically Auto-Scaling.
-				Rapid Elasticity: 	Fast Allocation of Resources as Client's needs change.
+			Scalability: 		Specifically Auto-Scaling.
+				Rapid Elasticity: Fast Allocation of Resources as Client's needs change.
 
 			Reliability
 				Availability
@@ -96,6 +94,8 @@ Cloud Computing:
 			Manageability:
 				Management of the Cloud: Encompasses aspects of the entire Cloud Environment.
 					Optimizing Resource Allocation and Managing Costs
+						Resource Pooling: All Resources provided by the Cloud Provider are seen as one large pool, to be divided amongst all Clients using them.
+
 					Setting Security Standards
 					Ensuring Compliance across the Cloud Environment
 
