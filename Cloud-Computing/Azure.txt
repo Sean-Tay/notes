@@ -15,25 +15,41 @@ Azure
 		TCO Calculator: 	Compare the cost of hosting your Service / System in Azure vs. On-Prem.
 		Pricing Calculator: Estimate the cost of using various Azure Resources with different features / levels of Azure support.
 		Azure Advisor:		Utility to assist in detecting underutilized Resources and ways to optimize Services, in Real-Time.
+		Microsoft Cost Management: Quickly check Azure Resource costs, create Alerts based on Resource spend, and create Budgets that can be used to automate Resource Management.
+			Cost Analysis:	View current and projected forecast on Azure Resource costs.
 
-		Availability Zone: 	Unique Physical Location within a single Azure Region.
+			Cost Alerts:	View all existing Alerts that can show up on Microsoft Cost Management. Alerts are also sent via email in some cases.
+				Budget Alerts: Triggered when either pre-defined Cost or Usage Thresholds are exceeded.
+				Credit Alerts: Triggered when 90% or 100% of an Enterprise's Azure Credit Balance is used.
+				Department Spending Quota Alerts: Triggered when Department Spending reaches a fixed threshold of the Quota.
+
+			Budgets: 		Set a spending limit for Azure Resources, based on a Subscription, Resource Group, Service Type, etc. A Budget Alert is also created as part of creating a Budget. Optionally, Budgets can be tweaked to automatically suspend or modify Azure Resources when the Budget is reached.
+
+		Availability Zone: 	Contains one or more Azure Data Centers.
+			Zone-Redundant Deployments: Azure Resources are replicated / distributed between Availability Zones automatically, for higher fault tolerance.
+			Zonal Deployments: Azure Resources are kept within a single Availability Zone for more stringent latency / performance requirements.
+		Azure Region:		Consists of one or more Availability Zones, each connected to another by high capacity, fault-tolerant, low latency Network Connections.
 
 		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models.
 
 		Management Groups:	A logical container to contain multiple Azure Subscriptions.
+		Resource Group:		A logical container to contain Azure Resources.
 
 		Serivce Principal:	Azure AD account whose metadata (i.e. Client ID, Secret) is managed by Users and not Azure. This Account can be used anywhere outside of Azure.
 		Managed Identity:	A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
 			System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
 			User Assigned: 	Independent lifecycle, can be shared across Azure Resources.
 
-		Resource Group:		A logical container to contain Azure Resources.
-
 		Azure VMWare:		IaaS-scoped Cloud VM Solution.
+			Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
+				Fault Domain: VMs within the same Fault Domain share Storage, Network, and Power, similar to a Server Rack in a Data-Center.
+				Update Domain: VMs within the same Update Domain can be rebooted at the same time. Only one Update Domain within an Availability Set is rebooted at a time, ensuring continued operation of the Availability Set during planned maintenance.
+
 		Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
 			Azure Containers: Virtual Disk Solution for Azure VMWare.
 
 			Azure Auto-Scale: Horizontal Scaling (w.r.t VMs) for hosted Applications running on VMs.
+		Azure Monitor:		Offers services to gain insights on VM's performance and operational health.
 
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
