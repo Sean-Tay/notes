@@ -35,6 +35,8 @@ Azure
 		Management Groups:	A logical container to contain multiple Azure Subscriptions.
 		Resource Group:		A logical container to contain Azure Resources.
 
+		Tags:				Allows organization of Azure entities in custom ways, with attached metadata for more information. Resources do not inherit tags from Subscriptions and Resource Groups.
+
 		Serivce Principal:	Azure AD account whose metadata (i.e. Client ID, Secret) is managed by Users and not Azure. This Account can be used anywhere outside of Azure.
 		Managed Identity:	A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
 			System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
