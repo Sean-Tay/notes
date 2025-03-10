@@ -25,12 +25,12 @@ Azure
 
 			Budgets: 		Set a spending limit for Azure Resources, based on a Subscription, Resource Group, Service Type, etc. A Budget Alert is also created as part of creating a Budget. Optionally, Budgets can be tweaked to automatically suspend or modify Azure Resources when the Budget is reached.
 
-		Availability Zone: 	Contains one or more Azure Data Centers.
-			Zone-Redundant Deployments: Azure Resources are replicated / distributed between Availability Zones automatically, for higher fault tolerance.
-			Zonal Deployments: Azure Resources are kept within a single Availability Zone for more stringent latency / performance requirements.
-		Azure Region:		Consists of one or more Availability Zones, each connected to another by high capacity, fault-tolerant, low latency Network Connections.
-
+		Microsoft Service Trust Portal: Tool that provides information about Microsoft Security, Privacy and Compliance practices.
 		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models.
+		Microsoft Purview: 	A suite of Governance, Risk and Compliance Solutions for Application Data. Able to handle Data managed On-Prem, Multi-Cloud and from SaaS sources.
+		Azure Policy: 		Prevents creation of / Highlights existing Azure Resources that deviate from pre-defined Compliance Policies. Can be set at a Resource, Resource Group or Subscription level, with higher levels applying the Policies to all entities within them, and has built-in Policy and Initiatives pertaining to Storage, Networking, Compute, Security Center and Monitoring.
+			Azure Policy Initiative: A group of Azure Policies.
+		Resource Lock:		Locks on Resources, Resource Groups or Subscriptions that prevent them from being deleted or updated.
 
 		Management Groups:	A logical container to contain multiple Azure Subscriptions.
 		Resource Group:		A logical container to contain Azure Resources.
@@ -41,6 +41,11 @@ Azure
 		Managed Identity:	A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
 			System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
 			User Assigned: 	Independent lifecycle, can be shared across Azure Resources.
+
+		Availability Zone: 	Contains one or more Azure Data Centers.
+			Zone-Redundant Deployments: Azure Resources are replicated / distributed between Availability Zones automatically, for higher fault tolerance.
+			Zonal Deployments: Azure Resources are kept within a single Availability Zone for more stringent latency / performance requirements.
+		Azure Region:		Consists of one or more Availability Zones, each connected to another by high capacity, fault-tolerant, low latency Network Connections.
 
 		Azure VMWare:		IaaS-scoped Cloud VM Solution.
 			Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
