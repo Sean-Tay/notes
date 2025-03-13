@@ -76,6 +76,14 @@ Azure
 		ARM Template:		Specifies configuration of specific Azure Resources.
 	
 	Details:
+		Microsoft Cloud Adoption Framework for Azure: SPRAGM
+			S: Define a Strategy
+			P: Make a Plan
+			R: Ready your Organization
+			A: Adopt the Cloud
+			G: Govern
+			M: Manage
+
 		Azure Well-Architected Framework: 
 			For a given System, it should:
 				Be Resilient, Available, and Recoverable.
