@@ -26,11 +26,16 @@ Azure
 			Budgets: 		Set a spending limit for Azure Resources, based on a Subscription, Resource Group, Service Type, etc. A Budget Alert is also created as part of creating a Budget. Optionally, Budgets can be tweaked to automatically suspend or modify Azure Resources when the Budget is reached.
 
 		Microsoft Service Trust Portal: Tool that provides information about Microsoft Security, Privacy and Compliance practices.
-		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models.
 		Microsoft Purview: 	A suite of Governance, Risk and Compliance Solutions for Application Data. Able to handle Data managed On-Prem, Multi-Cloud and from SaaS sources.
 		Azure Policy: 		Prevents creation of / Highlights existing Azure Resources that deviate from pre-defined Compliance Policies. Can be set at a Resource, Resource Group or Subscription level, with higher levels applying the Policies to all entities within them, and has built-in Policy and Initiatives pertaining to Storage, Networking, Compute, Security Center and Monitoring.
 			Azure Policy Initiative: A group of Azure Policies.
 		Resource Lock:		Locks on Resources, Resource Groups or Subscriptions that prevent them from being deleted or updated.
+
+		Azure Portal:		Application that provides a Web UI to manage Azure Resources.
+			Azure Cloud Shell: Provides a Bash or Powershell Environment to execute Azure Commands.
+		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models, such as Hybrid or Multi-Cloud, for Servers, VMs, Kubernetes Clusters, SQL Server and Azure Data services.
+		Azure Resource Manager: Deployment and Management Service for Azure.
+			ARM Template:	Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to faciliatate Infrastructure as Code.
 
 		Management Groups:	A logical container to contain multiple Azure Subscriptions.
 		Resource Group:		A logical container to contain Azure Resources.
@@ -72,8 +77,6 @@ Azure
 				Page Blob: 	A collection of 512-Byte Pages optimized for random read and write operations.
 				Append Blob: Similar to a Block Blob, except Blocks can only be appended to the Blob. Each Block is also much smaller than the Blocks in a Block Blob.
 		Azure Files:		Provides synchronization between On-Prem Storage and Blob Storage.
-
-		ARM Template:		Specifies configuration of specific Azure Resources.
 	
 	Details:
 		Microsoft Cloud Adoption Framework for Azure: SPRAGM
