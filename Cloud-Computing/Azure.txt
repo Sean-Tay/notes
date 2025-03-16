@@ -163,6 +163,9 @@ Azure
 					"resources": [
 						{
 							// For Standalone Resources:
+							// Define Conditional Logic to determine if this Resource ultimately gets deployed
+							"condition": "[not(empty( ... ))]",
+
 							"type": "<azure-resource-provider-namespace>/<azure-resource-type>",
 							"apiVersion": "<api-version>",
 							"name": "<resource-custom-name>",
