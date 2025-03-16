@@ -69,6 +69,8 @@ Cloud Computing:
 		Benefits of Cloud Computing:
 			Scalability: 		Specifically Auto-Scaling.
 				Rapid Elasticity: Fast Allocation of Resources as Client's needs change.
+					Horizontal Scaling: Add or Remove more Nodes to the Cluster.
+					Vertical Scaling: Configure more powerful hardware for each Node.
 
 			Reliability
 				Availability
