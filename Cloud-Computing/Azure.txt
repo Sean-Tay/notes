@@ -12,39 +12,43 @@ Azure
 	Resources:
 	
 	Concepts:
-		TCO Calculator: 	Compare the cost of hosting your Service / System in Azure vs. On-Prem.
-		Pricing Calculator: Estimate the cost of using various Azure Resources with different features / levels of Azure support.
-		Azure Advisor:		Evaluates Azure Resources and makes recommendations to improve Reliability, Security, Performance, Operational Excellence, and ultimately reduce costs by detecting underutilized Resources.
-		Microsoft Cost Management: Quickly check Azure Resource costs, create Alerts based on Resource spend, and create Budgets that can be used to automate Resource Management.
-			Cost Analysis:	View current and projected forecast on Azure Resource costs.
+		// Cost Management:
+			TCO Calculator: Compare the cost of hosting your Service / System in Azure vs. On-Prem.
+			Pricing Calculator: Estimate the cost of using various Azure Resources with different features / levels of Azure support.
+			Azure Advisor:	Evaluates Azure Resources and makes recommendations to improve Reliability, Security, Performance, Operational Excellence, and ultimately reduce costs by detecting underutilized Resources.
+			Microsoft Cost Management: Quickly check Azure Resource costs, create Alerts based on Resource spend, and create Budgets that can be used to automate Resource Management.
+				Cost Analysis: View current and projected forecast on Azure Resource costs.
 
-			Cost Alerts:	View all existing Alerts that can show up on Microsoft Cost Management. Alerts are also sent via email in some cases.
-				Budget Alerts: Triggered when either pre-defined Cost or Usage Thresholds are exceeded.
-				Credit Alerts: Triggered when 90% or 100% of an Enterprise's Azure Credit Balance is used.
-				Department Spending Quota Alerts: Triggered when Department Spending reaches a fixed threshold of the Quota.
+				Cost Alerts: View all existing Alerts that can show up on Microsoft Cost Management. Alerts are also sent via email in some cases.
+					Budget Alerts: Triggered when either pre-defined Cost or Usage Thresholds are exceeded.
+					Credit Alerts: Triggered when 90% or 100% of an Enterprise's Azure Credit Balance is used.
+					Department Spending Quota Alerts: Triggered when Department Spending reaches a fixed threshold of the Quota.
 
-			Budgets: 		Set a spending limit for Azure Resources, based on a Subscription, Resource Group, Service Type, etc. A Budget Alert is also created as part of creating a Budget. Optionally, Budgets can be tweaked to automatically suspend or modify Azure Resources when the Budget is reached.
+				Budgets: 	Set a spending limit for Azure Resources, based on a Subscription, Resource Group, Service Type, etc. A Budget Alert is also created as part of creating a Budget. Optionally, Budgets can be tweaked to automatically suspend or modify Azure Resources when the Budget is reached.
 
-		Microsoft Service Trust Portal: Tool that provides information about Microsoft Security, Privacy and Compliance practices.
-		Microsoft Purview: 	A suite of Governance, Risk and Compliance Solutions for Application Data. Able to handle Data managed On-Prem, Multi-Cloud and from SaaS sources.
-		Azure Policy: 		Prevents creation of / Highlights existing Azure Resources that deviate from pre-defined Compliance Policies. Can be set at a Resource, Resource Group or Subscription level, with higher levels applying the Policies to all entities within them, and has built-in Policy and Initiatives pertaining to Storage, Networking, Compute, Security Center and Monitoring.
-			Azure Policy Initiative: A group of Azure Policies.
-		Resource Lock:		Locks on Resources, Resource Groups or Subscriptions that prevent them from being deleted or updated.
+		// Governance and Compliance:
+			Microsoft Service Trust Portal: Tool that provides information about Microsoft Security, Privacy and Compliance practices.
+			Microsoft Purview: A suite of Governance, Risk and Compliance Solutions for Application Data. Able to handle Data managed On-Prem, Multi-Cloud and from SaaS sources.
+			Azure Policy: 	Prevents creation of / Highlights existing Azure Resources that deviate from pre-defined Compliance Policies. Can be set at a Resource, Resource Group or Subscription level, with higher levels applying the Policies to all entities within them, and has built-in Policy and Initiatives pertaining to Storage, Networking, Compute, Security Center and Monitoring.
+				Azure Policy Initiative: A group of Azure Policies.
+			Resource Lock:	Locks on Resources, Resource Groups or Subscriptions that prevent them from being deleted or updated.
 
-		Azure Portal:		Application that provides a Web UI to manage Azure Resources.
-			Azure Cloud Shell: Provides a Bash or Powershell Environment to execute Azure Commands.
-		Azure Arc:			Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models, such as Hybrid or Multi-Cloud, for Servers, VMs, Kubernetes Clusters, SQL Server and Azure Data services.
-		Azure Resource Manager: Deployment and Management Service for Azure.
-			ARM Template:	Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to faciliatate Infrastructure as Code.
+		// Managing and Deploying Azure Resources:
+			Azure Portal:	Application that provides a Web UI to manage Azure Resources.
+				Azure Cloud Shell: Provides a Bash or Powershell Environment to execute Azure Commands.
+			Azure Arc:		Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models, such as Hybrid or Multi-Cloud, for Servers, VMs, Kubernetes Clusters, SQL Server and Azure Data services.
+			Azure Resource Manager: Deployment and Management Service for Azure.
+				ARM Template: Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to faciliatate Infrastructure as Code.
 
-		Azure Service Health: Shows the status of global Azure Infrastructure and owned Azure Resources.
-			Azure Status: 	Status of Azure (owned or otherwise) in general.
-			Service Health: Like Azure Status, but focused on the Azure Services and Regions that the User has Resources deployed in (but not on the User's actual Resources).
-			Resource Health: Focuses on User's actual Resources specifically.
-		Azure Monitor:		Platform for collecting and analyzing log / metric data from On-Prem or Cloud (Azure or otherwise) Resources, and visualizes / acts on the results of the analysis.
-			Azure Log Analytics: Tool where queries on collected log / metric data from Azure Monitor can be done to faciliatate Data Analysis.
-			Azure Monitor Alerts: Alerts / attempts corrective action when Azure Monitor detects a threshold being crossed, specified by pre-configured conditions.
-			Application Insights: Monitors Web Applications hosted on On-Prem or Cloud (Azure or otherwise), but the Web Application needs to interact with the Insights SDK / Insights Agent. Examples of Metrics collected include Request Rates, Response Times, Page Views, Load Performance etc.
+		// Monitoring Tools:
+			Azure Service Health: Shows the status of global Azure Infrastructure and owned Azure Resources.
+				Azure Status: Status of Azure (owned or otherwise) in general.
+				Service Health: Like Azure Status, but focused on the Azure Services and Regions that the User has Resources deployed in (but not on the User's actual Resources).
+				Resource Health: Focuses on User's actual Resources specifically.
+			Azure Monitor:	Platform for collecting and analyzing log / metric data from On-Prem or Cloud (Azure or otherwise) Resources, and visualizes / acts on the results of the analysis.
+				Azure Log Analytics: Tool where queries on collected log / metric data from Azure Monitor can be done to faciliatate Data Analysis.
+				Azure Monitor Alerts: Alerts / attempts corrective action when Azure Monitor detects a threshold being crossed, specified by pre-configured conditions.
+				Application Insights: Monitors Web Applications hosted on On-Prem or Cloud (Azure or otherwise), but the Web Application needs to interact with the Insights SDK / Insights Agent. Examples of Metrics collected include Request Rates, Response Times, Page Views, Load Performance etc.
 
 		Management Groups:	A logical container to contain multiple Azure Subscriptions.
 		Resource Group:		A logical container to contain Azure Resources.
@@ -66,11 +70,12 @@ Azure
 				Fault Domain: VMs within the same Fault Domain share Storage, Network, and Power, similar to a Server Rack in a Data-Center.
 				Update Domain: VMs within the same Update Domain can be rebooted at the same time. Only one Update Domain within an Availability Set is rebooted at a time, ensuring continued operation of the Availability Set during planned maintenance.
 
+			Azure Monitor:	Offers services to gain insights on VM's performance and operational health.
+
 		Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
 			Azure Containers: Virtual Disk Solution for Azure VMWare.
 
 			Azure Auto-Scale: Horizontal Scaling (w.r.t VMs) for hosted Applications running on VMs.
-		Azure Monitor:		Offers services to gain insights on VM's performance and operational health.
 
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
