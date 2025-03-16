@@ -7,7 +7,7 @@ Azure
 
 		SAS:				Shared Access Signature.
 	
-	Description:
+	Description: 			Azure is a continually expanding set of Cloud Services (some unique to Cloud) to assist in rapidly innovating solutions to meet Business Application Goals.
 	
 	Resources:
 	
@@ -50,20 +50,47 @@ Azure
 				Azure Monitor Alerts: Alerts / attempts corrective action when Azure Monitor detects a threshold being crossed, specified by pre-configured conditions.
 				Application Insights: Monitors Web Applications hosted on On-Prem or Cloud (Azure or otherwise), but the Web Application needs to interact with the Insights SDK / Insights Agent. Examples of Metrics collected include Request Rates, Response Times, Page Views, Load Performance etc.
 
-		Management Groups:	A logical container to contain multiple Azure Subscriptions.
-		Resource Group:		A logical container to contain Azure Resources.
+		// Azure Infrastructure:
+			// Physical Infrastructure:
+				// Location:
+					Availability Zone: Contains one or more Azure Data Centers, each with dedicated Power, Cooling and Networking Infrastructure. Availability Zones are primarily meant for VM, Managed Disk, Load Balancer, and SQL Database Services.
 
-		Tags:				Allows organization of Azure entities in custom ways, with attached metadata for more information. Resources do not inherit tags from Subscriptions and Resource Groups.
+					Azure Region:
+						Availability Zone Supported: Consists of three or more Availability Zones, each connected to another by high capacity, fault-tolerant, low latency Network Connections.
 
-		Serivce Principal:	Azure AD account whose metadata (i.e. Client ID, Secret) is managed by Users and not Azure. This Account can be used anywhere outside of Azure.
-		Managed Identity:	A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
-			System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
-			User Assigned: 	Independent lifecycle, can be shared across Azure Resources.
+						Non-Availability Zone Supported: Azure Regions that were built before the Availability Zone concept was introduced - these sometimes have physical or architectural limitations that prevent the consituent Data Centers from being organized into isolated units.
 
-		Availability Zone: 	Contains one or more Azure Data Centers.
-			Zone-Redundant Deployments: Azure Resources are replicated / distributed between Availability Zones automatically, for higher fault tolerance.
-			Zonal Deployments: Azure Resources are kept within a single Availability Zone for more stringent latency / performance requirements.
-		Azure Region:		Consists of one or more Availability Zones, each connected to another by high capacity, fault-tolerant, low latency Network Connections.
+						Sovereign Region: Regions that are isolated from the main Azure instance, typically used for Compliance-reasons / Government organizations.
+
+					Azure Geography: A discrete market, typically containing at least two or more Azure Regions, usually defined by Geopolitical / Country Borders that serves as a fixed Data Residency Boundary.
+						Region Pairs: Two Azure Regions that are paired together, at least 300 miles apart, for redundancy purposes. In an event involving multiple Region-wide outages, Microsoft will prioritize recovery of one Azure Region within each Region Pair (i.e. those that do bi-directional backup; some don't), not both.
+
+				// Azure Service Redundancy Types:
+					Zonal Services: Azure Services here are kept within a single Availability Zone for more stringent latency / performance requirements.
+					Zone-Redundant Services: Azure Services here are automatically replicated / distributed between multiple Availability Zones within an Azure Region, for higher fault tolerance.
+					Non-Regional Services: Global Services that are always available, resilient to Zone-wide and Region-wide Outages.
+
+			// Management Infrastructure:
+				// Azure Accounts:
+					Microsoft Learn: A sandbox which creates a Subscription within Microsoft Learn Courses for the purpose of temporarily provisioning Azure Resources during Course Exercises. Created Resources get automatically deallocated once the Course Module is completed.
+
+					Account: Contains one or more Azure Subscriptions, tied to a User / Organization.
+						Free Account: Free access to popular Azure Products for 12 months, credit to use for 30 days, and access to some Cloud Services that are always free.
+						Free Student Account: Free access to certain Azure Services for 12 months, credit to use within 12 months, and access to certain Software Development Tools.
+
+				Management Groups: A logical container to contain multiple Azure Subscriptions. These are nestable, up to 7 levels.
+				Subscription: A unit of Azure Resource management, billing and scale.
+					Billing Boundary: Azure generates separate billing reports and invoices for each Subscription.
+					Access Control Boundary: Useful when enforcing Access Control Policies, which apply at the Subscription-level (i.e. segregate Department Usage, or Environments).
+
+				Resource Group:	A logical container to contain Azure Resources. These are not nestable.
+
+				Tags:		Allows organization of Azure entities in custom ways, with attached metadata for more information. Resources do not inherit Tags from Subscriptions and Resource Groups.
+
+				Serivce Principal: Azure AD account whose metadata (i.e. Client ID, Secret) is managed by Users and not Azure. This Account can be used anywhere outside of Azure.
+				Managed Identity: A special type of Service Principal where Azure manages the metadata as well. This Account can only be used by other Azure-managed services.
+					System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
+					User Assigned: Independent lifecycle, can be shared across Azure Resources.
 
 		Azure VMWare:		IaaS-scoped Cloud VM Solution.
 			Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
@@ -202,6 +229,8 @@ Azure
 				}
 	
 	Commands:
+		az interactive # Initialize several IDE features such as Auto-completion and Command Documentation.
+
 		az deployment group validate # Deploy the Resources defined in the <template-file>.json with the specified configuration Parameters. If the deployment succeeds, it should be listed under the Resource Group "deployments" within the Azure Web Portal.
 			--resource-group <resource-group> # Specify the Resource Group that the deployment should execute under.
 			--template-file <name>.deploy.json
