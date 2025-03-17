@@ -195,7 +195,8 @@ System Design:
 	
 			Scalability: As the System grows / downscales, there should be reasonable ways of dealing with the corresponding growth / reduction in demand.
 				Factors:
-					Auto-Scaling: There should be some means to automatically allocate / de-allocate System Resources to meet demand accurately.
+					Elasticity / Auto-Scaling: There should be some means to automatically allocate / de-allocate System Resources to meet demand accurately.
+					Agility: How quickly the System is able to meet demand.
 					Load Balancing: A mechanism to redirect and rebalance demand away from "hot" areas to "cooler" areas.
 
 				Characteristics:

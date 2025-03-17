@@ -67,10 +67,17 @@ Cloud Computing:
 				Enterprise-level Data Protection.
 
 		Benefits of Cloud Computing:
-			Scalability: 		Specifically Auto-Scaling.
-				Rapid Elasticity: Fast Allocation of Resources as Client's needs change.
-					Horizontal Scaling: Add or Remove more Nodes to the Cluster.
-					Vertical Scaling: Configure more powerful hardware for each Node.
+			Scalability
+				Elasticity: Automatic Scalability
+					Agility: Fast Allocation of Resources as Client's needs change.
+
+				Horizontal Scaling: Adjustments to the Cluster's size.
+					In-Scaling: Removing Nodes from the Cluster (i.e. "zooming in and seeing less").
+					Out-Scaling: Adding Nodes to the Cluster (i.e. "zooming out and seeing more").
+
+				Vertical Scaling: Configure the hardware for each Node.
+					Down-Scaling: Replacing hardware with less powerful variants (i.e. going "downwards vertically").
+					Up-Scaling: Adding more powerful hardware to a Node (i.e. going "upwards vertically").
 
 			Reliability
 				Availability
