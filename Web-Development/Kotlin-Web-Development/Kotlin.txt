@@ -610,6 +610,9 @@ Kotlin
 						<result>.takeIf { <lambda-conditional> }?. // ...
 						<result>.takeUnless { <lambda-conditional> }?. // ...
 
+					// with
+						with(<result>) { // it === <result> }
+
 				// Switch-Case:
 					// Note: when is an Expression, meaning it can return Values once evaluated.
 					val result = when (<variable>) {
