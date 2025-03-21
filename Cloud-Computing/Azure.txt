@@ -60,10 +60,10 @@ Azure
 
 						Non-Availability Zone Supported: Azure Regions that were built before the Availability Zone concept was introduced - these sometimes have physical or architectural limitations that prevent the consituent Data Centers from being organized into isolated units.
 
-						Sovereign Region: Regions that are isolated from the main Azure instance, typically used for Compliance-reasons / Government organizations.
+						Sovereign Region: Regions that are isolated from the main Azure instance (e.g. outside of Azure Geographies), typically used for Compliance-reasons / Government organizations.
 
-					Azure Geography: A discrete market, typically containing at least two or more Azure Regions, usually defined by Geopolitical / Country Borders that serves as a fixed Data Residency Boundary.
-						Region Pairs: Two Azure Regions that are paired together, at least 300 miles apart, for redundancy purposes. In an event involving multiple Region-wide outages, Microsoft will prioritize recovery of one Azure Region within each Region Pair (i.e. those that do bi-directional backup; some don't), not both.
+					Azure Geography: A discrete market, typically containing at least two or more Azure Regions (i.e. one or more Region Pairs), usually defined by Geopolitical / Country Borders that serves as a fixed Data Residency Boundary.
+						Region Pair: Every Azure Region is part of a Region-Pair, with each Region at least 300 miles apart, for redundancy purposes. In an event involving multiple Region-wide outages, Microsoft will prioritize recovery of one Azure Region within each Region Pair (i.e. those that do bi-directional backup; some don't), not both.
 
 				// Azure Service Redundancy Types:
 					Zonal Services: Azure Services here are kept within a single Availability Zone for more stringent latency / performance requirements.
