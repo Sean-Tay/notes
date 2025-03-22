@@ -92,17 +92,30 @@ Azure
 					System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
 					User Assigned: Independent lifecycle, can be shared across Azure Resources.
 
-		Azure VMWare:		IaaS-scoped Cloud VM Solution.
-			Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
-				Fault Domain: VMs within the same Fault Domain share Storage, Network, and Power, similar to a Server Rack in a Data-Center.
-				Update Domain: VMs within the same Update Domain can be rebooted at the same time. Only one Update Domain within an Availability Set is rebooted at a time, ensuring continued operation of the Availability Set during planned maintenance.
+		// Compute
+			Azure VMWare:	IaaS-scoped Cloud VM Solution.
+				Scale Set: 	Utility to automatically create and manage a Cluster of identical VMs with Load Balancing and Elasticity.
 
-			Azure Monitor:	Offers services to gain insights on VM's performance and operational health.
+				Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
+					Fault Domain: VMs within the same Fault Domain share Storage, Network, and Power, similar to a Server Rack in a Data-Center.
+					Update Domain: VMs within the same Update Domain can be rebooted at the same time. Only one Update Domain within an Availability Set is rebooted at a time, ensuring continued operation of the Availability Set during planned maintenance.
 
-		Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
-			Azure Containers: Virtual Disk Solution for Azure VMWare.
+				Custom Script Extension: Downloads and runs scripts on Azure VMs for post-deployment configuration, software installation, or some other management task.
 
-			Azure Auto-Scale: Horizontal Scaling (w.r.t VMs) for hosted Applications running on VMs.
+				Azure VMware Solution: Migrate or extend existing VMware environments provided by other Cloud Providers to Azure.
+					Azure Auto-Scale: Horizontal Scaling (w.r.t VMs) for hosted Applications running on VMs.
+
+				Azure Virtual Desktop: Desktop and Application Virtualization Service on the Cloud.
+			
+			Azure Containers: PaaS-scoped Container / OS-Virtualization Solution.
+				Azure Container Instances: Service that runs Containers that are uploaded.
+				Azure Container Apps: Similar to Azure Container Instances, except with extra benefits such as the ability to incorporate Load Balancing and Scaling.
+				Azure Kubernetes Service: Container Orchestration Service.
+
+			Azure Functions: Serverless Compute Solution, meant for quick (i.e. a few seconds) operations that do not require an active VM / Container to be running.
+				Durable Functions: Azure Functions with persistent State that is passed via context when the Function is called.
+
+			Azure App Service: Build and host Web Apps, API Apps, WebJobs (i.e. Background Jobs), and Mobile Back-Ends with Elasticity, High Availablity and CICD support without worrying about Infrastructure.
 
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
