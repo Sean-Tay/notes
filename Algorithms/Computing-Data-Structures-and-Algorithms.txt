@@ -392,6 +392,9 @@
 	Linked Lists:
 		- Runner Technique: Use multiple Pointers of different Stride Lengths.
 
+	Queue:
+		- Queue Rotation: Dequeue and Enqueue repeatedly.
+
 	Bit Manipulation:
 		- XOR: ^
 			- Commutative and Associative
