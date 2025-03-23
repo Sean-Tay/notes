@@ -92,7 +92,7 @@ Azure
 					System Assigned: Each SAMI is attached to one Azure Resource (i.e. lifetime of the Azure Resource).
 					User Assigned: Independent lifecycle, can be shared across Azure Resources.
 
-		// Compute
+		// Compute: In descending order of Complexity:
 			Azure VMWare:	IaaS-scoped Cloud VM Solution.
 				Scale Set: 	Utility to automatically create and manage a Cluster of identical VMs with Load Balancing and Elasticity.
 
@@ -112,7 +112,9 @@ Azure
 				Azure Container Apps: Similar to Azure Container Instances, except with extra benefits such as the ability to incorporate Load Balancing and Scaling.
 				Azure Kubernetes Service: Container Orchestration Service.
 
-			Azure Functions: Serverless Compute Solution, meant for quick (i.e. a few seconds) operations that do not require an active VM / Container to be running.
+			Azure App Service: Build and host Web Apps, API Apps, WebJobs (i.e. Background Jobs), and Mobile Back-Ends with Elasticity, High Availablity and CICD support, depending on Programming Language / Framework used.
+
+			Azure Functions: Serverless Compute Solution, meant for Micro / Nano Services (i.e. short-lived operations) that do not require an active VM / Container to be perpetually running.
 				Durable Functions: Azure Functions with persistent State that is passed via context when the Function is called.
 
 			Azure App Service: Build and host Web Apps, API Apps, WebJobs (i.e. Background Jobs), and Mobile Back-Ends with Elasticity, High Availablity and CICD support without worrying about Infrastructure.
