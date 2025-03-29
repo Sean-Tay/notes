@@ -38,7 +38,7 @@ Azure
 				Azure Cloud Shell: Provides a Bash or Powershell Environment to execute Azure Commands.
 			Azure Arc:		Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models, such as Hybrid or Multi-Cloud, for Servers, VMs, Kubernetes Clusters, SQL Server and Azure Data services.
 			Azure Resource Manager: Deployment and Management Service for Azure.
-				ARM Template: Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to faciliatate Infrastructure as Code.
+				ARM Template: Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to facilitate Infrastructure as Code.
 
 		// Monitoring Tools:
 			Azure Service Health: Shows the status of global Azure Infrastructure and owned Azure Resources.
@@ -46,7 +46,7 @@ Azure
 				Service Health: Like Azure Status, but focused on the Azure Services and Regions that the User has Resources deployed in (but not on the User's actual Resources).
 				Resource Health: Focuses on User's actual Resources specifically.
 			Azure Monitor:	Platform for collecting and analyzing log / metric data from On-Prem or Cloud (Azure or otherwise) Resources, and visualizes / acts on the results of the analysis.
-				Azure Log Analytics: Tool where queries on collected log / metric data from Azure Monitor can be done to faciliatate Data Analysis.
+				Azure Log Analytics: Tool where queries on collected log / metric data from Azure Monitor can be done to facilitate Data Analysis.
 				Azure Monitor Alerts: Alerts / attempts corrective action when Azure Monitor detects a threshold being crossed, specified by pre-configured conditions.
 				Application Insights: Monitors Web Applications hosted on On-Prem or Cloud (Azure or otherwise), but the Web Application needs to interact with the Insights SDK / Insights Agent. Examples of Metrics collected include Request Rates, Response Times, Page Views, Load Performance etc.
 
@@ -117,7 +117,56 @@ Azure
 			Azure Functions: Serverless Compute Solution, meant for Micro / Nano Services (i.e. short-lived operations) that do not require an active VM / Container to be perpetually running.
 				Durable Functions: Azure Functions with persistent State that is passed via context when the Function is called.
 
-			Azure App Service: Build and host Web Apps, API Apps, WebJobs (i.e. Background Jobs), and Mobile Back-Ends with Elasticity, High Availablity and CICD support without worrying about Infrastructure.
+		// Networking
+			Microsoft Backbone: Microsoft's own Private, Global Network Infrastructure used to facilitate communications between different Azure Regions.
+
+			Azure Virtual Network / Azure VNet / Azure VPC: Isolated Network Space within Azure's internal Networking Infrastructure that provides Private IP Addressing and Network Segmentation, to facilitate communication between Azure Resources, On-Prem Entities and Users, within the same Azure Region.
+				Subnets:	Subdivides a Virtual Private Network further via Private IP Address Ranges.
+
+				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that specify allowed / denied ports, protocols, and IP Addresses.
+
+				VNet Peering: Connects two Azure VNets together via Microsoft Backbone, avoiding the need for using Gateways.
+					Global VNet Peering: Connect two Azure VNets together in different Azure Regions.
+
+				// Endpoints:
+					Service Endpoint: Network Interface meant to link Azure Resources to an Azure VNet. These operate at the Subnet-level.
+					Private Endpoint: Network Interface which has a Private IP Address within the Address Range of the VNet. This can supersede the role of Service Endpoints, but requires more configuration.
+
+					Public Endpoint: Network Interface with a Public IP Address.
+
+				// Routing:
+					Route Tables: Controls how Packets are routed between Subnets.
+					Border Gateway Protocol: Works when a Gateway is involved.
+
+				// Gateway: A specialized Network Component running on an Azure VM that serves as a connectivity point between different Networks.
+					// Types:
+						VPN Gateway: Creates encrypted tunnels between Azure VNet and other Cloud / On-Prem Networks over the Public Internet. At most one per VNet.
+							// Connections:
+								Point-to-Site Connection: Client Computer utilizes a VPN to connect to the Azure VNet Gateway.
+								Site-to-Site Connection: On-Prem / Cloud VPN Device / Gateway to the Azure VNet Gateway.
+							
+							// Behaviours: To determine which traffic requires encryption:
+								Policy-Based: A Policy governing connections between two Networks will determine if encryption is needed.
+								Route-Based: Examines the IP Addresses of Packets to determine which encryption tunnel to send them through. This option is more resilient to Network Topology changes.
+
+						Azure ExpressRoute Gateway: Provides a dedicated connection to an Azure VNet that does not rely on the Public Internet, useful for higher bandwidth / security requirements. At most one per VNet.
+
+						Application Gateway: Allows for inbound HTTP / HTTPs Routing and acts as a HTTP Traffic Load Balancer / Firewall.
+						NAT Gateway: Provides outbound internet connectivity for VMs within the Virtual Network.
+
+					// Availability Configurations:
+						Active-Passive: Up to 90 seconds of recovery time. Default Availability Configuration when deploying Gateways.
+						Active-Active
+						ExpressRoute Failover: Failover to a regular VPN Gateway so that connectivity between VNets is not completely shut off.
+						Zone-Redundant Gateways: Deploy Gateway instances in each Availability Zone within an Azure Region.
+
+			Azure Firewall: Provides firewall capabilities across multiple VNets.
+
+			Azure ExpressRoute: Used to provide dedicated connectivity to Azure Cloud Services from On-Prem Networks that do not rely on the Public Internet.
+
+			Azure Load Balancer: Non-HTTP Traffic Load Balancer.
+
+			Azure DNS: 		Azure Domain Name Hosting Service (note: not Domain Name Registration Service). Compatible with both Public facing Domains and Private Domains within Azure VNets.
 
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
