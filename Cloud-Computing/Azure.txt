@@ -55,7 +55,7 @@ Azure
 				// Location:
 					Availability Zone: Contains one or more Azure Data Centers, each with dedicated Power, Cooling and Networking Infrastructure. Availability Zones are primarily meant for VM, Managed Disk, Load Balancer, and SQL Database Services.
 
-					Azure Region:
+					Azure Region: A grouping of Availability Zones, such that the total Round-Trip Time between them is under 2ms.
 						Availability Zone Supported: Consists of three or more Availability Zones, each connected to another by high capacity, fault-tolerant, low latency Network Connections.
 
 						Non-Availability Zone Supported: Azure Regions that were built before the Availability Zone concept was introduced - these sometimes have physical or architectural limitations that prevent the consituent Data Centers from being organized into isolated units.
@@ -117,13 +117,15 @@ Azure
 			Azure Functions: Serverless Compute Solution, meant for Micro / Nano Services (i.e. short-lived operations) that do not require an active VM / Container to be perpetually running.
 				Durable Functions: Azure Functions with persistent State that is passed via context when the Function is called.
 
+			Azure Logic Apps: No-code solution for creating flows via independent modules that do certain things.
+
 		// Networking
 			Microsoft Backbone: Microsoft's own Private, Global Network Infrastructure used to facilitate communications between different Azure Regions.
 
 			Azure Virtual Network / Azure VNet / Azure VPC: Isolated Network Space within Azure's internal Networking Infrastructure that provides Private IP Addressing and Network Segmentation, to facilitate communication between Azure Resources, On-Prem Entities and Users, within the same Azure Region.
 				Subnets:	Subdivides a Virtual Private Network further via Private IP Address Ranges.
 
-				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that specify allowed / denied ports, protocols, and IP Addresses.
+				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that apply to different Subnets / Network Interfaces (Ports, IP Addresses, Protocols, etc.).
 
 				VNet Peering: Connects two Azure VNets together via Microsoft Backbone, avoiding the need for using Gateways.
 					Global VNet Peering: Connect two Azure VNets together in different Azure Regions.

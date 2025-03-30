@@ -59,7 +59,7 @@ Cloud Computing:
 		
 			Advantage of Cloud Computing:
 				Consumption-Based Model: OpEx - pay-as-you-use.
-					No upfront costs.
+					No upfront costs (unless using Private Cloud)
 						Reduced IT and Admin Staff costs.
 
 					No wasted resources - pay as much as used, stop paying when not needed.
