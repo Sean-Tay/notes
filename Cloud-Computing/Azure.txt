@@ -78,10 +78,10 @@ Azure
 						Free Account: Free access to popular Azure Products for 12 months, credit to use for 30 days, and access to some Cloud Services that are always free.
 						Free Student Account: Free access to certain Azure Services for 12 months, credit to use within 12 months, and access to certain Software Development Tools.
 
-				Management Groups: A logical container to contain multiple Azure Subscriptions. These are nestable, up to 7 levels.
-				Subscription: A unit of Azure Resource management, billing and scale.
+				Management Groups: A logical container to contain multiple Azure Subscriptions. These are nestable, up to 7 levels. Only links up to one Azure Active Directory / EntraID tenant.
+				Subscription: A unit of Azure Resource management, billing and scale. Only links up to one Azure Active Directory / EntraID tenant.
 					Billing Boundary: Azure generates separate billing reports and invoices for each Subscription.
-					Access Control Boundary: Useful when enforcing Access Control Policies, which apply at the Subscription-level (i.e. segregate Department Usage, or Environments).
+					Access Control Boundary: Useful when enforcing Access Control Policies, which apply at the Subscription-level (i.e. segregate Department Usage, or Environments), or RBACs.
 
 				Resource Group:	A logical container to contain Azure Resources. These are not nestable.
 
@@ -94,7 +94,7 @@ Azure
 
 		// Compute: In descending order of Complexity:
 			Azure VMWare:	IaaS-scoped Cloud VM Solution.
-				Scale Set: 	Utility to automatically create and manage a Cluster of identical VMs with Load Balancing and Elasticity.
+				Scale Set: 	Utility to automatically create and manage a Cluster of identical VMs with Load Balancing and Elasticity, deploying them across Zones and Fault Domains.
 
 				Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
 					Fault Domain: VMs within the same Fault Domain share Storage, Network, and Power, similar to a Server Rack in a Data-Center.
@@ -170,20 +170,50 @@ Azure
 
 			Azure DNS: 		Azure Domain Name Hosting Service (note: not Domain Name Registration Service). Compatible with both Public facing Domains and Private Domains within Azure VNets.
 
+		Azure Storage:
+			Storage Account: Unique Namespace for a User's Storage Data, accessible via HTTP or HTTPS. A Storage Account can have multiple Azure Storage Services associated to it.
+				// Redundancy Tiers:
+					Locally Redundant Storage: Replicates data 3 times within a single Data Center in the Primary Azure Region. Offers 11 9s of durability over a given year.
+					Zone Redundant Storage: Replicates data synchronously across 3 Availability Zones in the Primary Azure Region. Offers 12 9s of durability over a given year.
+					
+					Geo Redundant Storage: Applies Locally Redundant Storage behaviour for both Primary and Secondary Azure Regions in a Region Pair (i.e. data is replicated 6 times, asynchronously between Regions), in an Active-Passive configuration (i.e. only data from one Azure Region is available at a time). Offers 16 9s of durability over a given year.
+					Read-Access Geo Redundant Storage: Similar to Geo Redundant Storage, but the configuration is Active-Active (read-only data is available from both).
+					Geo-Zone Redundant Storage: Applies Zone Redundant Storage behaviour for the Primary Azure Region, and Locally Redundant Storage behaviour for the Secondary Azure Region. Offers 16 9s of durability over a given year.
+					Read-Access Geo-Zone Redundant Storage: Similar to Geo-Zone Redundant Storage, but the configuration is Active-Active (read-only data is available from both).
+				
+				// Services:
+					Azure Blobs: Massively scalable Object Store for Text and Binary Data, consisting of one or more Storage Containers. In the Kotlin SDK, this is referenced via BlobServiceClientBuilder.
+						Storage Container: Contains one or more Blob Files. In the Kotlin SDK, this is referenced via BlobContainerClientBuilder, whilst individual Blobs are referenced via BlobClientBuilder.
+							Block Blob:	A collection of one or more data Blocks. Default Blob Type.
+							Page Blob: 	A collection of 512-Byte Pages optimized for random read and write operations.
+							Append Blob: Similar to a Block Blob, except Blocks can only be appended to the Blob. Each Block is also much smaller than the Blocks in a Block Blob.
+
+						// Tiers:
+							Hot: Optimized for storing data that is accessed frequently. This can be changed at the Storage Account / Blob level.
+							Cool: Optimized for storing data that is infrequently accessed and stored for at least 30 days. This can be changed at the Storage Account / Blob level.
+							Cold: Optimized for storing data that is rarely accessed and stored for at least 90 days. This can be changed at the Storage Account / Blob level.
+							Archive: Optimized for storing data for archival purposes (stored for at least 180 days). This cannot be changed at the Storage Account level, but can be set at the Blob level.
+
+						AzCopy: CLI tool for copying Blobs to or from the Storage Account.
+
+					Azure Files: Provides synchronization between On-Prem Storage and Cloud Storage via the Server-Message Block or Netowrk File Share Protocols.
+						Azure File Sync: Tool for replicating Files from a local Windows File Server to other Azure locations.
+
+					Azure Disks: Block-Level Storage Virtual Volumes for Azure VMs.
+					Queue Storage: Messaging Storage for reliable messaging between Application Components.
+					Table Storage: NoSQL Table Option for semi-structured data.
+
+					Azure Storage Explorer: Standalone application for exploring data within a Storage Account.
+
+			Azure Migrate: 	Service for migrating On-Prem data to Azure.
+				Azure Data Box: Physical migration service via a proprietary 80TB storage device to help transfer large amounts of data without the need for Network Connectivity.
+
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
 			Messages:		Number of API Requests that put actual Events into the Event Hub.
 
 		Azure Event Grid:	Router for generated Events; usually to 'Push' Events from their Source to an Event Hub or a Webhook. Note: Has to be in the same Resource Group as the Event Source.
 			System Topic: 	Designation for Events produced by other Azure Services.
-
-		Azure Blob Storage:	Provides persistent Data Storage capability.
-			Storage Account: Contains one or more Storage Containers. In the Kotlin SDK, this is referenced via BlobServiceClientBuilder.
-			Storage Container: Contains one or more Blob Files. In the Kotlin SDK, this is referenced via BlobContainerClientBuilder, whilst individual Blobs are referenced via BlobClientBuilder.
-				Block Blob:	A collection of one or more data Blocks. Default Blob Type.
-				Page Blob: 	A collection of 512-Byte Pages optimized for random read and write operations.
-				Append Blob: Similar to a Block Blob, except Blocks can only be appended to the Blob. Each Block is also much smaller than the Blocks in a Block Blob.
-		Azure Files:		Provides synchronization between On-Prem Storage and Blob Storage.
 	
 	Details:
 		Microsoft Cloud Adoption Framework for Azure: SPRAGM
