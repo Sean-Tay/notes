@@ -94,11 +94,17 @@ Azure
 
 		// Compute: In descending order of Complexity:
 			Azure VMWare:	IaaS-scoped Cloud VM Solution.
-				Scale Set: 	Utility to automatically create and manage a Cluster of identical VMs with Load Balancing and Elasticity, deploying them across Zones and Fault Domains.
+				// Properties:
+					Scale Set: Utility to automatically create and manage a Cluster of identical VMs with Load Balancing and Elasticity, deploying them across Zones and Fault Domains.
 
-				Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
-					Fault Domain: VMs within the same Fault Domain share Storage, Network, and Power, similar to a Server Rack in a Data-Center.
-					Update Domain: VMs within the same Update Domain can be rebooted at the same time. Only one Update Domain within an Availability Set is rebooted at a time, ensuring continued operation of the Availability Set during planned maintenance.
+					Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
+						Fault Domain: VMs within the same Fault Domain share Storage, Network, and Power, similar to a Server Rack in a Data-Center.
+						Update Domain: VMs within the same Update Domain can be rebooted at the same time. Only one Update Domain within an Availability Set is rebooted at a time, ensuring continued operation of the Availability Set during planned maintenance.
+
+				// Related Resources:
+					Azure Virtual Network Interface (vNIC): Enables an Azure VM to connect to a Virtual Network / Internet, and can have one or more Public / Private IP Addresses assigned to it.
+
+					Azure Disks: Block-Level Storage Virtual Volumes for Azure VMs.
 
 				Custom Script Extension: Downloads and runs scripts on Azure VMs for post-deployment configuration, software installation, or some other management task.
 
@@ -124,6 +130,8 @@ Azure
 
 			Azure Virtual Network / Azure VNet / Azure VPC: Isolated Network Space within Azure's internal Networking Infrastructure that provides Private IP Addressing and Network Segmentation, to facilitate communication between Azure Resources, On-Prem Entities and Users, within the same Azure Region.
 				Subnets:	Subdivides a Virtual Private Network further via Private IP Address Ranges.
+
+				Azure Virtual Network Interface: See under Azure VMs.
 
 				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that apply to different Subnets / Network Interfaces (Ports, IP Addresses, Protocols, etc.).
 
@@ -199,7 +207,7 @@ Azure
 					Azure Files: Provides synchronization between On-Prem Storage and Cloud Storage via the Server-Message Block or Netowrk File Share Protocols.
 						Azure File Sync: Tool for replicating Files from a local Windows File Server to other Azure locations.
 
-					Azure Disks: Block-Level Storage Virtual Volumes for Azure VMs.
+					Azure Disks: See under Azure VMs.
 					Queue Storage: Messaging Storage for reliable messaging between Application Components.
 					Table Storage: NoSQL Table Option for semi-structured data.
 
