@@ -216,6 +216,43 @@ Azure
 			Azure Migrate: 	Service for migrating On-Prem data to Azure.
 				Azure Data Box: Physical migration service via a proprietary 80TB storage device to help transfer large amounts of data without the need for Network Connectivity.
 
+		Security:
+			Active Directory: On-Prem Identity and Access Management Service running on a Windows Server. Does not monitor sign-in attempts, unless linked to Microsoft Entra ID via Microsoft Entra Connect, which synchronizes between the two one-way, from Active Directory to Microsoft Entra ID.
+			Microsoft Entra ID: Microsoft's Cloud Based Identity and Access Management Service. Supports Authentication, Single-Sign On, Application and Device Management.
+				Microsoft Entra Domain Services: Provides Domain Services such as LDAP, Group Policy, Kerberos / NTLM Authentication that support legacy authentication mechanisms.
+
+				Azure Tenant: Dedicated instance of Microsoft Entra ID that represents an organization.
+
+				Microsoft Entra External ID: Mechanism to allow the organization's Azure Tenant to interact with the profile of Users from other Identity Providers.
+					B2B Collaboration: Lets External Users collaborate in the organization's Microsoft / Enterprise Applications by letting them use their preferred identity from another Identity Provider to sign-on. These are represented in the organization's Azure Tenant as Guest Users.
+					B2B Direct Connect: Establish a mutual, two-way trust with another Microsoft Entra Instance. Collaboration supported in Teams.
+					Azure Active Directory B2C: Allows access to SaaS / Custom Apps to Consumers and Customers by controlling the Identity and Access Management.
+
+				// Authentication Mechanisms:
+					Single Sign-On: Enables a User to sign in one time, and use that credential for access to multiple resources and applications from different providers that trust the Authenticator.
+					Multi-Factor Authentication: Process of prompting the User for an extra form of identification during the sign-in process, protecting against the scenario where the password was compromised.
+					Passwordless Authentication: A more User-friendly approach to Multi-Factor Authentication, replaces a password with a User's Device.
+						Windows Hello for Business: Ideal for Employees with designated Windows PC.
+						Microsoft Authenticator App: Phone App.
+						FIDO2 Security Key: Involves a Physical Device.
+
+					Conditional Access: Allow or Deny access, either partially or fully, to protected resources based on Identity Signals, such as a User's Location, or the Device being used to login.
+					Role-Based Access Control (RBAC): Sets pre-defined or custom Access Permissions to a Scope (i.e. Management Groups, Subscriptions, Resource Group, or a Resource), which is enforced on every Request to ARM.
+
+			Microsoft Defender for Cloud: Monitoring Tool for Security Posture measurement and Threat Protection, with capabilities to extend to On-Prem, Hybrid, and Multi-Cloud Environments.
+				// Protection Coverage:
+					// Azure-Native:
+						Azure PaaS: Azure App Service, Azure SQL, Azure Storage Account, Container Registries, etc.
+						Networks: Hardens Azure VM Ports.
+
+					// Hybrid Resource: Requires Azure Arc.
+
+					// Multi-Cloud Resource:
+						Defender for Containers: Amazon EKS Linux Clusters.
+						Defender for Servers: Windows and Linux EC2 Instances.
+
+				Microsoft Cloud Security Benchmark: Collection of High-Impact Security Recommendations that can be applied to help secure Cloud Services.
+
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
 			Messages:		Number of API Requests that put actual Events into the Event Hub.
@@ -257,6 +294,26 @@ Azure
 				Azure Marketplace: Allows purchasing of Azure-based Solutions and Services from Third-Party Vendors - additional costs incurred from leveraging on the Third Party's skills and expertise for their Solution.
 
 				Licensing
+
+		Security Models:
+			Zero Trust Security Model: The idea that there should be no security assumptions made, even within what is considered a 'safe' environment.
+				Verify Explicitly: Always verify explicity on all Data Points.
+				Least Privilege Access: Limit Users to as little access as they need via Just In Time (JIT) / Just Enough Access (JEA) and adaptive Policies, that they need to do their job.
+				Assume Breach: Minimize blast radius and Segment Access.
+
+			Defense-In-Depth: A model to protect information and and prevent it from being stolen from those that aren't authorized to access it. Structured in a way such that if one Layer breaks, there are other Layers within to assist.
+				Physical Security: Protect Computer Hardware within the Data Center via Physical Safeguards.
+				Identity and Access: Manages Infrastructure Access and Change Control by ensuring Identities are secure, via SSO / Multi-Factor Authentication and auditing Change Requests.
+				(Network) Perimeter: Uses Distributed DoS Protection to filter large-scale attacks before they can cause DoS to Users, and Perimeter Firewalls to identify and alert on malicious attacks against a Network.
+				Network: Limits communication between Resources through Segmentation and Access Control, allowing only what is required.
+				Compute: Secures access to Virtual Machines, implement Endpoint Protection on Devices, and keep Systems patched and current.
+				Application: Ensures that Applications are secure and free of security vulnerabilities, storing sensitive Application Secrets in a secure storage medium, and enforcing that Security is considered as part of an Application's Design.
+				Data: Controls access to Business and Customer Data that needs to be protected.
+
+			Assess, Secure, Defend:
+				Continuously Access: Identify and track vulnerabilities.
+				Secure: Harden Resources and Services via Microsoft Cloud Security Benchmark.
+				Defend: Detect and resolve threats to Resources, Workloads and Servics.
 
 		ARM Template Syntax: https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax
 			<name>.params.json: File that defines arguments to be passed into the deploy.json.
