@@ -1153,6 +1153,9 @@ Kotlin
 														<dependency> wasNot Called
 													}
 
+												// Verify that all <dependency>'s <function>s that were mocked were called:
+													confirmVerified(<dependency>, ...)
+
 												// Verify that the <function>s called in specified <dependency>s are the only ones that were called:
 													verifyAll {
 														<dependency>.<function>(<arg> = <arg-matcher>, ... )
