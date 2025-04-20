@@ -40,6 +40,8 @@ Azure
 			Azure Resource Manager: Deployment and Management Service for Azure.
 				ARM Template: Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to facilitate Infrastructure as Code.
 
+				Azure Blueprint: A collection of one or more ARM Templates.
+
 		// Monitoring Tools:
 			Azure Service Health: Shows the status of global Azure Infrastructure and owned Azure Resources.
 				Azure Status: Status of Azure (owned or otherwise) in general.
@@ -252,6 +254,8 @@ Azure
 						Defender for Servers: Windows and Linux EC2 Instances.
 
 				Microsoft Cloud Security Benchmark: Collection of High-Impact Security Recommendations that can be applied to help secure Cloud Services.
+
+			Azure Sentinel: Security Information Event Management (SIEM) and Security Orchestration Automated Response Solution.
 
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
