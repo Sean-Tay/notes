@@ -13,11 +13,15 @@ Kubernetes:
 
 	Details:
 		Components:
-			Label: 				Name Tags to identify entities, or to define different attributes. 
+			Label: 				Name Tags to identify entities, or to define different attributes.
 				Querying can be done on these Labels in a Kubernetes Environment.
 
-			Pod: 				A runnable unit of work which can contain many related Containers. 
+			Pod: 				A runnable unit of work which can contain many Containers that support each other and are tightly coupled.
 				Kubernetes will connect this Pod to the overall network, and the rest of the Kubernetes ecosystem.
+
+			Node:				A Machine with a Container Runtime that can run Pods.
+
+			Cluster: 			A group of Nodes with the same configuration.
 
 			Replication Controller: Provides a Pod Template, which can create any number of Pod Templates.
 

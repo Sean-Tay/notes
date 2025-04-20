@@ -96,7 +96,16 @@ Azure
 
 		// Compute: In descending order of Complexity:
 			Azure VMWare:	IaaS-scoped Cloud VM Solution.
+				// Types: Pick the right type for the Workload we want to do on the VM.
+					General-Purpose
+					Compute Optimized
+					Storage Optimized
+					Memory Optimized
+					GPU Specialist
+
 				// Properties:
+					OS Image: Select the base Operating System that will run on the VM. Up to User to configure and maintain further after initial provisioning.
+
 					Scale Set: Utility to automatically create and manage a Cluster of identical VMs with Load Balancing and Elasticity, deploying them across Zones and Fault Domains.
 
 					Availability Set: Spreads groups of Azure VMs amongst Physical Hardware in different Fault and Update Domains, within one Location.
@@ -118,7 +127,15 @@ Azure
 			Azure Containers: PaaS-scoped Container / OS-Virtualization Solution.
 				Azure Container Instances: Service that runs Containers that are uploaded.
 				Azure Container Apps: Similar to Azure Container Instances, except with extra benefits such as the ability to incorporate Load Balancing and Scaling.
+					// Properties:
+						Base Image: The runtime (i.e. Node, Python, Java) / stripped down OS that will be used as the base for the Application Image / final Container Image.
+
 				Azure Kubernetes Service: Container Orchestration Service.
+					Management Plane / Control Plane: Kubernetes Components.
+					Data Plane: Where the Containers are actually running - represented by Pools of Container Hosts / Nodes in the Azure Subscription, which are built on Azure VM Scale Sets.
+						Pod: Can consist of a group of different Containers (i.e. Sidecar Architecture) running different things that support each other / are tightly coupled to one another.
+						Node: Runs a group of Pods with a Container Runtime.
+						Cluster: A group of Nodes. In Azure, these are implemented via Azure VM Scale Sets.
 
 			Azure App Service: Build and host Web Apps, API Apps, WebJobs (i.e. Background Jobs), and Mobile Back-Ends with Elasticity, High Availablity and CICD support, depending on Programming Language / Framework used.
 

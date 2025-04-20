@@ -20,8 +20,11 @@ Cloud Computing:
 		Traditional Computing: 	On-Premise Computing. Consists of Computer Hardware, Operating System, and Applications.
 		
 		Pillars of Cloud Computing:
-			Virtualization:		Decoupling of a Logical Server from a Physical Server.
-			Hypervisor:			Allows multiple OS-es to share the same Host, and manage the resource allocation to virtual OS-es.
+			Hardware Virtualization: Decoupling of a Logical Machine from a Physical Machine.
+				Hypervisor:	Allows multiple OS-es to share the same Physical Machine.
+
+			OS Virtualization: Decoupling of a Logical OS Environment from an actual OS.
+				Container Runtime: Allows multiple Applications to run on the same OS without conflicts.
 
 		Cloud Service Models:
 			IaaS: Virtual Hardware that replaces On-Premise Compute Resources. Example: AWS, Microsoft Azure, Google Cloud.
