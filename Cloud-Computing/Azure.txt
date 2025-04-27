@@ -26,6 +26,8 @@ Azure
 
 				Budgets: 	Set a spending limit for Azure Resources, based on a Subscription, Resource Group, Service Type, etc. A Budget Alert is also created as part of creating a Budget. Optionally, Budgets can be tweaked to automatically suspend or modify Azure Resources when the Budget is reached.
 
+			Azure Reservations: Reserve the Resource for a longer period with a set price in advance that is cheaper than Pay-as-you-Go rates.
+
 		// Governance and Compliance:
 			Microsoft Service Trust Portal: Tool that provides information about Microsoft Security, Privacy and Compliance practices.
 			Microsoft Purview: A suite of Governance, Risk and Compliance Solutions for Application Data. Able to handle Data managed On-Prem, Multi-Cloud and from SaaS sources.
@@ -147,18 +149,39 @@ Azure
 		// Networking
 			Microsoft Backbone: Microsoft's own Private, Global Network Infrastructure used to facilitate communications between different Azure Regions.
 
-			Azure Virtual Network / Azure VNet / Azure VPC: Isolated Network Space within Azure's internal Networking Infrastructure that provides Private IP Addressing and Network Segmentation, to facilitate communication between Azure Resources, On-Prem Entities and Users, within the same Azure Region.
-				Subnets:	Subdivides a Virtual Private Network further via Private IP Address Ranges.
+			Azure Virtual Network / Azure VNet / Azure VPC: Isolated Network Space within Azure's internal Networking Infrastructure that provides Private IP Addressing and Network Segmentation, to facilitate communication between Azure Resources, On-Prem Entities and Users, within the same Azure Region, spanning across Availability Zones. Defined minimally as a set of internal Private IPv4 Address CIDR Ranges.
+				Subnets:	Subdivides a Virtual Private Network further via subdivision of the VNet's Private IP Address Ranges. Microsoft typically reserves 5 IPs per Subnet, 1 for the Gateway and 2 for the DNS, as well as all 0s and all 1s for Network Broadcasts.
 
 				Azure Virtual Network Interface: See under Azure VMs.
 
-				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that apply to different Subnets / Network Interfaces (Ports, IP Addresses, Protocols, etc.).
+				// Connecting different Networks: Any Internal Private IP Address Ranges of the different Networks must not overlap.
+					VNet Peering: Connects two Azure VNets together via Microsoft Backbone, avoiding the need for using Gateways.
+						Global VNet Peering: Connect two Azure VNets together in different Azure Regions.
 
-				VNet Peering: Connects two Azure VNets together via Microsoft Backbone, avoiding the need for using Gateways.
-					Global VNet Peering: Connect two Azure VNets together in different Azure Regions.
+					// Gateway: A specialized Network Component running on an Azure VM that serves as a connectivity point between different Networks.
+						// Types:
+							VPN Gateway: Creates encrypted tunnels between Azure VNet and other Cloud / On-Prem Networks over the Public Internet. At most one per VNet.
+								// Connections:
+									Point-to-Site Connection: Client Computer utilizes a VPN to connect to the Azure VNet Gateway.
+									Site-to-Site Connection: On-Prem / Cloud VPN Device / Gateway to the Azure VNet Gateway.
+								
+								// Behaviours: To determine which traffic requires encryption:
+									Policy-Based: A Policy governing connections between two Networks will determine if encryption is needed, however this is limited (i.e. Static Configuration) and more for legacy support.
+									Route-Based: Examines the IP Addresses of Packets to determine which encryption tunnel to send them through. This option is more resilient to Network Topology changes.
+
+							Azure ExpressRoute Gateway: Provides a dedicated connection to an Azure VNet (a.k.a Private Peering) that does not rely on the Public Internet, useful for higher bandwidth / security requirements. At most one per VNet.
+
+							Application Gateway: Allows for inbound HTTP / HTTPs Routing and acts as a HTTP Traffic Load Balancer / Firewall.
+							NAT Gateway: Provides outbound internet connectivity for VMs within the Virtual Network.
+
+						// Availability Configurations:
+							Active-Passive: Up to 90 seconds of recovery time. Default Availability Configuration when deploying Gateways.
+							Active-Active
+							ExpressRoute Failover: Failover to a regular VPN Gateway so that connectivity between VNets is not completely shut off.
+							Zone-Redundant Gateways: Deploy Gateway instances in each Availability Zone within an Azure Region.
 
 				// Endpoints:
-					Service Endpoint: Network Interface meant to link Azure Resources to an Azure VNet. These operate at the Subnet-level.
+					Service Endpoint: Network Interface meant to link Azure Resources outside of the Azure VNet to Azure Resources within the Azure VNet. These operate at the Subnet-level.
 					Private Endpoint: Network Interface which has a Private IP Address within the Address Range of the VNet. This can supersede the role of Service Endpoints, but requires more configuration.
 
 					Public Endpoint: Network Interface with a Public IP Address.
@@ -167,27 +190,7 @@ Azure
 					Route Tables: Controls how Packets are routed between Subnets.
 					Border Gateway Protocol: Works when a Gateway is involved.
 
-				// Gateway: A specialized Network Component running on an Azure VM that serves as a connectivity point between different Networks.
-					// Types:
-						VPN Gateway: Creates encrypted tunnels between Azure VNet and other Cloud / On-Prem Networks over the Public Internet. At most one per VNet.
-							// Connections:
-								Point-to-Site Connection: Client Computer utilizes a VPN to connect to the Azure VNet Gateway.
-								Site-to-Site Connection: On-Prem / Cloud VPN Device / Gateway to the Azure VNet Gateway.
-							
-							// Behaviours: To determine which traffic requires encryption:
-								Policy-Based: A Policy governing connections between two Networks will determine if encryption is needed.
-								Route-Based: Examines the IP Addresses of Packets to determine which encryption tunnel to send them through. This option is more resilient to Network Topology changes.
-
-						Azure ExpressRoute Gateway: Provides a dedicated connection to an Azure VNet that does not rely on the Public Internet, useful for higher bandwidth / security requirements. At most one per VNet.
-
-						Application Gateway: Allows for inbound HTTP / HTTPs Routing and acts as a HTTP Traffic Load Balancer / Firewall.
-						NAT Gateway: Provides outbound internet connectivity for VMs within the Virtual Network.
-
-					// Availability Configurations:
-						Active-Passive: Up to 90 seconds of recovery time. Default Availability Configuration when deploying Gateways.
-						Active-Active
-						ExpressRoute Failover: Failover to a regular VPN Gateway so that connectivity between VNets is not completely shut off.
-						Zone-Redundant Gateways: Deploy Gateway instances in each Availability Zone within an Azure Region.
+				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that apply to different Subnets / Network Interfaces (Ports, IP Addresses, Protocols, etc.).
 
 			Azure Firewall: Provides firewall capabilities across multiple VNets.
 
