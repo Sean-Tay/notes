@@ -181,10 +181,10 @@ Azure
 							Zone-Redundant Gateways: Deploy Gateway instances in each Availability Zone within an Azure Region.
 
 				// Endpoints:
-					Service Endpoint: Network Interface meant to link Azure Resources outside of the Azure VNet to Azure Resources within the Azure VNet. These operate at the Subnet-level.
-					Private Endpoint: Network Interface which has a Private IP Address within the Address Range of the VNet. This can supersede the role of Service Endpoints, but requires more configuration.
+					Service Endpoint: Network Interface meant to link Azure PaaS Resources outside of the Azure VNet to Azure Resources within the Azure VNet, represented as a property within a Subnet of an Azure VNet.
+					Private Endpoint: Network Interface which has a Private IP Address within the Address Range of the VNet, represented by an actual Azure Resource. This can supersede the role of Service Endpoints, but requires more configuration.
 
-					Public Endpoint: Network Interface with a Public IP Address.
+					Public Endpoint: Network Interface with a Public IP Address, represented as a property inherent to other Azure Resources. For those created as part of Azure PaaS Resources, these are typically paired with an accompanying Azure Firewall to lock down what can access the Resource attached to the Public Endpoint, based on the traffic's originating IP Address.
 
 				// Routing:
 					Route Tables: Controls how Packets are routed between Subnets.
