@@ -190,7 +190,7 @@ Azure
 					Route Tables: Controls how Packets are routed between Subnets.
 					Border Gateway Protocol: Works when a Gateway is involved.
 
-				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that apply to different Subnets / Network Interfaces (Ports, IP Addresses, Protocols, etc.).
+				Network Security Group: Acts as a firewall, filtering inbound / outbound Network Traffic based on rules that apply within Subnets on Network Interfaces (Ports, IP Addresses, Protocols, etc.) or Azure Resources (via Service / Application Tags).
 
 			Azure Firewall: Provides firewall capabilities across multiple VNets.
 
