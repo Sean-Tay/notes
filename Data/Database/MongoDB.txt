@@ -252,3 +252,5 @@ MongoDB:
 						// ...
 					))
 				))
+
+				val <operation> = Document.parse("<json-string>")
