@@ -211,8 +211,10 @@ MongoDB:
 						"upsert": <boolean>, // If a new Document should be created if no existing Documents match the <query>.
 					}
 			
-			// Delete Document(s) in <collection-name>:
-			db.<collection-name>.remove(<query>, <justOne>)
+			// Delete Documents
+			db.<collection-name>.deleteMany({
+				// ...
+			})
 			
 	Language Syntax:
 		Kotlin:
