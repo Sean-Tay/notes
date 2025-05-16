@@ -215,6 +215,13 @@ MongoDB:
 			db.<collection-name>.deleteMany({
 				// ...
 			})
+
+			// Run Extension Commands implemented by specific implementations of Mongo.
+			// Note: The first key of the JSON Object has to be the key denoting the Command to run on Mongo.
+			db.runCommand({
+				"<command-key>": "<command>",
+				// ...
+			})
 			
 	Language Syntax:
 		Kotlin:
