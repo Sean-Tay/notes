@@ -6,24 +6,26 @@ Kubernetes:
 	Resources: 
 	
 	Concepts: 
-		Release: An Application Image / Container to be deployed onto a Kubernetes Cluster.
+		Release: 				An instance of a Manifest running in a Kubernetes Cluster.
 
-		Manifest: A YAML File that describes the desired state of a Resource.
-		Resource: An Object that describes a desired state for the Release.
+		Manifest: 				A YAML File that describes the desired state of a Resource.
+		Resource: 				An Object that describes a desired state for the Release.
+
+		Containers:				An isolated environment in which a Runtime Executable can run in.
+		Pods:					A runnable unit of work which can contain many Containers that support each other and are tightly coupled. Kubernetes will connect this Pod to the overall network, and the rest of the Kubernetes ecosystem.
+
+		Replication Controller: An older variant of the Replica Set.
+		Replica Set:			Ensures a specified number of Pods (of the same type) are active.
+		Deployment:				A higher-level abstraction over Replica Sets, supporting features such as Rolling Updates / Rollbacks.
 
 	Details:
 		Components:
 			Label: 				Name Tags to identify entities, or to define different attributes.
 				Querying can be done on these Labels in a Kubernetes Environment.
 
-			Pod: 				A runnable unit of work which can contain many Containers that support each other and are tightly coupled.
-				Kubernetes will connect this Pod to the overall network, and the rest of the Kubernetes ecosystem.
-
 			Node:				A Machine with a Container Runtime that can run Pods.
 
 			Cluster: 			A group of Nodes with the same configuration.
-
-			Replication Controller: Provides a Pod Template, which can create any number of Pod Templates.
 
 			k8s Service: 		Tells the rest of the Kubernetes Environment, including other Pods and Replication Controllers, what Services does the Application provide.
 					Defines a fixed Network Address for the Application so that other Applications can interact with the Application.
