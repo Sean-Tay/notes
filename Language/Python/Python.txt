@@ -42,6 +42,8 @@ Python
 
 			<list-variable>.append(<value>)
 			item = <list-variable>.pop()
+
+			size = len(<list-variable>)
 	
 		# Deque:
 			from collections import deque
