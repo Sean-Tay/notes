@@ -28,7 +28,7 @@ Database
 			Sparse Index:		Contains a mapping only for every n Records in the Collection. Typically used in Multi-Level Indexing (i.e further Indexing of a Dense or overly Large Index).
 			Dense Index:		Contains a mapping for every Record in the Collection.
 
-			Clustered Index: 	Each Index Entry stores the full Record.
+			Clustered Index: 	Each Index Entry stores the full Record / Collection Records are physically stored in sorted order.
 			Covering Index: 	A partial Clustered Index; stores only a subset of the complete Record.
 
 			Concatenating Index: An Index which concatenates the Keys inolved in the Index together, so that it need only use one Key. It is not able to handle Queries that does not at least use the first Key in the concatenation.
