@@ -1268,13 +1268,18 @@ Kotlin
 					// Main Script Config Section 
 
 					dependencies {
-						// ...
+						// Dependency Configurations
+							api("...") // Dependency available during Compile-Time and Runtime, and whose API is exposed to consuming Projects of this Project
+							
+							implementation("...") // Dependency available during Compile-Time and Runtime
+							testImplementation("...") // Dependency available during Compile-Time and Runtime for Tests
 
-						// To enable Kotlin Reflection
-						implementation(kotlin("reflect"))
+						// Noteworthy Dependencies:
+							// To enable Kotlin Reflection
+							implementation(kotlin("reflect"))
 
-						// To use mockk for Testing:
-						testImplementation("io.mockk:mockk:${mockkVersion}")
+							// To use mockk for Testing:
+							testImplementation("io.mockk:mockk:${mockkVersion}")
 					}
 
 					// ...
