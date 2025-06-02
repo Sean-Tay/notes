@@ -1037,6 +1037,12 @@ Kotlin
 									ConfigurationProperties.fromResource("<relative-path-from-resources-folder>") // Get Configuration stored in a File located within a resources Folder.
 										// Note: When importing a Library, the Library's resources Folder will get merged in with the Project's resources Folder, with priority going to the Project in case of conflicting contents.
 
+									// In-Memory Configuration for Testing
+									ConfigurationMap(
+										"<key>.<subkey>. ... " to "<value>",
+										// ...
+									)
+
 								// PropertyGroup
 									PropertyGroup() // Returns a base PropertyGroup that an Object Class can inherit from.
 										object <group>>: PropertyGroup() {
@@ -1070,6 +1076,9 @@ Kotlin
 
 											// Ensuring every <dependency> Instance created is a Mock:
 											mockkConstructor(<class>)
+
+											// Mock a Singleton Kotlin Object:
+											mockkObject(<object>)
 
 											// Spies
 											val <spy> = spyk(<class>( ... ))
