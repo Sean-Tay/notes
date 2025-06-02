@@ -40,7 +40,9 @@ Python
 		# Lists:
 			<list-variable> = []
 
+			<list-variable>.insert(<index>, <item>)
 			<list-variable>.append(<value>)
+
 			item = <list-variable>.pop()
 
 			size = len(<list-variable>)
