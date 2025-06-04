@@ -88,7 +88,7 @@ Database
 		ACID:					A set of Properties for Operations on a Database to guarantee so as to avoid Erroneous Data.
 			Atomicity:			Transactions containing multiple Operations will either succeed as a whole, or not be processed at all.
 
-			Consistency:		Transactions can only bring the Database from one correct State to another, respecting Constraints, Cascades and Triggers within affected Data. This is related to Data Consistency from the CAP Theorem, but not exactly the same.
+			Consistency:		Transactions can only bring the Database from one correct State to another, respecting Constraints, Cascades and Triggers within affected Data. This is related to Data Consistency from the CAP Theorem, but not exactly the same - ACID Consistency focuses on Data Integrity being maintained, whereas CAP Consistency refers to multiple Nodes in the Database Cluster having the same Data.
 
 			Isolation: 			The degree by which Transactions on a Database can assume that they would be unaffected by other concurrently executing Transactions, definable with the types of phenomena that can be observed during overlapping Transactions. The highest degree mandates that the end results of each Transaction can only be one of several, all of which arise from completely non-overlapping Transactions.
 				Concurrency Bugs:
@@ -123,15 +123,15 @@ Database
 						Scenarios:
 							Useful in cases where the Query only needs approximate / best-effort Data.
 
-					Snapshot Isolation: Each Write to a Record results in a separate copy stored alongside a Monotonically Increasing Transaction ID Sequence. Reads can only view copies of Records that are lower than the Transaction ID it is attached to, and Writes can be aborted and retried when there exists a copy with a higher Transaction ID.
-						Features:
-							Prevents all Concurrency Bugs except Phantoms and Write Skews.
-							Reads do not block Writes.
-							Consumes more resources than Locking-based approaches.
-
 					Repeatable Reads: The Transaction attempts to obtain Transaction-Level Record Locks.
 						Features:
 							Prevents all Concurrency Bugs except Phantoms and Write Skews.
+
+					Snapshot Isolation: Each Write to a Record results in a separate copy stored alongside a Monotonically Increasing Transaction ID Sequence. Reads can only view copies of Records that are lower than the Transaction ID it is attached to, and Writes can be aborted and retried when there exists a copy with a higher Transaction ID.
+						Features:
+							Prevents all Concurrency Bugs except Phantoms.
+							Reads do not block Writes.
+							Consumes more resources than Locking-based approaches.
 
 					Serializable Snapshot Isolation: New. Snapshot Isolation, but track for cases where non Serializable Execution could occur, and abort one of the participating Transactions (e.g. track all Reads for a Record, and abort all tracked Reads when a Write is made to the Record).
 						Features:
