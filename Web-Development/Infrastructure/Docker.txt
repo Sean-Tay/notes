@@ -84,6 +84,10 @@ Docker
 				# Execute Shell Commands in a new layer on top of the current Container, and Commit the results.
 				RUN ["<command>", ...]
 
+				# Define Env Variables that can be referenced when the Container is running:
+				ENV <key>=<value>
+				ENV <key>=$<arg-key> # Extend Argument to Runtime Scope
+
 				# Command to run when Container is started:
 				CMD ["<command>", ...]
 
