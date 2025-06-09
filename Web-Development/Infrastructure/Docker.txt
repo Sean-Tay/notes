@@ -73,6 +73,7 @@ Docker
 				ARG <key>=<default-value>
 
 				# Sets the Working Directory for any COPY, ADD, ENTRYPOINT, RUN, CMD Instructions that follow.
+				# Tip: Consider the default Entry Path of the Image to be at the Root. Images tend to follow the same structure as a Linux Server (i.e. /bin/bash for the Bash Executable).
 				WORKDIR <path-within-image>
 
 				# Copy Files into the Container's File System.
