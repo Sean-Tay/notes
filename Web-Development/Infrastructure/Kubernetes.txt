@@ -52,5 +52,13 @@ Kubernetes:
 			OpenShift:			Container Application Platform that extends Kubernetes to provide Enterprise-level Features and Security.
 	
 	Commands:
-		
-	
+		kubectl
+			get deployments
+			scale deployment <deployment-name> --replicas=<n>
+
+			get pods
+			get jobs / cronjobs
+				-o wide			# See Images used in the Pod / Job / Cronjob
+			
+			exec -it <pod-id> -- /bin/bash # Execute /bin/bash in target Pod
+			logs <pod-id>		# Examine Logs from target Pod
