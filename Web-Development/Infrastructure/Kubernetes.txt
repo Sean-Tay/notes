@@ -14,6 +14,9 @@ Kubernetes:
 		Containers:				An isolated environment in which a Runtime Executable can run in.
 		Pods:					A runnable unit of work which can contain many Containers that support each other and are tightly coupled. Kubernetes will connect this Pod to the overall network, and the rest of the Kubernetes ecosystem.
 
+		Job:					Manages running a Pod to complete a finite task.
+		Cronjob:				A scheduled Job.
+
 		Replication Controller: An older variant of the Replica Set.
 		Replica Set:			Ensures a specified number of Pods (of the same type) are active.
 		Deployment:				A higher-level abstraction over Replica Sets, supporting features such as Rolling Updates / Rollbacks.
