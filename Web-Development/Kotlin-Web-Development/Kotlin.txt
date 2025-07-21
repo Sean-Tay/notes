@@ -919,11 +919,12 @@ Kotlin
 							// Write Text into the File.
 								<file-handle>.writeText(<file-content>)
 
-				// JSON Manipulation
+				// JSON / XML Manipulation
 					// Relevant Packages:
 						com.fasterxml.jackson.* // Serialization / Deserialization Library for JSON Objects
 							// Relevant Types:
 								ObjectMapper
+								XMLMapper // For XML
 
 								JsonNode // Documentation: https://fasterxml.github.io/jackson-databind/javadoc/2.8/com/fasterxml/jackson/databind/JsonNode.html
 									ContainerNode
