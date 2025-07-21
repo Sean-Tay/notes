@@ -874,9 +874,19 @@ Kotlin
 
 				// IO:
 					// Files:
+						// Obtain BufferedReader of Resource File meant to be packaged with the Application:
+						// Note: No BufferedWriter available.
+						val resourceBufferedReader = this::class.java.classLoader.getResourceAsStream("<path-relative-to-resources-folder>")?.bufferedReader()
+
+						// Obtain Handle of File on System:
 						val fileHandle = File("<absolute-file-path>")
 
 						// Read
+							<file-handle>.bufferedReader().use {
+								in ->
+									// ...
+							}
+
 							// Obtain a List of Lines in the File.
 							// Tip: Suitable for Large Files, as this uses a Lazy Evaluation over a Stream, which is good for open File Handle count.
 								<file-handle>.useLines {
@@ -889,6 +899,11 @@ Kotlin
 								}
 
 						// Write
+							<file-handle>.bufferedWriter().use {
+								out ->
+									// ...
+							}
+
 							// Write Content piecewise into the File via a PrintWriter.
 							// Note: PrintWriter internally uses a BufferedWriter.
 							// Note: PrintWriter not officially declared as Thread-safe, but can assume it is.
