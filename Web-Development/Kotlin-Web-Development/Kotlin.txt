@@ -779,6 +779,9 @@ Kotlin
 									LinkedBlockingQueue<Runnable>(),
 									handler = <handler> // Submitted Tasks may be rejected with an Exception, this will allow handling of when that happens.
 								)
+									// In-Built Types that internally use ThreadPoolExecutor
+									Executors.newFixedThreadPool(<maximum-number-of-threads-to-grow-to>)
+									Executors.newSingleThreadExecutor() // For Tasks that absolutely require Sequential Execution
 
 								val taskHandle: Future<*> = executorService.submit<*> {
 									// ...
