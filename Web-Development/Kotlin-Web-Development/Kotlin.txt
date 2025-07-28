@@ -6,6 +6,7 @@ Kotlin
 	
 	Resources: 
 		Generic Types: https://typealias.com/guides/illustrated-guide-covariance-contravariance/
+		Coroutines: https://proandroiddev.com/understanding-kotlin-coroutines-a-deep-dive-into-blocking-vs-non-blocking-and-concurrent-vs-7667dfe77fbb
 	
 	Concepts:
 		Coroutines: Unit of Suspendable Concurrent Execution.
@@ -648,48 +649,58 @@ Kotlin
 
 				// Asynchronousity:
 					// Suspendable:
-						// Coroutines: A tracked instance of Pausable Computation.
-							// Type: Job.
-
-							// Tip: Creating a Coroutine incurs less overhead than creating a Thread.
-
-							// Note: Parent Coroutines cannot complete until all Child Coroutines complete (following the princple of Structured Concurrency).
-
-							// CoroutineScope: Defines an environment for which Coroutines can be created in. Can be seen as a "Grouping" of Coroutines.
-								// Constructor Functions:
-									// runBlocking: A Normal Function that when executed, instantiates a local CoroutineScope and blocks current execution from continuing beyond it (i.e. *additionally locks down the execution to the code within the created scope*, until all execution within it is completed). Can be used as a bridge between non-Suspendable Code and Suspendable Code.
-
-									// coroutineScope: A Suspendable Function that when executed, instantiates a local CoroutineScope and suspends current execution from continuing beyond it (i.e. *does not additionally lock down the execution to the code within the created scope*, and releases the calling Thread to perform other execution, until all execution within it is completed).
-
-								// GlobalScope: A Globally Accessible CoroutineScope, usually meant for Top-Level Coroutines operating throughout the Application lifetime.
-
-							// CoroutineContext: The Object that holds the Execution Metadata of a CoroutineScope (e.g. which Thread Dispatcher it is using).
-								// Thread Dispatcher Types:
-									// Dispatchers.Default: Coroutines defined within the Scope will run on a Thread specialized for CPU intensive work.
-									// Dispatchers.IO: Coroutines defined within the Scope will run on a Thread specialized for IO intensive work.
-									// Dispatchers.Unconfirmed: Coroutines defined within the Scope will run on any Thread.
-
-							// Coroutine Builder Functions: Only usable from / within a CoroutineScope. Will inherit parent CoroutineScope and modify it.
-								// launch 		Starts a new Coroutine.
-								// join 		Wait for the completion of the created Coroutine.
-								// joinAll		Waits for the successful completion of a Collection of Coroutines (via their Handles, which launch returns).
-
-								// async 		Starts a new Coroutine that would return some Result, represented by an instance of Deferred. Note: Will NOT cause the Application to crash upon encountering an unhandled Exception.
-								// await 		Wait for the completion of the created Coroutine, and realize the Result of the Deferred Instance returned by async.
-								// awaitAll		Waits for the successful completion of a Collection of Deferred Instances.
-
-							// Suspendable Function: Pausable Function; would be invoked and executed by a Coroutine during creation.
-							// Note: Only can be used in other Suspendable Functions / Coroutines.
-								suspend fun <suspendable-function-name>() {
-									// <coroutine-scope> { ... <coroutine-builder-function> { ... } ... }
-
-									// Note: Calling another Suspendable Function will defer execution of this Function.
-									<another-suspendable-function-name>()
-
-									// ...
-								}
+						// Suspendable Function: Pausable Function.
+						// Note: Only can be invoked in other Suspendable Functions / CoroutineScopes.
+							suspend fun <suspendable-function-name>() {
+								// Note: Calling another Suspendable Function will defer execution of this Function.
+								<another-suspendable-function-name>()
 
 								// ...
+
+								// Suspend execution of this Function, allowing the Thread to pick up other execution work.
+								yield()
+
+								// ...
+							}
+
+						// Coroutines: A tracked instance of Pausable Computation.
+							// Tip: Creating a Coroutine incurs less overhead than creating a Thread.
+							// Note: Parent Coroutines cannot complete until all Child Coroutines complete (following the princple of Structured Concurrency).
+
+							// Types:
+								<coroutine-scope>(<optional-coroutine-context>) { ... <coroutine-builder-function> { ... } ... }
+
+								// Coroutine Builder Functions: Only usable from / within a CoroutineScope. Will inherit parent CoroutineScope and modify it.
+									// Note: If a Coroutine Builder is not used to run a Suspendable Function, the Function executes serially.
+
+									// launch 		Creates a Coroutine to execute concurrently, represented by an instance of Job. Used for fire-and-forget scenarios.
+										// join 	Wait for the completion of the created Coroutine.
+										// cancel	Stop execution of the created Coroutine (but the Suspendable Functions being executed by the Coroutine must be cooperative).
+										// joinAll	Waits for the successful completion of one or more Coroutines.
+
+									// async 		Creates a Coroutine to execute concurrently, represented by an instance of Deferred<T>. Used for scenarios where the return value of a suspendable is important.
+										// await 	Wait for the completion of the created Coroutine, and return the final result of the Deferred Instance.
+										// cancel	Stop execution of the created Coroutine (but the Suspendable Functions being executed by the Coroutine must be cooperative).
+										// awaitAll	Waits for the successful completion of one or more Deferred Instances.
+
+								// CoroutineScope: Defines an environment for which Coroutines can be created in. Can be seen as a "Grouping" of Coroutines.
+									// Constructor Functions:
+										// runBlocking: A Normal Function that when executed, instantiates a local CoroutineScope and blocks current execution from continuing beyond it (i.e. *additionally locks down the execution to the code within the created scope*, until all execution within it is completed). Can be used as a bridge between non-Suspendable Code and Suspendable Code.
+
+										// coroutineScope: A Suspendable Function that when executed, instantiates a local CoroutineScope and suspends current execution from continuing beyond it (i.e. *does NOT lock down the execution to the code within the created scope*, and releases the calling Thread to perform other execution, until all execution within it is completed).
+
+									// GlobalScope: A Globally Accessible CoroutineScope, usually meant for Top-Level Coroutines operating throughout the Application lifetime.
+
+									// Utility Function:
+										// withContext(<coroutine-context>) { // ... }: Allows for swtiching / defining the CoroutineContext midway within the parent CoroutineScope.
+
+								// CoroutineContext: The Object that holds the Execution Metadata of a CoroutineScope.
+									// Note: Optional to pass this into a CoroutineScope. If no CoroutineContext is passed (i.e. no ThreadDispatcher specified), it uses the current running Thread, otherwise a pool of other Threads is used (i.e. Parellelism enabled, not just Concurrency).
+
+									// Thread Dispatcher Types:
+										// Dispatchers.Default: Coroutines defined within the Scope will run on a Thread specialized for CPU intensive work.
+										// Dispatchers.IO: Coroutines defined within the Scope will run on a Thread specialized for IO intensive work.
+										// Dispatchers.Unconfined: Coroutines defined within the Scope will run on any Thread.
 
 							// Channels: Mechanism by which Coroutines can communicate with one another. Producer-Consumer Model.
 								fun main() {
@@ -719,20 +730,20 @@ Kotlin
 									}
 								}
 
-							// Simple Summary
-								fun main() {
-									// Creates a Coroutine Scope
-									runBlocking {
-										// Creates a Coroutine that executes the Suspendable Function
-										val handle = launch { 
-											<suspendable-function-name>() 
-										}
-										
-										// ...
-
-										handle.join()
+						// Summary
+							fun main() {
+								// Note: Optional to pass this into a CoroutineScope. If no CoroutineContext is passed, it uses the current running Thread, otherwise a pool of other Threads is used (i.e. Parallelism enabled, not just Concurrency).
+								<coroutine-scope>(<optional-coroutine-context>) {
+									// Note: If a Coroutine Builder is not used to run a Suspendable Function, the Function executes serially.
+									val handle = <coroutine-builder-function> {
+										<suspendable-function-name>()
 									}
+									
+									// ...
+
+									handle.join()
 								}
+							}
 
 					// Parallelism / Multi-Threaded:
 						// Note: Threads are more expensive to create than Coroutines.
@@ -771,6 +782,8 @@ Kotlin
 									// ...
 
 						// Parallel Execution:
+							// Note: Coroutines can also be executed with multiple Threads by providing the CoroutineScope with a CoroutineContext.
+
 							// Executor Service: Interface that specifies methods to manage the execution of one or more Asynchronous Tasks.
 								val executorService = ThreadPoolExecutor(
 									<number-of-core-threads-to-allocate>,
