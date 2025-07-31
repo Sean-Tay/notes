@@ -668,6 +668,11 @@ Kotlin
 								}
 							}
 
+							// Suspendable Lambdas:
+							val suspendableLambda: suspend ( ... ) -> <return-type> = {
+								// ...
+							}
+
 						// Coroutines: A tracked instance of Pausable Computation.
 							// Tip: Creating a Coroutine incurs less overhead than creating a Thread.
 							// Note: Parent Coroutines cannot complete until all Child Coroutines complete (following the princple of Structured Concurrency).
