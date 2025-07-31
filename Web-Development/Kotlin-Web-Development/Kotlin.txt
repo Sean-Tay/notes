@@ -652,15 +652,20 @@ Kotlin
 						// Suspendable Function: Pausable Function.
 						// Note: Only can be invoked in other Suspendable Functions / CoroutineScopes.
 							suspend fun <suspendable-function-name>() {
-								// Note: Calling another Suspendable Function will defer execution of this Function.
-								<another-suspendable-function-name>()
+								try {
+									// Note: Calling another Suspendable Function will defer execution of this Function.
+									<another-suspendable-function-name>()
 
-								// ...
+									// ...
 
-								// Suspend execution of this Function, allowing the Thread to pick up other execution work.
-								yield()
+									// Suspend execution of this Function, allowing the Thread to pick up other execution work.
+									yield()
 
-								// ...
+									// ...
+								} finally {
+									// CancellationException is thrown when the Coroutine is cancelled.
+									// ... clean up Resources ...
+								}
 							}
 
 						// Coroutines: A tracked instance of Pausable Computation.
