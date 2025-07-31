@@ -673,15 +673,17 @@ Kotlin
 								// ...
 							}
 
-						// Coroutines: A tracked instance of Pausable Computation.
-							// Tip: Creating a Coroutine incurs less overhead than creating a Thread.
+						// Coroutines: A tracked instance of Pausable Computation. Good for non-Blocking Computation.
+							// Tip: Creating a Coroutine incurs less overhead than creating a Thread - Kotlin will auto assign Threads from a specified pool to execute one or more created Coroutines.
+							// Tip: Consider Coroutines an abstraction over how Threads are used.
+							// Note: A given Coroutine may be executed by one or more Threads when it yields - the Thread is not always the same.
 							// Note: Parent Coroutines cannot complete until all Child Coroutines complete (following the princple of Structured Concurrency).
 
 							// Types:
 								<coroutine-scope>(<optional-coroutine-context>) { ... <coroutine-builder-function> { ... } ... }
 
 								// Coroutine Builder Functions: Only usable from / within a CoroutineScope. Will inherit parent CoroutineScope and modify it.
-									// Note: If a Coroutine Builder is not used to run a Suspendable Function, the Function executes serially.
+									// Note: If a Coroutine Builder is not used to run a Suspendable, the Function executes serially.
 
 									// launch 		Creates a Coroutine to execute concurrently, represented by an instance of Job. Used for fire-and-forget scenarios.
 										// join 	Wait for the completion of the created Coroutine.
@@ -709,8 +711,23 @@ Kotlin
 
 									// Thread Dispatcher Types:
 										// Dispatchers.Default: Coroutines defined within the Scope will run on a Thread specialized for CPU intensive work.
-										// Dispatchers.IO: Coroutines defined within the Scope will run on a Thread specialized for IO intensive work.
+										// Dispatchers.IO: Coroutines defined within the Scope will run on a Thread specialized for IO intensive work (i.e. Blocking Workloads).
 										// Dispatchers.Unconfined: Coroutines defined within the Scope will run on any Thread.
+
+							// Mutexes (Coroutine-variant): Suspends the Coroutine attempting to access the shared Resource if another Coroutine is already using it.
+								// Note: Better than blocking the Thread with the suspension Block, as it removes a Thread from the pool that can execute Coroutines for the duration.
+								fun main() {
+									runBlocking {
+										val <mutex-name> = Mutex()
+
+										launch {
+											// ...
+											<mutex-name>.withLock {
+												// ... Critical Code Segment
+											}
+										}
+									}
+								}
 
 							// Channels: Mechanism by which Coroutines can communicate with one another. Producer-Consumer Model.
 								fun main() {
@@ -756,7 +773,7 @@ Kotlin
 							}
 
 					// Parallelism / Multi-Threaded:
-						// Note: Threads are more expensive to create than Coroutines.
+						// Note: Threads are more expensive to create than Coroutines, but they offer features such as Thread Prioritization and Affinity.
 
 						// Thread-Safe Read-Write Data Structures:
 							// Concurrent Map:
