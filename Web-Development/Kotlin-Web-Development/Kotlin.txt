@@ -145,6 +145,13 @@ Kotlin
 					val string = "${ i + 5 } ...";
 
 			Collections:
+				// Iterables
+					// Stable Sort
+					<iterable-instance>.sortedWith(
+						{ compareBy | compareByDescending } <<type>> { it.<field> }
+							.{ thenBy | thenByDescending } { it.<another-field> }
+					)
+
 				// Lists
 					val mutableList: MutableList<<type>> = mutableListOf( <item>, ... )
 					val list: List<<type>> = listOf( <item>, ... )
