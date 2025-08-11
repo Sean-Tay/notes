@@ -969,6 +969,62 @@ Kotlin
 							// Write Text into the File.
 								<file-handle>.writeText(<file-content>)
 
+					// FileChannel:
+						// Provides support for more advanced and flexible I/O Operations compared to File - particularly suited for Large Files, Random Access and Performance (Non-Blocking IO).
+						FileChannel.open(
+							"<absolute-file-path>", // Tip: Can use File here to get the Path Instance
+							// Options
+								StandardOpenOption.READ
+
+								StandardOpenOption.WRITE
+								StandardOpenOption.CREATE
+								StandardOpenOption.APPEND / StandardOpenOption.TRUNCATE_EXISTING
+						).use { channel ->
+							// Memory Mapped Files - good when the File is relatively large but still able to fit entirely into available Virtual Memory / SSD:
+							// Note: May cause Blocking IO if Memory Page is not cached.
+							val buffer = channel.map(FileChannel.MapMode.READ_WRITE, <starting-byte-offset>, <expected-number-of-bytes>)
+
+							// Current Byte Position
+							// Note: Some Channel Operations do not implicitly modify the Channel Position; need to set explicitly.
+							val byteOffset = channel.position()
+							channel.position(<new-byte-offset>)
+
+							// File Size
+							val byteSize = channel.size()
+
+							// Transfer Data between different FileChannels.
+							// Tip: Bypasses loading the File Data into Java Heap Memory, making this more efficient.
+								// Source -> Current
+								channel.transferFrom( 
+									<source-channel>,
+									<channel-starting-byte-offset>, // Current Channel, not <source-channel>
+									<number-of-bytes> // Note: Will alter the <source-channel> position by the <number-of-bytes>.
+								)
+
+								// Current -> Target
+								channel.transferTo(
+									<channel-starting-byte-offset>, // Current Channel, not <target-channel>
+									<number-of-bytes>, // Note: Will alter the <target-channel> position by the <number-of-bytes>.
+									<target-channel>
+								)
+
+							// Read:
+							channel.read(<byte-buffer>)
+
+							// Write:
+							// Note: If Channel was initialized to APPEND, this will set Channel position to EOF, before the actual Write Operation.
+							val byteBuffer = ByteBuffer.wrap("<string-value>".toByteArray(<encoding>))
+							byteBuffer.flip() // Set the ByteBuffer to Read-Only mode
+							channel.write(<byte-buffer>)
+						}
+
+						// Similar to FileChannel, but with Asychronous Read / Write Operations 
+						AsyncFileChannel.open(
+							// ...
+						).use { asyncChannel ->
+							// ... 
+						}
+
 				// JSON / XML Manipulation
 					// Relevant Packages:
 						com.fasterxml.jackson.* // Serialization / Deserialization Library for JSON Objects
