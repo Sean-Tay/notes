@@ -721,6 +721,32 @@ Kotlin
 										// Dispatchers.IO: Coroutines defined within the Scope will run on a Thread specialized for IO intensive work (i.e. Blocking Workloads).
 										// Dispatchers.Unconfined: Coroutines defined within the Scope will run on any Thread.
 
+							// Utility Methods:
+								// suspendCoroutine: Similar to a Promisify operation in JavaScript - allows wraparound of Asynchronous APIs implemented by Callback Handlers so that Coroutines executing these are suspended properly:
+									suspendCoroutine { continuation ->
+										// ...
+											continuation.resume(<value>)
+
+										// ...
+											continuation.resumeWithException(<exception>)
+									}
+
+									// Example: Promisfying AsynchronousFileChannel's read Method:
+									suspend fun AsynchronousFileChannel.readSuspending(
+										buffer: ByteBuffer,
+										position: Long
+									) = suspendCoroutine { continuation -> 
+										read(buffer, position, null, object: CompletionHandler<Int, Nothing?> {
+											override fun completed(result: Int?, attachment: Nothing?) {
+												continuation.resume(result)
+											}
+
+											override fun failed(exc: Throwable, attachment: Nothing?) {
+												continuation.resumeWithException(exc)
+											}
+										})
+									}
+
 							// Mutexes (Coroutine-variant): Suspends the Coroutine attempting to access the shared Resource if another Coroutine is already using it.
 								// Note: Better than blocking the Thread with the suspension Block, as it removes a Thread from the pool that can execute Coroutines for the duration.
 								fun main() {
@@ -1019,7 +1045,7 @@ Kotlin
 						}
 
 						// Similar to FileChannel, but with Asychronous Read / Write Operations 
-						AsyncFileChannel.open(
+						AsynchronousFileChannel.open(
 							// ...
 						).use { asyncChannel ->
 							// ... 
