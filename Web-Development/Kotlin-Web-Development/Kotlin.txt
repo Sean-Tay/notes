@@ -604,12 +604,14 @@ Kotlin
 							// ...
 						}
 
-					// apply / also: 
+					// apply / also:
+						// Note: apply is used primarily for configuring and modifying the <result> inline
 						// Tip: Can be used for the Builder Design Pattern.
 						<result>.apply {
 							// this === <result>
 						}
 
+						// Note: also is conventionally used for side-effects that involve the <result> (i.e. the <result> is not the main focus)
 						<result>.also {
 							// it === <result>
 						}
