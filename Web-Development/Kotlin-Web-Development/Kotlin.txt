@@ -179,6 +179,11 @@ Kotlin
 					map.contains( <potential-key> )
 					map.get( <key> )
 
+					// Map Builder Block - useful for adding Keys conditionally:
+					buildMap {
+						// ... put(<key>, <value>) ...
+					}
+
 				// Streams: Used for Function-Oriented Processing of Immutable Element Sequences obtained from a Collection.
 					val stream = <collection>.stream()
 
