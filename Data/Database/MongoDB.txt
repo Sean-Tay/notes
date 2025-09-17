@@ -254,3 +254,23 @@ MongoDB:
 				))
 
 				val <operation> = Document.parse("<json-string>")
+
+	Implementation Specifics:
+		Azure Cosmos DB:
+			Shard Keys have to be defined upon Collection Creation.
+				Format Differences:
+					For Mongo, the Shard Key is specified as a bson Document:
+						Document(mapOf(
+							"<shard-field>" to 1,
+							// ...
+						))
+
+					For Azure, the Shard Key is specified as a just a String:
+						"shardKey" to "<shard-field>"
+
+			Shard Keys cannot be made up of more than one Field.
+			Unsharded Collections can only go up to 20 GB.
+
+			Azure disallows Search Queries involving Fields that don't have associated Indexes defined.
+			Unique Indexes have to be defined upon Collection Creation.
+			Unique Indexes must contain the Shard Key as a prefix / initial part of the Index Specification for Compound Indexes.
