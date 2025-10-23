@@ -1398,6 +1398,17 @@ Kotlin
 								fun `<test-description>`( <arg>, ... ) {
 									// ...
 								}
+
+							// Nested Test
+								@Nested
+								inner class <name> {
+									@Test
+									fun ` ... `() {
+
+									}
+
+									// ...
+								}
 						}
 
 		Project Configuration:
