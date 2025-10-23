@@ -30,7 +30,7 @@ ELK
 					"query": <query>,
 						// <query>
 						{
-							// Term Level: More for checking if a <field> has a particular <value>.
+							// Term Level: More for checking if a <field> has a particular <value>. Only works on keyword Fields - use Match Queries for text Fields.
 								// Exists - Check if a <field> has a non-null Value, or is a non-empty (String) Array.
 								// Note: Don't use this to check for the existance of Nested Objects; use the ignore_unmapped flag in the Nested Query instead.
 								"exists": {
