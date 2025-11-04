@@ -729,9 +729,9 @@ Kotlin
 									// Thread Dispatcher Types:
 										// Dispatchers.Default: Coroutines defined within the Scope will run on a Thread specialized for CPU intensive work.
 										// Dispatchers.IO: Coroutines defined within the Scope will run on a Thread specialized for IO intensive work (i.e. Blocking Workloads).
-										// Dispatchers.Unconfined: Coroutines defined within the Scope will run on any Thread.
+										// Dispatchers.Unconfined: Coroutines defined within the Scope will run on any Thread / or a single Thread.
 
-							// Utility Methods:
+							// Utility:
 								// suspendCoroutine: Similar to a Promisify operation in JavaScript - allows wraparound of Asynchronous APIs implemented by Callback Handlers so that Coroutines executing these are suspended properly:
 									suspendCoroutine { continuation ->
 										// ...
@@ -757,20 +757,41 @@ Kotlin
 										})
 									}
 
-							// Mutexes (Coroutine-variant): Suspends the Coroutine attempting to access the shared Resource if another Coroutine is already using it.
-								// Note: Better than blocking the Thread with the suspension Block, as it removes a Thread from the pool that can execute Coroutines for the duration.
-								fun main() {
-									runBlocking {
-										val <mutex-name> = Mutex()
+								// Control-Flow:
+									// Mutexes (Coroutine-variant): Suspends the Coroutine attempting to access the shared Resource if another Coroutine is already using it.
+										// Note: Better than blocking the Thread with the suspension Block, as it removes a Thread from the pool that can execute Coroutines for the duration.
+										fun main() {
+											runBlocking {
+												val <mutex-name> = Mutex()
 
-										launch {
-											// ...
-											<mutex-name>.withLock {
-												// ... Critical Code Segment
+												launch {
+													// ...
+													<mutex-name>.withLock {
+														// ... Critical Code Segment
+													}
+												}
 											}
 										}
-									}
-								}
+
+									// CompletableDeferred: Can be used to stop all Coroutines when they reach a specfic point.
+										fun main() {
+											runBlocking {
+												val handle = CompletableDeferred()
+
+												launch {
+													// ...
+
+													// Pause Coroutine execution at this point (until handle.complete() is invoked)
+													handle.await()
+
+													// ...
+												}
+												
+												// ...
+
+												handle.complete()
+											}
+										}
 
 							// Channels: Mechanism by which Coroutines can communicate with one another. Producer-Consumer Model.
 								fun main() {
