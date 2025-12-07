@@ -35,8 +35,11 @@ Python
 			for i in range(<start>, <stop>, <step>):
 				# ...
 
-			for item in <collection>:
+			for item in <iterable>:
 				# ...
+
+			for key, value in enumerate(<iterable>, start=<index>):
+				# ... 
 
 		# Lists:
 			<list-variable> = []
