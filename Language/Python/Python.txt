@@ -28,6 +28,7 @@ Python
 			math.floor()
 
 		# For Loops:
+			# range - inclusive <start> (default 0), exclusive <stop>
 			for i in range(<stop>):
 				# ...
 
@@ -39,6 +40,9 @@ Python
 
 		# Lists:
 			<list-variable> = []
+
+			# Create a filled List of a given <value> of size <n>:
+			<filled-list-variable> = [<value>] * <n>
 
 			<list-variable>.insert(<index>, <item>)
 			<list-variable>.append(<value>)
@@ -92,6 +96,10 @@ Python
 			class <class-name>:
 				def __init__(self, <param>, ...):
 					self.<variable> = <data>
+
+				def <class-method>(self, <param>, ...):
+					# Tip: Don't feed in self when invoking <another-class-method>
+					self.<another-class-method>(<argument>, ...)
 
 				# ...
 
