@@ -22,10 +22,14 @@ Python
 			# String: string(<value>)
 
 		# Math:
-			import math
+			# Methods:
+				floor()
+				max()
+				min()
 
-			# Methods
-			math.floor()
+			# Operators:
+				//= # Floor Division
+				% 	# Modulo
 
 		# For Loops:
 			# range - inclusive <start> (default 0), exclusive <stop>
