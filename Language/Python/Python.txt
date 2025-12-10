@@ -85,6 +85,9 @@ Python
 			item = <map-variable>.get(<key>, <default-value>)
 			<map-variable>[<key>] = item
 
+			del <map-variable>[<key>]
+			removed_item = <map-variable>.pop(<key>, <default-value>)
+
 			# Test Membership: item in <map-variable>
 			# Test Non-Membership: item not in <map-variable>
 
