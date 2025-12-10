@@ -98,6 +98,21 @@ Python
 			for key in <map-variable>:
 				# ...
 
+		# Iterables:
+			# Indexing:
+				<iterable>[<0-based-index>] # get element at index w.r.t front of <iterable>, starting at 0
+				<iterable>[-<1-based-index>] # get element at index w.r.t back of <iterable>, starting at -1
+
+			# Slicing:
+				<iterable>[<inclusive-start>]
+
+				<iterable>[<inclusive-start>:<exclusive-end>]
+				<iterable>[:<exclusive-end>]
+
+				<iterable>[<inclusive-start>:<exclusive-end>:<step>]
+				<iterable>[<inclusive-start>::<step>]
+				<iterable>[:<exclusive-end>:<step>]
+
 		# Functions:
 			def <function-name>(arg: <arg-type>, ... ) -> <return-type> :
 				# ...
