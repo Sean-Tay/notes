@@ -57,22 +57,6 @@ Python
 			item = <list-variable>.pop()
 
 			size = len(<list-variable>)
-	
-		# Deque:
-			from collections import deque
-			
-			<queue-variable> = deque([<initial-element>, ... ])
-			<queue-variable>.append(<value>)
-			item = <queue-variable>.popLeft()
-
-		# Heaps:
-			# Note: Min Heap Implementation
-			import heapq
-
-			<pqueue-variable> = []
-			heapq.heappush(<pqueue-variable>, [<priority>, <item>])
-			item = heapq.heappop()
-			# Peek: <pqueue-variable>[0]
 
 		# Sets:
 			<set-variable> = set()
@@ -112,6 +96,32 @@ Python
 				<iterable>[<inclusive-start>:<exclusive-end>:<step>]
 				<iterable>[<inclusive-start>::<step>]
 				<iterable>[:<exclusive-end>:<step>]
+
+			# Iterable Comprehensions:
+				# Tip: Replacement for map( ... ), filter( ... ), etc.
+				# Note: <item-expression> is just any transformation expression involving <item>; it can be <item> itself.
+				# Note: <item>s that fulfil the <condition> will be included in the sub-Iterable.
+				[<item-expression> for <item> in <iterable> if <condition>] # List Comprehension
+				(<item-expression> for <item> in <iterable> if <condition>) # Generator Comprehension
+
+				{<item-expression> for <item> in <iterable> if <condition>} # Set Comprehension
+				{<item-expression>:<item-expression> for <item> in <iterable> if <condition>} # Dict Comprehension
+
+		# Deque:
+			from collections import deque
+			
+			<queue-variable> = deque([<initial-element>, ... ])
+			<queue-variable>.append(<value>)
+			item = <queue-variable>.popLeft()
+
+		# Heaps:
+			# Note: Min Heap Implementation
+			import heapq
+
+			<pqueue-variable> = []
+			heapq.heappush(<pqueue-variable>, [<priority>, <item>])
+			item = heapq.heappop()
+			# Peek: <pqueue-variable>[0]
 
 		# Functions:
 			def <function-name>(arg: <arg-type>, ... ) -> <return-type> :
