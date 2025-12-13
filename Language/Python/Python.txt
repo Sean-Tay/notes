@@ -133,6 +133,10 @@ Python
 			def <function-name>(arg: <arg-type>, ... ) -> <return-type> :
 				# ...
 
+			# Anoynymous Function:
+			from typing import Callable
+			<lambda-function>: Callable[[<param-1-type>, <param-2-type>, ... ], <return-type>] = lambda <param-1>, <param-2>, ... : <return-value>
+
 		# Classes:
 			class <class-name>:
 				def __init__(self, <param>, ...):
