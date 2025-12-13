@@ -51,12 +51,18 @@ Python
 			# Create a filled List of a given <value> of size <n>:
 			<filled-list-variable> = [<value>] * <n>
 
+			# Insert an <item> at the <index>, displacing other subsequent elements forward.
 			<list-variable>.insert(<index>, <item>)
+			<list-variable>.pop(<index>)
+
 			<list-variable>.append(<value>)
 
 			item = <list-variable>.pop()
 
 			size = len(<list-variable>)
+
+			# Sort the <list-variable> in-place, using some custom sort function:
+			<list-variable>.sort(key = lambda item: <numerical-order-of-item>)
 
 		# Sets:
 			<set-variable> = set()
