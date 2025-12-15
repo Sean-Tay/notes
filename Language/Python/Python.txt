@@ -22,6 +22,9 @@ Python
 			# String: string(<value>)
 
 		# Math:
+			# Values:
+				float('inf')
+
 			# Methods:
 				floor()
 				max()
