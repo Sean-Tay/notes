@@ -380,7 +380,18 @@
 				- If both pointing to same Index, Array is Empty.
 				- When full, Head and Tail Pointer should be separated by one empty Index to ensure no confusion with Empty state.
 
-		- Two Pointers / Sliding Window	
+		- Two Pointers:
+			- Fast / Slow Pointers
+			- Meet in the Middle
+			- Sliding Window
+
+			- Revision Questions:
+				- Container with Most Water
+
+			- Tip:
+				- What does each Pointer represent?
+				- When do I move the Left and Right Pointers?
+				- What should always be true as we move the Pointers?
 
 		- Tip: 
 			- For frequent lookups to Unsorted Arrays, consider converting the Array to a Map (Element-Index) first.
