@@ -34,6 +34,10 @@ Python
 				//= # Floor Division
 				% 	# Modulo
 
+				# Base <x> Operation:
+					<digit> % <x> # Cap the <digit> to base <x>
+					<digit> // <x> # Get the "carry" after capping the <digit> to base <x>
+
 		# For Loops:
 			# range - inclusive <start> (default 0), exclusive <stop>
 			for i in range(<stop>):
@@ -66,6 +70,12 @@ Python
 
 			# Sort the <list-variable> in-place, using some custom sort function:
 			<list-variable>.sort(key = lambda item: <numerical-order-of-item>)
+
+			# In-Place List Reverse:
+				left_ptr = 0
+				right_ptr = len(<list>) - 1
+				while (left_ptr < right_ptr):
+					<list>[left_ptr], <list>[right_ptr] = <list>[right_ptr], <list>[left_ptr]
 
 		# Sets:
 			<set-variable> = set()
