@@ -176,6 +176,9 @@ ELK
 
 							// Alternatively "<YYYY-MM-DD>T<HH-MM-SS.MS>"
 
+							<YYYY-MM-DD>
+								now-30d
+
 						// Note: The colon after the <field> is still required for the below
 						><value> // Greater Than
 						>=<value> // Greather Than or Equal To
