@@ -56,12 +56,25 @@ Kubernetes:
 	
 	Commands:
 		kubectl
-			get deployments
-			scale deployment <deployment-name> --replicas=<n>
+			# Namespace
+				describe <namespace-name>
 
-			get pods
-			get jobs / cronjobs
-				-o wide			# See Images used in the Pod / Job / Cronjob
-			
-			exec -it <pod-id> -- /bin/bash # Execute /bin/bash in target Pod
-			logs <pod-id>		# Examine Logs from target Pod
+			# Deployment
+				get deployments
+				describe deployment <deployment-name>
+				scale deployment <deployment-name> --replicas=<n>
+				
+				# Change variables in k8s Deployment Spec:
+				edit deployment <deployment-name>
+
+			# Replica-Set
+				get replicasets
+				describe replicaset <replicaset-name>
+
+			# Pod
+				get pods
+				get jobs / cronjobs
+					-o wide		# See Images used in the Pod / Job / Cronjob
+				
+				exec -it <pod-id> -- /bin/bash # Execute /bin/bash in target Pod
+				logs <pod-id>	# Examine Logs from target Pod
