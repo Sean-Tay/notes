@@ -465,6 +465,9 @@ Kotlin
 					}
 
 				// Lambda Expressions / Function Literals / Arrow Functions:
+					// Note: Beware of closure issues involving changing variable values when using Lambdas - Objects variables are passed via value of the references (i.e. Lambda receives pointer of a pointer to the Object, with the Object variable being the pointer to the Object), so changes to the original Object variable will be reflected in the Lambda (but primitive variables are passed via simple value).
+					// Tip: Reference immutable variables in Lambdas for less headaches.
+
 					// Note: The Curly Braces are needed to obtain an Instance of the Lambda.
 					val <lambda>: (<type>, ... ) -> <return-type> = {
 						<arg>, ... -> 
