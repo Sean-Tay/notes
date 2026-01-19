@@ -50,8 +50,14 @@ GitLab:
 
 					# OR
 
+					# Tip: Variables defined in this manner will show up on the Gitlab UI:
 					<key>:
 						value: <value>
+						options:
+							- <value> # Note: The default value must be present.
+							- <value-1>
+							- <value-2>
+							# ...
 						description: <description>
 
 					# Note: Special Variables:
