@@ -295,7 +295,7 @@ Database
 									Leaders can send each other Writes via several Topologies:
 										Circular: A ring consisting of Leaders - each Leader passes Writes down to the next Leader after it in the ring. Not very Fault Tolerant.
 										Star: Akin to a starfish - every Leader is connected to some central Node. Single Point of Failure.
-										All-to-All (Fully Connected) - Each Leader is connected to every other Leader.
+										All-to-All (Fully Connected) - Each Leader is connected to every other Leader. Note: This differs from Leaderless - Clients still send their Read / Writes to only one Node in this configuration.
 
 										Chain Replication?
 
@@ -334,7 +334,7 @@ Database
 										Let N be the total number of Replicas in the Cluster. Typically N should be an odd number.
 
 										Pseudo Strong Consistency Quorum: If W + R > N where N is the total number of Replicas, then at least one Replica will have the most updated Object.
-											Typically W = R = (N+1)/2, then each Read / Write can tolerate up to (N-1)/2 Replicas failing per Operation.
+											Typically W = R = (N+1)/2, then each Read / Write can tolerate up to N-R / N-W Replicas failing per Operation.
 
 											Imperfect:
 												Allows for inconsistent Data States (i.e. Client considers Write failed as w < W, but w Replicas now have a potentially unwanted Write).
