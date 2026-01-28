@@ -116,6 +116,7 @@ MongoDB:
 								"$gte": <value>, // To Select for Documents whose value under the <field> is greater than or equal to <value>.
 								"$lte": <value>, // To Select for Documents whose value under the <field> is lesser than or equal to <value>.
 									// Date: ISODate("YYYY-MM-DDT00:00:00.000Z")
+										// In Java / Kotlin, supply Instant DateTime Objects, if the <field> is a BSON DateTime Type.
 
 								"$size": <length>, // To Select for Documents whose value under the <field> is an Array containing <length> Elements.
 
