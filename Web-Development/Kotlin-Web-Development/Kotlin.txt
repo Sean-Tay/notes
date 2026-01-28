@@ -971,6 +971,7 @@ Kotlin
 						.of(<LocalDateTime>, <zone-id-enum>)
 						
 						.parse(<string>, DateTimeFormatter.ofPattern(<string-format>)) // Create a ZonedDateTime Instance from a Timestamp String
+						.parse(<string>, DateTimeFormatter.ISO_OFFSET_DATE_TIME) // YYYY-MM-DDTHH:MM:SSZ
 
 					// Date and Time Representation
 					// Note: Cannot represent Point in Time because it lacks Timezone
