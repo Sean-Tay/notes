@@ -528,7 +528,14 @@ Database
 							Nodes become "Hotspots" if these are not met for any Node in the Partition Set.
 
 						Configurations:
-							Fixed Number of Partitions:
+							Fixed Number of Partitions: 
+								Establish a fixed number of Partitions across all Nodes.
+									The number of Partitions is significantly more than the number of Nodes (i.e. 1000+).
+
+									Each Node will get a certain number of Partitions, and this can vary from Node capability and Traffic Patterns.
+
+									Rebalancing is done by moving whole Partitions from one Node to another.
+
 								Too Low:
 									Each Partition will get too big, and Application can't scale.
 									Rebalancing will take a longer time.
