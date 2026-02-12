@@ -52,15 +52,16 @@ Database
 
 			Strict Serializability: A combination of both Linearizability and Serializability. When the history of Operations being executed concurrently for one or more Objects is the same as one where the Operations are executed sequentially, and in the submitted order (i.e. no interleaving of Operations + correct order of Operations).
 
-		Record-Level Lock: 		A Lock that lasts for as long as the interaction of one Record.
-		Operation-Level Lock: 	A Lock that lasts for as long as one Operation within a Transaction.
-		Transaction-Level Lock: A Lock that lasts until the completion or abortion of the enclosing Transaction.
+		Locks: Three Dimensions to Consider:
+			Operation-Level Lock: A Lock that lasts for as long as one Operation within a Transaction.
+			Transaction-Level Lock: A Lock that lasts until the completion or abortion of the enclosing Transaction.
 
-		Shared-Mode Lock:		A Lock that allows concurrent Read Access but not Write Access. Obtainable when the involved subject has no Exclusive-Mode Lock active.
-		Exclusive-Mode Lock: 	A Lock that allows for both Read and Write Access. Only one Transaction may hold this at any time, and only if the involved subject has no other existing Locks active.
+			Shared-Mode Lock:	A Lock that allows concurrent Read Access but not Write Access. Obtainable when the involved subject has no Exclusive-Mode Lock active.
+			Exclusive-Mode Lock: A Lock that allows for both Read and Write Access. Only one Transaction may hold this at any time, and only if the involved subject has no other existing Locks active.
 
-		Record Lock: 			A Lock on a Record.
-		Predicate Lock:			A Lock on a potential range of Records.
+			Record Lock: 		A Lock on a Record.
+			Predicate Lock:		A Lock on a potential range of Records.
+			Table Lock: 		A Lock on all Records in the Table.
 
 		Multiversion Concurrency Control: Generates a new version of an Object for each Write, and maintaining the last few relevant versions of the Object for Read Operations.
 
@@ -86,59 +87,33 @@ Database
 
 	Details:
 		ACID:					A set of Properties for Operations on a Database to guarantee so as to avoid Erroneous Data.
-			Atomicity:			Transactions containing multiple Operations will either succeed as a whole, or not be processed at all.
+			Atomicity:			Transactions containing multiple Operations will either succeed as a whole, or not be processed at all (a.k.a Abortability).
 
 			Consistency:		Transactions can only bring the Database from one correct State to another, respecting Constraints, Cascades and Triggers within affected Data. This is related to Data Consistency from the CAP Theorem, but not exactly the same - ACID Consistency focuses on Data Integrity being maintained, whereas CAP Consistency refers to multiple Nodes in the Database Cluster having the same Data.
 
 			Isolation: 			The degree by which Transactions on a Database can assume that they would be unaffected by other concurrently executing Transactions, definable with the types of phenomena that can be observed during overlapping Transactions. The highest degree mandates that the end results of each Transaction can only be one of several, all of which arise from completely non-overlapping Transactions.
-				Concurrency Bugs:
-					Dirty Operations: Incorrect behaviour stemming from uncommitted Data.
-						Writes: A Transaction overwrites committed Data from another concurrently executed Transaction (started later and completed earlier) with uncommitted Data. Uncommitted Data should be able to be subsequently rolled back, but the first Transaction will not be able to roll back without removing the committed Data. Solvable via Transaction-Level Exclusive-Mode Record Locks w.r.t Write Operations.
+				Levels + Concurrency Bugs that they are susceptable to (next highest):
+					No Isolation: Transactions can observe the effects of other Transactions that have not yet committed.
+						Dirty Writes: A Transaction overwrites committed Data from another concurrently executed Transaction (started later and completed earlier) with uncommitted Data. Uncommitted Data should be able to be subsequently rolled back, but the first Transaction will not be able to roll back without removing the committed Data.
 
-						Reads: A Transaction sees uncommitted Data from another concurrently executing Transaction. Uncommitted Data can be subsequently rolled back, which leaves the first Transaction with incorrect Data. Solvable via Operation-Level Shared-Mode Record Locks w.r.t each Read Operation, and Transaction-Level Exclusive-Mode Record Locks w.r.t Write Operations.
+					Read Uncommitted: A Write Operation within a Transaction attempts to obtain a Transaction-Level Exclusive-Mode Record Lock. Useful for Read Operations that do not need to be accurate, such as estimations.
+						Dirty Reads: A Transaction sees uncommitted Data from another concurrently executing Transaction. Uncommitted Data can be subsequently rolled back, which leaves the first Transaction with incorrect Data.
 
-					Incorrect behaviour stemming from stale Read Data whose contents were updated whilst the Transaction was paused:
-						Fuzzy Reads / Non-Repeatable Reads: A Transaction re-Reads previously read Data and sees that the content within the Read Records has changed. Solvable via Transaction-Level Shared-Mode Record Locks and Operation-Level Shared-Mode Predicate Locks w.r.t Read Operations, and Transaction-Level Exclusive-Mode Record Locks w.r.t Write Operations.
+					Read Committed: Read Uncommitted + Read Operations within a Transaction attempts to obtain Operation-Level Shared-Mode Record Locks.
+						Fuzzy Reads / Non-Repeatable Reads: A Transaction re-Reads previously read Data and sees that the content within the Read Records has changed.
 						Read Skew / Inconsistent Reads: A Transaction Reads differing computed Data that is based on some other previously Read Data, which became stale due to updates from another concurrently executed and completed Transaction.
 
-						Lost Updates: A Transaction causes a prior committed update of a concurrently executed Transaction to a Record to be lost, because it based its own update on stale Data from the same Record via a prior Read. Solvable by the same methods used to solve Fuzzy Reads / Non-Repeatable Reads.
+						Lost Updates: A Read-Modify-Write Operation in a Transaction causes a prior committed update of a concurrently executed Transaction to a Record to be lost, because it based its own update on stale Data from the same Record via a prior Read.
+
+					Repeatable Reads: The Transaction attempts to obtain Transaction-Level Record Locks for both Reads and Writes.
+						Phantom Reads: A Transaction re-executes a Read and finds a different set of Records vs. the set of Records from executing the Read before due to committed additions / deletions from another concurrently executed Transaction.
+
+						Phantom Writes: Transactions each Read some Records to make a decision on whether to add / delete new Records, which can occur incorrectly and violate some constraint.
+
+					Snapshot Isolation: Multi Version Concurrency Control - each Write to a Record results in a separate copy stored alongside a Monotonically Increasing Transaction ID Sequence. Reads can only view copies of Records that are lower than the Transaction ID it is attached to, and Writes can be aborted and retried when there exists a copy with a higher Transaction ID. It has the benefit of not blocking Reads when executing Writes.
 						Write Skew: A Transaction Writes differing computed Data that is based on some other previously Read Data, which became stale due to updates from another concurrently executed and completed Transaction.
 
-					Phantoms: Incorrect behaviour stemming from stale Read Data that would not include new relevant additions / deletions whilst the Transaction was paused:
-						Reads: A Transaction re-executes a Read and finds a different set of Records vs. the set of Records from executing the Read before due to committed additions / deletions from another concurrently executed Transaction. Solvable via Transaction-Level Shared-Mode Record and Predicate Locks w.r.t Read Operations, and Transaction-Level Exclusive-Mode Record Locks w.r.t Write Operations.
-
-						Writes: Transactions each Read some Records to make a decision on whether to add / delete new Records, which can occur incorrectly and violate some constraint. Solvable via Conflict Materialization, which creates Dummy Records to prefill a Query Space so that Locks can be placed when Dummy Records are to be Written to.
-
-				Isolation Levels: 
-					Note: The Database Engine may comply by implementing a higher Isolation Level than what is required by Read Committed - check if there are other Isolation Levels offered by the Database Engine.
-
-					Read Uncommitted: A Write Operation within a Transaction attempts to obtain an Transaction-Level Exclusive-Mode Record Lock.
-						Features:
-							Prevents Dirty Writes.
-
-					Read Committed: Read Uncommitted + Read Operations within a Transaction attempts to obtain Record-Level Shared-Mode Record Locks.
-						Features:
-							Prevents Dirty Writes + Dirty Reads.
-
-						Scenarios:
-							Useful in cases where the Query only needs approximate / best-effort Data.
-
-					Repeatable Reads: The Transaction attempts to obtain Transaction-Level Record Locks.
-						Features:
-							Prevents all Concurrency Bugs except Phantoms and Write Skews.
-
-					Snapshot Isolation: Each Write to a Record results in a separate copy stored alongside a Monotonically Increasing Transaction ID Sequence. Reads can only view copies of Records that are lower than the Transaction ID it is attached to, and Writes can be aborted and retried when there exists a copy with a higher Transaction ID.
-						Features:
-							Prevents all Concurrency Bugs except Phantoms.
-							Reads do not block Writes.
-							Consumes more resources than Locking-based approaches.
-
 					Serializable Snapshot Isolation: New. Snapshot Isolation, but track for cases where non Serializable Execution could occur, and abort one of the participating Transactions (e.g. track all Reads for a Record, and abort all tracked Reads when a Write is made to the Record).
-						Features:
-							Prevents all Concurrency Bugs, but may unnecessarily abort certain Transactions.
-							Reads do not block Writes.
-							Faster than traditional Two Phase Locking.
-							Consumes more resources than Locking-based approaches.
 
 					Serializable / Two Phase Locking: Widely used - all necessary Locks are acquired / are upgraded for a Transaction (Growth Phase) before Locks are released / are downgraded (Shrink Phase, which usually occurs when a Transaction completes / is rolled back).
 						Features:
