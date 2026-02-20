@@ -220,6 +220,9 @@ SQL:
 						HAVING <aggregate_conditional>
 						ORDER BY <alias>.<attribute_name>, ...
 						LIMIT <number_offset>, <number_rows>
+
+						-- Lock the Records for Exclusive Access in a later part of the Transaction.
+						FOR UPDATE
 						;
 
 						-- Stop Saving further Query Results to Local File at <filepath>.
