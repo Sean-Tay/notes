@@ -110,6 +110,7 @@ Database
 
 					Snapshot Isolation: Multi Version Concurrency Control - each Write to a Record results in a separate copy stored alongside a Monotonically Increasing Transaction ID Sequence. Reads can only view copies of Records that are lower than the Transaction ID it is attached to, and Writes can be aborted and retried when there exists a copy with a higher Transaction ID. It has the benefit of not blocking Reads when executing Writes.
 						Write Skew: A Transaction Writes differing computed Data that is based on some other previously Read Data, which became stale due to updates from another concurrently executed and completed Transaction.
+							Note: Write Skew and Lost Updates both involve concurrent Read-Modify-Write Transaction, but the difference is that a Lost Update affects the same Record, while a Write Skew affects different Records.
 
 						Phantom Writes: A specific form of Write Skew that involves the Insertion and Deletion of Data based on Query Results.
 
