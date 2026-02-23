@@ -235,6 +235,8 @@ System Design:
 									99.9% -> 8.77 Hours Offline Per Year
 									99.99% -> 1 Hour Offline Per Year
 
+								Note: Has to be multiplied together for Composite SLAs involving multiple Dependencies (e.g. Microservices).
+
 							Latency: x% -> x% of Requests met in a timely manner.
 								Tail Latency: The Requests above the xth Percentile. As more Requests are made (either in Sequence or Parallel), the Request Times of these start to dominate the other x% of Requests, assuming a large differential in the Request Times between the two types.
 
