@@ -180,7 +180,7 @@ Kotlin
 					map.get( <key> )
 
 					// Map Builder Block - useful for adding Keys conditionally:
-					buildMap {
+					val map = buildMap {
 						// ... put(<key>, <value>) ...
 					}
 
