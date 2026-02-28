@@ -61,6 +61,7 @@ Database
 
 			Record Lock: 		A Lock on a Record.
 			Predicate Lock:		A Lock on a potential range of Records.
+				Index Lock: 	An implementation of a Predicate Lock that uses the Index to lock down the range of Records. Using the Index to lock is faster compared to a native Predicate Lock implementation as overlapping Index Locks are easier to reconcile.
 			Table Lock: 		A Lock on all Records in the Table.
 
 		Multiversion Concurrency Control: Generates a new version of an Object for each Write, and maintaining the last few relevant versions of the Object for Read Operations.
@@ -114,7 +115,11 @@ Database
 
 						Phantom Writes: A specific form of Write Skew that involves the Insertion and Deletion of Data based on Query Results.
 
-					Serializable Snapshot Isolation: New. Snapshot Isolation, but track for cases where non Serializable Execution could occur, and abort one of the participating Transactions (e.g. track all Reads for a Record, and abort all tracked Reads when a Write is made to the Record).
+					Serializable Snapshot Isolation: New. Snapshot Isolation, but track for cases where non Serializable Execution could occur, and abort one of the participating Transactions.
+						Detection of Isolation Breaches:
+							If a Transaction is attempting to do a Write after a Read that has become stale - the DB knows that the Transaction has Read an older version of the Record due to the MVCC of Snapshot Isolation.
+
+							Detection of Writes that would affect prior Reads.
 
 					Serializable / Two Phase Locking: Widely used - all necessary (Predicate) Locks are acquired / are upgraded for a Transaction (Growth Phase) before Locks are released / are downgraded (Shrink Phase, which usually occurs when a Transaction completes / is rolled back).
 						Features:
