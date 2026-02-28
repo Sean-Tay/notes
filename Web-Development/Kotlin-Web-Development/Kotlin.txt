@@ -1131,7 +1131,7 @@ Kotlin
 								// Java Object <-> Jackson JsonNode
 									// mapper.valueToTree(<java-object>)
 
-									// mapper.valueToTree(<jackson-node>, <class>)
+									// mapper.treeToValue(<jackson-node>, <class>)
 
 							// Node Creation
 								val node: JsonNode = mapper.createObjectNode()
