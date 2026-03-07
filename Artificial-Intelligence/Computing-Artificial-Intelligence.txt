@@ -1,0 +1,146 @@
+Artificial Intelligence:
+	Abbreviations:
+		VAE: 					Variational Autoencoder
+		GAN: 					Generative Adversarial Network
+	
+		MCP: 					Model Context Protocol
+
+	Description:
+		
+	
+	Resources: 
+		ollama.com/library		List of LLMs available to download and run locally. Note: Click "View All" to see all available LLMs, not just Q4 Quantized.
+	
+	Concepts:
+		Narrow Artificial Intelligence: A class of AI technologies that is capable of performing a specific task, based on its Training Data and Input Parameters.
+			Discriminative Artificial Intelligence: A class of AI technologies that is capable of distinguishing between different Categories in Data, based on their Training Data and Input Parameters.
+
+		Generative Artifical Intelligence: A class of AI technologies that is capable of generating varius forms of content, such as Images, Audio and Text, based on their Training Data and Input Parameters.
+			Variational Autoencoder: Learns how to convert real-world Input Data into a compressed form (i.e. Latent Space), and then back again to Data that looks real.
+				Beta Variable Autoencoder: Introduces a Hyperparameter that controls the trade-off between the accuracy of Reconstructed Data versus understanding the underlying features of the Training Data for the resulting VAE Model.
+
+				Conditional Variational Autoencoder: A variant of VAE that conditions the generative process on some extra labels / classes along with the usual Training Data, allowing it to produce samples that adhere to a specific class.
+
+			Generative Adversarial Network: Features a Generator and a Discriminator Neural Network that compete with each other to ultimately improve the quality of the generated Data.
+				Deep Convolutional GAN: Uses Convolutional Neural Networks for both the Generator and Discriminator, which allows it to generate high-quality Images.
+
+				Style GAN: Uses a style-based Generator architecture that enables production of high quality realistic Images.
+
+			Transformer Architecture: Allows a Model to dynamically focus on different parts of the Input Data (i.e. achieve a Self-Attention Mechanism).
+
+			Autoregressive Model: Generates Data Points one at a time, conditioning each based on previous Data Points.
+
+			Large Language Models:
+				Quantization: A Compression technique that reduces the precision of the Model's Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
+
+		Agentic Artificial Intelligence: A class of AI technologies that is capable of autonomously performing tasks, making decisions and interacting with its environment, based on its Training Data and Input Parameters.
+			Chain-of-Thought: A technique which encourages the Model to introspect and craft a step-by-step reasoning process to solve a given problem.
+
+			Model Context Protocol: Model-Agnostic Open Standard introduced by Anthropic (now governed by the Linux Foundation) that lets any LLM / Agentic AI connect to any external Resource.
+
+	Details:
+		Generative Artificial Intelligence:
+			Generative AI learns the underlying patterns, structures and distributions of the Training Data, which enables a Procedure in the Model to generate new Data that is similar to the Training Data in terms of statistical probability and characteristics.
+				AIs "learn" the Probability Distribution of the Training Data, and then samples the Distribution to generate new but similar Data.
+
+			Variational Autoencoder: The Encoder compresses the Input Data into a Latent Space, and the Decoder reconstructs the Data from the Latent Space.
+				Analogy: Artist that not only just copies paintings, but learns the "essence" of the paintings. They are able to extract out the most significant underlying characteristics of a detailed painting (i.e. Encoding) and apply it to their output (i.e. Decoding).
+
+				Beta Variational Autoencoder: Features a hyperparameter to help disentangle the VAE's Encoding and Decoding capability.
+					Analogy: Art Student that not just copies a painting but also to understand and separate the key-elements such as color, shape and style.
+
+				Conditional Variational Autoencoder: Able to generate new Data that is conditioned on a specific class or category, based on the Training Data and given Labels.
+					Analogy: An Artist that can paint in different styles.
+
+			Generative Adversarial Network: The Generator Neural Network generates new Data, and the Discriminator Neural Network evaluates the Data to determine if it is real or fake.
+				The Generator and Discriminator are trained together antagonistically, with the aim of the Generator to fool the Discriminator into thinking the generated Data is real, and the Discriminator to correctly identify the generated Data as fake. Each will get better at their task over time.
+
+				Wasserstein GAN: Uses a Wasserstein Distance Metric to improve the stability of the Training Process.
+					Analogy: Gives the Generator and Discriminator a better way to communicate and evaluate each other's performance. Instead of just saying "Good" or "Bad", they say "Getting Warmer" or "Getting Colder".
+	
+			Autoregressive Model: Generates Data Points one at a time, conditioning each based on previous Data Points.
+				Key Components:
+					Self Attention Mechanism: Allows the Model to dynamically focus on different parts of the Input Data, depending on the context.
+						Multi-Head Attention: An extension of Self-Attention that allows the Model to attend to different parts of the Input Data simultaneously, which enables the Model to capture a wider range of dependencies and relationships.
+						
+						Positional Encoding: Provides the Model with information about the position of each Data Point in the sequence, which is necessary for the Model to generate Data Points in the correct order, especially when processing them in Parallel for Multi-Head Attention.
+
+					Feed-Forward Neural Network: Processes the Output of the Self Attention Mechanism to generate the next Data Point in the sequence.
+					Layer Normalization: Normalizes the Output of the Self Attention Mechanism and Feed-Forward Neural Network to stabilize the Training Process.
+
+				PixelCNN: Autoregressively generates images pixel by pixel, conditioning each pixel on the previous pixels in the image. Works well for generating images with fine details.
+					PixelSNAIL: Refinement over PixelCNN that uses Self Attention Mechanism to capture long-range dependencies in the image.
+
+				GPT: Generative Pre-trained Transformer: Model that predicts which words should come next.
+
+				BERT: Bi-directional Encoder Representations from Transformers. Designed to understand the context from both directions of the text - it uses the Encoder part of the Transformer architecture. Typically used for tasks that require an understanding of the entire input sequence at once, rather than generating text autoregressively.
+
+				Text-to-Text Transfer Transformer: Frames all NLP Tasks in a Text-to-Text format; it uses the full Transformer Architecture (both Encoding and Decoding).
+
+			Large Language Models: Scaled-up Text-based Models.
+				Autoregressive LLMs: LLM that generates text sequentially, based on the Autoregressive approach.
+
+				Encoder-only LLMs: Model that specializes in Natural Language Understanding, which involve analyzing and comprehending input text without generating new text. They process the entire Input Text simultaneously, allowing them to help with tasks such as Text Classification, Named Entity Recognition and Sentiment Analysis.
+
+				Encoder-Decoder LLMs: Model that not only understand the context of input Text (i.e. Natuiral Language Understanding) but also generate new text (i.e. Natural Language Generation). Suitable for tasks such as Language Translation, Summarization and Question-Answering.
+
+				Multi-Model LLMs: Model that not only handles Text but also other mediums such as Image, Video and Audio.
+
+				Instruction-tuned LLMs: A general LLM that has been fine-tuned using domain-specific Data. Suitable for Chatbots, Virtual Assistants, and even AI Agents when combined with other components.
+
+				Domain-specific LLMs: An LLM that has been built on domain-specific Data from the ground up.
+
+		Agentic Artificial Intelligence:
+			Model Context Protocol:
+				MCP Hosts: Agentic AI Developer Applications (i.e. Claude Code, Cursor, Google Antigravity)
+					MCP Client: Within the MCP Host to manage communicatins to other MCP Servers.
+
+				MCP Server: Interface for Agentic AIs to interact with other Resources (i.e. Databases, File Systems, APIs), implemented as a Server running alongside the Resource.
+
+	Commands:
+		Tools:
+			Types:
+				Claude Code: Agentic CLI
+					CLAUDE.md: Markdown File containing Instructions, Architectural Context, Coding Convention, and Rules that Claude Code reads before starting any Task.
+				
+				Cursor / Google Antigravity: Agentic IDE
+					.cursorrules: Similar function to CLAUDE.md.
+
+				Cline / Continue.dev: IDE Plugins that allows for the execution of Development Tasks on different LLMs, depending on the Task Complexity (i.e. Planning - Heavier / Acting - Lighter)
+
+				Ollama: Docker for Local LLMs.
+					ollama pull <model-name> # Download a LLM.
+					ollama rm <model-name> # Remove a LLM.
+
+					ollama list # List all Installed LLMs.
+					ollama show --modelfile <model-name> # Show Quantization Level of a LLM.
+					
+					ollama serve # Start Ollama Server.
+
+					ollama run <model-name> # Run a LLM. Automatically starts the Ollama Server if not already started.
+						ollama run <model-name> <arg>
+
+					ollama stop <model-name> # Stop a LLM.
+					ollama launch <integration> --model <model-name> # Launch an Integration with a specific LLM.
+
+			Development Tasks:
+				Fast-Inline Code Completion: Small, fast Local LLM or a Cloud LLM optimized for speed (i.e. Claude Haiku, Gemini Flash).
+
+				Routine Tasks: Local LLM supported Agentic AI (i.e. Qwen3-Coder, Deepseek-V3.2)
+					Generating Boilerplate Code
+					Writing tests for Existing Code
+					Documentation
+
+				Heavy Reasoning Tasks: Cloud LLM supported Agentic AI (i.e. Claude Opus)
+					Large Scale Refactoring
+					Architectural Decisions
+					Tricky Debugging
+
+		Effective Prompt Engineering: RICE-Q
+			Role: Set the context by defining the role of the AI.
+			Instruction: Provide the specific task or question you want the AI to complete.
+			Context: Provide any relevant background information or data that the AI needs to know to complete the task.
+			Examples: Provide examples of the desired output, so the AI can better understand what you are looking for.
+			Question: Invite the AI to ask you questions if it needs more information to complete the task.
+
+			Tip: Ask the AI to explain its reasoning, showing its thought-process step-by-step.
