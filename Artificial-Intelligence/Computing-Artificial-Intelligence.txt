@@ -5,11 +5,9 @@ Artificial Intelligence:
 	
 		MCP: 					Model Context Protocol
 
-	Description:
-		
+	Description: 
 	
 	Resources: 
-		ollama.com/library		List of LLMs available to download and run locally. Note: Click "View All" to see all available LLMs, not just Q4 Quantized.
 	
 	Concepts:
 		Narrow Artificial Intelligence: A class of AI technologies that is capable of performing a specific task, based on its Training Data and Input Parameters.
@@ -31,7 +29,20 @@ Artificial Intelligence:
 			Autoregressive Model: Generates Data Points one at a time, conditioning each based on previous Data Points.
 
 			Large Language Models:
-				Quantization: A Compression technique that reduces the precision of the Model's Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
+				Parameter Count: A measure of the size of the LLM, which is the number of Weights and Biases in the Model. An LLM with larger numbers means the Model has greater capacity to store knowledge and reason about complex problems.
+
+				Quantization: A Compression technique that reduces the precision of the Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
+					f16: Uncompressed, full 16-bit Floating Point values.
+					q8_0
+					q4_0
+
+				Flash Attention: Algorithm that reduces the Memory Bandwidth and Computational Requirements of the Attention Mechanism.
+
+				Context Length: The maximum number of Tokens that the LLM can process at once, per prompt.
+					Architectural: The number of Tokens that the LLM was built to process.
+					Effective: The number of Tokens that the LLM can actually process, based on the current Resource Constraints.
+
+				KV Cache: Time Optimization technique that stores intermediate results of the Attention Mechanism, which allows the LLM to reuse the results for generating subsequent Tokens, instead of having to reprocess all prior Tokens. In practice, this is the Runtime Representation of the Context for a Task.
 
 		Agentic Artificial Intelligence: A class of AI technologies that is capable of autonomously performing tasks, making decisions and interacting with its environment, based on its Training Data and Input Parameters.
 			Chain-of-Thought: A technique which encourages the Model to introspect and craft a step-by-step reasoning process to solve a given problem.
@@ -100,28 +111,15 @@ Artificial Intelligence:
 	Commands:
 		Tools:
 			Types:
-				Claude Code: Agentic CLI
-					CLAUDE.md: Markdown File containing Instructions, Architectural Context, Coding Convention, and Rules that Claude Code reads before starting any Task.
-				
-				Cursor / Google Antigravity: Agentic IDE
-					.cursorrules: Similar function to CLAUDE.md.
+				Ollama: Docker for Local LLMs.
 
 				Cline / Continue.dev: IDE Plugins that allows for the execution of Development Tasks on different LLMs, depending on the Task Complexity (i.e. Planning - Heavier / Acting - Lighter)
 
-				Ollama: Docker for Local LLMs.
-					ollama pull <model-name> # Download a LLM.
-					ollama rm <model-name> # Remove a LLM.
+				Cursor / Google Antigravity: Agentic IDE
+					.cursorrules: Similar function to CLAUDE.md.
 
-					ollama list # List all Installed LLMs.
-					ollama show --modelfile <model-name> # Show Quantization Level of a LLM.
-					
-					ollama serve # Start Ollama Server.
-
-					ollama run <model-name> # Run a LLM. Automatically starts the Ollama Server if not already started.
-						ollama run <model-name> <arg>
-
-					ollama stop <model-name> # Stop a LLM.
-					ollama launch <integration> --model <model-name> # Launch an Integration with a specific LLM.
+				Claude Code: Agentic CLI
+					CLAUDE.md: Markdown File containing Instructions, Architectural Context, Coding Convention, and Rules that Claude Code reads before starting any Task.
 
 			Development Tasks:
 				Fast-Inline Code Completion: Small, fast Local LLM or a Cloud LLM optimized for speed (i.e. Claude Haiku, Gemini Flash).

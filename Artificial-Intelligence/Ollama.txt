@@ -1,0 +1,55 @@
+Ollama
+	Abbreviations:
+		
+	
+	Description: 				Docker for Local LLMs.
+	
+	Resources:
+		ollama.com/library		List of LLMs available to download and run locally. Note: Click "View All" to see all available LLMs, not just Q4 Quantized.
+	
+	Concepts:
+	
+	Details:
+		Ollama is a Docker-like tool for running LLMs locally.
+			The LLM is similar to the Container Image, and the LLM + KV Cache is similar to the running Container.
+	
+	Commands:
+		ollama pull <model-name> # Download a LLM.
+		ollama rm <model-name> # Remove a LLM.
+
+		ollama list # List all Installed LLMs.
+		ollama show --modelfile <model-name> # Show Quantization Level of a LLM.
+
+		# Enable Flash Attention for the Ollama Server.
+		export OLLAMA_FLASH_ATTENTION=1 # set OLLAMA_FLASH_ATTENTION=1 for Windows
+
+		# Specify the Quantization Level of the LLM.
+		export OLLAMA_KV_CACHE_TYPE=q8_0 # f16 is the default # set OLLAMA_KV_CACHE_TYPE=q8_0 for Windows
+
+		# Set the Context Length of the LLM.
+		export OLLAMA_CONTEXT_LENGTH=64000 # set OLLAMA_CONTEXT_LENGTH=64000 for Windows
+
+		export OLLAMA_KEEP_ALIVE=-1 # set OLLAMA_KEEP_ALIVE=-1 for Windows
+
+		ollama serve # Start Ollama Server. # Note: If running in a Windows and developing in WSL2, ensure "mirrored" networkingMode is enabled for WSL2.
+		sudo systemctl restart ollama # Restart Ollama Server.
+		sudo systemctl stop ollama # Stop Ollama Server. # taskkill /F /IM ollama.exe for Windows
+
+		# Load an LLM into Memory (if not already done) and creates a new KV Cache tagged to the Interactive Session. Automatically starts the Ollama Server if not already started.
+		ollama run <model-name>
+			--verbose # Show the number of Input Tokens (prompt_eval_count) and Output Tokens (eval_count).
+			
+			ollama run <model-name> <arg>
+
+			# Sets the maximum possible KV Cache capacity for the LLM (refreshes upon next REPL). 
+			# Note: This eagerly reserves the amount of VRAM needed to support it.
+			# Note: Flash Attention works best when the KV Cache capacity is a power of 2.
+			/set parameter num_ctx 4096 
+
+			/bye # Exit the Interactive Session.
+
+		ollama ps # List all running LLMs and their Resource Usage.
+
+		ollama stop <model-name> # Stop a LLM.
+		ollama launch <integration> --model <model-name> # Launch an Integration with a specific LLM.
+	
