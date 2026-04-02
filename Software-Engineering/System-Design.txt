@@ -188,6 +188,7 @@ System Design:
 				Strategies:
 					Failover:
 						Active-Passive: Only one Node is actively handling Requests - the rest of the cloned Nodes are reserved for backup (either in Cold or Hot State). The Active Node is sending a regular heartbeat to the Passive Nodes - after a certain duration of not receiving a heartbeat one of the Passive Nodes takes over the Active Node's IP Address and role.
+							Phi-Accrual Failure Detector to determine probability of a Node / Network Segregation and vary the heartbeat timeout dynamically.
 
 						Active-Active: More than one Node is actively handling Requests. The DNS and Application Logic needs to know about all Active Nodes.
 
