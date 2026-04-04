@@ -31,6 +31,7 @@ Ollama
 
 		export OLLAMA_KEEP_ALIVE=-1 # set OLLAMA_KEEP_ALIVE=-1 for Windows
 
+		# Usually http://localhost:11434/v1
 		ollama serve # Start Ollama Server. # Note: If running in a Windows and developing in WSL2, ensure "mirrored" networkingMode is enabled for WSL2.
 		sudo systemctl restart ollama # Restart Ollama Server.
 		sudo systemctl stop ollama # Stop Ollama Server. # taskkill /F /IM ollama.exe for Windows
