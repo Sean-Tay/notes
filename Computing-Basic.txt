@@ -27,7 +27,7 @@ General Computing Notes:
 		Socket:					Endpoint of a Connection defined by a Network Protocol + IP Address + Port Number.
 
 		Network:				A group of Entities that communicate over a shared medium.
-			Synchronous:		A Network where all Entities get allocated dedicated time to transmit data over. Reacts slower to bursty workloads.
+			Synchronous:		A Network where all Entities (e.g. Voice Calls) get allocated dedicated time to transmit data over. Reacts slower to bursty workloads.
 			Asynchronous:		A Network where Entities can transmit data over at any time. Reacts faster to bursty workloads.
 
 		Multiplexer:			Mechanism for routing multiple inputs into a single channel, based on additional selector inputs.
