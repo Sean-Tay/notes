@@ -250,10 +250,11 @@ System Design:
 		Synchronization in Distributed Systems:
 			Time:
 				Network Time Protocol: Mechanism occasionally used by Machines to synchronize their internal clocks.
+				Time of Day Clock: Uses Network Time Protocol to provide the current time. Note: Treat as Confidence Interval (i.e. 95% sure it is now this time, because clocks can run faster or slower than what NTP prescribes for short periods).
 				Monotonic Clock: Only used to measure Time Deltas - specific value of the Clock means nothing.
 			
 			Consensus: Agreement on something between multiple Nodes.
-				Fencing Token: Token with a monotonically increasing value used in Consensus-based Distributed Scenarios to ensure correct behaviour even when parts of it have been paused / are unreliable. Entities obtain a Token from a Token Service, and will only be successful in performing the operation on another Entity if the other Entity has not seen a Token with a higher value before.
+				Fencing Token: Token with a monotonically increasing value used in Consensus-based Distributed Scenarios to ensure correct behaviour even when parts of it have been paused (i.e. due to heavy GC or Node-level pauses) / are unreliable. Entities obtain a Token from a Token Service, and will only be successful in performing the operation on another Entity if the other Entity has not seen a Token with a higher value before.
 
 			Communication: To distribute information within the Cluster as quickly as possible.
 				Gossip / Epidemic Protocols: Pass information directly from Node to Node (i.e. like an infection spread) instead of using one centralized Coordination Service.
