@@ -377,7 +377,7 @@ Database
 												Level 2: Keys 1 4 7, 10 13 16, ...
 												Level 3: Keys 1 10 19, ...
 
-									Complete Records are only stored at the Leaf Nodes of the Primary Index; the Leaf Nodes of other Indexes map the Key Fields to the Primary Key(s), which can be used with the Primary Index to get the complete Record(s).
+									Complete Records are only stored at the Nodes of the Primary Index; the Leaf Nodes of other Indexes map the Key Fields to the Primary Key(s), which can be used with the Primary Index to get the complete Record(s).
 
 								Behaviour:
 									Time Complexities:
@@ -436,7 +436,7 @@ Database
 
 									B+ Trees Properties:
 										- Does not need to traverse the whole Tree for Sequential Access:
-											- All Non-Leaf Nodes have their Elements in the Leaf Nodes as well.
+											- All Data Pointers stored in the Leaf Nodes.
 											- All Leaf Nodes will be connected together like a Linked List from left to right.
 
 								Pros:
