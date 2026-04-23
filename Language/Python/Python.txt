@@ -23,7 +23,9 @@ Python
 
 		# Math:
 			# Values:
-				float('inf')
+				# Infinity
+					float('-inf')
+					float('inf')
 
 			# Methods:
 				floor()
@@ -50,7 +52,10 @@ Python
 				# ...
 
 			for key, value in enumerate(<iterable>, start=<index>):
-				# ... 
+				# ...
+
+			for value-a, value-b in zip(<iterable-a>, <iterable-b>):
+				# ...
 
 		# Lists:
 			<list-variable> = []
@@ -60,16 +65,17 @@ Python
 
 			# Insert an <item> at the <index>, displacing other subsequent elements forward.
 			<list-variable>.insert(<index>, <item>)
-			<list-variable>.pop(<index>)
-
 			<list-variable>.append(<value>)
 
+			<list-variable>.pop(<index>)
 			item = <list-variable>.pop()
 
 			size = len(<list-variable>)
 
 			# Sort the <list-variable> in-place, using some custom sort function:
 			<list-variable>.sort(key = lambda item: <numerical-order-of-item>)
+			# Returns a sorted copy of <list-variable>:
+			<sorted-list-variable> = <list-variable> = sorted(<list-variable>, key = lambda item: <numerical-order-of-item>)
 
 			# In-Place List Reverse:
 				left_ptr = 0
@@ -81,10 +87,16 @@ Python
 			<set-variable> = set()
 
 			<set-variable>.add(<item>)
-			<set-variable>.remove(<item>)
+
+			<set-variable>.remove(<item>) # Error if <item> is not in <set-variable>
+			<set-variable>.discard(<item>) # No error if <item> is not in <set-variable>
 
 			# Test Membership: item in <set-variable>
 			# Test Non-Membership: item not in <set-variable>
+
+			# Set Union: <set-variable-1> | <set-variable-2>
+			# Set Intersection: <set-variable-1> & <set-variable-2>
+			# Set Difference: <set-variable-1> - <set-variable-2>
 
 		# Dicts / Maps:
 			<map-variable> = {}
