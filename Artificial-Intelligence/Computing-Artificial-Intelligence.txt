@@ -104,9 +104,30 @@ Artificial Intelligence:
 		Agentic Artificial Intelligence:
 			Model Context Protocol:
 				MCP Hosts: Agentic AI Developer Applications (i.e. Claude Code, Cursor, Google Antigravity)
-					MCP Client: Within the MCP Host to manage communicatins to other MCP Servers.
+					MCP Client: Within the MCP Host to manage communicatins to other MCP Servers. One Client connects to one Server.
 
-				MCP Server: Interface for Agentic AIs to interact with other Resources (i.e. Databases, File Systems, APIs), implemented as a Server running alongside the Resource.
+				MCP Server: Serves context data for Agentic AIs to interact with other Resources (i.e. Databases, File Systems, APIs), implemented as a Server running alongside the Resource. One Server can support multiple Clients.
+
+				Data Layer:	Defines the governing logic that decides what Messages are allowed, when they can be sent, and what they signify in the context of an AI session, implemented via JSON-RPC. Implicitly enforced by a State Machine; allowed sequences of Messages that should be sent between Client and Server during an interaction.
+					Lifecycle Management: Handles Connection Initialization, Capability Negotiation and Flow Control throughout the Conversation, Error Semantics, and Connection Termination.
+
+					Client Features: Allows Servers to sample the Host LLM or request User Input via the Client.
+						Primitives: Defines what Clients can offer Servers.
+							Sampling: Allows Servers to sample the Host LLM - useful when Server Authors want access to a Language Model without having to include their own LLM and stay Model-independent.
+							Elicitation: Allows Servers to request User Input via the Client.
+							Logging: Allows Servers to send Log Messages to the Client for debugging purposes.
+
+					Server Features: Allows Servers to provide core functionality.
+						Primitives: Defines what Servers can offer Clients.
+							Tools: Executable Functions that can be called by AI Applications to perform actions (i.e. Database Queries, File System Operations, API Calls).
+							Resources: Data Sources that provide Context Data for AI Applications (i.e. Database Records, Files, API Responses).
+							Prompts: Reusable Templates that help structure interactions with Language Models in the Host (i.e. System Prompts, Few-Shot examples).
+
+					Notifications: For when Servers want to notify Clients of Events (i.e. Resource Updates, Errors) without requiring the Client to respond / poll the Server.
+
+				Transport Layer: Defines the communication mechanisms and channels that enable data exchange between Clients and Servers.
+					STDIO: Standard Input / Output Streams for Hosts and Servers located in the same Machine, providing optimal performance with no additional Network bottleneck.
+					Streamable HTTP: HTTP POST for Client-to-Server Messages, with optional Server-Sent Events for Streaming Capabilities. 
 
 	Commands:
 		Tools:
