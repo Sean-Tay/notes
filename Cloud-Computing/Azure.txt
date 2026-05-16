@@ -249,7 +249,7 @@ Azure
 			Microsoft Entra ID: Microsoft's Cloud Based Identity and Access Management Service. Supports Authentication, Single-Sign On, Application and Device Management.
 				Microsoft Entra Domain Services: Provides Domain Services such as LDAP, Group Policy, Kerberos / NTLM Authentication that support legacy authentication mechanisms.
 
-				Azure Tenant: Dedicated instance of Microsoft Entra ID that represents an organization.
+				Azure Tenant: Dedicated instance of Microsoft Entra ID that represents an organization. This conceptually sits right at the top of the Management Grop hierarchy of an organization.
 
 				Microsoft Entra External ID: Mechanism to allow the organization's Azure Tenant to interact with the profile of Users from other Identity Providers.
 					B2B Collaboration: Lets External Users collaborate in the organization's Microsoft / Enterprise Applications by letting them use their preferred identity from another Identity Provider to sign-on. These are represented in the organization's Azure Tenant as Guest Users.
