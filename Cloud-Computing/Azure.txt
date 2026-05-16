@@ -37,7 +37,11 @@ Azure
 
 		// Managing and Deploying Azure Resources:
 			Azure Portal:	Application that provides a Web UI to manage Azure Resources.
-				Azure Cloud Shell: Provides a Bash or Powershell Environment to execute Azure Commands.
+				Azure Cloud Shell: Provides a Bash or Powershell Environment to execute Azure Commands via a Web Browser, negating the need to install local Dependencies. Useful for quick access (i.e. Mobile Devices), but should not be used to run long-running Scripts (i.e. more than 20 minutes), execute Scripts that require non-standard Dependencies, or operations that require multiple Terminals.
+			
+			Azure CLI: 		Bash Shell runnable on Windows and *nix Environments.
+			Azure Powershell: Powershell Module named Az runnable on Windows and *nix Environments. Requires Windows Powershell or Powershell.
+
 			Azure Arc:		Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models, such as Hybrid or Multi-Cloud, for Servers, VMs, Kubernetes Clusters, SQL Server and Azure Data services.
 			Azure Resource Manager: Deployment and Management Service for Azure.
 				ARM Template: Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to facilitate Infrastructure as Code.
