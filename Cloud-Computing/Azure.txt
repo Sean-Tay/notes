@@ -43,8 +43,10 @@ Azure
 			Azure Powershell: Powershell Module named Az runnable on Windows and *nix Environments. Requires Windows Powershell or Powershell.
 
 			Azure Arc:		Utility to help Organizations manage their Cloud Environment. Supports several Cloud Deployment Models, such as Hybrid or Multi-Cloud, for Servers, VMs, Kubernetes Clusters, SQL Server and Azure Data services.
-			Azure Resource Manager: Deployment and Management Service for Azure.
+			
+			Azure Resource Manager: Deployment and Management Service for Azure. Deploys Resources in a repeatable manner (i.e. idempotent), and in parallel where possible.
 				ARM Template: Specifies configuration of Cloud Resources (Azure / Third-Party / On-Premises) via a declarative JSON format to facilitate Infrastructure as Code.
+					Template Spec: A compiled ARM Template from multiple Linked Templates.
 
 				Azure Blueprint: A collection of one or more ARM Templates.
 
@@ -381,6 +383,30 @@ Azure
 								// parameters('<parameter-name>')
 								// variables('<variable-name>')
 					},
+					"functions": [
+						// ... User-defined Functions ... //
+						{
+							"namespace": "<namespace>",
+							"members": {
+								"<function-name>": {
+									"parameters": [
+										{
+											"name": "<parameter-name>",
+											"type": "<parameter-type>"
+										},
+
+										// ...
+									],
+
+									"output": {
+										"type": "<output-type>",
+										"value": "<output-value>"
+									}
+								}
+							}
+						}, 
+					],
+					"apiProfile": "<api-version>", // Avoid having to specify an apiVersion for each Resource.
 					"resources": [
 						{
 							// For Standalone Resources:
@@ -401,7 +427,7 @@ Azure
 							// ...
 						},
 						{
-							// For Nested Resources (i.e. Resources that have a Parent Resource):
+							// For Dependent Resources (i.e. Resources that have a Parent Resource):
 							"type": "<parent-type>/<child-type>",
 							"name": "[concat('<parent-name>', '/', '<child-name>')]",
 							"dependsOn": [
@@ -409,10 +435,56 @@ Azure
 							],
 
 							// ...
-						}
+						},
 
 						// ...
+
+						// Inline Nested Templates:
+						{
+							"type": "Microsoft.Resources/deployments",
+							"name": "<nested-template-name>",
+							"properties": {
+								"expressionEvaluationOptions": {
+									"scope": "inner" // "inner", or "outer", for inheriting Parent Template variables and types
+								},
+								"mode": "<deployment-mode>", // "Incremental" or "Complete"
+								"template": {
+									// Content beginning from <name>.deploy.json
+									// ...
+								}
+							}
+						},
+
+						// Linked Templates
+						{
+							"type": "Microsoft.Resources/deployments",
+							"name": "<linked-template-name>",
+							"properties": {
+								"mode": "<deployment-mode>", // "Incremental" or "Complete"
+
+								"parameters": {
+									//  ...
+								},
+								// OR
+								"parametersLink": {
+									"uri": "<uri-to-<name>.params.json>", // Has to be stored in a Cloud Storage where ARM can access it
+									"contentVersion": "<version>"
+								},
+
+								"templateLink": {
+									"uri": "<uri-to-<name>.deploy.json>" // Has to be stored in a Cloud Storage where ARM can access it
+									"contentVersion": "<version>"
+								}
+							}
+						},
 					],
+					"output": {
+						"<output-name>": {
+							"value": "<output-value>"
+							"type": "<output-value-type>"
+							"condition": "<condition-if-output-name-should-be-returned>"
+						}
+					},
 
 					// ...
 				}
