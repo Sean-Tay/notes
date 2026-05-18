@@ -1,5 +1,7 @@
 OAuth:
 	Abbreviations:
+		SAML:					Security Assertion Markup Language.
+
 		JWT:					JSON Web Token.
 
 		PKCE:					Proof Key for Code Exchange.
@@ -34,6 +36,16 @@ OAuth:
 
 					This Authentication Token will expire after some time, as determined by the Server, so as to avoid leaking the Authentication Token and allowing a Malicious Entity to impersonate the User on the Application.
 
+			Security Assertion Markup Language (SAML): Pre-OIDC Standard for Authentication.
+				A Service and an Identity Provider will have a pre-established relationship.
+
+				The User (Principal) is registered with an Identity Provider.
+				When the User attempts to access a Service, the Service will redirect the User to the Identity Provider to authenticate.
+				Upon successful Authentication, the Identity Provider will redirect the User back to the Service with a SAML Ticket.
+					The Ticket would contain the User's Identity and full list of Attributes that the User has been granted.
+
+					The Service will then validate the SAML Assertion and allow the User to access the Service.
+
 			API Keys: Mechanism by which a Service allows an Application to use its Resources / perform Actions.
 				Services may expose APIs to allow other Applications to access their information.
 					Spotify API provides Endpoints for almost all of its functionality. This allows other Applications to fetch data from e.g. the Spotify Music Catalogue and manage a User's playlist and saved music.
@@ -46,6 +58,9 @@ OAuth:
 					The Service can then track the type and frequency of Requests that the Service is making. This can then be used to throttle Requests made by a Application to the pre-determined SLA. This prevents Malicious Applications from spamming the Service's Endpoint or abusing User Data, since the Service can just block the Application's assigned API Key to prevent further use by the Malicious Application.
 	
 		OAuth (2007 - Twitter): Standardized Protocol to assist Providers in providing functionality via their APIs to Consumers in a secure way.
+			Previously, User-facing Services which wanted to access the User's data from another Service would ask the User for their Credentials to the Service - this was known as the Password Sharing Anti-Pattern.
+				This also allowed the other Services to have the same level of permissions as the User in the Service. There was no mechanism to share a subset of the User's permissions to the other Service.
+
 			Typical Implementations of API Key Mechanisms are usually limited in the following ways:
 				API Keys don't conveniently allow a User on the Service to block an Application from accessing their Data - they would need to do so in advance on the Service before the Application sends the Request.
 
@@ -76,6 +91,7 @@ OAuth:
 				After selecting the Service, the User will be redirected to the Service to login. This login confirms the User's Identity, and typically provides the User with a list of permissions the originating Application is attempting to gain from the Service.
 
 				If the User confirms that they allow this access, the Service redirects the User back to the originating Application, alongside a Token. This Token is saved by the originating Application, and sent with subsequent Requests to the Service API to prove that the User has granted access to the Application, and retrieve the appropriate User Data (without it the API will reject the Request).
+					Compare this to SAML which returns all User Information in the Ticket.
 
 				When a User returns to the Application, the Token is retrieved and the User will not have to Authenticate again on the Service (unless the Token has expired).
 
@@ -201,25 +217,35 @@ OAuth:
 					Impersonation
 					Delegation
 
-		OIDC (2014): Builds on top of OAuth 2's Authorization Code Flow to provide Authentication functionality.
+		SCIM (2012): An open RESTful API standard for automating the synchronization of / CRUD User Account Information between an Identity Provider and a Service / another Identity Provider.
+			Useful for Stateful Applications (i.e. Slack, Salesforce) that need User Profiles to track User Activity within them.
+				If SCIM is not used, the Application would need to create a Just-in-Time User Account for the User in its own Identity Management Solution when the User first logs in manually.
+				If SCIM is used, an Admin of the Identity Provider can trigger provisioning of the User Account in the Application's Identity Management Solution before the User even first logs in.
+
+		OIDC (2014): Builds on top of OAuth 2's Authorization Code Flow to provide Authentication functionality. Considered a successor to SAML.
 			Implementation Details:
-				Introduces a nonce Param for /authorize Calls to prevent Replay Attacks.
-					The Service generates a nonce for the session and sends it with the /authorize Call to the Provider.
-					The Service checks if the nonce received as part of the id_token from the /token Call to the Provider matches the one it sent to the /authorize Call in this session.
-						This prevents replaying of past id_tokens from Malicious Entities back to the Service, as the nonce in the replayed id_token will not match the one the Service sent to the current /authorize Call.
-							This prevents the Malicious Entity from impersonating as the User in the Authentication Process.
+				Primarily uses RESTful APIs, which work better for SPAs than SAML's redirection mechanisms.
+					Introduces a User Info Endpoint that returns additional User Information.
+						/userinfo (supply the usual access_token).
 
-						Even if the replayed id_token contained the correct nonce for this session, it would be invalidated as the Service has already seen it before (i.e. assuming the malicious id_token was re-sent to the Service after the first instance).
+					Introduces a nonce Param for /authorize Calls to prevent Replay Attacks.
+						The Service generates a nonce for the session and sends it with the /authorize Call to the Provider.
+						The Service checks if the nonce received as part of the id_token from the /token Call to the Provider matches the one it sent to the /authorize Call in this session.
+							This prevents replaying of past id_tokens from Malicious Entities back to the Service, as the nonce in the replayed id_token will not match the one the Service sent to the current /authorize Call.
+								This prevents the Malicious Entity from impersonating as the User in the Authentication Process.
 
-				Introduces standardized scopes for the /authorize Call:
-					openid
-					profile
-					email
+							Even if the replayed id_token contained the correct nonce for this session, it would be invalidated as the Service has already seen it before (i.e. assuming the malicious id_token was re-sent to the Service after the first instance).
+
+					Introduces standardized scopes for the /authorize Call:
+						openid
+						profile
+						email
 
 				Returns an id_token JWT during the /token Call containing User Information.
 					Typically in the format of <header>.<payload>.<signature>. Split the JWT String via the dot delimiters.
 						Base-64 decrypt the <payload>.
 						The <signature> can be verified with a call to the Provider's .well-known / jwks.json Endpoint.
+					
+					This was significantly less resource intensive to process than SAML's XML Payload.
 
-				Introduces a User Info Endpoint that returns additional User Information.
-					/userinfo (supply the usual access_token).
+
