@@ -245,18 +245,15 @@ Azure
 				Azure Data Box: Physical migration service via a proprietary 80TB storage device to help transfer large amounts of data without the need for Network Connectivity.
 
 		Security:
-			Active Directory: On-Prem Identity and Access Management Service running on a Windows Server. Does not monitor sign-in attempts, unless linked to Microsoft Entra ID via Microsoft Entra Connect, which synchronizes between the two one-way, from Active Directory to Microsoft Entra ID.
-			Microsoft Entra ID: Microsoft's Cloud Based Identity and Access Management Service. Supports Authentication, Single-Sign On, Application and Device Management.
-				Microsoft Entra Domain Services: Provides Domain Services such as LDAP, Group Policy, Kerberos / NTLM Authentication that support legacy authentication mechanisms.
+			Active Directory: Legacy On-Prem Identity and Access Management Service running on a Windows Server.
+				Active Directory Federation Service: On-Premise Web Authentication Gateway which translates OAuth / OIDC Calls to Active Directory compatible protocols such as Kerberos and NTLM to allow Cloud Services to federate to the legacy On Prem Active Directory Instance.
 
+			Azure Active Directory: Cloud-based Identity Provider. Not just a Cloud-hosted version of Active Directory - typically works together with On-Prem Active Directory to support Hybrid Authentication.
 				Azure Tenant: Dedicated instance of Microsoft Entra ID that represents an organization. This conceptually sits right at the top of the Management Grop hierarchy of an organization.
+				Azure AD Roles: Management Roles for managing the Azure Tenant and its Users.
+					Privileged Identity Management: Provides JIT, Time-Bound elevated access to Administrative Roles.
 
-				Microsoft Entra External ID: Mechanism to allow the organization's Azure Tenant to interact with the profile of Users from other Identity Providers.
-					B2B Collaboration: Lets External Users collaborate in the organization's Microsoft / Enterprise Applications by letting them use their preferred identity from another Identity Provider to sign-on. These are represented in the organization's Azure Tenant as Guest Users.
-					B2B Direct Connect: Establish a mutual, two-way trust with another Microsoft Entra Instance. Collaboration supported in Teams.
-					Azure Active Directory B2C: Allows access to SaaS / Custom Apps to Consumers and Customers by controlling the Identity and Access Management.
-
-				// Authentication Mechanisms:
+				Core Authentication Mechanisms:
 					Single Sign-On: Enables a User to sign in one time, and use that credential for access to multiple resources and applications from different providers that trust the Authenticator.
 					Multi-Factor Authentication: Process of prompting the User for an extra form of identification during the sign-in process, protecting against the scenario where the password was compromised.
 					Passwordless Authentication: A more User-friendly approach to Multi-Factor Authentication, replaces a password with a User's Device.
@@ -264,8 +261,36 @@ Azure
 						Microsoft Authenticator App: Phone App.
 						FIDO2 Security Key: Involves a Physical Device.
 
-					Conditional Access: Allow or Deny access, either partially or fully, to protected resources based on Identity Signals, such as a User's Location, or the Device being used to login.
-					Role-Based Access Control (RBAC): Sets pre-defined or custom Access Permissions to a Scope (i.e. Management Groups, Subscriptions, Resource Group, or a Resource), which is enforced on every Request to ARM.
+				Conditional Access: Security Policy Engine - allow or deny access, either partially or fully, to protected resources based on Identity Signals, such as a User's Location, or the Device being used to login, or even Terms of Use via an uploaded Document.
+				Identity Protection: Evaluates Risk Signals based on typical User Behaviour (i.e. logging in from a new location). Works together with Conditional Access to dynamically require a User to use stronger Authentication Methods.
+					Sign-In Risk Policy: Forces a Multi-Factor Authentication if User Activity is anormalous.
+					User-Risk Policy: Forces a Secure Password Reset if the User's Identity is compromised.
+
+				Azure External ID: Mechanism to allow the organization's Azure Tenant to interact with the profile of Users from other Identity Providers.
+					B2B Collaboration: Invites "Guest Users" from other Identity Providers into the organization's Azure Tenant to support collaboration.
+					B2B Direct Connect: Establish a mutual, two-way trust with another Azure Active Directory Instance. Collaboration supported in Teams.
+					B2C: Allows access to SaaS / Custom Apps to Consumers and Customers by controlling the Identity and Access Management, via a special Azure Active Directory.
+
+				Azure AD Domain Services: Provides Domain Services such as LDAP, Group Policy, Kerberos / NTLM Authentication that support legacy authentication mechanisms. Replicates information from Azure Active Directory to these managed Active Directory Domain Controllers.
+				Azure AD Connect: Synchronizes On-Prem Active Directory with Azure Active Directory. Can be used together with Active Directory Federation Services to support Hybrid Authentication.
+					Seamless Single Sign-On: Enables a User to sign in to Azure AD-joined devices without having to enter their password multiple times via a Kerberos Ticket.
+				Microsoft Defender for Identity: Protects against Active Directory Attacks for On-Prem Active Directory.
+
+				Azure AD Join: Allows Administrators to manage the security of devices that are joined to Azure AD, and to control access to company resources.
+
+				Microsoft Authentication Library: App Library that handles OAuth / OIDC Token Lifecycle Management (i.e. does the Token need a refresh).
+
+			Microsoft Entra ID: A rebranding of Azure Active Directory which involved adding more features on top of Azure Active Directory.
+				Entra ID Governance: Automated Full Lifecycle Management of Identities via Lifecycle Workflows.
+
+				Entra Internet Access: Additionally protects a User browsing the Open Web after Authentication.
+				Entra Private Access: Replaces a traditional enterprise VPN with a Cloud-native Identity-centric one, checking Conditional Access Policies on a per-App basis at the Network Level.
+
+				Cloud Infrastructure Entitlement Management (CIEM): Multi-Cloud Permissions Management from a single Control Plane.
+
+				Entra Verified Identity: Decentralized Identity Verification System that allows Users to prove their Identity to a Verifier without exposing their Personal Information.
+
+				Entra Workload Identity: Supports Identities for non Human Users / Principals.
 
 			Microsoft Defender for Cloud: Monitoring Tool for Security Posture measurement and Threat Protection, with capabilities to extend to On-Prem, Hybrid, and Multi-Cloud Environments.
 				// Protection Coverage:
