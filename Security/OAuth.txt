@@ -221,6 +221,7 @@ OAuth:
 			Useful for Stateful Applications (i.e. Slack, Salesforce) that need User Profiles to track User Activity within them.
 				If SCIM is not used, the Application would need to create a Just-in-Time User Account for the User in its own Identity Management Solution when the User first logs in manually.
 				If SCIM is used, an Admin of the Identity Provider can trigger provisioning of the User Account in the Application's Identity Management Solution before the User even first logs in.
+					Added advantage - the User's Account can be synchronized across multiple Applications that use the same Identity Provider; the Account can be deactivated or changed from one place.
 
 		OIDC (2014): Builds on top of OAuth 2's Authorization Code Flow to provide Authentication functionality. Considered a successor to SAML.
 			Implementation Details:
