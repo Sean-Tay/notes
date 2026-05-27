@@ -272,6 +272,8 @@ MongoDB:
 			Shard Keys cannot be made up of more than one Field.
 			Unsharded Collections can only go up to 20 GB.
 			Once a Collection reaches 80GB, Azure will automatically start to shard the Collections automatically. RU/s capacity will then be split across the Shards.
+				New Machines provisioned as a result of this partitioning will incur additional costs.
+				There is no official way to merge back split Partitions.
 
 			Azure disallows Search Queries involving Fields that don't have associated Indexes defined.
 			Unique Indexes have to be defined upon Collection Creation.
