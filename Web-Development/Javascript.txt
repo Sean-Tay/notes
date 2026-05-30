@@ -1288,6 +1288,90 @@ Javascript
 					mode: {'open' | 'close'} // Allow if outside JS can access the Shadow DOM Tree.
 				});
 
+			Web Components: Custom HTML Elements that can be used to encapsulate reusable functionality.
+				// Implemented as a Class which extends either HTMLElement (for Autonomous Elements), or an Interface of the In-Built Element (e.g. <p>).
+				class CustomElement extends HTMLElement { // or HTML<Built-In-Element>Element, for e.g. HTMLParagraphElement for <p>
+					static observedAttributes = [ // List of Attributes to observe for changes.
+						'<attribute-name>',
+						// ...
+					]; 
+
+					constructor() {
+						super(); // This needs to be called before any other statements in the constructor.
+
+						// ...
+					}
+
+					// Lifecycle Callbacks - Triggered whenever the Page Code interacts with the Custom Element.
+						// Called when the Custom Element is first connected to the DOM Tree.
+						connectedCallback() {
+							// ...
+						}
+
+						// Called when the Custom Element is disconnected from the DOM Tree.
+						disconnectedCallback() {
+							// ...
+						}
+
+						// If this is defined, this is called instead of connectedCallback / disconnectedCallback when the Custom Element is moved to a different place in the DOM
+						connectedMoveCallback() {
+							// ...
+						}
+
+						// Called when an Attribute of the Custom Element is added, removed, updated, or replaced.
+						// Note: The attribute must be specified in the static observedAttributes getter.
+						attributeChangedCallback(name, oldValue, newValue) {
+							// ...
+						}
+
+						// Called when the Custom Element is moved to a new Document.
+						adoptedCallback() {
+							// ...
+						}
+
+					// ... implement custom Element functionality ...
+				}
+
+				// Register the Custom Element with the Browser.
+					// In the Global Scope
+					customElements.define(
+						'<custom-element-name>', // The name of the Custom Element must be lower-case, and contain a hyphen.
+						CustomElement, 
+						{ extends: '<built-in-element-name>' } // For Customized Built-In Elements only.
+					); 
+
+					// In a Custom Scoped Registry, whose definitions only apply to a specific section of the DOM Tree, such as a Shadow Tree.
+					// Note: This does not support Customized Built-In Elements.
+						const registry = new CustomElementRegistry();
+						registry.define(
+							'<custom-element-name>',
+							class extends HTMLElement {
+								// ...
+							}, 
+							// Note: No support for 'extends', and therefore Customized Built-In Elements
+						);
+
+						// Attach the Registry to a Shadow Root
+						const shadowRoot = document.getElementById('...').attachShadow({ mode: 'open' });
+						shadowRoot.attachShadow({
+							mode: "open",
+							customElementRegistry: registry
+						})
+
+						// OR
+
+						// If the Shadow Root has already been created, use the following instead:
+						registry.initialize(shadowRoot)
+
+				// Usage
+					// Autonomous Element:
+					<custom-element-name></custom-element-name>
+
+					// Custom In-Built Element: 
+					<p is="<custom-element-name>" >
+						<!-- ... -->
+					</p>
+
 		Resize Observer: To do something when there are Size Changes detected in one or more Observed DOM Elements.
 			const observer = new ResizeObserver(
 				// Callback that executes whenever a Resize of the Observed Targets are detected.
