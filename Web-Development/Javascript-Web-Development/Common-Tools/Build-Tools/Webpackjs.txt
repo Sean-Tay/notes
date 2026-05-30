@@ -368,6 +368,8 @@ Webpack.js
 						babel-loader								// Enables JS Transpilation.
 						@babel/core									
 						@babel/preset-env							// Use Latest Javascript / ESNext.
+						@babel/preset-react							// Transforms React syntax.
+						@babel/preset-typescript					// Strips away Typescript.
 
 						// Note: For resolving async / await Arrow Function Errors:
 						@babel/plugin-transform-runtime				// Allow for re-use of Babel's Injected Helper Code.
