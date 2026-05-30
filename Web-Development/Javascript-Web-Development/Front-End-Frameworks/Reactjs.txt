@@ -791,6 +791,7 @@ React.js
 
 			Application Rendering:
 				React <= v17:
+					import ReactDOM from 'react-dom';
 					let ExampleComponentElement = React.createElement(ExampleComponent, propsObject, ... children);
 					ReactDOM.render(ExampleComponentElement, document.getElementById('...')); // Actually mount to DOM.
 
@@ -805,7 +806,8 @@ React.js
 					// React.Children API Methods.
 
 				React >= v18:
-					const root = ReactDOM.createRoot(document.getElementById('...'));
+					import { createRoot } from 'react-dom/client';
+					const root = createRoot(document.getElementById('...'));
 					root.render(<ExampleComponent />);
 		
 		React Form: Modified HTML Form that uses React State as a single-source of truth.
