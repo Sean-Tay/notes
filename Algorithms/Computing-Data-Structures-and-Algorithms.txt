@@ -472,6 +472,23 @@
 			Counting Sort:
 
 			Bucket Sort:
+
+			Cyclic Sort: Sorts an Array containing 1 .. n+1 Element Values in O(n) Time Complexity.
+				Without Duplicates - Total Ordering; All Elements in their correct places at the end.
+				With Missing Values from the 1 .. n+1 Range / Garbage Elements (Duplicates or Elements < 1 or Elements > n) - Partial Ordering; All non-Garbage Elements in correct places, Garbage Elements take up the positions of the missing Element Values
+
+				Key Idea: Initialize a Pointer at the leftmost Element and check:
+					If the Element is within 1 .. n+1 and the Element at the Pointer denotes an Index in the Array where that Element does not correspond to the current Element, swap. Do not advance the Pointer in this case, as the swapped Element might not be in the correct place either.
+					Otherwise, advance the Pointer.
+
+					Loop until the Pointer reaches the end.
+
+				Questions: 
+					Find Missing Positive
+					Find All Duplicates
+					Find All Disappeared Numbers
+					Find the Duplicate Number
+					Set Mismatch
 	
 	Binary Search:
 		- Time Complexity: O(logn)
