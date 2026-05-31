@@ -27,6 +27,20 @@
 			Linked List: Dequeue at Head, Enqueue at Tail.
 
 	Stack: LIFO Data Structure.
+		Monotonic Stack: A variant of a Stack that only stores non-Decreasing / non-Increasing Elements.
+			Key Idea:
+				Upon encountering an Element that would violate the above constraint, pop Elements until the current Element can be inserted.
+				The popped off Elements, or the Element immediately behind the Element to be inserted, may be of some value.
+
+			Trigger:
+				Next Greater / Smaller Element to the Left / Right
+
+			Questions:
+				Next Greater Element 1 / 2 / 3
+				Daily Temperatures
+				Largest Rectangle in Histogram
+				Trapping Rain Water
+				Sum of Subarray Minimums
 
 	Hash Table: Maps Keys to the Values they represent via a Hashing Function that efficiently determines Value location within the Data Structure.
 		- Time Complexities:
@@ -482,6 +496,10 @@
 					Otherwise, advance the Pointer.
 
 					Loop until the Pointer reaches the end.
+
+				Trigger:
+					O(1) Extra Space
+					Integer Values bounded by Array Length
 
 				Questions: 
 					Find Missing Positive
