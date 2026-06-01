@@ -34,9 +34,11 @@ Jest
 			jest				
 			@types/jest			Allows Intellisense to properly work in Jest Test Files with Typescript.
 
-			babel-jest			Allows usage of Babel with Jest.
-
 			ts-jest				Allows Jest to preprocess TypeScript Test Files.
+			babel-jest			Use Babel to strip away TypeScript for Jest interpretation.
+			@swc/jest			Use @swc/jest to strip away TypeScript for Jest interpretation.
+
+			jest-environment-jsdom Package to add Jest Methods for testing Browser DOM. Standalone Package since Jest v28.
 
 			moxios 				Used for Mocking Axios Calls.
 
@@ -52,7 +54,8 @@ Jest
 				// Note: Jest can only parse Javascript by default.
 				"transform": { 
 					"<file-name-regex>": "<parser>",
-					"^.+\\.(ts|tsx)$": "ts-jest"
+
+					"^.+\\.(ts|tsx)$": "ts-jest", // or @swc/jest
 				},
 
 				// Specify Setup Files that configures the Testing Environment before other Test Frameworks are installed.
