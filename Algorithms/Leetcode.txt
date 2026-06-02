@@ -1,0 +1,116 @@
+Hash Maps
+	Questions:
+		Two Sum + Variants
+		Frequency Counting
+		Grouping
+
+Two Pointers
+	Questions:
+		Sorted Array Problems
+		Container with Most Water
+		Palindrome Checking
+
+		Dutch National Flag // 3 Pointers
+
+Sliding Window
+	Questions:
+		Max Subarray of Size k
+		Longest Substring without Repeating Characters
+		Minimum Window Substring
+
+Binary Search
+	Questions:
+		Search in Rotated Array
+		Find First / Last Position
+		Search 2D Matrix
+
+Sorting + Intervals
+	Questions:
+		Merge Intervals
+		Insert Intervals
+		Meeting Rooms 1 and 2
+
+Stack
+	Questions:
+		Valid Parenthesis
+
+	Monotonic Stack: A variant of a Stack that only stores non-Decreasing / non-Increasing Elements.
+		Key Idea:
+			Upon encountering an Element that would violate the above constraint, pop Elements until the current Element can be inserted.
+			The popped off Elements, or the Element immediately behind the Element to be inserted, may be of some value.
+
+		Trigger:
+			Next Greater / Smaller Element to the Left / Right
+
+		Questions:
+			Next Greater Element 1 / 2 / 3
+			Daily Temperatures
+			Largest Rectangle in Histogram
+			Trapping Rain Water
+			Sum of Subarray Minimums
+
+BFS / DFS on Trees
+	Questions:
+		Max Depth
+		Level Order Traversal
+		Validate BST
+		Lowest Common Ancestor
+
+BFS / DFS on Graphs
+	Questions:
+		Number of Islands
+		Course Schedule (Topological Order)
+		Clone Graph
+
+Linked Lists
+	Questions:
+		Reverse
+		Detect Cycle
+		Merge Two / n Sorted
+		Remove nth From End
+
+Heaps
+	Questions:
+		Top k Elements
+		Merge k Sorted Lists
+		Median from Data Stream
+
+Prefix Sums
+	Questions:
+		Subarray Sum Equals k
+		Range Sum Queries
+
+Backtracking
+	Questions:
+		Permutations
+		Combinations
+		Subsets
+
+Dynamic Programming
+	Questions:
+		Climbing Stairs
+		Coin Change
+		Longest Common Subsequence
+
+Cyclic Sort: Sorts an Array containing 1 .. n+1 Element Values in O(n) Time Complexity.
+	Without Duplicates - Total Ordering; All Elements in their correct places at the end.
+	With Missing Values from the 1 .. n+1 Range / Garbage Elements (Duplicates or Elements < 1 or Elements > n) - Partial Ordering; All non-Garbage Elements in correct places, Garbage Elements take up the positions of the missing Element Values
+
+	Key Idea: Initialize a Pointer at the leftmost Element and check:
+		If the Element is within 1 .. n+1 and the Element at the Pointer denotes an Index in the Array where that Element does not correspond to the current Element, swap. Do not advance the Pointer in this case, as the swapped Element might not be in the correct place either.
+		Otherwise, advance the Pointer.
+
+		Loop until the Pointer reaches the end.
+
+	Trigger:
+		O(1) Extra Space
+		Integer Values bounded by Array Length
+
+	Questions: 
+		Find Missing Positive
+		Find All Duplicates
+		Find All Disappeared Numbers
+		Find the Duplicate Number
+		Set Mismatch
+
+Trie
