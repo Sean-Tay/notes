@@ -4,6 +4,24 @@ Hash Maps
 		Frequency Counting
 		Grouping
 
+	Prefix Sums: 
+		Questions:
+			Subarray Sum Equals k
+			Continuous Subarray Sum
+			Contiguous Array - Count Subarrays with Equal 0s and 1s
+			Subarray Sums Divisible by k
+
+			Subarrays with Given Sum and Bounded Maximum 
+				Key Idea:
+					Track:
+						seen HashMap - Number of times a Prefix Sum (i.e. as the key to the Hash Map) has been seen so far (i.e. the corresponding value in the Hash Map); dynamically update it while going through Number Array.
+						current_prefix_sum
+
+					At the current position j, we would need the Prefix Sum at a position i to be the current_prefix_sum - k, since we want k and k = current_prefix_sum - prefix_sum_at_i
+						There can be multiple such position i's, hence we reference seen[curr_prefix_sum - k] rather than seen[k]
+
+					Reset both tracked variables upon encountering Element > Maximum
+
 Two Pointers
 	Questions:
 		Sorted Array Problems
