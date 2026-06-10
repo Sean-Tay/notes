@@ -36,13 +36,41 @@ Artificial Intelligence:
 					q8_0
 					q4_0
 
-				Flash Attention: Algorithm that reduces the Memory Bandwidth and Computational Requirements of the Attention Mechanism.
-
 				Context Length: The maximum number of Tokens that the LLM can process at once, per prompt.
 					Architectural: The number of Tokens that the LLM was built to process.
 					Effective: The number of Tokens that the LLM can actually process, based on the current Resource Constraints.
 
-				KV Cache: Time Optimization technique that stores intermediate results of the Attention Mechanism, which allows the LLM to reuse the results for generating subsequent Tokens, instead of having to reprocess all prior Tokens. In practice, this is the Runtime Representation of the Context for a Task.
+				Context Window: Same as the Context Length, but leans more towards defining the Active Memory Space in the Model.
+
+				Token: A unit of Data (i.e. words, sub-words).
+				Vector: Each Token is encoded as a Vector (i.e. Array of Numbers).
+				Embedding: Vectors that have been converted by a Transformer to embed additional Linguistic and Semantic information about the Token, based on what was presented in the Training Data.
+
+				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings).
+					A Model has several internal Model Matrices based on Training Data.
+
+					Each Token's Vector is multiplied by 3 different internal Model Matrices, to determine the Query, Key and Value Vectors.
+						Query: What information am I looking for?
+						Key: What kind of information do I contain?
+						Value: Actual Token Content.
+
+					The Key and Value Vectors for a Token would not change for the exact same Inputs.
+						They do change based on the position of the Token in the Input, due to Positional Encoding.
+
+					The Model then multiplies the Query of each Token against the Key of every other Token in the Current Context Window to determine the respective Attention Weights that the current Token should give to all other Tokens.
+
+					Finally, the Contextual Embedding for a Token is generated when the Model blends all the Value Vectors of relevant-enough Tokens together, as calculated by the Attention Weights.
+
+					An Autoregressive Mechanism within the Model predicts one new Token based on all generated Contextual Embeddings. The Attention Mechanism then recalculates the Contextual Embeddings for the Input and this new Token, and then uses the Autoregressive Mechanism again to generate another new Token. 
+						The Autoregressive and Attention Mechanisms run in a loop until the complete response is generated.
+
+						Temperature: The amount of variance to use when determining the next Token to pick, based on the Attention Weights. Lower Temperatures induce more determinism and subsequently less creativity in the Response.
+						Top-P Sampling: Instruct the Model to only look at the Tokens that make up the top 90% of the Attention Weight scale (i.e. ignore uncommon relationships, such as Banana -> Computer).
+
+						KV Cache: Optimization Technique to cache the calculated Key & Value Vectors for already processed Tokens. Casual Masking ensures that only newer Tokens reference the information from older Tokens, not the other way around.
+
+				Multi-Head Attention: Technique that gives the Model deeper understanding of the Context Window. Each Token's Vector is split into multiple smaller Vectors called Heads, so that the Key-Value Matchmaking can be computed across more than one dimension at the same time (i.e. Grammar, Pronoun Resolution, etc.). However, this requires more Internal Matrices for each additional dimension.
+				Flash Attention: Instead of tracking the relationships of Tokens with every other Token in the Context Window, the Model breaks them into small Blocks which can fit into faster SRAM. Online Softmax Re-scaling assures that this chunking technique does not result in the loss of context across the entire Context Window.
 
 		Agentic Artificial Intelligence: A class of AI technologies that is capable of autonomously performing tasks, making decisions and interacting with its environment, based on its Training Data and Input Parameters.
 			Chain-of-Thought: A technique which encourages the Model to introspect and craft a step-by-step reasoning process to solve a given problem.
