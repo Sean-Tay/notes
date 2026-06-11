@@ -727,12 +727,18 @@ Kotlin
 										// withContext(<coroutine-context>) { // ... }: Allows for swtiching / defining the CoroutineContext midway within the parent CoroutineScope.
 
 								// CoroutineContext: The Object that holds the Execution Metadata of a CoroutineScope.
-									// Note: Optional to pass this into a CoroutineScope. If no CoroutineContext is passed (i.e. no ThreadDispatcher specified), it uses the current running Thread, otherwise a pool of other Threads is used (i.e. Parellelism enabled, not just Concurrency).
+									// Note: Optional to pass this into a CoroutineScope. If no CoroutineContext is passed (i.e. no ThreadDispatcher or CoroutineDispatcher specified), it uses the current running Thread, otherwise a pool of other Threads is used (i.e. Parellelism enabled, not just Concurrency).
 
 									// Thread Dispatcher Types:
 										// Dispatchers.Default: Coroutines defined within the Scope will run on a Thread specialized for CPU intensive work.
 										// Dispatchers.IO: Coroutines defined within the Scope will run on a Thread specialized for IO intensive work (i.e. Blocking Workloads).
 										// Dispatchers.Unconfined: Coroutines defined within the Scope will run on any Thread / or a single Thread.
+
+									// CoroutineDispatcher:
+										import kotlinx.coroutines.asCoroutineDispatcher
+
+										// ExecutorCoroutineDispatcher inherits from the CoroutineDispatcher Abstract Class, which implements the CoroutineContext Interface via the ContinuationInterceptor -> CoroutineContext.Element -> CoroutineContext chain.
+										val dispatcher = Executors.newFixedThreadPool(<maximum-number-of-threads-to-grow-to>).asCoroutineDispatcher()
 
 							// Utility:
 								// suspendCoroutine: Similar to a Promisify operation in JavaScript - allows wraparound of Asynchronous APIs implemented by Callback Handlers so that Coroutines executing these are suspended properly:
@@ -929,6 +935,19 @@ Kotlin
 											// ...
 										}
 									}
+
+								// CyclicBarrier: Physical Thread Barrier; Threads wait for each other upon encountering this checkpoint, before moving forward together.
+									val barrier = CyclicBarrier(<number-of-threads-to-wait-for>)
+
+									// ...
+
+									barrier.await()
+
+									// ... reusable ...
+									
+									barrier.await()
+
+									// ...
 
 				// Date:
 					// Point in Time via UTC (replaces java.util.Date & java.util.Timestamp with java.time.Instant)
