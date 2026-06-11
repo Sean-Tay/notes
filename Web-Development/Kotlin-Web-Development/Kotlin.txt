@@ -766,6 +766,8 @@ Kotlin
 										})
 									}
 
+									// Note: Typically, the OS provides support for certain asynchronous APIs, which Java wraps around in certain native libraries in a non-Blocking manner with callback mechanisms. However, it is also possible for Applications to define their own blocking workloads on separate Threads and await their completion via custom callbacks (i.e. CompletableFuture / CompletableDeferred).
+
 								// Control-Flow:
 									// Mutexes (Coroutine-variant): Suspends the Coroutine attempting to access the shared Resource if another Coroutine is already using it.
 										// Note: Better than blocking the Thread with the suspension Block, as it removes a Thread from the pool that can execute Coroutines for the duration.
@@ -782,7 +784,7 @@ Kotlin
 											}
 										}
 
-									// CompletableDeferred: Can be used to stop all Coroutines when they reach a specfic point.
+									// CompletableDeferred: Can be used to stop all Coroutines when they reach a specfic point. The Kotlin Coroutine equivalent of CompletableFuture.
 										fun main() {
 											runBlocking {
 												val handle = CompletableDeferred()
