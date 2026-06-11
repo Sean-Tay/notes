@@ -264,8 +264,10 @@ Node.js:
 				}
 
 			npm - A Build Tool / Package Manager for a Node Project. Skip to yarn if possible.
-				npm config set @<scope>:registry <registry-url>			# Globally set npm to reference another Node Registry when referencing Scoped Node Dependencies.
-					// Config File for Local Project: .npmrc
+				// Config File for Local Project: .npmrc
+					npm config set @<scope>:registry <registry-url>		# Set npm to reference another Node Registry when referencing Scoped Node Dependencies.
+					
+					min-release-age=<n>									# Set the minimum age in days for a Node Package to be considered for installation.
 
 				npm install -g node 									# Update Node.
 				npm install -g npm stable								# Update npm.
@@ -304,8 +306,10 @@ Node.js:
 				npm publish "<file-path>"								# Publish a Node Dependency rooted at <file-path> to a Node Registry.
 			
 			yarn - A better version of npm. Avoid installing with npm - install separately.
-				yarn config set registry <registry-url>					# Globally set yarn to reference another Node Registry when referencing Scoped Node Dependencies.
-					// Config File for Local Project: .yarnrc
+				// Config File for Local Project: .yarnrc
+					yarn config set registry <registry-url>				# Set yarn to reference another Node Registry when referencing Scoped Node Dependencies.
+					
+					npmMinimalAgeGate: <n>d								# Set the minimum age in days for a Node Package to be considered for installation.
 
 				yarn init												# Initialize a new Node Project.
 					-2 													# Initialize a new Node Project with yarn 2. Better expected behaviour (e.g. installs Peer Dependencies by default).
@@ -329,6 +333,9 @@ Node.js:
 				yarn [run] <command> [<arg>, ...]						# Execute a <command> (script) that was specified as a property within the "scripts" Object of package.json.
 
 			pnpm - Superior version to npn and possibly yarn.
+				// pnpm-workspace.yaml
+					minimumReleaseAge: <n>								# Set the minimum age in minutes for a Node Package to be considered for installation.
+
 				pnpm init 												# Initialize a new Node Project.
 
 				pnpm install											# Add all Node Dependency specified within a package.json locally to the current Node Project.
