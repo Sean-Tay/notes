@@ -42,14 +42,18 @@ Artificial Intelligence:
 
 				Context Window: Same as the Context Length, but leans more towards defining the Active Memory Space in the Model.
 
+				Corpus: The initial body of Text.
 				Token: A unit of Data (i.e. words, sub-words).
 				Vector: Each Token is encoded as a Vector (i.e. Array of Numbers).
-				Embedding: Vectors that have been converted by a Transformer to embed additional Linguistic and Semantic information about the Token, based on what was presented in the Training Data.
+				Embedding: A specific type of Vector that captures Semantic meaning, mapping Tokens into a continuous Vector Space where Tokens with similar meanings sit closer to each other.
+					Static Embedding: Embeddings generated from what was learnt by the Model during training (i.e. via a "static lookup table" for Embedding values). 
+
+					Contextualized Embedding: Embeddings whose values shift based on the surrounding tokens in the Prompt, not just on what was learnt by the Model during training.
 
 				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings).
 					A Model has several internal Model Matrices based on Training Data.
 
-					Each Token's Vector is multiplied by 3 different internal Model Matrices, to determine the Query, Key and Value Vectors.
+					As part of initial Text Analysis, each Token's Vector is multiplied by 3 different internal Model Matrices, to determine the Query, Key and Value Vectors.
 						Query: What information am I looking for?
 						Key: What kind of information do I contain?
 						Value: Actual Token Content.
