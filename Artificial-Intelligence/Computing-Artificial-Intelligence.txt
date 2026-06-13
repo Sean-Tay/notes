@@ -133,6 +133,39 @@ Artificial Intelligence:
 
 				Domain-specific LLMs: An LLM that has been built on domain-specific Data from the ground up.
 
+				Obtaining Context:
+					Text Preprocessing Techniques:
+						Text Normalization: Lower-case standardization, etc.
+						Stop Word Removal: Exclude words that do not hold significant meaning (i.e. the).
+						N-gram Extraction: Finding multi-term phrases.
+						Stemming: Converting different forms of the same word to the same word by stripping the suffix (i.e. ending / ended -> end ).
+						Lemmatization: Similar to Stemming, but uses actual linguistical rules to convert the words (i.e. global -> globe).
+						Parts of Speech Tagging: Labelling each word with the grammatical category (i.e. noun, adjective, word).
+
+					Text Analysis: Traditionally done using Statistical Models, Semantic Models have overtaken Statistical Models for common Text Analysis Tasks.
+						Types:
+							Text Summarization
+							Text / Document Classification
+							Keyword Extraction
+							Named Entity Recognition
+
+						Statistical Models:
+							Frequency Counting: Counts the number of times each word appears. The most common words will typically express the meaning of the overall Corpus. Helps with Text Summarization.
+
+							Term Frequency - Inverse Document Frequency: Weighs relevance of a Term, both within a Document, and across Documents. The more it appears within a single Document + less it appears across all Documents, the more significant the Term is. Helps to differentiate between multiple Documents in the same Corpus.
+
+							Bag of Words - Feature (i.e. Machine Learning) Extraction Technique to represent Text Tokens as a Vector of Word Frequencies or Occurrences ignoring Grammar or Word Order. Helps with Document Classification.
+
+							TextRank - Unsupervised Graph Algorithm that models Text / Sentences as a network of connected Nodes, with Edges representing similarity of contained Words. Nodes with high number of connected Edges are then extracted for the purposes of summarizing the overall Corpus.
+								Extractive Summarization: No new Text is generated from the analysis.
+								Abstractive Summarization: New Text is generated from the analysis, based on new Semantic modelling techniques.
+
+						Semantic Models:
+							Embedding: Represent Words as Vectors that capture the Semantic meaning of the Word within the Corpus, influenced by how the Model doing the Tokenization was trained.
+								Cosine Similarity: Semantically similar pairs of Embeddings would tend to have high Cosine Similarity (i.e. (A . B) / (||A|| * ||B||)
+								Vector Translation: Adding or subtracting Embeddings together can result in Vectors that match / closely resemble other Embeddings (e.g. dog + young == puppy).
+									Analogical Reasoning: Translation can help find analogies (i.e. puppy is to dog as cat is to => dog - puppy + cat => kitten).
+
 		Agentic Artificial Intelligence:
 			Model Context Protocol:
 				MCP Hosts: Agentic AI Developer Applications (i.e. Claude Code, Cursor, Google Antigravity)
