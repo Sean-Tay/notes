@@ -315,6 +315,10 @@ Azure
 		Azure Event Grid:	Router for generated Events; usually to 'Push' Events from their Source to an Event Hub or a Webhook. Note: Has to be in the same Resource Group as the Event Source.
 			System Topic: 	Designation for Events produced by other Azure Services.
 	
+		// Artificial Intelligence:
+			Microsoft Copilot Studio: Declarative AI Agent creation using Natural Language, Prompts and Templates; an AI Agent is configured rather than explicitly programmed, via defined Intent, Actions and Data Connections.
+			Microsoft Foundry: Enables code-based (i.e. Python or C#) AI Agent Development with SDKs and APIs, allowing integration with other Microsoft AI Services and deployment of the Agent via CICD to support Applications.
+
 	Details:
 		Microsoft Cloud Adoption Framework for Azure: SPRAGM
 			S: Define a Strategy
