@@ -33,8 +33,15 @@ Artificial Intelligence:
 
 				Quantization: A Compression technique that reduces the precision of the Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
 					f16: Uncompressed, full 16-bit Floating Point values.
-					q8_0
-					q4_0
+
+					# Integer-based Quantization:
+						q8_0
+						q4_0
+
+					# Floating-point based Quantization:
+						nvfp4 
+							# Non-uniform Floating Point Scale, naturally grouping more precision around 0, which is where Model Weights usually live anyway.
+							# Scales better with Apple Hardware, delivering ~20% faster Token generation and cuts accuracy loss from typical quantization in half compared to traditional Integer-based Quantization.
 
 				Context Length: The maximum number of Tokens that the LLM can process at once, per prompt.
 					Architectural: The number of Tokens that the LLM was built to process.
