@@ -525,6 +525,8 @@ Linux / Unix:
 					-<number>	- Specify number of lines to display.
 
 					-n +<number> - Skip the first <number> lines.
+					
+					-f <file>	- Stream <file> for changes.
 
 				echo "<output>"	- Output <output> to output stream.
 					-n			- Disable automatic newline after execution.
