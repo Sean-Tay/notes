@@ -231,8 +231,8 @@ Artificial Intelligence:
 				Cursor / Google Antigravity: Agentic IDE
 					.cursorrules: Similar function to CLAUDE.md.
 
-				Claude Code: Agentic CLI
-					CLAUDE.md: Markdown File containing Instructions, Architectural Context, Coding Convention, and Rules that Claude Code reads before starting any Task.
+				Claude Code / Opencode: Agentic CLI
+					CLAUDE.md / agents.md: Markdown File containing Instructions, Architectural Context, Coding Convention, and Rules that the Agent runtime reads before starting any Task.
 
 		Effective Prompt Engineering: RICE-Q
 			Role: Set the context by defining the role of the AI.
