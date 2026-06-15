@@ -12,6 +12,9 @@ Ollama
 	Details:
 		Ollama is a Docker-like tool for running LLMs locally.
 			The LLM is similar to the Container Image, and the LLM + KV Cache is similar to the running Container.
+
+			Note: Use oMLX for a Mac Silicon alternative - oMLX buffers the KV Cache Block to SSD so that it doesn't have to recompute the KV Cache when the Context Window shifts.
+				Unfortunately, it doesn't seem to be able to integrate well with other Tools.
 	
 	Commands:
 		ollama pull <model-name> # Download a LLM.
