@@ -24,7 +24,7 @@ Artificial Intelligence:
 
 				Style GAN: Uses a style-based Generator architecture that enables production of high quality realistic Images.
 
-			Transformer Architecture: Allows a Model to dynamically focus on different parts of the Input Data (i.e. achieve a Self-Attention Mechanism).
+			Transformer Architecture: Refers to the Encoder-Decoder architecture within a Model to convert Input Data into a format that it is able to process, then back to the original format after processing.
 
 			Autoregressive Model: Generates Data Points one at a time, conditioning each based on previous Data Points.
 
@@ -87,6 +87,13 @@ Artificial Intelligence:
 			Chain-of-Thought: A technique which encourages the Model to introspect and craft a step-by-step reasoning process to solve a given problem.
 
 			Model Context Protocol: Model-Agnostic Open Standard introduced by Anthropic (now governed by the Linux Foundation) that lets any LLM / Agentic AI connect to any external Resource.
+
+		Prompt Design: The process of creating a Prompt that is tailored to the specific Task that the system is being asked to perform.
+		Prompt Engineering: The process of creating a Prompt that is designed to improve performance over the original Prompt.
+			Chain-of-Thought Reasoning: Models are better at getting the right answer when they are encouraged to think through the problem with intermediate steps.
+
+		Parameter Efficient Tuning Methods: Method of tuning an LLM on your own custom data without duplicating the Model. Involves swapping out a few add-on layers during Inference.
+			Prompt Tuning.
 
 	Details:
 		Generative Artificial Intelligence:
