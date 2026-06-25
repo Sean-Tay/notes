@@ -418,6 +418,10 @@ Linux / Unix:
 						...
 						break
 						;;
+					<value3>|<value4>) # multi-case
+						...
+						break
+						;;
 					*)
 						#default
 						;;
