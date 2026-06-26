@@ -11,18 +11,30 @@ Kubernetes:
 		Manifest: 				A YAML File that describes the desired state of a Resource.
 		Resource: 				An Object that describes a desired state for the Release.
 
-		Containers:				An isolated environment in which a Runtime Executable can run in.
-		Pods:					A runnable unit of work which can contain many Containers that support each other and are tightly coupled. Kubernetes will connect this Pod to the overall network, and the rest of the Kubernetes ecosystem.
-			Liveness Probe		Indicates if the Pod is able to run. Restart the Pod if not true.
-			Readiness Probe		Indicates if the Pod is able to serve Requests. Reroutes Requests from the Pod to other ready Pods while not true.
-			Startup Probe		Delays Liveness and Readiness Probe Checks while Pod is starting up.
+		Workload:
+			Job:				Manages running a Pod to complete a finite task.
+			Cronjob:			A scheduled Job.
 
-		Job:					Manages running a Pod to complete a finite task.
-		Cronjob:				A scheduled Job.
+			Containers:			An isolated environment in which a Runtime Executable can run in.
+			Pods:				A runnable unit of work which can contain many Containers that support each other and are tightly coupled. Kubernetes will connect this Pod to the overall network, and the rest of the Kubernetes ecosystem.
+				Liveness Probe	Indicates if the Pod is able to run. Restart the Pod if not true.
+				Readiness Probe	Indicates if the Pod is able to serve Requests. Reroutes Requests from the Pod to other ready Pods while not true.
+				Startup Probe	Delays Liveness and Readiness Probe Checks while Pod is starting up.
 
-		Replication Controller: An older variant of the Replica Set.
-		Replica Set:			Ensures a specified number of Pods (of the same type) are active.
-		Deployment:				A higher-level abstraction over Replica Sets, supporting features such as Rolling Updates / Rollbacks.
+			Replication Controller: An older variant of the Replica Set.
+			Replica Set:		Ensures a specified number of Pods (of the same type) are active.
+			Deployment:			A higher-level abstraction over Replica Sets, supporting features such as Rolling Updates / Rollbacks.
+
+		Service:				Represents the boundary between Workload Entities (i.e. Replica Sets, Pods, etc.) and Traffic Entities (i.e. Gateways, HTTPRoutes). Load-Balances the Request to a healthy Pod.
+
+		Node: 					Any Physical or Virtual Machine that runs Pods. Can be run in a Cluster, possibly managed via Infrastructure Tools.
+
+		Traffic:
+			ReferenceGrant:		Explicitly permits a specific Resource in one Namespace to point to a Resource in another Namespace.
+			HTTPRoute:			Defines how incoming HTTP Requests are routed to Services.
+			Gateway:			An interface for exposing Applications on a Cluster through a Load Balancer, Proxy, or specific Port Mappings. It represents the actual Network Entry Point.
+				GatewayClass:	Defines how Gateways should be provisioned.
+				Certificate: 	Represents a TLS Certificate, securing the traffic entering the workload (i.e. between Gateway and Pods).
 
 	Details:
 		Components:
@@ -59,6 +71,24 @@ Kubernetes:
 			# Namespace
 				describe <namespace-name>
 
+			# Gateway
+				get gateways
+
+			# Certificate
+				get certificates
+
+			# HTTPRoute
+				get httproutes
+
+			# ReferenceGrant
+				get referencegrant
+
+			# Service
+				get services
+
+			# Node
+				get nodes
+
 			# Deployment
 				get deployments
 				describe deployment <deployment-name>
@@ -74,7 +104,7 @@ Kubernetes:
 			# Pod
 				get pods
 				get jobs / cronjobs
-					-o wide		# See Images used in the Pod / Job / Cronjob
+					-o wide		# See Images used in the Pod / Job / Cronjob; or the Node it is scheduled to.
 				
 				exec -it <pod-id> -- /bin/bash # Execute /bin/bash in target Pod
 				logs <pod-id>	# Examine Logs from target Pod
