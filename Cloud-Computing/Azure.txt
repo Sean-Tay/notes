@@ -319,6 +319,27 @@ Azure
 			Microsoft Copilot Studio: Declarative AI Agent creation using Natural Language, Prompts and Templates; an AI Agent is configured rather than explicitly programmed, via defined Intent, Actions and Data Connections.
 			Microsoft Foundry: Enables code-based (i.e. Python or C#) AI Agent Development with SDKs and APIs, allowing integration with other Microsoft AI Services and deployment of the Agent via CICD to support Applications.
 
+			Azure AI Foundry:
+				Azure Machine Learning: Facilitates creation of custom Models based on supplied Data.
+					AutoML: Automates the process of building a custom Model. The User supplies the Data Set, and AutoML automatically tests various combinations of algorithms and hyperparameters to generate the best tuned custom Model from the Data Set.
+					Machine Learning Designer: Low-Code / No-Code interface used to design and deploy a Machine Learning pipeline.
+					
+				Foundry Tools: Provides fully pre-built, ready-to-use AI Tools that integrate directly into Applications via simple APIs.
+					Azure Anomaly Detector: Provides Anomaly Detection, based on learning what is considered an expected fluctuation and what is not, based on training data.
+
+					Azure Computer Vision: Provides robust, pre-built APIs that empower Applications to Analyze Images, read Text in Images, and detect Faces.
+
+					Speech
+
+					Q&A Maker
+					LUIS // Language Understanding and Intelligent Services
+
+				Foundry Agent Service
+					
+
+				Azure AI Bot Service 
+
+
 	Details:
 		Microsoft Cloud Adoption Framework for Azure: SPRAGM
 			S: Define a Strategy
