@@ -59,42 +59,26 @@ Artificial Intelligence:
 					Contextualized Embedding: Embeddings whose values shift based on the surrounding tokens in the Prompt, not just on what was learnt by the Model during training.
 
 				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings).
-					A Model has several internal Model Matrices based on Training Data.
+					Temperature: The amount of variance to use when determining the next Token to pick, based on the Attention Weights. Lower Temperatures induce more determinism and subsequently less creativity in the Response.
+					Top-P Sampling: Instruct the Model to only look at the Tokens that make up the top 90% of the Attention Weight scale (i.e. ignore uncommon relationships, such as Banana -> Computer).
 
-					As part of initial Text Analysis, each Token's Vector is multiplied by 3 different internal Model Matrices, to determine the Query, Key and Value Vectors.
-						Query: What information am I looking for?
-						Key: What kind of information do I contain?
-						Value: Actual Token Content.
+					KV Cache: Optimization Technique to cache the calculated Key & Value Vectors for already processed Tokens. Casual Masking ensures that only newer Tokens reference the information from older Tokens, not the other way around.
 
-					The Key and Value Vectors for a Token would not change for the exact same Inputs.
-						They do change based on the position of the Token in the Input, due to Positional Encoding.
+					Variants:
+						Multi-Head Attention: Technique that gives the Model deeper understanding of the Context Window. Each Token's Vector is split into multiple smaller Vectors called Heads, so that the Key-Value Matchmaking can be computed across more than one dimension at the same time (i.e. Grammar, Pronoun Resolution, etc.). However, this requires more Internal Matrices for each additional dimension.
 
-					The Model then multiplies the Query of each Token against the Key of every other Token in the Current Context Window to determine the respective Attention Weights that the current Token should give to all other Tokens.
+						Flash Attention: Instead of tracking the relationships of Tokens with every other Token in the Context Window, the Model breaks them into small Blocks which can fit into faster SRAM. Online Softmax Re-scaling assures that this chunking technique does not result in the loss of context across the entire Context Window.
 
-					Finally, the Contextual Embedding for a Token is generated when the Model blends all the Value Vectors of relevant-enough Tokens together, as calculated by the Attention Weights.
+						Cross-Model Attention: Technique that links Embeddings across different mediums, allowing a Model to determine how data in one Medium would relate to data in another Medium. Used in Multi-Modal Models.
 
-					An Autoregressive Mechanism within the Model predicts one new Token based on all generated Contextual Embeddings. The Attention Mechanism then recalculates the Contextual Embeddings for the Input and this new Token, and then uses the Autoregressive Mechanism again to generate another new Token. 
-						The Autoregressive and Attention Mechanisms run in a loop until the complete response is generated.
+			Multi-Modal:
+				Grapheme: Unit of Text.
+				Phoneme: Unit of Sound (Pronounication).
+				Prosody: Rhythm, Stress and Intonation Patterns that make speech sound natural.
 
-						Temperature: The amount of variance to use when determining the next Token to pick, based on the Attention Weights. Lower Temperatures induce more determinism and subsequently less creativity in the Response.
-						Top-P Sampling: Instruct the Model to only look at the Tokens that make up the top 90% of the Attention Weight scale (i.e. ignore uncommon relationships, such as Banana -> Computer).
-
-						KV Cache: Optimization Technique to cache the calculated Key & Value Vectors for already processed Tokens. Casual Masking ensures that only newer Tokens reference the information from older Tokens, not the other way around.
-
-				Multi-Head Attention: Technique that gives the Model deeper understanding of the Context Window. Each Token's Vector is split into multiple smaller Vectors called Heads, so that the Key-Value Matchmaking can be computed across more than one dimension at the same time (i.e. Grammar, Pronoun Resolution, etc.). However, this requires more Internal Matrices for each additional dimension.
-
-				Flash Attention: Instead of tracking the relationships of Tokens with every other Token in the Context Window, the Model breaks them into small Blocks which can fit into faster SRAM. Online Softmax Re-scaling assures that this chunking technique does not result in the loss of context across the entire Context Window.
-
-				Cross-Model Attention: Technique that links Embeddings across different mediums, allowing a Model to determine how data in one Medium would relate to data in another Medium. Used in Multi-Modal Models.
-
-		Multi-Modal:
-			Grapheme: Unit of Text.
-			Phoneme: Unit of Sound (Pronounication).
-			Prosody: Rhythm, Stress and Intonation Patterns that make speech sound natural.
-
-			Pixel: Unit of Image.
-			Kernels: Pixel Values making up a Filter.
-			Diffusion: An iterative procedure of generating an Image from language, starting with random noise and progressively removing / organizing the noise into features which eventually match the requested description.
+				Pixel: Unit of Image.
+				Kernels: Pixel Values making up a Filter.
+				Diffusion: An iterative procedure of generating an Image from language, starting with random noise and progressively removing / organizing the noise into features which eventually match the requested description.
 
 		Agentic Artificial Intelligence: A class of AI technologies that is capable of autonomously performing tasks, making decisions and interacting with its environment, based on its Training Data and Input Parameters.
 			Chain-of-Thought: A technique which encourages the Model to introspect and craft a step-by-step reasoning process to solve a given problem.
@@ -154,56 +138,25 @@ Artificial Intelligence:
 
 				Encoder-Decoder LLMs: Model that not only understand the context of input Text (i.e. Natuiral Language Understanding) but also generate new text (i.e. Natural Language Generation). Suitable for tasks such as Language Translation, Summarization and Question-Answering.
 
-				Multi-Modal: Model that not only handles Text but also other mediums such as Image, Video and Audio.
-					Speech:
-						Use-Cases:
-							Speech Recognition: Listens to Audio Input and translates it to Text.
-								Audio Capture: From Analog to Digital Waveform. Basic Filtering can be applied to increase captured Audio Quality (i.e. remove Hums).
-								Pre-Processing: Extract meaningful Features. Transforms the Digital Waveform into a compact representation that highlights Speech Characteristics and remove irrelevant details.
-									Mel-Frequency Cepstral Coefficients - Used to convert Waveforms to Vectors.
-								Accoustic Modelling: Recognize Phonemes (the smallest unit of sound that can distinguish words) from detected Features. The Attention Mechanism in the Accoustic Model's Transformer Architecture analyzes a given Audio Frame and its neighbours to resolve ambiguity.
-								Language Modelling: The Model also makes use of patterns in vocubulary, grammar and common word patterns to further distinguish between ambiguous Phonemes.
-								Decoding: Searches through millions of possible word sequences to find the transcription that best matches both acoustic and language model predictions.
-									Beam-Search - Maintains a shortlist of the top-scoring partial transcriptions as it processes each Audio Frame; extending each probable hypothesis with the next most likely word, and pruning low-scoring paths.
-								Post-Processing: Applies formatting rules and corrections to improve readability and accuracy (i.e. capitalization of names, numerical formatting).
+				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings).
+					A Model has several internal Model Matrices based on Training Data.
 
-							Speech Synthesis: Translates Text to Audio Output. Useful for overcoming Dyslexia.
-								Text Normalization: Prepare the Text by expanding abbreviations, numbers and symbols into spoken forms.
-								Linguistic Analysis: Map Text to Phonemes via Grapheme-Phoneme conversion.
-									Split text into words and syllables.
-									Look up pronounciations of words and syllables in lexicons.
-									Apply Neural Models for unknown words.
-									Mark syllable boundaries and identify stressed syllables.
-									Determine phonetic context for adjacent sounds.
-								Transformer-Based Prosody Prediction: 
-									Prosody Pronounciation: Determine how to say words, not just which sounds to produce. This can differ with different contexts, even with the exact same sentence.
-										Pitch Contours: Rising or falling Pitch Patterns that indicate questions vs statements.
-										Duration
-										Intensity
-										Pauses
-										Stress Patterns
-								Speech Synthesis: Generate final Audio waveform based on Phoneme sequence and Prosody specifications, utilizing an Acoustic Model to convert them into Mel-Spectrograms, which Neural Vocoders then use to create the raw Audioforms.
-									Mel-Spectrograms: Visual representations of Sound Frequencies over time.
+					As part of initial Text Analysis, each Token's Vector is multiplied by 3 different internal Model Matrices, to determine the Query, Key and Value Vectors.
+						Query: What information am I looking for?
+						Key: What kind of information do I contain?
+						Value: Actual Token Content.
 
-						Challenges:
-							Audio Quality Requirements: Background Noise can hamper Output Quality.
-							Language and Dialect Support
-							Latency Expectations: Real-Time Conversation requires Low Latency Processing.
+					The Key and Value Vectors for a Token would not change for the exact same Inputs.
+						They do change based on the position of the Token in the Input, due to Positional Encoding.
 
-					Vision:
-						Types:
-							Vision Transformer Models: 
-								A Model is trained on a large volume of Images; the Model extracts Patches of Pixel values from the Image and generates a Linear Vector of the Pixel values, with Embeddings highlighting visual features (e.g. colour, contrast, texture). 
-								The same Attention technique that is used in Language Models is then used to determine contextual relationships between each Patch (i.e. Visual Features associated with a Hat and Head are similar, with their features having Vectors with similar direction).
+						With respect to a given Chat Sequence, a KV Cache is generated to drastically reduce Token generation time for follow-up messages.
 
-						Use-Cases:
-							Image Classification
-							Object Detection: Models combine CNN Feature Extraction Layers with identification of regions of interest to locate multiple classes of Objects within the same Image.
-							Semantic Segmentation: A more precise form of Object Detection, finding Pixels that make up the Objects, rather than just the rectangular bounding boxes.
+					The Model then multiplies the Query of each Token against the Key of every other Token in the Current Context Window to determine the respective Attention Weights that the current Token should give to all other Tokens.
 
-							Contextual Image Analysis: Description of what the Image depicts overall (e.g. man eating an apple). Utilizes Vision Transformer Models.
+					Finally, the Contextual Embedding for a Token is generated when the Model blends all the Value Vectors of relevant-enough Tokens together, as calculated by the Attention Weights.
 
-							Image Generation: Utilizes Vision Transformer Models.
+					An Autoregressive Mechanism within the Model predicts one new Token based on all generated Contextual Embeddings. The Attention Mechanism then recalculates the Contextual Embeddings for the Input and this new Token, and then uses the Autoregressive Mechanism again to generate another new Token. 
+						The Autoregressive and Attention Mechanisms run in a loop until the complete response is generated.
 
 				Instruction-tuned LLMs: A general LLM that has been fine-tuned using domain-specific Data. Suitable for Chatbots, Virtual Assistants, and even AI Agents when combined with other components.
 
@@ -241,6 +194,57 @@ Artificial Intelligence:
 								Cosine Similarity: Semantically similar pairs of Embeddings would tend to have high Cosine Similarity (i.e. (A . B) / (||A|| * ||B||)
 								Vector Translation: Adding or subtracting Embeddings together can result in Vectors that match / closely resemble other Embeddings (e.g. dog + young == puppy).
 									Analogical Reasoning: Translation can help find analogies (i.e. puppy is to dog as cat is to => dog - puppy + cat => kitten).
+
+			Multi-Modal: Model that not only handles Text but also other mediums such as Image, Video and Audio.
+				Speech:
+					Use-Cases:
+						Speech Recognition: Listens to Audio Input and translates it to Text.
+							Audio Capture: From Analog to Digital Waveform. Basic Filtering can be applied to increase captured Audio Quality (i.e. remove Hums).
+							Pre-Processing: Extract meaningful Features. Transforms the Digital Waveform into a compact representation that highlights Speech Characteristics and remove irrelevant details.
+								Mel-Frequency Cepstral Coefficients - Used to convert Waveforms to Vectors.
+							Accoustic Modelling: Recognize Phonemes (the smallest unit of sound that can distinguish words) from detected Features. The Attention Mechanism in the Accoustic Model's Transformer Architecture analyzes a given Audio Frame and its neighbours to resolve ambiguity.
+							Language Modelling: The Model also makes use of patterns in vocubulary, grammar and common word patterns to further distinguish between ambiguous Phonemes.
+							Decoding: Searches through millions of possible word sequences to find the transcription that best matches both acoustic and language model predictions.
+								Beam-Search - Maintains a shortlist of the top-scoring partial transcriptions as it processes each Audio Frame; extending each probable hypothesis with the next most likely word, and pruning low-scoring paths.
+							Post-Processing: Applies formatting rules and corrections to improve readability and accuracy (i.e. capitalization of names, numerical formatting).
+
+						Speech Synthesis: Translates Text to Audio Output. Useful for overcoming Dyslexia.
+							Text Normalization: Prepare the Text by expanding abbreviations, numbers and symbols into spoken forms.
+							Linguistic Analysis: Map Text to Phonemes via Grapheme-Phoneme conversion.
+								Split text into words and syllables.
+								Look up pronounciations of words and syllables in lexicons.
+								Apply Neural Models for unknown words.
+								Mark syllable boundaries and identify stressed syllables.
+								Determine phonetic context for adjacent sounds.
+							Transformer-Based Prosody Prediction: 
+								Prosody Pronounciation: Determine how to say words, not just which sounds to produce. This can differ with different contexts, even with the exact same sentence.
+									Pitch Contours: Rising or falling Pitch Patterns that indicate questions vs statements.
+									Duration
+									Intensity
+									Pauses
+									Stress Patterns
+							Speech Synthesis: Generate final Audio waveform based on Phoneme sequence and Prosody specifications, utilizing an Acoustic Model to convert them into Mel-Spectrograms, which Neural Vocoders then use to create the raw Audioforms.
+								Mel-Spectrograms: Visual representations of Sound Frequencies over time.
+
+					Challenges:
+						Audio Quality Requirements: Background Noise can hamper Output Quality.
+						Language and Dialect Support
+						Latency Expectations: Real-Time Conversation requires Low Latency Processing.
+
+				Vision:
+					Types:
+						Vision Transformer Models: 
+							A Model is trained on a large volume of Images; the Model extracts Patches of Pixel values from the Image and generates a Linear Vector of the Pixel values, with Embeddings highlighting visual features (e.g. colour, contrast, texture). 
+							The same Attention technique that is used in Language Models is then used to determine contextual relationships between each Patch (i.e. Visual Features associated with a Hat and Head are similar, with their features having Vectors with similar direction).
+
+					Use-Cases:
+						Image Classification
+						Object Detection: Models combine CNN Feature Extraction Layers with identification of regions of interest to locate multiple classes of Objects within the same Image.
+						Semantic Segmentation: A more precise form of Object Detection, finding Pixels that make up the Objects, rather than just the rectangular bounding boxes.
+
+						Contextual Image Analysis: Description of what the Image depicts overall (e.g. man eating an apple). Utilizes Vision Transformer Models.
+
+						Image Generation: Utilizes Vision Transformer Models.
 
 		Agentic Artificial Intelligence:
 			Model Context Protocol:
