@@ -93,6 +93,89 @@ Artificial Intelligence:
 			Prompt Tuning.
 
 	Details:
+		Narrow Artificial Intelligence:
+			Discriminative Artificial Intelligence:
+				Convolutional Neural Network:
+					Use-Cases:
+						Optical Character Recognition:
+							Image Acquisition: Image Quality impacts the final results significantly.
+							Preprocessing and Image Enhancement:
+								Noise Reduction:
+									Classical Algorithms: Gaussian Filters, etc.
+									Neural Network Models: Denoising Autoencoders and Convolutional Neural Networks trained to denoise Images.
+								Contrast Adjustment: Enhances the difference between Text and Document background to make the Text clearer.
+									Classical Algorithms: Histogram Equalization, Adaptive Thresholding, etc.
+									Machine Learning								
+								Skew Correction: Corrects Document rotation.
+									Classical Algorithms: Hough Transformation for Line Detection, Projection Profiles, Connected Component Analysis.
+									Neural Network Models: Regression CNNs that predict rotation angles directly from Image Features
+								Resolution Optimization: Adjusts Image Resolution to optimal configurations for OCR.
+									Classical Methods: Bicubic, Bilinear.
+									Super-Resolution Models: GANs and Residual Networks.
+							
+							Text Region Detection:
+								Layout Analysis: Distinguishes between Text, Image, Graphics and White-Space.
+									Classical Methods: Connected Component Analysis, Run-Length Encoding, Projection-based Segmentation.
+									Neural Network Models: Semantic Segmentation Networks
+								Text Block Identification: Groups individual Characters into Words, Lines, and Paragraphs based on spatial relationships.
+									Classical Methods: Distance-based Clustering, White-Space Analysis, Morphological Operations
+									Neural Network Models: Graph Neural Networks and Transformer Models
+								Reading Order Determination: Establishes the direction in which Text should be read.
+									Classical Methods: Geometric Algorithms using Bounding Box Operations and Spatial Heuristics.
+									Machine Learning: Sequence Prediction Models and Graph-based approaches that learn reading patterns from Training Data.
+								Region Classification: Identifies different types of Text and Text Regions (i.e. Headers, Captions, Tables).
+									Classical Methods: Support Vector Machines using handcrafted features such as Font Size, Position and Formatting.
+									Neural Network Models: CNNs and Vision Transformers.
+
+							Character Recognition and Classification: 
+								Feature Extraction: Analyzes the shape, size and distinctive characteristics of each symbol.
+									Classical Methods: Statistical Features like Moments, Fourier Descriptors and Structural Features.
+									Neural Network Models: CNNs that automatically learn Discriminative Features from raw Pixel Data.
+								Pattern Matching: Compares extracted features against trained Models that recognize different fonts, sizes and writing styles.
+									Classical Methods: Direct Comparison with Stored Templates using correlation techniques, Hidden Markov Models, Support Vector Machines, k-nearest Neighbours.
+									Machine Learning: CNNs, Multi-Layer Perceptors, Residual Networks, DenseNet, EfficientNet Architectures.
+								Context Analysis: Uses surrounding characters and words to improve recognition accuracy via dictionary lookups and Language Models.
+									Classical Methods: Dictionary-based Correction (i.e. Lexicon Lookup with Distance-based Algorithms).
+									Machine Learning: N-gram Models, LSTM and Transformer-baed Models (i.e. BERT), Attention Mechanisms.
+								Confidence Sorting: Assigns probability scores to each recognized character based on how certain the System is about the Character's identity.
+									Classical Methods: Bayesian Probabilities that quantify uncertainty in Character Prediction.
+									Machine Learning: Softmax (i.e. Neural Network final layer activations converted to probability distributions); Ensemble Methods that combine predictions from multiple Models to improve confidence estimates.
+
+							Output Generation and Post-Processing:
+								Text Compilation: Assembles individual Character Recognition into complete Words and Sentences
+									Classical Methods: Rule-based Assembly with Spatial Proximity and Confidence Thresholds
+									Machine Learning: Sequence and Attention-based Models.
+								Format Preservation: Maintains Document Structure (i.e. Paragraphs, Line Breaks and Spacing).
+									Classical Methods: Rules-based Systems using Bounding Boxes and White-Space Analysis.
+									Machine Learning: Layer-understanding Models and Multi-Modal Transformers.
+								Coordinate Mapping: Records the exact position of each Text Element within the original Image.
+									Classical Methods: Mathematical Mapping between Image Pixels and Document Coordinates.
+									Machine Learning: Models trained to predict precise Text-positioning coordinates.
+								Quality Validation: Applies Spelling and Grammar checks to identify potential recognition errors.
+									Classical Methods: Dictionary-based validation
+									Machine Learning: N-gram Models, Probabilistic Parsers, GPT or BERT Models, Ensemble Validation.
+
+						Field-Extraction Recognition: Takes Text Output from OCR and maps them to specific labelled Fields that corresponds to meaningful Business Information.
+							OCR Output Ingestion
+
+							Field Detection and Candidate Identification
+								Template-Based Detection: Pre-defined Document Layouts with known Field Patterns and Anchors; Search for Label-Value Pairs
+								Machine Learning Detection: Transformer Models which are good at applying contextual cues to identify patterns.
+								Generative AI Schema-based Detection: Enables more flexible Field-detection approaches compared to Template-Based Detection (i.e. Prompt-based Extraction in which the LLM is provided the Document and Schema definition).
+
+							Field Mapping and Association: 
+								Key-Value Pairing Techniques: Proximity Analysis and Linguistic Pattern Recognition.
+								Table and Structured Content Processing: CNNs, Object Detection Approaches for Table Cells, Row-Column Association and Header Recognition.
+								Confidence Sorting and Validation: OCR Confidence, Pattern-Matching Confidence, Context and Cross-Field Validation.
+
+							Data Normalization and Standardization
+								Format Standardization: Date Normalization, Currency and Numeric Processing, Text Standardization (i.e. Cases, Encoding, Abbreviation Expansion).
+								Data Validation and Quality Assurance: Required Fields Validation, Range Validation, Outlier Detection.
+
+							Integration with Business Processes and Systems
+								Schema Mapping: Alignment to Database Schemas, API Payloads, Message Queues, Field Renaming, Data-type Conversion.
+								Quality Metrics and Reporting: Field-level Confidence Scores, Document-level Quality Assessment, Error Categorization.
+
 		Generative Artificial Intelligence:
 			Generative AI learns the underlying patterns, structures and distributions of the Training Data, which enables a Procedure in the Model to generate new Data that is similar to the Training Data in terms of statistical probability and characteristics.
 				AIs "learn" the Probability Distribution of the Training Data, and then samples the Distribution to generate new but similar Data.
