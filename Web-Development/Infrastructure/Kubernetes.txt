@@ -29,6 +29,8 @@ Kubernetes:
 
 		Node: 					Any Physical or Virtual Machine that runs Pods. Can be run in a Cluster, possibly managed via Infrastructure Tools.
 
+		Karpenter:				Workload compaction Service that optimizes Node usage across the Cluster. Pods on a Node Cluster gets destroyed and recreated when being "moved" across Nodes.
+
 		Traffic:
 			ReferenceGrant:		Explicitly permits a specific Resource in one Namespace to point to a Resource in another Namespace.
 			HTTPRoute:			Defines how incoming HTTP Requests are routed to Services.
