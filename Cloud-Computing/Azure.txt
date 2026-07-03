@@ -308,6 +308,8 @@ Azure
 
 			Azure Sentinel: Security Information Event Management (SIEM) and Security Orchestration Automated Response Solution.
 
+			Azure Key Vault: PaaS that houses Application Secrets. In practice, this only stores Infrastructure-level Secrets for Azure-native Services such as Azure Blob Storage, or Hardware-backed Keys (HSM); typically Applications integrate with a custom Secrets Management Service (such as HashiCorp / EVA).
+
 		Azure Event Hub:	Analogous to Kafka Event Queues, these expose an Event 'Pull' Model for Consumers.
 			Requests:		Number of API Requests made.
 			Messages:		Number of API Requests that put actual Events into the Event Hub.
