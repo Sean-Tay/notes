@@ -109,3 +109,17 @@ Software Engineering:
 
 			Repository:				Used to control how shared State can be interacted with via provision of Data Access Objects.
 
+			Strategy:				Used to change the behaviour of an Object *during runtime* - applicable when the specific behaviours themselves are interchangeable Objects.
+				Advantages compared to Inheritance:
+					Behaviour can be swapped during runtime. With Inheritance, a new instance of the Object will have to be created.
+					Behaviours can be easily changed in more than one Dimension; the Inheritance chain for Object is itself only one Dimension.
+
+				Entities:
+					Strategy: 		The interface to abstract Behaviour Objects.
+					Concrete Strategy: The concrete Behaviour Objects.
+					Context:		The Entity that needs to execute the Behaviours.
+
+			Observer:				Used to update an open-ended number of Entities that need to react to certain events.
+				Differences compared to the Publisher Subscriber Pattern:
+					Publishers and Subscribers do not know about each other; Subjects contain direct references to their Observers (via a standardized Observer interface).
+
