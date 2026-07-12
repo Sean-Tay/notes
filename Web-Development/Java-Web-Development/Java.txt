@@ -244,26 +244,44 @@ Java
 								ExecutorService executorService = Executors.newFixedThreadPool(<number-of-threads>);
 								ExecutorService singleThreadExecutor = Executors.newSingleThreadPool();
 
-								// Future - Representation of a value that will take time to retrieve.
-								// CompletableFuture is an evolution of Future that makes it more like JavaScript's Promise API:
-								CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>); // Supply to Global Thread Pool
-								CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>, <executor>); // Supply to specific Thread Pool
+								// Callables - used by the ExecutorService to get some Future result
+									// Future - Representation of a value that will take time to retrieve.
+									// CompletableFuture is an evolution of Future that makes it more like JavaScript's Promise API:
+									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>); // Supply to Global Thread Pool
+									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>, <executor>); // Supply to specific Thread Pool
 
-								// Note: Non-Blocking Specification - similar to JavaScript Promise API
-								<completableFuture>
-									.thenApply(<mapper-lambda>) // .thenCompose in case <mapper-lambda> returns another CompletableFuture
-									.thenAccept(<lambda>)
-									.exceptionally((e) -> { // ... //; });
+									// Note: Non-Blocking Specification - similar to JavaScript Promise API
+									<completableFuture>
+										.thenApply(<mapper-lambda>) // .thenCompose in case <mapper-lambda> returns another CompletableFuture
+										.thenAccept(<lambda>)
+										.exceptionally((e) -> { // ... //; });
 
-								// Await on multiple CompletableFutures
-								CompletableFuture.allOf( ... )
-								CompletableFuture.anyOf( ... )
-								<completableFuture>.thenCombine(
-									<another-completable-future>,
-									(a, b) -> { // ... //; }
-								)
+									// Await on multiple CompletableFutures
+									CompletableFuture.allOf( ... )
+									CompletableFuture.anyOf( ... )
+									<completableFuture>.thenCombine(
+										<another-completable-future>,
+										(a, b) -> { // ... //; }
+									)
 
-								<completableFuture>.join(); // Block Parent Thread while Results are being obtained
+									<completableFuture>.join(); // Block Parent Thread while Results are being obtained
+
+								// Runnable - used by the ExecutorService to do some long-running Tasks
+									Runnable task = () -> {
+										while (!Thread.currentThread().isInterrupted()) {
+											try {
+												// ...
+											} catch (InterruptedException e) {
+												Thread.currentThread().interrupt();
+
+												// ...
+
+												break;
+											} catch (Exception e) {
+												// ...
+											}
+										}
+									};
 
 								executorService.shutdown();
 							}
