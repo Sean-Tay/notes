@@ -89,6 +89,22 @@ Java
 						// TreeMap
 
 						// ConcurrentHashMap
+							// Individual bins are locking, so that unrelated Keys are not blocking each other.
+
+				// Sets
+					// Methods:
+						Set<<type>> exampleSet;
+
+						exampleSet.add(<item>);
+						exampleSet.remove(<item>);
+						exampleSet.contains(<item>);
+
+						exampleSet.addAll(<item-collection>); // Union with <item-collection>
+						exampleSet.retainAll(<item-collection>); // Intersection with <item-collection>; keep Elements that are present in both.
+						exampleSet.removeAll(<item-collection>); // Difference with <item-collection>; retain Elements not present in <item-collection>.
+
+					// Implementations:
+						// EnumSet - uses a Bit Vector for Bit Membership operations, which are faster than Hashing comparison.
 						
 				// Queues
 					// Methods:
