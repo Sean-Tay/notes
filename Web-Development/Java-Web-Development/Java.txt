@@ -135,10 +135,10 @@ Java
 						// LinkedBlockingDeque
 							// Note: Use the BlockingDeque interface to get the Blocking variants of the Deque methods:
 								.putFirst(<item>);
-								.takeFirst(<item>);
+								.takeFirst();
 
 								.putLast(<item>);
-								.takeLast(<item>);
+								.takeLast();
 
 								// Note: The Blocking Methods throw the InterruptedException if the Thread Container (i.e. ExecutorService) or Application is closed; the Exception is how the JVM wakes the Blocked Threads. Either rethrow the Exception or ensure Thread.currentThread().interrupt() is invoked to ensure no Zombie Threads.
 
@@ -228,7 +228,7 @@ Java
 						// CyclicBarrier - wait until a number of Threads hit the CyclicBarrier before continuing.
 							class Example {
 								public void fn() {
-									CyclicBarrer barrier = new CyclicBarrier(<num-threads-needed>);
+									CyclicBarrier barrier = new CyclicBarrier(<num-threads-needed>);
 
 									// ... 
 
@@ -241,8 +241,8 @@ Java
 						class Example {
 							public static void main(String[] args) {
 								// ExecutorService - a Pool of Threads that will execute some Callables:
-								ExecutorService executorService = Executors.newFixedThreadPool(<number-of-threads>);
-								ExecutorService singleThreadExecutor = Executors.newSingleThreadPool();
+								ExecutorService executorService = Executors.newFixedThreadPool(<maximum-number-of-threads-to-grow-to>);
+								ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 
 								// Callables - used by the ExecutorService to get some Future result
 									// Future - Representation of a value that will take time to retrieve.
