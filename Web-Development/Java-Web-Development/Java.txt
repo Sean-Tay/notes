@@ -179,6 +179,11 @@ Java
 				abstract class AbstractExampleClass {
 					// ... 
 				}
+				
+				// Analogous to a Data Class in Kotlin, but Immutable
+				record RecordClass(<type> <field>, ...) {
+					// ...
+				}
 
 				class ExampleClass {
 					<visibility> <type> <class-field>;
