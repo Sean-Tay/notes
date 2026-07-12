@@ -1,0 +1,223 @@
+Java
+	Abbreviations: 
+	
+	Description: 
+	
+	Resources: 
+	
+	Concepts: 
+	
+	Details:
+		Syntax:
+			Types:
+				// Primitives:
+					// Note: Unlike Kotlin the Field's <type> can implicitly allow null
+					string stringVariable;
+					string[] stringArrayVariable;
+
+				// Explicitly declaring Nullability:
+					Optional<<type>> optionalVariable = Optional.empty();
+
+					<type> optionalVariable = Optional.of(<value>);
+					<type> optionalVariable = Optional.ofNullable(<value>);
+
+					<type> optionalVariable.isPresent()
+
+					<type> variable = optionalVariable.orElse(<default-value>);
+					<type> variable = optionalVariable.orElseGet(() -> { <default-value>; });
+					
+					<type> variable = optionalVariable.map(v -> <transformed-value>);
+					<type> variable = optionalVariable.flatMap(v -> <transformed-value>); // useful if the Mapper Lambda itself returns an Optional.
+					<type> variable = optionalVariable.filter(v -> <boolean>); // Returns Empty Optional if Filter Lambda returns false for the current Optional value.
+
+			Collections:
+				// Lists
+					// Methods:
+						List<<type>> exampleList;
+
+						exampleList.size();
+
+						exampleList.get(<index>); // Gets the <item> at <index>
+
+						exampleList.add(<index>, <item>); // Adds <item> to specified position in List, if the <index> is within current List size. Shifts all items beyond <index> to the right.
+						exampleList.add(<item>); // Adds <item> to end of List.
+
+						<type> item = exampleList.remove(<index>) // Remove <item> at <index>. Shifts all items beyond <index> to the left.
+						exampleList.remove(<item>) // Remove first occurence of <item> in List.
+
+					// Implementations:
+						// ArrayList 
+							// Random Access - O(1) Read from any Index.
+							// Add or Remove from end of List - O(1) Write to Index end; O(N) Write for any other Index.
+							// Good for Cache-Locality, since contiguous Array of Elements.
+							// Note: Primitive Arrays are better; ArrayList cannot store Primitives, they must store Objects.
+							// Note: Dynamically expands the backing Object[] in fixed multiples, adding to some Memory overhead.
+
+						// LinkedList 
+							// Access - O(N) Read from any Index.
+							// Add or Remove any Element - O(1).
+							// Worse Cache-Locality; requires double jump, first to retrieve the Node and then to retrieve the data in the Node.
+
+				// Maps
+					// Methods:
+						Map<<key-type>, <value-type>> exampleMap;
+
+						exampleMap.size();
+
+						<value-type> value = exampleMap.get(<key>);
+						<value-type> value = exampleMap.getOrDefault(<key>, <default-value>);
+
+						exampleMap.put(<key>, <value>); // Add <value> to the Map, referenced by <key>. 
+						exampleMap.putIfAbsent(<key>, <value>); // Add <value> to the Map only if the <key> does not exist.
+
+						exampleMap.computeIfAbsent(<key>, k -> <value>); // Run a Lambda for <key> only if <key> is not present or holds a null.
+						exampleMap.computeIfPresent(<key>, (k, v) -> <value>) // Run a Lambda for <key> only if <key> is already set.
+
+						exampleMap.remove(<key>);
+						exampleMap.remove(<key>, <value>); // Remove the <key> only if it is currently mapped to the <value> specified.
+
+					// Implementations:
+						// HashMap
+							// Upon Hash Collision, HashMap dynamically changes a crowded Bucket to a LinkedList, followed by a Red-Black Tree. Worse-Case O(log N).
+							// Expands Collection Size upon reaching 75% capacity.
+
+						// LinkedHashMap
+							// Same Hash Collision Behaviour as HashMap.
+							// Retains Insertion / Least Used Ordering, specified in the Constructor.
+							// Has more Memory overhead compared to HashMap, as each Node now has two additional Pointers to the previous / next Node.
+
+						// TreeMap
+
+						// ConcurrentHashMap
+						
+
+			Classes:
+				class ExampleClass {
+					<visibility> <type> <class-field>;
+
+					public ExampleClass(
+						// ...
+					) {
+						this.<class-field> = ... ;
+					}
+				}
+
+				// Interface Implementation
+				class ExampleClass implements ExampleInterface {
+					// ...
+				}
+
+				// Class Inheritance
+				class ChildClass extends ParentClass {
+					// ...
+				}
+
+			Functions:
+				// Lambda:
+					// Parameters with Inferred Type
+					(<parameter-1>, <parameter-2>, ... ) -> // ... expression ... // ;
+
+					// Parameters with Explicit Type
+					(<type> <parameter>, ...) -> // ... expression ... // ;
+
+					// Lambda with Body
+					( ... ) -> { ... };
+
+			Loops:
+				for (int i = 0; i < <limit>; i++) {
+					// ...
+				}
+
+				for (<type> <variable> : <iterable>) {
+					// ...
+				}
+
+				while (<condition>) {
+					// ...
+				}
+
+				do {
+					// ...
+				} while (<condition>);
+
+			Utilities:
+				// Date:
+					Duration.between(<earlier-temporal>, <later-temporal>).to*(); // Otherwise amount will be negative.
+
+				// Asynchronousity
+					// Control-Flow:
+						// synchronized - declare code where only one Thread may access the region within:
+						// Note: This will block other Threads
+							class Example {
+								// Functions-Level:
+									// Per Object-instance
+									public synchronized void fn() {
+										// ... 
+									}
+
+									// Across all Objects
+									public static synchronized void fn() {
+										// ...
+									}
+
+								// Block-Level:
+									public void fn() {
+										// synchronized needs a Object to track Threads
+										synchronized(this) {
+											// ...
+
+											// Re-entrant Property allows the same Thread to activate the same Lock
+											// synchronized(this)
+										}
+									}
+							}
+
+						// Semaphore - permit only a limited number of Threads at a Time.
+
+						// CyclicBarrier - wait until a number of Threads hit the CyclicBarrier before continuing.
+							class Example {
+								public void fn() {
+									CyclicBarrer barrier = new CyclicBarrier(<num-threads-needed>);
+
+									// ... 
+
+									// Note: Blocks the calling Thread until the condition is satisfied.
+									barrier.await();
+								}
+							}
+
+					// Multi-Threading:
+						class Example {
+							public static void main(String[] args) {
+								// ExecutorService - a Pool of Threads that will execute some Callables:
+								ExecutorService executorService = Executors.newFixedThreadPool(<number-of-threads>);
+								ExecutorService singleThreadExecutor = Executors.newSingleThreadPool();
+
+								// Future - Representation of a value that will take time to retrieve.
+								// CompletableFuture is an evolution of Future that makes it more like JavaScript's Promise API:
+								CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>); // Supply to Global Thread Pool
+								CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>, <executor>); // Supply to specific Thread Pool
+
+								// Note: Non-Blocking Specification - similar to JavaScript Promise API
+								<completableFuture>
+									.thenApply(<mapper-lambda>) // .thenCompose in case <mapper-lambda> returns another CompletableFuture
+									.thenAccept(<lambda>)
+									.exceptionally((e) -> { // ... //; });
+
+								// Await on multiple CompletableFutures
+								CompletableFuture.allOf( ... )
+								CompletableFuture.anyOf( ... )
+								<completableFuture>.thenCombine(
+									<another-completable-future>,
+									(a, b) -> { // ... //; }
+								)
+
+								<completableFuture>.join(); // Block Parent Thread while Results are being obtained
+
+								executorService.shutdown();
+							}
+						}
+
+	Commands:
+		
+	
