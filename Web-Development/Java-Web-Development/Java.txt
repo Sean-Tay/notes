@@ -50,7 +50,7 @@ Java
 							// Random Access - O(1) Read from any Index.
 							// Add or Remove from end of List - O(1) Write to Index end; O(N) Write for any other Index.
 							// Good for Cache-Locality, since contiguous Array of Elements.
-							// Note: Primitive Arrays are better; ArrayList cannot store Primitives, they must store Objects.
+							// Note: Primitive Arrays are better; ArrayList cannot store Primitives, they must store Objects, which introduces Object-boxing Memory overhead.
 							// Note: Dynamically expands the backing Object[] in fixed multiples, adding to some Memory overhead.
 
 						// LinkedList 
@@ -90,6 +90,57 @@ Java
 
 						// ConcurrentHashMap
 						
+				// Queues
+					// Methods:
+						Queue<<type>> exampleQueue;
+
+						exampleQueue.size();
+						
+						exampleQueue.offer(<item>);
+						<type> firstItem = exampleQueue.peek(); // Get a reference to the first Item in the Queue.
+						<type> firstItem = exampleQueue.poll(); // Remove the first Item from the Queue, and get its reference.
+
+					// Implementations:
+						// ArrayDeque
+							// Used for Stack and Queue Operations.
+							// Internally uses a Circular Array behind the scenes to avoid typical O(N) Array Shift operations.
+							// Note: When the Circular Array is full it has to do an O(N) operation to copy all existing Elements into a new larger Array.
+
+						// PriorityQueue
+							// Internally uses a Min Heap; to convert to a Max Heap, feed Collections.reverseOrder() into the PriorityQueue constructor.
+
+				// Deque - modern Interface featuring both Stack and Queue operations:
+					// Methods:
+						Deque<<type>> exampleDeque;
+
+						exampleDeque.size();
+
+						// Tip: In general, the Deque methods are just variations of the Queue methods, but with "First" or "Last" suffixed to the Method Names.
+						exampleDeque.offerFirst(<item>);
+						exampleDeque.offerLast(<item>);
+
+						<type> item = exampleDeque.peekFirst();
+						<type> item = exampleDeque.peekLast();
+						<type> item = exampleDeque.pollFirst();
+						<type> item = exampleDeque.pollLast();
+
+					// Implementations:
+						// ArrayDeque
+
+						// ConcurrentLinkedDeque
+							// Backed by a Doubly-Linked Node Structure.
+							// Achieves Thread-safety entirely through Compare-and-Swap primitives at the Hardware Instruction level.
+							// Note: No locks, so .size() is an O(N) operation, requiring full List traversal.
+
+						// LinkedBlockingDeque
+							// Note: Use the BlockingDeque interface to get the Blocking variants of the Deque methods:
+								.putFirst(<item>);
+								.takeFirst(<item>);
+
+								.putLast(<item>);
+								.takeLast(<item>);
+
+								// Note: The Blocking Methods throw the InterruptedException if the Thread Container (i.e. ExecutorService) or Application is closed; the Exception is how the JVM wakes the Blocked Threads. Either rethrow the Exception or ensure Thread.currentThread().interrupt() is invoked to ensure no Zombie Threads.
 
 			Classes:
 				class ExampleClass {
