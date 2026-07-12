@@ -158,7 +158,28 @@ Java
 
 								// Note: The Blocking Methods throw the InterruptedException if the Thread Container (i.e. ExecutorService) or Application is closed; the Exception is how the JVM wakes the Blocked Threads. Either rethrow the Exception or ensure Thread.currentThread().interrupt() is invoked to ensure no Zombie Threads.
 
+			Interfaces:
+				interface ExampleInterface {
+					<return-type> <function>(<param>, ...); 
+
+					// Default Interface Methods - useful for incrementally adding Functions to Interfaces without breaking existing Class Implementations.
+					// Note: If Classes implement multiple Interfaces  with the same Default Interface Methods, the Class would need to override the Function.
+					default <return-type> <function>(<param>, ...) {
+						// ...
+					}
+
+					// Static Interface Methods - owned by the ExampleInterface, not by the implementing Classes.
+					static <return-type> <function>(<param>, ... ) {
+						// ...
+					}
+				}
+
 			Classes:
+				// Tip: To share States and a Constructor, use Abstract Classes over Interfaces
+				abstract class AbstractExampleClass {
+					// ... 
+				}
+
 				class ExampleClass {
 					<visibility> <type> <class-field>;
 
@@ -172,11 +193,22 @@ Java
 				// Interface Implementation
 				class ExampleClass implements ExampleInterface {
 					// ...
+
+					@Override
+					public <return-type> <function>(<param>, ...) {
+						// ...
+
+						// or
+
+						// ExampleInterface.super.<function>(<param>, ...)
+					}
 				}
 
 				// Class Inheritance
 				class ChildClass extends ParentClass {
 					// ...
+
+					// super.<parent-function>() 
 				}
 
 			Functions:
