@@ -340,6 +340,54 @@ Java
 							}
 						}
 
+				// Thread Management:
+					Thread.onSpinWait: Instructs the CPU to execute the Thread at a slightly slower rate. Good for saving on CPU Resources while waiting for something, and maintaining the ability to react quickly once the thing materializes. See Optimization Techniques section for other uses.
+
+					Thread.yield: Instructs the Scheduler to give the CPU to another Thread that needs it. Good for optimizing CPU Resources during cooperative multithreading tasks.
+
+					Thread.sleep: Pauses Thread, saving CPU Resources. Good for waiting in the span of milliseconds / seconds.
+
+			Optimization Techniques: Focus on optimizing the Hot Paths.
+				Just-in-Time Compilation:
+					Warmup-Routine:
+						The JVM interprets first, then compiles Hot Methods when encountered during runtime. Running a warm-up routine can minimize this and related hazards (i.e. deoptimization, runtime Class-loading).
+
+				Garbage Collection:
+					Heap Memory Allocation:
+						Use Primitives over Objects (i.e. Auto-Boxing); the Agrona Library provides Primitive-keyed Collections.
+
+						Object Pooling to stabilize Memory Allocation.
+
+						Avoid Streams and capturing Lambdas.
+
+						Avoid the Heap for the true Hot States:
+							Memory-Mapped Files: Operating System feature that maps the content of the File to the Address Space of the Application's Virtual Memory.
+							Chronicle Queue Library provides a Append-only Message Log persisted on Disk.
+
+							Cache beats Pointer-chasing Object graphs.
+
+					Collectors:
+						ZGC and Shenandoah are Concurrent Collectors with sub-millisecond pauses, at the cost of some throughput and Memory overhead.
+
+						G1 - Default Collector.
+
+						Epsilon is a No-Op Collector; there's no pauses but the Application will eventually need to be restarted (e.g. during a known period of no activity).
+
+				Lock-Free Execution:
+					Single-Writer: If each state only has a single modifier, there will be no need for locks and CAS retry-loops. See: LMAX Disruptor.
+
+				Mechanical Symphony:
+					Thread.onSpinWait(): Slows the rate of CPU instruction processing for a Thread (i.e. does NOT reduce the CPU allocated time for a Thread, neither does it put a Thread to sleep).
+						Prevents Context Switching for a Thread - blocking and waking a Thread has a cost.
+
+						Prevents unnecessary CPU Prediction flushes - flushes causes latency.
+							A CPU Core will aggressively guess what the next CPU instructions would be; if it guesses wrong it will flush the Memory Pipeline. Encountering the onSpinWait will force the CPU to slow down and its guessing.
+
+					Pin a Thread to dedicated CPU core - primarily optimizes for L1 and L2 Caches (i.e. per Core cache). See: OpenHFT Affinity Library.
+						Risk of starving GC Collection.
+
+						OS configuration might be needed to ensure CPU core is dedicated for the Application Thread, and that no other tasks outside of the Application are given to the CPU Core.
+
 	Commands:
 		
 	
