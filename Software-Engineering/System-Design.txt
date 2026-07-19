@@ -48,40 +48,76 @@ System Design:
 
 			System Data Transport:
 				Message Queue: Enables Asynchronous Communication between two or more Components.
+					Summary:
+						Broker Types:
+							Log Broker: Uses Append-Only Log to store Messages; each distinct Consumer maintains its own offset.
+								Naturally caters to Fan-Out type workloads.
+								Extreme Throughput - Log Partitions can achieve parallelism.
+
+							Queue Broker: Uses Append-Only Log + Index on Messages; only one Consumer can consume a Message.
+								Naturally caters to Round-Robin type workloads.
+								Per-Message Manipulation (i.e. Priority, Delay, DLQ, Head-of-Line Blocking / Poison-Handling).
+
+						Consumption Patterns: This determines how a Broker is configured.
+							For Round-Robin / Load-Balanced distribution of Messages:
+								Queue-Level Broker: Works out of the Box.
+								Log Broker: Ensure as many Partitions as Consumers in the "Round-Robin" Consumer Group - Messages distributed between Partitions, NOT Consumers within a Consumer Group.
+
+							For Fan-Out / Pub-Sub distribution of Messages:
+								Queue-Level Broker: Requires an additional Router component / Topic layer; each Subscription gets its own virtual Queue.
+								Log Broker: Ensure each Consumer has a different Consumer Group - each Consumer Group receives the full log.
+
+							Tip: Each kind of Broker handles either the Round-Robin or Fan-Out use-case natively, and requires additional configuration for the other use-case.
+
 					Behaviour:
-						Messages produced by Producer Nodes, consumed by at least one Consumer Node.
+						Destructive Message Consumption: Messages are considered "deleted" once any Consumer acknowledges consumption of the Message. 
+							Usually meant for Round-Robin / Queue-Level Brokers.
 
-						A Messaging Broker is a Database specialized for Streaming, typically managing the various Queues.
-							Messages can either be consumed and deleted, or consumed and kept.
-							Messages can either be sent to all Subscribers, or sent to Subscribers in a Round-Robin fashion (i.e. Load Balancing).
+						Retained Message Consumption: Messages are persisted up till retention policy; Consumers maintain their own offset on the Log, and the Log can be replayed if needed. 
+							Usually meant for Fan-Out / Log Brokers, but can be configured to implement Destructive Message Consumption as well.
 
-						Even if the Messages are kept in the Queue, Messages may still be processed out-of-order:
-							Consumers consume Messages at different speeds.
-							Varying Network Speeds to different Consumers.
-							Messages are not all equal.
+					Implementation: The authoritative Data-Structure influences which Behaviour the Message Queue supports.
+						Note: Append-Only Sequential Disk I/O + Batching can actually be faster than In-Memory.
 
+						Append-Only Log / Journal: Message Contents are persisted to an Append-Only File on Disk.
+							Partitions can split Logs for workload distribution.
+
+						Index to accompany Log / Journal to track individual Message on Disk + additional dynamic Message metadata within the Index. Needed for Queue Brokers.
+
+					Considerations:
 						Queues should keep track of the Message Index, and only consider a Message consumed when Consumers send an acknowledgement.
+							Fault Tolerance: Involves ensuring Messages are processed only exactly once.
+								At Most Once: Acknowledge before processing; crash loses the Message but never duplicates.
+								At Least Once: Acknowledge after processing; redelivery on timeout.
+								
+								Effective Exactly Once: At Least Once + Idempotent Consumers (dedup on UUID / Sequence Number). True Exactly Once is impossible.
 
-						Fault Tolerance: Involves ensuring Messages are processed only exactly once.
-							At least once: Occasionally checkpoint Stream State to Disk to restart from most recent checkpoint on crash.
-							At most once: Idempotent Operations via UUID; Atomic Transactions via Two-Phase Commit.
-
-					Types:
-						In-Memory: Higher Throughput - better for larger Messages as Memory is faster than Disk; Messages are deleted once Consumer acknowledges the Message.
-						Log-Based (Disk): Persistent Append-Only Log; can be Partitioned and Replicated to improve number of Consumers and Fault Tolerance.
-							One Consumer per Partition to maintain Message Order per Partition.
+						Even if the Messages are kept in a Queue-like fashion, Messages may still be processed out-of-order from the expected FIFO:
+							Log: Consumers consuming from multiple Partitions - no cross Partition ordering.
+							Queue-Level: Different Consumers may have different consumption speed / Different Messages in the same Queue are not equal.
+							
+							Redelivery after failure.
 
 					Examples:
-						Memory:
-							Redis
+						Queue-Level Broker:
+							RabbitMQ
 
-						Log-Based:
+							Redis Lists
+
+							Azure Service Bus
+							AWS SQS
+
+						Log Brokers:
 							Kafka
 
-						RabbitMQ
-						Azure Bus Service
-						AWS SQS
-						Google Cloud Pub/Sub
+							Redis Streams
+
+							Azure Event Hub
+							AWS Kinesis
+
+						Others:
+							Google Cloud Pub/Sub - hybrid; Append-Only Log + Queue-style Ack API.
+							Pulsar - hybrid; Append-Only Log via BookKeeper + Queue-style Ack API.
 
 			Optimization:
 				(In-Memory) Cache: Simple Key-Value Object Store that is very quick on Read / Write operations. Can be used for storing information about User Sessions.
