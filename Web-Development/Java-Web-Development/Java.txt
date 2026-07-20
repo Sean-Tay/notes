@@ -65,13 +65,16 @@ Java
 						exampleMap.size();
 
 						<value-type> value = exampleMap.get(<key>);
-						<value-type> value = exampleMap.getOrDefault(<key>, <default-value>);
+						<value-type> value = exampleMap.getOrDefault(<key>, <default-value>); // Tip: Use computeIfAbsent instead to avoid eager evaluation and memory cost
 
 						exampleMap.put(<key>, <value>); // Add <value> to the Map, referenced by <key>. 
 						exampleMap.putIfAbsent(<key>, <value>); // Add <value> to the Map only if the <key> does not exist.
 
-						exampleMap.computeIfAbsent(<key>, k -> <value>); // Run a Lambda for <key> only if <key> is not present or holds a null.
+						<value-type> value = exampleMap.computeIfAbsent(<key>, k -> <value>); // Run a Lambda for <key> only if <key> is not present or holds a null.
 						exampleMap.computeIfPresent(<key>, (k, v) -> <value>) // Run a Lambda for <key> only if <key> is already set.
+
+						<value-type> value = exampleMap.compute(<key>, (k, v) -> <value>); // Combine computeIfAbsent + computeIfPresent
+							// Note: If <value> is null, <key> will be removed from the Map.
 
 						exampleMap.remove(<key>);
 						exampleMap.remove(<key>, <value>); // Remove the <key> only if it is currently mapped to the <value> specified.
@@ -248,6 +251,8 @@ Java
 				// Date:
 					Duration.between(<earlier-temporal>, <later-temporal>).to*(); // Otherwise amount will be negative.
 
+					long milliseconds = Instant.now().toEpochMilli();
+
 				// Asynchronousity
 					// Control-Flow:
 						// synchronized - declare code where only one Thread may access the region within:
@@ -367,6 +372,7 @@ Java
 
 						Avoid Streams and capturing Lambdas.
 							Lambdas that capture require instantiation of a new Lambda instance each time the captured variables change, increasing Memory Consumption.
+								If it's not possible to avoid capturing lambdas, ensure that they aren't created unnecessarily. For example, for a Map, use get first to limit calls to a subsequent computeIfAbsent.
 
 							Stream internal library methods are shared by all Streams in the Application; so the call-sites see many different lambdas passing through. This makes the API megamorphic, which the JIT Compiler can't optimize for.
 
