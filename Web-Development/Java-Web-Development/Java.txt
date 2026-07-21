@@ -270,6 +270,10 @@ Java
 				// Asynchronousity
 					// Multi-Threading:
 						class Example {
+							// Declare a variable accessed by Multiple Threads to be volatile; forces read / writes to be flushed to RAM and not Thread-specific CPU Core Caches, ensuring all Threads immediately see any updates to the variable.
+							// Note: If using Atomic* variables, the volatile functionality is already included.
+							public volatile <type> <volatile-variable>;
+
 							public static void main(String[] args) {
 								// ExecutorService - a Pool of Threads that will execute some Callables:
 								ExecutorService executorService = Executors.newFixedThreadPool(<maximum-number-of-threads-to-grow-to>);
