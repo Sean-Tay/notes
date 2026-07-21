@@ -329,6 +329,10 @@ Java
 
 							Thread.sleep: Pauses Thread, saving CPU Resources. Good for waiting in the span of milliseconds / seconds.
 
+							Thread.currentThread(): Get current Thread Properties:
+								.isInterrupted() - check if the current Thread is interrupted.
+								.interrupt() - mark the current Thread as interrupted; needed after catching an InterruptedException.
+
 					// Control-Flow:
 						// synchronized - declare code where only one Thread may access the region within:
 						// Note: This will block other Threads
