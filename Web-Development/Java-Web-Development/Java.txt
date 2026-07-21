@@ -268,6 +268,63 @@ Java
 					long milliseconds = Instant.now().toEpochMilli();
 
 				// Asynchronousity
+					// Multi-Threading:
+						class Example {
+							public static void main(String[] args) {
+								// ExecutorService - a Pool of Threads that will execute some Callables:
+								ExecutorService executorService = Executors.newFixedThreadPool(<maximum-number-of-threads-to-grow-to>);
+								ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+
+								// Callables - used by the ExecutorService to get some Future result
+									// Future - Representation of a value that will take time to retrieve.
+									// CompletableFuture is an evolution of Future that makes it more like JavaScript's Promise API:
+									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>); // Supply to Global Thread Pool
+									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>, <executor>); // Supply to specific Thread Pool
+
+									// Note: Non-Blocking Specification - similar to JavaScript Promise API
+									<completableFuture>
+										.thenApply(<mapper-lambda>) // .thenCompose in case <mapper-lambda> returns another CompletableFuture
+										.thenAccept(<lambda>)
+										.exceptionally((e) -> { // ... //; });
+
+									// Await on multiple CompletableFutures
+									CompletableFuture.allOf( ... )
+									CompletableFuture.anyOf( ... )
+									<completableFuture>.thenCombine(
+										<another-completable-future>,
+										(a, b) -> { // ... //; }
+									)
+
+									<completableFuture>.join(); // Block Parent Thread while Results are being obtained
+
+								// Runnable - used by the ExecutorService to do some long-running Tasks
+									Runnable task = () -> {
+										while (!Thread.currentThread().isInterrupted()) {
+											try {
+												// ...
+											} catch (InterruptedException e) {
+												Thread.currentThread().interrupt();
+
+												// ...
+
+												break;
+											} catch (Exception e) {
+												// ...
+											}
+										}
+									};
+
+								executorService.shutdown();
+							}
+						}
+
+						// Thread Management:
+							Thread.onSpinWait: Instructs the CPU to execute the Thread at a slightly slower rate. Good for saving on CPU Resources while waiting for something, and maintaining the ability to react quickly once the thing materializes. See Optimization Techniques section for other uses.
+
+							Thread.yield: Instructs the Scheduler to give the CPU to another Thread that needs it. Good for optimizing CPU Resources during cooperative multithreading tasks.
+
+							Thread.sleep: Pauses Thread, saving CPU Resources. Good for waiting in the span of milliseconds / seconds.
+
 					// Control-Flow:
 						// synchronized - declare code where only one Thread may access the region within:
 						// Note: This will block other Threads
@@ -325,63 +382,6 @@ Java
 									barrier.await();
 								}
 							}
-
-					// Multi-Threading:
-						class Example {
-							public static void main(String[] args) {
-								// ExecutorService - a Pool of Threads that will execute some Callables:
-								ExecutorService executorService = Executors.newFixedThreadPool(<maximum-number-of-threads-to-grow-to>);
-								ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
-
-								// Callables - used by the ExecutorService to get some Future result
-									// Future - Representation of a value that will take time to retrieve.
-									// CompletableFuture is an evolution of Future that makes it more like JavaScript's Promise API:
-									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>); // Supply to Global Thread Pool
-									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>, <executor>); // Supply to specific Thread Pool
-
-									// Note: Non-Blocking Specification - similar to JavaScript Promise API
-									<completableFuture>
-										.thenApply(<mapper-lambda>) // .thenCompose in case <mapper-lambda> returns another CompletableFuture
-										.thenAccept(<lambda>)
-										.exceptionally((e) -> { // ... //; });
-
-									// Await on multiple CompletableFutures
-									CompletableFuture.allOf( ... )
-									CompletableFuture.anyOf( ... )
-									<completableFuture>.thenCombine(
-										<another-completable-future>,
-										(a, b) -> { // ... //; }
-									)
-
-									<completableFuture>.join(); // Block Parent Thread while Results are being obtained
-
-								// Runnable - used by the ExecutorService to do some long-running Tasks
-									Runnable task = () -> {
-										while (!Thread.currentThread().isInterrupted()) {
-											try {
-												// ...
-											} catch (InterruptedException e) {
-												Thread.currentThread().interrupt();
-
-												// ...
-
-												break;
-											} catch (Exception e) {
-												// ...
-											}
-										}
-									};
-
-								executorService.shutdown();
-							}
-						}
-
-				// Thread Management:
-					Thread.onSpinWait: Instructs the CPU to execute the Thread at a slightly slower rate. Good for saving on CPU Resources while waiting for something, and maintaining the ability to react quickly once the thing materializes. See Optimization Techniques section for other uses.
-
-					Thread.yield: Instructs the Scheduler to give the CPU to another Thread that needs it. Good for optimizing CPU Resources during cooperative multithreading tasks.
-
-					Thread.sleep: Pauses Thread, saving CPU Resources. Good for waiting in the span of milliseconds / seconds.
 
 			Optimization Techniques: Focus on optimizing the Hot Paths.
 				Just-in-Time Compilation: Required for a dynamic language such as Java. Compare this with Ahead-of-Time compilation.
