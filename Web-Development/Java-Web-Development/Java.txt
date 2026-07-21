@@ -284,13 +284,30 @@ Java
 									}
 
 								// Block-Level:
-									public void fn() {
+									// Declaring 'throws InterruptedException' needed if any Method invoked within throws that Exception
+									// Tip: Usually Thread.sleep(), <lock>.wait(), <thread>.join()
+									public void fn() throws InterruptedException {
 										// synchronized needs a Object to track Threads
 										synchronized(this) {
 											// ...
 
 											// Re-entrant Property allows the same Thread to activate the same Lock
 											// synchronized(this)
+
+											// Every Object has a hidden "Intrinsic Lock" Property that implements some Thread coordination Methods:
+												// Make the current Thread release the Lock and make it go into Dormant (i.e. Waiting) State
+												// Allows other Threads waiting outside the synchronized Block to enter and acquire the Lock
+												// Note: Ensure this.wait() is invoked in a while-loop! Threads can spuriously (i.e. randomly) wake up, even without calling this.notify()!
+												while(!<condition>) this.wait();
+
+												// ... update condition ...
+
+												// Wakes up one random Dormant Thread waiting to acquire / re-acquire the Lock in this synchronized Block
+												// Tip: For Threads that released the Lock via this.wait(), execution will continue after the this.wait() line, NOT from the beginning of the synchronized Block.
+												this.notify();
+
+												// Wakes up all Dormant Threads waiting to acquire / re-acquire the Lock in this synchronized Block
+												this.notifyAll();
 										}
 									}
 							}
