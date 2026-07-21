@@ -128,6 +128,18 @@ Java
 						// PriorityQueue
 							// Internally uses a Min Heap; to convert to a Max Heap, feed Collections.reverseOrder() into the PriorityQueue constructor.
 
+				// BlockingQueue - Has additional operations that blocks a Thread if it is trying to poll and the Queue is empty, or blocks a Thread if it is trying to retrieve and the Queue is Bounded and full.
+					// Methods:
+						.put(<item>);
+						.take();
+
+					// Implementations:
+						// ArrayBlockingQueue
+
+						// LinkedBlockingQueue
+
+						// PriorityBlockingQueue
+
 				// Deque - modern Interface featuring both Stack and Queue operations:
 					// Methods:
 						Deque<<type>> exampleDeque;
@@ -151,15 +163,17 @@ Java
 							// Achieves Thread-safety entirely through Compare-and-Swap primitives at the Hardware Instruction level.
 							// Note: No locks, so .size() is an O(N) operation, requiring full List traversal.
 
+				// BlockingDeque - Has additional operations that blocks a Thread if it is trying to poll and the Queue is empty, or blocks a Thread if it is trying to retrieve and the Queue is Bounded and full.
+					// Methods:
+						.putFirst(<item>);
+						.takeFirst();
+
+						.putLast(<item>);
+						.takeLast();
+
+					// Implementations:
 						// LinkedBlockingDeque
-							// Note: Use the BlockingDeque interface to get the Blocking variants of the Deque methods:
-								.putFirst(<item>);
-								.takeFirst();
-
-								.putLast(<item>);
-								.takeLast();
-
-								// Note: The Blocking Methods throw the InterruptedException if the Thread Container (i.e. ExecutorService) or Application is closed; the Exception is how the JVM wakes the Blocked Threads. Either rethrow the Exception or ensure Thread.currentThread().interrupt() is invoked to ensure no Zombie Threads.
+							// Note: The Blocking Methods throw the InterruptedException if the Thread Container (i.e. ExecutorService) or Application is closed; the Exception is how the JVM wakes the Blocked Threads. Either rethrow the Exception or ensure Thread.currentThread().interrupt() is invoked to ensure no Zombie Threads.
 
 			Interfaces:
 				interface ExampleInterface {
