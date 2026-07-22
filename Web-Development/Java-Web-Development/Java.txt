@@ -454,6 +454,20 @@ Java
 							}
 
 						// Semaphore - permit only a limited number of Threads at a Time.
+						// Tip: Mutex is a Semaphore with a limit of 2.
+							class Example {
+								public void fn() {
+									Semaphore s = new Semaphore(<initial-value>, <fairness-boolean>);
+
+									s.acquire(<num-permits>); // Attempt to acquire one or more permits from the Semaphore
+
+									s.availablePermits(); // Return number of available Permits
+									
+									// Release one or more permits from the Semaphore
+									// Note: <num-permits> can be more than <initial-value>
+									s.release(<num-permits>);
+								}
+							}
 
 						// CyclicBarrier - wait until a number of Threads hit the CyclicBarrier before continuing.
 							class Example {
