@@ -281,6 +281,8 @@ Java
 
 								// Callables - used by the ExecutorService to get some Future result
 									// Future - Representation of a value that will take time to retrieve.
+									// <executor-service>.submit(<callable>);
+
 									// CompletableFuture is an evolution of Future that makes it more like JavaScript's Promise API:
 									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>); // Supply to Global Thread Pool
 									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>, <executor>); // Supply to specific Thread Pool
@@ -318,7 +320,28 @@ Java
 										}
 									};
 
-								executorService.shutdown();
+									// OR
+
+									class RunnableTask implements Runnable {
+										public RunnableTask() {
+											// ...
+										}
+
+										@Override
+										public void run() {
+											// ...
+										}
+									}
+
+									// ...
+
+									// <executor-service>.execute(<runnable>);
+
+									// OR
+
+									// ... Thread.start(new RunnableTask()); ...
+
+								executorService.shutdown(); // Alternatively - try-with-resources
 							}
 						}
 
@@ -332,6 +355,8 @@ Java
 							Thread.currentThread(): Get current Thread Properties:
 								.isInterrupted() - check if the current Thread is interrupted.
 								.interrupt() - mark the current Thread as interrupted; needed after catching an InterruptedException.
+
+							Thread.start(<runnable>): Spawn a separate Thread and runs a Runnable Task.
 
 					// Control-Flow:
 						// synchronized - declare code where only one Thread may access the region within:
