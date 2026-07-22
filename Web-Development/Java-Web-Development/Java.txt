@@ -402,6 +402,36 @@ Java
 									}
 							}
 
+						// ReentrantLock - Finer-grained control vs. synchronized
+							// Tip: Allow Locking and Unlocking in different Block or Method Scopes, unlike synchronized
+							// Tip: Allow coordination between different types of Threads
+							class Example {
+								public void fn() throws InterruptedException {
+									Lock lock = new ReentrantLock(<fairness-boolean>); // Threads acquire the Lock in the order they request it
+									
+									Condition condition = lock.newCondition(); // Create some custom condition for Threads to be suspended upon
+
+									// Try to acquire the Lock, blocking the Thread if unsuccessful
+									lock.lock(); // lock.tryLock() for the non-blocking alternative
+
+									// ... 
+
+									try {
+										// Await on a Condition - release Lock but suspend Thread until signalled
+										// Tip - requires another Thread typically operating on a different side of the logic to release this Thread.
+										condition.await();
+
+										// ...
+
+										// Signal on suspended Threads waiting for a Condition
+										condition.signal();
+									} finally {
+										// Ensure lock is always released
+										lock.unlock();
+									}
+								}
+							}
+
 						// Semaphore - permit only a limited number of Threads at a Time.
 
 						// CyclicBarrier - wait until a number of Threads hit the CyclicBarrier before continuing.
