@@ -364,6 +364,20 @@ Java
 
 							Thread.start(<runnable>): Spawn a separate Thread and runs a Runnable Task.
 
+					// Variables:
+						// AtomicInteger:
+							class Example {
+								public void static main(String[] args) {
+									AtomicInteger aI = new AtomicInteger(<initial-value>);
+
+									// ...
+
+									int current = aI.get();
+									int current = aI.addAndGet(<delta>);
+									int current = aI.compareAndSet(<expected>, <update>); // Only set to <update> if value is currently <expected>
+								}
+							}
+
 					// Control-Flow:
 						// synchronized - declare code where only one Thread may access the region within:
 						// Note: This will block other Threads
