@@ -135,8 +135,10 @@ Java
 
 					// Implementations:
 						// ArrayBlockingQueue
+							// Has to be bounded, feed the limit into the Constructor.
 
 						// LinkedBlockingQueue
+							// Can be unbounded
 
 						// PriorityBlockingQueue
 
@@ -341,7 +343,11 @@ Java
 
 									// ... Thread.start(new RunnableTask()); ...
 
+								// Prevent new Tasks from being submitted into the ExecutorService
 								executorService.shutdown(); // Alternatively - try-with-resources
+
+								// Immediately terminate the Runnables in the ExecutorService
+								executorService.shutdownNow();
 							}
 						}
 
