@@ -429,7 +429,8 @@ Java
 
 										// ...
 
-										// Signal on suspended Threads waiting for a Condition
+										// Awaken suspended Threads waiting for a Condition
+										// Note: The suspended Threads still has to re-acquire the Lock before it can continue executing, which is why a subsequent lock.unlock(); is needed.
 										condition.signal();
 									} finally {
 										// Ensure lock is always released
