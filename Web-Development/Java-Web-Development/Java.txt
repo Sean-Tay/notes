@@ -5,7 +5,14 @@ Java
 	
 	Resources: 
 	
-	Concepts: 
+	Concepts:
+		Java Memory Model:		Describes how Threads interact through Memory. It mainly aims to define and describe the allowable behaviour of Multi-Threaded programs.
+
+		Lock Escalation:		Upgrades a Lock (in Java this is implemented on the synchronized keyword) according to level of Thread Contention; the higher the level the more capable but the heavier the performance cost.
+			Unlocked:			Baseline Performance Cost.
+			Biased Lock:		Assumes only one Thread will acquire / release the Lock. Deprecated in Java 15+ due to high cleanup cost in modern Multi-threaded architectures.
+			Lightweight / Thin Lock: Upgraded from Biased Lock when another Thread attempts to acquire the Lock. Blocks the Thread via CAS (e.g. AtomicBoolean) operations, which are slower than Biased Lock operations but better than OS-level System calls in Heavyweight Lock.
+			Heavyweight / Fat Lock:	Upgraded from Lightweight Lock if a spinning (i.e. Blocked) Thread fails to acquire the Lock after a certain number of attempts. Blocks the Thread via sleeping with OS-level Mutex and System calls, which are more expensive.
 	
 	Details:
 		Syntax:
@@ -380,6 +387,7 @@ Java
 
 					// Control-Flow:
 						// synchronized - declare code where only one Thread may access the region within:
+						// Tip: The basic synchronized Object can be optimized by the JVM (e.g. Lock Escalation).
 						// Note: This will block other Threads
 							class Example {
 								// Functions-Level:
@@ -422,36 +430,38 @@ Java
 									}
 							}
 
-						// ReentrantLock - Finer-grained control vs. synchronized
+						// Locks - Finer-grained control vs. synchronized
 							// Tip: Allow Locking and Unlocking in different Block or Method Scopes, unlike synchronized
 							// Tip: Allow coordination between different types of Threads
-							class Example {
-								public void fn() throws InterruptedException {
-									Lock lock = new ReentrantLock(<fairness-boolean>); // Threads acquire the Lock in the order they request it
-									
-									Condition condition = lock.newCondition(); // Create some custom condition for Threads to be suspended upon
 
-									// Try to acquire the Lock, blocking the Thread if unsuccessful
-									lock.lock(); // lock.tryLock() for the non-blocking alternative
+							// ReentrantLock
+								class Example {
+									public void fn() throws InterruptedException {
+										Lock lock = new ReentrantLock(<fairness-boolean>); // Threads acquire the Lock in the order they request it
+										
+										Condition condition = lock.newCondition(); // Create some custom condition for Threads to be suspended upon
 
-									// ... 
+										// Try to acquire the Lock, blocking the Thread if unsuccessful
+										lock.lock(); // lock.tryLock() for the non-blocking alternative
 
-									try {
-										// Await on a Condition - release Lock but suspend Thread until signalled
-										// Tip - requires another Thread typically operating on a different side of the logic to release this Thread.
-										condition.await();
+										// ... 
 
-										// ...
+										try {
+											// Await on a Condition - release Lock but suspend Thread until signalled
+											// Tip - requires another Thread typically operating on a different side of the logic to release this Thread.
+											condition.await();
 
-										// Awaken suspended Threads waiting for a Condition
-										// Note: The suspended Threads still has to re-acquire the Lock before it can continue executing, which is why a subsequent lock.unlock(); is needed.
-										condition.signal();
-									} finally {
-										// Ensure lock is always released
-										lock.unlock();
+											// ...
+
+											// Awaken suspended Threads waiting for a Condition
+											// Note: The suspended Threads still has to re-acquire the Lock before it can continue executing, which is why a subsequent lock.unlock(); is needed.
+											condition.signal();
+										} finally {
+											// Ensure lock is always released
+											lock.unlock();
+										}
 									}
 								}
-							}
 
 						// Semaphore - permit only a limited number of Threads at a Time.
 						// Tip: Mutex is a Semaphore with a limit of 2.
