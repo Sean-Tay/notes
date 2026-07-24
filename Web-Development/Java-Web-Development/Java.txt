@@ -535,6 +535,31 @@ Java
 									}
 								}
 
+							// ReentrantReadWriteLock - allows multiple non-Blocking Read Access if no Write Operation in progress
+								class ReentrantReadWriteLockExample {
+									private final ReentrantReadWriteLock rrwl = new ReentrantReadWriteLock();
+
+									public static void main(String args[]) {
+										// Acquire Read-Lock
+										// Note: Only blocks if there is an ongoing Write Operation (i.e. acquired Write Lock)
+										rrwl.readLock().lock();
+										try {
+											// ...
+										} finally {
+											rrwl.readLock().unlock();
+										}
+
+										// Acquire Write-Lock
+										// Note: Blocks if there are any ongoing Read Operations (i.e. acquired Read Lock)
+										rrwl.writeLock().lock();
+										try {
+											// ...
+										} finally {
+											rrwl.writeLock().unlock();
+										}
+									}
+								}
+
 						// Semaphore - permit only a limited number of Threads at a Time.
 						// Tip: Mutex is a Semaphore with a limit of 2.
 							class Example {
