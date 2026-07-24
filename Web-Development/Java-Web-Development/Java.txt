@@ -8,6 +8,8 @@ Java
 	Concepts:
 		Java Memory Model:		Describes how Threads interact through Memory. It mainly aims to define and describe the allowable behaviour of Multi-Threaded programs.
 
+		Memory Tearing:			Java does not guarantee an Atomic update operation on 64-bit Data Types (i.e. split into 2 32-bit updates).
+
 		Lock Escalation:		Upgrades a Lock (in Java this is implemented on the synchronized keyword) according to level of Thread Contention; the higher the level the more capable but the heavier the performance cost.
 			Unlocked:			Baseline Performance Cost.
 			Biased Lock:		Assumes only one Thread will acquire / release the Lock. Deprecated in Java 15+ due to high cleanup cost in modern Multi-threaded architectures.
@@ -281,6 +283,7 @@ Java
 						class Example {
 							// Declare a variable accessed by Multiple Threads to be volatile; forces read / writes to be flushed to RAM and not Thread-specific CPU Core Caches, ensuring all Threads immediately see any updates to the variable.
 							// Note: If using Atomic* variables, the volatile functionality is already included.
+							// Note: For Arrays, use VarHandle to enforce volatility per Element instead of the volatile keyword.
 							public volatile <type> <volatile-variable>;
 
 							public static void main(String[] args) {
@@ -372,6 +375,75 @@ Java
 							Thread.start(<runnable>): Spawn a separate Thread and runs a Runnable Task.
 
 					// Variables:
+						// VarHandle: Defines how to and controls access a Variable for an Object. Can be used to do Volatile and Atomic operations.
+						// Note: VarHandle cannot be used on local Variables, as those are not on the Heap but in the Thread Stack.
+						// Tip: More Memory efficient compared to Atomic Wrappers, assuming the VarHandle is declared statically.
+							class <class-name> {
+								<type> <public-variable>; // Note: Cannot be final if need to use set / compareAndSet.
+								private static final VarHandle variableHandle;
+
+								static {
+									try {
+										variableHandle = MethodHandles.lookup() // Use MethodHandles.privateLookupIn(<class-name>.class, MethodHandles.lookup())
+											.findVarHandle(<class-name>.class, '<public-variable>', <type>.class)
+									} catch (ReflectiveOperationException e) {
+										throw new ExceptionInInitializerError(e);
+									}
+								}
+
+								// ...
+
+								public void fn() throws InterruptedException {
+									// Plain Get / Set operations
+										<type> example = (<type>) variableHandle.get(<class-instance>); // Need to cast to specific <type>
+										variableHandle.set(<class-instance>, <new-value>);
+
+									// TODO: Opaque operations
+
+									// TODO: Acquire / Release operations
+
+									// Volatile Get / Set operations
+									// Note: This is needed to avoid Memory Tearing for 64-bit Data Type such as long / double.
+										variableHandle.setVolatile(<class-instance>, <new-value>);
+										<type> example = (<type>) variableHandle.getVolatile(<class-instance>);
+
+									// Atomic operations
+										while (!variableHandle.compareAndSet(<class-instance>, <old-value>, <new-value>)) Thread.onSpinWait();
+								}
+							}
+
+							class ArrayVarHandleExample {
+								// Note: The difference between regular Variables and Array Variables; no need to specify "container" classes (i.e. <class-name>.class). Arrays are already managed in the Heap.
+								private static final VarHandle arrayVariableHandle = MethodHandles.arrayElementVarHandle(<type>[].class);
+
+								// Tip - Not really needed as Array lengths are typically fixed throughout lifetime of Array.
+								private static final VarHandle arrayLengthHandle = MethodHandles.arrayLength(<type>[].class);
+
+								public static void main(String[] args) {
+									<type>[] <array-variable> = { <value>, ... }
+
+									// Get Length of Array
+									// Tip: Just use <array-variable>.length since Array lengths are fixed throughout the lifetime of the Array.
+										int arrayLength = (int) arrayLengthHandle.getExact(<array-variable>);
+
+									// Plain Get / Set operations
+										<type> arrayExample = (<type>) arrayVariableHandle.get(<array-variable>, <index>); 
+										arrayVariableHandle.set(<array-variable>, <index>, <new-value>); 
+
+									// TODO: Opaque operations
+
+									// TODO: Acquire / Release operations
+
+									// Volatile Get / Set operations
+									// Note: This is needed to avoid Memory Tearing for 64-bit Data Type such as long / double.
+										<type> arrayExample = (<type>) arrayVariableHandle.getVolatile(<array-variable>, <index>);
+										arrayVariableHandle.setVolatile(<array-variable>, <index>, <new-value>);
+
+									// Atomic operations
+										while (!arrayVariableHandle.compareAndSet(<array-variable>, <index>, <old-value>, <new-value>)) Thread.onSpinWait();
+								}
+							}
+
 						// AtomicInteger:
 							class Example {
 								public void static main(String[] args) {
