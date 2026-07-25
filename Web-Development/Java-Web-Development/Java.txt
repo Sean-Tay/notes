@@ -280,7 +280,7 @@ Java
 
 				// Asynchronousity
 					// Multi-Threading:
-						class Example {
+						class CallableRunnableExample {
 							// Declare a variable accessed by Multiple Threads to be volatile; forces read / writes to be flushed to RAM and not Thread-specific CPU Core Caches, ensuring all Threads immediately see any updates to the variable.
 							// Note: If using Atomic* variables, the volatile functionality is already included.
 							// Note: For Arrays, use VarHandle to enforce volatility per Element instead of the volatile keyword.
@@ -461,7 +461,7 @@ Java
 						// synchronized - declare code where only one Thread may access the region within:
 						// Tip: The basic synchronized Object can be optimized by the JVM (e.g. Lock Escalation).
 						// Note: This will block other Threads
-							class Example {
+							class SynchronizedExample {
 								// Functions-Level:
 									// Per Object-instance
 									public synchronized void fn() {
@@ -507,7 +507,7 @@ Java
 							// Tip: Allow coordination between different types of Threads
 
 							// ReentrantLock
-								class Example {
+								class ReentrantLockExample {
 									public void fn() throws InterruptedException {
 										Lock lock = new ReentrantLock(<fairness-boolean>); // Threads acquire the Lock in the order they request it
 										
@@ -563,7 +563,7 @@ Java
 
 						// Semaphore - permit only a limited number of Threads at a Time.
 						// Tip: Mutex is a Semaphore with a limit of 2.
-							class Example {
+							class MutexExample {
 								public void fn() {
 									Semaphore s = new Semaphore(<initial-value>, <fairness-boolean>);
 
@@ -578,7 +578,7 @@ Java
 							}
 
 						// CyclicBarrier - wait until a number of Threads hit the CyclicBarrier before continuing.
-							class Example {
+							class CyclicBarrierExample {
 								public void fn() {
 									CyclicBarrier barrier = new CyclicBarrier(<num-threads-needed>);
 
