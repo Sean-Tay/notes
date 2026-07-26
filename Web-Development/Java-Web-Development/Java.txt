@@ -602,12 +602,20 @@ Java
 						// CyclicBarrier - wait until a number of Threads hit the CyclicBarrier before continuing.
 							class CyclicBarrierExample {
 								public void fn() {
-									CyclicBarrier barrier = new CyclicBarrier(<num-threads-needed>);
+									// Note: <custom-runnable-action> is triggered each time the CyclicBarrier releases participating Threads.
+									CyclicBarrier barrier = new CyclicBarrier(<num-threads-needed>, <custom-runnable-action>);
 
 									// ... 
+									try {
+										// Note: Blocks the calling Thread until the condition is satisfied.
+										barrier.await();
+									} catch (BrokenBarrierException e) {
+										// BrokenBarrierException is thrown when a Thread attempts to wait / is waiting on a Barrier in a broken state
+										// All participating waiting Threads will receive this Exception
 
-									// Note: Blocks the calling Thread until the condition is satisfied.
-									barrier.await();
+										// ... 
+										barrier.reset(); // Reset the CyclicBarrier manually.
+									}
 								}
 							}
 
