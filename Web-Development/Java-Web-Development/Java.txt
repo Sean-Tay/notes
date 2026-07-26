@@ -582,6 +582,23 @@ Java
 								}
 							}
 
+							// CountDownLatch - Counting Sempahore
+							class CountDownLatchExample {
+								public void fn() {
+									CountDownLatch cdl = new CountDownLatch(<number-of-activations-required>); // to progress past await
+
+									// ... 
+
+									cdl.countDown(); // Reduce CountDownLatch required activations by 1. Does NOT block the Thread if number of activations is still above 0 after reduction
+
+									// ...
+
+									cdl.await(); // Blocks the Thread until CountDownLatch number of activations becomes 0
+
+									// ...
+								}
+							}
+
 						// CyclicBarrier - wait until a number of Threads hit the CyclicBarrier before continuing.
 							class CyclicBarrierExample {
 								public void fn() {
