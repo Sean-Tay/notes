@@ -7,6 +7,10 @@ Java
 	
 	Concepts:
 		Java Memory Model:		Describes how Threads interact through Memory. It mainly aims to define and describe the allowable behaviour of Multi-Threaded programs.
+			Happens-Before:		Guarantee of visibility and ordering that ensures changes made by one action are visible to another.
+				For a single Thread, actions occur in the order that they were written in.
+				For a volatile variable, a write happens before every later read of the same variable.
+				For a monitor, unlocking it happens before any locking of the same monitor.
 
 		Memory Tearing:			Java does not guarantee an Atomic update operation on 64-bit Data Types (i.e. split into 2 32-bit updates).
 
@@ -282,6 +286,7 @@ Java
 					// Multi-Threading:
 						class CallableRunnableExample {
 							// Declare a variable accessed by Multiple Threads to be volatile; forces read / writes to be flushed to RAM and not Thread-specific CPU Core Caches, ensuring all Threads immediately see any updates to the variable.
+							// Note: A write to a volatile variable acts as a release for everything written before it in the Thread, not just the volatile variable itself (i.e. see JMM > Happens-Before > Volatile Rule). A single guard variable can safely publish a whole block of state without every field having to be made volatile (i.e. only for scenarios where the fields only have one writer and the reader for those fields is gated by the volatile variable).
 							// Note: If using Atomic* variables, the volatile functionality is already included.
 							// Note: For Arrays, use VarHandle to enforce volatility per Element instead of the volatile keyword.
 							public volatile <type> <volatile-variable>;
