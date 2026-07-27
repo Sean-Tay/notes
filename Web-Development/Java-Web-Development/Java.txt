@@ -19,7 +19,21 @@ Java
 			Biased Lock:		Assumes only one Thread will acquire / release the Lock. Deprecated in Java 15+ due to high cleanup cost in modern Multi-threaded architectures.
 			Lightweight / Thin Lock: Upgraded from Biased Lock when another Thread attempts to acquire the Lock. Blocks the Thread via CAS (e.g. AtomicBoolean) operations, which are slower than Biased Lock operations but better than OS-level System calls in Heavyweight Lock.
 			Heavyweight / Fat Lock:	Upgraded from Lightweight Lock if a spinning (i.e. Blocked) Thread fails to acquire the Lock after a certain number of attempts. Blocks the Thread via sleeping with OS-level Mutex and System calls, which are more expensive.
-	
+
+		Deadlock:				When two or more Threads are each permanently blocked from progressing, because they are each waiting for a Resource that another Thread has sole ownership of currently. 
+			The Coffman Conditions specify the conditions that must simultaneously be true in order for a Deadlock to occur:
+				Mutual Exclusion: Only a single Thread may access a Resource at a time.
+				Hold and Wait: A Thread holds one Resource while waiting for another.
+				Circular Wait: There's a cycle of Threads, each waiting for the next.
+				No Premption: A Resource cannot be forceably taken away, only released voluntarily.
+
+			Resolution:
+				For participating Threads, always acquire Locks in the same order.
+				Acquire Locks with a timeout (i.e. tryLock()).
+				Use jstack to detect Deadlock scenarios.
+
+		Livelock:				Similar to Deadlock, except Threads are actively executing, but no real progress is made (e.g. looped exponential backoff for mutual Lock acquisition).
+
 	Details:
 		Syntax:
 			Types:
@@ -284,7 +298,7 @@ Java
 
 				// Asynchronousity
 					// Multi-Threading:
-						class CallableRunnableExample {
+						class SupplierRunnableExample {
 							// Declare a variable accessed by Multiple Threads to be volatile; forces read / writes to be flushed to RAM and not Thread-specific CPU Core Caches, ensuring all Threads immediately see any updates to the variable.
 							// Note: A write to a volatile variable acts as a release for everything written before it in the Thread, not just the volatile variable itself (i.e. see JMM > Happens-Before > Volatile Rule). A single guard variable can safely publish a whole block of state without every field having to be made volatile (i.e. only for scenarios where the fields only have one writer and the reader for those fields is gated by the volatile variable).
 							// Note: If using Atomic* variables, the volatile functionality is already included.
@@ -296,13 +310,13 @@ Java
 								ExecutorService executorService = Executors.newFixedThreadPool(<maximum-number-of-threads-to-grow-to>);
 								ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 
-								// Callables - used by the ExecutorService to get some Future result
+								// Callables / Supplier - used by the ExecutorService to get some Future result
 									// Future - Representation of a value that will take time to retrieve.
 									// <executor-service>.submit(<callable>);
 
 									// CompletableFuture is an evolution of Future that makes it more like JavaScript's Promise API:
-									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>); // Supply to Global Thread Pool
-									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<lambda>, <executor>); // Supply to specific Thread Pool
+									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<supplier>); // Supply to Global Thread Pool
+									CompletableFuture<<lambda-return-type>> future = CompletableFuture.supplyAsync(<supplier>, <executor>); // Supply to specific Thread Pool
 
 									// Note: Non-Blocking Specification - similar to JavaScript Promise API
 									<completableFuture>
@@ -519,24 +533,37 @@ Java
 										Condition condition = lock.newCondition(); // Create some custom condition for Threads to be suspended upon
 
 										// Try to acquire the Lock, blocking the Thread if unsuccessful
-										lock.lock(); // lock.tryLock() for the non-blocking alternative
+											lock.lock(); 
+											try {
+												// Await on a Condition - release Lock but suspend Thread until signalled
+												// Tip - requires another Thread typically operating on a different side of the logic to release this Thread.
+												condition.await();
 
-										// ... 
+												// ...
 
-										try {
-											// Await on a Condition - release Lock but suspend Thread until signalled
-											// Tip - requires another Thread typically operating on a different side of the logic to release this Thread.
-											condition.await();
-
-											// ...
-
-											// Awaken suspended Threads waiting for a Condition
-											// Note: The suspended Threads still has to re-acquire the Lock before it can continue executing, which is why a subsequent lock.unlock(); is needed.
-											condition.signal();
-										} finally {
-											// Ensure lock is always released
-											lock.unlock();
-										}
+												// Awaken suspended Threads waiting for a Condition
+												// Note: The suspended Threads still has to re-acquire the Lock before it can continue executing, which is why a subsequent lock.unlock(); is needed.
+												condition.signal();
+											} finally {
+												// Ensure lock is always released
+												// Note: If lock was acquired multiple times, a corresponding number of unlock invocations is required to fully release the lock
+												lock.unlock();
+											}
+										
+										// lock.tryLock() for the non-blocking alternative:
+											// Note: if tryLock is invoked without arguments, the Lock acquisition will ignore <fairness-boolean>
+											// Note: tryLock returns a Boolean on whether the Lock was successfully acquired within the Timeout
+											if (lock.tryLock(<number>, TimeUnit.<time-unit>)) {
+												try {
+													// Lock acquired
+												} finally {
+													// Ensure lock is always released
+													// Note: If lock was acquired multiple times, a corresponding number of unlock invocations is required to fully release the lock
+													lock.unlock();
+												}
+											} else {
+												// Unable to acquire the Lock, retry 
+											}
 									}
 								}
 
