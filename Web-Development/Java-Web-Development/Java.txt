@@ -605,6 +605,8 @@ Java
 									
 									// Release one or more permits from the Semaphore
 									// Note: <num-permits> can be more than <initial-value>
+									// Note: Semaphores do not require a Thread to own a Semaphore permit before releasing Semaphore permits.
+									// Tip: This differs from Lock's Condition.signal; the permit remains available even if no Thread is currently listening to the Semaphore, unlike Condition.signal.
 									s.release(<num-permits>);
 								}
 							}
