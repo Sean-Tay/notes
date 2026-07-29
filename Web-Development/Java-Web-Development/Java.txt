@@ -153,7 +153,15 @@ Java
 							// Note: When the Circular Array is full it has to do an O(N) operation to copy all existing Elements into a new larger Array.
 
 						// PriorityQueue
-							// Internally uses a Min Heap; to convert to a Max Heap, feed Collections.reverseOrder() into the PriorityQueue constructor.
+							// Internally uses a Min Heap; to convert to a Max Heap, feed Comparator.reversed() into the PriorityQueue constructor.
+
+							// Methods:
+								// Construction
+								PriorityQueue<<type>> pq = new PriorityQueue<>(
+									Comparator.comparing{ Double | Int | Long }(<type>::<method-on-type>)
+										.thenComparing{ Double | Int | Long }(<type>::<method-on-type>)
+										[.reversed()]
+								);
 
 				// BlockingQueue - Has additional operations that blocks a Thread if it is trying to poll and the Queue is empty, or blocks a Thread if it is trying to retrieve and the Queue is Bounded and full.
 					// Methods:
