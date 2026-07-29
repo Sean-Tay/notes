@@ -388,6 +388,10 @@ Java
 							Thread.sleep: Pauses Thread, saving CPU Resources. Good for waiting in the span of milliseconds / seconds.
 
 							Thread.currentThread(): Get current Thread Properties:
+								// Get Thread Name:
+									.getId() - < Java 19
+									.threadId - > Java 19
+
 								.isInterrupted() - check if the current Thread is interrupted.
 								.interrupt() - mark the current Thread as interrupted; needed after catching an InterruptedException.
 
