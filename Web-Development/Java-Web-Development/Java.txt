@@ -299,6 +299,10 @@ Java
 				} while (<condition>);
 
 			Utilities:
+				// Identity:
+					// Get an identifier for <object> which can be used for localized natural ordering.
+					int hc = System.identityHashCode(<object>);
+
 				// Date:
 					Duration.between(<earlier-temporal>, <later-temporal>).to*(); // Otherwise amount will be negative.
 
