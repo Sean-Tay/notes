@@ -34,6 +34,8 @@ Java
 
 		Livelock:				Similar to Deadlock, except Threads are actively executing, but no real progress is made (e.g. looped exponential backoff for mutual Lock acquisition).
 
+		Cooperative Interruption: Describes the overall direction in Java where it's up to the executing Task to determine when it can be interrupted (i.e. while loop on Thread.currentThread().isInterrupted()).
+		
 	Details:
 		Syntax:
 			Types:
