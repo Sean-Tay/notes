@@ -30,7 +30,7 @@ Java
 			Resolution:
 				For participating Threads, always acquire Locks in the same order.
 				Acquire Locks with a timeout (i.e. tryLock()).
-				Use jstack to detect Deadlock scenarios.
+				Use jstack to detect Deadlock scenarios (between multiple Threads; can't detect self-deadlock i.e. ReentrantReadWriteLock).
 
 		Livelock:				Similar to Deadlock, except Threads are actively executing, but no real progress is made (e.g. looped exponential backoff for mutual Lock acquisition).
 
@@ -571,7 +571,7 @@ Java
 										Condition condition = lock.newCondition(); // Create some custom condition for Threads to be suspended upon
 
 										// Try to acquire the Lock, blocking the Thread if unsuccessful
-											lock.lock(); 
+											lock.lock(); // lock.lockInterruptibly(); to allow the Thread to respond to Thread interruptions
 											try {
 												// Await on a Condition - release Lock but suspend Thread until signalled
 												// Tip - requires another Thread typically operating on a different side of the logic to release this Thread.
@@ -633,7 +633,7 @@ Java
 
 						// Semaphore - permit only a limited number of Threads at a Time.
 						// Tip: Mutex is a Semaphore with a limit of 2.
-							class MutexExample {
+							class SemaphoreExample {
 								public void fn() {
 									Semaphore s = new Semaphore(<initial-value>, <fairness-boolean>);
 
@@ -656,7 +656,7 @@ Java
 
 									// ... 
 
-									cdl.countDown(); // Reduce CountDownLatch required activations by 1. Does NOT block the Thread if number of activations is still above 0 after reduction
+									cdl.countDown(); // Reduce CountDownLatch required activations by 1. Does NOT block the Thread
 
 									// ...
 
