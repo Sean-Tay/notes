@@ -585,6 +585,7 @@ Java
 											} finally {
 												// Ensure lock is always released
 												// Note: If lock was acquired multiple times, a corresponding number of unlock invocations is required to fully release the lock
+												// Note: ReentrantLock API has .isHeldByCurrentThread() method to check if the current Thread holds the Lock. Important as calling .unlock() with a Thread that does not hold the Lock will throw an IllegalMonitorState Exception.
 												lock.unlock();
 											}
 										
