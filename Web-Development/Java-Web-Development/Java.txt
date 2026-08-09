@@ -41,8 +41,12 @@ Java
 			Types:
 				// Primitives:
 					// Note: Unlike Kotlin the Field's <type> can implicitly allow null
-					string stringVariable;
-					string[] stringArrayVariable;
+					<type> variable;
+
+					// Arrays
+						<type>[] arrayVariable = new <type>[<size>]; // 2D: new <type>[<num-rows>][<num-cols>]; // 3D: new <type>[<num-pages>]<2D>
+						<type>[] arrayVariable = { <value1>, ... }; // 2D: { { <value> , ... }, { <value>, ... }, ... } // 3D: { <2D>, ... }
+						arrayVariable.length;
 
 				// Explicitly declaring Nullability:
 					Optional<<type>> optionalVariable = Optional.empty();
