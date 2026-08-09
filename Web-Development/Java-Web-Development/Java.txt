@@ -64,6 +64,11 @@ Java
 					<type> variable = optionalVariable.filter(v -> <boolean>); // Returns Empty Optional if Filter Lambda returns false for the current Optional value.
 
 				// Utilities:
+					// StringBuilder: More efficient way to construct / manage Strings.
+						StringBuilder sb = new StringBuilder();
+						sb.append(<value>);
+						sb.toString();
+
 					// Runtime Type Checking:
 						(<variable> instanceof <type> <type-casted-variable>) // boolean expression
 
