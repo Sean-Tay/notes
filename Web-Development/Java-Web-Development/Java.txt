@@ -122,6 +122,20 @@ Java
 						exampleMap.remove(<key>, <value>); // Remove the <key> only if it is currently mapped to the <value> specified.
 
 					// Implementations:
+						// Special Immutable Map Initialization: 
+							// For 0 to 2 KV Entries:
+								// 0 KV Entries: ImmutableCollections.EmptyMap
+								// 1 to 2 KV Entries: ImmutableCollections.Map1 / ImmutableCollections.MapN
+								Map<<key-type>, <value-type>> m = Map.of(<key-1>, <value-1>, <key-2>, ... );
+
+							// For 3+ KV Entries: ImmutableCollections.MapN
+								Map<<key-type>, <value-type> m = Map.ofEntries(
+									Map.entry(<key-1>, <value-1>),
+									// ...
+								);
+
+							// Smaller Memory Footprint compared to vanilla HashMap - optimization done by storing Key-Values in a simple flat Array, instead of having to consider Buckets, intermediate Node Objects or resizing Calculations.
+
 						// HashMap
 							// Upon Hash Collision, HashMap dynamically changes a crowded Bucket to a LinkedList, followed by a Red-Black Tree. Worse-Case O(log N).
 							// Expands Collection Size upon reaching 75% capacity.
