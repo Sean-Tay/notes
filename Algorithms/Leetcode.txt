@@ -1,6 +1,9 @@
 Hash Maps
 	Questions:
 		Two Sum + Variants
+			Key Idea:
+				Avoid using the same Element more than once.
+
 		Frequency Counting
 		Grouping
 
@@ -34,11 +37,18 @@ Sliding Window
 	Questions:
 		Max Subarray of Size k
 		Longest Substring without Repeating Characters
+			Key Idea:
+				Keep a trailing pointer that denotes where the current substring with unique characters begin.
+				If a repeat character is found (i.e. determined by a Set), advance the trailing pointer until the Set doesn't have the repeat character anymore, then add it back into the Set.
+
 		Minimum Window Substring
 
 Binary Search
 	Questions:
 		Search in Rotated Array
+			Key Idea:
+				Instead of comparing the Target Element with Mid, determine which segment is in sorted order and which segment is in non-sorted order, by comparing Left, Mid and Right with each other.
+
 		Find First / Last Position
 		Search 2D Matrix
 
