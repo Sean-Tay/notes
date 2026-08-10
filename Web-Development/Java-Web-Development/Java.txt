@@ -151,6 +151,9 @@ Java
 					// Implementations:
 						// EnumSet - uses a Bit Vector for Bit Membership operations, which are faster than Hashing comparison.
 						
+				// Stacks
+					// Deprecated - use Deque instead. The traditional Stack DS in Java extends Vector, where every operation is synchronized.
+
 				// Queues
 					// Methods:
 						Queue<<type>> exampleQueue;
