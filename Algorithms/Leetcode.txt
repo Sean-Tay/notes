@@ -61,6 +61,8 @@ Sorting + Intervals
 Stack
 	Questions:
 		Valid Parenthesis
+			Key Idea:
+				Remember to check for non-zero size Stack at the end of the iteration, otherwise things like "((" would also return true.
 
 	Monotonic Stack: A variant of a Stack that only stores non-Decreasing / non-Increasing Elements.
 		Key Idea:
