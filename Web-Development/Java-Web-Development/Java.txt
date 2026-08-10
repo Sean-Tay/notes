@@ -754,7 +754,7 @@ Java
 				Lock-Free Execution:
 					Single-Writer: If each state only has a single modifier, there will be no need for locks and CAS retry-loops. See: LMAX Disruptor.
 
-				Mechanical Symphony:
+				Mechanical Sympathy:
 					Thread.onSpinWait(): Slows the rate of CPU instruction processing for a Thread (i.e. does NOT reduce the CPU allocated time for a Thread, neither does it put a Thread to sleep).
 						Prevents Context Switching for a Thread - blocking and waking a Thread has a cost.
 
