@@ -33,16 +33,20 @@ Artificial Intelligence:
 				Parameter Count: A measure of the size of the LLM, which is the number of Weights and Biases in the Model. An LLM with larger numbers means the Model has greater capacity to store knowledge and reason about complex problems.
 
 				Quantization: A Compression technique that reduces the precision of the Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
-					f16: Uncompressed, full 16-bit Floating Point values.
+					
 
 					# Integer-based Quantization:
 						q8_0
 						q4_0
 
 					# Floating-point based Quantization:
+						bf16: Uncompressed, full 16-bit Floating Point values.
+
+						mxfp8
+
 						nvfp4 
 							# Non-uniform Floating Point Scale, naturally grouping more precision around 0, which is where Model Weights usually live anyway.
-							# Scales better with Apple Hardware, delivering ~20% faster Token generation and cuts accuracy loss from typical quantization in half compared to traditional Integer-based Quantization.
+							# Scales better with Nvidia / Apple M5 Hardware, delivering ~20% faster Token generation and cuts accuracy loss from typical quantization in half compared to traditional Integer-based Quantization.
 
 				Context Length: The maximum number of Tokens that the LLM can process at once, per prompt.
 					Architectural: The number of Tokens that the LLM was built to process.
