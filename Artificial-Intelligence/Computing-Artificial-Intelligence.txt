@@ -33,8 +33,6 @@ Artificial Intelligence:
 				Parameter Count: A measure of the size of the LLM, which is the number of Weights and Biases in the Model. An LLM with larger numbers means the Model has greater capacity to store knowledge and reason about complex problems.
 
 				Quantization: A Compression technique that reduces the precision of the Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
-					
-
 					# Integer-based Quantization:
 						q8_0
 						q4_0
@@ -58,13 +56,10 @@ Artificial Intelligence:
 				Token: A unit of Data (i.e. words, sub-words).
 				Vector: Each Token is encoded as a Vector (i.e. Array of Numbers).
 				Embedding: A specific type of Vector that captures Semantic meaning, mapping Tokens into a continuous Vector Space where Tokens with similar meanings sit closer to each other.
-					Static Embedding: Embeddings generated from what was learnt by the Model during training (i.e. via a "static lookup table" for Embedding values). 
+					Static Embedding: Embeddings generated from what was learnt by the Model during training (i.e. via a "static lookup table" for Embedding values).
 
+				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other past Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings).
 					Contextualized Embedding: Embeddings whose values shift based on the surrounding tokens in the Prompt, not just on what was learnt by the Model during training.
-
-				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings).
-					Temperature: The amount of variance to use when determining the next Token to pick, based on the Attention Weights. Lower Temperatures induce more determinism and subsequently less creativity in the Response.
-					Top-P Sampling: Instruct the Model to only look at the Tokens that make up the top 90% of the Attention Weight scale (i.e. ignore uncommon relationships, such as Banana -> Computer).
 
 					KV Cache: Optimization Technique to cache the calculated Key & Value Vectors for already processed Tokens. Casual Masking ensures that only newer Tokens reference the information from older Tokens, not the other way around.
 
@@ -74,6 +69,12 @@ Artificial Intelligence:
 						Flash Attention: Instead of tracking the relationships of Tokens with every other Token in the Context Window, the Model breaks them into small Blocks which can fit into faster SRAM. Online Softmax Re-scaling assures that this chunking technique does not result in the loss of context across the entire Context Window.
 
 						Cross-Model Attention: Technique that links Embeddings across different mediums, allowing a Model to determine how data in one Medium would relate to data in another Medium. Used in Multi-Modal Models.
+
+				Filtering Mechanisms:
+					Temperature: The amount of variance to use when determining the next Token to pick, based on the Logits. Lower Temperatures induce more determinism and subsequently less creativity in the Response.
+
+					Top-K Sampling: Instruct the Model to only consider the top K likely next Tokens.
+					Top-P Sampling: Instruct the Model to only consider from the most likely next Tokens whose cumulative probability adds up to P. Differs from Top-K in the sense that the pool of possible next Tokens shrinks based on how confident the Model is for the choices.
 
 			Multi-Modal:
 				Grapheme: Unit of Text.
