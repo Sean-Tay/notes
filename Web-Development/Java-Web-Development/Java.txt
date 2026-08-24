@@ -124,6 +124,9 @@ Java
 						exampleMap.remove(<key>);
 						exampleMap.remove(<key>, <value>); // Remove the <key> only if it is currently mapped to the <value> specified.
 
+						// Iteration
+						Iterator<Map.Entry<<key-type>, <value-type>>> entryIterator = exampleMap.entrySet();
+
 					// Implementations:
 						// Special Immutable Map Initialization: 
 							// For 0 to 2 KV Entries:
@@ -148,7 +151,26 @@ Java
 							// Retains Insertion / Least Used Ordering, specified in the Constructor.
 							// Has more Memory overhead compared to HashMap, as each Node now has two additional Pointers to the previous / next Node.
 
-						// TreeMap
+						// TreeMap / NavigableMap
+							// Maintains sorted Key order at the cost of O(log k) insertion / deletion.
+							// Useful as a Secondary Data Structure for Range Queries.
+
+							// Methods:
+								NavigableMap<<key-type>, <value-type>> exampleNM = new TreeMap<>();
+
+								// Returns next lower or higher Key than <key>
+								<key-type> lowerKey = exampleNM.lowerKey(<key>);
+								<key-type> lowerOrEqualToKey = exampleNM.floorKey(<key>);
+								<key-type> higherKey = exampleNM.higherKey(<key>);
+								<key-type> higherOrEqualToKey = exampleNM.ceilingKey(<key>);
+
+								<key-type> firstKey = exampleNM.firstKey();
+								<key-type> lastKey = exampleNM.lastKey();
+
+								// O(1) Ordered Views:
+									NavigableSet<<key-type>> ascNS = exampleNM.navigableKeySet();
+									NavigableSet<<key-type>> descNS = exampleNM.descendingKeySet();
+									NavigableMap<<key-type>, <value-type>> descNM = exampleNM.descendingMap();
 
 						// ConcurrentHashMap
 							// Individual bins are locking, so that unrelated Keys are not blocking each other.
