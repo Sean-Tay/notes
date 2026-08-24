@@ -88,6 +88,9 @@ Java
 						exampleList.remove(<item>) // Remove first occurence of <item> in List.
 
 					// Implementations:
+						// Immutable List:
+							Collections.unmodifiableList(<list>);
+
 						// ArrayList 
 							// Random Access - O(1) Read from any Index.
 							// Add or Remove from end of List - O(1) Write to Index end; O(N) Write for any other Index.
