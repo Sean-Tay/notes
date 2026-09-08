@@ -52,14 +52,16 @@ Web Dev:
 
 		URI: 					A String that specifies the location of a Resource / Site / Service.
 		URL:					A Web-specific URI. Consists of:
-			Protocol:			The Protocol used to specify the communication mode with the Server.
-			Host and Domain:	The Entity that the Server is running on, and the Administrative Space the Entity is in.
+			Scheme:				The Protocol used to specify the communication mode with the Server.
+			Host and Domain: 	The Entity that the Server is running on, and the Administrative Space the Entity is in.
 			Port:				The Network Port used to interact with the Server Process that is running on the Host.
+
 			Path / Path Params:	The part that points to a Resource within the Host (i.e. one or more of {"/<simple>" | "/:<parameter>" | "/:<parameter><regex>"}).
 			Query Params:		Optional appended String to the Path that represents URL Arguments in Key-Value Pairs (i.e. <path>/?<key>=<value>& ...).
 			Fragment:			Optional appended String to the URL that is used to identify a specific part of a returned Resource.
 
-		Origin: 				Protocol + Host + Domain + Port.
+			Authority:			Host + Domain + Port
+			Origin:				Scheme + Authority
 
 		HTTP Request Methods:
 			Create / POST 
