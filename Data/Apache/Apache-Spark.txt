@@ -8,7 +8,7 @@ Apache Spark
 	Resources:
 	
 	Concepts:
-		
+		Spark SQL: Core module within Apache Spark for querying / processing Structured / Semi-Structured Data.
 	
 	Details:
 		Overview: Chain together some Deterministic / Pure Functions together called Operators; able to avoid unnecessary Mappers.
@@ -16,6 +16,27 @@ Apache Spark
 				Less Fault Tolerant than MapReduce as intermediate results not always written to Disk.
 					Recompute based on most recent computations that still survive.
 					Occasional Checkpoint mechanism.
+
+		Language Syntax:
+			Java:
+				Note: Apache Spark will leverage on native Java Libraries for performance reasons, which may have been restricted in later Java versions. Need to specify JVM flags to allow, such as --add-exports=java.base/sun.*=ALL_UNNAMED
+
+				// Create a Spark Session:
+					SparkSession s = SparkSession.builder()
+						.appName("<application-name>")
+						.master("local[<num-worker-threads>]")
+						.config("<config-property>", <value>)
+							.config("spark.ui.enabled", { false | true })
+
+							// Extend Spark Engine Capability
+								// SQL Parser, Analyzer, Optimizer and Planner
+								.config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") // For Delta Lake
+
+								// Data Storage Pointer
+								.config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") // For Delta Lake
+
+						// ...
+						.getOrCreate();
 	
 	Commands:
 		

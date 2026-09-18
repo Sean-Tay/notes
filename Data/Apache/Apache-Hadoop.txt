@@ -1,6 +1,9 @@
 Apache Hadoop
 	Abbreviations:
 		DFS:					Distributed File System.
+		HDFS: 					Hadoop DFS.
+
+		YARN:					Yet Another Resource Negotiator.
 	
 	Description: 
 		A collection of Open Source Utilities to facilitate usage of Distributed Computing to solve problems involving massive amounts of Data and Computation.
@@ -8,10 +11,14 @@ Apache Hadoop
 	Resources:
 	
 	Concepts:
+		HDFS:					HDFS acts as Hard Drive of Hadoop workloads, splitting massive files into smaller chunks and distribtes them among Storage Drives of multiple Servers for safety and fast access.
 
+		YARN:					YARN acts as the Operating System of Hadoop workloads, deciding which Servers handle various Computing and Data Processing tasks and how much Compute to allocate.
 	
 	Details:
 		Overview:
+			Apache Hadoop can be seen as the Storage Driver / Interface of a traditional Database Engine, interacting closely with the Distributed Physical Infrastructure.
+
 			MapReduce: Parallel Processing on a large group of Input Files independently, which returns Output Files that can be passed to other MapReduce Jobs.
 				General Flow:
 					1. Input Files are taken in by the Mapper Nodes, and each produce Key-Value pairs via the defined Map Task.
@@ -34,6 +41,8 @@ Apache Hadoop
 					Broadcast-Hash: Load a Hashmap of Key to Values to be joined into the Memory of Mapper Nodes; Values will be incorporated during the Map Task. Only works if the Hashmap is small enough.
 
 					Partitioned-Hash: Load a subset of the Hashmap of Key to Values to be joined into the Memory of the Mapper Nodes; Values will be incorporated during the Map Task. Only works when two Datasets are partitioned in the same way - the Hashmap is generated from the smaller partition of the two.
+
+					Apache Spark Catalyst Optimizer: Modern alternative to Hadoop MapReduce.
 
 				Pros:
 					Design tolerates frequent faults and failures from initial use-case; only requires restart of a failed Jobs.
