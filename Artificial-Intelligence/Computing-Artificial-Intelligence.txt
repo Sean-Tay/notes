@@ -367,7 +367,7 @@ Artificial Intelligence:
 			Types:
 				Ollama: Docker for Local LLMs.
 
-				Roo -> Kilocode / Cline / Continue.dev: IDE Plugins that allows for the execution of Development Tasks on different LLMs, depending on the Task Complexity (i.e. Planning - Heavier / Acting - Lighter)
+				Roo -> Kilocode / Cline / Continue.dev / GitHub Copilot: IDE Plugins that allows for the execution of Development Tasks on different LLMs, depending on the Task Complexity (i.e. Planning - Heavier / Acting - Lighter)
 					Multi-Agent Approach for Agentic AI Development:
 						Types:
 							Orchestrator: Agent that coordinates the other Agents to breakdown larger Tasks further. The LLM used for this Agent must be able to communicate well to the other Agents.
@@ -403,3 +403,19 @@ Artificial Intelligence:
 			Question: Invite the AI to ask you questions if it needs more information to complete the task.
 
 			Tip: Ask the AI to explain its reasoning, showing its thought-process step-by-step.
+
+		Sequential Approach for Agentic AI Development:
+			RPI Workflow: 
+				The idea is to split the end to end feature development flow into 3 parts:
+					Refine Requirements: Position as a Product Owner / Role - aim is to create a Requirements Document / Ticket that outlines the feature to be implemented in a structured and detailed manner (e.g. Acceptance Criteria). The Agent can help to ask clarifying questions to further distill the needed information.
+
+					Create Plan: Position as a Developer and or Tester Role - aim is to create an Implementation Plan / Testing Plan based on the Requirements Document from the previous step that denotes the considerations (i.e. Functional / Non-Functional) and the architectural decisions made when deciding on the feature's implementation. As before, the Agent can help to ask clarifying questions or even suggest best practices to help perfect the implementation plan.
+
+					Implement Plan: Position as a Developer and or Tester Role, the Agent will implement the feature based on what was decided during the creation of the Requirements Document and the Implementation / Testing Plan.
+
+			Advantages:
+				The sort of structured approach fits well with the Project Repository, as the R and P steps create artifacts which can then be checked into version control for auditing and review purposes.
+				
+				The scope is clearly defined and narrowed at each step, preventing scope creep by the agent during feature implementation compared to traditional one-shot workflows.
+
+				The workflow is effectively split into 3 checkpoints, allowing for continuation of the worflow after compaction, if it happens.
