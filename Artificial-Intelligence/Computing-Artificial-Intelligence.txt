@@ -368,6 +368,11 @@ Artificial Intelligence:
 				Ollama: Docker for Local LLMs.
 
 				Roo -> Kilocode / Cline / Continue.dev / GitHub Copilot: IDE Plugins that allows for the execution of Development Tasks on different LLMs, depending on the Task Complexity (i.e. Planning - Heavier / Acting - Lighter)
+					GitHub Copilot: Stores Project-specific configuration at .github directory in Project Root.
+						Prompts: Stores reusable Prompts for often-used workflows. Usually in the form of .md Files. Useful to save on reasoning effort done by the Model.
+						Hooks: Scripts to be executed by the Agent at certain points of the Agent Chat lifecycle (e.g. preToolUse, postToolUse). Useful as a form of guardrail or optimization step to save on reasoning effort.
+						Skills: Each Skill is a separate Directory containing at minimum a SKILL.md, which is used by the Agent whenever it is given a broad, multi-step task.
+
 					Multi-Agent Approach for Agentic AI Development:
 						Types:
 							Orchestrator: Agent that coordinates the other Agents to breakdown larger Tasks further. The LLM used for this Agent must be able to communicate well to the other Agents.
