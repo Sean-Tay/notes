@@ -400,6 +400,18 @@ Artificial Intelligence:
 				Claude Code / Opencode: Agentic CLI
 					CLAUDE.md / agents.md: Markdown File containing Instructions, Architectural Context, Coding Convention, and Rules that the Agent runtime reads before starting any Task.
 
+				Openspec: Spec Driven Development CLI Tool.
+					Phases:
+						Explore: Brainstorming and investigation. Used to consider multiple implementation options before making a formalized plan.
+
+						Propose: Used to transition from a plan to a concrete plan.
+						Apply: Used to implement a concrete plan.
+
+						Archive: Used to merge the concrete plan into the project's permanent truth directory, and shift the temporary change files into the project's archive folder.
+
+					Commands:
+						openspec init
+
 		Effective Prompt Engineering: RICE-Q
 			Role: Set the context by defining the role of the AI.
 			Instruction: Provide the specific task or question you want the AI to complete.
