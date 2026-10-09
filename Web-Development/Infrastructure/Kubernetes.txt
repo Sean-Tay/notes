@@ -29,6 +29,13 @@ Kubernetes:
 
 		Node: 					Any Physical or Virtual Machine that runs Pods. Can be run in a Cluster, possibly managed via Infrastructure Tools.
 
+		Environment:
+			ConfigMap:			Resource that contains non-sensitive configuration for Kubernetes Pods.
+			Secret:				Resource injected as an object in /etcd used by Kubernetes Pods.
+
+			External Secret:	A custom Resource that defines what data to pull from an external Secrets Store.
+			Secret Store:		
+
 		Karpenter:				Workload compaction Service that optimizes Node usage across the Cluster. Pods on a Node Cluster gets destroyed and recreated when being "moved" across Nodes.
 
 		Traffic:
@@ -84,6 +91,9 @@ Kubernetes:
 
 			# ReferenceGrant
 				get referencegrant
+
+			# Secrets
+				get externalsecret
 
 			# Service
 				get services
