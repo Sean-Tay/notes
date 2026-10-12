@@ -57,6 +57,14 @@ Ollama
 
 		ollama ps # List all running LLMs and their Resource Usage.
 
+		# Note: To see count of Token Generation, run the Ollama Server in CLI directly via `ollama start`.
+		tail -f ~/.ollama/logs/server.log # View live Ollama Logs.
+			# Example Inference Log Line:
+			slot print_timing: id  0 | task 5706 | n_gen =  15071, tg =  12.69 t/s, tg_3s =  11.43 t/s
+				n_gen: Number of Tokens generated for this task so far.
+				tg: Token Generation Rate across the duration of this task.
+				tg_3s: Token Generation Rate for this task in the last 3 seconds.
+
 		ollama stop <model-name> # Stop a LLM.
 		ollama launch <integration> --model <model-name> # Launch an Integration with a specific LLM.
 	
