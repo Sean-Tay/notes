@@ -70,6 +70,9 @@ Artificial Intelligence:
 
 						Cross-Model Attention: Technique that links Embeddings across different mediums, allowing a Model to determine how data in one Medium would relate to data in another Medium. Used in Multi-Modal Models.
 
+				Other Mechanisms:
+					Speculative Decoding / Multi-Token Prediction: Speeds up inference by drafting out several Tokens ahead at a time, instead of just one. The difference is that Speculative Decoding may involve a separate smaller Secondary Model, whereas MTP involves just one Model having several auxillary Heads.
+
 				Filtering Mechanisms:
 					Temperature: The amount of variance to use when determining the next Token to pick, based on the Logits. Lower Temperatures induce more determinism and subsequently less creativity in the Response.
 
