@@ -1,0 +1,60 @@
+Guice:
+	Abbreviations: 
+	
+	Description: Lightweight Dependency Injection Google Framework for Java.
+	
+	Resources:
+	
+	Concepts:
+		Module: Contains the bindings between Interfaces of Dependencies and their concrete implementations.
+	
+	Details:
+		// Define an Interface for a Dependency:
+			public interface <interface-name> {
+				// ...
+			}
+
+			public class <implementation-name> implements <interface-name> {
+				// ...
+			}
+
+		// Define the Consuming Class:
+			public class <consumer-name> {
+				private final <interface-name> <dependency-variable>;
+
+				// Note: The @Inject Annotation is only needed for Dependencies with > 1 resolvable types.
+				@Inject
+				public <consumer-name>(
+					<interface-name> <dependency-variable>,
+				) {
+					this.<dependency-variable> = <dependency-variable>;
+				}
+			}
+
+		// Bind the Depdency to the Consumer in a Module
+			public class <module-name> extends AbstractModule {
+				@Override
+				protected void configure() {
+					bind(
+						<interface-name>.class
+					).to(
+						<implementation-name>.class
+					);
+				}
+			}
+
+		// Bootstrap the Modules
+			public class Main {
+				public static void main(String[] args) {
+					Injector injector = Guice.createInjector(
+						new <module-name>(),
+						// ...
+					);
+
+					// Initialize the Consumer with the specific Dependency Injection mapping, as defined by the Injector's Module:
+					<consumer-name> <consumer-variable> = injector.getInstance(<consumer-name>.class);
+				}
+			}
+	
+	Commands:
+		
