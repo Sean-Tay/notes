@@ -93,7 +93,7 @@ System Design:
 								Effective Exactly Once: At Least Once + Idempotent Consumers (dedup on UUID / Sequence Number). True Exactly Once is impossible.
 
 						Even if the Messages are kept in a Queue-like fashion, Messages may still be processed out-of-order from the expected FIFO:
-							Log: Consumers consuming from multiple Partitions - no cross Partition ordering.
+							Log: Consumers consuming from multiple Partitions - no cross Partition Total Ordering.
 							Queue-Level: Different Consumers may have different consumption speed / Different Messages in the same Queue are not equal.
 							
 							Redelivery after failure.
@@ -109,6 +109,16 @@ System Design:
 
 						Log Brokers:
 							Kafka
+								Oriented towards High-Throughput + wide Ecosystem support for various use-cases.
+									Retained Message Consumption.
+
+								Payloads are only in raw Bytes.
+								Only full Event Publication.
+								Client-controlled Pull-based Distribution.
+
+								Uses Single-Leader Replica per Partition.
+									Supports both Synchronous and Asynchronous modes of Replication.
+										Producers do NOT need to publish Events sequentially - publication in parallel is also possible.
 
 							Redis Streams
 
@@ -118,6 +128,31 @@ System Design:
 						Others:
 							Google Cloud Pub/Sub - hybrid; Append-Only Log + Queue-style Ack API.
 							Pulsar - hybrid; Append-Only Log via BookKeeper + Queue-style Ack API.
+
+							AMPS - hybrid; supports both Log and Queue-style behaviours.
+								Oriented towards High-Throughput + Low-Latency Event Consumption.
+									Destructive Publication.
+
+								Able to parse different Payload formats (e.g. XML, JSON).
+								Supports Delta / Partial Event Publication / Subscription.
+								Server-controlled Push-based Distribution.
+
+								Uses Leaderless Replication. 
+									There is no need for Conflict Resolution (as with what happens in a Quorum for a Leaderless Database) because every Event is immutable and is uniquely identified by the Publisher + Seq ID.
+										The Seq ID is maintained at the Publisher.
+
+									Supports both Asynchronous or Synchronous modes of Replication, but both modes do NOT mean that a Subscriber has to wait for Replication before an Event is published.
+										Whether or not Replication happens Asynchronously or otherwise only affects the Publisher, which should wait for the Ack from the AMPS instance for the Event (or a later Event) before it can discard the Event(s) locally. When the Ack is sent depends on the Replication mode.
+											Event Publication can happen in parallel.
+
+											If an explicit failure occurs, AMPS reports those seperately.
+
+									Replication rules denote which Events are replicated to peers. By default this only propagates up to one hop, unless "Passthrough" is configured on each Peer.
+
+								State-of-the-World: Maintains and updates latest Event values for an SOW Topic, with each Event distinguishable by an SOW Key.
+									This feature is what supports Delta Publication / Subscription (for the SOW Topic).
+
+									Do not need to consume messages to get latest State - this ability to get the latest immediately is what makes this feature useful for eTrading scenarios, where millisecond delays are heavily penalized.
 
 			Optimization:
 				(In-Memory) Cache: Simple Key-Value Object Store that is very quick on Read / Write operations. Can be used for storing information about User Sessions.
