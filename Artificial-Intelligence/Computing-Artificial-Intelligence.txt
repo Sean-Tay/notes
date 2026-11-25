@@ -30,47 +30,67 @@ Artificial Intelligence:
 			Autoregressive Model: Generates Data Points one at a time, conditioning each based on previous Data Points.
 
 			Large Language Models:
-				Parameter Count: A measure of the size of the LLM, which is the number of Weights and Biases in the Model. An LLM with larger numbers means the Model has greater capacity to store knowledge and reason about complex problems.
-
-				Quantization: A Compression technique that reduces the precision of the Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
-					# Integer-based Quantization:
-						q8_0
-						q4_0
-
-					# Floating-point based Quantization:
-						bf16: Uncompressed, full 16-bit Floating Point values.
-
-						mxfp8
-
-						nvfp4 
-							# Non-uniform Floating Point Scale, naturally grouping more precision around 0, which is where Model Weights usually live anyway.
-							# Scales better with Nvidia / Apple M5 Hardware, delivering ~20% faster Token generation and cuts accuracy loss from typical quantization in half compared to traditional Integer-based Quantization.
-
-				Context Length: The maximum number of Tokens that the LLM can process at once, per prompt.
-					Architectural: The number of Tokens that the LLM was built to process.
-					Effective: The number of Tokens that the LLM can actually process, based on the current Resource Constraints.
-
-				Context Window: Same as the Context Length, but leans more towards defining the Active Memory Space in the Model.
-
 				Corpus: The initial body of Text.
-				Token: A unit of Data (i.e. words, sub-words).
-				Vector: Each Token is encoded as a Vector (i.e. Array of Numbers).
-				Embedding: A specific type of Vector that captures Semantic meaning, mapping Tokens into a continuous Vector Space where Tokens with similar meanings sit closer to each other.
-					Static Embedding: Embeddings generated from what was learnt by the Model during training (i.e. via a "static lookup table" for Embedding values).
+				Token: A integer ID from a fixed vocabulary, dependent on Model.
+				Vector: Each Token is then converted into a Vector (i.e. Array of Numbers) / Static Embeddings.
+					Static Embedding: Vectors generated from what was learnt by the Model during training (i.e. via a "static lookup table" for Embedding values). These Vectors primarily capture Semantic meaning based on the training data, and Tokens with similar meanings sit closer to each other.
 
-				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other past Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings).
-					Contextualized Embedding: Embeddings whose values shift based on the surrounding tokens in the Prompt, not just on what was learnt by the Model during training.
+				Parameter Count: A measure of the size of the LLM, which is the number of Weights and Biases in the Model. An LLM with larger numbers means the Model has greater capacity to store knowledge and reason about complex problems.
+					Layer: Pertaining to the Model's Layer, which a Vector would flow through to get refined. This is a factor of the Parameter Count. Can be seen as a thinking "step" for a Model - the more Layers it has the deeper in reasoning it can do, but the slower and less efficient it becomes in generation.
+
+					Embedding Dimension: Also known as Model Dimension, it is a factor of the Parameter Count. In the context of an Embedding, each Dimension can be taken as a question to the Token (e.g. is_wet, is_blue). These questions (and their number) differ per Layer, depending on what the Layer is designed to look for.
+
+				Attention: A mathematical matchmaking technique that allows every Token in a sentence to calculate how relevant they are to every other past Token, and update its meaning based on the current Context Window (i.e. converted into Contextual Embeddings). 
+					Contextualized Embedding: Embeddings whose values shift based on the surrounding Tokens in the Prompt, not just on what was learnt by the Model during training.
+						The initial Layer converts a Static Embedding into 3 different Vectors. Other Layers adjust these 3 as it moves through:
+							Query: What should I match with / What should I look for?
+							Key: How should I represent myself to other Embeddings for their Queries?
+							Value: In case I match, what meaning about myself should I pass along?
+
+							Attention Weight Vector for this Layer = Query Vector from own Embedding for this Layer x Key Vectors from other Embeddings for this Layer
+								In essence, the meaning of each Dimension for different Layers answers different questions about the Embeddings.
+
+								Use Softmax so that the values in each dimension add to 1. Different from a Unit Vector, which deals with sums of squares.
+
+								The Attention Weight Vector is multiplied with the Value Vector, and the resulting Context Update Vector is added onto the Embedding for a given Token before moving to the next Layer.
 
 					KV Cache: Optimization Technique to cache the calculated Key & Value Vectors for already processed Tokens. Casual Masking ensures that only newer Tokens reference the information from older Tokens, not the other way around.
+						(Deepseek) Flash Caching: Only some Layers in the LLM caches KV Values per Vector dimension; the other Layers in the Model reference them.
 
-					Variants:
-						Multi-Head Attention: Technique that gives the Model deeper understanding of the Context Window. Each Token's Vector is split into multiple smaller Vectors called Heads, so that the Key-Value Matchmaking can be computed across more than one dimension at the same time (i.e. Grammar, Pronoun Resolution, etc.). However, this requires more Internal Matrices for each additional dimension.
+					Variants (In Invention Order):
+						Multi-Head Attention: Technique that gives the Model more focused understanding. Each Token's QKV Vectors received by a Layer are split into multiple smaller QKV Vectors within each Layer (i.e. for each Head; each Layer can have different number of Heads => different number of smaller QKV Vectors), so that the Key-Value Matchmaking can be computed across more than one perspective (i.e. Grammar, Pronoun Resolution, etc.), without mixing the meanings and losing the detail. However, this requires more Internal Matrices for each additional perspective.
+							The smaller QKV Vectors are then stitched back together before being passed into the next Layer.
 
 						Flash Attention: Instead of tracking the relationships of Tokens with every other Token in the Context Window, the Model breaks them into small Blocks which can fit into faster SRAM. Online Softmax Re-scaling assures that this chunking technique does not result in the loss of context across the entire Context Window.
+
+						Grouped Query Attention: Multiple Heads share the same Key and Value Vectors. Quality drops slightly but Performance noticeable improves.
+							Multi Query Attention: A more extreme version where all Heads saves and references the same Key and Value Vector. Initial version of Grouped Query Attention.
+
+						Multi-Head Latent Attention: Different from Multi-Head Attention. Instead of storing the whole Token Vector, it is first projected into a lower dimension known as a Latent Vector, which is then cached.
+							It might be a Lossy Compression, but if redundant information is removed, it might actually improve the result.
+
+						(Deepseek) Sparse Attention: Track only the relationships of Tokens with only a selected subset of every other Token in the Context Window.
 
 						Cross-Model Attention: Technique that links Embeddings across different mediums, allowing a Model to determine how data in one Medium would relate to data in another Medium. Used in Multi-Modal Models.
 
 				Other Mechanisms:
+					Quantization: A Compression technique that reduces the precision of the Weights and Activations, reducing the Computational and Memory Requirements when running the Model.
+						# Integer-based Quantization:
+							q8_0
+							q4_0
+
+						# Floating-point based Quantization:
+							bf16: Uncompressed, full 16-bit Floating Point values.
+
+							mxfp8
+
+							nvfp4 
+								# Non-uniform Floating Point Scale, naturally grouping more precision around 0, which is where Model Weights usually live anyway.
+								# Scales better with Nvidia / Apple M5 Hardware, delivering ~20% faster Token generation and cuts accuracy loss from typical quantization in half compared to traditional Integer-based Quantization.
+
+					(Deepseek) Token-Entry Merging: Shares a Latent Vector across multiple Tokens. Not every Layer in the LLM will merge Tokens, to preserve the quality.
+						Note: This means that in terms of visible conversational history the LLM will interpret a slightly different version of what we see.
+
 					Speculative Decoding / Multi-Token Prediction: Speeds up inference by drafting out several Tokens ahead at a time, instead of just one. The difference is that Speculative Decoding may involve a separate smaller Secondary Model, whereas MTP involves just one Model having several auxillary Heads. Requires a particular Model architecture.
 
 					SSD N-Gram Offloading: Loads the Model's weights that represent factual knowledge from SSD only when needed, instead of loading all into RAM. Requires a particular Model architecture.
@@ -80,6 +100,12 @@ Artificial Intelligence:
 
 					Top-K Sampling: Instruct the Model to only consider the top K likely next Tokens.
 					Top-P Sampling: Instruct the Model to only consider from the most likely next Tokens whose cumulative probability adds up to P. Differs from Top-K in the sense that the pool of possible next Tokens shrinks based on how confident the Model is for the choices.
+
+				Context Length: The maximum number of Tokens that the LLM can process at once, per prompt.
+					Architectural: The number of Tokens that the LLM was built to process.
+					Effective: The number of Tokens that the LLM can actually process, based on the current Resource Constraints.
+
+				Context Window: Same as the Context Length, but leans more towards defining the Active Memory Space in the Model.
 
 			Multi-Modal:
 				Grapheme: Unit of Text.
